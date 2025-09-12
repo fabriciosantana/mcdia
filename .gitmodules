@@ -1,0 +1,3 @@
+[submodule "mcdia-python"]
+	path = mcdia-python
+	url = https://github.com/fabriciosantana/mcdia-python/
