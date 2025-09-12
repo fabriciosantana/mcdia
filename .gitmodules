@@ -1,6 +1,6 @@
 [submodule "mcdia-python"]
 	path = mcdia-python
-	url = https://github.com/fabriciosantana/mcdia-python/
+	url = git@github.com:fabriciosantana/mcdia-python.git
 [submodule "mcdia-nivelamento"]
 	path = mcdia-nivelamento
-	url = https://github.com/fabriciosantana/mcdia-nivelamento/
+	url = git@github.com:fabriciosantana/mcdia-nivelamento.git
