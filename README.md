@@ -9,10 +9,10 @@ Este repositório contém subrepositórios relacionados ao projeto MCDIA:
 - **URL**: https://github.com/fabriciosantana/mcdia-python/
 - **Diretório**: `mcdia-python/`
 
-### mcdia-nivelamento ❌
-- **Status**: Não pôde ser adicionado (repositório inacessível)
+### mcdia-nivelamento ✅
+- **Status**: Adicionado com sucesso
 - **URL**: https://github.com/fabriciosantana/mcdia-nivelamento/
-- **Nota**: O repositório pode estar privado ou não existir ainda
+- **Diretório**: `mcdia-nivelamento/`
 
 ## Como trabalhar com subrepositórios
 
@@ -24,9 +24,4 @@ git clone --recursive https://github.com/fabriciosantana/mcdia
 Para atualizar os subrepositórios:
 ```bash
 git submodule update --init --recursive
-```
-
-Para adicionar o mcdia-nivelamento quando disponível:
-```bash
-git submodule add https://github.com/fabriciosantana/mcdia-nivelamento/ mcdia-nivelamento
 ```
