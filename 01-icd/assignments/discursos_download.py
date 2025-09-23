@@ -268,8 +268,7 @@ def ler_intervalo_datas() -> tuple[dt.date, dt.date]:
         print(f"Aviso: datas invertidas. Usando {ini} → {fim}.")
     return ini, fim
 
-if __name__ == "__main__":
-
+def main():
     ini, fim = ler_intervalo_datas()
 
     log.info(f"Recuperando lista de discursos realizados no período de {ini} a {fim}")
@@ -298,3 +297,6 @@ if __name__ == "__main__":
     out_path2 = f"_data/discursos_{ini.isoformat()}_{fim.isoformat()}.csv"
     df_final.to_csv(out_path2, index=False, sep=";", encoding="utf-8-sig")
     log.info(f"OK: {df_txt['ok'].sum()} textos baixados, {len(df_txt)-df_txt['ok'].sum()} sem texto. Arquivo salvo em: {out_path2}")
+
+if __name__ == "__main__":
+    main()
