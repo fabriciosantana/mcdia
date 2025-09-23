@@ -288,8 +288,8 @@ def main():
             log.info(f"Usando: {out_path}")
             df_final = pd.read_parquet(out_path)  # <- parquet
             log.info(f"Discursos existentes no arquivo: {len(df_final)}")
-            log.info(f"OK: {df_final["ok"].astype(str).str.lower().eq("true").sum()} textos baixados, {len(df_final)-df_final["ok"].astype(str).str.lower().eq("true").sum()} sem texto. Arquivo salvo em: {out_path}")
-            log.info(df_final["TextoDiscursoIntegral"].str.len())
+            log.info(f"OK: {df_final["ok"].eq(True).sum()} textos baixados, {len(df_final)-df_final["ok"].eq(True).sum()} sem texto. Arquivo salvo em: {out_path}")
+            #log.info(df_final["TextoDiscursoIntegral"].str.len())
             raise SystemExit(0)
         else:
             log.info("Refazendo download dos discursos…")
@@ -319,9 +319,9 @@ def main():
     os.makedirs("_data", exist_ok=True)
     
     df_final.to_parquet(out_path, index=False, engine="pyarrow", compression="zstd")
-    log.info(f"OK: {df_final['ok'].sum()} textos baixados, {len(df_final)-df_final['ok'].sum()} sem texto. Arquivo salvo em: {out_path}")
+    log.info(f"OK: {df_final['ok'].eq(True).sum()} textos baixados, {len(df_final)-df_final['ok'].eq(True).sum()} sem texto. Arquivo salvo em: {out_path}")
 
-    log.info(df_final["TextoDiscursoIntegral"].str.len())
+    #log.info(df_final["TextoDiscursoIntegral"].str.len())
     #log.info(df_final["TextoDiscursoIntegral"].str.split().str.len())
 
 if __name__ == "__main__":
