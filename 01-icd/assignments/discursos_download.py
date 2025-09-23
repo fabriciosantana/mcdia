@@ -34,13 +34,20 @@ def yyyymmdd(d: dt.date) -> str:
 
 def make_windows(start: dt.date, end: dt.date, days_per_window: int = 31) -> List[tuple]:
     """Gera janelas [ini, fim] inclusive, com no máx. 'days_per_window' dias cada."""
+
+    print(f">>> Gerando intervalos de {days_per_window} dias para fazer download dos discursos em blocos")
+
     windows = []
     cur = start
     one_day = dt.timedelta(days=1)
+
     while cur <= end:
         w_end = min(cur + dt.timedelta(days=days_per_window - 1), end)
         windows.append((cur, w_end))
+        print(f">>> >>> Janela {len(windows)}: {(cur, w_end)}")
         cur = w_end + one_day
+
+    print(f">>> O download dos discursos será realizado em {len(windows)} intervalos/chamadas")
     return windows
 
 # ---------- Util: extrair lista "Pronunciamento" de qualquer JSON ----------
@@ -65,17 +72,22 @@ def extract_pronunciamentos(obj: Any) -> List[Dict[str, Any]]:
     rec(obj)
     return out
 
-def fetch_discursos_periodo(data_inicio: dt.date, data_fim: dt.date, sleep_s: float = 0.0) -> pd.DataFrame:
+def recupera_lista_discursos_por_periodo(data_inicio: dt.date, data_fim: dt.date, sleep_s: float = 0.0) -> pd.DataFrame:
     """
     Busca discursos do Plenário por janelas de data, agregando tudo num DataFrame.
     Endpoint: /plenario/lista/discursos/{AAAAMMDD}/{AAAAMMDD}.json
     """
+
+    print(f"Preparar intervalos para download dos discursos de {data_inicio} a {data_fim}")
     windows = make_windows(data_inicio, data_fim, days_per_window=31)  # janelas de ~1 mês
+
+    print(f"Iniciar download dos discursos em {len(windows)} intervalos")
     all_rows = []
 
     for i, (ini, fim) in enumerate(windows, 1):
         url = f"{BASE}plenario/lista/discursos/{yyyymmdd(ini)}/{yyyymmdd(fim)}.json"
-        print(url)
+
+        print(f"GET: {url}")
         r = sess.get(url, timeout=90)
         r.raise_for_status()
         j = r.json()
@@ -142,44 +154,98 @@ def fetch_and_save_txt(codigo_pron: str, url_txt: str) -> dict:
         out["msg"] = str(e)
         return out
 
+def _match_col(df: pd.DataFrame, alvo: str) -> str:
+    """
+    Tenta encontrar em df.columns a coluna equivalente a `alvo`.
+    Estratégia: match exato (case-insensitive) -> contém (case-insensitive).
+    Retorna o nome da coluna encontrada ou levanta KeyError.
+    """
+    cols = list(df.columns)
+    # 1) exato (case-insensitive)
+    for c in cols:
+        if c.lower() == alvo.lower():
+            return c
+    # 2) contém (case-insensitive)
+    candidatos = [c for c in cols if alvo.lower() in c.lower()]
+    if candidatos:
+        # prioriza o mais curto (geralmente o nome mais "limpo")
+        return sorted(candidatos, key=len)[0]
+    raise KeyError(f"Coluna obrigatória não encontrada: {alvo}. Disponíveis: {cols}")
+
+def preparar_discursos_para_download(
+    df_discursos: pd.DataFrame,
+    cols_necessarias=("TextoIntegralTxt", "CodigoPronunciamento"),
+    inplace: bool = False
+) -> pd.DataFrame:
+    """
+    - Faz rename tolerante das colunas necessárias para os nomes canônicos em `cols_necessarias`.
+    - Converte para string e strip.
+    - Retorna APENAS as linhas com URL válida em `TextoIntegralTxt` (http/https).
+    """
+    df = df_discursos if inplace else df_discursos.copy()
+
+    # 1) garantir/renomear colunas
+    ren = {}
+    for alvo in cols_necessarias:
+        col_real = _match_col(df, alvo)
+        if col_real != alvo:
+            ren[col_real] = alvo
+    if ren:
+        df = df.rename(columns=ren)
+
+    # 2) normalizar valores
+    for alvo in cols_necessarias:
+        df[alvo] = df[alvo].astype(str).str.strip()
+
+    # 3) filtrar URLs válidas
+    df_filtrado = df[df["TextoIntegralTxt"].str.startswith(("http://", "https://"), na=False)].copy()
+
+    return df_filtrado
+
+def download_texto_discursos(
+    df_download,
+    fetch_fn,                 # ex.: fetch_and_save_txt(codigo_pron, url_txt)
+    max_workers: int = 8
+):
+    """
+    Executa fetch_fn(CodigoPronunciamento, TextoIntegralTxt) em paralelo
+    para cada linha de df_download e retorna a lista 'resultados'.
+
+    - fetch_fn deve retornar um dict (ex.: {"CodigoPronunciamento":..., "ok":..., ...})
+    """
+    resultados = []
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        futs = {
+            ex.submit(fetch_fn, row["CodigoPronunciamento"], row["TextoIntegralTxt"]): row
+            for _, row in df_download.iterrows()
+        }
+        for fut in as_completed(futs):
+            row = futs[fut]
+            try:
+                resultados.append(fut.result())
+            except Exception as e:
+                resultados.append({
+                    "CodigoPronunciamento": row.get("CodigoPronunciamento"),
+                    "ok": False,
+                    "msg": str(e),
+                })
+    return pd.DataFrame(resultados)
+
 if __name__ == "__main__":
     ini = dt.date(2019, 3, 29)
     fim = dt.date(2019, 3, 31)
-    
-    df_discursos = fetch_discursos_periodo(ini, fim, sleep_s=0.0)
-    print(f"Discursos recuperados: ", len(df_discursos))
 
-    for needed in ["TextoIntegralTxt", "CodigoPronunciamento"]:
-        if needed not in df_discursos.columns:
-            # tenta localizar nomes equivalentes
-            candidatos = [c for c in df_discursos.columns if needed.lower() in c.lower()]
-            if candidatos:
-                df_discursos = df_discursos.rename(columns={candidatos[0]: needed})
-            else:
-                raise KeyError(f"Coluna obrigatória não encontrada: {needed}")
+    print(f"Iniciando download da lista de discursos realizados no período de {ini} a {fim}")
+    df_discursos = recupera_lista_discursos_por_periodo(ini, fim, sleep_s=0.0)
+    print(f"Lista de discursos recuperados: {len(df_discursos)}")
 
-    df_discursos["TextoIntegralTxt"] = df_discursos["TextoIntegralTxt"].astype(str).str.strip()
-    df_discursos["CodigoPronunciamento"] = df_discursos["CodigoPronunciamento"].astype(str).str.strip()
-    
-    # remove linhas sem URL
-    df_download = df_discursos[df_discursos["TextoIntegralTxt"].str.startswith("http")].copy()
-    print(f"Discursos com link para texto integral: ", len(df_download))    
+    print("Prepando discursos para download")
+    df_download = preparar_discursos_para_download(df_discursos)
+    print("Discursos com link para texto integral: ", len(df_download))    
 
-    TEXT_DIR = "_textos"
-    os.makedirs(TEXT_DIR, exist_ok=True)
-
-    # --- 3) Download em paralelo (rápido)
-    resultados = []
-    with ThreadPoolExecutor(max_workers=8) as ex:
-        futs = {
-            ex.submit(fetch_and_save_txt, row["CodigoPronunciamento"], row["TextoIntegralTxt"]): i
-            for i, row in df_download.iterrows()
-        }
-        for fut in as_completed(futs):
-            resultados.append(fut.result())
-
-    df_txt = pd.DataFrame(resultados)
-    print(f"Textos baixados: ", len(df_txt))
+    print("Iniciando download do texto integral do discurso com link para texto integral: ", len(df_download))    
+    df_txt = download_texto_discursos(df_download, fetch_and_save_txt, max_workers=8)
+    print(f"Foi realizado o download dos textos de discursos: {len(df_txt)}")
 
     # --- 4) Merge de volta no DataFrame principal
     df_final = df_discursos.merge(
