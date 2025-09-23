@@ -7,6 +7,7 @@ import logging
 import requests
 import pandas as pd
 import re
+from pathlib import Path
 from typing import List, Dict, Any, Iterable
 from requests.adapters import HTTPAdapter, Retry
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -19,6 +20,9 @@ TIMEOUT_TXT  = 60
 RETRY_TOTAL  = 8
 RETRY_BACKOFF = 0.6
 STATUS_FORCELIST = [429, 500, 502, 503, 504]
+
+DEFAULT_INI = dt.date(2019, 3, 29)
+DEFAULT_FIM = dt.date(2019, 3, 31)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -248,28 +252,51 @@ def fazer_download_texto_discursos(
 
 def _parse_data(s: str) -> dt.date:
     s = (s or "").strip()
-    formatos = ("%Y-%m-%d", "%d/%m/%Y")
-    for fmt in formatos:
+    for fmt in ("%Y-%m-%d", "%d/%m/%Y"):
         try:
             return dt.datetime.strptime(s, fmt).date()
         except ValueError:
             pass
-    raise ValueError(f"Data inválida: '{s}'. Use YYYY-MM-DD ou DD/MM/AAAA.")
+    raise ValueError(f"Data inválida: {s!r}")
 
 def ler_intervalo_datas() -> tuple[dt.date, dt.date]:
-    print("Informe o intervalo de datas (ex.: 2019-03-29 ou 29/03/2019).")
-    s_ini = input("Data inicial: ").strip()
-    s_fim = input("Data final  : ").strip()
-    ini = _parse_data(s_ini)
-    fim = _parse_data(s_fim)
+    print("Informe o intervalo (ENTER para usar padrão 2019-03-29 → 2019-03-31).")
+    s_ini = input("Data inicial [2019-03-29]: ").strip()
+    s_fim = input("Data final   [2019-03-31]: ").strip()
+
+    ini = _parse_data(s_ini) if s_ini else DEFAULT_INI
+    fim = _parse_data(s_fim) if s_fim else DEFAULT_FIM
     if fim < ini:
-        # se o usuário inverteu, trocamos
         ini, fim = fim, ini
         print(f"Aviso: datas invertidas. Usando {ini} → {fim}.")
     return ini, fim
 
+def ask_yes_no(msg: str, default_yes=True) -> bool:
+    prompt = " [S/n] " if default_yes else " [s/N] "
+    while True:
+        ans = input(msg + prompt).strip().lower()
+        if not ans:
+            return default_yes
+        if ans in ("s","sim","y","yes"): return True
+        if ans in ("n","nao","não","no"): return False
+        print("Responda com s/n.")
+
 def main():
     ini, fim = ler_intervalo_datas()
+
+    DATA_DIR = Path("_data")
+    DATA_DIR.mkdir(exist_ok=True)
+    out_csv = DATA_DIR / f"discursos_{ini.isoformat()}_{fim.isoformat()}.csv"
+
+    if out_csv.exists():
+        if ask_yes_no(f"Arquivo já existe: {out_csv}\nUsar o arquivo existente?"):
+            log.info(f"Usando: {out_csv}")
+            df_final = pd.read_csv(out_csv, sep=";", dtype=str)
+            log.info(f"Linhas: {len(df_final)}")
+            # encerre ou siga com análises que não exigem novo download
+            raise SystemExit(0)
+        else:
+            log.info("Refazendo download dos discursos…")
 
     log.info(f"Recuperando lista de discursos realizados no período de {ini} a {fim}")
     df_discursos = recuperar_lista_discursos_por_periodo(ini, fim, sleep_s=0.0)
