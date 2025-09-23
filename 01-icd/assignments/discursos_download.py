@@ -24,6 +24,9 @@ STATUS_FORCELIST = [429, 500, 502, 503, 504]
 DEFAULT_INI = dt.date(2019, 3, 29)
 DEFAULT_FIM = dt.date(2019, 3, 31)
 
+DATA_DIR = Path("_data")
+DATA_DIR.mkdir(exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
@@ -130,8 +133,8 @@ def recuperar_lista_discursos_por_periodo(data_inicio: dt.date, data_fim: dt.dat
 
     return df_all
 
-def recuperar_e_gravar_texto_discurso(codigo_pron: str, url_txt: str) -> dict:
-    out = {"CodigoPronunciamento": codigo_pron, "ArquivoTextoIntegral": "", "ok": False, "status": None, "msg": ""}
+def recuperar_texto_discurso(codigo_pron: str, url_txt: str) -> dict:
+    out = {"CodigoPronunciamento": codigo_pron, "TextoDiscursoIntegral": "", "ok": False, "status": None, "msg": ""}
 
     try:
         log.info(f">>> GET: {url_txt}")
@@ -158,15 +161,8 @@ def recuperar_e_gravar_texto_discurso(codigo_pron: str, url_txt: str) -> dict:
             out["msg"] = f"vazio (Content-Type={ct})"
             return out
 
-        # salva
-        TEXT_DIR = "_textos"
-        os.makedirs(TEXT_DIR, exist_ok=True)
-        path = os.path.join(TEXT_DIR, f"{codigo_pron}.txt")
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(txt)
-
-        out["ArquivoTextoIntegral"] = path
         out["ok"] = True
+        out["TextoDiscursoIntegral"] = txt
         return out
 
     except Exception as e:
@@ -282,18 +278,18 @@ def ask_yes_no(msg: str, default_yes=True) -> bool:
         print("Responda com s/n.")
 
 def main():
+    
     ini, fim = ler_intervalo_datas()
 
-    DATA_DIR = Path("_data")
-    DATA_DIR.mkdir(exist_ok=True)
-    out_csv = DATA_DIR / f"discursos_{ini.isoformat()}_{fim.isoformat()}.csv"
+    out_path = DATA_DIR / f"discursos_{ini.isoformat()}_{fim.isoformat()}.parquet"
 
-    if out_csv.exists():
-        if ask_yes_no(f"Arquivo já existe: {out_csv}\nUsar o arquivo existente?"):
-            log.info(f"Usando: {out_csv}")
-            df_final = pd.read_csv(out_csv, sep=";", dtype=str)
-            log.info(f"Linhas: {len(df_final)}")
-            # encerre ou siga com análises que não exigem novo download
+    if out_path.exists():
+        if ask_yes_no(f"Arquivo já existe: {out_path}\nUsar o arquivo existente?"):
+            log.info(f"Usando: {out_path}")
+            df_final = pd.read_parquet(out_path)  # <- parquet
+            log.info(f"Discursos existentes no arquivo: {len(df_final)}")
+            log.info(f"OK: {df_final["ok"].astype(str).str.lower().eq("true").sum()} textos baixados, {len(df_final)-df_final["ok"].astype(str).str.lower().eq("true").sum()} sem texto. Arquivo salvo em: {out_path}")
+            log.info(df_final["TextoDiscursoIntegral"].str.len())
             raise SystemExit(0)
         else:
             log.info("Refazendo download dos discursos…")
@@ -307,23 +303,26 @@ def main():
     log.info(f"Discursos com link para download do texto integral {len(df_download)}")    
 
     log.info(f"Iniciando download do texto integral do discurso com link para texto integral: {len(df_download)}")    
-    df_txt = fazer_download_texto_discursos(df_download, recuperar_e_gravar_texto_discurso, max_workers=8)
+    df_txt = fazer_download_texto_discursos(df_download, recuperar_texto_discurso, max_workers=8)
     log.info(f"Foi realizado o download dos textos de discursos: {len(df_txt)}")
 
     df_final = df_discursos.merge(
-        df_txt[["CodigoPronunciamento", "ArquivoTextoIntegral", "ok", "status", "msg"]],
+        df_txt[["CodigoPronunciamento", "TextoDiscursoIntegral", "ok", "status", "msg"]],
         on="CodigoPronunciamento",
         how="left"
     )
-    log.info(f"Textos no data frame final: {len(df_final)}")
 
+    log.info(f"Textos no data frame final: {len(df_final)}")
     log.info(f"Discursos por período: {len(df_discursos):,} linhas")
 
-    log.info(f"Salvando arquivo com a lista dos discursos")    
+    log.info(f"Salvando arquivo com a lista dos discursos e os respectivos textos integrais")    
     os.makedirs("_data", exist_ok=True)
-    out_path2 = f"_data/discursos_{ini.isoformat()}_{fim.isoformat()}.csv"
-    df_final.to_csv(out_path2, index=False, sep=";", encoding="utf-8-sig")
-    log.info(f"OK: {df_txt['ok'].sum()} textos baixados, {len(df_txt)-df_txt['ok'].sum()} sem texto. Arquivo salvo em: {out_path2}")
+    
+    df_final.to_parquet(out_path, index=False, engine="pyarrow", compression="zstd")
+    log.info(f"OK: {df_final['ok'].sum()} textos baixados, {len(df_final)-df_final['ok'].sum()} sem texto. Arquivo salvo em: {out_path}")
+
+    log.info(df_final["TextoDiscursoIntegral"].str.len())
+    #log.info(df_final["TextoDiscursoIntegral"].str.split().str.len())
 
 if __name__ == "__main__":
     main()
