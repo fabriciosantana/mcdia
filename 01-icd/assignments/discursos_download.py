@@ -316,8 +316,6 @@ def main():
     log.info(f"Discursos por período: {len(df_discursos):,} linhas")
 
     log.info(f"Salvando arquivo com a lista dos discursos e os respectivos textos integrais")    
-    os.makedirs("_data", exist_ok=True)
-    
     df_final.to_parquet(out_path, index=False, engine="pyarrow", compression="zstd")
     log.info(f"OK: {df_final['ok'].eq(True).sum()} textos baixados, {len(df_final)-df_final['ok'].eq(True).sum()} sem texto. Arquivo salvo em: {out_path}")
 
