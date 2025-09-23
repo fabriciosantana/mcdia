@@ -3,39 +3,52 @@ import math
 import time
 import json
 import datetime as dt
-from typing import List, Dict, Any, Iterable
-
+import logging
 import requests
 import pandas as pd
 import re
+from typing import List, Dict, Any, Iterable
 from requests.adapters import HTTPAdapter, Retry
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pprint import pformat
 
 BASE = "https://legis.senado.leg.br/dadosabertos/"
 
-# ---------- Sessão HTTP com retries ----------
+TIMEOUT_JSON = 90
+TIMEOUT_TXT  = 60
+RETRY_TOTAL  = 8
+RETRY_BACKOFF = 0.6
+STATUS_FORCELIST = [429, 500, 502, 503, 504]
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+log = logging.getLogger("discursos")
+
 def make_session() -> requests.Session:
     s = requests.Session()
     retries = Retry(
-        total=8,
-        backoff_factor=0.6,
-        status_forcelist=[429, 500, 502, 503, 504],
+        total=RETRY_TOTAL,
+        backoff_factor=RETRY_BACKOFF,
+        status_forcelist=STATUS_FORCELIST,
         allowed_methods=["GET"],
     )
     s.mount("https://", HTTPAdapter(max_retries=retries))
-    s.headers.update({"Accept": "application/json"})
+
+    log.info(f">>> Headers: {pformat(dict(s.headers))}")
+    log.info(f">>> Cookies: {s.cookies}")
+    log.info(f">>> Auth: {s.auth}")
+
     return s
 
+log.info(f"Construindo sessão HTTP")
 sess = make_session()
 
-# ---------- Util: datas e janelas ----------
-def yyyymmdd(d: dt.date) -> str:
-    return d.strftime("%Y%m%d")
-
-def make_windows(start: dt.date, end: dt.date, days_per_window: int = 31) -> List[tuple]:
+def montar_intervalo_de_datas(start: dt.date, end: dt.date, days_per_window: int = 31) -> List[tuple]:
     """Gera janelas [ini, fim] inclusive, com no máx. 'days_per_window' dias cada."""
 
-    print(f">>> Gerando intervalos de {days_per_window} dias para fazer download dos discursos em blocos")
+    log.info(f">>> Montando intervalos de {days_per_window} dias para fazer download dos discursos em blocos")
 
     windows = []
     cur = start
@@ -44,14 +57,13 @@ def make_windows(start: dt.date, end: dt.date, days_per_window: int = 31) -> Lis
     while cur <= end:
         w_end = min(cur + dt.timedelta(days=days_per_window - 1), end)
         windows.append((cur, w_end))
-        print(f">>> >>> Janela {len(windows)}: {(cur, w_end)}")
+        log.info(f">>> >>> Janela {len(windows)}: {(cur, w_end)}")
         cur = w_end + one_day
 
-    print(f">>> O download dos discursos será realizado em {len(windows)} intervalos/chamadas")
+    log.info(f">>> O download dos discursos será realizado em {len(windows)} intervalos")
     return windows
 
-# ---------- Util: extrair lista "Pronunciamento" de qualquer JSON ----------
-def extract_pronunciamentos(obj: Any) -> List[Dict[str, Any]]:
+def extrair_discurso(obj: Any) -> List[Dict[str, Any]]:
     """
     Procura, recursivamente, qualquer lista sob a chave 'Pronunciamento'.
     Isso torna o parser resiliente a pequenas mudanças de envelope.
@@ -72,34 +84,36 @@ def extract_pronunciamentos(obj: Any) -> List[Dict[str, Any]]:
     rec(obj)
     return out
 
-def recupera_lista_discursos_por_periodo(data_inicio: dt.date, data_fim: dt.date, sleep_s: float = 0.0) -> pd.DataFrame:
+def recuperar_lista_discursos_por_periodo(data_inicio: dt.date, data_fim: dt.date, sleep_s: float = 0.0) -> pd.DataFrame:
     """
     Busca discursos do Plenário por janelas de data, agregando tudo num DataFrame.
     Endpoint: /plenario/lista/discursos/{AAAAMMDD}/{AAAAMMDD}.json
     """
 
-    print(f"Preparar intervalos para download dos discursos de {data_inicio} a {data_fim}")
-    windows = make_windows(data_inicio, data_fim, days_per_window=31)  # janelas de ~1 mês
+    log.info(f">>> Preparando intervalos para download dos discursos de {data_inicio} a {data_fim}")
+    windows = montar_intervalo_de_datas(data_inicio, data_fim, days_per_window=31)  # janelas de ~1 mês
 
-    print(f"Iniciar download dos discursos em {len(windows)} intervalos")
+    log.info(f">>> Iniciando download dos discursos em {len(windows)} intervalos")
     all_rows = []
 
-    for i, (ini, fim) in enumerate(windows, 1):
-        url = f"{BASE}plenario/lista/discursos/{yyyymmdd(ini)}/{yyyymmdd(fim)}.json"
+    for i, (data_ini, data_fim) in enumerate(windows, 1):
+        url = f"{BASE}plenario/lista/discursos/{data_ini.strftime('%Y%m%d')}/{data_fim.strftime('%Y%m%d')}.json"
 
-        print(f"GET: {url}")
-        r = sess.get(url, timeout=90)
+        log.info(f">>> >>> GET: {url}")
+        r = sess.get(url, headers={"Accept": "application/json"}, timeout=TIMEOUT_JSON)
         r.raise_for_status()
         j = r.json()
 
-        pron = extract_pronunciamentos(j)
+        log.info(f">>> >>> Extraindo discurso")
+        pron = extrair_discurso(j)
         if pron:
             # flatten resiliente
             df = pd.json_normalize(pron, sep=".")
             # anexa janela de coleta (útil para auditoria)
-            df["__janela_inicio"] = ini.isoformat()
-            df["__janela_fim"] = fim.isoformat()
+            df["__janela_inicio"] = data_ini.isoformat()
+            df["__janela_fim"] = data_fim.isoformat()
             all_rows.append(df)
+            log.info(f">>> >>> Discursos extraídos: {len(all_rows)}")
 
         if sleep_s:
             time.sleep(sleep_s)
@@ -108,15 +122,16 @@ def recupera_lista_discursos_por_periodo(data_inicio: dt.date, data_fim: dt.date
         return pd.DataFrame()
 
     df_all = pd.concat(all_rows, ignore_index=True, sort=False)
+    log.info(f">>> Discursos recuperados: {len(df_all)}")
+
     return df_all
 
-def fetch_and_save_txt(codigo_pron: str, url_txt: str) -> dict:
+def recuperar_e_gravar_texto_discurso(codigo_pron: str, url_txt: str) -> dict:
     out = {"CodigoPronunciamento": codigo_pron, "ArquivoTextoIntegral": "", "ok": False, "status": None, "msg": ""}
 
     try:
-        print("GET:", url_txt)
-        sess.headers.update({"Accept": "text/plain, */*;q=0.1"})
-        r = sess.get(url_txt, timeout=60, allow_redirects=True)
+        log.info(f">>> GET: {url_txt}")
+        r = sess.get(url_txt, timeout=TIMEOUT_TXT, headers={"Accept": "text/plain, */*;q=0.1"}, allow_redirects=True)
         out["status"] = r.status_code
 
         # log auxiliar para diagnosticar
@@ -202,7 +217,7 @@ def preparar_discursos_para_download(
 
     return df_filtrado
 
-def download_texto_discursos(
+def fazer_download_texto_discursos(
     df_download,
     fetch_fn,                 # ex.: fetch_and_save_txt(codigo_pron, url_txt)
     max_workers: int = 8
@@ -231,33 +246,55 @@ def download_texto_discursos(
                 })
     return pd.DataFrame(resultados)
 
+def _parse_data(s: str) -> dt.date:
+    s = (s or "").strip()
+    formatos = ("%Y-%m-%d", "%d/%m/%Y")
+    for fmt in formatos:
+        try:
+            return dt.datetime.strptime(s, fmt).date()
+        except ValueError:
+            pass
+    raise ValueError(f"Data inválida: '{s}'. Use YYYY-MM-DD ou DD/MM/AAAA.")
+
+def ler_intervalo_datas() -> tuple[dt.date, dt.date]:
+    print("Informe o intervalo de datas (ex.: 2019-03-29 ou 29/03/2019).")
+    s_ini = input("Data inicial: ").strip()
+    s_fim = input("Data final  : ").strip()
+    ini = _parse_data(s_ini)
+    fim = _parse_data(s_fim)
+    if fim < ini:
+        # se o usuário inverteu, trocamos
+        ini, fim = fim, ini
+        print(f"Aviso: datas invertidas. Usando {ini} → {fim}.")
+    return ini, fim
+
 if __name__ == "__main__":
-    ini = dt.date(2019, 3, 29)
-    fim = dt.date(2019, 3, 31)
 
-    print(f"Iniciando download da lista de discursos realizados no período de {ini} a {fim}")
-    df_discursos = recupera_lista_discursos_por_periodo(ini, fim, sleep_s=0.0)
-    print(f"Lista de discursos recuperados: {len(df_discursos)}")
+    ini, fim = ler_intervalo_datas()
 
-    print("Prepando discursos para download")
+    log.info(f"Recuperando lista de discursos realizados no período de {ini} a {fim}")
+    df_discursos = recuperar_lista_discursos_por_periodo(ini, fim, sleep_s=0.0)
+    log.info(f"Lista de discursos recuperados: {len(df_discursos)}")
+
+    log.info(f"Prepando discursos para download")
     df_download = preparar_discursos_para_download(df_discursos)
-    print("Discursos com link para texto integral: ", len(df_download))    
+    log.info(f"Discursos com link para download do texto integral {len(df_download)}")    
 
-    print("Iniciando download do texto integral do discurso com link para texto integral: ", len(df_download))    
-    df_txt = download_texto_discursos(df_download, fetch_and_save_txt, max_workers=8)
-    print(f"Foi realizado o download dos textos de discursos: {len(df_txt)}")
+    log.info(f"Iniciando download do texto integral do discurso com link para texto integral: {len(df_download)}")    
+    df_txt = fazer_download_texto_discursos(df_download, recuperar_e_gravar_texto_discurso, max_workers=8)
+    log.info(f"Foi realizado o download dos textos de discursos: {len(df_txt)}")
 
-    # --- 4) Merge de volta no DataFrame principal
     df_final = df_discursos.merge(
         df_txt[["CodigoPronunciamento", "ArquivoTextoIntegral", "ok", "status", "msg"]],
         on="CodigoPronunciamento",
         how="left"
     )
-    print(f"Textos no data frame final: ", len(df_final))
+    log.info(f"Textos no data frame final: {len(df_final)}")
 
-    print(f"Discursos por período: {len(df_discursos):,} linhas")
-    
+    log.info(f"Discursos por período: {len(df_discursos):,} linhas")
+
+    log.info(f"Salvando arquivo com a lista dos discursos")    
     os.makedirs("_data", exist_ok=True)
     out_path2 = f"_data/discursos_{ini.isoformat()}_{fim.isoformat()}.csv"
     df_final.to_csv(out_path2, index=False, sep=";", encoding="utf-8-sig")
-    print(f"OK: {df_txt['ok'].sum()} textos baixados, {len(df_txt)-df_txt['ok'].sum()} sem texto. Arquivo salvo em: {out_path2}")
+    log.info(f"OK: {df_txt['ok'].sum()} textos baixados, {len(df_txt)-df_txt['ok'].sum()} sem texto. Arquivo salvo em: {out_path2}")
