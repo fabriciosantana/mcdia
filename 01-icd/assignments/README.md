@@ -1,34 +1,153 @@
 # Documentação dos Notebooks sobre Discursos do Senado
 
-Este documento consolida as análises realizadas nos notebooks `01_preparar_base_discursos.ipynb`, `02_analise_quantitativa_discursos.ipynb` e `03-analise-aprendizado-supervisionado.ipynb`, localizados em `01-icd/assignments`. Ele descreve a preparação da base de discursos do Senado Federal, a análise quantitativa exploratória e os experimentos com modelos supervisionados para classificação partidária.
+Este README descreve o pipeline de coleta, exploração, modelagem supervisionada e análise temática construído nos notebooks `01-preparar-base-discursos.ipynb`, `02-analise-quantitativa-discursos.ipynb`, `03-analise-aprendizado-supervisionado.ipynb` e `04-analise-tematica-discursos.ipynb`, localizados em `01-icd/assignments`.
 
-## 1. Contexto, fonte de dados e problema de pesquisa
+## 1. Visão geral do pipeline
 
-- **Fonte oficial**: Portal de Dados Abertos do Senado Federal (`https://legis.senado.leg.br/dadosabertos`). Os notebooks consomem os endpoints `plenario/lista/discursos/{AAAAMMDD}/{AAAAMMDD}.json` (lista de discursos) e `discurso/texto-integral/{CodigoPronunciamento}` (texto em formato `.txt`).
-- **Período coberto**: pronunciamentos de 01/02/2019 a 10/01/2023 (56ª Legislatura), totalizando 15.729 discursos no arquivo `data/hf_discursos/data/full/discursos_2019-02-01_2023-01-31.parquet`.
-- **Objetivo analítico**: compreender padrões discursivos dos senadores (volume, conteúdo e metadados) e avaliar a capacidade de modelos de PLN para prever o partido do orador a partir do texto integral.
-- **Granularidade**: uma linha por pronunciamento, com metadados do autor, contexto de fala e texto integral quando disponível.
+- **Fonte dos dados**: Portal de Dados Abertos do Senado Federal (`https://legis.senado.leg.br/dadosabertos`), com coleta via `plenario/lista/discursos/{AAAAMMDD}/{AAAAMMDD}.json` e `discurso/texto-integral/{CodigoPronunciamento}`.
+- **Cobertura**: pronunciamentos da 56ª Legislatura (01/02/2019 a 31/01/2023), 15.729 discursos com metadados e texto integral quando disponível.
+- **Produtos principais**: arquivo parquet com discursos (`_data/discursos_<ini>_<fim>.parquet`), painéis quantitativos, classificadores para prever partido e modelos NMF para agrupamento temático.
+- **Problemas tratados**: entendimento do volume e da autoria dos discursos, identificação de padrões temporais e semânticos, e avaliação de modelos de PLN para tarefas de classificação.
 
-## 2. Preparação da base (Notebook 01)
+## 2. Configuração do ambiente
 
-1. **Sessão HTTP robusta**: utiliza `requests.Session` com retries exponenciais (`Retry` do `requests.adapters`) para minimizar falhas temporárias (status 429/5xx). Timeouts configurados em 90 s para JSON e 60 s para TXT.
-2. **Janelas de coleta**: a API limita consultas a 31 dias; o notebook gera janelas deslizantes e registra `__janela_inicio` e `__janela_fim` para auditoria.
-3. **Download do catálogo**: cada janela é normalizada com `pd.json_normalize`, preservando hierarquias de `TipoUsoPalavra`, `Publicacoes` e `Apartes`.
-4. **Seleção para download de texto**: `preparar_discursos_para_download` garante URL válida no campo `TextoIntegralTxt` e normaliza colunas críticas.
-5. **Coleta do texto integral**: paraleliza downloads com `ThreadPoolExecutor` (8 workers). Indicadores `ok`, `status` e `msg` registram sucesso ou falha (690 respostas 404 sinalizam ausência de texto).
-6. **Persistência**: o dataframe final é salvo em `_data/discursos_<ini>_<fim>.parquet` (compressão `zstd`) e reutilizado se já existir.
+- Utilize Python 3.10+ com dependências: `requests`, `pandas`, `pyarrow`, `datasets`, `scikit-learn`, `matplotlib`, `seaborn`, `plotly` e `tqdm`.
+- Instalação rápida:
 
-## 3. Caracterização da base consolidada
+  ```bash
+  pip install requests pandas pyarrow datasets scikit-learn matplotlib seaborn plotly tqdm
+  ```
 
-- **Tamanho**: 15.729 discursos, 30 campos (ver dicionário). 
-- **Autores**: 1.794 nomes únicos. A maioria é `Senador(a)`, mas existem `Deputado(a)` (sessões conjuntas) e `Autor Externo`.
-- **Partidos**: 32 siglas registradas; 2.074 discursos sem informação de partido/UF (principalmente convidados).
-- **Cobertura do texto integral**: 15.039 discursos com download bem-sucedido (`ok=True`, status 200), 690 sem texto (`status=404`).
-- **Tamanho dos discursos**: mediana de 464 palavras (≈ 2.842 caracteres); média de 728 palavras com desvio-padrão 880; máximo de 17.602 palavras.
-- **Distribuição temporal**: picos em setembro/2021 (949 discursos), agosto/2021 (792) e maio/2022 (753); queda em 2020 devido à pandemia (mínimo em novembro/2020 com 46).
-- **Dias da semana**: terça (4.421) e quarta-feira (4.667) concentram a atividade; sábados são raros (48 discursos).
+- Para reproduzir as análises sem acesso à internet, aponte `DATA_FILE_HF` nos notebooks 02, 03 e 04 para o parquet gerado pelo Notebook 01 em vez do repositório Hugging Face (`fabriciosantana/discursos-senado-legislatura-56`).
+- Os notebooks são compatíveis com Google Colab (botão disponível em cada arquivo) e com ambientes Jupyter locais.
 
-## 4. Dicionário de dados
+## 3. Notebook 01 – Preparar base de discursos
+
+### Implementação
+
+1. Cria sessão HTTP com retries exponenciais (`requests.Session` + `Retry`) para tolerar códigos 429/5xx.
+2. Divide intervalos maiores que 31 dias em janelas menores (`montar_intervalo_de_datas`) conforme restrição da API.
+3. Normaliza a resposta JSON com `pd.json_normalize`, preservando hierarquias de `TipoUsoPalavra`, `Publicacoes` e `Apartes`.
+4. Filtra discursos com link válido para texto integral (`preparar_discursos_para_download`) e padroniza colunas obrigatórias.
+5. Faz download assíncrono dos textos (`fazer_download_texto_discursos`) usando `ThreadPoolExecutor`, registrando campos `ok`, `status` e `msg` para auditoria.
+6. Persiste o resultado em `_data/` com compressão `zstd` e reutiliza arquivos existentes mediante confirmação do usuário.
+
+### Como executar
+
+1. Garanta as dependências instaladas e execute as células em ordem; `_data/` é criado automaticamente.
+2. Informe data inicial e final quando solicitado (`2019-03-29` a `2019-03-31` são usados se pressionar ENTER).
+3. Caso o parquet do intervalo já exista, escolha entre reutilizá-lo ou refazer o download.
+4. O notebook pode ser executado iterativamente para cobrir toda a legislatura; basta ajustar as datas ou orquestrar várias execuções sequenciais.
+
+### Resultados
+
+- Gera arquivos `discursos_<ini>_<fim>.parquet` contendo metadados e texto integral (quando disponível) de cada pronunciamento.
+- Execução completa (01/02/2019 a 31/01/2023) resultou em 15.729 linhas, com 15.039 textos baixados (`ok=True`) e 690 URLs indisponíveis (`status=404`).
+- Campos auxiliares (`__janela_inicio`, `__janela_fim`, `ok`, `status`, `msg`) facilitam a auditoria da coleta e a reexecução seletiva.
+
+## 4. Notebook 02 – Análise quantitativa dos discursos
+
+### Implementação
+
+- Carrega o parquet via `datasets.load_dataset`, converte para `pandas` e audita tipos, valores faltantes e consistência dos metadados.
+- Deriva variáveis temporais (`ano`, `mes`, `dia_semana`) e de tamanho textual (contagem de palavras e caracteres).
+- Produz painéis com `matplotlib`/`seaborn` para frequência por ano, mês, dia da semana, autor, partido, UF e tipo de uso da palavra.
+- Resume a distribuição do tamanho dos discursos e destaca disponibilidade do texto integral.
+
+### Como executar
+
+1. Ajuste `DATASET_HF_REPO` e `DATA_FILE_HF` para o dataset remoto ou para o caminho local (`_data/discursos_*.parquet`).
+2. Execute as células sequencialmente; tabelas intermediárias são exibidas com `display()` e gráficos são renderizados inline.
+3. Para exportar figuras, utilize `plt.savefig` conforme necessário (os comandos-base estão comentados no notebook).
+
+### Resultados observados
+
+- Os discursos concentram-se entre 2019 e 2022, com picos mensais em períodos de intensa atividade legislativa.
+- Lideranças partidárias e relatorias respondem pelo maior volume de falas; PT, Podemos e MDB figuram entre os partidos mais prolíficos.
+- A maioria dos discursos possui texto integral disponível, mediana de ~464 palavras (≈2,8 mil caracteres) e cauda longa de pronunciamentos extensos.
+- Sessões plenárias ocorrem majoritariamente entre terça e quinta-feira; sábados e domingos apresentam volume residual.
+- A combinação de tabelas e gráficos sustenta análises posteriores (supervisionadas e temáticas) ao revelar padrões de autoria e calendário.
+
+## 5. Notebook 03 – Análise com aprendizado supervisionado
+
+### Implementação
+
+- Filtra os oito partidos com maior volume de discursos e limita cada classe a 800 amostras (`sample` estratificado) para balancear o conjunto.
+- Consolida o texto (`df_balanceado['texto']`), aplica divisão treino/teste estratificada (`test_size=0.2`, `random_state=42`).
+- Usa `TfidfVectorizer` com unigramas e bigramas (`ngram_range=(1, 2)`, `max_features=20000`, `min_df=5`, `strip_accents='unicode'`).
+- Treina quatro pipelines de classificação e gera relatórios de desempenho (`classification_report`) e matrizes de confusão (`ConfusionMatrixDisplay`).
+
+### Algoritmos e aplicabilidade
+
+- **Regressão Logística (one-vs-rest)**: minimiza perda logística para separar classes linearmente; fornece probabilidades interpretáveis e funciona bem em espaços esparsos de alta dimensionalidade como TF-IDF.
+- **SVM Linear (`LinearSVC`)**: maximiza a margem entre classes usando perda hinge; robusto a features redundantes e eficaz para texto devido à propriedade de margem larga.
+- **Multinomial Naive Bayes**: modelo generativo que assume distribuição multinomial das contagens de termos; rápido e competitivo em cenários com vocabulário grande, servindo como baseline leve.
+- **Passive Aggressive Classifier**: algoritmo on-line de margem máxima que atualiza o hiperplano apenas quando erra; indicado para fluxos de texto e para lidar com leve desbalanceamento mantendo custo computacional baixo.
+
+### Como executar
+
+1. Garanta o parquet carregado (via Hugging Face ou `_data`) e execute as células na ordem indicada.
+2. Ajuste `max_por_partido`, `ngram_range` ou `max_features` para testar outras configurações; os pipelines compartilham o mesmo vetor TF-IDF.
+3. Utilize os relatórios e matrizes de confusão para identificar classes com maior confusão e justificar ajustes futuros.
+
+### Resultados observados
+
+- A regressão logística com TF-IDF alcançou acurácia de 0,973 na execução de referência, seguida de SVM linear com desempenho similar.
+- Naive Bayes e Passive Aggressive apresentaram acurácia ligeiramente menor, porém superior a 0,90, confirmando que o vocabulário diferencia bem os partidos analisados.
+- As matrizes de confusão mostram confusões residuais entre legendas com agendas próximas, apontando a necessidade de features adicionais ou divisão temporal.
+
+## 6. Notebook 04 – Análise temática com NMF
+
+### Implementação
+
+- Seleciona até 6.000 discursos para acelerar a vetorização mantendo representatividade temporal e política.
+- Tokeniza e vetorializa com `TfidfVectorizer` (unigramas e bigramas, `min_df=5`), removendo stopwords customizadas em português.
+- Ajusta `NMF` com 12 componentes para decompor a matriz TF-IDF em temas latentes (`W` documentos × temas, `H` temas × termos).
+- Atribui a cada discurso o tema dominante e gera análises: ranking de termos, evolução temporal, participação percentual, temas líderes por mês, Sankey (senador/partido/UF × tema) e heatmap partido × tema.
+
+### Algoritmo (NMF) e aplicabilidade
+
+- **Non-negative Matrix Factorization** decompõe a matriz de frequências em fatores não-negativos, resultando em representações aditivas que facilitam interpretar conjuntos de palavras correlacionadas.
+- Adequado para descobrir tópicos latentes em textos parlamentares, pois produz componentes esparsos que destacam agendas específicas (ex.: previdência, saúde, educação) preservando a aditividade dos pesos.
+
+### Como executar
+
+1. Confirme dependências adicionais (`plotly`) e a disponibilidade do parquet com discursos.
+2. Ajuste `MAX_DISCURSOS`, `N_TEMAS` ou listas de stopwords conforme a granularidade desejada.
+3. Execute as células em ordem; gráficos `matplotlib` são renderizados inline e figuras `plotly` retornam estruturas interativas compatíveis com Colab.
+
+### Resultados observados
+
+- A NMF identificou doze agrupamentos; dois deles concentram discursos protocolares (`Debates Gerais`).
+- Os temas mais frequentes destacam agendas sobre medidas provisórias, debates gerais, segurança pública e reforma da previdência.
+- A linha do tempo evidencia o pico de saúde e vacinação em 2020-2021 (pandemia) e a predominância de previdência em 2019, enquanto Sankeys conectam autores, partidos e estados às pautas dominantes.
+
+| Tema aproximado | Principais termos (amostra) | Discursos |
+| --- | --- | --- |
+| Medidas Provisórias | `emenda`, `medida provisoria`, `provisoria`, `medida`, `texto` | 962 |
+| Debates Gerais (procedimentais) | `possa`, `muita`, `sei`, `estava`, `tempo` | 823 |
+| Segurança Pública | `nacional`, `convido`, `deputado`, `vida`, `deus` | 801 |
+| Reforma da Previdência | `reforma`, `previdencia`, `paim`, `paulo paim`, `pais` | 612 |
+| Saúde e Vacinação | `saude`, `vacina`, `vacinas`, `covid`, `pandemia` | 565 |
+| Judiciário e STF | `supremo`, `tribunal`, `tribunal federal`, `ministro`, `stf` | 550 |
+| Meio Ambiente e Amazônia | `amazonia`, `meio ambiente`, `energia`, `ibama`, `parque` | 521 |
+| Educação | `educacao`, `ensino`, `escola`, `escolas`, `professores` | 341 |
+| Direitos das Mulheres | `mulheres`, `mulher`, `violencia`, `feminina`, `direitos` | 321 |
+| Energia e Combustíveis | `preco`, `petrobras`, `combustiveis`, `petroleo`, `diesel` | 262 |
+| Agronegócio | `estado`, `wellington fagundes`, `mato grosso`, `produtores`, `agro` | 242 |
+| Debates Gerais (homenagens) | `esperidiao amin`, `santa catarina`, `homenagem`, `sessao`, `agradeco` | — |
+
+## 7. Caracterização global da base consolidada
+
+- **Tamanho**: 15.729 discursos, 30 variáveis observadas.
+- **Autores**: 1.794 nomes únicos (principalmente senadores, mas inclui convidados externos e deputados em sessões conjuntas).
+- **Partidos**: 32 siglas registradas; 2.074 discursos sem informação de partido/UF (majoritariamente convidados).
+- **Cobertura do texto integral**: 15.039 discursos com download bem-sucedido (`ok=True`), 690 anotações com falha (`status=404`).
+- **Comprimento dos textos**: mediana ≈464 palavras (≈2.842 caracteres), média 728 palavras, máximo 17.602 palavras.
+- **Distribuição temporal**: picos em setembro/2021 (949 discursos), agosto/2021 (792) e maio/2022 (753); novembro/2020 apresenta o menor volume (46 discursos).
+- **Dias da semana**: terça (4.421) e quarta-feira (4.667) concentram pronunciamentos; sábados somam apenas 48 discursos.
+
+## 8. Dicionário de dados
 
 | Variavel | Nome | Tipo | Unidade | Dominio | Descricao | Obs |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -63,83 +182,16 @@ Este documento consolida as análises realizadas nos notebooks `01_preparar_base
 | status | Status HTTP do download | Numérico (inteiro) | Código HTTP | {200, 404} | Código retornado pela API ao tentar baixar o texto | 404 acompanha ausências de texto |
 | msg | Mensagem de download | Texto | - | "" ou "404 (sem texto integral)" | Mensagem auxiliar para diagnósticos de download | Preenchido apenas em casos de falha |
 
-## 5. Análises descritivas iniciais (Notebook 02)
+## 9. Avaliação e próximos passos
 
-### Medidas de posição e dispersão
-- **Comprimento do texto**: média 728 palavras (desvio 880), mediana 464, quartil superior 912. Em caracteres: média 4.451, mediana 2.842, máximo 106.610.
-- **Volume por autor**: top 5 — Izalci Lucas (704), Paulo Paim (676), Eduardo Girão (593), Rodrigo Pacheco (496), Jorge Kajuru (458).
-- **Participação partidária**: PT (1.890 discursos), Podemos (1.743), MDB (1.675), PSD (1.330), PSDB (1.179), PP (919), PL (832), DEM (779).
-
-### Exploração gráfica e padrões
-- **Séries temporais mensais**: gráficos de linhas revelam pico em 2021 (agenda pandêmica e CPI), queda em 2020 (sessões remotas) e nova alta no fim de 2022.
-- **Barplots por partido e UF**: mostram concentração em estados como RS, DF, RN, MG e CE; partidos de liderança ocupam maior fatia.
-- **Tipos de uso da palavra**: `Discurso` (5.668) é majoritário, seguido de `Pela ordem` (2.620), `Discussão` (1.618) e `Orientação à bancada` (1.340), evidenciando predominância de falas regimentais.
-- **Distribuição de comprimento**: histogramas exibem cauda longa; boxplots indicam outliers extensos associados a relatórios e pronunciamentos especiais.
-- **Dia da semana**: terça e quarta concentram 57% dos discursos, refletindo o calendário de sessões deliberativas.
-
-## 6. Discussão preliminar e qualidade dos dados
-
-- **Ausências estruturadas**: campos `Partido`, `UF`, `CodigoParlamentar` e metadados de autores externos têm cerca de 13% de missing, exigindo decisões de imputação ou exclusão conforme o objetivo analítico.
-- **Cobertura do texto**: 4,4% das linhas não possuem texto integral (status 404). É necessário decidir entre excluir essas linhas, buscar fontes alternativas (PDF) ou sinalizar lacunas nos resultados.
-- **Padronização**: siglas partidárias extintas ou trocas de partido aparecem sem normalização temporal; `NomeAutor` pode apresentar variações em acentuação. Recomenda-se aplicar tabelas de referência para identificar fusões (ex.: DEM → União Brasil) conforme o recorte temporal.
-- **Campos aninhados**: `Publicacoes.Publicacao` e `Apartes.Aparteante` são listas; para análises detalhadas, é preciso explodir essas colunas.
-- **Qualidade de datas**: `Data`, `__janela_inicio` e `__janela_fim` chegam como texto e devem ser convertidas para `datetime` antes de cálculos.
-
-## 7. Análise exploratória avançada (Notebook 02)
-
-- **Matriz de ausência e heatmaps**: (células preparadas) permitem visualizar onde há falhas sistemáticas de dados, especialmente em autores externos.
-- **Agregações multivariadas**: combinações `Partido × TipoUsoPalavra` e `Partido × Mês` indicam agendas distintas (por exemplo, PT com mais `Discurso` e `Fala da Presidência`, Podemos com maior proporção de `Discussão`).
-- **Comprimento × Categoria**: scatterplots relacionam tamanho do texto com tipo de uso, sugerindo que `Como Relator` gera discursos mais extensos.
-- **Indicadores derivados**: criação de `texto_len_palavras`, `texto_len_caracteres` e `resumo_len_palavras` serve para detectar outliers e subsidiar engenharia de atributos.
-
-## 8. Pré-processamento e transformação para modelagem (Notebook 03)
-
-1. **Seleção de colunas**: utiliza `Data`, `NomeAutor`, `Partido`, `UF`, `TextoDiscursoIntegral`; renomeia `TextoDiscursoIntegral` para `texto` e `NomeAutor` para `nome_autor`.
-2. **Limpeza**:
-   - remove registros com `Partido` ou `texto` nulos;
-   - trim de espaços e exclusão de textos vazios (após strip);
-   - filtro para discursos com pelo menos 20 palavras (`n_palavras ≥ 20`), reduzindo ruído de falas protocolares.
-3. **Balanceamento**:
-   - identifica os 8 partidos com maior volume;
-   - amostra até 800 discursos por partido para balancear (`groupby().sample()`), resultando em 6.322 registros (DEM possui apenas 722 disponíveis).
-4. **Features textuais**: vetoriza com `TfidfVectorizer` (máx. 20.000 features, n-gramas 1–2, `min_df=5`, normalização com remoção de acentos).
-
-## 9. Divisão treino/teste
-
-- `train_test_split` estratificado (seed 42), proporção 80/20:
-  - **Treino**: 5.057 discursos.
-  - **Teste**: 1.265 discursos.
-- Mantém a distribuição balanceada entre os 8 partidos (cada grupo com 578–640 instâncias de treino; teste proporcional ~145–160).
-- Métrica principal: acurácia; relatórios incluem precisão, revocação e F1 por partido.
-
-## 10. Modelos supervisionados testados
-
-| Modelo | Representação | Principais hiperparâmetros | Acurácia (teste) | Destaques |
-| --- | --- | --- | --- | --- |
-| Regressão Logística multinomial | TF-IDF (1-2 gramas, max_features=20k, min_df=5) | `max_iter=200`, `multi_class='multinomial'` | 0,957 | F1 entre 0,94 e 0,98; menor recall para PODEMOS (0,92) e PL (0,94). |
-| Linear SVM (LinearSVC) | TF-IDF (1-2 gramas, max_features=20k, min_df=5) | `C` padrão (1.0), `random_state=42` | 0,973 | F1 ≥ 0,96 para todos os partidos; melhor desempenho para DEM (0,99) e PT (0,98). |
-
-- As matrizes de confusão (geradas nos notebooks) mostram baixa confusão entre partidos ideologicamente distintos; erros concentram-se em partidos de centro (MDB, PSD) versus legendas próximas (PP, PSDB).
-
-## 11. Otimização de hiperparâmetros
-
-- Os notebooks atuais ainda não executam busca sistemática. Recomenda-se implementar:
-  1. **Grid Search** (`GridSearchCV`) sobre `C`, `penalty` e `class_weight` na logística, e `C`, `max_df`, `min_df` para TF-IDF.
-  2. **Random Search** (`RandomizedSearchCV`) para explorar combinações mais amplas (ex.: limites superiores de `max_features`, inclusão de trigramas, uso de `sublinear_tf`).
-  3. **Validação cruzada estratificada (k=5)** para reduzir variância na estimativa e comparar incrementalmente com o baseline atual.
-- Deve-se monitorar tempo de execução (TF-IDF denso) e aplicar `n_jobs=-1` quando disponível.
-
-## 12. Avaliação final e discussão crítica
-
-- **Desempenho elevado** (acurácia até 0,973) indica que o vocabulário distingue bem os partidos principais, mas limita-se a oito legendas mais prolíficas; generalização para partidos minoritários precisa de dados adicionais.
-- **Risco de sobreajuste temporal**: discursos do mesmo orador em períodos próximos podem cair em treino e teste; considerar divisão temporal (por ano) para avaliar robustez.
-- **Cobertura parcial**: 2.074 discursos sem partido/UF não entram na modelagem. Essas linhas podem ser usadas em cenários de predição real (dados sem rótulo), mas é necessário tratar ausência de metadados.
-- **Explicabilidade**: coeficientes da logística e pesos da SVM podem ser inspecionados para identificar termos-chave por partido; documentar essas interpretações ajuda na transparência do modelo.
-- **Próximos passos sugeridos**:
-  1. Enriquecer a base com variáveis derivadas (`ano`, `mês`, `tamanho`, indicadores de cargo) para análises multivariadas.
-  2. Testar modelos não lineares (Random Forest, Gradient Boosting) e embeddings pré-treinados (BERTimbau) com fine-tuning.
-  3. Implementar monitoramento de qualidade do texto (detecção de duplicatas e discursos truncados) antes de novas versões do dataset.
+- Modelos lineares com TF-IDF distinguiram bem os oito partidos mais ativos (acurácia até 0,973); ampliar cobertura exige incorporar partidos com menos discursos e avaliar divisões temporais.
+- O desbalanceamento residual e a proximidade temporal entre discursos do mesmo autor podem inflar métricas; recomenda-se validação cruzada estratificada e cortes por ano.
+- A análise temática revela agendas prioritárias e enseja validações qualitativas com especialistas para consolidar rótulos dos tópicos (especialmente os dois clusters gerais).
+- Próximas etapas sugeridas:
+  1. Enriquecer o dataset com variáveis derivadas (`ano`, `mês`, tamanho do texto, cargo) e metadados do processo legislativo.
+  2. Testar embeddings pré-treinados (ex.: BERTimbau) e modelos não lineares (Random Forest, Gradient Boosting) para comparação com o baseline linear.
+  3. Automatizar monitoramento de qualidade (duplicatas, textos truncados) antes de novas versões públicas do dataset.
 
 ---
 
-Este README resume os principais achados e recomendações para continuidade do projeto, servindo como referência rápida para quem precisar replicar ou evoluir as análises dos notebooks acima.
+Esta documentação serve como guia de referência para replicar, auditar e evoluir as análises conduzidas nos quatro notebooks.
