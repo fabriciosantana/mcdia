@@ -1,6 +1,14 @@
 # Documentação dos Notebooks sobre Discursos do Senado
 
-Este README descreve o pipeline de coleta, exploração, modelagem supervisionada e análise temática construído nos notebooks `01-preparar-base-discursos.ipynb`, `02-analise-quantitativa-discursos.ipynb`, `03-analise-aprendizado-supervisionado.ipynb` e `04-analise-tematica-discursos.ipynb`, localizados em `01-icd/assignments`.
+Este README descreve o pipeline de coleta, exploração, modelagem supervisionada e análise temática construído nos notebooks `01-preparar-base-discursos.ipynb`, `02-analisar-discursos.ipynb`, `03-analisar-discursos-aprendizado-supervisionado.ipynb` e `04-analisar-discursos-aprendizado-nao-supervisionado.ipynb`, localizados em `01-icd/assignments`.
+
+## 0. Arquivos de suporte
+
+- Notebook 01: `01-preparar-base-discursos.ipynb` – coleta e higienização dos pronunciamentos.
+- Notebook 02: `02-analisar-discursos.ipynb` – análise exploratória e visualizações quantitativas.
+- Notebook 03: `03-analisar-discursos-aprendizado-supervisionado.ipynb` – classificação de partidos com TF-IDF e modelos lineares.
+- Notebook 04: `04-analisar-discursos-aprendizado-nao-supervisionado.ipynb` – extração de tópicos com NMF e TF-IDF.
+- Documento síntese: `02-tarefa-ia-setor-publico.md` – discussão de riscos e benefícios de IA no setor público.
 
 ## 1. Visão geral do pipeline
 
@@ -45,7 +53,7 @@ Este README descreve o pipeline de coleta, exploração, modelagem supervisionad
 - Execução completa (01/02/2019 a 31/01/2023) resultou em 15.729 linhas, com 15.039 textos baixados (`ok=True`) e 690 URLs indisponíveis (`status=404`).
 - Campos auxiliares (`__janela_inicio`, `__janela_fim`, `ok`, `status`, `msg`) facilitam a auditoria da coleta e a reexecução seletiva.
 
-## 4. Notebook 02 – Análise quantitativa dos discursos
+## 4. Notebook 02 – Analisar discursos (análise quantitativa)
 
 ### Implementação
 
