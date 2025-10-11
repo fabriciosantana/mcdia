@@ -1,0 +1,7 @@
+Contexto: Estou iniciando meus estudos em Ciência de Dados e quero compreender de forma acessível o que são redes neurais artificiais, sem entrar em fórmulas matemáticas avançadas.
+
+Tarefa: Explicar o conceito de redes neurais artificiais de maneira simples, usando exemplos do dia a dia.
+
+Detalhes: A explicação deve ser detalhada e escrita de uma forma para uma pessoa que não tem conhecimento nenhum no assunto. Como uma rede neural se inspira no funcionamento do cérebro humano, o que são neurônios artificiais e por que redes neurais são úteis em tarefas como reconhecimento de imagens ou previsão de séries temporais. Use analogias fáceis (como comparar neurônios a interruptores ou caixas de decisão) e dê pelo menos 1 exemplo aplicado a políticas públicas (ex: prever demanda hospitalar ou identificar regiões com maior vulnerabilidade social).
+
+Formato de saída: Um texto com até 4 parágrafos, linguagem clara e acessível para quem nunca estudou redes neurais.

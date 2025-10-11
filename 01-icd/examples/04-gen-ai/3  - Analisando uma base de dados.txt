@@ -1,0 +1,7 @@
+Contexto: Estou estudando indicadores municipais do Brasil a partir da base de dados em anexo que contém informações sobre população, IDHM, finanças públicas, saúde e vulnerabilidade social. Entre as colunas disponíveis estão: População 2022, IDHM 2010, Receita Municipal Per Capita 2018, Cobertura Vacinal 2019, Cobertura da Atenção Básica 2020, Estabelecimentos SUS a cada 1.000 habitantes (2010) e percentual de inscritos no CadÚnico (2019). 
+
+Tarefa: Criar uma análise exploratória inicial desses dados utilizando também estatística descritiva.
+
+Detalhes: Quero entender a distribuição do IDHM, verificar a relação entre receita municipal e indicadores de saúde (como cobertura vacinal e número de estabelecimentos SUS) e analisar como a vulnerabilidade social (percentual de inscritos no CadÚnico) se relaciona com a população dos municípios. O código deve ser escrito em Python, usando pandas e matplotlib. 
+
+Formato de saída: Um relatório curto em Markdown com 3 gráficos (1. histograma da distribuição do IDHM, 2. gráfico de dispersão relacionando Receita Municipal Per Capita 2018 e cobertura vacinal, 3. gráfico de dispersão entre população 2022 e percentual de inscritos no CadÚnico), mais outros 2 gráficos sugeridos por você. No final, quero tudo acompanhado do código em Python em ipynb para que eu possa baixar e rodar no google colab.

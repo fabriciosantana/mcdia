@@ -1,0 +1,26 @@
+Contexto:
+Estou iniciando meu mestrado em Ciência de Dados aplicado ao Setor Público e me sinto totalmente perdido quanto à definição de um tema de dissertação. Tenho interesse especial em dados relacionados a políticas públicas de saúde, mas não possuo experiência prévia sólida em pesquisa acadêmica. Minha familiaridade com estatística e programação ainda é inicial, portanto preciso de propostas que sejam factíveis para o nível de mestrado e exequíveis dentro de um prazo de dois anos.
+
+Tarefa:
+Elaborar sugestões de possíveis temas de dissertação para um mestrado em Ciência de Dados voltado ao Setor Público, com foco em saúde pública.
+
+Detalhes:
+
+Os temas devem possuir relevância prática e acadêmica, ou seja, trazer benefícios concretos para a gestão de políticas públicas e, ao mesmo tempo, dialogar com a literatura científica da área.
+
+As propostas devem ser originais, viáveis (considerando tempo e recursos de um mestrando) e não excessivamente complexas em termos metodológicos.
+
+Para cada sugestão, apresentar:
+
+Título provisório (objetivo e descritivo)
+
+Problema de pesquisa (questão central a ser respondida)
+
+Relevância para o setor público (por que o tema é importante para gestores, sociedade e academia)
+
+Tipos de dados possíveis (bases públicas, registros administrativos, pesquisas nacionais etc.)
+
+Métodos de análise viáveis (estatística descritiva, regressão, análise de séries temporais, clustering, machine learning supervisionado, etc., sempre dentro da complexidade adequada para um iniciante).
+
+Formato de saída:
+Uma lista com 2 propostas de dissertação, apresentadas de forma organizada e clara, contemplando todos os itens acima.

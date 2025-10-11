@@ -1,0 +1,7 @@
+Contexto: Elaborei uma aula de IA generativa para minha aula de mestrado, que trata de conceitos sobre o tema além de também ter ensinado algumas técnicas para criar prompts.
+
+Tarefa: Criar uma ilustração no mesmo estilo do desenho em anexo, mas que mostre uma cena diferente. 
+
+Detalhes: A cena deve retratar uma família (pai, mãe, filho e filha) sentada à mesa de jantar. Devem estar juntos, com pratos e copos sobre a mesa, em um estilo minimalista, monocromático em verde, semelhante ao desenho enviado. A expressão deve transmitir união e convivência familiar. Leve em consideração a diversidade de pessoas disponível na imagem em anexo.
+
+Formato de saída: Uma imagem digital vetorial/ilustrativa, em alta resolução (1024x1024), no mesmo estilo do anexo.

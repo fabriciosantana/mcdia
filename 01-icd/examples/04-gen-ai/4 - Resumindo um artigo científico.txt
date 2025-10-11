@@ -1,0 +1,12 @@
+Contexto: Estou redigindo meu primeiro artigo científico no âmbito do mestrado em Ciência de Dados no Setor Público. O trabalho em anexo aborda especificamente o grau de incerteza do Índice de Desenvolvimento da Educação Básica (IDEB) e discute por que essa questão é relevante para a formulação, avaliação e monitoramento de políticas públicas educacionais no Brasil. 
+
+Tarefa: Elaborar um resumo acadêmico do artigo, adequado para compor a seção de revisão de literatura do meu trabalho.
+
+Detalhes: O texto deve apresentar extensão máxima de 150 palavras e deve apresentar de forma clara: 
+A)Objetivo central do artigo. 
+B)Questões discutidas (ex.: origem da incerteza do IDEB, limitações metodológicas, impactos na interpretação dos resultados). 
+C)Principais contribuições (como o artigo amplia a compreensão sobre a confiabilidade do IDEB). 
+Resultados e implicações para a administração pública (ex.: riscos de decisões baseadas em indicadores sem considerar incertezas). 
+O tom deve ser científico, objetivo e consistente com padrões acadêmicos, mas também acessível a gestores e profissionais da administração pública, evitando tecnicismos excessivos. Deve ser escrito em português formal, adequado para publicação em revista científica da área. 
+
+Formato de saída: Um resumo pronto para inserção direta na revisão de literatura do meu artigo. O texto deve estar coeso, com frases bem estruturadas, mantendo clareza, precisão e fluidez.
