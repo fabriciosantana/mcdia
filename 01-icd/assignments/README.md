@@ -199,7 +199,3 @@ Este README descreve o pipeline de coleta, exploração, modelagem supervisionad
   1. Enriquecer o dataset com variáveis derivadas (`ano`, `mês`, tamanho do texto, cargo) e metadados do processo legislativo.
   2. Testar embeddings pré-treinados (ex.: BERTimbau) e modelos não lineares (Random Forest, Gradient Boosting) para comparação com o baseline linear.
   3. Automatizar monitoramento de qualidade (duplicatas, textos truncados) antes de novas versões públicas do dataset.
-
----
-
-Esta documentação serve como guia de referência para replicar, auditar e evoluir as análises conduzidas nos quatro notebooks.
