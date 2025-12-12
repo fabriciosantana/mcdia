@@ -33,7 +33,7 @@ COPY requirements.txt /tmp/pip-requirements.txt
 
 # Create the mcdia environment with the required Python version and install dependencies
 ARG PYTHON_VERSION=3.13
-RUN ${CONDA_DIR}/bin/conda update -y -n base -c defaults conda \
+RUN ${CONDA_DIR}/bin/conda update -y -n base -c conda-forge conda \
     && sed -i "s/PYTHON_VERSION_PLACEHOLDER/${PYTHON_VERSION}/" /tmp/environment.yml \
     && ${CONDA_DIR}/bin/conda env create -f /tmp/environment.yml \
     && rm /tmp/environment.yml /tmp/pip-requirements.txt \
