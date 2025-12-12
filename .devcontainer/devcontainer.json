@@ -4,14 +4,18 @@
     "dockerfile": "Dockerfile"
   },
   "runArgs": ["--privileged"],
+  "forwardPorts": [8888],
   "features": {
     "ghcr.io/devcontainers/features/sshd:1": {
         "version": "latest"
     }
   },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "customizations": {
     "vscode": {
-      "settings": {},
+      "settings": {
+        "python.defaultInterpreterPath": "/opt/conda/envs/mcdia/bin/python"
+      },
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance",

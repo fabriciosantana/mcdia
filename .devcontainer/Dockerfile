@@ -6,7 +6,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install only essentials required before Conda is available
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends ca-certificates curl git \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        curl \
+        git \
+        libffi-dev \
+        libssl-dev \
+        pkg-config \
+        unzip \
+        wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Miniconda and set up the base paths
@@ -18,15 +27,16 @@ RUN curl -fsSL https://repo.anaconda.com/miniconda/${MINICONDA_INSTALLER} -o /tm
     && rm /tmp/miniconda.sh \
     && ${CONDA_DIR}/bin/conda clean -afy
 
-# Copy dependency specification
-COPY .devcontainer/requirements.txt /tmp/requirements.txt
+# Copy dependency specifications
+COPY .devcontainer/environment.yml /tmp/environment.yml
+COPY .devcontainer/requirements.txt /tmp/pip-requirements.txt
 
-# Create the mcdia environment with the required Python version and install dependencies via pip
-ARG PYTHON_VERSION=3.14.2
+# Create the mcdia environment with the required Python version and install dependencies
+ARG PYTHON_VERSION=3.13
 RUN ${CONDA_DIR}/bin/conda update -y -n base -c defaults conda \
-    && ${CONDA_DIR}/bin/conda create -y -n mcdia python=${PYTHON_VERSION} pip \
-    && ${CONDA_DIR}/bin/conda run -n mcdia pip install --no-cache-dir -r /tmp/requirements.txt \
-    && rm /tmp/requirements.txt \
+    && sed -i "s/PYTHON_VERSION_PLACEHOLDER/${PYTHON_VERSION}/" /tmp/environment.yml \
+    && ${CONDA_DIR}/bin/conda env create -f /tmp/environment.yml \
+    && rm /tmp/environment.yml /tmp/pip-requirements.txt \
     && ${CONDA_DIR}/bin/conda clean -afy
 
 # Make the environment active by default

@@ -1,0 +1,37 @@
+name: mcdia
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=PYTHON_VERSION_PLACEHOLDER
+  - pip
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - statsmodels
+  - plotly
+  - joblib
+  - requests
+  - nltk
+  - spacy
+  - shap
+  - wordcloud
+  - xgboost
+  - pytorch
+  - torchvision
+  - torchaudio
+  - ipykernel
+  - ipywidgets
+  - notebook
+  - jupyterlab
+  - pytest
+  - black
+  - mypy
+  - nbqa
+  - ruff
+  - pre-commit
+  - pip:
+      - -r /tmp/pip-requirements.txt
