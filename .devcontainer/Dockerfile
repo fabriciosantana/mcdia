@@ -42,6 +42,12 @@ RUN ${CONDA_DIR}/bin/conda update -y -n base -c conda-forge conda \
     && rm /tmp/environment.yml /tmp/pip-requirements.txt \
     && ${CONDA_DIR}/bin/conda clean -afy
 
+RUN apt-get update && \
+    apt-get install -y git-lfs && \
+    git lfs install --system && \
+    rm -rf /var/lib/apt/lists/*
+
+
 # Make the environment active by default
 ENV PATH=${CONDA_DIR}/envs/mcdia/bin:${CONDA_DIR}/bin:${PATH}
 ENV CONDA_DEFAULT_ENV=mcdia
