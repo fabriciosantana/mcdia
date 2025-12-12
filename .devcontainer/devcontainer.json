@@ -10,7 +10,7 @@
         "version": "latest"
     }
   },
-  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postCreateCommand": "bash post-create.sh",
   "customizations": {
     "vscode": {
       "settings": {
