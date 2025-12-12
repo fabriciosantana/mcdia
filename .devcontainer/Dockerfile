@@ -31,6 +31,9 @@ RUN curl -fsSL https://repo.anaconda.com/miniconda/${MINICONDA_INSTALLER} -o /tm
 COPY environment.yml /tmp/environment.yml
 COPY requirements.txt /tmp/pip-requirements.txt
 
+RUN ${CONDA_DIR}/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+RUN ${CONDA_DIR}/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+
 # Create the mcdia environment with the required Python version and install dependencies
 ARG PYTHON_VERSION=3.13
 RUN ${CONDA_DIR}/bin/conda update -y -n base -c conda-forge conda \
