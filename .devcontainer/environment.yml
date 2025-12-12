@@ -1,9 +1,10 @@
 name: mcdia
 channels:
-  - pytorch
   - conda-forge
+  - pytorch
+  - nodefaults
 dependencies:
-  - python=PYTHON_VERSION_PLACEHOLDER
+  - python=3.13
   - pip
   - numpy
   - pandas
