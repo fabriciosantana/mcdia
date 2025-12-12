@@ -8,9 +8,10 @@
   "features": {
     "ghcr.io/devcontainers/features/sshd:1": {
         "version": "latest"
-    }
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  //"postCreateCommand": "bash post-create.sh",
+  "postCreateCommand": "bash post-create.sh",
   "customizations": {
     "vscode": {
       "settings": {
@@ -28,7 +29,8 @@
         "github.copilot-chat",
         "github.vscode-pull-request-github",
         "google.gemini-cli-vscode-ide-companion",
-        "google.geminicodeassist"
+        "google.geminicodeassist",
+        "openai.codex"
       ]
     }
   }
