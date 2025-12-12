@@ -28,8 +28,8 @@ RUN curl -fsSL https://repo.anaconda.com/miniconda/${MINICONDA_INSTALLER} -o /tm
     && ${CONDA_DIR}/bin/conda clean -afy
 
 # Copy dependency specifications
-COPY .devcontainer/environment.yml /tmp/environment.yml
-COPY .devcontainer/requirements.txt /tmp/pip-requirements.txt
+COPY environment.yml /tmp/environment.yml
+COPY requirements.txt /tmp/pip-requirements.txt
 
 # Create the mcdia environment with the required Python version and install dependencies
 ARG PYTHON_VERSION=3.13
