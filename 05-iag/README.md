@@ -166,4 +166,46 @@ curl http://localhost:11434/api/chat -d '{
 
 ---
 
+
+## Nemotron (NVIDIA)
+
+O notebook `nemotron_example.ipynb` mostra como usar os modelos Nemotron da NVIDIA.
+
+### Por que o erro?
+
+O modelo `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8` **não funciona** com a API `chat.completions` do Hugging Face da mesma forma que o Llama. O Nemotron requer:
+
+1. **NVIDIA NIM API** (cloud) - API própria da NVIDIA
+2. **Carregamento local** (requer GPU NVIDIA)
+
+### Formas de usar o Nemotron
+
+**Via NVIDIA NIM API (recomendado):**
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://integrate.api.nvidia.com/v1",
+    api_key="SUA_NVIDIA_API_KEY"
+)
+
+response = client.chat.completions.create(
+    model="nvidia/nemotron-3-nano-30b-a3b",
+    messages=[{"role": "user", "content": "Olá!"}]
+)
+```
+
+**Obter API Key:** https://build.nvidia.com
+
+**Carregar localmente (GPU necessária):**
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model = AutoModelForCausalLM.from_pretrained(
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8",
+    torch_dtype=torch.float16,
+    device_map="auto"
+)
+```
+
 *Atualizado por Neo 🤖 em 2026-02-28*
