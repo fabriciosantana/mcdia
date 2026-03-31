@@ -8,18 +8,20 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+    network_mode: host
 
   docling:
     image: ghcr.io/docling-project/docling-serve-cpu:latest
     container_name: docling-service
     environment:
-      - HF_TOKEN=${HF_TOKEN}
+      - HF_TOKEN=${HF_TOKEN:-}
       - DOCLING_MAX_WORKERS=8
     volumes:
       - docling_cache:/root/.cache/huggingface
     ports:
       - "5001:5001"
     restart: unless-stopped
+    network_mode: host
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -33,24 +35,28 @@ services:
       - open_webui_data:/app/backend/data
     environment:
 
-      # Ollama bare metal
-      - OLLAMA_BASE_URL=http://host.docker.internal:11434
-      - OLLAMA_KEEP_ALIVE=24h
+      # Ollama (local ou nuvem)
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://localhost:11434}
+      - OLLAMA_API_KEY=${OLLAMA_API_KEY:-}
+      - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE:-24h}
 
       # Base vetorial
       - VECTOR_DB=chroma
-      - CHROMA_HTTP_HOST=chromadb
+      - CHROMA_HTTP_HOST=localhost
       - CHROMA_HTTP_PORT=8000
 
-      # Embeddings Ollama
-      - RAG_EMBEDDING_ENGINE=ollama
-      - RAG_EMBEDDING_MODEL=qwen3-embedding:0.6b
-      - RAG_EMBEDDING_BATCH_SIZE=32
+      # Embeddings (ollama ou openai)
+      - RAG_EMBEDDING_ENGINE=${RAG_EMBEDDING_ENGINE:-ollama}
+      - RAG_EMBEDDING_MODEL=${RAG_EMBEDDING_MODEL:-qwen3-embedding:0.6b}
+      - RAG_EMBEDDING_BATCH_SIZE=${RAG_EMBEDDING_BATCH_SIZE:-32}
+      - RAG_OPENAI_API_BASE_URL=${RAG_OPENAI_API_BASE_URL:-https://api.openai.com/v1}
+      - RAG_OPENAI_API_KEY=${RAG_OPENAI_API_KEY:-}
 
       # Timeout ampliado
       - WEBUI_TIMEOUT=300
 
     restart: unless-stopped
+    network_mode: host
 
 volumes:
 

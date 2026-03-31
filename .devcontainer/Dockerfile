@@ -17,6 +17,7 @@ RUN apt-get update \
         libssl-dev \
         pkg-config \
         unzip \
+        zstd \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
