@@ -49,6 +49,9 @@ RUN apt-get update && \
     git lfs install --system && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Ollama CLI/runtime (service can be started manually with `ollama serve`).
+RUN curl -fsSL https://ollama.com/install.sh | sh
+
 # Ensure the default devcontainer user can access Docker without sudo.
 RUN usermod -aG docker vscode
 
