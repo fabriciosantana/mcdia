@@ -5,8 +5,8 @@ services:
     container_name: chromadb
     volumes:
       - chromadb_data:/chroma/chroma
-    ports:
-      - "8000:8000"
+    #ports:
+    #  - "8000:8000"
     restart: unless-stopped
     network_mode: host
 
@@ -18,8 +18,8 @@ services:
       - DOCLING_MAX_WORKERS=8
     volumes:
       - docling_cache:/root/.cache/huggingface
-    ports:
-      - "5001:5001"
+    #ports:
+    #  - "5001:5001"
     restart: unless-stopped
     network_mode: host
 
@@ -29,8 +29,8 @@ services:
     depends_on:
       - chromadb
       - docling
-    ports:
-      - "3000:8080"
+    #ports:
+    #  - "3000:8080"
     volumes:
       - open_webui_data:/app/backend/data
     environment:
