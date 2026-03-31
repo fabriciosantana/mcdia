@@ -131,6 +131,55 @@ ollama serve
 
 ------------------------------------------------------------------------
 
+## 2.3.1 Usando Ollama na Nuvem (opcional)
+
+Crie o arquivo `.env` a partir do exemplo:
+
+``` bash
+cp .env.example .env
+```
+
+Para Ollama Cloud, ajuste:
+
+``` bash
+OLLAMA_BASE_URL=https://ollama.com
+OLLAMA_API_KEY=seu_token_aqui
+```
+
+Observações:
+
+-   Se quiser continuar local, mantenha:
+    `OLLAMA_BASE_URL=http://localhost:11434`.
+-   O modelo de embedding também pode ser alterado no `.env` via
+    `RAG_EMBEDDING_MODEL`.
+
+------------------------------------------------------------------------
+
+## 2.3.2 Usando OpenAI para Embeddings (opcional)
+
+No `.env`, ajuste:
+
+``` bash
+RAG_EMBEDDING_ENGINE=openai
+RAG_EMBEDDING_MODEL=text-embedding-3-small
+RAG_OPENAI_API_BASE_URL=https://api.openai.com/v1
+RAG_OPENAI_API_KEY=seu_token_openai
+```
+
+Depois aplique:
+
+``` bash
+docker compose up -d
+```
+
+Observação importante:
+
+-   Se trocar de modelo/dimensão de embedding (ex.: 1024 para 1536),
+    crie um novo Knowledge ou reindexe do zero para evitar conflito de
+    dimensão no ChromaDB.
+
+------------------------------------------------------------------------
+
 # 2.4 Subindo o restante da stack com Docker
 
 Entre no diretório:
@@ -409,4 +458,3 @@ Ao final do laboratório, o aluno terá:
 -   Pipeline de **extração → chunking → embeddings → busca → re-ranking
     → geração**
 -   Capacidade de **consultar documentos com LLMs**
-
