@@ -10,8 +10,6 @@ RUN apt-get update \
         build-essential \
         ca-certificates \
         curl \
-        docker.io \
-        docker-compose-v2 \
         git \
         libffi-dev \
         libssl-dev \
@@ -54,7 +52,7 @@ RUN apt-get update && \
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
 # Ensure the default devcontainer user can access Docker without sudo.
-RUN usermod -aG docker vscode
+#RUN usermod -aG docker vscode
 
 
 # Make the environment active by default

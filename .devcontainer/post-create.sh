@@ -15,14 +15,9 @@ conda env export -n mcdia > /workspaces/mcdia/environment.lock.yml
 
 # Configure Docker to use vfs in Codespaces/devcontainers, where overlayfs
 # may fail with "invalid argument" on container startup.
-sudo mkdir -p /etc/docker
-cat <<'EOF' | sudo tee /etc/docker/daemon.json >/dev/null
-{
-  "storage-driver": "vfs"
-}
-EOF
-
-# Restart daemon so storage driver config is applied immediately.
-if command -v service >/dev/null 2>&1; then
-  sudo service docker restart
-fi
+#sudo mkdir -p /etc/docker
+#cat <<'EOF' | sudo tee /etc/docker/daemon.json >/dev/null
+#{
+#  "storage-driver": "vfs"
+#}
+#EOF
