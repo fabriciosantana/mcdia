@@ -41,9 +41,15 @@ services:
       - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE:-24h}
 
       # Base vetorial
-      - VECTOR_DB=chroma
-      - CHROMA_HTTP_HOST=localhost
-      - CHROMA_HTTP_PORT=8000
+      - VECTOR_DB=${VECTOR_DB:-chroma}
+      - CHROMA_MODE=${CHROMA_MODE:-local} # local | cloud
+      - CHROMA_HTTP_SCHEME=${CHROMA_HTTP_SCHEME:-http}
+      - CHROMA_HTTP_HOST=${CHROMA_HTTP_HOST:-localhost}
+      - CHROMA_HTTP_PORT=${CHROMA_HTTP_PORT:-8000}
+      - CHROMA_TENANT=${CHROMA_TENANT:-default_tenant}
+      - CHROMA_DATABASE=${CHROMA_DATABASE:-default_database}
+      - CHROMA_API_TOKEN=${CHROMA_API_TOKEN:-}
+      - CHROMA_USE_TLS=${CHROMA_USE_TLS:-false}
 
       # Embeddings (ollama ou openai)
       - RAG_EMBEDDING_ENGINE=${RAG_EMBEDDING_ENGINE:-ollama}
@@ -51,6 +57,11 @@ services:
       - RAG_EMBEDDING_BATCH_SIZE=${RAG_EMBEDDING_BATCH_SIZE:-32}
       - RAG_OPENAI_API_BASE_URL=${RAG_OPENAI_API_BASE_URL:-https://api.openai.com/v1}
       - RAG_OPENAI_API_KEY=${RAG_OPENAI_API_KEY:-}
+
+      # Geração (OpenAI)
+      - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
 
       # Timeout ampliado
       - WEBUI_TIMEOUT=300
