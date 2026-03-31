@@ -10,6 +10,8 @@ RUN apt-get update \
         build-essential \
         ca-certificates \
         curl \
+        docker.io \
+        docker-compose-v2 \
         git \
         libffi-dev \
         libssl-dev \
@@ -46,6 +48,9 @@ RUN apt-get update && \
     apt-get install -y git-lfs && \
     git lfs install --system && \
     rm -rf /var/lib/apt/lists/*
+
+# Ensure the default devcontainer user can access Docker without sudo.
+RUN usermod -aG docker vscode
 
 
 # Make the environment active by default
