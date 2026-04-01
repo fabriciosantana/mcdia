@@ -42,14 +42,12 @@ services:
 
       # Base vetorial
       - VECTOR_DB=${VECTOR_DB:-chroma}
-      - CHROMA_MODE=${CHROMA_MODE:-local} # local | cloud
-      - CHROMA_HTTP_SCHEME=${CHROMA_HTTP_SCHEME:-http}
       - CHROMA_HTTP_HOST=${CHROMA_HTTP_HOST:-localhost}
       - CHROMA_HTTP_PORT=${CHROMA_HTTP_PORT:-8000}
+      - CHROMA_HTTP_SSL=${CHROMA_HTTP_SSL:-false}
+      - CHROMA_HTTP_HEADERS=${CHROMA_HTTP_HEADERS:-}
       - CHROMA_TENANT=${CHROMA_TENANT:-default_tenant}
       - CHROMA_DATABASE=${CHROMA_DATABASE:-default_database}
-      - CHROMA_API_TOKEN=${CHROMA_API_TOKEN:-}
-      - CHROMA_USE_TLS=${CHROMA_USE_TLS:-false}
 
       # Embeddings (ollama ou openai)
       - RAG_EMBEDDING_ENGINE=${RAG_EMBEDDING_ENGINE:-ollama}
