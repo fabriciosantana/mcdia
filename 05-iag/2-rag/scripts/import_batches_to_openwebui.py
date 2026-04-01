@@ -233,6 +233,8 @@ def main() -> int:
 
     imported = 0
     failed = 0
+    imported_files: list[str] = []
+    failed_files: list[str] = []
 
     for index, file_path in enumerate(file_paths, start=1):
         print(f"\n[{index}/{len(file_paths)}] Importando {file_path.name}")
@@ -261,13 +263,23 @@ def main() -> int:
             )
             print("  adicionado ao knowledge")
             imported += 1
+            imported_files.append(file_path.name)
         except Exception as exc:  # noqa: BLE001
             failed += 1
+            failed_files.append(file_path.name)
             print(f"  erro: {exc}", file=sys.stderr)
 
     print("\nResumo:")
     print(f"  importados: {imported}")
     print(f"  falharam: {failed}")
+    if imported_files:
+        print("  arquivos importados com sucesso:")
+        for name in imported_files:
+            print(f"    - {name}")
+    if failed_files:
+        print("  arquivos que falharam:")
+        for name in failed_files:
+            print(f"    - {name}")
 
     return 0 if failed == 0 else 1
 
