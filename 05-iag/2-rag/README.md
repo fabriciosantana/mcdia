@@ -238,6 +238,86 @@ Configuração:
   "ocr": false,
   "table_structure": false,
   "do_layout_analysis": false,
+
+------------------------------------------------------------------------
+
+# 2.7 Avaliando o RAG por script
+
+O projeto inclui um script para executar perguntas de avaliação contra a
+Knowledge Base no Open WebUI usando a mesma collection anexada na
+interface.
+
+Arquivos:
+
+-   `eval/discursos_questions.json`: conjunto inicial de perguntas
+-   `eval/RUBRIC.md`: critérios de avaliação manual
+-   `scripts/run_rag_eval.py`: executor dos testes
+
+Pré-requisitos no `.env`:
+
+``` bash
+OPENWEBUI_URL=http://localhost:8080
+OPENWEBUI_API_KEY=sua_chave_da_api
+```
+
+O script usa por padrão a knowledge:
+
+    Discursos do plenário do Senado 2019-2023
+
+## Rodando todos os testes
+
+``` bash
+python scripts/run_rag_eval.py
+```
+
+## Rodando apenas parte dos testes
+
+Exemplo com as 3 primeiras perguntas:
+
+``` bash
+python scripts/run_rag_eval.py --limit 3
+```
+
+## Resultado da execução
+
+Os resultados são gravados em:
+
+-   `eval/results/*.jsonl`: resposta completa e payload retornado
+-   `eval/results/*.md`: resumo legível para revisão humana
+
+Exemplo de saída:
+
+    Resultados salvos em:
+    - /workspaces/.../eval/results/rag_eval_YYYYMMDDTHHMMSSZ.jsonl
+    - /workspaces/.../eval/results/rag_eval_YYYYMMDDTHHMMSSZ.md
+
+## Como revisar
+
+1. Abra o arquivo `.md` gerado.
+2. Compare cada resposta com a pergunta correspondente.
+3. Use `eval/RUBRIC.md` para classificar:
+
+-   aderência à pergunta
+-   precisão factual
+-   foco nas fontes
+-   síntese
+-   risco de alucinação
+
+## Ajustes úteis
+
+Trocar o modelo:
+
+``` bash
+python scripts/run_rag_eval.py --model gpt-5-nano
+```
+
+Adicionar pausa maior entre perguntas:
+
+``` bash
+python scripts/run_rag_eval.py --sleep-between 5
+```
+
+------------------------------------------------------------------------
   "pdf_dpi": 150,
   "num_workers": 4,
   "max_pages": 200
