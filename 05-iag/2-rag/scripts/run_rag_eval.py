@@ -9,6 +9,7 @@ Salva:
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 import random
@@ -126,6 +127,44 @@ def write_markdown_summary(path: Path, rows: list[dict[str, Any]]) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def write_csv_template(path: Path, rows: list[dict[str, Any]]) -> None:
+    fieldnames = [
+        "id",
+        "category",
+        "question",
+        "execution_status",
+        "answer",
+        "adherence_score",
+        "factual_score",
+        "source_focus_score",
+        "synthesis_score",
+        "hallucination_score",
+        "total_score",
+        "review_notes",
+    ]
+
+    with path.open("w", encoding="utf-8", newline="") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(
+                {
+                    "id": row["id"],
+                    "category": row["category"],
+                    "question": row["question"],
+                    "execution_status": row["status"],
+                    "answer": row["answer"],
+                    "adherence_score": "",
+                    "factual_score": "",
+                    "source_focus_score": "",
+                    "synthesis_score": "",
+                    "hallucination_score": "",
+                    "total_score": "",
+                    "review_notes": "",
+                }
+            )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Executa perguntas de avaliacao no Open WebUI com RAG.")
     parser.add_argument(
@@ -192,6 +231,7 @@ def main() -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
     jsonl_path = output_dir / f"rag_eval_{ts}.jsonl"
     md_path = output_dir / f"rag_eval_{ts}.md"
+    csv_path = output_dir / f"rag_eval_{ts}.csv"
 
     rows: list[dict[str, Any]] = []
     with jsonl_path.open("w", encoding="utf-8") as jsonl_file:
@@ -232,7 +272,8 @@ def main() -> int:
             time.sleep(args.sleep_between)
 
     write_markdown_summary(md_path, rows)
-    print(f"\nResultados salvos em:\n- {jsonl_path}\n- {md_path}")
+    write_csv_template(csv_path, rows)
+    print(f"\nResultados salvos em:\n- {jsonl_path}\n- {md_path}\n- {csv_path}")
     return 0
 
 
