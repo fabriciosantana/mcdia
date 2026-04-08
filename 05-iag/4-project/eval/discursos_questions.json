@@ -1,0 +1,52 @@
+[
+  {
+    "id": "q01",
+    "category": "factual",
+    "question": "Quais dados Ciro Nogueira apresenta para criticar a concentracao bancaria no Brasil e qual conclusao ele tira sobre juros, tarifas e spread?"
+  },
+  {
+    "id": "q02",
+    "category": "factual",
+    "question": "Quais sao os principais argumentos de Paulo Paim contra a capitalizacao da Previdencia e que exemplos ele usa para sustentar essa posicao?"
+  },
+  {
+    "id": "q03",
+    "category": "proposal",
+    "question": "Que propostas Confucio Moura apresenta para melhorar a educacao?"
+  },
+  {
+    "id": "q04",
+    "category": "proposal",
+    "question": "Por que Confucio Moura defende que senadores e deputados acompanhem mais de perto escolas publicas?"
+  },
+  {
+    "id": "q05",
+    "category": "author_focus",
+    "question": "Quais prioridades Chico Rodrigues afirma defender no inicio do mandato e como ele relaciona ordem, uniao e desenvolvimento para o Brasil e para Roraima?"
+  },
+  {
+    "id": "q06",
+    "category": "comparison",
+    "question": "Compare as preocupacoes de Paulo Paim sobre Previdencia com as preocupacoes de Confucio Moura sobre educacao."
+  },
+  {
+    "id": "q07",
+    "category": "synthesis",
+    "question": "Quais temas sociais e economicos aparecem com mais frequencia nos discursos carregados e quais senadores associam esses problemas a propostas concretas de solucao?"
+  },
+  {
+    "id": "q08",
+    "category": "numbers",
+    "question": "Quais discursos citam percentuais, valores ou estatisticas e para sustentar quais argumentos?"
+  },
+  {
+    "id": "q09",
+    "category": "author_focus",
+    "question": "Que argumentos Wellington Fagundes usa para defender investimentos em infraestrutura e qual relacao ele faz entre logistica e competitividade?"
+  },
+  {
+    "id": "q10",
+    "category": "broad",
+    "question": "Quais diagnosticos sobre desigualdade, vulnerabilidade ou falta de desenvolvimento aparecem nesses discursos e que tipos de solucao sao defendidos?"
+  }
+]
