@@ -199,14 +199,14 @@ Além disso, a solução pode ser expandida para outros tipos de documentos legi
 
 ## Referências
 
-CAVALCANTI, Helen Bento. Inteligência Artificial na Organização do Conhecimento do Parlamento Brasileiro. In: **ISKO Brasil 2024**, Campina Grande. *Anais...* Campina Grande: UFCG, 2024. Disponível em: <https://dspace.sti.ufcg.edu.br/bitstream/riufcg/38144/1/HELEN%20BENTO%20CAVALCANTI-ARTIGO-CI%C3%8ANCIA%20DA%20COMPUTA%C3%87%C3%83O-CEEI%20%282024%29.pdf>. Acesso em: 28 out. 2025.
+CAVALCANTI, Helen Bento. Inteligência artificial na organização do conhecimento do Parlamento brasileiro. In: ISKO BRASIL 2024, Campina Grande. Anais [...]. Campina Grande: UFCG, 2024. Disponível em: https://dspace.sti.ufcg.edu.br/bitstream/riufcg/38144/1/HELEN%20BENTO%20CAVALCANTI-ARTIGO-CI%C3%8ANCIA%20DA%20COMPUTA%C3%87%C3%83O-CEEI%20%282024%29.pdf. Acesso em: 28 out. 2025.
 
-DEENE, Joris. Can a RAG system reduce the GDPR risks of your enterprise AI? *ICT Lawyer*, s.d. Disponível em: <https://www.ictrechtswijzer.be/en/can-a-rag-system-reduce-the-gdpr-risks-of-your-enterprise-ai/>. Acesso em: 8 abr. 2026.
+DEENE, Joris. Can a RAG system reduce the GDPR risks of your enterprise AI? ICT Lawyer, [s. l.], s.d. Disponível em: https://www.ictrechtswijzer.be/en/can-a-rag-system-reduce-the-gdpr-risks-of-your-enterprise-ai/. Acesso em: 8 abr. 2026.
 
-GAO, Yunfan; XIONG, Yun; GAO, Xinyu; JIA, Kangxiang; PAN, Jinliu; BI, Yuxi; DAI, Yi; SUN, Jiawei; WANG, Meng; WANG, Haofen. Retrieval-augmented generation for large language models: a survey. *arXiv preprint*, arXiv:2312.10997, 2023. Disponível em: <https://arxiv.org/abs/2312.10997>. Acesso em: 28 out. 2025.
+GAO, Yunfan et al. Retrieval-augmented generation for large language models: a survey. arXiv preprint, arXiv:2312.10997, 2023. Disponível em: https://arxiv.org/abs/2312.10997. Acesso em: 28 out. 2025.
 
-KHALIQ, Mohammed Abdul et al. RAG-Augmented Reasoning for Political Fact-Checking using Multimodal Large Language Models. In: **PROCEEDINGS OF THE SEVENTH FACT EXTRACTION AND VERIFICATION WORKSHOP (FEVER)**, 2024, Miami, Florida, USA. *Proceedings...* Miami: Association for Computational Linguistics, 2024. p. 280-296. DOI: <https://doi.org/10.18653/v1/2024.fever-1.29>. Disponível em: <https://aclanthology.org/2024.fever-1.29/>. Acesso em: 19 nov. 2025.
+KHALIQ, Mohammed Abdul et al. RAG-augmented reasoning for political fact-checking using multimodal large language models. In: PROCEEDINGS OF THE SEVENTH FACT EXTRACTION AND VERIFICATION WORKSHOP (FEVER), 2024, Miami, Florida, USA. Proceedings [...]. Miami: Association for Computational Linguistics, 2024. p. 280-296. DOI: https://doi.org/10.18653/v1/2024.fever-1.29. Disponível em: https://aclanthology.org/2024.fever-1.29/. Acesso em: 19 nov. 2025.
 
-SAID, Adil. RAG in Practice: Exploring Versioning, Observability, and Evaluation in Production Systems. *Towards AI*, 28 ago. 2025. Disponível em: <https://towardsai.net/p/artificial-intelligence/rag-in-practice-exploring-versioning-observability-and-evaluation-in-production-systems>. Acesso em: 8 abr. 2026.
+SAID, Adil. RAG in practice: exploring versioning, observability, and evaluation in production systems. Towards AI, [s. l.], 28 ago. 2025. Disponível em: https://towardsai.net/p/artificial-intelligence/rag-in-practice-exploring-versioning-observability-and-evaluation-in-production-systems. Acesso em: 8 abr. 2026.
 
-SINGH, Pankaj. 8 Types of Chunking for RAG Systems. *Analytics Vidhya*, 4 abr. 2025. Disponível em: <https://www.analyticsvidhya.com/blog/2025/02/types-of-chunking-for-rag-systems/>. Acesso em: 8 abr. 2026.
+SINGH, Pankaj. 8 types of chunking for RAG systems. Analytics Vidhya, [s. l.], 4 abr. 2025. Disponível em: https://www.analyticsvidhya.com/blog/2025/02/types-of-chunking-for-rag-systems/. Acesso em: 8 abr. 2026.
