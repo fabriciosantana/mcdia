@@ -1,268 +1,129 @@
-# Relatório Técnico: Desenvolvimento de um RAG Legislativo para Apoio à Consulta de Discursos Parlamentares
+```markdown
+# Chatbot Legislativo com RAG para Respostas Auditáveis sobre Discursos da 56ª Legislatura do Senado Federal
 
 ## 1. Introdução
 
 ### 1.1 Contextualização
 
-O avanço recente dos grandes modelos de linguagem (Large Language Models, LLMs) ampliou o interesse por soluções capazes de responder perguntas em linguagem natural sobre grandes volumes documentais. No setor público, esse potencial é especialmente relevante em contextos nos quais há acervos extensos, dinâmicos e heterogêneos, como legislação, pareceres, notas técnicas, discursos parlamentares e documentos administrativos. Entretanto, o uso direto de LLMs apresenta limitações conhecidas, como alucinações, desatualização do conhecimento e baixa rastreabilidade das evidências utilizadas para compor uma resposta (GAO et al., 2023).
+O avanço recente dos grandes modelos de linguagem (Large Language Models, LLMs) ampliou o interesse por soluções capazes de responder perguntas em linguagem natural sobre grandes volumes documentais. No setor público, esse potencial é especialmente relevante em contextos nos quais há acervos extensos, dinâmicos e heterogêneos, como legislação, pareceres, notas técnicas, discursos parlamentares e documentos administrativos. Entretanto, o uso direto de LLMs apresenta limitações conhecidas, como alucinações, desatualização do conhecimento e baixa rastreabilidade das evidências utilizadas para compor uma resposta (Gao et al., 2023).
 
-Nesse cenário, a abordagem Retrieval-Augmented Generation (RAG) surge como uma arquitetura adequada para combinar recuperação semântica de documentos com geração textual fundamentada em fontes externas. Em vez de depender apenas do conhecimento paramétrico do modelo, o sistema recupera trechos relevantes de uma base documental e os incorpora ao contexto da resposta, elevando a precisão factual, a atualidade e a auditabilidade do resultado (GAO et al., 2023).
-
-No contexto do Parlamento brasileiro, a organização do conhecimento e a ampliação de mecanismos de acesso à informação já constituem tema relevante de pesquisa aplicada. Cavalcanti (2024) destaca que a inteligência artificial pode apoiar a organização do conhecimento legislativo, desde que utilizada com atenção à estrutura informacional, à mediação documental e à explicabilidade dos resultados. O presente projeto insere-se nesse problema aplicado ao desenvolver um RAG legislativo orientado ao acervo de discursos do Senado Federal.
+Nesse cenário, a abordagem Retrieval-Augmented Generation (RAG) surge como uma arquitetura adequada para combinar recuperação semântica de documentos com geração textual fundamentada em fontes externas. Em vez de depender apenas do conhecimento paramétrico do modelo, o sistema recupera trechos relevantes de uma base documental e os incorpora ao contexto da resposta, elevando a precisão factual, a atualidade e a auditabilidade do resultado (Gao et al., 2023). No contexto do Parlamento brasileiro, a organização do conhecimento e a ampliação de mecanismos de acesso à informação já constituem tema relevante de pesquisa aplicada. Cavalcanti (2024) destaca que a inteligência artificial pode apoiar a organização do conhecimento legislativo, desde que utilizada com atenção à estrutura informacional, à mediação documental e à explicabilidade dos resultados. O presente projeto insere-se nesse problema aplicado ao desenvolver um chatbot legislativo baseado em RAG, orientado ao acervo de discursos da 56ª Legislatura do Senado Federal (Cavalcanti, 2024).
 
 ### 1.2 Motivação
 
 A administração pública lida com forte pressão por transparência, rastreabilidade e eficiência na gestão da informação. Em ambientes parlamentares, a consulta a discursos e pronunciamentos é importante para análise temática, comparação de posicionamentos, apoio a gabinetes, produção de relatórios e atendimento ao cidadão. Todavia, a busca puramente lexical em grandes bases tende a ser insuficiente quando o usuário formula perguntas complexas, comparativas ou orientadas a síntese.
 
-Além disso, soluções baseadas apenas em LLMs generalistas podem gerar respostas convincentes, porém não verificáveis. Em domínios institucionais, essa limitação é particularmente problemática. Deene (s.d.) argumenta que sistemas RAG podem reduzir riscos de governança informacional e conformidade ao deslocar a fonte primária do conhecimento para documentos controlados, atualizáveis e auditáveis. Said (2025), por sua vez, ressalta que, em produção, sistemas RAG exigem não apenas recuperação e geração, mas também versionamento, observabilidade e avaliação contínua.
+Além disso, soluções baseadas apenas em LLMs generalistas podem gerar respostas convincentes, porém não verificáveis, o que é particularmente problemático em domínios institucionais que exigem responsabilização e controle sobre as fontes. Deene (s.d.) argumenta que sistemas RAG podem reduzir riscos de governança informacional e conformidade ao deslocar a fonte primária do conhecimento para documentos controlados, atualizáveis e auditáveis (Deene, s.d.). Said (2025), por sua vez, ressalta que, em produção, sistemas RAG exigem não apenas recuperação e geração, mas também versionamento, observabilidade e avaliação contínua para mitigar riscos e garantir qualidade (Said, 2025).
 
 ### 1.3 Objetivo
 
-O objetivo deste trabalho é desenvolver e demonstrar uma solução de RAG legislativo voltada à consulta de discursos parlamentares do Senado Federal, com foco em:
-
-- estruturar uma base de conhecimento consultável a partir de discursos parlamentares;
-- permitir perguntas em linguagem natural com respostas fundamentadas em trechos recuperados;
-- avaliar empiricamente a qualidade inicial da recuperação e da geração;
-- documentar uma arquitetura reproduzível, com baixo acoplamento e possibilidade de evolução para cenários institucionais.
+O objetivo deste trabalho é desenvolver e demonstrar uma solução de chatbot legislativo com RAG voltada à consulta de discursos parlamentares da 56ª Legislatura do Senado Federal. Especificamente, busca-se estruturar uma base de conhecimento consultável a partir desses discursos, permitir perguntas em linguagem natural com respostas fundamentadas em trechos recuperados, avaliar empiricamente a qualidade inicial da recuperação e da geração, bem como documentar uma arquitetura reproduzível, com baixo acoplamento e possibilidade de evolução para cenários institucionais (Gao et al., 2023; Said, 2025).
 
 ## 2. Fundamentação teórica
 
 ### 2.1 Arquiteturas de LLM relacionadas ao problema
 
-As arquiteturas mais relevantes para este projeto são as de LLMs generativos baseados em transformadores e os modelos de embeddings usados para busca vetorial. No primeiro caso, o LLM atua como componente de síntese, recebendo uma pergunta e um conjunto de trechos recuperados para compor uma resposta textual. No segundo, modelos de embedding convertem trechos documentais e consultas em vetores de alta dimensão, permitindo cálculo de similaridade semântica em banco vetorial.
+As arquiteturas mais relevantes para este projeto são as de LLMs generativos baseados em transformadores e os modelos de embeddings usados para busca vetorial. No primeiro caso, o LLM atua como componente de síntese, recebendo uma pergunta e um conjunto de trechos recuperados para compor uma resposta textual. No segundo, modelos de embedding convertem trechos documentais e consultas em vetores de alta dimensão, permitindo cálculo de similaridade semântica em banco vetorial (Gao et al., 2023).
 
-No RAG, esses componentes operam de forma complementar: o modelo de embedding suporta a etapa de recuperação, enquanto o modelo generativo suporta a etapa de composição de resposta. Gao et al. (2023) classificam as arquiteturas RAG em formas mais ingênuas, avançadas e modulares. Para o problema legislativo, a arquitetura modular é particularmente adequada, pois facilita a substituição independente de extratores, modelos de embedding, banco vetorial, reranqueadores e modelos gerativos.
+No contexto de RAG, esses componentes operam de forma complementar: o modelo de embedding suporta a etapa de recuperação, enquanto o modelo generativo suporta a etapa de composição da resposta (Gao et al., 2023). Gao et al. (2023) classificam as arquiteturas RAG em formas ingênuas, avançadas e modulares. Para o problema legislativo abordado neste trabalho, a arquitetura modular revela-se particularmente adequada, pois facilita a substituição independente de extratores, modelos de embedding, banco vetorial, reranqueadores e modelos gerativos, permitindo a evolução incremental do sistema sem reengenharia completa da solução (Gao et al., 2023).
 
 ### 2.2 Técnicas relacionadas
 
-As principais técnicas empregadas no projeto foram:
+As principais técnicas empregadas no projeto incluem extração documental, chunking, embeddings semânticos, recuperação vetorial, reranqueamento e seleção contextual, bem como prompting orientado a evidências (Said, 2025). A extração documental compreende a conversão e preparação do texto para ingestão na base de conhecimento. O chunking corresponde à segmentação dos documentos em unidades menores destinadas à indexação vetorial. Os embeddings semânticos fornecem a representação vetorial de chunks e consultas, enquanto a recuperação vetorial permite a identificação dos trechos mais relevantes. O reranqueamento e a seleção contextual delimitam o subconjunto de contexto enviado ao modelo gerativo. Por fim, o prompting orientado a evidências contempla instruções explícitas para privilegiar o contexto recuperado, limitar inferências especulativas e distribuir citações ao longo da resposta (Said, 2025).
 
-- **extração documental**: conversão e preparação do texto para ingestão na base de conhecimento;
-- **chunking**: segmentação dos documentos em unidades menores para indexação vetorial;
-- **embeddings semânticos**: representação vetorial de chunks e consultas;
-- **recuperação vetorial**: busca dos trechos mais relevantes para a consulta;
-- **reranqueamento e seleção contextual**: filtragem do contexto enviado ao modelo;
-- **prompting orientado a evidências**: instruções para privilegiar o contexto recuperado, limitar inferências e distribuir citações ao longo da resposta.
+Entre essas técnicas, o chunking assume papel central. Singh (2025) discute que estratégias de segmentação inadequadas podem prejudicar sensivelmente a recuperação ao quebrar o contexto semântico ou, no extremo oposto, ao gerar blocos excessivamente grandes, reduzindo a precisão da busca (Singh, 2025). No presente projeto, o desenvolvimento exigiu ajustes iterativos de chunking para equilibrar qualidade de recuperação e restrições operacionais do banco vetorial em nuvem. A experiência prática corroborou a literatura: o chunking não é uma etapa acessória, mas um dos principais fatores de desempenho de um sistema RAG (Singh, 2025).
 
-Entre essas técnicas, o chunking tem papel decisivo. Singh (2025) discute que estratégias de segmentação inadequadas podem prejudicar a recuperação ao quebrar o contexto semântico ou, no extremo oposto, gerar blocos excessivamente grandes, reduzindo precisão. No presente projeto, o desenvolvimento exigiu ajustes iterativos de chunking para equilibrar qualidade de recuperação e restrições operacionais do banco vetorial em nuvem. A experiência prática confirmou a literatura: o chunking não é uma etapa acessória, mas um dos principais fatores de desempenho de um RAG.
-
-Said (2025) acrescenta que, em ambientes reais, técnicas de avaliação, observabilidade e versionamento são tão importantes quanto o pipeline básico de recuperação. Essa perspectiva foi incorporada ao projeto por meio de scripts próprios de importação, avaliação e documentação de parâmetros.
+Said (2025) acrescenta que, em ambientes reais, técnicas de avaliação, observabilidade e versionamento são tão importantes quanto o pipeline básico de recuperação, sobretudo para detectar regressões, acompanhar mudanças em modelos e dados, e assegurar consistência entre versões do sistema. Essa perspectiva foi incorporada ao projeto por meio de scripts próprios de importação, avaliação e documentação de parâmetros (Said, 2025).
 
 ### 2.3 Trabalhos e soluções relacionadas
 
-Gao et al. (2023) oferecem a base conceitual mais abrangente para compreender o RAG como solução para problemas de desatualização, baixa explicabilidade e geração não rastreável em LLMs. O trabalho também orienta a decomposição do problema em recuperação, aumento de contexto e geração.
+Gao et al. (2023) oferecem a base conceitual mais abrangente para compreender o RAG como solução para problemas de desatualização, baixa explicabilidade e geração não rastreável em LLMs, orientando a decomposição do problema em etapas de recuperação, aumento de contexto e geração (Gao et al., 2023). No campo jurídico e regulatório, Deene (s.d.) discute o potencial do RAG para reduzir riscos associados ao uso corporativo de IA, especialmente por aumentar o controle sobre fontes, facilitar a atualização e favorecer mecanismos de responsabilização (Deene, s.d.). Embora o texto esteja voltado ao contexto empresarial e de proteção de dados, seus argumentos são aplicáveis ao setor público por analogia institucional.
 
-No campo jurídico e regulatório, Deene (s.d.) discute o potencial do RAG para reduzir riscos associados ao uso corporativo de IA, especialmente por aumentar controle sobre fontes, facilitar atualização e favorecer mecanismos de responsabilização. Embora o texto esteja voltado ao contexto empresarial e de proteção de dados, seus argumentos são aplicáveis ao setor público por analogia institucional.
-
-No domínio político, Khaliq et al. (2024) demonstram que arquiteturas RAG podem apoiar tarefas de fact-checking político com raciocínio apoiado em evidências externas. Ainda que o foco do presente projeto não seja verificação factual multimodal, o trabalho mostra que o domínio político-parlamentar é compatível com abordagens RAG e se beneficia de estruturas de recuperação rigorosa.
-
-Por fim, Cavalcanti (2024) aproxima a discussão da realidade do Parlamento brasileiro ao tratar da inteligência artificial na organização do conhecimento legislativo, reforçando a pertinência da aplicação de IA explicável e documentalmente ancorada em contextos institucionais.
+No domínio político, Khaliq et al. (2024) demonstram que arquiteturas RAG podem apoiar tarefas de fact-checking político com raciocínio apoiado em evidências externas, articulando recuperação rigorosa e geração explicável (Khaliq et al., 2024). Ainda que o foco do presente projeto não seja verificação factual multimodal, o trabalho de Khaliq et al. (2024) mostra que o domínio político-parlamentar é compatível com abordagens RAG e se beneficia de estruturas de recuperação rigorosa. Por fim, Cavalcanti (2024) aproxima a discussão da realidade do Parlamento brasileiro ao tratar da inteligência artificial na organização do conhecimento legislativo, reforçando a pertinência da aplicação de IA explicável e documentalmente ancorada em contextos institucionais (Cavalcanti, 2024).
 
 ## 3. Caracterização do problema
 
 ### 3.1 Problema da administração pública
 
-O problema central é a dificuldade de transformar grandes acervos parlamentares em bases efetivamente consultáveis por perguntas em linguagem natural, com respostas úteis, verificáveis e contextualizadas. Embora os discursos legislativos sejam públicos, seu volume e diversidade dificultam a recuperação eficiente de argumentos, temas, posicionamentos e referências temporais apenas por mecanismos tradicionais de busca.
+O problema central abordado neste trabalho é a dificuldade de transformar grandes acervos parlamentares em bases efetivamente consultáveis por meio de perguntas em linguagem natural, com respostas úteis, verificáveis e contextualizadas. Embora os discursos legislativos sejam públicos, seu volume e diversidade dificultam a recuperação eficiente de argumentos, temas, posicionamentos e referências temporais apenas por mecanismos tradicionais de busca. Na prática, esse quadro impacta gabinetes parlamentares que precisam recuperar rapidamente posicionamentos anteriores, equipes técnicas responsáveis por notas, pareceres e subsídios, pesquisadores e jornalistas que investigam temas legislativos e cidadãos interessados em transparência e controle social.
 
-Na prática, isso afeta:
-
-- gabinetes parlamentares que precisam recuperar rapidamente posicionamentos anteriores;
-- equipes técnicas que elaboram notas, pareceres e subsídios;
-- pesquisadores e jornalistas que investigam temas legislativos;
-- cidadãos interessados em transparência e controle social.
-
-Sem uma camada semântica de recuperação, a consulta tende a ser fragmentada, lenta e dependente de conhecimento prévio do acervo.
+Na ausência de uma camada semântica de recuperação, a consulta ao acervo tende a ser fragmentada, lenta e dependente de conhecimento prévio sobre a estrutura e o conteúdo da base (Gao et al., 2023; Cavalcanti, 2024). O chatbot legislativo com RAG proposto busca atuar precisamente sobre essa lacuna, adicionando uma camada de mediação que combina busca semântica e geração com evidências.
 
 ### 3.2 Partes interessadas
 
-As partes interessadas do projeto incluem:
-
-- gabinetes parlamentares;
-- consultorias legislativas e assessorias técnicas;
-- equipes de transparência e gestão da informação;
-- pesquisadores em ciência política, direito e administração pública;
-- cidadãos e organizações da sociedade civil;
-- equipes de tecnologia responsáveis por operação e manutenção da solução.
+As partes interessadas no projeto abrangem, em primeiro lugar, os gabinetes parlamentares, consultorias legislativas e assessorias técnicas que demandam acesso rápido e qualificado a discursos anteriores. Abrangem também equipes de transparência e gestão da informação, pesquisadores em ciência política, direito e administração pública, bem como cidadãos e organizações da sociedade civil que utilizam o acervo como insumo para controle social. Por fim, incluem-se as equipes de tecnologia responsáveis pela operação e manutenção da solução, que precisam de mecanismos claros de governança, observabilidade e evolução arquitetural (Cavalcanti, 2024; Said, 2025).
 
 ### 3.3 Critérios de sucesso
 
-Os critérios de sucesso definidos para o laboratório foram:
-
-- capacidade de indexar uma base representativa de discursos parlamentares;
-- recuperação de trechos relevantes para perguntas factuais e analíticas;
-- geração de respostas em português com base prioritária no contexto recuperado;
-- inclusão de referências e metadados dos discursos utilizados;
-- possibilidade de importação e avaliação automatizadas;
-- reprodutibilidade da solução em ambiente local/containerizado.
+Os critérios de sucesso definidos para o laboratório dizem respeito à capacidade de indexar uma base representativa de discursos parlamentares, à recuperação de trechos relevantes para perguntas factuais e analíticas e à geração de respostas em português baseadas prioritariamente no contexto recuperado. Incluem, adicionalmente, a inclusão de referências e metadados dos discursos utilizados, a possibilidade de importação e avaliação automatizadas e a reprodutibilidade da solução em ambiente local ou containerizado (Said, 2025). Esses critérios dialogam com recomendações da literatura para sistemas RAG em produção, que enfatizam reprodutibilidade, avaliação contínua e rastreabilidade (Gao et al., 2023; Said, 2025).
 
 ## 4. Proposta de solução
 
-### 4.1 Diagrama de arquitetura da solução
+### 4.1 Arquitetura do chatbot legislativo
 
-```mermaid
-flowchart TD
-    A[Usuário] --> B[Open WebUI]
-    B --> C[Prompt RAG]
-    B --> D[Docling]
-    B --> E[Modelo de Embeddings]
-    B --> F[Modelo Gerativo]
-    E --> G[ChromaDB Cloud/HTTP]
-    D --> H[Base de documentos]
-    H --> I[Pipeline de chunking e metadados]
-    I --> G
-    G --> B
-    F --> B
-```
+A solução proposta materializa-se em um chatbot legislativo que utiliza RAG para responder consultas sobre discursos da 56ª Legislatura do Senado Federal. A arquitetura compreende três serviços principais: uma instância do Open WebUI como interface de interação e orquestração do fluxo de RAG; o Docling para extração e preparação de conteúdo documental; e o ChromaDB como banco vetorial acessado por HTTP. Essa separação de responsabilidades é coerente com a adoção de uma arquitetura modular discutida por Gao et al. (2023).
 
-A solução foi implementada com três serviços principais:
-
-- **Open WebUI** como interface de interação e orquestração do fluxo RAG;
-- **Docling** para extração e preparação de conteúdo documental;
-- **ChromaDB** como banco vetorial acessado por HTTP.
-
-O ambiente foi definido em `docker-compose.yaml`, com serviços em `network_mode: host`, reduzindo complexidade de conectividade local. O sistema também foi configurado para operar tanto com embeddings locais via Ollama quanto com embeddings via OpenAI, sendo esta segunda opção a utilizada na configuração experimental validada.
+O ambiente foi definido em arquivo `docker-compose.yaml`, com serviços configurados em `network_mode: host`, de modo a reduzir a complexidade de conectividade local. O sistema foi configurado para operar tanto com embeddings locais, via Ollama, quanto com embeddings providos por serviços externos, como a API da OpenAI, sendo esta segunda opção a utilizada na configuração experimental validada (Gao et al., 2023; Said, 2025). Essa flexibilidade facilita a adaptação da solução a diferentes ambientes institucionais e restrições de infraestrutura.
 
 ### 4.2 Pipeline desenvolvido
 
-O pipeline do projeto foi composto pelas seguintes etapas:
+O pipeline do projeto inicia-se com a aquisição dos dados, baseada no dataset `fabriciosantana/discursos-senado-legislatura-56`, que reúne discursos da 56ª Legislatura do Senado Federal. Na etapa de pré-processamento e seleção textual, prioriza-se o campo `TextoDiscursoIntegral`, com recurso ao `Resumo` e à `Indexacao` quando necessário, garantindo que o conteúdo mais completo e informativo seja privilegiado na construção da base. Em seguida, realiza-se o chunking em nível de palavras, com geração de segmentos que preservam metadados relevantes por chunk, em consonância com a importância da segmentação para o desempenho de sistemas RAG enfatizada por Singh (2025).
 
-1. **Aquisição dos dados**: uso do dataset `fabriciosantana/discursos-senado-legislatura-56`.
-2. **Pré-processamento e seleção textual**: priorização do campo `TextoDiscursoIntegral`, com fallback para `Resumo` e `Indexacao`.
-3. **Chunking em nível de palavras**: geração de segmentos com metadados por chunk.
-4. **Geração de arquivos de ingestão para Open WebUI**: lotes markdown estruturados e um arquivo `jsonl` de referência.
-5. **Importação automatizada**: script para upload dos batches, monitoramento do processamento e inclusão na knowledge base do Open WebUI.
-6. **Indexação vetorial**: embeddings gerados e persistidos no ChromaDB.
-7. **Consulta RAG**: recuperação vetorial, montagem de contexto, aplicação do prompt e geração da resposta.
-8. **Avaliação inicial**: execução automatizada de perguntas de teste e exportação de resultados em JSONL, Markdown e CSV.
+A partir desses segmentos, são gerados arquivos de ingestão para o Open WebUI, em lotes markdown estruturados, bem como um arquivo `jsonl` de referência. A importação dos lotes é automatizada por script que realiza o upload, monitora o processamento e assegura a inclusão na knowledge base do Open WebUI. Concluída a ingestão, procede-se à indexação vetorial, em que os embeddings são gerados e persistidos no ChromaDB. A etapa de consulta RAG integra recuperação vetorial, montagem de contexto, aplicação do prompt e geração da resposta pelo modelo, compondo o fluxo de atendimento do chatbot legislativo.
 
-O script `build_openwebui_knowledge_from_hf.py` sintetiza bem a fase de preparação. Ele gera chunks com metadados como data, autor, partido, unidade da federação, tipo de uso da palavra, resumo, indexação e URL do texto integral. Essa modelagem favorece tanto a recuperação semântica quanto a geração posterior de referências documentais.
+Por fim, a avaliação inicial é realizada por meio de um script (`run_rag_eval.py`) que consulta a knowledge base via API e gera saídas em formatos `.jsonl`, `.md` e `.csv`, permitindo análise estruturada, revisão qualitativa e scoring manual para comparação entre execuções (Said, 2025). O script `build_openwebui_knowledge_from_hf.py` sintetiza a fase de preparação ao gerar chunks com metadados como data, autor, partido, unidade da federação, tipo de uso da palavra, resumo, indexação e URL do texto integral. Essa modelagem favorece tanto a recuperação semântica quanto a geração posterior de respostas auditáveis, com referências documentais claras (Gao et al., 2023; Said, 2025).
 
 ### 4.3 Principais contribuições
 
-As principais contribuições do projeto foram:
-
-- construção de um ambiente reprodutível de RAG legislativo;
-- adaptação do pipeline para um acervo real do Senado Federal;
-- definição de um formato de chunk com metadados úteis para auditoria e referência;
-- automatização da importação em lote para o Open WebUI;
-- automatização de avaliação básica com conjunto de perguntas e rubric;
-- validação prática de parâmetros de chunking e de conectividade com ChromaDB remoto.
+O projeto contribui para a literatura e para a prática institucional ao construir um ambiente reprodutível de chatbot legislativo com RAG, adaptado a um acervo real do Senado Federal. Demonstra, empiricamente, a importância de uma modelagem de chunk com metadados ricos para fins de auditoria e referência, automatiza a importação em lote e a avaliação básica e valida, em ambiente experimental, a sensibilidade do desempenho às escolhas de chunking e de conectividade com um banco vetorial remoto (Gao et al., 2023; Singh, 2025; Said, 2025). Ao fazê-lo, aproxima as recomendações gerais de RAG em produção da realidade de um acervo legislativo brasileiro.
 
 ### 4.4 Riscos e limitações
 
-Os principais riscos e limitações identificados foram:
+Os principais riscos e limitações identificados dizem respeito à sensibilidade do desempenho à estratégia de chunking, à possibilidade de mistura excessiva de fontes em perguntas muito abertas e à dependência da qualidade dos documentos e metadados de origem. Há também risco de respostas expansivas ou excessivamente inferenciais quando o prompt não é suficientemente restritivo, bem como dependência de quotas e limites operacionais de serviços externos, tanto para embeddings quanto para o banco vetorial (Singh, 2025; Said, 2025). Deene (s.d.) e Said (2025) contribuem para interpretar esses riscos de forma mais ampla: um sistema RAG melhora o controle e a auditabilidade, mas não elimina automaticamente problemas de qualidade documental, governança, avaliação e conformidade, exigindo processos institucionais de monitoramento e revisão (Deene, s.d.; Said, 2025).
 
-- sensibilidade do desempenho à estratégia de chunking;
-- possibilidade de mistura excessiva de fontes em perguntas muito abertas;
-- dependência da qualidade dos documentos e metadados de origem;
-- risco de respostas expansivas ou inferenciais quando o prompt não é suficientemente restritivo;
-- dependência de quotas e limites operacionais de serviços externos, como embeddings e banco vetorial.
-
-Deene (s.d.) e Said (2025) ajudam a interpretar esses riscos de forma mais ampla: um RAG melhora controle e auditabilidade, mas não elimina automaticamente problemas de qualidade documental, governança, avaliação e conformidade.
-
-## 5. Experimentos / Demonstração
+## 5. Experimentos e demonstração
 
 ### 5.1 Setup experimental
 
-O experimento utilizou uma base derivada do dataset `fabriciosantana/discursos-senado-legislatura-56`, contendo:
+O experimento utilizou uma base derivada do dataset `fabriciosantana/discursos-senado-legislatura-56`, contendo 15.729 registros de entrada, dos quais 15.726 correspondem a discursos efetivamente escritos e 3 foram descartados por ausência de texto útil. A partir desses registros, foram gerados 23.806 chunks e organizados 120 arquivos markdown de ingestão. Esses números foram registrados em `knowledge_openwebui/build_metadata.json`, de modo a permitir rastreabilidade quantitativa da base construída (Said, 2025).
 
-- 15.729 registros de entrada;
-- 15.726 discursos efetivamente escritos;
-- 3 registros descartados por ausência de texto útil;
-- 23.806 chunks gerados;
-- 120 arquivos markdown de ingestão.
+Na etapa de construção da base, adotaram-se, como parâmetros principais, `max_words = 850`, `overlap_words = 150` e `chunks_per_file = 200`, escolhas que refletem a preocupação em equilibrar granularidade e contexto, em consonância com as recomendações de Singh (2025) sobre estratégias de chunking. Na configuração operacional validada no Open WebUI, definiram-se `Chunk Size = 6000`, `Chunk Overlap = 500` e `Chunk Min Size Target = 2000`, com o `Markdown Header Text Splitter` habilitado, uso do modelo de embedding `text-embedding-3-small` e batch de embeddings de tamanho 32 (Gao et al., 2023).
 
-Esses números foram registrados em `knowledge_openwebui/build_metadata.json`.
+O prompt de RAG foi evoluído iterativamente para privilegiar o uso prioritário do contexto recuperado, proibir explicitamente a invenção de fatos, exigir declaração quando a informação solicitada não estivesse presente no contexto e incentivar a distribuição de citações ao longo da resposta, incluindo, quando pertinente, uma seção final de referências. Essa configuração busca alinhar a operação do chatbot legislativo com a ênfase em explicabilidade, auditabilidade e governança presente na literatura (Deene, s.d.; Said, 2025).
 
-Na etapa de construção da base, foram usados os seguintes parâmetros:
-
-- `max_words = 850`;
-- `overlap_words = 150`;
-- `chunks_per_file = 200`.
-
-Na configuração operacional validada no Open WebUI, foram adotados:
-
-- `Chunk Size = 6000`;
-- `Chunk Overlap = 500`;
-- `Chunk Min Size Target = 2000`;
-- `Markdown Header Text Splitter = habilitado`;
-- modelo de embedding `text-embedding-3-small`;
-- batch de embeddings `32`.
-
-O prompt RAG foi evoluído ao longo do laboratório para privilegiar:
-
-- uso prioritário do contexto recuperado;
-- proibição de invenção de fatos;
-- declaração explícita quando a informação não estivesse no contexto;
-- citações distribuídas ao longo da resposta;
-- inclusão de seção final de referências quando solicitada.
-
-Para avaliação, foi desenvolvido o script `run_rag_eval.py`, que consulta a knowledge base do Open WebUI via API e gera saídas em:
-
-- `.jsonl`, para persistência estruturada;
-- `.md`, para revisão qualitativa;
-- `.csv`, para scoring manual e comparação entre execuções.
+Para a avaliação, o script `run_rag_eval.py` realiza consultas automatizadas à knowledge base do Open WebUI via API, gerando saídas em `.jsonl` para persistência estruturada, em `.md` para revisão qualitativa e em `.csv` para atribuição de notas e comparação entre execuções (Said, 2025). Esse arranjo aproxima o ambiente do laboratório de práticas de observabilidade e versionamento recomendadas para sistemas RAG em produção.
 
 ### 5.2 Resultados alcançados
 
-Os resultados do laboratório foram satisfatórios para uma prova de conceito funcional. Em especial:
+Os resultados do laboratório foram satisfatórios para uma prova de conceito funcional do chatbot legislativo com RAG. A importação de todos os 120 lotes foi concluída com sucesso e o sistema passou a responder perguntas factuais e temáticas sobre discursos da 56ª Legislatura com qualidade inicial considerada adequada. Observou-se que perguntas específicas e “atômicas” apresentaram desempenho superior em relação a perguntas excessivamente abertas ou multifocais e constatou-se que a inclusão de referências ao final da resposta é viável por meio de instruções apropriadas no prompt (Gao et al., 2023; Said, 2025).
 
-- a importação de todos os 120 batches foi concluída com sucesso;
-- o sistema passou a responder perguntas factuais e temáticas sobre discursos parlamentares com qualidade inicial considerada boa;
-- perguntas específicas e atômicas apresentaram melhor desempenho do que perguntas excessivamente abertas ou multifocais;
-- a inclusão de referências ao final da resposta mostrou-se viável por meio de instruções de prompt.
-
-Na avaliação empírica, observou-se que:
-
-- perguntas sobre dados objetivos e argumentos centrais de um senador tendem a produzir respostas mais precisas;
-- perguntas transversais, comparativas e muito abertas ampliam o risco de sínteses excessivamente largas;
-- a qualidade percebida depende não apenas do modelo, mas da combinação entre chunking, prompt e formulação da consulta.
-
-Esses achados são coerentes com a literatura. Gao et al. (2023) observam que RAG não é uma técnica única, mas um pipeline cujo desempenho emerge da interação entre recuperação, aumento de contexto e geração. Said (2025) reforça que avaliação contínua é necessária para detectar regressões e orientar ajustes.
+Na avaliação empírica, verificou-se que perguntas sobre dados objetivos e argumentos centrais de um senador tendem a produzir respostas mais precisas, enquanto questões transversais, comparativas e muito abertas elevam o risco de sínteses excessivamente amplas. Ficou evidente que a qualidade percebida depende não apenas do modelo subjacente, mas da combinação entre estratégia de chunking, desenho do prompt e formulação da consulta (Singh, 2025; Said, 2025). Esses achados são coerentes com a literatura. Gao et al. (2023) observam que RAG não é uma técnica única, mas um pipeline cujo desempenho emerge da interação entre recuperação, aumento de contexto e geração (Gao et al., 2023). Said (2025) reforça que avaliação contínua é necessária para detectar regressões e orientar ajustes em ambiente de produção (Said, 2025).
 
 ### 5.3 Impacto na administração pública
 
-O impacto potencial para a administração pública é relevante em pelo menos quatro dimensões:
+O impacto potencial do chatbot legislativo com RAG para a administração pública manifesta-se em pelo menos quatro dimensões. Em termos de transparência, as respostas passam a ser ancoradas em discursos públicos e citáveis, facilitando a verificação por terceiros. Em termos de eficiência, há redução do tempo de busca em grandes acervos legislativos, com ganho operacional para gabinetes e equipes técnicas. No que se refere à memória institucional, a recuperação de posicionamentos anteriores, temas recorrentes e evidências documentais torna-se mais rápida e sistemática. Finalmente, quanto ao apoio à decisão, gabinetes e equipes técnicas podem explorar o acervo de forma mais estruturada, usando o chatbot como camada de mediação informacional (Cavalcanti, 2024; Deene, s.d.).
 
-- **transparência**: respostas passam a ser ancoradas em discursos públicos e citáveis;
-- **eficiência**: redução do tempo de busca em grandes acervos legislativos;
-- **memória institucional**: recuperação mais rápida de posicionamentos anteriores, temas recorrentes e evidências documentais;
-- **apoio à decisão**: gabinetes e equipes técnicas podem explorar o acervo de forma mais sistemática.
-
-Além disso, por operar sobre fontes controladas e com possibilidade de referência explícita, a solução é mais compatível com exigências de accountability do que o uso isolado de um chatbot genérico. Esse ponto dialoga tanto com Deene (s.d.) quanto com Cavalcanti (2024).
+Por operar sobre fontes controladas e com possibilidade de referência explícita aos discursos da 56ª Legislatura, a solução é mais compatível com exigências de accountability do que o uso isolado de um chatbot genérico. Esse ponto dialoga com Deene (s.d.) e Cavalcanti (2024), que destacam a importância da governança das fontes e da mediação documental em contextos institucionais (Cavalcanti, 2024; Deene, s.d.).
 
 ## 6. Conclusão e trabalhos futuros
 
 ### 6.1 Revisão das contribuições
 
-O trabalho desenvolveu uma solução funcional de RAG legislativo voltada ao acervo de discursos do Senado Federal, composta por pipeline de preparação documental, banco vetorial, interface de consulta e scripts auxiliares de ingestão e avaliação. O projeto demonstrou que é possível estruturar uma base semântica consultável e responder perguntas em linguagem natural com apoio em evidências recuperadas.
+O trabalho desenvolveu uma solução funcional de chatbot legislativo com RAG voltada ao acervo de discursos da 56ª Legislatura do Senado Federal, composta por um pipeline de preparação documental, um banco vetorial, uma interface de consulta e scripts auxiliares de ingestão e avaliação. O projeto demonstrou que é possível estruturar uma base semântica consultável e responder perguntas em linguagem natural com apoio em evidências recuperadas, alinhando-se à visão de RAG como técnica para aumentar atualidade, explicabilidade e rastreabilidade dos LLMs (Gao et al., 2023).
 
 ### 6.2 Discussão e interpretação crítica dos resultados frente aos objetivos
 
-Frente ao objetivo proposto, os resultados foram positivos. A solução atendeu aos requisitos mínimos de indexação, recuperação, geração e automação de testes. No entanto, a experiência também mostrou que a qualidade de um RAG institucional depende de disciplina metodológica: escolha de chunking, desenho de prompt, governança de metadados e avaliação iterativa influenciam diretamente o comportamento final.
+Considerando o objetivo proposto, os resultados podem ser considerados positivos. A solução atendeu aos requisitos mínimos de indexação da base de discursos da 56ª Legislatura, recuperação de trechos relevantes, geração de respostas e automação de testes, em consonância com os critérios de sucesso definidos (Said, 2025). A experiência também evidenciou que a qualidade de um RAG institucional depende de disciplina metodológica: a escolha da estratégia de chunking, o desenho do prompt, a governança de metadados e a avaliação iterativa influenciam diretamente o comportamento final do chatbot (Gao et al., 2023; Singh, 2025).
 
-Isso confirma a literatura recente. RAG não deve ser entendido apenas como “conectar um LLM a um banco vetorial”, mas como um sistema sociotécnico que exige observabilidade, versionamento e critérios claros de sucesso (SAID, 2025).
+Essa constatação confirma a literatura recente. RAG não deve ser entendido apenas como “conectar um LLM a um banco vetorial”, mas como um sistema sociotécnico que exige observabilidade, versionamento e critérios claros de sucesso, sobretudo quando utilizado para apoiar funções públicas sensíveis (Said, 2025).
 
 ### 6.3 Limitações
 
-As limitações atuais incluem:
-
-- avaliação ainda predominantemente qualitativa e manual;
-- ausência, nesta etapa, de filtros mais sofisticados por autor, período ou tipo de discurso diretamente no fluxo de geração;
-- possibilidade de respostas excessivamente amplas em consultas abertas;
-- dependência de serviços externos para embeddings e parte da geração.
+As limitações atuais incluem uma avaliação ainda predominantemente qualitativa e manual, a ausência, nesta etapa, de filtros mais sofisticados por autor, período ou tipo de discurso diretamente integrados ao fluxo de geração, a possibilidade de respostas excessivamente amplas em consultas abertas e a dependência de serviços externos para embeddings e parte da geração (Said, 2025). Essas limitações dialogam com alertas da literatura sobre riscos operacionais, viés de dados e necessidade de monitoramento contínuo em sistemas RAG (Gao et al., 2023; Said, 2025).
 
 ### 6.4 Próximos passos
 
-Como trabalhos futuros, recomenda-se:
-
-- ampliar a avaliação automática com framework especializado, como RAGAS ou juiz LLM;
-- incorporar filtros estruturados por metadado na recuperação;
-- experimentar reranqueadores mais robustos;
-- testar diferentes estratégias de chunking por tipo documental;
-- implementar pós-processamento determinístico para seção de referências;
-- expandir a solução para outros tipos de documentos legislativos, como pareceres, projetos de lei e notas técnicas;
-- evoluir o sistema para cenários de geração assistida de minutas e discursos, preservando rastreabilidade e revisão humana.
+Como trabalhos futuros, recomenda-se ampliar a avaliação automática com o uso de frameworks especializados, como RAGAS ou abordagens baseadas em “juiz LLM”, de modo a complementar o julgamento humano com métricas sistemáticas. Sugere-se, ainda, incorporar filtros estruturados por metadado na recuperação, experimentar reranqueadores mais robustos, testar diferentes estratégias de chunking por tipo documental, implementar pós-processamento determinístico para a seção de referências e expandir a solução para outros tipos de documentos legislativos, como pareceres, projetos de lei e notas técnicas. Um passo adicional consiste em evoluir o sistema para cenários de geração assistida de minutas e discursos, preservando rastreabilidade e revisões humanas obrigatórias (Gao et al., 2023; Singh, 2025; Said, 2025).
 
 ## Referências
 
@@ -277,3 +138,4 @@ KHALIQ, Mohammed Abdul; et al. RAG-Augmented Reasoning for Political Fact-Checki
 SAID, Adil. RAG in Practice: Exploring Versioning, Observability, and Evaluation in Production Systems. *Towards AI*, 28 ago. 2025. Disponível em: <https://towardsai.net/p/artificial-intelligence/rag-in-practice-exploring-versioning-observability-and-evaluation-in-production-systems>. Acesso em: 8 abr. 2026.
 
 SINGH, Pankaj. 8 Types of Chunking for RAG Systems. *Analytics Vidhya*, 4 abr. 2025. Disponível em: <https://www.analyticsvidhya.com/blog/2025/02/types-of-chunking-for-rag-systems/>. Acesso em: 8 abr. 2026.
+```
