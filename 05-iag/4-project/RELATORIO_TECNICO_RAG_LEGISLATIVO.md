@@ -1,4 +1,3 @@
-```markdown
 # Chatbot Legislativo com RAG para Respostas Auditáveis sobre Discursos da 56ª Legislatura do Senado Federal
 
 ## 1. Introdução
@@ -138,4 +137,3 @@ KHALIQ, Mohammed Abdul; et al. RAG-Augmented Reasoning for Political Fact-Checki
 SAID, Adil. RAG in Practice: Exploring Versioning, Observability, and Evaluation in Production Systems. *Towards AI*, 28 ago. 2025. Disponível em: <https://towardsai.net/p/artificial-intelligence/rag-in-practice-exploring-versioning-observability-and-evaluation-in-production-systems>. Acesso em: 8 abr. 2026.
 
 SINGH, Pankaj. 8 Types of Chunking for RAG Systems. *Analytics Vidhya*, 4 abr. 2025. Disponível em: <https://www.analyticsvidhya.com/blog/2025/02/types-of-chunking-for-rag-systems/>. Acesso em: 8 abr. 2026.
-```
