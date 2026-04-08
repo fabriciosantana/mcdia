@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  gmail-mcp:
+    build: .
+    image: gmail-mcp-server
+    container_name: gmail-mcp
+    #ports:
+    #  - "8000:8000"
+    volumes:
+      # Mount credentials and token files
+      # IMPORTANT: If token.json does not exist on your host machine before running docker-compose,
+      # Docker may mistakenly create a directory named token.json. 
+      # Please run `python main.py auth` locally first to generate token.json or create an empty file.
+      - ./credentials.json:/app/credentials.json:ro
+      - ./token.json:/app/token.json
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    network_mode: host
