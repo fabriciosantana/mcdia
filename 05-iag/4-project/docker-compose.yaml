@@ -1,0 +1,79 @@
+services:
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: chromadb
+    volumes:
+      - chromadb_data:/chroma/chroma
+    #ports:
+    #  - "8000:8000"
+    restart: unless-stopped
+    network_mode: host
+
+  docling:
+    image: ghcr.io/docling-project/docling-serve-cpu:latest
+    container_name: docling-service
+    environment:
+      - HF_TOKEN=${HF_TOKEN:-}
+      - DOCLING_MAX_WORKERS=8
+    volumes:
+      - docling_cache:/root/.cache/huggingface
+    #ports:
+    #  - "5001:5001"
+    restart: unless-stopped
+    network_mode: host
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    depends_on:
+      - chromadb
+      - docling
+    #ports:
+    #  - "3000:8080"
+    volumes:
+      - open_webui_data:/app/backend/data
+    environment:
+
+      # Ollama (local ou nuvem)
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://localhost:11434}
+      - OLLAMA_API_KEY=${OLLAMA_API_KEY:-}
+      - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE:-24h}
+
+      # Base vetorial
+      - VECTOR_DB=${VECTOR_DB:-chroma}
+      - CHROMA_HTTP_HOST=${CHROMA_HTTP_HOST:-localhost}
+      - CHROMA_HTTP_PORT=${CHROMA_HTTP_PORT:-8000}
+      - CHROMA_HTTP_SSL=${CHROMA_HTTP_SSL:-false}
+      - CHROMA_HTTP_HEADERS=${CHROMA_HTTP_HEADERS:-}
+      - CHROMA_TENANT=${CHROMA_TENANT:-default_tenant}
+      - CHROMA_DATABASE=${CHROMA_DATABASE:-default_database}
+
+      # Embeddings (ollama ou openai)
+      - RAG_EMBEDDING_ENGINE=${RAG_EMBEDDING_ENGINE:-ollama}
+      - RAG_EMBEDDING_MODEL=${RAG_EMBEDDING_MODEL:-qwen3-embedding:0.6b}
+      - RAG_EMBEDDING_BATCH_SIZE=${RAG_EMBEDDING_BATCH_SIZE:-32}
+      - RAG_OPENAI_API_BASE_URL=${RAG_OPENAI_API_BASE_URL:-https://api.openai.com/v1}
+      - RAG_OPENAI_API_KEY=${RAG_OPENAI_API_KEY:-}
+
+      # Geração (OpenAI)
+      - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+
+      # Timeout ampliado
+      - WEBUI_TIMEOUT=300
+
+    restart: unless-stopped
+    network_mode: host
+
+volumes:
+
+  chromadb_data:
+    name: chromadb_data
+
+  docling_cache:
+    name: docling_cache
+
+  open_webui_data:
+    name: open_webui_data
