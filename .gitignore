@@ -208,7 +208,5 @@ __marimo__/
 
 _data/
 .vscode/settings.json
-eval/
-knowledge_openwebui/
 05-iag/3-agentes/gmail-mcp-server/credentials.json
 05-iag/3-agentes/gmail-mcp-server/token.json
