@@ -2,48 +2,30 @@
 
 A solução implementa um chatbot legislativo para consultas auditáveis sobre discursos da 56ª Legislatura do Senado Federal (2019-2023), aplicando a estratégia _retrieval augmented generation_ que usa recuperação semântica, geração orientada por contexto e oferece rastreabilidade por metadados.
 
-O objetivo deste diretório é permitir que outra pessoa:
-
-- entenda a arquitetura técnica da solução;
-- regenere a base de conhecimento a partir do dataset original;
-- suba o ambiente localmente;
-- use provedores em nuvem para embeddings, geração e banco vetorial;
-- importe os dados no Open WebUI;
-- execute avaliações reproduzíveis do RAG.
-
-O artigo acadêmico anexado neste diretório complementa a fundamentação teórica e a discussão dos resultados. Este README foca na replicação técnica da solução.
-
-## 1. O que foi construído
+## 1. Componentes
 
 A solução combina:
 
-- `Open WebUI` como interface de chat, orquestração do fluxo RAG e ponto de ingestão da knowledge base;
+- `Open WebUI` como interface de chat, orquestração do fluxo RAG e ponto de ingestão da _knowledge base_;
 - `ChromaDB` como banco vetorial;
 - `Ollama` como opção para modelos locais de geração e embeddings;
-- `OpenAI API` como opção para geração e embeddings;
+- `OpenAI API` como opção para geração e embeddings por meio de API;
 - scripts Python para:
   - baixar o dataset no Hugging Face;
   - selecionar o texto prioritário de cada discurso;
   - gerar chunks com metadados;
-  - produzir lotes Markdown compatíveis com o Open WebUI;
-  - importar lotes via API;
+  - produzir lotes Markdown (pré-chuncks);
+  - importar lotes via API (opcionalmente, é possível importar os dados manualmente);
   - avaliar automaticamente a knowledge base.
 
 ## 2. Escopo do corpus
 
-- Fonte lógica: dataset `fabriciosantana/discursos-senado-legislatura-56`
 - Fonte original do dado: dados abertos do Senado Federal
-- Recorte temporal: 2019-02-01 a 2023-01-31
+- Fonte derivada: dataset `fabriciosantana/discursos-senado-legislatura-56`(https://huggingface.co/datasets/fabriciosantana/discursos-senado-legislatura-56)
+- Recorte temporal: 2019-02-01 a 2023-01-31 (56ª Legislatura do Senado Federal)
 - Unidade documental: discursos da 56ª Legislatura do Senado Federal
 
-Regras de seleção textual implementadas em [`scripts/build_openwebui_knowledge_from_hf.py`](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py):
-
-1. usar `TextoDiscursoIntegral` quando disponível;
-2. usar `Resumo` como fallback;
-3. usar `Indexacao` como fallback final.
-
-Cada chunk carrega metadados úteis para auditabilidade:
-
+Scripts de preparação de dados para importação no Open WebUI disponível em [`scripts/build_openwebui_knowledge_from_hf.py`](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py). Cada chunk carrega metadados úteis para auditabilidade:
 - data;
 - autor;
 - partido;
@@ -61,7 +43,6 @@ Cada chunk carrega metadados úteis para auditabilidade:
 ├── .env.example
 ├── docker-compose.yaml
 ├── README.md
-├── Relatório - Chatbot Legislativo com RAG para respostas auditáveis...
 ├── eval/
 │   ├── RUBRIC.md
 │   └── discursos_questions.json
@@ -74,8 +55,6 @@ Cada chunk carrega metadados úteis para auditabilidade:
     ├── test_chroma_cloud_client.py
     └── test_chroma_connection.py
 ```
-
-Observação importante: os artefatos gerados (`discursos_chunks.jsonl`, `md_batches/` e `build_metadata.json`) não estão versionados neste diretório no estado atual do repositório. Eles podem ser regenerados pelo script de build descrito abaixo.
 
 ## 4. Arquitetura da solução
 
