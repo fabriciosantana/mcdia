@@ -203,6 +203,8 @@ cp .env.example .env
 | `CHROMA_HTTP_HEADERS` | cabeçalhos extras, ex.: token |
 | `OPENWEBUI_URL` | URL da instância do Open WebUI usada pelos scripts |
 | `OPENWEBUI_API_KEY` | chave da API do Open WebUI usada pelos scripts |
+| `OPENWEBUI_EVAL_MODEL` | modelo padrão usado pelo `run_rag_eval.py` para gerar respostas |
+| `OPENWEBUI_JUDGE_MODEL` | modelo opcional usado para aplicar a rubrica; se vazio, reutiliza `OPENWEBUI_EVAL_MODEL` |
 
 ### Perfis de configuração suportados
 
@@ -465,6 +467,11 @@ Execução padrão:
 python scripts/run_rag_eval.py
 ```
 
+Modelo padrão usado pelo script:
+
+- geração das respostas: `OPENWEBUI_EVAL_MODEL` ou `gpt-5-nano` por padrão
+- julgamento das métricas: `OPENWEBUI_JUDGE_MODEL`; se estiver vazio, reutiliza o modelo de geração
+
 Executar apenas as 3 primeiras perguntas:
 
 ```bash
@@ -475,6 +482,12 @@ Trocar o modelo:
 
 ```bash
 python scripts/run_rag_eval.py --model gpt-5-nano
+```
+
+Usar um modelo separado para o juiz:
+
+```bash
+python scripts/run_rag_eval.py --model gpt-5-nano --judge-model gpt-5.4-nano
 ```
 
 Aumentar a pausa entre perguntas:
@@ -489,7 +502,27 @@ Resultados gerados:
 - `eval/results/*.md`
 - `eval/results/*.csv`
 
-O `.csv` serve como planilha-base para revisão manual com a rubrica.
+Por padrao, o script tambem aplica a rubrica automaticamente e preenche no `.csv`:
+
+- `adherence_score`
+- `factual_score`
+- `source_focus_score`
+- `synthesis_score`
+- `hallucination_score`
+- `total_score`
+- `review_notes`
+
+Se quiser gerar apenas as respostas e deixar a pontuacao para revisao manual posterior:
+
+```bash
+python scripts/run_rag_eval.py --no-auto-score
+```
+
+Para usar um modelo diferente como juiz:
+
+```bash
+python scripts/run_rag_eval.py --judge-model gpt-5-nano
+```
 
 ## 15. Comandos úteis de operação
 

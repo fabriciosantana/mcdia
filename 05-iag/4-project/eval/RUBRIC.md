@@ -2,7 +2,7 @@
 
 Use esta rubric para classificar cada resposta em uma planilha ou revisao manual.
 
-## Escala sugerida
+## Escala
 
 - `2`: bom
 - `1`: aceitavel

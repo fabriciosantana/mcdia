@@ -4,6 +4,7 @@
 Salva:
 - JSONL com resposta completa
 - Markdown resumido para revisao humana
+- CSV com metricas preenchidas automaticamente a partir da rubrica
 """
 
 from __future__ import annotations
@@ -19,6 +20,10 @@ from pathlib import Path
 from typing import Any
 
 import requests
+
+
+def json_dumps_compact(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=True, separators=(",", ":"))
 
 
 def load_dotenv(dotenv_path: Path) -> None:
@@ -73,7 +78,7 @@ def ask_openwebui(
     base_url: str,
     token: str,
     model: str,
-    knowledge_id: str,
+    knowledge_id: str | None,
     question: str,
     system_prompt: str,
     max_retries: int,
@@ -85,9 +90,10 @@ def ask_openwebui(
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": question},
         ],
-        "files": [{"type": "collection", "id": knowledge_id}],
         "stream": False,
     }
+    if knowledge_id:
+        payload["files"] = [{"type": "collection", "id": knowledge_id}]
 
     attempt = 0
     while True:
@@ -111,6 +117,98 @@ def ask_openwebui(
             time.sleep(sleep_seconds)
 
 
+def parse_json_object(text: str) -> dict[str, Any]:
+    text = text.strip()
+    if not text:
+        raise ValueError("Resposta vazia ao tentar interpretar JSON.")
+    try:
+        value = json.loads(text)
+    except json.JSONDecodeError:
+        start = text.find("{")
+        end = text.rfind("}")
+        if start == -1 or end == -1 or start >= end:
+            raise
+        value = json.loads(text[start : end + 1])
+    if not isinstance(value, dict):
+        raise ValueError("O payload de avaliacao nao e um objeto JSON.")
+    return value
+
+
+def coerce_score(raw_value: Any, field_name: str) -> int:
+    try:
+        score = int(raw_value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{field_name} invalido: {raw_value!r}") from exc
+    if score not in {0, 1, 2}:
+        raise ValueError(f"{field_name} fora da escala 0-2: {score}")
+    return score
+
+
+def build_judge_prompt(rubric_text: str, question: str, answer: str) -> str:
+    return (
+        "Voce e um avaliador estrito de RAG.\n"
+        "Aplique a rubrica abaixo para avaliar a resposta do assistente.\n"
+        "Use apenas a escala 0, 1 ou 2 em cada criterio.\n"
+        "Retorne somente um objeto JSON valido, sem markdown, sem comentarios extras.\n"
+        "Campos obrigatorios do JSON: "
+        "adherence_score, factual_score, source_focus_score, synthesis_score, "
+        "hallucination_score, review_notes.\n"
+        "review_notes deve ser uma string curta em portugues com os principais achados.\n\n"
+        f"RUBRICA:\n{rubric_text.strip()}\n\n"
+        f"PERGUNTA:\n{question.strip()}\n\n"
+        f"RESPOSTA:\n{answer.strip()}\n"
+    )
+
+
+def judge_answer(
+    base_url: str,
+    token: str,
+    model: str,
+    rubric_text: str,
+    question: str,
+    answer: str,
+    max_retries: int,
+    initial_backoff: float,
+) -> dict[str, Any]:
+    judge_prompt = build_judge_prompt(rubric_text=rubric_text, question=question, answer=answer)
+    response = ask_openwebui(
+        base_url=base_url,
+        token=token,
+        model=model,
+        knowledge_id="",
+        question=judge_prompt,
+        system_prompt=(
+            "Voce eh um avaliador automatico. "
+            "Responda apenas com JSON valido e estrito."
+        ),
+        max_retries=max_retries,
+        initial_backoff=initial_backoff,
+    )
+    parsed = parse_json_object(extract_answer(response))
+    adherence_score = coerce_score(parsed.get("adherence_score"), "adherence_score")
+    factual_score = coerce_score(parsed.get("factual_score"), "factual_score")
+    source_focus_score = coerce_score(parsed.get("source_focus_score"), "source_focus_score")
+    synthesis_score = coerce_score(parsed.get("synthesis_score"), "synthesis_score")
+    hallucination_score = coerce_score(parsed.get("hallucination_score"), "hallucination_score")
+    review_notes = str(parsed.get("review_notes", "")).strip()
+    return {
+        "adherence_score": adherence_score,
+        "factual_score": factual_score,
+        "source_focus_score": source_focus_score,
+        "synthesis_score": synthesis_score,
+        "hallucination_score": hallucination_score,
+        "total_score": (
+            adherence_score
+            + factual_score
+            + source_focus_score
+            + synthesis_score
+            + hallucination_score
+        ),
+        "review_notes": review_notes,
+        "judge_response": response,
+    }
+
+
 def write_markdown_summary(path: Path, rows: list[dict[str, Any]]) -> None:
     lines = ["# RAG Eval Results", ""]
     for row in rows:
@@ -123,6 +221,20 @@ def write_markdown_summary(path: Path, rows: list[dict[str, Any]]) -> None:
         lines.append(row["answer"].strip() or "<vazio>")
         lines.append("")
         lines.append(f"**Status**: {row['status']}")
+        if row.get("adherence_score", "") != "":
+            lines.append("")
+            lines.append(
+                "**Metricas**: "
+                f"aderencia={row['adherence_score']} | "
+                f"precisao={row['factual_score']} | "
+                f"fontes={row['source_focus_score']} | "
+                f"sintese={row['synthesis_score']} | "
+                f"confianca={row['hallucination_score']} | "
+                f"total={row['total_score']}"
+            )
+        if row.get("review_notes"):
+            lines.append("")
+            lines.append(f"**Notas de revisao**: {row['review_notes']}")
         lines.append("")
     path.write_text("\n".join(lines), encoding="utf-8")
 
@@ -154,13 +266,13 @@ def write_csv_template(path: Path, rows: list[dict[str, Any]]) -> None:
                     "question": row["question"],
                     "execution_status": row["status"],
                     "answer": row["answer"],
-                    "adherence_score": "",
-                    "factual_score": "",
-                    "source_focus_score": "",
-                    "synthesis_score": "",
-                    "hallucination_score": "",
-                    "total_score": "",
-                    "review_notes": "",
+                    "adherence_score": row.get("adherence_score", ""),
+                    "factual_score": row.get("factual_score", ""),
+                    "source_focus_score": row.get("source_focus_score", ""),
+                    "synthesis_score": row.get("synthesis_score", ""),
+                    "hallucination_score": row.get("hallucination_score", ""),
+                    "total_score": row.get("total_score", ""),
+                    "review_notes": row.get("review_notes", ""),
                 }
             )
 
@@ -181,6 +293,21 @@ def main() -> int:
         "--model",
         default=os.getenv("OPENWEBUI_EVAL_MODEL", "gpt-5-nano"),
         help="Modelo a usar via Open WebUI.",
+    )
+    parser.add_argument(
+        "--judge-model",
+        default=os.getenv("OPENWEBUI_JUDGE_MODEL", ""),
+        help="Modelo para aplicar a rubrica. Default: reutiliza --model.",
+    )
+    parser.add_argument(
+        "--rubric-file",
+        default="eval/RUBRIC.md",
+        help="Arquivo Markdown com a rubrica de avaliacao.",
+    )
+    parser.add_argument(
+        "--no-auto-score",
+        action="store_true",
+        help="Nao preenche automaticamente as metricas no CSV.",
     )
     parser.add_argument(
         "--limit",
@@ -214,7 +341,10 @@ def main() -> int:
     base_url = require_env("OPENWEBUI_URL").rstrip("/")
     token = require_env("OPENWEBUI_API_KEY")
     questions_path = (project_root / args.questions_file).resolve()
+    rubric_path = (project_root / args.rubric_file).resolve()
     questions = json.loads(questions_path.read_text(encoding="utf-8"))
+    rubric_text = rubric_path.read_text(encoding="utf-8")
+    judge_model = args.judge_model.strip() or args.model
     if args.limit > 0:
         questions = questions[: args.limit]
 
@@ -257,6 +387,19 @@ def main() -> int:
                     "status": "ok",
                     "response": response,
                 }
+                if not args.no_auto_score:
+                    print(f"  avaliando com rubrica via modelo {judge_model}")
+                    judge = judge_answer(
+                        base_url=base_url,
+                        token=token,
+                        model=judge_model,
+                        rubric_text=rubric_text,
+                        question=item["question"],
+                        answer=answer,
+                        max_retries=args.max_retries,
+                        initial_backoff=args.initial_backoff,
+                    )
+                    row.update(judge)
             except Exception as exc:  # noqa: BLE001
                 row = {
                     "id": item["id"],
@@ -265,9 +408,10 @@ def main() -> int:
                     "answer": "",
                     "status": f"error: {exc}",
                     "response": None,
+                    "review_notes": "",
                 }
             rows.append(row)
-            jsonl_file.write(json.dumps(row, ensure_ascii=True) + "\n")
+            jsonl_file.write(json_dumps_compact(row) + "\n")
             jsonl_file.flush()
             time.sleep(args.sleep_between)
 
