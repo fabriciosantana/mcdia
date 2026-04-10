@@ -1,6 +1,6 @@
 # Chatbot Legislativo com RAG
 
-Projeto final da disciplina de Inteligência Artificial Generativa. A solução implementa um chatbot legislativo para consultas auditáveis sobre discursos da 56ª Legislatura do Senado Federal (2019-2023), usando recuperação semântica, geração orientada por contexto e rastreabilidade por metadados.
+A solução implementa um chatbot legislativo para consultas auditáveis sobre discursos da 56ª Legislatura do Senado Federal (2019-2023), aplicando a estratégia _retrieval augmented generation_ que usa recuperação semântica, geração orientada por contexto e oferece rastreabilidade por metadados.
 
 O objetivo deste diretório é permitir que outra pessoa:
 
