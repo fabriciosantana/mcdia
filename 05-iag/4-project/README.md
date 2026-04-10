@@ -1,6 +1,6 @@
 # Chatbot Legislativo com RAG
 
-A solução implementa um chatbot legislativo para consultas auditáveis sobre discursos da 56ª Legislatura do Senado Federal (2019-2023), aplicando a estratégia _retrieval augmented generation_ que usa recuperação semântica, geração orientada por contexto e oferece rastreabilidade por metadados.
+A solução implementa um chatbot legislativo para consultas auditáveis sobre discursos da 56ª Legislatura do Senado Federal (2019-2023), aplicando a estratégia _retrieval augmented generation_, que usa recuperação semântica, geração orientada por contexto e oferece rastreabilidade por metadados.
 
 ## 1. Componentes
 
@@ -140,7 +140,7 @@ flowchart TD
 - `chromadb`: persistência vetorial
 - `docling`: processamento de documentos dentro do fluxo do Open WebUI
 
-### Parâmetros principais observados no projeto
+### Parâmetros principais usados no projeto
 
 - chunking no script de preparação:
   - `max_words=850`
@@ -151,18 +151,6 @@ flowchart TD
   - engine remota validada no experimento: `openai`
 - parâmetros de ingestão no Open WebUI:
   - lote de embeddings: `32`
-
-### Escala registrada no artigo
-
-Na execução completa descrita no artigo:
-
-- `15.729` registros de entrada foram lidos;
-- `15.726` registros resultaram em texto útil;
-- `3` registros foram descartados;
-- `23.806` chunks foram gerados;
-- `120` arquivos Markdown de ingestão foram produzidos.
-
-Esses números são úteis como referência para validar uma nova execução do pipeline.
 
 ## 7. Pré-requisitos
 
@@ -186,8 +174,6 @@ python -m venv .venv
 source .venv/bin/activate
 pip install pandas pyarrow huggingface_hub requests chromadb
 ```
-
-`pyarrow` é necessário para leitura do arquivo parquet.
 
 ## 8. Configuração do ambiente
 
@@ -239,7 +225,7 @@ CHROMA_TENANT=default_tenant
 CHROMA_DATABASE=default_database
 ```
 
-#### Perfil 2: híbrido validado no projeto
+#### Perfil 2: híbrido
 
 - geração: OpenAI
 - embeddings: OpenAI
@@ -321,8 +307,6 @@ docker compose down
 
 Se você quiser usar modelos locais para geração e embeddings, instale e suba o Ollama no host.
 
-Exemplo de preparação:
-
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull qwen3-embedding:0.6b
@@ -378,8 +362,6 @@ python scripts/test_chroma_cloud_client.py
 ## 12. Regenerando os artefatos da knowledge base
 
 Use este passo quando `knowledge_openwebui/md_batches/` não estiver presente ou quando você quiser reconstruir a base.
-
-Comando completo:
 
 ```bash
 python scripts/build_openwebui_knowledge_from_hf.py \
@@ -473,8 +455,6 @@ python scripts/import_batches_to_openwebui.py \
 
 ## 14. Avaliação do RAG
 
-Arquivos relevantes:
-
 - [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json)
 - [`eval/RUBRIC.md`](/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md)
 - [`scripts/run_rag_eval.py`](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py)
@@ -539,32 +519,3 @@ docker compose ps
 docker compose down
 docker compose up -d
 ```
-
-## 16. Limitações práticas observadas
-
-- perguntas factuais e bem delimitadas tendem a performar melhor do que perguntas muito amplas;
-- o desempenho é sensível à estratégia de chunking;
-- mudar o modelo de embedding pode exigir reindexação completa;
-- quando embeddings e geração dependem de provedores externos, custo, latência e rate limit passam a fazer parte do desenho operacional;
-- a qualidade final depende da combinação entre retrieval, prompt, chunking e formulação da pergunta.
-
-## 17. Ordem recomendada para replicação
-
-1. configurar `.env`;
-2. subir `docker compose up -d`;
-3. validar Chroma local ou remoto;
-4. regenerar `knowledge_openwebui/` se os lotes não estiverem presentes;
-5. criar a Knowledge Base no Open WebUI;
-6. importar os batches;
-7. testar perguntas manualmente na interface;
-8. executar `run_rag_eval.py`;
-9. revisar os resultados com a rubrica.
-
-## 18. Arquivos-chave para leitura rápida
-
-- [`docker-compose.yaml`](/workspaces/mcdia/05-iag/4-project/docker-compose.yaml): serviços e integração da stack
-- [`.env.example`](/workspaces/mcdia/05-iag/4-project/.env.example): configuração-base
-- [`scripts/build_openwebui_knowledge_from_hf.py`](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py): preparação da base
-- [`scripts/import_batches_to_openwebui.py`](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py): ingestão automatizada
-- [`scripts/run_rag_eval.py`](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py): avaliação automatizada
-- [`Relatório - Chatbot Legislativo com RAG para respostas auditáveis sobre discursos da 56ª Legislatura do Senado Federal.pdf`](/workspaces/mcdia/05-iag/4-project/Relatório%20-%20Chatbot%20Legislativo%20com%20RAG%20para%20respostas%20audit%C3%A1veis%20sobre%20discursos%20da%2056%C2%AA%20Legislatura%20do%20Senado%20Federal.pdf): fundamentação teórica e resultados do trabalho
