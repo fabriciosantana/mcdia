@@ -1,24 +1,50 @@
-# Importing In OpenWebUI
+# Importando a base no Open WebUI
 
-This folder was generated from:
+Esta pasta é o destino dos artefatos gerados por:
+
+- `scripts/build_openwebui_knowledge_from_hf.py`
+
+Fonte de dados esperada:
+
 - Dataset: `fabriciosantana/discursos-senado-legislatura-56`
-- Source file: `data/full/discursos_2019-02-01_2023-01-31.parquet`
+- Arquivo parquet: `data/full/discursos_2019-02-01_2023-01-31.parquet`
 
-Generated artifacts:
-- `discursos_chunks.jsonl`: structured chunks with metadata (for custom pipelines)
-- `md_batches/`: markdown files ready for OpenWebUI Knowledge upload
-- `build_metadata.json`: generation summary
+Artefatos gerados quando a preparação é executada:
 
-## Quick Import Steps
+- `discursos_chunks.jsonl`: chunks estruturados com metadados
+- `md_batches/`: arquivos Markdown prontos para ingestão no Open WebUI
+- `build_metadata.json`: resumo quantitativo da geração
 
-1. Open OpenWebUI admin/user panel.
-2. Go to `Knowledge`.
-3. Create a new knowledge base (for example: `Discursos Senado 56`).
-4. Add files from `md_batches/` (multiple upload is recommended).
-5. Wait for indexing to finish.
+Observação: os lotes Markdown e o `jsonl` podem não estar versionados no repositório. Se esta pasta contiver apenas este README, regenere os artefatos pelo comando documentado no README principal do projeto.
 
-## Notes
+## Fluxo recomendado
 
-- Generated with `max_words=850` and `overlap_words=150`.
-- Current output has `120` markdown files.
-- If you want fewer/larger files, regenerate with a higher `--chunks-per-file` value.
+1. Gere os lotes com `build_openwebui_knowledge_from_hf.py`.
+2. Crie a Knowledge Base no Open WebUI.
+3. Descubra o `knowledge_id`.
+4. Importe os batches via `scripts/import_batches_to_openwebui.py`.
+
+## Upload manual
+
+Se preferir usar a interface:
+
+1. abra `Knowledge` no Open WebUI;
+2. crie uma knowledge base;
+3. faça upload múltiplo dos arquivos em `md_batches/`;
+4. aguarde o término da indexação.
+
+## Upload automatizado
+
+```bash
+python scripts/import_batches_to_openwebui.py \
+  --knowledge-id <knowledge_id> \
+  --pattern 'knowledge_openwebui/md_batches/batch_*.md'
+```
+
+## Parâmetros usados na geração validada no projeto
+
+- `max_words=850`
+- `overlap_words=150`
+- `chunks_per_file=200`
+
+Na execução completa descrita no artigo, isso resultou em `120` arquivos Markdown.
