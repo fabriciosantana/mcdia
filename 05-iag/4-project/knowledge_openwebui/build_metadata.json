@@ -1,0 +1,14 @@
+{
+  "repo_id": "fabriciosantana/discursos-senado-legislatura-56",
+  "parquet_local_path": "/home/vscode/.cache/huggingface/hub/datasets--fabriciosantana--discursos-senado-legislatura-56/snapshots/a23f7b268c25040c64560d2be870d11224c2c105/data/full/discursos_2019-02-01_2023-01-31.parquet",
+  "total_input_rows": 15729,
+  "written_rows": 15726,
+  "skipped_rows": 3,
+  "total_chunks": 23806,
+  "max_words": 850,
+  "overlap_words": 150,
+  "chunks_per_file": 200,
+  "markdown_batch_files": 120,
+  "jsonl_path": "/workspaces/mcdia/05-iag/2-rag/knowledge_openwebui/discursos_chunks.jsonl",
+  "markdown_dir": "/workspaces/mcdia/05-iag/2-rag/knowledge_openwebui/md_batches"
+}
