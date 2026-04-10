@@ -134,6 +134,10 @@ def parse_json_object(text: str) -> dict[str, Any]:
     return value
 
 
+def load_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8").strip()
+
+
 def coerce_score(raw_value: Any, field_name: str) -> int:
     try:
         score = int(raw_value)
@@ -144,20 +148,11 @@ def coerce_score(raw_value: Any, field_name: str) -> int:
     return score
 
 
-def build_judge_prompt(rubric_text: str, question: str, answer: str) -> str:
-    return (
-        "Voce e um avaliador estrito de RAG.\n"
-        "Aplique a rubrica abaixo para avaliar a resposta do assistente.\n"
-        "Use apenas a escala 0, 1 ou 2 em cada criterio.\n"
-        "Retorne somente um objeto JSON valido, sem markdown, sem comentarios extras.\n"
-        "Campos obrigatorios do JSON: "
-        "adherence_score, factual_score, source_focus_score, synthesis_score, "
-        "hallucination_score, review_notes.\n"
-        "review_notes deve ser uma string curta em portugues com os principais achados.\n\n"
-        f"RUBRICA:\n{rubric_text.strip()}\n\n"
-        f"PERGUNTA:\n{question.strip()}\n\n"
-        f"RESPOSTA:\n{answer.strip()}\n"
-    )
+def build_prompt_from_template(template: str, replacements: dict[str, str]) -> str:
+    prompt = template
+    for key, value in replacements.items():
+        prompt = prompt.replace(f"{{{key}}}", value.strip())
+    return prompt
 
 
 def judge_answer(
@@ -165,22 +160,28 @@ def judge_answer(
     token: str,
     model: str,
     rubric_text: str,
+    judge_system_prompt: str,
+    judge_user_template: str,
     question: str,
     answer: str,
     max_retries: int,
     initial_backoff: float,
 ) -> dict[str, Any]:
-    judge_prompt = build_judge_prompt(rubric_text=rubric_text, question=question, answer=answer)
+    judge_prompt = build_prompt_from_template(
+        template=judge_user_template,
+        replacements={
+            "rubric_text": rubric_text,
+            "question": question,
+            "answer": answer,
+        },
+    )
     response = ask_openwebui(
         base_url=base_url,
         token=token,
         model=model,
         knowledge_id="",
         question=judge_prompt,
-        system_prompt=(
-            "Voce eh um avaliador automatico. "
-            "Responda apenas com JSON valido e estrito."
-        ),
+        system_prompt=judge_system_prompt,
         max_retries=max_retries,
         initial_backoff=initial_backoff,
     )
@@ -305,6 +306,21 @@ def main() -> int:
         help="Arquivo Markdown com a rubrica de avaliacao.",
     )
     parser.add_argument(
+        "--answer-system-prompt-file",
+        default="eval/prompts/rag_answer_system.md",
+        help="Arquivo de prompt de sistema usado para gerar as respostas RAG.",
+    )
+    parser.add_argument(
+        "--judge-system-prompt-file",
+        default="eval/prompts/rag_judge_system.md",
+        help="Arquivo de prompt de sistema usado pelo juiz automatico.",
+    )
+    parser.add_argument(
+        "--judge-user-prompt-file",
+        default="eval/prompts/rag_judge_user.md",
+        help="Template do prompt de usuario do juiz. Suporta {rubric_text}, {question} e {answer}.",
+    )
+    parser.add_argument(
         "--no-auto-score",
         action="store_true",
         help="Nao preenche automaticamente as metricas no CSV.",
@@ -342,19 +358,19 @@ def main() -> int:
     token = require_env("OPENWEBUI_API_KEY")
     questions_path = (project_root / args.questions_file).resolve()
     rubric_path = (project_root / args.rubric_file).resolve()
+    answer_system_prompt_path = (project_root / args.answer_system_prompt_file).resolve()
+    judge_system_prompt_path = (project_root / args.judge_system_prompt_file).resolve()
+    judge_user_prompt_path = (project_root / args.judge_user_prompt_file).resolve()
     questions = json.loads(questions_path.read_text(encoding="utf-8"))
     rubric_text = rubric_path.read_text(encoding="utf-8")
+    answer_system_prompt = load_text(answer_system_prompt_path)
+    judge_system_prompt = load_text(judge_system_prompt_path)
+    judge_user_template = load_text(judge_user_prompt_path)
     judge_model = args.judge_model.strip() or args.model
     if args.limit > 0:
         questions = questions[: args.limit]
 
     knowledge_id = get_knowledge_id(base_url, token, args.knowledge_name)
-
-    system_prompt = (
-        "Responda usando prioritariamente o contexto recuperado. "
-        "Nao invente fatos. Se nao encontrar a resposta no contexto, diga isso claramente. "
-        "Responda em portugues e distribua citacoes ao longo da resposta quando aplicavel."
-    )
 
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output_dir = project_root / "eval" / "results"
@@ -374,7 +390,7 @@ def main() -> int:
                     model=args.model,
                     knowledge_id=knowledge_id,
                     question=item["question"],
-                    system_prompt=system_prompt,
+                    system_prompt=answer_system_prompt,
                     max_retries=args.max_retries,
                     initial_backoff=args.initial_backoff,
                 )
@@ -394,6 +410,8 @@ def main() -> int:
                         token=token,
                         model=judge_model,
                         rubric_text=rubric_text,
+                        judge_system_prompt=judge_system_prompt,
+                        judge_user_template=judge_user_template,
                         question=item["question"],
                         answer=answer,
                         max_retries=args.max_retries,

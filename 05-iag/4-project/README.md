@@ -459,6 +459,9 @@ python scripts/import_batches_to_openwebui.py \
 
 - [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json)
 - [`eval/RUBRIC.md`](/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md)
+- [`eval/prompts/rag_answer_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_answer_system.md)
+- [`eval/prompts/rag_judge_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_system.md)
+- [`eval/prompts/rag_judge_user.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_user.md)
 - [`scripts/run_rag_eval.py`](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py)
 
 Execução padrão:
@@ -471,6 +474,8 @@ Modelo padrão usado pelo script:
 
 - geração das respostas: `OPENWEBUI_EVAL_MODEL` ou `gpt-5-nano` por padrão
 - julgamento das métricas: `OPENWEBUI_JUDGE_MODEL`; se estiver vazio, reutiliza o modelo de geração
+- prompts: carregados de arquivos em `eval/prompts/`, desacoplados da lógica do script
+- o prompt de eval pode e deve ser diferente do prompt de produção do Open WebUI; aqui ele foi mantido mais rígido e enxuto para medir grounding, foco e reconhecimento de limites
 
 Executar apenas as 3 primeiras perguntas:
 
@@ -522,6 +527,15 @@ Para usar um modelo diferente como juiz:
 
 ```bash
 python scripts/run_rag_eval.py --judge-model gpt-5-nano
+```
+
+Para testar uma variante de prompt sem alterar o script:
+
+```bash
+python scripts/run_rag_eval.py \
+  --answer-system-prompt-file eval/prompts/rag_answer_system.md \
+  --judge-system-prompt-file eval/prompts/rag_judge_system.md \
+  --judge-user-prompt-file eval/prompts/rag_judge_user.md
 ```
 
 ## 15. Comandos úteis de operação
