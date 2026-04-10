@@ -60,39 +60,39 @@ Scripts de preparação de dados para importação no Open WebUI disponível em 
 
 ```mermaid
 flowchart LR
-    U[Usuario] --> UI[Open WebUI<br/>chat + RAG orchestration]
+    U[Usuario] --> W[Open WebUI]
 
-    subgraph Runtime["Ambiente de execucao"]
-        UI
-        DOC[Docling service<br/>document processing]
-        VDB[(ChromaDB<br/>colecoes vetoriais)]
+    subgraph Runtime
+        W
+        C[ChromaDB]
+        D[Docling]
     end
 
-    subgraph Models["Model providers"]
-        OLL[Ollama<br/>local ou remoto]
-        OAI[OpenAI API<br/>chat + embeddings]
+    subgraph Providers
+        O[Ollama]
+        A[OpenAI API]
     end
 
-    subgraph DataPrep["Preparacao e ingestao"]
-        HF[(Hugging Face Dataset)]
-        BUILD[build_openwebui_knowledge_from_hf.py]
-        BATCH[Markdown batches + JSONL]
-        IMPORT[import_batches_to_openwebui.py]
+    subgraph Prep
+        H[Hugging Face Dataset]
+        B[build_openwebui_knowledge_from_hf.py]
+        M[Markdown batches e JSONL]
+        I[import_batches_to_openwebui.py]
     end
 
-    HF --> BUILD
-    BUILD --> BATCH
-    BATCH --> IMPORT
-    IMPORT --> UI
+    H --> B
+    B --> M
+    M --> I
+    I --> W
 
-    UI --> DOC
-    UI --> VDB
-    UI --> OLL
-    UI --> OAI
+    W --> C
+    W --> D
+    W --> O
+    W --> A
 
-    VDB --> UI
-    OLL --> UI
-    OAI --> UI
+    C --> W
+    O --> W
+    A --> W
 ```
 
 ### Fluxo de consulta
@@ -108,28 +108,28 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[Dataset no Hugging Face<br/>discursos-senado-legislatura-56] --> B[Download do parquet]
+    A[Dataset no Hugging Face] --> B[Download do parquet]
     B --> C[Leitura com pandas]
     C --> D{Selecao do texto}
-    D -->|1| E[TextoDiscursoIntegral]
-    D -->|2| F[Resumo]
-    D -->|3| G[Indexacao]
+    D --> E[TextoDiscursoIntegral]
+    D --> F[Resumo]
+    D --> G[Indexacao]
 
-    E --> H[Normalizacao de espacos]
+    E --> H[Normalizacao do texto]
     F --> H
     G --> H
 
-    H --> I[Chunking por palavras<br/>max_words=850<br/>overlap_words=150]
-    I --> J[Enriquecimento de cada chunk com metadados]
-    J --> K[Geracao de discursos_chunks.jsonl]
-    J --> L[Geracao de md_batches/batch_XXXXX.md]
+    H --> I[Chunking por palavras]
+    I --> J[Enriquecimento com metadados]
+    J --> K[discursos_chunks.jsonl]
+    J --> L[md_batches batch_XXXXX.md]
     L --> M[Upload via API do Open WebUI]
     M --> N[Processamento do arquivo]
-    N --> O[Associacao a uma Knowledge Base]
+    N --> O[Associacao a Knowledge Base]
     O --> P[Geracao de embeddings]
     P --> Q[Indexacao vetorial no ChromaDB]
     Q --> R[Consulta RAG]
-    R --> S[Execucao de avaliacao automatizada<br/>run_rag_eval.py]
+    R --> S[run_rag_eval.py]
 ```
 
 ## 6. Stack e decisões técnicas
