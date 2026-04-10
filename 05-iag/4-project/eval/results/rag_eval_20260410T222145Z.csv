@@ -1,0 +1,715 @@
+id,category,question,execution_status,answer,adherence_score,factual_score,source_focus_score,synthesis_score,hallucination_score,total_score,review_notes
+q01,factual,"Quais dados Ciro Nogueira apresenta para criticar a concentracao bancaria no Brasil e qual conclusao ele tira sobre juros, tarifas e spread?",ok,"Resposta direta:
+Dados apresentados por Ciro Nogueira para criticar a concentração bancária:
+- Concentração elevada: aponta que os cinco maiores bancos concentram cerca de 82% dos ativos financeiros, e que esse índice subiu de 60% para 82% entre 2006 e 2016. [Ciro Nogueira, 2019-02-27] 
+- Efeito sobre tarifas: sustenta que a baixa competição faz com que consumidores paguem tarifas mais altas; cita a existência de pacotes básicos com tarifas muito próximas entre os bancos (variação de apenas R$ 0,40, entre R$12,00 e R$12,40). [Ciro Nogueira, 2019-02-27]
+- Efeito sobre o spread: afirma que o Brasil tem spread bancário elevado em comparação internacional, citando dados do Banco Mundial de 2016, com Brasil em posição desonrosa (spread médio de 39,6%), sendo apenas Madagascar acima. [Ciro Nogueira, 2019-02-27]
+- Juros altos (cheque especial, cartão de crédito): apresenta faixas de juros elevadas: cheque especial para pessoas jurídicas entre 350,17% e 379,59% ao ano; para pessoas físicas entre 288,40% e 421,19% ao ano; cartão de crédito entre 196,94% e 259,34%. [Ciro Nogueira, 2019-02-27]
+- Juros na prática frente à Selic: observa que a taxa Selic está muito baixa (0,53% no mês anterior) e que a taxa acumulada dos últimos 12 meses era de 6,54%, ressaltando a desproporção entre juros cobrados e a política monetária. [Ciro Nogueira, 2019-02-27]
+- Conclusão: afirma que não é crível que os juros, tarifas e spread caiam sem enfrentar a concentração e a verticalização do sistema financeiro; a redução sustentável depende de enfrentar esses desequilíbrios. [Ciro Nogueira, 2019-02-27]
+- Complemento sobre solução considerada: menciona que há expectativa de que o cadastro positivo possa reduzir juros para bons pagadores, mas afirma que, sem atacar concentração/verticalização, a melhoria pode não ocorrer. [Ciro Nogueira, 2019-02-27]
+
+Evidências principais do contexto:
+- Dados específicos de concentração (82% dos ativos pelos cinco maiores bancos; aumento de 60% para 82% entre 2006 e 2016). [Ciro Nogueira, 2019-02-27]
+- Dados de tarifas do pacote básico (12,00 a 12,40) com variação de 40 centavos. [Ciro Nogueira, 2019-02-27]
+- Dados de spread internacional (Brasil 39,6% em 2016; posição entre 92 países; Madagascar como único acima). [Ciro Nogueira, 2019-02-27]
+- Faixas de juros do cheque especial e do cartão de crédito citadas. [Ciro Nogueira, 2019-02-27]
+- Observação sobre a taxa Selic atual e o ganho relativo entre juros cobrados e política monetária. [Ciro Nogueira, 2019-02-27]
+- Conclusão sobre a necessidade de enfrentar concentração e verticalização para redução de juros e spreads. [Ciro Nogueira, 2019-02-27]
+
+Limitações do que não foi possível confirmar:
+- Não há dados adicionais além dos citados no contexto fornecido sobre outras dimensões da concentração bancária ou sobre impactos específicos de políticas públicas recentes; as informações acima são as apresentadas pelo próprio discurso citado.
+
+Referências:
+- Ciro Nogueira (PP/PI) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451286",2,2,2,2,2,10,"Resumo fiel: dados apresentados por Ciro Nogueira sobre concentração (82% dos ativos pelos cinco maiores bancos), tarifas básicas próximas (R$12,00–R$12,40), spread elevado (39,6% em 2016), juros altos (cheque especial, cartão de crédito) e relação com a Selic; conclusão de que redução de juros/ tarifas depende de enfrentar concentração/verticalização; complemento sobre cadastro positivo citado. Base de evidência refere-se a uma única fonte citada."
+q02,factual,Quais sao os principais argumentos de Paulo Paim contra a capitalizacao da Previdencia e que exemplos ele usa para sustentar essa posicao?,ok,"Principais argumentos de Paulo Paim contra a capitalização da Previdência (e exemplos que ele usa para sustentar)
+
+- A capitalização representa o fim do regime solidário e do pacto social de proteção: transforma a Previdência de um bem coletivo em poupança individual de mercado. “A capitalização é o ponto central da reforma da Previdência. Ela acaba com o sistema solidário.” [Fonte: 450736-002] 
+  - Ele destaca que a Previdência atual funciona com solidariedade entre gerações, algo que a capitalização coloca em risco. “Hoje, uma geração trabalha para pagar benefícios da geração anterior. E, ainda, essa mesma geração atual paga pela manutenção dos benefícios pagos as pessoas da mesma geração que estão impossibilitados de trabalhar…” [Fonte: 450736-001]
+
+- O regime de capitalização separa as contribuições de cada pessoa, criando uma poupança individual em vez de um fundo comum: “é uma poupança individual.” [Fonte: 453766-003]
+
+- Mantendo o espírito de repartição, ele argumenta que o sistema atual distribui renda de forma ampla; já existe uma estrutura de distribuição que não pode ser desmontada sem impactos sociais graves. “A Previdência Social brasileira é o maior distribuidor de renda do mundo.” [Fonte: 454571-004]
+
+- Risco de perdas para o trabalhador: sob capitalização, quem contribui durante toda a vida pode perder grande parte do valor acumulado se o fundo ainda não rendir bem, e há cenários em que o dependente não recebe nada em caso de falecimento do titular. Exemplos usados por Paim:
+  - “na capitalização, aquele que contribuiu durante toda a vida com aqueles 10%, que não vai dar… se o casal fica junto e alguém morre, a pensão pode ficar zerada para a família.” [Fonte: 454571-004] 
+  - Em argumentação direta sobre o que acontece quando há falha do fundo: “se o fundo aplicar mal, como foi no Chile e até nos Estados Unidos, babau. O resultado é zero em matéria de rendimento para as minhas aplicações.” [Fonte: 453686-002]
+
+- Exemplos internacionais usados para criticar a capitalização:
+  - Chile, Peru, Colômbia e México adotaram regimes de capitalização e, segundo Paim, estão “voltando atrás” por não terem alcançado resultados positivos. Ele cita especificamente que o Chile tem aposentadorias muito baixas (em média meio salário mínimo) e elevados índices de pobreza entre aposentados. “O Chile, que já adotou o sistema… é um dos países do mundo onde mais ocorre o quê? Suicídio entre os idosos… A média da aposentadoria no Chile é um correspondente a meio salário mínimo.” [Fontes: 450736-002; 450736-001]
+  - Ele reforça que eficiência esperada não se confirmou e que “a capitalização faliu” em diversos lugares, citando Chile, Peru, Colômbia, México como exemplos. [Fontes: 450736-002; 451430-002]
+
+- Custos de transição e incerteza sobre o futuro da renda: ele aponta que a transição entre regimes impõe custos e que o trabalhador fica inseguro quanto ao valor do benefício futuro. “o custo de transição de um regime para outro… é gravíssimo” [Fonte: 454571-004]
+
+- Benefícios previstos pela capitalização tendem a favorecer o setor financeiro, não o trabalhador: “só o sistema financeiro” se beneficiaria; a proposta reduziria o papel da participação dos trabalhadores e aumentaria a concentração de renda nas mãos de bancos e fundos privados. [Fonte: 453686-002]
+
+- Impactos negativos amplos sobre governos locais e sobre a sociedade: ele cita que “87% dos Municípios serão prejudicados com essa reforma” (referência a impactos distributivos da reforma). [Fonte: 453686-002]
+
+Observações sobre a forma de sustentação
+- Paulo Paim utiliza dados e exemplos de países que tentaram a capitalização para sustentar a crítica, citando níveis de benefício baixos, pobreza entre aposentados e suicídios de idosos como consequências associadas ao regime de capitalização. As afirmações aparecem ao longo de seus discursos, com referências explícitas a Chile e a estudos/relatos de especialistas. [Fontes: 450736-002; 450736-001; 451430-002; 453686-002; 453766-003; 454571-004; 454172-001]
+
+Limitações do que foi possível confirmar
+- A partir do contexto fornecido, os principais argumentos de Paulo Paim contra a capitalização aparecem nos discursos de 2019. Não há neste conjunto de textos uma síntese única dele com todas as afirmações em um único trecho; as informações estão distribuídas em vários discursos ao longo de 2019. Onde houve afirmação direta de sua posição, está marcada a fonte correspondente.
+
+Referências:
+
+- Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Paulo Paim (PT/RS) | Data: 2019-03-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451430
+- Paulo Paim (PT/RS) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453686
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Paim (PT/RS) | Data: 2019-06-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454571
+- Paulo Paim (PT/RS) | Data: 2019-06-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454172
+- Paulo Paim (PT/RS) | Data: 2019-02-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450672
+
+Observação final: se desejar, posso reorganizar os argumentos em um quadro comparativo com citações diretas curtas de cada discurso para facilitar a leitura.",2,1,2,2,2,9,Resposta cobre os principais argumentos de Paim contra a capitalização com exemplos citados. Está bem organizada e cita fontes. Inclui limitações quanto ao conjunto de textos usados. Pode exigir verificação adicional de alguns dados/alegações específicas de países para confirmar total precisão factual.
+q03,proposal,Que propostas Confucio Moura apresenta para melhorar a educacao?,ok,"A partir dos discursos de Confúcio Moura, as propostas que ele apresenta para melhorar a educação são basicamente as seguintes:
+
+1) Fortalecer o financiamento da educação, com a perenização do Fundeb e maior aporte de recursos para a educação básica, além de fiscalizar a destinação do gasto (especialmente o objetivo de 6% do PIB para a educação) para evitar manobras orçamentárias que reduzam esse recurso. [463649-003]
+
+2) Melhorar a qualidade dos professores por meio de incentivos profissionais, valorização da carreira, remuneração adequada e formação prática centrada na sala de aula; também defender o aumento de salários e a criação de condições para tornar a profissão socialmente mais respeitada, incluindo medidas para punir agressões contra docentes. [455270-005]
+
+3) Fortalecer a gestão escolar por mérito, defendendo que diretores de escola e secretários de educação sejam escolhidos por excelência e não por indicação política; ampliar o papel dos tribunais de contas para observar gasto por aluno e qualidade da educação. [463649-003]
+
+4) Recuperar e fortalecer o ambiente da escola como espaço de equilíbrio, organização, respeito e disciplina, com foco na redução da violência e na melhoria do currículo para assegurar padrões de ensino. [451323-004]
+
+5) Encarar a educação como uma política de Estado, com continuidade entre governos e reformas que facilitem a gestão pública, incluindo a garantia de gasto, combate a privilégios, e ações para tornar a educação mais inclusiva e de maior qualidade. [493592-001]
+
+6) Dar prioridade à educação infantil e à primeira infância, reconhecendo a importância dos primeiros anos para o desenvolvimento cerebral e a aprendizagem futura, defendendo foco na creche, pré-escola e universalização onde for possível, com atenção à qualidade desde os primeiros anos. [450976-003]
+
+Evidências principais do contexto (trechos usados para fundamentar as propostas acima):
+- Fundeb, recursos e fiscalização de gastos educacionais; defesa da perenização do Fundeb. [463649-003]
+- Equilíbrio entre salários, valorização da carreira docente, incentivos e formação prática em sala de aula; proteção contra agressões a professores. [455270-005]
+- Nomeação de diretores/escolas por mérito, não por cabo eleitoral, e papel dos Tribunais de Contas para acompanhar gasto e qualidade. [463649-003]
+- Recuperação de ambiente escolar, autoridade, organização e combate à violência. [451323-004]
+- Educação como política de Estado e foco em reformas e gastos públicos estáveis. [493592-001]
+- Importância da primeira infância na qualidade da educação e necessidade de ações para creches/educação infantil. [450976-003]
+
+Limitações do que não foi possível confirmar no contexto:
+- Não há detalhes de propostas específicas sobre implementação de políticas em creches em nível regional/municipal além do conceito geral de universalização e foco na primeira infância, conforme citado em 450976-003.
+- As diretrizes de financiamento mencionadas aparecem de forma geral; não há dados orçamentários adicionais além do que já está contido nos trechos citados.
+
+### Referências:
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455270
+- Confúcio Moura (MDB/RO) | Data: 2019-02-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450976
+- Confúcio Moura (MDB/RO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451323
+- Confúcio Moura (MDB/RO) | Data: 2022-08-31 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493592
+- Confúcio Moura (MDB/RO) | Data: 2019-08-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456320",2,2,2,2,2,10,"Resposta está alinhada com a pergunta, utiliza fontes pertinentes e está bem estruturada; não há evidência de alucinação. Sugestão: incluir, se possível, mais detalhes sobre implementação regional ou municipal."
+q04,proposal,Por que Confucio Moura defende que senadores e deputados acompanhem mais de perto escolas publicas?,ok,"Resposta direta:
+Ele defende que senadores e deputados acompanhem mais de perto as escolas públicas para manter o foco no aluno e na melhoria da qualidade da educação, assegurando que os recursos sejam usados de forma adequada, promovendo governança eficaz e fiscalização sobre gastos e resultados.
+
+Evidências principais do contexto:
+- O foco deve ser no aluno, especialmente o pobre e o de periferia, para melhorar a qualidade da educação e promover inclusão social. (473414-001)  
+  (473414-001)
+
+- O Congresso deve permanecer vigilante sobre a execução dos recursos da educação, fiscalizando o gasto por aluno e a qualidade da educação, para evitar manobras orçamentárias que prejudicam o investimento educacional. (463649-003)  
+  (463649-003)
+
+- A gestão escolar não pode ser fruto de apadrinhamento político; diretor de escola deve ser escolhido por mérito e qualificação, o que exige acompanhamento e critérios claros por parte dos legisladores. (463649-003)  
+  (463649-003)
+
+- Há defesa de um maior envolvimento do Senado na política educacional por meio de mecanismos institucionais, fortalecendo a participação parlamentar na definição de pautas e estratégias educacionais. (456320-003)  
+  (456320-003)
+
+Limitações do que não foi possível confirmar:
+- Não encontrei no contexto uma frase exata que use a expressão “acompanhem mais de perto” nesse wording específico. O que aparece de forma explícita é a ideia de vigilância, fiscalização e envolvimento ativo do Congresso para acompanhar a implementação e a qualidade da educação. (463649-003)  
+  (463649-003)
+
+Referências:
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649  
+- Confúcio Moura (MDB/RO) | Data: 2020-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/473414  
+- Confúcio Moura (MDB/RO) | Data: 2019-06-17 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454560  
+- Confúcio Moura (MDB/RO) | Data: 2019-08-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456320  
+- Confúcio Moura (MDB/RO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451323",2,2,2,2,2,10,"Resposta foca no porquê, usa evidências pertinentes e está bem estruturada; ressalva sobre a expressão exata solicitada; sem alucinações aparentes."
+q05,author_focus,"Quais prioridades Chico Rodrigues afirma defender no inicio do mandato e como ele relaciona ordem, uniao e desenvolvimento para o Brasil e para Roraima?",ok,"### Resposta direta
+
+- No início do mandato, Chico Rodrigues afirma defender prioridades como: promover a unidade (unir o País) e reduzir conflitos; estabelecer um “projeto para o Brasil” de longo alcance; impor ordem como condição para desenvolvimento (segurança, educação, empregos, desenvolvimento sustentável e combate à corrupção). Ele também enfatiza a importância de investir em infraestrutura, especialmente em rodovias, e de integrar Roraima ao Brasil e a países fronteiriços para ampliar oportunidades econômicas. (Exemplos: “escolhemos a esperança no lugar do medo, a unidade de propósito em vez do conflito e da discórdia”; “a palavra de que o nosso País mais precisa hoje é ordem: … educação, empregos, desenvolvimento sustentável … corrupção”) [Chico Rodrigues, 2019-02-07]. Além disso, ele aponta a necessidade de diálogo com Venezuela e Guiana para integrar RR e ampliar o comércio regional. [Chico Rodrigues, 2019-11-18; 2022-10-18].
+
+- Especificamente para Roraima, ele vincula desenvolvimento a integração regional e a investimentos em infraestrutura (rodovias, energia, ligações com países vizinhos). Em discurso sobre início de mandato e agenda de Roraima, ele ressalta a importância de ligar Boa Vista ao Brasil e a países vizinhos, bem como a implementação de obras como o Linhão de Tucuruí e a aproximação com Venezuela e Guiana. [Chico Rodrigues, 2019-02-07; 2019-11-18; 2022-10-18]. Também destaca resultados concretos de infraestrutura realizados em RR, como crédito para rodovias (PLN/BR) que beneficiam a região. [Chico Rodrigues, 2021-10-07].
+
+### Evidências principais do contexto
+
+- Unidade e fim dos conflitos vs. construção de um projeto para o Brasil:
+  - “Hoje nos reunimos aqui porque escolhemos a esperança no lugar do medo, a unidade de propósito em vez do conflito e da discórdia.” [Chico Rodrigues, 2019-02-07]. 
+  - “a palavra de que o nosso País mais precisa hoje é ordem … educação, empregos … desenvolvimento sustentável … corrupção.” [Chico Rodrigues, 2019-02-07].
+
+- Projeto de longo prazo e desenvolvimento autossustentado:
+  - “existem as bases do desenvolvimento autossustentado, diminuir as desigualdades sociais, consolidar os eixos da nossa democracia e inserir o Brasil, de maneira definitiva, no rol das nações desenvolvidas.” (referência a ideia de “Um Projeto para o Brasil”) [Chico Rodrigues, 2019-02-07].
+
+- Infraestrutura e ações para RR:
+  - “elogiar a aprovação do PLN nº 20 … abre crédito especial e um crédito suplementar para atender várias demandas reprimidas em rodovias nacionais e, no nosso caso, especificamente no Estado de Roraima.” [Chico Rodrigues, 2021-10-07].
+  - “Temos mais fronteiras com esses países que com os estados brasileiros. Reinstalei e estou presidindo os grupos parlamentares com a Venezuela e a Guiana; … visitei esses países, fazendo pontes, utilizando a diplomacia parlamentar para superar arestas e trazer benefícios para o meu povo e para Roraima.” [Chico Rodrigues, 2019-11-18; trecho de RR mais recente]. 
+  - “as exportações para a Venezuela cresceram … US$336 milhões em 2021, dos quais 73% para a Venezuela, o que representa US$244 milhões.” [Chico Rodrigues, 2020? trecho do discurso de RR; citado no contexto 4].
+
+- Integração regional e economia de RR:
+  - “Destaque para a importância das relações comerciais com a Venezuela para a economia do Estado e do Brasil.” [Chico Rodrigues, 2022-10-18].
+
+### Limitações do que foi possível confirmar
+
+- O conjunto de prioridades está distribuído ao longo de vários discursos. Embora haja menções claras a ordem, unidade, projeto de longo prazo e infraestrutura, não há uma lista única e sucinta no contexto que resuma todas as prioridades em um único trecho. As afirmações sobre RR estão amplamente embasadas em trechos específicos (infraestrutura, integração com Venezuela/Guiana, energia). Em particular, a relação direta entre “inicio do mandato” e cada item específico aparece em trechos diferentes (2019-02-07, 2021-10-07, 2022-10-18). Não encontrei uma enumeração fechada das prioridades apenas nesse conjunto; as evidências estão distribuídas e precisam ser lidas em conjunto para compor a resposta.
+
+### Referências
+
+- Chico Rodrigues (DEM/RR) | Data: 2019-02-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450676
+- Chico Rodrigues (DEM/RR) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450950
+- Chico Rodrigues (DEM/RR) | Data: 2021-10-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484591
+- Chico Rodrigues (UNIÃO/RR) | Data: 2022-10-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493953",2,2,2,2,2,10,"A resposta identifica as prioridades (unidade, ordem, projeto para o Brasil) e como RR se relaciona por integração regional e infraestrutura; utiliza fontes de discursos de Chico Rodrigues de 2019 a 2022. Está bem estruturada, com evidências citadas, mas as prioridades não aparecem em um único trecho; números citados exigem checagem nas fontes originais."
+q06,comparison,Compare as preocupacoes de Paulo Paim sobre Previdencia com as preocupacoes de Confucio Moura sobre educacao.,ok,"Resumo direto da comparação
+- Paulo Paim (PT/RS) concentra-se principalmente em Previdência Social, defendendo um sistema solidário de repartição e criticando propostas de capitalização, além de alertar para desvios de recursos e impactos negativos sobre trabalhadores. “Queremos uma aposentadoria decente, uma previdência saudável, viável, que atenda o interesse de todos” (Paulo Paim). E foi enfático ao mencionar que o déficit apontado não deve justificar privatizações ou desvirtuar direitos, destacando que o sistema é solidário e de repartição. “[Defenderam] o sistema solidário de repartição” (trecho resumido do registro citado). Também apontou riscos como o desvio de recursos via DRU e a cobrança de grandes devedores para financiar a seguridade. “Vamos cobrar esse R$1 trilhão dos grandes devedores.” e “Não há dias de déficit sem desvios ou desvinculação de receitas” (parcialmente via registros sobre DRU e dívida ativa). Sobre propostas de capitalização, indicou que elas não devem comprometer direitos adquiridos (registro sobre o debate da capitalização). 
+  - Evidência principal: 452829-003; 450736-006; 450968-004; 453347-001; 456916-004.
+
+- Confúcio Moura (MDB/RO) foca em educação como prioridade estratégica do Estado, defendendo a manutenção do Fundeb e mais recursos para a educação, além de fortalecer a qualidade do ensino e a valorização dos Professores. Enfatizou que a educação deve ser tratada como política de Estado e que o Brasil precisa de financiamento estável para avançar nesse campo. “A saída é a educação” e “se a educação for tratada como política de Estado baseada na qualidade, o Brasil pode avançar” aparecem nos discursos. Também destacou a necessidade de melhorar a qualidade dos professores, valorizar a profissão e investir em formação prática para a sala de aula. Em speeches recentes, ele defendeu a perenização do Fundeb e mais recursos para reduzir desigualdades educacionais. “O caminho… diz respeito à melhoria da qualidade dos professores, que é o elemento básico da escola” (trechos sobre educação). Em 2022, reiterou a ideia de tratar a educação como política de Estado. 
+  - Evidência principal: 455270-005; 463649-001; 463649-002; 493592.
+
+Comparação de foco e preocupações
+- Âmbito central: 
+  - Paim: Previdência Social é o tema central, com preocupação em manter um sistema solidário, evitar a capitalização e não retirar direitos dos trabalhadores. Ele ressalta riscos de capitalização, impactos de reformas e a necessidade de cobrança de devedores para manter a seguridade. Exemplos: defesa do sistema solidário de repartição; críticas à capitalização; preocupação com desvios via DRU e cobrança de grandes devedores. Citações: ""defenderam em uníssono o sistema solidário de repartição"" e ""proposta de capitalização"" (473347-001, 450736-006, 450968-004, 452829-003).
+  - Moura: Educação pública e financiamento do Fundeb são prioritários, com ênfase em qualidade do ensino, valorização de professores e educação como política de Estado. Ele defende que o Brasil precisa investir mais em educação para promover desenvolvimento e reduzir desigualdades. Citações: “a saída é a educação”; “melhorar a qualidade dos professores, que é o elemento básico da escola”; defesa da perenização do Fundeb e de mais recursos (455270-005, 463649-001, 463649-002, 493592).
+
+- Instrumentos e propostas discutidos:
+  - Paim: discussão de reformas previdenciárias com ênfase em evitar perdão de direitos e manter um regime solidário; crítica a soluções de capitalização; itens sobre DRU, dívida ativa e impactos sobre trabalhadores. Citações destacadas: “Queremos uma aposentadoria decente… previdência saudável”; “defenderam o sistema solidário de repartição”; menções a capitalização e aos efeitos da reforma trabalhista na Previdência. (450736-006; 452829-003; 450968-004; 453347-001; 456916-004)
+  - Moura: defesa de educação como prioridade permanente, Fundeb, melhoria da qualidade de professores, formação para prática em sala de aula, e visão de Estado em educação. Citações: “A saída é a educação”; “melhorar a qualidade dos professores, que é o elemento básico da escola”; defesa da perenização do Fundeb; relação entre educação e desenvolvimento social. (455270-005; 463649-001; 463649-002; 493592)
+
+Limitações do que não consegui confirmar
+- Não tenho no contexto fornecido uma comparação direta linha a linha entre propostas específicas de Paim e de Moura em um único documento, mas as citações disponíveis permitem extrair claramente os focos principais de cada um em seus respectivos temas (Previdência para Paim; Educação para Moura).
+- Não houve menção de interações diretas entre Paim e Moura nos mesmos textos para uma contraposição ponto a ponto; a comparação é feita a partir de seus discursos separados conforme os trechos fornecidos.
+
+Referências:
+- Paulo Paim (PT/RS) | Data: 2019-04-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452829
+- Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Paulo Paim (PT/RS) | Data: 2019-02-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450968
+- Paulo Paim (PT/RS) | Data: 2019-05-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453347
+- Paulo Paim (PT/RS) | Data: 2019-08-30 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456916
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2022-08-31 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493592
+
+Observação: Utilizei apenas informações contidas nos trechos do contexto fornecido e não acrescentei fatos externos.",2,2,2,2,2,10,"Resumo direto ao ponto, aborda Previdência (Paim) vs Educação (Moura), cita fontes relevantes, estrutura clara e sinaliza limitações."
+q07,synthesis,Quais temas sociais e economicos aparecem com mais frequencia nos discursos carregados e quais senadores associam esses problemas a propostas concretas de solucao?,ok,"Resposta direta
+
+- Temas sociais e econômicos que aparecem com mais frequência nos discursos carregados:
+  - Proteção social e renda básica para reduzir fome, pobreza e desigualdade (ex.: Bolsa Família, renda básica cidadã). Propostas associadas a soluções concretas: renda básica/bolsa família como mecanismo central de proteção social. Citações: ""a renda básica chamada por nós de Bolsa Família""; ""crise alimentar ... alargar esse benefício"" e menções à renda básica cidadã. [Paulo Rocha: 471758-001] [Fernando Bezerra Coelho: 485085-001] [Alessandro Vieira: 485317-002]
+  - Combate à fome e à pobreza via políticas públicas anticíclicas e financiamento estável (inclui discussão sobre salário mínimo, gasto público, financiamentos e SNF). Propostas associadas: reforma tributária solidária; uso do Sistema Nacional de Fomento (SNF); mecanismos para manter renda e empregos. Citações: ""reforma tributária solidária"" e ""SNF"" aparecem como caminhos para sair da crise; e a ideia de reformar despesas para financiar políticas sociais. [Paulo Rocha: 471758-001] [Rogério Carvalho: 471750-002] [Leila Barros: 5º bloco de debates (SNF) — narrado no contexto de 471750-002] [Alejandro/Senador Alessandro Vieira: 485317-002]
+  - Educação como parte essencial de saída econômica e social (foco na implementação de estruturas nacionais). Proposta associada: Sistema Nacional de Educação (projeto 235) com planos nacionais, estaduais e municipais de educação e fontes de financiamento. Citação: ""235... Sistema Nacional de Educação"" e fontes de financiamento da educação. [Paulo Paim: 488552-001]
+  - Contenção de gastos públicos e regras fiscais, com foco em acelerar soluções para necessidades sociais sem ampliar o teto de gastos descontroladamente. Proposta associada: PECs e reformas que tratem estável a despesa social, incluindo propostas para evitar desvirtuar teto orçamentário. Citação: referência a ""novo marco fiscal moderno"" e a debate sobre teto/curvas de gasto. [Leitura do discurso de abertura da sessão de debates (2020/2021) – 471750-001, 471750-002]
+  - Saúde, planos de saúde e atenção especial a pessoas com deficiência (políticas públicas de saúde, mutirões e cobertura de necessidades). Propostas associadas: mutirões de saúde para pessoas com deficiência; discussão sobre garantias de acesso à saúde; atenção especial a direitos de pessoas vulneráveis. Citações: mutirões para atendimento às pessoas com deficiência; preocupação com cobertura de planos de saúde; debate sobre direitos sociais. [Flávio Arns: 451143-003; Paulo Paim: 448552-001; Magda Biavaschi: 483365-002]
+
+Evidências principais do contexto (trechos usados para embasar cada tema)
+
+- Proteção social e renda básica para reduzir fome, pobreza e desigualdade
+  - ""mais investimento na agricultura familiar e a renda básica chamada por nós de Bolsa Família."" [Paulo Rocha, 471758-001] 
+  - ""vamos discutir... a sustentabilidade num momento em que o País pega fogo... programa de renda básica cidadã, através daquele que se tornou a maior referência em transferência de renda no mundo, que é o Bolsa Família."" [Rogério Carvalho, 471750-001]
+  - ""o Governo... alargar esse benefício, sobretudo, neste momento de crise alimentar... é importante que a gente possa saber que a política de solidariedade, de proteção aos mais pobres é uma garantia constitucional."" [Fernando Bezerra Coelho, 485085-001]
+  - ""Essa solução resolve o problema da fome em 2022"" (referência a proposta de ajuste fiscal/fomento para financiar renda). [Alessandro Vieira, 485317-002]
+
+- Combate à fome e à pobreza via políticas anticíclicas e financiamento estável
+  - ""reforma tributária solidária"" e ""SNF"" como instrumentos para enfrentar a crise e manter políticas sociais. [Paulo Rocha, 471758-001] [Rogério Carvalho, 471750-002] 
+  - ""Sistema Nacional de Fomento (SNF)"" como base para financiar políticas públicas, infraestrutura e geração de empregos. [Leila Barros, 5º bloco de debates – 471750-001]
+  - ""novo marco fiscal moderno"" e ""reforma tributária solidária"" para reduzir impacto regressivo da tributação e sustentar renda social. [Trechos de abertura da sessão temática – 471750-001]
+
+- Educação como base de aporte social e econômico
+  - ""PROPOSTA DE SISTEMA NACIONAL DE EDUCAÇÃO (235)"" com planos nacionais, estaduais e municipais de educação e fontes de financiamento. [Paulo Paim, 488552-001]
+
+- Gastos públicos, teto e reformas fiscais
+  - Discussões sobre endurecimento/amenização de regras fiscais e necessidade de reformas para financiar políticas públicas sem desarranjo orçamentário. [471750-001; 464206-001 (Paulo Paim); 485317-002 (Alessandro Vieira)]
+
+- Saúde e direitos de pessoas com deficiência
+  - ""mutirões para atendimento às pessoas com deficiência"" e discussão sobre políticas de saúde e direitos dessas populações. [Flávio Arns, 451143-003] [Paulo Paim, 451143-003; referência a saúde e direitos sociais quando pertinente] 
+  - ""Projeto de Lei nº 3914/2020"" e debates sobre requisitos de litígios relativos a benefícios por incapacidade (contexto de saúde e previdência). [Magda Barros Biavaschi, 483365-002]
+
+Limitações do que foi possível confirmar
+
+- O conjunto de trechos fornecido abrange várias falas de diferentes senadores em momentos diferentes. Embora haja recorrência de temas como renda básica, proteção social, educação, saúde e reformas fiscais, a frequência exata de cada tema ao longo de todo o conjunto não está tabulada de forma numérica neste material. O melhor ajuste para “mais frequentes” foi inferido a partir de repetições perceptíveis nos trechos apresentados.
+- Algumas falas aparecem associadas a propostas específicas de forma indireta (por exemplo, referências a PECs ou a propostas de reforma) sem um texto completo da proposta, o que limita a identificação de todos os detalhes de cada solução.
+
+Referências
+
+- Paulo Rocha (PT/PA) | Data: 2020-09-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471758
+- Rogério Carvalho (PT/SE) | Data: 2020-09-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471750
+- Fernando Bezerra Coelho (MDB/PE) | Data: 2021-11-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/485085
+- Alessandro Vieira (CIDADANIA/SE) | Data: 2021-11-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/485317
+- Paulo Paim (PT/RS) | Data: 2019-02-23 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488552
+- Flávio Arns (REDE/PR) | Data: 2019-02-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451143
+- Jorge Kajuru (PSB/GO) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453688
+- Humberto Costa (PT/PE) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453689
+- Dário Berger (MDB/SC) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450954
+- Paulo Paim (PT/RS) | Data: 2019-11-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461046
+
+Observação: Caso deseje, posso refinar a lista priorizando apenas as falas de um conjunto menor de senadores ou organizando por tema com citações diretas mais curtas.",2,2,2,2,2,10,"A resposta atende à pergunta, identifica temas sociais/econômicos mais frequentes e os senadores associados a propostas concretas. Tem boa organização com citações e referências; menciona limitações na quantificação da frequência, o que reduz a confiança na frequência exata."
+q08,numbers,"Quais discursos citam percentuais, valores ou estatisticas e para sustentar quais argumentos?",ok,"Resposta direta:
+- Paulo Paim (PT/RS) | 2019-09-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/458158
+  - Cita 13,2 milhões de pessoas em situação de extrema pobreza para defender a importância de desenvolver a educação no Brasil. “Preocupação com a situação de 13,2 milhões de pessoas que vivem em situação de extrema pobreza no Brasil. Explicações sobre a importância do desenvolvimento da educação no Brasil.” [discurso de Paulo Paim] 
+
+- Rose de Freitas (PODEMOS/ES) | 2019-11-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461145
+  - Cita números da violência contra a mulher para sustentar a necessidade de promoção de direitos humanos, educação e políticas de igualdade de gênero. “Considerações sobre os números da violência contra a mulher.” [discurso de Rose de Freitas]
+
+- Carlos Fávaro (PSD/MT) | 2021-07-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481265
+  - Cita percentuais relativos a cotas de gênero nas candidaturas: 30% do valor recebido para candidaturas proporcionais femininas (PEC relacionada) e 15% de preenchimento mínimo de vagas para mulheres nas eleições proporcionais, para defender políticas eleitorais de igualdade de gênero. “Registro sobre a apresentação da Proposta de Emenda à Constituição (PEC) nº 18, de 2021, que determina aos partidos políticos a aplicação do mínimo de 30% do valor recebido para as candidaturas proporcionais femininas… e o Projeto de Lei nº 1951, de 2021, que prevê percentual de preenchimento mínimo de vagas para candidaturas de cada sexo… 15% das cadeiras às mulheres nas eleições proporcionais.” [discurso de Carlos Fávaro]
+
+Evidências principais do contexto:
+- 13,2 milhões de pessoas em extrema pobreza foi usado para argumentar a necessidade de investir em educação e políticas de melhoria social (Paulo Paim). 
+  - Citação: “Preocupação com a situação de 13,2 milhões de pessoas que vivem em situação de extrema pobreza no Brasil. Explicações sobre a importância do desenvolvimento da educação no Brasil.” (Paulo Paim | 2019-09-27) Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/458158
+- Percentuais de ações afirmativas em candidaturas foram usados para defender cotas de gênero e regras de distribuição de recursos públicos para campanhas (Carlos Fávaro).
+  - Citação: “Registro sobre a apresentação da Proposta de Emenda à Constituição (PEC) nº 18, de 2021, que determina aos partidos políticos a aplicação do mínimo de 30% do valor recebido para as candidaturas proporcionais femininas… aponta ainda o Projeto de Lei nº 1951, de 2021, que prevê percentual de preenchimento mínimo de vagas para candidaturas de cada sexo, determina a destinação proporcional aos gastos de campanha com recursos do Fundo Eleitoral e obriga o preenchimento mínimo de 15% das cadeiras às mulheres nas eleições proporcionais.” (Carlos Fávaro | 2021-07-13) Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481265
+- Números sobre violência contra a mulher são usados para defender políticas públicas de proteção e direitos humanos (Rose de Freitas).
+  - Citação: “Considerações sobre os números da violência contra a mulher.” (Rose de Freitas | 2019-11-07) Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461145
+
+Limitações do que não foi possível confirmar:
+- Alguns discursos mencionam “números” ou “dados” (por exemplo, referências a IBGE, desigualdades, violência, pobreza) mas não apresentam números explícitos no trecho fornecido. Não foi possível confirmar valores específicos nesses casos (ex.: 456587, 461385, 463618, etc.). Onde o conteúdo não traz números explícitos, não os descrevi como parte da resposta.
+
+Referências:
+- Paulo Paim (PT/RS) | Data: 2019-09-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/458158
+- Rose de Freitas (PODEMOS/ES) | Data: 2019-11-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461145
+- Carlos Fávaro (PSD/MT) | Data: 2021-07-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481265",2,1,2,2,2,9,"Cita 3 discursos; apresenta números explícitos (Paim 13,2 milhões; Fávaro 30%/15%), Rose cita dados sobre violência sem números. Uso de fontes/links adequado; menciona limitações ao não confirmar valores em alguns trechos."
+q09,author_focus,Que argumentos Wellington Fagundes usa para defender investimentos em infraestrutura e qual relacao ele faz entre logistica e competitividade?,ok,"Aqui estão os principais argumentos de Wellington Fagundes para defender investimentos em infraestrutura e a relação que ele faz entre logística e competitividade, com base nos trechos disponíveis:
+
+1) O eixo dos investimentos em infraestrutura deve ser deslocado para o setor privado
+- Ele afirma que houve um deslocamento do eixo dinâmico das iniciativas e dos investimentos em infraestrutura para o setor privado. Isso ele ressalta como condição para aumentar a eficiência e a capacidade de investimento. — Wellington Fagundes (PR/MT) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451435
+
+2) Parcerias público-privadas são fundamentais para o desenvolvimento da infraestrutura
+- Em contexto de crise fiscal, ele defende a necessidade de parceria entre os setores público e privado para a infraestrutura do país, destacando a importância de o setor privado indicar prioridades e de mudanças regulatórias indispensáveis. — Wellington Fagundes (PR/MT) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451205
+
+3) Relevância de instrumentos regulatórios e de concessões para aumentar a competitividade
+- Ele cita o Decreto dos Portos como inovação polêmica, mas que hoje sustenta avanços na competitividade mundial por meio de concessões portuárias. Isso demonstra a visão de que melhorias regulatórias ajudam a atrair investimentos e reduzir custos. — Wellington Fagundes (PR/MT) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451435
+
+4) A indústria precisa de condições para competir, com geração de empregos e atração de investimentos
+- Em tom de apreciação à gestão pública, ele aponta que é preciso proteger a indústria com as condições para competir, gerando empregos e atraindo investimentos necessários para essa competição. — Wellington Fagundes (PL/MT) | Data: 2021-08-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482578
+
+5) A infraestrutura é condição essencial para o crescimento econômico e desenvolvimento social
+- Em seus discursos, ele reforça que a infraestrutura sustenta o crescimento econômico e o desenvolvimento social do Brasil, conectando regiões e ampliando oportunidades. — Wellington Fagundes (PL/MT) | Data: 2019-10-10 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459794
+
+6) Logística portuária e infraestrutura como alavancas da competitividade
+- Ao tratar do Fórum Nacional para Expansão do Setor Logístico Portuário, ele aponta que haverão movimentos de investimento relevantes (PPI, megaleilões, portos, ferrovias, energia), destacando a logística como eixo estratégico para atrair investimentos e melhorar a competitividade do Brasil. — Wellington Fagundes (PL/MT) | Data: 2019-10-10 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459794
+
+7) O custo do transporte é um fator central na competitividade e depende de infraestrutura adequada
+- Em fala sobre logística e infraestrutura, ele menciona que o custo do transporte é um elemento que pode tornar o Brasil mais competitivo quando a infraestrutura facilita parcerias e investimentos. — Wellington Fagundes (PR/MT) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451435
+
+Observação sobre o que não está presente ou não está claramente no contexto
+- As falas acima são todas extraídas de discursos do próprio Wellington Fagundes presentes nos trechos do contexto. Não houve necessidade de recorrer a fontes adicionais externas para responder a esta pergunta.
+
+### Referências:
+- Wellington Fagundes (PR/MT) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451435
+- Wellington Fagundes (PR/MT) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451205
+- Wellington Fagundes (PR/MT) | Data: 2019-10-10 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459794
+- Wellington Fagundes (PL/MT) | Data: 2021-08-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482578
+- Wellington Fagundes (PL/MT) | Data: 2019-10-10 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459794",2,2,2,2,2,10,"Aborda os argumentos de infraestrutura e a relação logística-competitividade, usa fontes relevantes e organiza bem. Sugestão: verificar consistência de datas/partidos citados e confirmar fidelidade dos trechos citados."
+q10,broad,"Quais diagnosticos sobre desigualdade, vulnerabilidade ou falta de desenvolvimento aparecem nesses discursos e que tipos de solucao sao defendidos?",ok,"Diagnósticos sobre desigualdade, vulnerabilidade ou falta de desenvolvimento presentes nos discursos
+
+- Desigualdade social ampla e persistente no Brasil, com menção a piora ou aprofundamento da desigualdade ao longo do tempo. ""aumento da pobreza e de aprofundamento da desigualdade social no País"" [Randolfe Rodrigues] . “a desigualdade no País é recorde” [Paulo Paim] . “mais de 50% da população marginalizada” (contexto de pobreza/exclusão) [varias falas de Paulo Paim]. 
+  Observação: há referências diretas a desigualdade como problema central e estrutural, não apenas conjuntural. [Randolfe Rodrigues; Dário Berger; Paulo Paim] 
+
+- Pobreza generalizada e crescente, com dados do IBGE apontando altas taxas de pobreza em diferentes momentos e grupos. Exemplos de diagnóstico citados: “54,8 milhões de brasileiros viviam em situação de pobreza em 2017”; “43,4% das crianças brasileiras vivem na pobreza”; “52 milhões de brasileiros estão na linha da pobreza ou abaixo dela”; e menções à pobreza extrema de milhões de brasileiros. [Paulo Paim; Alvaro Dias; Dário Berger] 
+  Observação: aparecem números de pobreza apenas em alguns discursos; há consistência de leitura de que a pobreza é um problema grave. [454935; 453167; 461385; 453167] 
+
+- Desemprego, subemprego e informalidade como fontes centrais de vulnerabilidade econômica. Dados citados incluem: desemprego elevado, trabalhadores sem proteção social, e altos níveis de desocupação/linha da pobreza associada à crise econômica. [Paulo Paim; Alvaro Dias; Randolfe Rodrigues] 
+  Observação: há menções a números específicos de desemprego e à precarização do trabalho. [454935; 453167; 461385] 
+
+- Desigualdade regional marcada, com ênfase no Nordeste e em regiões de maior vulnerabilidade. Há menções a diferenças regionais e à necessidade de políticas específicas para desenvolvimento regional. [Alvaro Dias; discurso sobre desenvolvimento regional] 
+
+- Racismo estrutural e institucional como vetor de desigualdade social, com destaque para a população negra. Citações sobre racismo institucional, desigualdade no mercado de trabalho e subutilização da força de trabalho entre pretos/pardos; defesa de centralidade de agenda racial e ações afirmativas. [Rita Cristina de Oliveira; César Oliveira Gomes] 
+  Observação: o tema é tratado como “racismo institucional” e como necessidade de políticas reparatórias e de inclusão. [462889-002; 461834] 
+
+- Desigualdade de acesso a direitos básicos (educação, saúde, moradia) como obstáculos ao desenvolvimento humano. Menções a acesso desigual a serviços públicos e à necessidade de políticas públicas que promovam dignidade e inclusão. [Rita Cristina de Oliveira; Paulo Paim; Dário Berger] 
+
+- Urgência de políticas públicas de combate à pobreza e à miséria com foco em inclusão social, educação de qualidade e igualdade de oportunidades. Várias falas conectam pobreza a uma necessidade de políticas de inclusão econômica e social. [Randolfe Rodrigues; Dário Berger; Paulo Paim; 459931] 
+
+Tipos de soluções defendidos nos discursos
+
+- Políticas públicas de inclusão social como resposta à desigualdade. Propostas para desenvolvimento econômico com inclusão social e combate à desigualdade. [Randolfe Rodrigues] 
+  Citação: “a tarefa é retomar desenvolvimento econômico com inclusão social, para combater desigualdade” [Randolfe Rodrigues] 
+
+- Medidas de ação afirmativa e de reparação histórica para reduzir desigualdades raciais e de gênero/Classes. Adoção de cotas em universidades, editais de concursos, monitoramento de políticas de cotas, e ampliação de políticas de anti-discriminação. Proposta de centralidade da pauta racial e articulação jurídica com o direito da antidiscriminação; cobrança de cumprimento de políticas de cotas em educação e concursos; inclusão de estudos de história e cultura africana, afro-brasileira e indígena (art. 26-A da LDB). [Rita Cristina de Oliveira; Cesar Oliveira Gomes] 
+  Citações: “centralidade da pauta racial e sua articulação jurídica com o direito da antidiscriminação” ; “cobrar a observância das cotas nos concursos públicos” ; “inclusão do estudo de história e cultura africana, afro-brasileira e indígena nas matrizes curriculares” .
+
+- Investimento público em políticas estruturais (educação, saúde, moradia, saneamento) e desenvolvimento regional. Enfoque em ampliar investimentos públicos para reduzir pobreza, melhorar educação, saúde e habitação, bem como saneamento. [Alvaro Dias; Paulo Paim] 
+  Citações: “investir em moradias e saneamento” ; “desenvolvimento regional” com governança baseada em dados.
+
+- Adoção de governança e uso de dados para orientar políticas públicas. Enfatiza-se a necessidade de governança, transparência e uso de dados para medir e orientar políticas regionais e nacionais. [Estrutura de desenvolvimento regional e governança] 
+  Citações: “dados são tudo para a administração” ; “estruturação do sistema de governança do desenvolvimento regional” .
+
+- Reformas econômicas com foco em inclusão social (sem perder o foco na proteção social). Combate à pobreza e à miséria como objetivos centrais, com referências a Agenda 2030 e ao Objetivo 1 (erradicar a pobreza). [Randolfe Rodrigues; 459931; 454935] 
+  Citações: “erradicar a pobreza é o maior e mais importante desafio global” ; “Agenda 2030” .
+
+- Reforma tributária como forma de ampliar a arrecadação sem depender exclusivamente de mudanças na Previdência. Propostas de cobrar impostos de grandes reunidos (discussões sobre quem paga mais; reduzir sonegação). [Jorge Kajuru; Referências a propostas de cobrança de impostos] 
+  Citações: “se menos de 3% da população pagassem impostos ... teríamos R$1,5 trilhão” ; “cobrar imposto de quem tem mais” .
+
+- Enfoque na educação e na dignidade humana como base para o desenvolvimento sustentável. Observação de que educação de qualidade, inclusão e políticas de dignidade são centrais para o desenvolvimento. [Dário Berger; Cesar Oliveira Gomes; 454935] 
+  Citações: “é preciso políticas para inclusão social” ; “o Brasil precisa ser uma prioridade” .
+
+Observação sobre possíveis contradições ou limitações no contexto
+- Há discursos que citam dados e propostas muito específicos, enquanto outros se concentram mais em diagnósticos qualitativos. Em algumas falas, os números variam conforme a fonte e o momento temporal, o que exige cautela ao comparar diagnósticos entre discursos diferentes. Por exemplo, há vários números de pobreza e pobreza infantil em diferentes falas (54,8 milhões em 2017; 43,4% de crianças; 52 milhões na linha da pobreza), o que pode indicar variação de ano e metodologia entre fontes citadas. [454935; 453167; 461385; 459931; 462889]
+
+Evidências principais do contexto (trechos-chave)
+
+- Randolfe Rodrigues: ""Exposição sobre a situação de aumento da pobreza e de aprofundamento da desigualdade social no País, baseado em dados divulgados pelo IBGE."" [462? trecho de 461429-004] 
+- Randolfe Rodrigues: ""é tarefa urgente retomar desenvolvimento econômico com inclusão social, para combater desigualdade"" [461429-004] 
+- Rita Cristina de Oliveira: ""centridade da pauta racial e sua articulação jurídica com o direito da antidiscriminação"" e ""observância das cotas nos concursos públicos"" e ""inclusão do estudo de história e cultura africana, afro-brasileira e indígena nas matrizes curriculares"" [462889-002; 462889-003]
+- Paulo Paim: ""A pobreza é o maior obstáculo para o desenvolvimento sustentável"" e números como ""43,4% das crianças brasileiras vivem na pobreza"" e ""54,8 milhões de brasileiros viviam em pobreza em 2017"" [459931; 454935; 453167]
+- Alvaro Dias: ""52 milhões de brasileiros na linha da pobreza"" e ""extrema pobreza de 15,3 milhões"" (trechos de 453167-004)
+- César Oliveira Gomes: dados sobre racismo institucional, pobreza racializada e necessidade de ações afirmativas e políticas de reparação histórica [461834]
+- Dário Berger: ""priorizar o combate à miséria"" e ""políticas públicas pensadas para a inclusão social"" [461385-001; 461385-002]
+- Jorge Kajuru (trecho de debate relacionado à tributação): ""solução existe ... cobrar imposto de quem tem mais"" [462889-003]
+- 2019-11-22 Sessão de Consciência Negra: dados sobre desigualdade racial no Brasil, racismo institucional e necessidade de ações afirmativas [461834]
+
+Referências:
+
+- Paulo Paim | Data: 2021-06-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480060
+- Randolfe Rodrigues | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461429
+- Rita Cristina de Oliveira | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462889
+- Dário Berger | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461385
+- Alvaro Dias | Data: 2019-04-30 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453167
+- Paulo Paim | Data: 2019-06-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454935
+- Paulo Paim | Data: 2019-10-17 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459931
+- César Oliveira Gomes | Data: 2019-11-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461834
+- Dário Berger | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461385
+
+Observação final: as abordagens variam entre diagnósticos predominantemente solicitando ações de política pública de inclusão (educação, saúde, trabalho, raça) e números específicos de pobreza/desigualdade; as soluções defendidas vão desde políticas de inclusão e ações afirmativas até reformas institucionais, governança baseada em dados e propostas de reforma tributária. Caso queira, eu organizo as informações em uma tabela com cada diagnóstico acompanhado da(s) fonte(s) correspondente(s).",2,1,2,2,2,9,"Avaliação: aborda diagnósticos de desigualdade, vulnerabilidade e falta de desenvolvimento e apresenta soluções de inclusão, governança e políticas públicas de forma organizada. Pontos fortes: aderência ao tema, uso de fontes e síntese clara. Pontos de melhoria: alguns números de pobreza variam entre fontes, risco de imprecisão factual; evitar misturar dados sem indicar o ano/metodologia; esclarecer a natureza das citações."
+q11,comparison,"Compare como Ciro Nogueira e Wellington Fagundes usam dados economicos ou setoriais para defender mudancas estruturais. Quais numeros aparecem, para sustentar que tese, e onde os argumentos deles divergem?",ok,"Resumo direto da resposta
+- Não encontrei menção a Ciro Nogueira nos trechos fornecidos, portanto não é possível comparar o uso de dados dele com o de Wellington Fagundes com base nesse conjunto. 
+- Wellington Fagundes utiliza dados econômicos para defender mudanças estruturais, especialmente via PEC 73 (competência municipal para fiscalizar e legislar sobre o Imposto sobre a Propriedade Territorial Rural) e para justificar suplementação de recursos para a educação. O trecho dele aponta números explícitos: ele cita que “é de R$12,5 bilhões, e 30% representariam R$3,7 bilhões” e defende que os recursos da educação sejam incluídos na suplementação. (Fonte: 453571-006)
+
+Evidências principais do contexto
+- Wellington Fagundes (PL/MT) | 2019-05-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453571
+  - Tese defendida: maior justiça tributária com maior atribuição de poderes aos municípios, por meio da PEC 73, para fiscalizar e legislar sobre o Imposto Territorial Rural. O discurso também enfatiza a educação como área destinatária de recursos adicionais. Não apenas a ideia de descentralizar tributos, mas de suplementar recursos para educação. 
+  - Dados citados: “é de R$12,5 bilhões, e 30% representariam R$3,7 bilhões”; uso do argumento de suplementação para educação. (As citações aparecem no trecho citado)
+  - Contexto adicional: o orador reforça a ideia de ser Sub-Relator na área de educação para viabilizar essas ações. (Trecho citado)
+- Comparação com outros trechos relevantes do mesmo conjunto (para entender divergência de métodos, ainda que não haja menção a Ciro Nogueira)
+  - Plínio Valério (PSDB/AM) | 2019-05-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453357
+    - Dados/setor de interesse: crítica à defesa de incentivos fiscais e à Zona Franca de Manaus; utiliza o tema de incentivos fiscais como argumento de mudança estrutural, embora não apresente números específicos de recuperação fiscal no trecho. Diverge de Fagundes ao questionar políticas setoriais de incentivos, em vez de apoiar mais recursos municipais para educação.
+  - Vanderlan Cardoso (PSD/GO) | 2022-08-03 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493034
+    - Dados/setor de interesse: usa dados econômicos globais do FMI para sustentar uma visão de recuperação econômica do Brasil, com ênfase em crescimento e melhoria de resultados de empresas estatais, o que embasa uma visão macro de reformas e eficiência do Estado.
+    - Tom de argumento: macroeconomia, com foco em perspectivas de crescimento, redução de juros, e desempenho de setores estatais; contraste com o enfoque micro/local de Fagundes de investir em educação via tributação e competências municipais.
+
+Limitações/limitações do que foi possível confirmar
+- Não há menção a Ciro Nogueira entre os trechos apresentados, portanto não é possível fazer a comparação solicitada com base nesses dados — afirmação direta sobre a ausência no contexto fornecido. 
+- A comparação entre Wellington Fagundes e outros senadores do conjunto (como Plínio Valério e Vanderlan Cardoso) é útil para entender diferentes usos de dados, mas não substitui a ausência de qualquer dado de Ciro Nogueira no material.
+
+Referências:
+- Wellington Fagundes (PL/MT) | Data: 2019-05-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453571
+- Plínio Valério (PSDB/AM) | Data: 2019-05-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453357
+- Vanderlan Cardoso (PSD/GO) | Data: 2022-08-03 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493034",1,2,2,2,2,9,"Não houve menção a Ciro Nogueira; a avaliação foca em Wellington Fagundes com números (R$12,5 bilhões; 30% = R$3,7 bilhões) para educação via PEC 73. Inclui menção a trechos de outros senadores, o que desvia do objetivo da pergunta. Limitação explicitada de não ter dados de Ciro no material fornecido."
+q12,author_disambiguation,"Quais propostas sobre educacao aparecem especificamente em falas de Confucio Moura e quais aparecem em falas de outros senadores, mas poderiam ser confundidas com as dele? Responda separando com clareza o que e dele e o que nao e.",ok,"Resposta direta
+
+Propostas apresentadas especificamente por Confúcio Moura (MDB/RO):
+- Adotar cada escola por um Senador, ou seja, haveria a participação de senadores na presença/atuação junto às escolas. Evidência: ele menciona explicitamente a ideia no discurso e cita “o projeto que relatei do senhor, no sentido de que cada escola fosse adotada por um Senador.” [2019-08-06] (456320)
+- Educação integral para as crianças do ensino básico (infantil e ensino fundamental). Evidência: afirmação direta sobre educação integral. [2019-02-22] (451112)
+- Foco na melhoria da qualidade dos professores da educação básica, com formação baseada na prática em sala de aula, valorização da profissão, atenção a salários, e combate à violência contra professores. Evidência: sequência de pontos sobre formação, valorização e disciplina de agressões. [2019-07-08] (455270)
+- Defesa da permanência/aperfeiçoamento do Fundeb, com necessidade de maiores recursos para a educação brasileira; discussão sobre destinação dos recursos e fiscalização. Evidência: defesa da perenização do Fundeb e de recursos para educação. [2020-02-06] (463649)
+- Defesa de que o diretor/secretário de educação não seja nomeado por vereadores ou políticos, defendendo que a nomeação tenha critérios de qualificação e notório conhecimento na área. Evidência: trecho específico sobre a nomeação de diretores/secretários de educação. [2020-02-06] (463649)
+- Enfoque de que “educação é prioridade” e que a melhoria da educação deve ocorrer de forma gradual, com foco em formação de professores, currículo e leitura/escrita. Evidência: ressalta a educação como prioridade e o papel do professor. [2019-02-22] (451112) e [2019-05-30] (453950) também contextualizam o tema, mas a formulação central está em 451112.
+- Observação histórica sobre a educação e a necessidade de reformas para melhoria da qualidade, incluindo enfatizar a formação de professores, avaliação de qualidade e investimento. Evidência: referências históricas e a afirmação de que “educação” é o caminho para o progresso. [2019-03-14] (451323) e [2019-05-30] (453950)
+
+Propostas de outros senadores que aparecem no contexto, mas que poderiam ser confundidas com as dele:
+- A ideia de adoção de escolas por um Senador é apresentada no discurso citado de Confúcio Moura, mas é reiterada no momento por outro senador (Styvenson Valentim) ao apartear e mencionar que citou o projeto que “relatei do senhor” para que “cada escola fosse adotada por um Senador.” Dessa forma, a proposta aparece na fala de outro senador, mas já havia sido apresentada por Confúcio Moura. Evidência: referência direta de Styvenson Valentim à ideia do projeto de Confúcio Moura. [2019-08-06] (456320)
+
+Limitações do que pode ser confirmado
+- O conjunto de fontes disponíveis no contexto mostra principalmente as propostas e posicionamentos de Confúcio Moura. Há participação de outros senadores que comentam ou defendem temas correlatos (ex.: Paulo Paim elogiando a educação e comentando sobre financiamento e fiscalização), mas o material não detalha explicitamente propostas novas apresentadas por eles que sejam idênticas às de Confúcio, além do caso em que Styvenson Valentim reproduz a referência à “adoção de escolas por Senador.” Em termos de conteúdo, a associação direta entre propostas de terceiros e as de Confúcio está principalmente na referência de Styvenson a uma ideia já apresentada por ele. Fontes citadas para apoiar isso: 2019-08-06 (456320).
+
+Referências:
+- Confúcio Moura (MDB/RO) | Data: 2019-02-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451112
+- Confúcio Moura (MDB/RO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451323
+- Confúcio Moura (MDB/RO) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455270
+- Confúcio Moura (MDB/RO) | Data: 2019-08-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456320
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+
+Observação: Caso você queira, posso reformatar as propostas em uma tabela simples com tópicos e citações diretas retiradas dos trechos, para facilitar a leitura.",2,2,2,2,2,10,Separou claramente propostas de Confúcio Moura das de outros; cita fontes específicas. Sem alucinações. Pode reforçar a verificação de que propostas são originais dele versus menções de terceiros.
+q13,negative_evidence,"Ha, no contexto recuperado, evidencia suficiente para afirmar que existe uma proposta detalhada de implementacao, com prazos e fonte de financiamento, para combater a desigualdade? Se nao houver, explique exatamente o que falta.",ok,"Não. No contexto fornecido não há uma referência a uma “proposta detalhada de implementação” com prazos claros e fonte de financiamento única e específica para combater a desigualdade. O material apresenta propostas e mecanismos de financiamento, mas sem um cronograma definido.
+
+Evidências principais do contexto (com foco na pergunta):
+- Existem propostas que tratam de financiamento e mecanismos de implementação, como o PLV 22/2021, que aborda ajustes orçamentários e financeiros, uso de fundos constitucionais e expansão de instrumentos de financiamento, incluindo PPPs e dispensa de licitação em determinadas situações. Também menciona repasses de recursos entre fundos e instituições financeiras públicas para ampliar investimentos. Exemplo: “a Medida Provisória nº 1.052, na forma do PLV nº 22, de 2021, é meritória e merece aprovação” e a ideia de repassar até 10% dos recursos do FCO aos bancos cooperativos e às confederações de cooperativas de crédito. Fonte: O SR. MARCOS ROGÉRIO (Bloco Parlamentar Vanguarda/DEM - RO) | Data: 2021-06-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480060
+- Também há proposições com emendas que detalham aplicações de recursos, como a Emenda nº 98-PLEN, que propõe destinar 1% do imposto devido para contas específicas em instituições financeiras de escolha da Sudene/Sudam, para aplicação conforme regulamentação. Fonte: O SR. MARCOS ROGÉRIO (Bloco Parlamentar Vanguarda/DEM - RO) | Data: 2021-06-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480060
+- Em relação ao PL 3.717/2021 (“Lei dos Direitos da Mãe Solo”), há descrições de emendas e ajustes propostos para ampliar o grupo de beneficiárias e adequar regras de crédito, habitação, intermediação de mão de obra e outros instrumentos, com menção a regras de aplicação e de fiscalização, mas sem especificação de prazos de implementação. Fonte: Aprofundamento sobre o tema pelo Parlamentar Leila Barros (Relatora) | Data: 2022-03-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488705
+- Também há menções a ajustes operacionais (cadastro único, prioridades para mães solo, participação em programas de crédito, licença-maternidade, etc.) dentro das propostas, que indicam direção de políticas públicas, mas sem prazos definidos. Exemplo: a discussão sobre Emendas ao PL 3.717/2021 e ajustes para ampliar o alcance e a qualidade das políticas públicas. Fonte: O SR. FABIANO CONTARATO (REDE/ES) | Data: 2019-04-10 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452433
+- Dados de debates sobre desigualdade também aparecem em discursos que ressaltam a necessidade de ações com impacto social imediato, mas sem cronogramas de implementação descritos nesses trechos. Fonte: O SR. RANDOLFE RODRIGUES (REDE/AP) | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461429
+
+Limitações do que não foi possível confirmar:
+- Não há no contexto apresentado um cronograma detalhado com prazos de implementação (datas específicas) para as medidas propostas.
+- Não há uma lista única de fontes de financiamento consolidada com valores, mecanismos de captação ou fontes de renda que cubram todo o plano, nem um documento único que agregue etapas, responsáveis e prazos.
+- As referências disponíveis descrevem medidas, emendas e mecanismos de financiamento setoriais, mas não entregam um plano operacional completo com etapas e datas.
+
+Referências:
+- Marcos Rogério (Bloco Parlamentar Vanguarda/DEM - RO) | Data: 2021-06-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480060
+- Leila Barros (CIDADANIA/DF) | Data: 2022-03-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488705
+- Fabiano Contarato (REDE/ES) | Data: 2019-04-10 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452433
+- Randolfe Rodrigues (REDE/AP) | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461429
+- Randolfe Rodrigues (REDE/AP) | Data: 2019-10-17 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459931
+
+Observação: Se desejar, posso tentar extrair um resumo comparando as propostas mencionadas para identificar quais elementos exigem prazos ou que tipos de fontes de financiamento aparecem com mais frequência.",2,2,2,2,2,10,Conclui que não há proposta detalhada com prazos e fonte de financiamento único; aponta lacunas (cronograma detalhado e financiamento consolidado) e cita evidências relevantes.
+q14,multi_hop,"A partir de diferentes discursos, reconstrua a cadeia de raciocinio que liga desigualdade, desenvolvimento regional, educacao e protecao social. Quais autores fazem essas conexoes de modo mais explicito e com quais limites?",ok,"Resumo direto da resposta
+- A cadeia de raciocínio presente nos discursos parte de uma leitura comum: a desigualdade, especialmente a regional (Nordeste/Norte), é o principal entrave ao desenvolvimento; para superá-la é preciso combinar políticas de desenvolvimento regional com investimentos em educação e proteção social, de modo a ampliar acesso, qualidade e oportunidades para as populações mais pobres e históricamente desprivilegiadas. Diversos autores associam explicitamente educação a redução de desigualdades e a melhoria do desenvolvimento regional, enquanto a proteção social atua como motor de inclusão e estabilidade que viabiliza o investimento em educação e participação social. Alguns autores tratam a educação como prática emancipatória, com ênfase na educação popular e na inclusão de grupos historicamente marginalizados. Entretanto, há limites: as falas costumam ser mais normativas e programáticas do que apresentarem um pacote integrado de políticas coerentes entre desigualdade, desenvolvimento regional, educação e proteção social; além disso, há referências a restrições orçamentárias e disputas políticas que dificultam a implementação prática dessas conexões.
+
+Evidências principais do contexto (trechos relacionados)
+- Desigualdade regional como obstáculo ao desenvolvimento e focalização no Nordeste/Norte: “Regiões Norte e Nordeste chegam a ter mais de 40% de suas escolas públicas sem ligações públicas de luz e de esgoto… é inaceitável…”, conclusão de que há desigualdade estrutural que requer cuidado especial com desenvolvimento regional. (Dário Berger) [46? 461387-001 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461387]
+- Educação como motor central do desenvolvimento e ferramenta de redução de desigualdades: defesa de maior investimento na educação, com ênfase em educação técnica/profissionalizante, expansão de institutos federais, e visão de educação como base para cidadania e desenvolvimento. (Paulo Paim) [455266-003 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455266]
+- Educação como “chave para o sucesso” e sua relação com redução de desigualdades: repetição da ideia de que educação é caminho essencial rumo à igualdade (sintetizado na defesa de políticas de educação para todos, e de uma sociedade que valorize a educação). (Paulo Paim) [455421-001 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455421]
+- Proteção social como componente da equação e sua relação com desigualdade: dados sobre queda de alcance do Bolsa Família em 2012-2018, apontando a necessidade de políticas públicas para manter redes de proteção que sustentem renda e acesso a serviços. (Otto Alencar) [459977-002 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459977]
+- Inclusão racial e social como parte da redução de desigualdades, com políticas de cotas e educação não seletiva; o mecanismo de cotas é apresentado como imperativo democrático para refletir perfil demográfico e reduzir desigualdades históricas. (Deborah Duprat) [462882-002 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462882]
+- Educação como prática emancipatória; educação popular como método de transformação da realidade e desnaturalização de estruturas de dominação: “educação popular” como caminho para ampliar participação e romper exclusões. (Douglas de Jesus Gonçalves) [483386-001 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483386]
+- Limites explícitos sobre a viabilidade/execução: menção a emendas, teto de gastos (Emenda 95) e cortes orçamentários que limitam o investimento público em educação e políticas sociais. (Deborah Duprat) [462882-002 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462882]
+
+Conexões explícitas entre desigualdade, desenvolvimento regional, educação e proteção social (quem faz e como)
+- Paulo Paim (PT/RS) — faz ligações claras entre educação e desenvolvimento, defendendo investimentos pesados em educação técnica e superior pública como base para redução de desigualdades e para o desenvolvimento do país. Enfatiza a educação como “chave” para o futuro, aponta a necessidade de universalizar o acesso e de ampliar o papel do Estado na educação (Fundeb, ensino técnico, educação pública). Limites apontados: ênfase programática sem detalhar mecanismos de implementação ou financiamento estáveis em face de restrições orçamentárias. Citações: defesa da educação como fundamento do desenvolvimento e da cidadania; defesa de investimento em institutos federais e educação técnica. (Paulo Paim) [455266-003]; uso de Paim para reforçar que “a educação é a chave” para reduzir desigualdades. [455421-001]
+
+- Dário Berger (MDB/SC) — conecta diretamente desigualdade regional (com evidência do IOEB) a necessidade de distribuir recursos com foco na educação e infraestrutura, defendendo o reforço do Fundeb e a criação de um sistema educacional nacional que facilite políticas públicas com viés regional. Limites: a relação entre IOEB e políticas específicas depende de decisões orçamentárias e prioridade política; o eixo de implementação é apresentado de forma conceitual. Citações: IOEB identifica desigualdade regional e necessidade de distribuir recursos; crítica à desigualdade Norte/Nordeste; defesa de investimento em infraestrutura escolar e de um sistema de educação nacional. [461387-001]
+
+- Deborah Duprat (PDT/RS? ou vaga) — destaca a desigualdade racial como parte central da desigualdade social, defendendo cotas e o ensino da história e cultura africanas para enfrentar a discriminação estrutural; associações entre políticas de inclusão (cot as) e educação como ferramenta de transformação social. Limites: a arguição é mais normativa e de direitos humanos do que um plano integrado de políticas de educação e proteção social; a conexão com proteção social é indireta. Citações: alusão às cotas raciais como imperativo democrático e ao papel da educação para resgatar história e reduzir desigualdades raciais. [462882-002]
+
+- Otto Alencar (PSD/BA) — apresenta um retrato claro da desigualdade (Gini) e aponta necessidade de políticas públicas para desenvolvimento; ligações à educação aparecem no tom geral da importância da educação para o sucesso (frases retóricas de educação como chave para o desenvolvimento), e ele ainda cita o impacto de cortes orçamentários na educação e no Bolsa Família, o que evidencia a conexão entre proteção social e desenvolvimento sustentável. Limites: as ligações entre educação e proteção social são mencionadas, mas de forma menos sistemática; o foco principal é o diagnóstico da desigualdade e a defesa de políticas públicas. Citações: dados de desigualdade por IBGE/Pnadc; queda no Bolsa Família; defesa de políticas públicas para o desenvolvimento. [459977-002]
+
+- Douglas de Jesus Gonçalves (Rede Emancipa) — enfatiza a educação como prática libertadora, destacando a educação popular como instrumento para desnaturalizar a opressão estrutural e promover transformação social; conecta a educação a mobilização social e participação cidadã, o que amplia a visão de proteção social como base para o empoderamento popular. Limites: o foco é mais ideológico/educacional do que operacional em termos de políticas públicas de proteção social; não descreve um pacote específico de políticas públicas para reduzir desigualdades regionais. Citações: educação popular como método de transformação da realidade; leitura de Freire e Hooks para defender práticas emancipatórias. [483386-001]
+
+- Síntese dos limites observados
+  - Várias falas são fortemente normativas e programáticas, com menos detalhamento de instrumentos de implementação e financiamento estáveis para articular de modo coeso as quatro dimensões (desigualdade, desenvolvimento regional, educação e proteção social).
+  - Há menção a restrições orçamentárias (por exemplo, teto de gastos) que dificultam a materialização das propostas de educação e proteção social, o que aponta um descompasso entre diagnóstico e viabilidade prática. (Deborah Duprat) [462882-002]
+  - A ligação entre educação e proteção social é clara em alguns discursos (p. ex., Bolsa Família, inclusão social), mas nem todos articulam de forma integrada uma política que combine as quatro dimensões em um plano único de desenvolvimento.
+
+Referências:
+- DÁRIO BERGER | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461387
+- PAULO PAIM | Data: 2019-07-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455421
+- PAULO Paim | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455266
+- OTTO ALENCAR | Data: 2019-10-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459977
+- DEBORAH DUPRAT | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462882
+- DOUGLAS DE JESUS GONÇALVES | Data: 2021-09-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483386
+- PAULO Paim | Data: 2019-07-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455421
+- CONTEXTUALIZAÇÃO GERAL (trechos diversos) | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/",2,2,2,2,2,10,"Resposta bem alinhada com a pergunta: reconstrução da cadeia de raciocínio, identificação de autores que conectam desigualdade, desenvolvimento regional, educação e proteção social, e discussão de limites. Evidências contextuais relevantes, síntese clara e organizada. Sem alucinações; poderia detalhar mais os mecanismos de implementação orçamentária."
+q15,numbers_precision,Quais numeros citados nos discursos parecem centrais para o argumento de cada autor e quais aparecem apenas como apoio periferico? Distingua os dois grupos e evite misturar estatisticas de autores diferentes.,ok,"Resposta direta:
+
+- Izalci Lucas (PSDB/DF) – Não identifiquei números centrais citados para fundamentar seu argumento; o discurso aborda Centros de Desenvolvimento Regional e parcerias sem apresentar dados numéricos explícitos. [Fonte: 450951-002]
+
+- Douglas de Jesus Gonçalves (nan) – O número central do discurso é o centenário de Paulo Freire (100 anos), usado para enquadrar a celebração e a importância da educação popular. [Fonte: 483386-001]
+
+- Randolfe Rodrigues (REDE/AP) – Números centrais: “quase 600 mil” brasileiros são mencionados para dimensionar o impacto da pandemia, contextualizando o lançamento da obra e o significado cívico do momento. [Fonte: 483490-001]
+
+- Nathalia Henrich (nan) – Número central: referência a cerca de 600 mil mortes no Brasil pela covid-19, usada para dar peso histórico e cívico ao lançamento/participação no debate. [Fonte: 483489-001]
+
+- Dora Kaufman (nan) – Número central: comparação de tamanho entre atos legislativos (Câmara vs. Senado) em termos de páginas: Câmara tem 7 páginas, Senado 4 páginas, usada para enfatizar o alcance/complexidade do tema em pauta. [Fonte: 481547-001]
+
+- Esperidião Amin (PP/SC) – Números centrais: referências a vários projetos de lei e leis com anos específicos (1422/2019; 7.116/1983; 9.454/1997; 13.444/2017; 13.460/2017; 172/2017; 2628/2020; 3816/2020) que fundamentam a discussão sobre adoção de um número único de identificação (CPF) e a integração de cadastros. Esses números são usados como base legal e histórica do argumento. [Fonte: 483648-002]
+
+- Fernando Collor (Bloco da Resistência Democrática/PROS) – Não vejo números centrais que sustentem seu argumento no trecho disponível; o foco é o enfrentamento de acusações e o direito à defesa, sem dados numéricos relevantes apresentados no texto. [Fonte: 459806-001]
+
+Evidências principais do contexto (trechos de apoio):
+
+- Centenário de Paulo Freire como eixo do discurso: “sessão especial destinada a comemorar o centenário do educador Paulo Freire” (Douglas de Jesus Gonçalves). [Fonte: 483386-001]
+
+- Numeração como elemento dramático/legislatório em pauta: menção ao Projeto de Lei n° 1422/2019 e outros projetos correlatos (172/2017; 2628/2020; 3816/2020), além de referências às leis 7.116/1983, 9.454/1997, 13.444/2017 e 13.460/2017 no contexto da identificação civil e do CPF. [Fonte: 483648-002]
+
+- Impacto da covid-19 como parâmetro histórico/ético: “quase 600 mil brasileiros e brasileiras que perderam a vida durante a pandemia de covid-19” (Randolfe Rodrigues; Nathalia Henrich). [Fontes: 483490-001; 483489-001]
+
+- Comparação de tamanho de textos legislativos para ilustrar complexidade/alcance (Câmara vs. Senado): Câmara com sete páginas, Senado com quatro páginas. [Fonte: 481547-001]
+
+Limitações do que não foi possível confirmar (com clareza):
+
+- Em Izalci Lucas, não há números explícitos que sustentem o argumento no conjunto dos trechos disponíveis; o conteúdo se concentra em ações e parcerias sem dados numéricos visíveis. [Fontes: 450951-002; 450951-004]
+
+- Em Collor, não há números centrais evidentes nos trechos apresentados; o foco é desdobramento de acusações sem dados estatísticos relevantes no texto. [Fonte: 459806-001]
+
+- Em Randolfe Rodrigues adicionais (483488-001, 483492-001), não há números centrais explícitos que sustentem o argumento nesses trechos; portanto, não foram identificados números centrais adicionais para esses discursos além dos citados em 483490-001. [Fontes: 483488-001; 483492-001]
+
+Referências:
+
+- Izalci Lucas (PSDB/DF) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450951
+
+- Izalci Lucas (PSDB/DF) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450951
+
+- Douglas de Jesus Gonçalves (nan) | Data: 2021-09-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483386
+
+- Randolfe Rodrigues (REDE/AP) | Data: 2021-09-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483490
+
+- Randolfe Rodrigues (REDE/AP) | Data: 2021-09-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483488
+
+- Randolfe Rodrigues (REDE/AP) | Data: 2021-09-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483492
+
+- Nathalia Henrich (nan) | Data: 2021-09-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483489
+
+- Dora Kaufman (nan) | Data: 2021-07-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481547
+
+- Esperidião Amin (PP/SC) | Data: 2021-09-28 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483648
+
+- Fernando Collor (PROS/AL) | Data: 2019-10-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459806
+
+Observação final: organizei os grupos de números de acordo com cada autor, distinguindo números centrais (ou seja, aqueles que estão no cerne do argumento) de números que funcionam apenas como apoio periférico nos trechos disponíveis. Se desejar, posso ampliar ou reduzir a lista de autores analisados ou reorganizar por tema (educação, legislação, política pública, etc.).",2,2,2,2,2,10,"Avaliação adequada: identifica números centrais por autor (ex.: centenário de Paulo Freire; quase 600 mil mortos; 600 mil; páginas da Câmara vs Senado; PLs e leis citadas). Mantém separação entre autores e não registra números centrais para Izalci Lucas e Collor. Pode melhorar: listar explicitamente os números periféricos por autor onde aparecem, aplicar uma divisão clara entre centrals vs periféricos sem misturar estatísticas entre autores e reduzir repetições/duplicação de fontes."
+q16,scope_control,"O que exatamente Paulo Paim afirma sobre capitalizacao da Previdencia, e o que seria uma extrapolacao indevida para alem do que os trechos permitem concluir?",ok,"1) Resposta direta
+
+- Paulo Paim afirma que a capitalização da Previdência (capitalização > regime de poupança individual) é uma proposta que ele rejeita e critica fortemente. Ele aponta que países que adotaram esse modelo (Chile, Colômbia, México, Peru) estão voltando atrás, justamente por enfrentar problemas como benefícios muito baixos e cobertura restrita. [450736-002] 
+
+  Citação associada: ""o sistema da capitalização já foi adotado no Chile, na Colômbia, no México e no Peru. Esses países fizeram essa experiência e já estão voltando atrás – todos eles estão voltando atrás"" [450736-002].
+
+- Paim descreve a capitalização como poupança individual, com risco de gerar um rombo no sistema previdenciário, principalmente pela menor entrada de novos contribuintes. Ele argumenta que isso fragiliza a seguridade social e aumenta a vulnerabilidade de dependentes. [453766-003]
+
+  Citação associada: ""capitalização... poupança individual"" e ""gerar um enorme rombo no sistema, isso devido à menor entrada de novos contribuintes"" [453766-003].
+
+- Sobre os impactos práticos, ele sustenta que sob capitalização muitas pessoas teriam aposentadorias muito menores (exemplo: no Chile, a média de aposentadoria é de meio salário mínimo; no Brasil, isso seria insuficiente para manter dignidade). Além disso, o dependente do trabalhador que caduca sem deixar recursos (ex.: se o cônjuge ficou em casa e o titular falece) pode ficar sem nenhum benefício. [453766-003]
+
+  Citação associada: referência ao Chile com “meio salário mínimo” e ao risco de dependentes ficarem sem nada [453766-003].
+
+- Em relação à gestão dos benefícios, ele afirma que sob capitalização há possibilidade de privatização da proteção social (gestão por bancos/empresas privadas) e que isso reduz a proteção do trabalhador. [457064-005]
+
+  Citação associada: ""a gestão... para banco e para empresas privadas... a proteção social dos trabalhadores será transformada em negócio"" [457064-005].
+
+- Além disso, Paim argumenta que não é verdade que o País vai quebrar sem a capitalização; defende em vez disso uma reforma tributária solidária e progressiva para resolver o problema fiscal, com combate à sonegação. [453766-003] 
+
+  Citação associada: ""Não é verdade... o País vai quebrar"" e defesa de reforma tributária solidária/progressiva [453766-003].
+
+- Por fim, ele reafirma que não vê a capitalização como solução e enfatiza que a esquerda/apoio à seguridade social defendem o regime de repartição solidário, criticando a capitalização e defendendo alternativas que preservem trabalhadores, especialmente os mais pobres. [452829-003], [454571-004]
+
+  Citação associada: defesa do sistema solidário de repartição e crítica à capitalização [452829-003]; menção a arranjos para evitar retrocessos com a capitalização [454571-004].
+
+2) Evidências principais do contexto
+
+- Crítica explícita à capitalização, citando experiências internacionais como alerta (Chile etc.) e argumentos de inviabilidade econômica e social. [450736-002], [453766-003], [454571-004]
+  Citação de apoio: “capitalização já foi adotado no Chile... estão voltando atrás” [450736-002].
+
+- Descrição de problemas de benefício sob capitalização (valor de aposentadoria baixo, risco de desproteger dependentes). [453766-003]
+  Citação de apoio: “média da aposentadoria no Chile é meio salário mínimo… se um dos dois morreu, a esposa fica sem nada” [453766-003].
+
+- Alerta sobre privatização da gestão de benefícios sob capitalização. [457064-005]
+  Citação de apoio: “gestão... para o banco e para empresas privadas… o benefício vira negócio” [457064-005].
+
+- Proposta alternativa de reforma tributária solidária e combate à sonegação como caminho para resolver a crise fiscal, sem recorrer à capitalização. [453766-003], [454571-004]
+  Citação de apoio: “reforma tributária solidária, progressiva já!” [453766-003], e crítica à capitalização associada a esse contexto [454571-004].
+
+3) Limitações do que não foi possível confirmar
+
+- Os trechos disponíveis são falas em sessões diferentes e, muitas vezes, representam ataques, defesas e referências a propostas legislativas (PECs) em tramitação. Embora haja repetidas declarações críticas à capitalização, não há nos textos fornecidos uma transcrição direta de Paim defendendo explicitamente qualquer versão de capitalização como solução. Em vez disso, ele se posiciona repetidamente contra a capitalização. Por exemplo, ele afirma que “capitalização fragiliza a seguridade” e que “se passar a capitalização... ficará sem nada” para dependentes, mas não há registro de ele apresentar ou defender um modelo específico de capitalização. [453766-003], [454571-004], [450736-002], [457064-005]
+
+- Não há nos trechos fornecidos uma nota técnica completa sobre as propostas de capitalização que garanta que todos os aspectos técnicos estejam cobertos. O que temos são descrições, críticas e alertas hipotéticos sobre cenários derivados da capitalização. Logo, extrapolações que afirmem que Paim propõe ou apoia uma capitalização com determinadas regras técnicas não são suportadas pelos trechos. 
+
+4) Referências
+
+- Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Paulo Paim (PT/RS) | Data: 2019-02-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450968
+- Paulo Paim (PT/RS) | Data: 2019-04-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452829
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Paim (PT/RS) | Data: 2019-06-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454571
+- Paulo Paim (PT/RS) | Data: 2019-08-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456974
+- Paulo Paim (PT/RS) | Data: 2019-09-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457064
+
+Observação: Não encontrei nesses trechos nenhuma afirmação de Paulo Paim que indique apoio à capitalização como modelo; as referências mostram principalmente críticas e argumentos contra esse regime, bem como defesa de alternatives, como reforma tributária solidária. Caso queira, posso destacar trechos textuais específicos com paráfrases mais diretas.",2,2,2,2,2,10,"A resposta está alinhada com a pergunta: afirma que Paim rejeita a capitalização, descreve impactos e que extrapolações não são suportadas pelos trechos; utiliza fontes relevantes; não há alucinações aparentes. Recomenda-se consolidar citações diretas para maior precisão."
+q17,source_focus,"Quais respostas exigiriam mais cautela por dependerem de inferencias amplas a partir de poucos trechos: as sobre educacao, as sobre desigualdade ou as sobre infraestrutura? Justifique com base nas limitacoes do proprio contexto.",ok,"Resposta direta:
+As respostas que exigiriam mais cautela são as sobre infraestrutura e, em menor grau, as sobre desigualdade. Explico a seguir com base nas limitações do contexto.
+
+Evidências principais do contexto:
+- Infraestrutura: há declarações específicas sobre deficiências de infraestrutura em escolas, como “mais de 40% de suas escolas públicas sem ligações públicas de luz e de esgoto” em regiões do Norte e Nordeste, além de menções à falta de água potável, ausência de internet e falta de banheiros nas escolas. Essas são afirmações pontuais vindas de discursos individuais, não de uma base de dados nacional consolidada apresentada no conjunto. [Dário Berger | 2019-11-12] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461387) 
+  - Complementarmente, há o relato de Heleno Araújo sobre dados do censo que evidenciam gaps de infraestrutura (conectividade, treinamento tecnológico, acesso a equipamentos, etc.). Esses pontos reforçam a sensibilidade da infraestrutura, mas continuam sendo apresentado em contexto de apresentação de dados específicos. [Heleno Manoel Gomes Araújo Filho | 2021-08-24] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482638)
+
+- Desigualdade: o material aponta desigualdades regionais e de oferta de recursos entre grupos e regiões, por meio de referências a IOEB (Índice de Oportunidades da Educação Brasileira) e a discussões sobre distribuição de recursos entre Estados e Municípios. Há afirmações como a desigualdade regional concentrada em Norte/Nordeste conforme o IOEB, o que é apresentado por meio de discurso específico. [Dário Berger | 2019-11-12] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461387)
+  - Há também falas que destacam a invisibilização de grupos e políticas públicas pela ausência de dados para monitoramento, o que reforça a necessidade de cautela ao extrapolar para políticas nacionais sem dados robustos. [Lara Simiel­li | 2022-06-20] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491957)
+  - Outras falas enfatizam a necessidade de dados para monitoramento de metas (metas do PNE, inclusão, educação de jovens e adultos) como forma de evitar que desigualdades fiquem invisíveis. [Daniel Cara | 2021-09-03] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482925)
+
+- Educação (como campo): existem elementos consistentes no contexto (IOEB, Sistema Nacional de Educação, metas do PNE, custos-aluno-qualidade, Fundeb) que ajudam a fundamentar perguntas sobre educação de forma sólida, com várias fontes dentro do próprio contexto. Ainda assim, a extrapolação de políticas nacionais a partir de trechos específicos requer cuidado, pois envolve discussões sobre políticas públicas, financiamento e implementação que aparecem em diferentes discursos. [Dário Berger | 2019-11-12], [Daniel Cara | 2021-09-03], [Soraya Thronicke | 2021-?], [Lara Simiel­li | 2022-06-20]
+
+Limitações do que não pode ser confirmado com segurança pelo contexto:
+- As informações sobre infraestrutura e desigualdade são apresentadas como afirmações em discursos específicos, não como dados oficiais consolidados apresentados aqui. Portanto, extrapolar para uma leitura nacional abrangente pode induzir inferências não suportadas por dados generalizáveis no contexto fornecido. As referências citadas aparecem em falas isoladas, sem uma base única e completa de dados. Por isso, é preciso cautela ao generalizar. 
+- Embora haja conteúdo relevante sobre educação, o conjunto é composto principalmente de falas e pareceres de senadores e convidados, o que exige cuidado para não assumir conclusões que dependam de dados nacionais adicionais não apresentados aqui. 
+- Se a pergunta exigir síntese precisa com números nacionais atualizados, o contexto não fornece uma base única e completa; apenas trechos específicos são apresentados. 
+
+Referências:
+- Dário Berger (MDB/SC) | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461387
+- Heleno Manoel Gomes Araújo Filho (nan) | Data: 2021-08-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482638
+- Lara Simiel­li (nan) | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491957
+- Daniel Cara (nan) | Data: 2021-09-03 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482925
+
+Observação final: Se quiser, posso reorganizar a resposta em formato de lista com apenas os trechos estritamente necessários para sustentar a conclusão, ou aprofundar cada ponto com trechos adicionais disponíveis no contexto.",2,2,2,2,2,10,"Resposta foca nas áreas infraestrutura e desigualdade, justificando com limitações do contexto; utiliza fontes do Senado de forma coerente e sinaliza limites, sem alucinações."
+q18,cross_author,"Quais semelhancas de linguagem ou tema entre Paulo Paim, Confucio Moura e outros autores podem levar o sistema a confundir autoria ou proposta? Identifique os riscos concretos de confusao e ilustre com exemplos.",ok,"Resposta direta
+
+- O sistema pode confundir autoria ou proposta quando autores diferentes usam:
+  - um tom formal e estruturado de discurso parlamentar, com marcação de ""O SR./A SRA."" e sequência típica de fala (apresentação, desenvolvimento, conclusão), o que dificulta distinguir quem discursou sem olhar para a identificação explícita. Exemplo: abertura do discurso de Paulo Paim e a forma de identificação no texto: “O SR. PAULO PAIM (Bloco Parlamentar da Resistência Democrática/PT - RS) – Independente do resultado.” [456916-004]. 
+  - temas muito semelhantes — especialmente em debates legislativos sobre reformas, direitos, Estado de Direito e democracia — que aparecem repetidamente em diferentes falas, dificultando atribuição se o trecho for retirado do contexto. Exemplo: debates sobre direitos, Estado de Direito e democracia aparecem em falas de Paulo Paim e de Confúcio Moura (ex.: “Estado de direito” e “direitos humanos” aparecem em 453501-001 e também em 456916-004). [453501-001], [456916-004].
+  - uso de referências a leis, artigos e propostas de lei, com linguagem jurídica comum (artigos, capítulos, penas, tipos penais), o que pode levar a atribuir uma proposta específica a um autor equivocado. Exemplo: discussão de novos tipos penais e reformas (artigos, dispositivos, Sabotagem/Abolição/Espionagem) em falas que citam termos como “artigo 359-O” ou “Estado Democrático de Direito” (ex.: Alaor Leite em 480785-001; Raísa Cetra em 480789-001 discute leis e direitos digitais). [480785-001], [480789-001].
+  - semelhanças de estrutura, com abertura de saudação, contextualização histórica, apresentação de pontos-chave e conclusão, o que pode levar o leitor a marcar a autoria baseando-se apenas na organização do texto e não no conjunto de dados do autor. Exemplo: Alaor Leite inicia com apresentação, cumprimentos e contextualização do tema da Lei de Segurança Nacional (480785-001). [480785-001]
+
+- Riscos concretos de confusão com exemplos do contexto:
+  - Risco A: atribuir a Paulo Paim uma menção a posições técnicas sobre a Lei de Segurança Nacional (ou sobre o tema de “Estado Democrático de Direito”) que foi apresentada por outro colega. Exemplo de linguagem associada à Lei de Segurança Nacional surge no discurso de Alaor Leite: “esta sessão plenária trata de relevante matéria, afinal a Lei de Segurança Nacional é uma morta insepulta” (480785-001). Sem cuidado de identificação, essa linha pode ser indevidamente creditada a outro autor. [480785-001]
+  - Risco B: misturar proposições sobre reformas de previdência/trabalho com proposições sobre direitos humanos e democracia, pois tanto Paulo Paim quanto Confúcio Moura tratam de temas de política social e direitos, usando vocabulário técnico e referências históricas. Por exemplo, Paulo Paim fala de reformas previdenciárias com linguagem jurídica detalhada (“serviço público aposentado” etc.) em 456916-004, enquanto Confúcio Moura aborda direitos humanos e história da escravatura com outra moldura, mas a semelhança de tom pode levar à confusão se o trecho for isolado. [456916-004], [453501-001]
+  - Risco C: confundir propostas ou referências a normas específicas que aparecem em falas de diferentes autores, por exemplo:
+    - menções a debates sobre “processo eleitoral” e “desinformação em massa” associadas ao Projeto 872/2021 aparecem no contexto de Alaor Leite (480785-001), que discute proposta de tipificação penal para comunicação enganosa em massa (359-O). Se alguém isolar esse trecho, pode atribuí-lo a outro autor que fala de direitos digitais ou eleições, gerando atribuição indevida. [480785-001]
+    - menções a direitos digitais, privacidade e “proteção do Estado democrático de direito” aparecem em Raísa Cetra (480789-001) e podem parecer genéricas o suficiente para serem associadas a vários autores, dificultando a identificação precisa se o contexto não for mantido. [480789-001]
+  - Risco D: usar trechos com timbre técnico-legal similar (citando leis, artigos, capítuos, penas) de diferentes falas pode levar a atribuir uma ideia específica (ex.: defesa de proteção do Estado democrático de direito) a quem não proferiu, apenas pela semelhança de vocabulário. Exemplo: referências a direitos, Estado de direito e proteções legais aparecem em várias falas (Confúcio Moura em 453501-001; Paulo Paim em 456916-004). [453501-001], [456916-004]
+
+- Ilustrações diretas de trechos que exemplificam semelhanças de linguagem/tema:
+  - Tom formal e referência a orelhas parlamentares: “O SR. PAULO PAIM (Bloco Parlamentar da Resistência Democrática/PT - RS) – Independente do resultado.” [456916-004].
+  - Abordagem de temas de direitos humanos, democracia e Estado de Direito com referências históricas e jurídicas: trecho de Confúcio Moura que discorre sobre direitos humanos e a escravatura (453501-001).
+  - Politização do tema de lei de segurança/normas flashlight em tom institucional: Alaor Leite destacando a revogação da Lei de Segurança Nacional e a criação de um novo regime jurídico (480785-001).
+  - Discussão de direitos digitais e democracia no contexto de uma sessão de debates sobre IA/tecnologia (usando linguagem de direito, direitos e deveres): Raísa Cetra, na fala de 480789-001 e 480789-003], [480789-001].
+
+Observação sobre o que não está no contexto
+- Não há uma afirmação explícita no material de que haja um risco sistemático de modelo confundir autoria entre Paulo Paim, Confúcio Moura e outros autores apenas pela semelhança de linguagem. As evidências acima mostram pontos de semelhança que podem favorecer confusões se o contexto não for mantido, mas não há uma linha única que descreva esse risco de forma direta.
+
+Referências:
+
+- Paulo Paim (PT/RS) | Data: 2019-08-30 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456916
+- Confúcio Moura (MDB/RO) | Data: 2019-05-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453501
+- Alaor Leite (nan) | Data: 2021-06-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480785",2,0,1,2,0,5,"Resposta aborda riscos de confusão entre autores e ilustra com exemplos; no entanto, apresenta potenciais alucinações factuais (IDs de falas, nomes de autores e trechos atribuídos) sem verificação. Recomenda-se checar a veracidade das citações e manter o foco nos riscos de confusão ao interpretar trechos isolados."
+q19,retrieval_stress,"Se a pergunta for 'quais senadores apresentam diagnostico e solucao no mesmo discurso, sem depender de sintese entre varios discursos?', quem realmente se encaixa nisso no contexto disponivel? Cite apenas os casos sustentados com seguranca.",ok,"Casos em que o senador apresenta diagnóstico e solução no mesmo discurso (com base no contexto disponível)
+
+- Fernando Collor (PTB/AL) | Data: 2022-12-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494545
+  - Diagnóstico: aponta crise mundial e nacional, polarização política, crise de confiança nas instituições e dificuldades de dialogar. “Sras. e Srs. Senadores, a pandemia e sua consequente politização das decisões alteraram a interlocução global, que passou a se estabelecer em parâmetros muito aquém da real e elevada política.” (Trecho do discurso)
+  - Solução: propõe medidas práticas e reformas institucionais como saída, inclusive “o uso tempestivo de instrumentos constitucionais como os freios e contrapesos entre os Poderes” e “adotar medidas práticas, concretas, factíveis” para resgatar normalidade institucional. “A solução está e sempre estará na interlocução política no seu mais elevado patamar … o uso tempestivo de instrumentos constitucionais como os freios e contrapesos …” e “Urge adotar medidas práticas, concretas, factíveis.” (Trechos do discurso)
+
+- Jarbas Vasconcelos (MDB/PE) | Data: 2019-06-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454708
+  - Diagnóstico: descreve uma quadra de contestações políticas e a necessidade de um consenso para governabilidade; critica a falta de pilares programáticos. “Não é possível manter conduta de pastoril … Estamos vivendo como se estivéssemos em um terceiro turno eleitoral sem pilares programáticos e sem uma agenda de trabalho clara.”  
+  - Solução: enfatiza consensos mínimos de governabilidade e ações de curto prazo em políticas públicas, incluindo “focar na política fiscal, nas reformas necessárias, na produtividade dos setores econômicos e num plano nacional de educação” (trechos do discurso).
+
+- Confúcio Moura (MDB/RO) | Data: 2019-04-01 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452035
+  - Diagnóstico: critica a falta de coragem política e o atraso para reformas necessárias. “Mas como é que ele não vai se meter em tudo? … Nós não fazemos a reforma política necessária, nós não fizemos a reforma tributária necessária … temos medo.”  
+  - Solução: aponta a necessidade de reformas estruturais e de engajamento do Congresso, com tom de urgência: “A transformação pede passagem. É preciso que todos desçam dos seus palanques … precisamos de reformas políticas e tributárias” (trechos do discurso).
+
+- Paulo Paim (PT/RS) | Data: 2019-06-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455064
+  - Diagnóstico: ressalta gargalos como custo da reforma da previdência sem contrapartidas e o efeito sobre o crescimento; aponta a necessidade de reformas para destravar o desenvolvimento. “sem a reforma tributária, sem mais investimentos e ainda com o congelamento imposto pela Emenda 95, fica muito difícil o País crescer.”  
+  - Solução: sugere prioridades de ação, incluindo a defesa de reformas (reforma tributária) e investimentos, além de apoiar PECs voltadas à acessibilidade e mobilidade para ampliar inclusão social. “a aprovação da PEC … que fala dessa questão da acessibilidade e da mobilidade.”
+
+- Nelsinho Trad (PSD/MS) | Data: 2019-12-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462733
+  - Diagnóstico: descreve lacunas em diagnóstico médico no interior do país e necessidade de reorganizar o sistema de saúde para diagnóstico eficiente.  
+  - Solução: defende a criação de centrais de diagnóstico pelo SUS e regulamentação da telemedicina para ampliar o acesso a diagnósticos de qualidade. “O Brasil precisa ter centrais de diagnóstico. O SUS pode criar grandes centrais de diagnóstico.” e “com a telemedicina, um paciente no interior do Amazonas pode ter o diagnóstico olhado por um médico no interior de São Paulo.”
+
+- Paulo Albuquerque (PSD/AP) | Data: 2020-02-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/464073
+  - Diagnóstico: apresenta dados sobre o câncer, destacando a gravidade da doença e a necessidade de ações rápidas.  
+  - Solução: defende ações concretas de prevenção e diagnóstico, enfatizando a necessidade de apoio à causa (“apoio nesta causa de combate e prevenção e o empenho desta Casa em prol de prevenção, diagnóstico do câncer no nosso País”) e melhoria do diagnóstico rápido e preciso.
+
+Observação sobre abrangência:
+- Entre os discursos disponíveis, identifiquei especialmente esses seis em que há formulação explícita de diagnóstico (ou diagnóstico técnico/condições nacionais) e, em seguida, proposta de solução ou caminho de ação no mesmo discurso. Em outros textos, há apenas diagnóstico ou apenas propostas de políticas sem uma ligação clara no mesmo discurso.
+
+### Limitações
+- A avaliação foi feita apenas com base nos trechos fornecidos. Em alguns casos, a ligação entre diagnóstico e solução é mais indireta ou depende de leitura entrelinhas; privilegiei os que apresentam afirmação concreta de diagnóstico seguida de proposição de solução no mesmo discurso.
+
+### Referências:
+- Fernando Collor (PTB/AL) | Data: 2022-12-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494545
+- Jarbas Vasconcelos (MDB/PE) | Data: 2019-06-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454708
+- Confúcio Moura (MDB/RO) | Data: 2019-04-01 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452035
+- Paulo Paim (PT/RS) | Data: 2019-06-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455064
+- Nelsinho Trad (PSD/MS) | Data: 2019-12-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462733
+- Paulo Albuquerque (PSD/AP) | Data: 2020-02-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/464073",2,2,2,2,2,10,Atende à pergunta com 6 casos que ligam diagnóstico a solução no mesmo discurso; usa fontes relevantes; apresentação clara; pequenas seções adicionais poderiam ser removidas para maior foco.
+q20,hallucination_check,"Entre as perguntas deste conjunto, quais tenderiam a induzir alucinacao ou excesso de confianca se o modelo nao reconhecesse limites do contexto? Explique por que e indique como uma resposta cautelosa deveria se comportar.",ok,"Não encontrei no contexto fornecido um conjunto explícito de perguntas. O material disponível são trechos de pronunciamentos sobre projetos de lei (principalmente relacionados ao PL 2108/2021 e ao PL 872/2021) e debates sobre IA, com posições, sugestões de redação e cautelas interpretativas. Por isso, não é possível indicar exatamente “quais perguntas” desse conjunto poderiam induzir alucinação. O que posso fazer é apontar, com base no próprio contexto, quais tipos de perguntas, se usadas, tenderiam a levar a respostas menos confiáveis e como responder de forma cautelosa.
+
+- Perguntas que peçam dados ou afirmações factuais não incluídos no texto (por exemplo, números exatos de votações futuras, prazos não citados, ou conteúdos completos de artigos que não estão integralmente apresentados). O material discute, por exemplo, trechos do art. 359-O com a redação proposta, incluindo a pena de “um a cinco anos”, mas não fornece um compêndio completo de todo o conteúdo legal ou de todas as consequências, o que aumenta o risco de extrapolar. Exemplo no contexto: a menção à redação do art. 359-O e à pena correspondente está presente, mas não é um compêndio completo do conteúdo legal. “[...] A pena é de um a cinco anos.” (Fonte: 480785-001). 
+  - Citações que apoiam esse ponto no contexto: “A redação do crime... A pena é de um a cinco anos.” (480785-001). Também há discussões sobre a necessidade de clareza interpretativa na definição de ‘comprometer o processo eleitoral’ que não estão completas no texto publicado. (480785-001; 480785-002)
+
+- Perguntas que peçam comparações detalhadas entre regulações de IA em países diferentes com dados atuais não presentes no texto. O conjunto menciona referências a exemplos internacionais (Áustria, Alemanha, Comissão Europeia) apenas de forma indicativa, sem um quadro comparativo completo. Isso aumenta o risco de afirmar algo específico que não está no contexto. Exemplo: “O texto cita exemplos internacionais e a comparação com o direito estrangeiro” (480785-001; 480785-002; 481553-001).
+
+- Perguntas que solicitem previsões de tramitação, posições de deputados/senadores que não estão totalmente representadas no corpus, ou cenários futuros não cobertos pelo material. O contexto aponta que há debates, sugestões de cautelas redacionais e preocupações com prazos (ex.: “vacatio legis de 90 dias”), mas não oferece uma linha de tempo ou resultados de votações. (480785-001)
+
+- Perguntas que exijam sínteses ou julgamentos éticos/constitucionais muito específicos que dependam de interpretações não apresentadas no texto. O material enfatiza que a regulação deve ser técnica, contextualizada e evitar precipitação, com debates entre especialistas e senadores. (481531-001; 481539-001)
+
+Como deve se comportar uma resposta cautelosa (quando o contexto é limitado ou parcial)
+
+- Reconhecer explicitamente os limites do contexto: indique que o conjunto de perguntas não está disponível no material e que há informações insuficientes para responder com precisão a perguntas específicas não cobertas pelo texto. Por exemplo, mencionar que o texto discute redações e cautelas, não oferece um quadro completo de todas as hipóteses ou de toda a legislação. 
+  - Apoio no contexto: a ênfase em precisão, cautela e necessidade de debate técnico está presente em várias falas (ex.: Dora Kaufman: “o tema tem que ser debatido de forma técnica, contextualizada, atentos aos riscos, ouvindo os setores... não se precipite”). (481531-001)
+
+- Evitar extrapolações: não afirme conteúdos não citados. Sempre que mencionar algo que não está explicitamente no texto, sinalize com “Não encontrei essa informação no contexto fornecido” ou descreva apenas o que o texto realmente oferece (p. ex., a discussão sobre a necessidade de clarificar termos como “comprometer o processo eleitoral” e a sugestão de revisões redacionais). 
+  - Apoio no contexto: discussões sobre a ambiguidade do termo “comprometer o processo eleitoral” e a necessidade de clareza redacional são apresentadas nos trechos de Alaor Leite (480785-001; 480785-002).
+
+- Fornecer apenas o que está diretamente sustentado por citações do contexto. Coloque citações imediatamente após a afirmação correspondente. 
+  - Apoio no contexto: orientações e trechos diretos sobre cautela, precisão e necessidade de explicar o âmbito de aplicação aparecem em 480785-001; 481531-001; 481527-002; 481535-002.
+
+- Sinalizar claramente quando se está extrapolando ou quando a informação não está no contexto. Se possível, indique caminhos para encontrar a informação (por exemplo, fontes oficiais, trechos de pareceres, ou textos completos dos projetos, quando citados no contexto).
+
+Referências utilizadas (discurso(s) usados para construir a resposta)
+
+- Alaor Leite (nan/nan) | Data: 2021-06-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480785
+- Dora Kaufman (nan/nan) | Data: 2021-07-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481531
+- Igor Ferreira Luna Louro (nan/nan) | Data: 2021-07-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481553
+- Marcio Nobre Migon (nan/nan) | Data: 2021-07-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481527
+- (Observação: outros trechos do conjunto também contêm falas relevantes sobre IA e sobre a necessidade de regulamentação técnica; incluí apenas os itens mais diretamente relacionados às regras de resposta e à cautela metodológica.)
+
+Se quiser, posso adaptar a resposta para enfatizar apenas os pontos que estejam absolutamente presentes no texto ou expandir com exemplos específicos de trechos citados.",1,2,2,2,2,9,"Resposta identifica categorias de perguntas que podem induzir alucinação e descreve comportamento cauteloso; apoia-se em fontes citadas e evita extrapolações. Não lista perguntas exatas do conjunto, o que reduz aderência total. Pontos fortes: clareza, estrutura e uso de citações; área de melhoria: apresentar exemplos diretos de perguntas e trechos citados."

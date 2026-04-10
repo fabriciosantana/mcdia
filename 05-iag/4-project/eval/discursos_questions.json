@@ -48,5 +48,55 @@
     "id": "q10",
     "category": "broad",
     "question": "Quais diagnosticos sobre desigualdade, vulnerabilidade ou falta de desenvolvimento aparecem nesses discursos e que tipos de solucao sao defendidos?"
+  },
+  {
+    "id": "q11",
+    "category": "comparison",
+    "question": "Compare como Ciro Nogueira e Wellington Fagundes usam dados economicos ou setoriais para defender mudancas estruturais. Quais numeros aparecem, para sustentar que tese, e onde os argumentos deles divergem?"
+  },
+  {
+    "id": "q12",
+    "category": "author_disambiguation",
+    "question": "Quais propostas sobre educacao aparecem especificamente em falas de Confucio Moura e quais aparecem em falas de outros senadores, mas poderiam ser confundidas com as dele? Responda separando com clareza o que e dele e o que nao e."
+  },
+  {
+    "id": "q13",
+    "category": "negative_evidence",
+    "question": "Ha, no contexto recuperado, evidencia suficiente para afirmar que existe uma proposta detalhada de implementacao, com prazos e fonte de financiamento, para combater a desigualdade? Se nao houver, explique exatamente o que falta."
+  },
+  {
+    "id": "q14",
+    "category": "multi_hop",
+    "question": "A partir de diferentes discursos, reconstrua a cadeia de raciocinio que liga desigualdade, desenvolvimento regional, educacao e protecao social. Quais autores fazem essas conexoes de modo mais explicito e com quais limites?"
+  },
+  {
+    "id": "q15",
+    "category": "numbers_precision",
+    "question": "Quais numeros citados nos discursos parecem centrais para o argumento de cada autor e quais aparecem apenas como apoio periferico? Distingua os dois grupos e evite misturar estatisticas de autores diferentes."
+  },
+  {
+    "id": "q16",
+    "category": "scope_control",
+    "question": "O que exatamente Paulo Paim afirma sobre capitalizacao da Previdencia, e o que seria uma extrapolacao indevida para alem do que os trechos permitem concluir?"
+  },
+  {
+    "id": "q17",
+    "category": "source_focus",
+    "question": "Quais respostas exigiriam mais cautela por dependerem de inferencias amplas a partir de poucos trechos: as sobre educacao, as sobre desigualdade ou as sobre infraestrutura? Justifique com base nas limitacoes do proprio contexto."
+  },
+  {
+    "id": "q18",
+    "category": "cross_author",
+    "question": "Quais semelhancas de linguagem ou tema entre Paulo Paim, Confucio Moura e outros autores podem levar o sistema a confundir autoria ou proposta? Identifique os riscos concretos de confusao e ilustre com exemplos."
+  },
+  {
+    "id": "q19",
+    "category": "retrieval_stress",
+    "question": "Se a pergunta for 'quais senadores apresentam diagnostico e solucao no mesmo discurso, sem depender de sintese entre varios discursos?', quem realmente se encaixa nisso no contexto disponivel? Cite apenas os casos sustentados com seguranca."
+  },
+  {
+    "id": "q20",
+    "category": "hallucination_check",
+    "question": "Entre as perguntas deste conjunto, quais tenderiam a induzir alucinacao ou excesso de confianca se o modelo nao reconhecesse limites do contexto? Explique por que e indique como uma resposta cautelosa deveria se comportar."
   }
 ]
