@@ -205,6 +205,15 @@ cp .env.example .env
 | `OPENWEBUI_API_KEY` | chave da API do Open WebUI usada pelos scripts |
 | `OPENWEBUI_EVAL_MODEL` | modelo padrão usado pelo `run_rag_eval.py` para gerar respostas |
 | `OPENWEBUI_JUDGE_MODEL` | modelo opcional usado para aplicar a rubrica; se vazio, reutiliza `OPENWEBUI_EVAL_MODEL` |
+| `RAG_EVAL_TEMPERATURE` | temperatura padrão da bateria de avaliação |
+| `RAG_EVAL_TOP_P` | top-p padrão da bateria de avaliação |
+| `RAG_EVAL_MAX_TOKENS` | limite padrão de tokens de saída da bateria de avaliação |
+| `RAG_EVAL_SEED` | seed opcional da bateria de avaliação, quando o backend suportar |
+
+Observação:
+- As variáveis `OPENWEBUI_*` apontam para o serviço/canal usado pelos scripts.
+- As variáveis `RAG_EVAL_*` controlam apenas os parâmetros experimentais da bateria executada por `scripts/run_rag_eval.py`.
+- Se `RAG_EVAL_*` estiverem vazias, o script usa o padrão do provedor ou do backend.
 
 ### Perfis de configuração suportados
 

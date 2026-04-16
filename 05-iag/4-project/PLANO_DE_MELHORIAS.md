@@ -97,7 +97,7 @@ Garantir que qualquer pessoa consiga reconstruir a base, importar os artefatos e
 ### Tarefa 1.3 - Padronizar o fluxo operacional no README
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `doing`
 - Arquivos principais:
   - [README.md](/workspaces/mcdia/05-iag/4-project/README.md:1)
   - [knowledge_openwebui/README_IMPORT.md](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/README_IMPORT.md:1)
@@ -117,7 +117,7 @@ Garantir que qualquer pessoa consiga reconstruir a base, importar os artefatos e
 ### Tarefa 1.5 - Versionar explicitamente a configuracao de cada rodada experimental
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:281)
   - `eval/results/`
@@ -505,7 +505,7 @@ Reduzir divergencias entre ambiente local, hibrido e cloud.
 ### Tarefa 8.1 - Alinhar `.env.example` com `docker-compose.yaml`
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `doing`
 - Arquivos principais:
   - [.env.example](/workspaces/mcdia/05-iag/4-project/.env.example:1)
   - [docker-compose.yaml](/workspaces/mcdia/05-iag/4-project/docker-compose.yaml:1)
@@ -664,7 +664,7 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.1 - Implementar o protocolo A de alinhamento com o Open WebUI
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:77)
   - [eval/prompts/rag_prompt.md](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1)
@@ -687,7 +687,7 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.2 - Rerodar a bateria com o protocolo alinhado
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Executar nova rodada completa apos o alinhamento do protocolo A.
   - Salvar resultados em novo conjunto de artefatos.
@@ -846,4 +846,9 @@ Use esta secao para resumir entregas realizadas.
 
 | Data | Item concluido | Evidencia | Observacoes |
 |---|---|---|---|
+| 2026-04-16 | Base inicial do protocolo A e versionamento de rodada | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:368) | Prompt padrao alterado para `eval/prompts/rag_prompt.md`; suporte a `temperature`, `top_p`, `max_tokens` e `seed`; novo `run_config` com knowledge_id, prompts e fingerprints. |
+| 2026-04-16 | Estrutura de mensagens mais fiel ao Open WebUI | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:78) | No protocolo A, o default passou a ser `--answer-prompt-role=none`, enviando apenas a pergunta do usuario e deixando o Open WebUI aplicar o `RAG_TEMPLATE` configurado no servidor. |
+| 2026-04-16 | Rodada oficial completa sob o protocolo A | [rag_eval_20260416T172816Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.csv:1) | Execucao completa com 20/20 perguntas `ok`, media 9.15, minimo 6, maximo 10, com configuracao versionada em `rag_eval_20260416T172816Z.run_config.json`. |
+| 2026-04-16 | Diagnostico e correcao do erro 400 no juiz automatico | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:109) | O script passou a incluir o corpo de erro do `/api/chat/completions` nas excecoes HTTP e a chamada do juiz deixou de enviar `seed` e parametros extras que estavam gerando `400 Bad Request`. |
+| 2026-04-16 | Parametros experimentais padronizados como `RAG_EVAL_*` | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:463) | `RAG_EVAL_TEMPERATURE`, `RAG_EVAL_TOP_P`, `RAG_EVAL_MAX_TOKENS` e `RAG_EVAL_SEED` foram adicionados ao `.env`, `.env.example` e README como defaults da bateria, sem confundir configuracao experimental com configuracao global do Open WebUI. |
 | a preencher | a preencher | a preencher | a preencher |
