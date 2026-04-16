@@ -16,6 +16,16 @@ Este arquivo consolida a lista priorizada de melhorias do projeto para acompanha
 - `done`: concluido
 - `blocked`: aguardando dependencia ou decisao
 
+## Diretriz metodologica vigente
+
+- Protocolo escolhido: `Opcao A`
+- Definicao:
+  - A bateria automatizada deve reproduzir o mais fielmente possivel o comportamento do fluxo interativo do Open WebUI.
+  - Isso inclui alinhar a estrutura de prompt, a knowledge utilizada, os parametros de execucao e o formato da rodada experimental.
+- Implicacao pratica:
+  - Nao basta trocar o arquivo de prompt padrao no script.
+  - O protocolo de avaliacao deve refletir a mesma logica efetiva do fluxo RAG usado manualmente no Open WebUI, com diferencas residuais explicitamente documentadas.
+
 ## Prioridade 1 - Reprodutibilidade do pipeline
 
 **Objetivo**
@@ -97,11 +107,39 @@ Garantir que qualquer pessoa consiga reconstruir a base, importar os artefatos e
     - gerar knowledge
     - importar knowledge
     - executar avaliacao
+    - registrar configuracao da rodada
   - Explicitar precondicoes e saidas esperadas.
   - Remover duplicacao ou divergencia entre README principal e README de importacao.
 - Criterios de aceite:
   - Existe uma sequencia unica e clara de comandos.
   - O leitor consegue executar o projeto sem deduzir passos faltantes.
+
+### Tarefa 1.5 - Versionar explicitamente a configuracao de cada rodada experimental
+
+- Prioridade: alta
+- Status: `todo`
+- Arquivos principais:
+  - [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:281)
+  - `eval/results/`
+- Problema atual:
+  - Parte da configuracao final de uma rodada esta espalhada entre `.env`, Open WebUI, prompts e argumentos de CLI.
+- Implementacao:
+  - Salvar um arquivo `run_config_<timestamp>.json` ou equivalente em `eval/results/`.
+  - Registrar no minimo:
+    - modelo gerador
+    - modelo juiz
+    - prompt de geracao efetivamente usado
+    - prompt do juiz
+    - rubrica usada
+    - `knowledge_name`
+    - `knowledge_id`
+    - data/hora de execucao
+    - conjunto de perguntas utilizado
+    - parametros de geracao relevantes, incluindo `temperature`, `top_p`, `max_tokens` e `seed`, se disponiveis
+  - Registrar fingerprints ou hashes dos artefatos da knowledge base usados na rodada.
+- Criterios de aceite:
+  - Cada rodada gera um arquivo de configuracao proprio.
+  - Um terceiro consegue reconstruir a configuracao experimental sem depender de memoria operacional.
 
 ### Tarefa 1.4 - Automatizar comandos recorrentes
 
@@ -250,6 +288,7 @@ Melhorar visibilidade sobre tempos, falhas, volume processado e resultados por e
   - Medir tempo por arquivo importado.
   - Medir tempo por pergunta avaliada.
   - Salvar um `run_summary.json` com estatisticas da execucao.
+  - Incluir identificadores da rodada e ponteiros para o `run_config`.
 - Criterios de aceite:
   - Cada execucao gera um resumo reutilizavel.
   - O tempo total e os gargalos ficam visiveis.
@@ -339,6 +378,8 @@ Diagnosticar se os erros estao na recuperacao do contexto, na qualidade da respo
     - autores presentes
     - links presentes
     - possivel foco em um unico autor ou mistura indevida
+    - numero de chunks ou segmentos retornados por resposta, quando disponivel
+    - numero de arquivos-fonte unicos por resposta
 - Criterios de aceite:
   - O JSONL ou CSV contem campos adicionais de retrieval.
 
@@ -517,6 +558,7 @@ Transformar execucoes isoladas em historico comparavel de qualidade.
 - Implementacao:
   - Criar script para ler todos os CSVs.
   - Comparar media, minimo, maximo e perguntas mais problemáticas.
+  - Comparar tambem variacao entre rodadas teoricamente identicas.
 - Criterios de aceite:
   - Existe um resumo unico da evolucao do sistema ao longo do tempo.
 
@@ -541,6 +583,7 @@ Transformar execucoes isoladas em historico comparavel de qualidade.
 - Implementacao:
   - Criar script como `scripts/summarize_eval_results.py`.
   - Atualizar `eval-openwebui/RESULTS.md` automaticamente.
+  - Incluir referencias cruzadas para `run_config` e `run_summary`.
 - Criterios de aceite:
   - O relatorio deixa de depender de manutencao manual.
 
@@ -598,6 +641,172 @@ Deixar o projeto mais proximo de um fluxo recorrente de uso, nao apenas de um ex
 - Criterios de aceite:
   - O time tem um criterio objetivo para aceitar ou recusar uma nova configuracao.
 
+## Prioridade 11 - Fortalecimento metodologico da avaliacao
+
+**Objetivo**
+
+Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, comparavel e defensavel metodologicamente.
+
+**Impacto esperado**
+
+- Aumenta a comparabilidade entre uso interativo e bateria automatizada.
+- Fortalece a defesa do experimento no manuscrito.
+- Reduz ambiguidade sobre o que exatamente foi avaliado em cada rodada.
+
+**Status geral**
+
+- Status: `todo`
+- Responsavel: a definir
+- Bloqueios/Dependencias:
+  - Prioridade 1 minimamente avancada
+  - Prioridade 9 minimamente avancada
+
+### Tarefa 11.1 - Implementar o protocolo A de alinhamento com o Open WebUI
+
+- Prioridade: alta
+- Status: `todo`
+- Arquivos principais:
+  - [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:77)
+  - [eval/prompts/rag_prompt.md](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1)
+  - [eval/prompts/rag_answer_system.md](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_answer_system.md:1)
+- Problema atual:
+  - O fluxo automatizado usa um `system_prompt` simples e a pergunta como `user`, enquanto o uso interativo do Open WebUI pode operar com uma formulacao RAG mais rica e com estrutura diferente.
+- Implementacao:
+  - Definir qual e a estrutura real do prompt no Open WebUI para o modelo RAG avaliado.
+  - Adaptar o `run_rag_eval.py` para espelhar essa estrutura o mais fielmente possivel.
+  - Se necessario, separar:
+    - template de sistema
+    - template de usuario
+    - configuracao de anexacao da collection
+  - Nao apenas trocar o default para `rag_prompt.md` sem adaptacao estrutural.
+  - Documentar qualquer diferenca residual que nao possa ser eliminada.
+- Criterios de aceite:
+  - O protocolo automatizado e descritivamente equivalente ao fluxo interativo do Open WebUI.
+  - A diferenca entre uso manual e bateria automatizada fica minimizada e explicitamente registrada.
+
+### Tarefa 11.2 - Rerodar a bateria com o protocolo alinhado
+
+- Prioridade: alta
+- Status: `todo`
+- Implementacao:
+  - Executar nova rodada completa apos o alinhamento do protocolo A.
+  - Salvar resultados em novo conjunto de artefatos.
+  - Comparar com a melhor rodada anterior.
+- Criterios de aceite:
+  - Existe ao menos uma rodada completa produzida ja sob o protocolo A.
+
+### Tarefa 11.3 - Executar rodadas identicas e medir estabilidade
+
+- Prioridade: alta
+- Status: `todo`
+- Implementacao:
+  - Executar pelo menos 3 rodadas identicas com:
+    - mesma knowledge base
+    - mesmo prompt
+    - mesmos modelos
+    - mesmos parametros de geracao
+    - mesmo conjunto de perguntas
+  - Medir:
+    - media total por rodada
+    - minimo por rodada
+    - variacao por pergunta
+    - variacao das `review_notes`
+  - Registrar se houve mudanca relevante nas respostas ou no julgamento.
+- Criterios de aceite:
+  - Existe um relatorio de estabilidade da avaliacao.
+  - A variacao entre rodadas identicas esta quantificada.
+
+### Tarefa 11.4 - Separar gerador e juiz em pelo menos uma rodada controlada
+
+- Prioridade: alta
+- Status: `todo`
+- Implementacao:
+  - Executar ao menos dois cenarios:
+    - gerador e juiz com o mesmo modelo
+    - gerador e juiz com modelos diferentes
+  - Comparar notas agregadas e por pergunta.
+  - Avaliar se a mudanca de juiz altera materialmente o resultado.
+- Criterios de aceite:
+  - Ha evidencia objetiva para discutir a robustez do `LLM as a Judge`.
+
+### Tarefa 11.5 - Congelar a knowledge base usada na avaliacao
+
+- Prioridade: alta
+- Status: `todo`
+- Arquivos principais:
+  - [knowledge_openwebui/build_metadata.json](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json:1)
+  - [knowledge_openwebui/discursos_chunks.jsonl](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/discursos_chunks.jsonl:1)
+  - `knowledge_openwebui/md_batches/`
+- Implementacao:
+  - Registrar `knowledge_id` em toda rodada.
+  - Confirmar que a collection nao foi reindexada entre rodadas comparadas.
+  - Manter snapshot dos artefatos usados.
+  - Se possivel, registrar hash ou fingerprint dos artefatos.
+- Criterios de aceite:
+  - Rodadas comparadas usam comprovadamente a mesma knowledge base.
+
+### Tarefa 11.6 - Enriquecer a saida sintetica por pergunta
+
+- Prioridade: media
+- Status: `todo`
+- Implementacao:
+  - Criar uma etapa de pos-processamento para gerar, por pergunta:
+    - qualidade da recuperacao
+    - fidelidade ao contexto
+    - presenca correta de referencias
+    - principal limite observado
+  - Aproveitar `review_notes` e sinais de retrieval ja extraidos.
+  - Produzir uma matriz curta para uso no manuscrito.
+- Criterios de aceite:
+  - Cada pergunta possui uma leitura analitica sintetica alem da nota numerica.
+
+### Tarefa 11.7 - Expandir a bateria com melhor balanceamento por categoria
+
+- Prioridade: media
+- Status: `todo`
+- Arquivos principais:
+  - [eval/discursos_questions.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json:1)
+- Implementacao:
+  - Aumentar o numero de perguntas por familia.
+  - Garantir pelo menos 2 ou 3 perguntas por categoria critica, especialmente:
+    - autoria cruzada
+    - ampla
+    - comparacao
+    - checagem de alucinacao
+    - multietapas
+  - Versionar explicitamente o conjunto de perguntas.
+- Criterios de aceite:
+  - O benchmark deixa de ter categorias criticas subrepresentadas.
+
+### Tarefa 11.8 - Incluir validacao manual amostral
+
+- Prioridade: media
+- Status: `todo`
+- Implementacao:
+  - Selecionar 5 a 7 respostas da rodada final.
+  - Fazer revisao humana parcial.
+  - Comparar julgamento humano versus LLM Judge.
+  - Registrar convergencias e divergencias.
+- Criterios de aceite:
+  - O experimento final inclui triangulacao entre avaliacao automatica e avaliacao humana amostral.
+
+### Tarefa 11.9 - Transformar a avaliacao em protocolo reproduzivel formal
+
+- Prioridade: alta
+- Status: `todo`
+- Implementacao:
+  - Definir um roteiro fixo da rodada:
+    - regenerar ou confirmar base
+    - validar ingestao
+    - confirmar prompt
+    - executar bateria
+    - executar julgamento
+    - gerar CSV/MD/JSONL
+    - gerar resumo analitico
+  - Registrar este roteiro no README e nos artefatos de configuracao da rodada.
+- Criterios de aceite:
+  - Existe um protocolo operacional e metodologico claro para repetir a avaliacao.
+
 ## Proposta de sequenciamento por sprint
 
 ## Sprint 1
@@ -605,12 +814,14 @@ Deixar o projeto mais proximo de um fluxo recorrente de uso, nao apenas de um ex
 - Prioridade 1 - Reprodutibilidade do pipeline
 - Prioridade 2 - Testes automatizados
 - Prioridade 3 - Observabilidade basica
+- Prioridade 11 - Fortalecimento metodologico da avaliacao, etapa de desenho do protocolo A
 
 ## Sprint 2
 
 - Prioridade 4 - Origem do conteudo indexado
 - Prioridade 7 - Robustez da importacao
 - Prioridade 9 - Governanca dos resultados
+- Prioridade 11 - Execucao das primeiras rodadas controladas
 
 ## Sprint 3
 
@@ -618,6 +829,7 @@ Deixar o projeto mais proximo de um fluxo recorrente de uso, nao apenas de um ex
 - Prioridade 6 - Refinamento de chunking
 - Prioridade 8 - Endurecimento de configuracao e infraestrutura
 - Prioridade 10 - Preparacao para operacao continua
+- Prioridade 11 - Validacao manual, balanceamento do benchmark e protocolo final
 
 ## Registro de decisoes
 
@@ -625,6 +837,7 @@ Use esta secao para anotar escolhas importantes feitas ao longo da execucao do p
 
 | Data | Item | Decisao | Observacoes |
 |---|---|---|---|
+| 2026-04-16 | Diretriz metodologica | Adotada a Opcao A para a avaliacao | A bateria automatizada deve espelhar o mais fielmente possivel o fluxo interativo do Open WebUI. |
 | a preencher | a preencher | a preencher | a preencher |
 
 ## Registro de execucao
