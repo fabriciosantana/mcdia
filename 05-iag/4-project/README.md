@@ -172,8 +172,12 @@ Se você quiser regenerar os artefatos, testar conectividade ou rodar a avaliaç
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install pandas pyarrow huggingface_hub requests chromadb
+pip install -r requirements.txt
 ```
+
+Arquivo oficial de dependências:
+
+- [`requirements.txt`](/workspaces/mcdia/05-iag/4-project/requirements.txt:1)
 
 ## 8. Configuração do ambiente
 
