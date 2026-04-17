@@ -15,7 +15,7 @@ services:
     container_name: docling-service
     environment:
       - HF_TOKEN=${HF_TOKEN:-}
-      - DOCLING_MAX_WORKERS=8
+      - DOCLING_MAX_WORKERS=${DOCLING_MAX_WORKERS:-8}
     volumes:
       - docling_cache:/root/.cache/huggingface
     #ports:
@@ -59,10 +59,10 @@ services:
       # Geração (OpenAI)
       - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
-      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-5.4-nano}
 
       # Timeout ampliado
-      - WEBUI_TIMEOUT=300
+      - WEBUI_TIMEOUT=${WEBUI_TIMEOUT:-300}
 
     restart: unless-stopped
     network_mode: host

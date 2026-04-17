@@ -194,11 +194,13 @@ cp .env.example .env
 |---|---|
 | `OPENAI_API_KEY` | geração de respostas via OpenAI |
 | `OPENAI_MODEL` | modelo usado para geração |
+| `DOCLING_MAX_WORKERS` | número de workers do serviço Docling |
 | `RAG_EMBEDDING_ENGINE` | `ollama` ou `openai` |
 | `RAG_EMBEDDING_MODEL` | modelo de embedding |
 | `RAG_OPENAI_API_KEY` | embeddings via OpenAI |
 | `OLLAMA_BASE_URL` | endpoint do Ollama local ou remoto |
 | `OLLAMA_API_KEY` | token do Ollama remoto, se existir |
+| `WEBUI_TIMEOUT` | timeout do Open WebUI para chamadas longas |
 | `CHROMA_HTTP_HOST` | host do Chroma |
 | `CHROMA_HTTP_PORT` | porta HTTP/HTTPS do Chroma |
 | `CHROMA_HTTP_SSL` | `true` ou `false` |

@@ -512,13 +512,18 @@ Reduzir divergencias entre ambiente local, hibrido e cloud.
 ### Tarefa 8.1 - Alinhar `.env.example` com `docker-compose.yaml`
 
 - Prioridade: alta
-- Status: `doing`
+- Status: `done`
 - Arquivos principais:
   - [.env.example](/workspaces/mcdia/05-iag/4-project/.env.example:1)
   - [docker-compose.yaml](/workspaces/mcdia/05-iag/4-project/docker-compose.yaml:1)
 - Implementacao:
   - Revisar se todas as variaveis relevantes do compose estao documentadas.
   - Revisar defaults de modelos entre compose e `.env.example`.
+- Resultado observado:
+  - Todas as variaveis interpoladas no `docker-compose.yaml` passaram a existir explicitamente no `.env.example`.
+  - Foram adicionadas e documentadas as variaveis `DOCLING_MAX_WORKERS`, `CHROMA_HTTP_HEADERS` e `WEBUI_TIMEOUT`.
+  - O default de `OPENAI_MODEL` no `docker-compose.yaml` foi alinhado para `gpt-5.4-nano`, em coerencia com `.env.example` e `README.md`.
+  - A configuracao final foi validada com `docker compose config`.
 - Criterios de aceite:
   - Nao ha variavel operacional importante ausente da documentacao.
 
@@ -886,6 +891,7 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-16 | Parametros experimentais padronizados como `RAG_EVAL_*` | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:463) | `RAG_EVAL_TEMPERATURE`, `RAG_EVAL_TOP_P`, `RAG_EVAL_MAX_TOKENS` e `RAG_EVAL_SEED` foram adicionados ao `.env`, `.env.example` e README como defaults da bateria, sem confundir configuracao experimental com configuracao global do Open WebUI. |
 | 2026-04-17 | Dependencias dos scripts auxiliares congeladas | [requirements.txt](/workspaces/mcdia/05-iag/4-project/requirements.txt:1) | Dependencias diretas fixadas em `requirements.txt` e fluxo oficial de instalacao do README atualizado para `pip install -r requirements.txt`, com validacao via `pip --dry-run`. |
 | 2026-04-17 | Fluxo operacional do projeto padronizado no README | [README.md](/workspaces/mcdia/05-iag/4-project/README.md:217) | O README passou a trazer uma trilha unica de execucao de ponta a ponta, com precondicoes e saidas esperadas; o `README_IMPORT` foi removido para manter o README principal como unica fonte operacional. |
+| 2026-04-17 | `.env.example` alinhado ao `docker-compose.yaml` | [.env.example](/workspaces/mcdia/05-iag/4-project/.env.example:1) | Variaveis interpoladas do compose foram revisadas e alinhadas com `.env.example`; defaults de `OPENAI_MODEL`, `DOCLING_MAX_WORKERS` e `WEBUI_TIMEOUT` foram consolidados e a configuracao foi validada com `docker compose config`. |
 | 2026-04-17 | Tres rodadas completas para analise inicial de estabilidade | [rag_eval_20260416T172816Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.csv:1) | Rodadas completas: `172816Z` media 9.15, `182240Z` media 9.55 e `232921Z` media 9.35; todas com 20/20 perguntas `ok` e mesma configuracao experimental versionada. |
 | 2026-04-17 | Variacao entre rodadas identicas quantificada | [rag_eval_20260416T232921Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T232921Z.csv:1) | Variacao observada em perguntas como `q15`, `q16`, `q18` e `q19`, indicando estabilidade operacional alta, mas sensibilidade metodologica relevante em parte do benchmark. |
 | 2026-04-17 | Consolidado automatico das 3 rodadas gerado | [scripts/summarize_eval_results.py](/workspaces/mcdia/05-iag/4-project/scripts/summarize_eval_results.py:1) | Script reutilizavel criado para comparar rodadas de avaliacao a partir dos CSVs e respectivos `run_config`. |
