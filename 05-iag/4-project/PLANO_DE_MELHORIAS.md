@@ -735,7 +735,7 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.5 - Congelar a knowledge base usada na avaliacao
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [knowledge_openwebui/build_metadata.json](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json:1)
   - [knowledge_openwebui/discursos_chunks.jsonl](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/discursos_chunks.jsonl:1)
@@ -745,6 +745,10 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
   - Confirmar que a collection nao foi reindexada entre rodadas comparadas.
   - Manter snapshot dos artefatos usados.
   - Se possivel, registrar hash ou fingerprint dos artefatos.
+- Resultado observado:
+  - Todas as rodadas com `run_config` comparadas ate aqui registram o mesmo `knowledge_id`: `902f627d-ab07-43bb-a395-8d573117f4fc`.
+  - Os fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e da amostra de `md_batches/` permaneceram identicos entre as rodadas comparadas.
+  - A evidência consolidada foi registrada em um resumo dedicado de congelamento da knowledge base.
 - Criterios de aceite:
   - Rodadas comparadas usam comprovadamente a mesma knowledge base.
 
@@ -842,6 +846,7 @@ Use esta secao para anotar escolhas importantes feitas ao longo da execucao do p
 |---|---|---|---|
 | 2026-04-16 | Diretriz metodologica | Adotada a Opcao A para a avaliacao | A bateria automatizada deve espelhar o mais fielmente possivel o fluxo interativo do Open WebUI. |
 | 2026-04-17 | Uso de modelos locais como juiz | `gemma3:12b` descartado como juiz principal; `gemma4:31b` nao adotado como juiz principal | `gemma3:12b` apresentou respostas nulas em parte da bateria; `gemma4:31b` foi estavel, mas aparentou leniencia excessiva ao atribuir `10/10` em toda a bateria, inclusive quando julgou respostas de outro gerador. |
+| 2026-04-17 | Congelamento da knowledge base | Rodadas com `run_config` passam a ser comparadas apenas quando mantem o mesmo `knowledge_id` e os mesmos fingerprints dos artefatos | O baseline atual fica associado ao `knowledge_id` `902f627d-ab07-43bb-a395-8d573117f4fc`, com verificacao formal registrada em resumo dedicado. |
 | a preencher | a preencher | a preencher | a preencher |
 
 ## Registro de execucao
@@ -862,4 +867,5 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Rodadas controladas com juiz alternativo concluidas | [rag_eval_20260417T014653Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T014653Z.csv:1) | `gpt-5-nano -> gemma3:12b` confirmou que a troca de juiz altera o comportamento do experimento, mas revelou instabilidade operacional do `gemma3:12b`, com falhas por resposta nula em `q12`, `q14` e `q15`. |
 | 2026-04-17 | Testes com `gemma4:31b` como gerador e juiz concluidos | [rag_eval_20260417T022327Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T022327Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens, sugerindo boa estabilidade operacional, mas tambem possivel leniencia excessiva do juiz quando o mesmo modelo gera e julga. |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
+| 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | a preencher | a preencher | a preencher | a preencher |
