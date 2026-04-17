@@ -468,10 +468,64 @@ python scripts/import_batches_to_openwebui.py \
 
 - [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json)
 - [`eval/RUBRIC.md`](/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md)
-- [`eval/prompts/rag_answer_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_answer_system.md)
+- [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md)
 - [`eval/prompts/rag_judge_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_system.md)
 - [`eval/prompts/rag_judge_user.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_user.md)
 - [`scripts/run_rag_eval.py`](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py)
+- [`scripts/build_question_analysis.py`](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py)
+- [`scripts/build_manual_validation_sample.py`](/workspaces/mcdia/05-iag/4-project/scripts/build_manual_validation_sample.py)
+- [`scripts/summarize_eval_results.py`](/workspaces/mcdia/05-iag/4-project/scripts/summarize_eval_results.py)
+
+### 14.1 Protocolo oficial reproduzível
+
+O protocolo oficial desta fase do projeto adota a **Opção A**:
+
+- a bateria automatizada deve espelhar o mais fielmente possível o fluxo interativo do Open WebUI;
+- o `run_rag_eval.py` usa por padrão `--answer-prompt-role=none`;
+- nesse modo, o script envia apenas a pergunta e a `collection`, deixando o servidor aplicar o `RAG_TEMPLATE` configurado no Open WebUI;
+- o arquivo [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1) é mantido como referência versionada do template RAG esperado no servidor.
+
+### 14.2 Pré-condições para uma rodada válida
+
+Antes de executar uma rodada que será usada em comparação metodológica:
+
+1. confirme que o Open WebUI está acessível em `OPENWEBUI_URL`;
+2. confirme que a knowledge base correta existe e está indexada;
+3. confirme que o `RAG_TEMPLATE` ativo no Open WebUI corresponde a [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1);
+4. confirme que o conjunto de perguntas e a rubrica são os arquivos versionados do repositório;
+5. mantenha estáveis os parâmetros experimentais `RAG_EVAL_*`, quando usados.
+
+### 14.3 Entradas obrigatórias da rodada
+
+Uma rodada comparável precisa fixar explicitamente:
+
+- `knowledge_name`
+- `knowledge_id`
+- arquivo de perguntas: [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json:1)
+- prompt RAG de referência: [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1)
+- prompt do juiz: [`eval/prompts/rag_judge_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_system.md:1)
+- prompt de usuário do juiz: [`eval/prompts/rag_judge_user.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_user.md:1)
+- rubrica: [`eval/RUBRIC.md`](/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md:1)
+- modelo gerador
+- modelo juiz
+- parâmetros `RAG_EVAL_TEMPERATURE`, `RAG_EVAL_TOP_P`, `RAG_EVAL_MAX_TOKENS` e `RAG_EVAL_SEED`, quando definidos
+
+### 14.4 Sequência oficial de execução
+
+#### Passo 1: confirmar a base congelada
+
+As rodadas que entram no mesmo conjunto comparativo devem manter:
+
+- o mesmo `knowledge_id`;
+- os mesmos fingerprints de [`knowledge_openwebui/build_metadata.json`](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json:1);
+- os mesmos fingerprints de [`knowledge_openwebui/discursos_chunks.jsonl`](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/discursos_chunks.jsonl:1);
+- a mesma amostra/fingerprint de `knowledge_openwebui/md_batches/`.
+
+Referência de congelamento já registrada:
+
+- [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1)
+
+#### Passo 2: executar a rodada
 
 Execução padrão:
 
@@ -483,8 +537,10 @@ Modelo padrão usado pelo script:
 
 - geração das respostas: `OPENWEBUI_EVAL_MODEL` ou `gpt-5-nano` por padrão
 - julgamento das métricas: `OPENWEBUI_JUDGE_MODEL`; se estiver vazio, reutiliza o modelo de geração
-- prompts: carregados de arquivos em `eval/prompts/`, desacoplados da lógica do script
-- o prompt de eval pode e deve ser diferente do prompt de produção do Open WebUI; aqui ele foi mantido mais rígido e enxuto para medir grounding, foco e reconhecimento de limites
+- protocolo de prompt: `--answer-prompt-role=none` por padrão
+- prompts do juiz: carregados de arquivos em `eval/prompts/`
+
+Execuções úteis:
 
 Executar apenas as 3 primeiras perguntas:
 
@@ -510,13 +566,16 @@ Aumentar a pausa entre perguntas:
 python scripts/run_rag_eval.py --sleep-between 5
 ```
 
-Resultados gerados:
+#### Passo 3: validar os artefatos mínimos da rodada
+
+Toda rodada válida deve gerar:
 
 - `eval/results/*.jsonl`
 - `eval/results/*.md`
 - `eval/results/*.csv`
+- `eval/results/*.run_config.json`
 
-Por padrao, o script tambem aplica a rubrica automaticamente e preenche no `.csv`:
+Por padrão, o script também aplica a rubrica automaticamente e preenche no `.csv`:
 
 - `adherence_score`
 - `factual_score`
@@ -542,10 +601,100 @@ Para testar uma variante de prompt sem alterar o script:
 
 ```bash
 python scripts/run_rag_eval.py \
-  --answer-system-prompt-file eval/prompts/rag_answer_system.md \
+  --answer-system-prompt-file eval/prompts/rag_prompt.md \
   --judge-system-prompt-file eval/prompts/rag_judge_system.md \
   --judge-user-prompt-file eval/prompts/rag_judge_user.md
 ```
+
+#### Passo 4: gerar a leitura analítica por pergunta
+
+```bash
+python scripts/build_question_analysis.py \
+  eval/results/<rodada>.jsonl
+```
+
+Saídas esperadas:
+
+- `eval/results/<rodada>.question_analysis.csv`
+- `eval/results/<rodada>.question_analysis.md`
+
+Esses artefatos sintetizam, por pergunta:
+
+- `retrieval_quality`
+- `context_faithfulness`
+- `reference_use`
+- `main_limitation`
+
+#### Passo 5: preparar a validação manual amostral
+
+```bash
+python scripts/build_manual_validation_sample.py \
+  eval/results/<rodada>.jsonl
+```
+
+Saída esperada:
+
+- `eval/results/<rodada>.manual_validation_sample.md`
+
+Esse pacote deve ser usado para triangulação humana parcial da rodada.
+
+#### Passo 6: consolidar estabilidade, quando houver múltiplas rodadas
+
+```bash
+python scripts/summarize_eval_results.py \
+  eval/results/rodada_1.csv \
+  eval/results/rodada_2.csv \
+  eval/results/rodada_3.csv
+```
+
+Saída esperada:
+
+- `eval/results/stability_summary_<timestamp>.md`
+
+### 14.5 Critérios de comparabilidade entre rodadas
+
+Duas ou mais rodadas só devem ser comparadas diretamente quando mantiverem:
+
+- o mesmo `knowledge_id`;
+- os mesmos fingerprints dos artefatos da knowledge base;
+- o mesmo arquivo de perguntas;
+- o mesmo protocolo de prompt (`prompt_application_role`);
+- os mesmos modelos, quando a comparação for de estabilidade;
+- os mesmos parâmetros `RAG_EVAL_*`, quando definidos.
+
+Se algum desses elementos mudar, a rodada ainda pode ser útil, mas deve ser tratada como um experimento metodológico distinto.
+
+### 14.6 Critérios mínimos de validade
+
+Uma rodada é considerada válida para análise quando:
+
+- completa todas as perguntas planejadas sem erro operacional relevante; ou
+- registra de forma explícita quais itens falharam e por quê, quando o objetivo for testar robustez de modelo/juiz.
+
+Uma análise de estabilidade é considerada válida quando:
+
+- usa pelo menos 3 rodadas idênticas; e
+- quantifica média, mínimo, máximo e variação por pergunta.
+
+Uma avaliação metodologicamente mais forte inclui, além da bateria automática:
+
+- análise por pergunta;
+- knowledge base congelada;
+- validação manual amostral;
+- nota explícita sobre limitações do juiz automático.
+
+### 14.7 Artefatos de referência já produzidos
+
+- rodada oficial base sob protocolo A:
+  - [rag_eval_20260416T172816Z.run_config.json](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.run_config.json:1)
+- resumo formal de estabilidade:
+  - [stability_summary_20260417T012001Z.md](/workspaces/mcdia/05-iag/4-project/eval/results/stability_summary_20260417T012001Z.md:1)
+- congelamento da knowledge base:
+  - [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1)
+- leitura analítica por pergunta:
+  - [rag_eval_20260416T172816Z.question_analysis.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.question_analysis.md:1)
+- validação manual amostral:
+  - [rag_eval_20260416T172816Z.manual_validation_sample.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.manual_validation_sample.md:1)
 
 ## 15. Comandos úteis de operação
 
