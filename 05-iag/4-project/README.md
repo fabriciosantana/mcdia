@@ -219,6 +219,33 @@ Observação:
 - As variáveis `RAG_EVAL_*` controlam apenas os parâmetros experimentais da bateria executada por `scripts/run_rag_eval.py`.
 - Se `RAG_EVAL_*` estiverem vazias, o script usa o padrão do provedor ou do backend.
 
+## 8.1 Fluxo operacional resumido
+
+Se você quer executar o projeto de ponta a ponta sem deduzir passos intermediários, siga esta sequência:
+
+1. preparar o ambiente:
+   - criar `.env`
+   - instalar dependências Python com `pip install -r requirements.txt`
+   - subir os serviços com `docker compose up -d`
+2. gerar ou confirmar os artefatos da knowledge base:
+   - verificar se `knowledge_openwebui/discursos_chunks.jsonl`, `build_metadata.json` e `md_batches/` já existem
+   - se não existirem, regenerar com `scripts/build_openwebui_knowledge_from_hf.py`
+3. criar a Knowledge Base no Open WebUI e obter o `knowledge_id`
+4. importar os lotes com `scripts/import_batches_to_openwebui.py`
+5. executar a avaliação com `scripts/run_rag_eval.py`
+6. gerar a análise por pergunta com `scripts/build_question_analysis.py`
+7. quando houver múltiplas rodadas, consolidar estabilidade com `scripts/summarize_eval_results.py`
+8. quando necessário, preparar a validação manual amostral com `scripts/build_manual_validation_sample.py`
+
+Saídas esperadas ao final do fluxo:
+
+- `eval/results/*.jsonl`
+- `eval/results/*.csv`
+- `eval/results/*.md`
+- `eval/results/*.run_config.json`
+- `eval/results/*.question_analysis.csv`
+- `eval/results/*.question_analysis.md`
+
 ### Perfis de configuração suportados
 
 #### Perfil 1: local puro
