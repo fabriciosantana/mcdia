@@ -755,7 +755,7 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.6 - Enriquecer a saida sintetica por pergunta
 
 - Prioridade: media
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Criar uma etapa de pos-processamento para gerar, por pergunta:
     - qualidade da recuperacao
@@ -764,6 +764,9 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
     - principal limite observado
   - Aproveitar `review_notes` e sinais de retrieval ja extraidos.
   - Produzir uma matriz curta para uso no manuscrito.
+- Resultado observado:
+  - Foi criado um pos-processador dedicado para gerar leitura analitica por pergunta a partir do JSONL da rodada.
+  - A primeira matriz foi gerada sobre a rodada oficial base, com classificacoes sinteticas de recuperacao, fidelidade ao contexto, uso de referencias e limite principal por item.
 - Criterios de aceite:
   - Cada pergunta possui uma leitura analitica sintetica alem da nota numerica.
 
@@ -868,4 +871,6 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Testes com `gemma4:31b` como gerador e juiz concluidos | [rag_eval_20260417T022327Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T022327Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens, sugerindo boa estabilidade operacional, mas tambem possivel leniencia excessiva do juiz quando o mesmo modelo gera e julga. |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
+| 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |
+| 2026-04-17 | Primeira matriz analitica da rodada oficial base gerada | [rag_eval_20260416T172816Z.question_analysis.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.question_analysis.md:1) | A rodada oficial base passou a ter leitura curta por pergunta com `retrieval_quality`, `context_faithfulness`, `reference_use` e `main_limitation`, pronta para reaproveito no manuscrito. |
 | a preencher | a preencher | a preencher | a preencher |

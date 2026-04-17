@@ -21,15 +21,13 @@ Avaliar se a separacao entre gerador e juiz altera materialmente os resultados e
 ## Conclusoes
 
 1. A troca de juiz altera materialmente a leitura dos resultados e, portanto, deve ser tratada como parte do protocolo metodologico, nao como detalhe operacional.
-2. O `gemma3:12b` mostrou instabilidade operacional no papel de juiz, com respostas nulas em parte da bateria, o que inviabiliza seu uso como juiz principal no protocolo atual.
-3. O `gemma4:31b` foi estavel operacionalmente como gerador e como juiz, inclusive em bateria completa com 20/20 perguntas `ok`.
-4. Apesar dessa estabilidade, o `gemma4:31b` atribuiu `10/10` a todos os itens tanto no cenario `gemma4 -> gemma4` quanto no cenario `gpt-5.4-nano -> gemma4`, o que sugere um perfil de julgamento excessivamente leniente.
+2. O `gemma4:31b` foi estavel operacionalmente como gerador e como juiz, inclusive em bateria completa com 20/20 perguntas `ok`.
+3. Apesar dessa estabilidade, o `gemma4:31b` atribuiu `10/10` a todos os itens tanto no cenario `gemma4 -> gemma4` quanto no cenario `gpt-5.4-nano -> gemma4`, o que sugere um perfil de julgamento excessivamente leniente.
 
 ## Implicacao pratica
 
 No estado atual do projeto, os testes recomendam:
 
-- nao adotar `gemma3:12b` como juiz principal;
 - nao adotar `gemma4:31b` como juiz principal sem validacao manual adicional;
 - manter como referencia principal as rodadas de estabilidade ja consolidadas com o juiz baseline;
 - usar os testes com modelos locais como evidencia metodologica de que o juiz escolhido influencia o experimento e precisa ser justificado explicitamente.
