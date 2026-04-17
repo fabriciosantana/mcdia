@@ -1,0 +1,422 @@
+id,category,question,execution_status,answer,adherence_score,factual_score,source_focus_score,synthesis_score,hallucination_score,total_score,review_notes
+q01,factual,"Quais dados Ciro Nogueira apresenta para criticar a concentracao bancaria no Brasil e qual conclusao ele tira sobre juros, tarifas e spread?",ok,"Ciro Nogueira apresenta os seguintes dados para criticar a concentração bancária no Brasil:
+
+*   **Concentração de Ativos:** Os cinco maiores bancos (Banco do Brasil, Bradesco, Itaú, Santander e Caixa) concentram cerca de 82% dos ativos financeiros [1].
+*   **Aumento da Concentração:** Entre 2006 e 2016, esse índice de concentração subiu 22 pontos percentuais, saltando de 60% para 82% [1].
+*   **Tarifas Bancárias:** No ""pacote básico"", a diferença entre a tarifa mais barata (R$ 12,00) e a mais cara (R$ 12,40) entre os cinco maiores bancos é de apenas 40 centavos [1].
+*   **Spread Bancário:** Em 2016, o Brasil registrou um spread médio de 39,6%, sendo superado por apenas um país (Madagascar) entre 92 pesquisados pelo Banco Mundial [1]. Em contraste, países vizinhos como Uruguai (10,6%), Argentina (6,9%), Bolívia (6,5%) e Chile (1,7%) apresentaram taxas significativamente menores [1].
+*   **Juros:** 
+    *   **Cheque Especial (PJ):** Variam entre 350,17% e 379,59% ao ano nas cinco maiores instituições [1].
+    *   **Cheque Especial (PF):** Taxas entre 288,40% e 421,19% anuais [1].
+    *   **Cartão de Crédito (Rotativo):** Valores entre 196,94% e 259,34% [1].
+
+**Conclusões do Senador:**
+Ciro Nogueira conclui que a baixa competição entre as instituições financeiras provoca prejuízos ao consumidor (pessoas físicas e jurídicas), resultando em juros, tarifas e spreads mais altos [1]. Ele argumenta que a redução dos juros para patamares aceitáveis não ocorrerá enquanto não forem combatidas a concentração e a verticalização dos bancos [1].
+
+### Referências:
+- Ciro Nogueira (PP-PI) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451286",2,2,2,2,2,10,"Resposta excelente, precisamente fundamentada na fonte, com dados detalhados e conclusão clara conforme solicitado."
+q02,factual,Quais sao os principais argumentos de Paulo Paim contra a capitalizacao da Previdencia e que exemplos ele usa para sustentar essa posicao?,ok,"Os principais argumentos de Paulo Paim contra a capitalização da Previdência centram-se na substituição de um sistema solidário de proteção social por um modelo de seguro individual, o que, segundo ele, prejudicaria a população mais pobre e beneficiaria apenas o sistema financeiro.
+
+**Argumentos principais:**
+*   **Fim da Solidariedade:** A capitalização acaba com o sistema solidário, onde gerações atuais financiam a anterior e pessoas impossibilitadas de trabalhar (por doença ou maternidade) [Fonte 2].
+*   **Insegurança e Miséria:** O modelo é descrito como uma ""poupança individual"" que pode levar a aposentadorias insuficientes, especialmente para quem tiver períodos de desemprego ou baixa renda, podendo resultar em benefícios de até metade do salário mínimo [Fonte 1, 2].
+*   **Impacto aos Dependentes:** No regime de capitalização, se o contribuinte falecer, o cônjuge que não contribuiu (como esposas que cuidaram do lar) poderia ficar sem pensão, recebendo ""zero"" [Fonte 3].
+*   **Risco Financeiro e Lucro Bancário:** Paim afirma que a capitalização é um investimento de risco e que os únicos beneficiados seriam os grandes bancos e fundos de pensão privados [Fonte 4].
+*   **Rombo no Sistema Atual:** A migração para a capitalização criaria um rombo financeiro, pois os novos contribuintes deixariam de financiar quem já está aposentado no regime de repartição [Fonte 1, 2].
+
+**Exemplos utilizados:**
+*   **Chile:** É o exemplo central citado. Paim afirma que o modelo falhou, com aposentadorias baixas (equivalentes a meio salário mínimo do Brasil ou até valores irrisórios como US$ 6) [Fonte 1, 2, 5]. Menciona ainda que o Chile registra altos índices de suicídio entre idosos devido à falta de recursos [Fonte 1, 2].
+*   **Outros Países:** Cita que Colômbia, México e Peru também adotaram o sistema e estariam ""voltando atrás"" por causa de coberturas restritas e baixos valores de aposentadoria [Fonte 1].
+*   **Estudo da OIT:** Utiliza dados da Organização Internacional do Trabalho (OIT) para argumentar que a privatização da previdência fracassou globalmente, resultando em maior desigualdade de renda e gênero, além de altos custos administrativos [Fonte 5].
+*   **Especialista:** Cita o economista Márcio Pochmann, que afirma que a capitalização gera instabilidade econômica e insegurança social ao impor o rebaixamento de benefícios [Fonte 1].
+
+### Referências:
+- Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Paulo Paim (PT/RS) | Data: 2019-03-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451430
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Paim (PT/RS) | Data: 2019-06-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454172
+- Paulo Paim (PT/RS) | Data: 2019-03-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451803",2,2,2,2,2,10,"Resposta excelente, respondeu precisamente aos dois pontos da pergunta (argumentos e exemplos), com ótima estrutura e referências claras."
+q03,proposal,Que propostas Confucio Moura apresenta para melhorar a educacao?,ok,"Para melhorar a educação, o Senador Confúcio Moura apresenta as seguintes propostas e visões:
+
+*   **Valorização e Formação Docente:** Defende a melhoria da qualidade dos professores, propondo que a profissão seja socialmente mais respeitada e que agressões a docentes sejam punidas com rigor absoluto [4]. Propõe que o treinamento do professor seja focado essencialmente na prática em sala de aula [4]. Além disso, menciona a importância de melhorar o incentivo aos que desejam ser professores, destacando que, embora o salário seja importante, não é o único fator necessário [4].
+*   **Política de Estado:** Defende que a educação seja tratada como um projeto de Estado, e não de governo, para garantir que a melhoria da qualidade seja sustentável e impacte todas as demais atividades brasileiras [6].
+*   **Foco na Educação Básica e Inclusão:** Propõe focar na educação de qualidade desde a creche e alfabetização até o ensino médio profissional [6]. Enfatiza a necessidade de priorizar a inclusão de jovens pobres, levando as melhores escolas para quem mais precisa [6]. Também manifestou a importância da educação integral para crianças do ensino infantil e fundamental [3].
+*   **Gestão e Financiamento:**
+    *   Manifestou-se favoravelmente à perenização do Fundeb e à necessidade de maiores recursos financeiros para o desenvolvimento educacional [1].
+    *   Sugere a coordenação de políticas educacionais lideradas pelo Governo Federal, mobilizando governadores e prefeitos [6].
+    *   Relaciona a viabilização dos gastos públicos em educação ao corte de privilégios via reforma administrativa e à realização de reformas tributárias [6].
+*   **Visão Econômica:** Argumenta que investir em educação é um investimento econômico e fonte de riqueza, sendo a solução para reduzir custos sociais com violência, criminalidade e trabalhadores desqualificados [3].
+
+### Referências:
+- Confúcio Moura (MDB/RO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451112
+- Confúcio Moura (MDB/RO) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455270
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2022-08-31 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493592",2,2,2,2,2,10,"Resposta excelente, precisamente alinhada à pergunta, com citações claras e síntese bem estruturada."
+q04,proposal,Por que Confucio Moura defende que senadores e deputados acompanhem mais de perto escolas publicas?,ok,"Embora o texto não apresente a fala direta de Confúcio Moura justificando a necessidade de acompanhamento, o Senador Styvenson Valentim, ao referir-se a um projeto relatado por Confúcio Moura, menciona que a proposta é para que cada escola seja ""adotada por um Senador"" [4]. O objetivo desse acompanhamento, segundo Valentim, não deve ser apenas por meio de emendas, mas pela ""presença"" do parlamentar [4], visando utilizar a educação como forma de retirar crianças de áreas periféricas da disponibilidade para o crime e permitir que elas ""possam ter sonhos de novo"" [4].
+
+### Referências:
+- Confúcio Moura (MDB/RO) | Data: 2019-08-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456320",2,2,2,2,2,10,"Resposta precisa, honesta quanto à ausência de fala direta do autor e fundamentada nas fontes."
+q05,author_focus,"Quais prioridades Chico Rodrigues afirma defender no inicio do mandato e como ele relaciona ordem, uniao e desenvolvimento para o Brasil e para Roraima?",ok,"No início de seu mandato, o Senador Chico Rodrigues afirma defender as seguintes prioridades:
+
+*   **Economia e Trabalho:** A necessidade de crescimento econômico para gerar oportunidades a mais de 13 milhões de trabalhadores brasileiros [1].
+*   **Segurança Pública:** O combate firme à criminalidade, tanto em metrópoles quanto no interior do país, para que os cidadãos não vivam como ""reféns em suas próprias casas"" [1].
+*   **Desburocratização e Tributação:** A redução da alta carga tributária e da ""burocracia estarrecedora"", especialmente para os pequenos empresários, que são os maiores empregadores do país [1].
+*   **Reformas Estruturais:** O apoio a reformas preparadas pelo Executivo, com destaque para a da previdência, visando mudar os destinos do país e beneficiar a área social [1].
+*   **Demandas de Roraima:** O atendimento a necessidades específicas do estado, como a obtenção de recursos federais para a saúde, educação e segurança, especialmente diante do fluxo imigratório venezuelano [4].
+
+**Relação entre ordem, união e desenvolvimento:**
+
+Para o Senador, a **união** é o pilar essencial para a superação de diferenças e questões menores, sendo necessária a ""unidade no essencial"" entre diferentes matizes partidários para levar o melhor ao país [1, 7, 11]. Ele relaciona essa união ao **desenvolvimento** ao afirmar que a parceria entre o Legislativo e o Governo Federal é o caminho para quebrar paradigmas, alcançar conquistas esperadas pela população e transformar a vida do Brasil [3].
+
+Em relação a **Roraima**, o desenvolvimento está atrelado à integração e infraestrutura. O Senador defende a visão de transformar o estado em um polo estratégico através de:
+*   **Integração Logística:** A implementação de ferrovias ligando o estado ao Porto de Georgetown (Guiana) para exportação de minérios e produtos do agronegócio [2].
+*   **Geopolítica:** O aproveitamento da localização geográfica para ampliar o relacionamento com a Guiana, vendo-a como um parceiro estratégico para a irrigação natural da economia roraimense [7].
+*   **Regularização Administrativa:** A resolução de pendências históricas, como o enquadramento de servidores públicos do ex-território de Roraima em cargos federais [5].
+
+### Referências:
+- Chico Rodrigues (DEM/RR) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450950
+- Chico Rodrigues (DEM/RR) | Data: 2021-10-05 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484138
+- Chico Rodrigues (DEM/RR) | Data: 2020-02-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/464136
+- Chico Rodrigues (DEM/RR) | Data: 2019-05-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453371
+- Chico Rodrigues (DEM/RR) | Data: 2019-03-28 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452252
+- Chico Rodrigues (DEM/RR) | Data: 2019-11-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461349
+- Chico Rodrigues (DEM/RR) | Data: 2019-03-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451671",2,2,2,2,2,10,"Resposta completa, precisa e bem estruturada, com citações adequadas e alinhada aos questionamentos."
+q06,comparison,Compare as preocupacoes de Paulo Paim sobre Previdencia com as preocupacoes de Confucio Moura sobre educacao.,ok,"As preocupações de Paulo Paim sobre a Previdência e de Confúcio Moura sobre a educação concentram-se na defesa de direitos sociais básicos e no impacto econômico e humano da gestão pública.
+
+**Preocupações de Paulo Paim (Previdência)**
+*   **Regime de Capitalização:** Paim manifesta forte oposição ao regime de capitalização, afirmando que este ""não deu certo em lugar do mundo nenhum"" [3], fragiliza a seguridade social [3] e altera o princípio da solidariedade da Constituição de 1988 [3].
+*   **Impacto Social e Vulnerabilidade:** Alerta que a capitalização pode deixar cônjuges desamparados (vencimento zero) caso o contribuinte faleça sem que o parceiro tenha contribuído [1]. Defende que a solução para crises fiscais não pode ocorrer ""às custas da população mais pobre"" [1].
+*   **Gestão e Defasagem:** Denuncia a crise no INSS, citando 5 milhões de processos parados e o aumento drástico no tempo de concessão de benefícios, como o BPC para pessoas com deficiência, que passou de 78 dias (2015) para 311 dias (2020) [5].
+*   **Déficit e Recursos:** Menciona a tese de que o déficit previdenciário seria ""uma fraude"" decorrente do desvio de recursos via DRU (Desvinculação das Receitas da União) [2].
+
+**Preocupações de Confúcio Moura (Educação)**
+*   **Investimento e Retorno Econômico:** Moura argumenta que a educação é um ""investimento econômico"" e ""riqueza"" [7]. Para ele, o custo da falta de educação (violência, prisões, trabalhadores desqualificados) é uma despesa muito alta para o Brasil [7].
+*   **Qualidade do Magistério:** Defende que a melhoria da educação básica depende da qualidade dos professores, o que exige não apenas melhores salários, mas que a profissão seja ""socialmente mais respeitada"" [8].
+*   **Formação Prática:** Sustenta que o treinamento docente deve ser fundado essencialmente na prática dentro da sala de aula [8].
+*   **Fundamentação Básica:** Enfatiza a essencialidade do ensino de leitura, escrita, conta e gramática como estudos primordiais de qualquer nação [8].
+
+**Síntese Comparativa**
+Enquanto Paim foca na **preservação de um sistema solidário** e na crítica a modelos de poupança individual que excluiriam os mais vulneráveis [1, 3], Moura foca na **educação como ferramenta de prosperidade econômica** e combate à desigualdade, priorizando a valorização do professor e a formação básica [7, 8]. Ambos convergem na ideia de que a ação do Estado deve garantir a dignidade humana e o desenvolvimento do país.
+
+### Referências:
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Paim (PT/RS) | Data: 2019-05-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453347
+- Paulo Paim (PT/RS) | Data: 2019-06-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454571
+- Paulo Paim (PT/RS) | Data: 2022-11-30 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494408
+- Confúcio Moura (MDB/RO) | Data: 2019-02-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451112
+- Confúcio Moura (MDB/RO) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455270",2,2,2,2,2,10,"Resposta excelente. Atendeu plenamente ao pedido de comparação, manteve precisão factual com citações diretas das fontes e apresentou síntese clara e organizada."
+q07,synthesis,Quais temas sociais e economicos aparecem com mais frequencia nos discursos carregados e quais senadores associam esses problemas a propostas concretas de solucao?,ok,"Os temas sociais e econômicos que aparecem com mais frequência nos discursos são a **reforma tributária**, o **déficit e a reforma da previdência social**, a **geração de emprego e renda**, a **desigualdade social/pobreza** e os **impactos econômicos da pandemia de Covid-19**.
+
+Os senadores que associam esses problemas a propostas concretas de solução são:
+
+*   **Rogério Carvalho:** Propõe a implementação de uma ""reforma tributária solidária"" para reduzir o caráter regressivo do sistema (onde quem ganha menos paga mais), a discussão de um programa de ""renda básica cidadã"" baseado no Bolsa Família e a criação de um novo marco fiscal moderno para reduzir a dívida interna brasileira [1].
+*   **Soraya Thronicke:** Defende a proposta do grupo ""Simplifica Já"" (Emenda 144), que visa simplificar o sistema tributário através da uniformização do ISS (âmbito municipal) e do ICMS (âmbito estadual), a unificação de PIS e Cofins em uma única contribuição e a redução da contribuição patronal previdenciária para empresas que mais empregam [1].
+*   **Jorge Kajuru:** Propõe o ajuste da tabela progressiva do Imposto de Renda (com alíquotas maiores para quem ganha acima de 40 salários mínimos) para aumentar a arrecadação, a criação de uma comissão mista para analisar isenções fiscais e a busca por parâmetros que reduzam o impacto negativo da reforma da previdência sobre os mais pobres [7].
+*   **Dário Berger:** Defende uma reforma da previdência que ""invirta a pirâmide"", fazendo com que os que possuem mais contribuam mais, combatendo o uso de subterfúgios legislativos por grandes conglomerados financeiros e empresariais para não recolherem suas contribuições previdenciárias [4].
+
+### Referências:
+- Rogério Carvalho (PT/SE) | Data: 2020-09-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471750
+- Soraya Thronicke (PSL/MS) | Data: 2020-09-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471761
+- Jorge Kajuru (PSB/GO) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453688
+- Dário Berger (MDB/SC) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450954",2,2,2,2,2,10,"Resposta excelente, respondeu a ambas as partes da pergunta com precisão, citando senadores específicos, suas propostas e referenciando as fontes corretamente."
+q08,numbers,"Quais discursos citam percentuais, valores ou estatisticas e para sustentar quais argumentos?",ok,"Com base no contexto fornecido, os discursos que citam percentuais, valores ou estatísticas são:
+
+*   **Dário Berger (MDB/SC):** Utiliza valores monetários para argumentar sobre a gravidade da miséria absoluta no Brasil, mencionando pessoas que vivem com apenas R$ 145, o que equivale a aproximadamente R$ 4 por dia [3]. Além disso, cita que aproximadamente 50% da população está desempregada, subempregada, na informalidade, empregada com salário mínimo ou vive com Bolsa Família, para questionar o futuro de uma população pobre e marginalizada [3].
+*   **Rita Cristina de Oliveira (Sessão Especial):** Apresenta dados estatísticos da DPU e ABPN sobre a Lei de Cotas entre 2016 e 2021 para sustentar a necessidade de aprimorar o monitoramento da política pública. Cita que, de 81.659 ingressantes, 3.700 autodeclarações foram recusadas por heteroverificação [8]. Argumenta que o monitoramento é inexistente, pois 84,7% das universidades usam sistemas próprios com dados divergentes, enquanto 15% utilizam procedimentos frágeis, como papel ou planilhas de Excel [8].
+*   **Rose de Freitas (PODEMOS/ES):** O resumo do discurso indica que a senadora faz registros de estatísticas sobre a violência contra a mulher [3].
+
+### Referências:
+
+- Dário Berger (MDB/SC) | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461385
+- Rita Cristina de Oliveira (nan/nan) | Data: 2022-08-29 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493475
+- Rose de Freitas (PODEMOS/ES) | Data: 2019-11-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461145",2,2,2,2,2,10,"Resposta precisa, bem estruturada e totalmente aderente à pergunta, com citações claras e correlação direta entre dados e argumentos."
+q09,author_focus,Que argumentos Wellington Fagundes usa para defender investimentos em infraestrutura e qual relacao ele faz entre logistica e competitividade?,ok,"Wellington Fagundes defende os investimentos em infraestrutura utilizando os seguintes argumentos:
+
+*   **Retomada Econômica:** Ele afirma que a infraestrutura é o ponto onde se concentra a possibilidade de retomar o crescimento econômico e o desenvolvimento social do Brasil [2].
+*   **Atração de Capital:** Argumenta que existem valores substanciais no mundo (entre 15 e 17 trilhões) aplicados a juros negativos que buscam projetos de infraestrutura mais rentáveis [2].
+*   **Eficiência Logística e Custos:** O senador destaca que, sem inovação e parcerias para reduzir o custo do transporte, o Brasil ficará para trás [3].
+*   **Demandas Multimodais:** Aponta a existência de uma ""espetacular demanda"" em todos os modais: rodoviário, ferroviário e aquaviário (incluindo cabotagem e portos) [2].
+*   **Integração Regional:** Defende a necessidade de integrar o estado do Mato Grosso, citando a importância de levar ferrovias a Cuiabá e ao ""nortão"" do estado [4].
+
+Quanto à relação entre **logística e competitividade**, o senador sustenta que:
+*   A abertura e a inovação na área portuária, especialmente através de concessões, são essenciais para que o Brasil alcance a competitividade mundial [3].
+*   É necessário aperfeiçoar os marcos legais e regulatórios de segurança jurídica para atrair investimentos privados, eliminando o excesso burocrático que impede a vinda de capitais externos [2].
+
+### Referências:
+- Wellington Fagundes (PL/MT) | Data: 2019-10-10 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459794
+- Wellington Fagundes (PL/MT) | Data: 2021-08-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482578
+- Wellington Fagundes (PR/MT) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451205",2,2,2,2,2,10,"Resposta excelente, aborda todos os pontos da pergunta com precisão, boa estruturação e citações diretas às fontes."
+q10,broad,"Quais diagnosticos sobre desigualdade, vulnerabilidade ou falta de desenvolvimento aparecem nesses discursos e que tipos de solucao sao defendidos?",ok,"Os discursos apresentam diagnósticos multidimensionais sobre desigualdade e vulnerabilidade, centrados no racismo estrutural e institucional, e defendem soluções que passam por reformas éticas, políticas afirmativas e representatividade.
+
+### Diagnósticos de Desigualdade e Vulnerabilidade
+
+*   **Racismo Institucional e Estrutural:** O Estado é descrito como uma ""máquina opressora"" que opera por meio de um ""pacto racista"" não escrito [1, Chunk 462889-001]. O racismo institucional é definido como a falha coletiva de organizações em prover serviços profissionais adequados com base na cor, cultura ou origem étnica [1, Chunk 461834-001].
+*   **Mercado de Trabalho e Renda:** Dados do IBGE indicam que 68,6% dos cargos gerenciais são ocupados por brancos, contra 29,9% de pretos ou pardos [1, Chunk 461834-001]. A população negra compõe dois terços dos subutilizados na força de trabalho (66,1%) [1, Chunk 461834-001]. Além disso, projeta-se que a renda de brancos e negros só se aproximará em 2089 [2, Chunk 453497-003].
+*   **Violência e Saúde:**
+    *   **Homicídios:** A taxa de homicídios entre pretos (43,4 por 100 mil) é significativamente maior que entre brancos (16 por 100 mil) [1, Chunk 461834-001].
+    *   **Saúde:** Mulheres negras são as maiores vítimas de violência obstétrica (65,4%) e mortalidade materna (53,6%) [2, Chunk 453497-003]. Há também a menção ao genocídio da população negra acentuado por gargalos no acesso aos serviços de saúde [1, Chunk 462889-003].
+*   **Educação e Cotas:** Existe um déficit de mais de 150 mil vagas não ocupadas por negros em universidades entre 2013 e 2019 em relação ao projetado pelo Censo [1, Chunk 5]. Observa-se alta evasão de cotistas (cerca de 30%), possivelmente ligada a indicadores sociais e falta de permanência estudantil [1, Chunk 5].
+*   **Representação Política:** A população negra é sub-representada no Congresso; na Câmara dos Deputados (eleição 2018), 70% dos eleitos não eram pretos nem pardos [2, Chunk 453497-003].
+*   **Território:** Há a denúncia de paralisação na demarcação de terras quilombolas e a crítica a exigências históricas excessivas (como a de 100 anos de permanência) para titulação de terras negras [1, Chunk 462882-002].
+
+### Soluções Defendidas
+
+*   **Medidas Jurídicas e Normativas:**
+    *   Centralidade da pauta racial e articulação com o **direito da antidiscriminação** [1, Chunk 462889-002].
+    *   Cumprimento rigoroso do art. 26-A da LDB (estudo de história e cultura africana, afro-brasileira e indígena) [1, Chunk 462889-002].
+    *   Observância rigorosa de políticas de cotas em universidades e concursos públicos, combatendo ""cláusulas de barreira"" [1, Chunk 462889-002].
+*   **Políticas Públicas e Reparação:**
+    *   Implementação de monitoramento de saúde com recorte racial [1, Chunk 462889-003].
+    *   Políticas de reparação histórica e reconhecimento internacional da contribuição africana [1, Chunk 462889-003].
+    *   Investimento em educação (livros, creches, escolas) e saneamento básico como alternativa ao armamento da população [2, Chunk 453497-003].
+*   **Mudanças Estruturais e Éticas:**
+    *   ""Rasgar simbolicamente"" o pacto racial nas instituições e enfrentar a ""branquitude institucional"" [1, Chunk 462889-002].
+    *   Promover ""revoluções éticas e estéticas"" para mudar a percepção de poder e beleza [1, Chunk 462882-002].
+    *   Ocupação de espaços de poder por negros em diversas esferas (Judiciário, Congresso, setor financeiro) mediante compromisso ético com a pauta racial [1, Chunk 462889-003].
+*   **Alinhamento Internacional:** Adoção de dados desagregados por raça e sexo para cumprir a Agenda 2030 da ONU e a Convenção Internacional sobre a Eliminação de Todas as Formas de Discriminação Racial (Icerd) [1, Chunk 462876-003].
+
+### Referências:
+- RITA CRISTINA DE OLIVEIRA | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462889
+- DEBORAH DUPRAT | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462882
+- ANA CLAUDIA PEREIRA | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462876
+- Paulo Paim (PT/RS) | Data: 2019-05-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453497
+- CÉSAR OLIVEIRA GOMES | Data: 2019-11-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461834",2,2,2,2,2,10,"Resposta excelente. Aborda precisamente os diagnósticos e soluções solicitados, com forte ancoragem nas fontes, citações detalhadas e estrutura organizada."
+q11,comparison,"Compare como Ciro Nogueira e Wellington Fagundes usam dados economicos ou setoriais para defender mudancas estruturais. Quais numeros aparecem, para sustentar que tese, e onde os argumentos deles divergem?",ok,"Com base no contexto fornecido, não é possível realizar a comparação solicitada pois **não há menção a Ciro Nogueira** em nenhum dos trechos recuperados. O contexto contém discursos e exposições de Wellington Fagundes, Eduardo Fagnani, Paulo Rocha, Plínio Valério, Mário Sérgio Carraro Telles, Paulo Paim, Rogério Marinho e Luís Roberto Barroso.
+
+Sobre **Wellington Fagundes**, as informações disponíveis são:
+
+*   **Tese e Argumentos:** Ele defende a necessidade de reformas estruturais voltadas ao pacto federativo e à infraestrutura. Argumenta que a União deve pagar o que deve aos Estados e Municípios, citando que a omissão do Congresso Nacional em regulamentar essa questão é prejudicial [Fonte 12].
+*   **Dados Utilizados:** 
+    *   Menciona que a União deve aos Estados um montante de aproximadamente **50 bilhões** [Fonte 12].
+    *   Defende a competência municipal para fiscalizar e legislar sobre o Imposto sobre a Propriedade Territorial Rural (PEC nº 73/2019) para promover maior justiça tributária [Fonte 11].
+    *   Comenta sobre a importância de investimentos em infraestrutura, como o ramal interligando Água Boa para viabilizar a Ferrovia Norte-Sul em Mato Grosso [Fonte 12].
+
+**Limitações:**
+Não foi possível analisar os números ou teses de Ciro Nogueira, nem divergir seus argumentos dos de Wellington Fagundes, pois as informações sobre o primeiro não constam no contexto.
+
+### Referências:
+- Wellington Fagundes (PL/MT) | Data: 2019-05-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453571
+- Wellington Fagundes (Bloco Parlamentar Vanguarda/PR - MT) | Data: Não disponível | Link: Não disponível (Trecho da Fonte 12)",2,2,2,2,2,10,"O assistente agiu corretamente ao informar a ausência de dados sobre Ciro Nogueira, evitando alucinações e extraindo com precisão os dados de Wellington Fagundes."
+q12,author_disambiguation,"Quais propostas sobre educacao aparecem especificamente em falas de Confucio Moura e quais aparecem em falas de outros senadores, mas poderiam ser confundidas com as dele? Responda separando com clareza o que e dele e o que nao e.",ok,"Com base no contexto fornecido, as propostas e defesas sobre educação dividem-se da seguinte forma:
+
+### Propostas e Defesas de Confúcio Moura
+*   **Alteração Constitucional:** Propõe a inclusão de termo no art. 205 da Constituição Federal para definir a educação como um ""vetor de progresso"" e desenvolvimento [5].
+*   **Focalização no Aluno:** Defende que o foco do Fundeb mude dos professores para o aluno, especialmente alunos pobres, de periferia e de escolas rurais, visando a inclusão social e a qualidade do aprendizado [6].
+*   **Valorização e Formação Docente:** Sugere a revisão de critérios salariais para valorizar o professor e a melhoria da formação inicial, desde o curso de Pedagogia [2].
+*   **Gestão Técnica Escolar:** Propõe que a nomeação de diretores de escola e secretários de educação seja baseada em notório conhecimento técnico e qualidade, e não por indicações políticas de vereadores, deputados ou senadores [2].
+*   **Adoção de Escolas:** Propõe que cada escola seja ""adotada"" por um Senador, não apenas por meio de emendas, mas através da presença efetiva [4].
+*   **Perenização do Fundeb:** Manifestou-se favoravelmente à permanência (perenização) do Fundeb [2].
+*   **Equilíbrio de Investimentos:** Questiona a disparidade de gastos, onde o aluno do ensino superior custa três vezes mais que o da educação básica, e sugere mexer nessa equação [2].
+
+### Propostas de Outros Senadores (Que podem ser confundidas)
+As seguintes propostas foram feitas por outros parlamentares, mas tratam de temas semelhantes (como financiamento, sistema nacional e valorização) aos defendidos por Confúcio Moura:
+
+*   **Sistema Nacional de Educação (SNE):** A regulamentação e implementação do SNE é pauta prioritária do Senador **Marcelo Castro** [9] e do Senador **Dário Berger** (seu relator), que busca garantir o direito à creche, a escola para crianças de 4 a 17 anos e um padrão mínimo de qualidade [11].
+*   **Financiamento via Royalties:** A proposta de usar recursos dos royalties do petróleo e do Fundo Social do Pré-Sal para a educação pública é de autoria do Senador **Marcelo Castro** (PEC 39/2019) [9].
+*   **Educação Conectada:** A aprovação de política para o Programa de Inovação Educação Conectada (Piec) e a derrubada de veto ao PLN 3.477/2020 para assegurar acesso à internet são prioridades do Senador **Marcelo Castro** [9].
+*   **Programa Jovem Senador:** A iniciativa de proporcionar conhecimentos sobre democracia e cidadania a estudantes do ensino médio de escolas públicas é promovida pelo Presidente **Rodrigo Pacheco** [7].
+
+### Referências:
+- Confúcio Moura (MDB/RO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451323
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2019-08-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456320
+- Confúcio Moura (MDB/RO) | Data: 2019-09-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457847
+- Confúcio Moura (MDB/RO) | Data: 2020-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/473414
+- Rodrigo Pacheco (PSD/MG) | Data: 2021-11-23 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/485391
+- Marcelo Castro (MDB/PI) | Data: 2021-04-28 | Link: (Não fornecido no contexto, apenas indexação)
+- Dário Berger (MDB/SC) | Data: 2021-12-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/486452",2,2,2,2,2,10,"Resposta excelente. Separou claramente as propostas de Confúcio Moura das de outros senadores, manteve a precisão factual e utilizou as fontes corretamente."
+q13,negative_evidence,"Ha, no contexto recuperado, evidencia suficiente para afirmar que existe uma proposta detalhada de implementacao, com prazos e fonte de financiamento, para combater a desigualdade? Se nao houver, explique exatamente o que falta.",ok,"Não, não há evidências suficientes no contexto para afirmar que existe uma proposta detalhada de implementação, com prazos e fonte de financiamento, para combater a desigualdade.
+
+O que o contexto apresenta são menções a instrumentos, estudos e projetos, mas sem o detalhamento executivo solicitado:
+
+*   **Instrumentos e Caminhos:** São citados como soluções gerais a utilização de tributos progressivos, sistemas robustos de seguridade social, base educacional sólida e estímulos do Estado à economia [2]. Eduardo Fagnani menciona a ""tributação progressiva"" e a necessidade de ampliar a tributação sobre renda e patrimônio [3].
+*   **Propostas e Estudos:** Há menções à ""Emenda Substitutiva Global 178"" e a um estudo intitulado ""Tributar os super-ricos para reconstruir o país"", que apresenta oito medidas prioritárias com potencial de arrecadação de R$ 290 bilhões [3]. Também são citados diversos Projetos de Lei (PL 130/2011, PL 4373/2020, PL 5231/2020, PLS 315/2015 e PL 12/2020) como proposições que visam combater desigualdades [1].
+*   **Programas Específicos:** É mencionada a proposta do ""Mais Bolsa Família"" como um caminho para proteger o trabalhador em ocupação precária [3].
+
+**O que falta para configurar uma proposta detalhada de implementação:**
+1.  **Prazos:** Não há qualquer cronograma, datas de início ou metas temporais para a execução das medidas mencionadas.
+2.  **Plano de Implementação:** Não existe a descrição do ""como"" as leis ou estudos seriam operacionalizados na prática (passo a passo administrativo).
+3.  **Detalhamento da Fonte de Financiamento:** Embora seja mencionado o ""potencial de arrecadação"" de R$ 290 bilhões através da tributação de super-ricos [3], não há um orçamento detalhado que vincule cada centavo arrecadado a ações específicas de combate à desigualdade.
+
+### Referências:
+- Paulo Paim (PT/RS) | Data: 2021-06-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480060
+- Randolfe Rodrigues (REDE/AP) | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461429
+- EDUARDO FAGNANI | Data: 2020-09-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471754",2,2,2,2,2,10,"Resposta excelente. Identificou corretamente a ausência da informação, detalhou o que estava presente e especificou precisamente as lacunas solicitadas."
+q14,multi_hop,"A partir de diferentes discursos, reconstrua a cadeia de raciocinio que liga desigualdade, desenvolvimento regional, educacao e protecao social. Quais autores fazem essas conexoes de modo mais explicito e com quais limites?",ok,"A cadeia de raciocínio que interliga desigualdade, desenvolvimento regional, educação e proteção social, conforme os discursos recuperados, estrutura-se da seguinte forma:
+
+**1. A Desigualdade como Obstáculo ao Desenvolvimento**
+A desigualdade social e regional é apresentada como o ""nó górdio"" da geração atual e o maior desafio do país [3]. A concentração de renda (onde 1% dos mais ricos cresce enquanto os mais pobres empobrecem) e as disparidades regionais — especialmente no Norte e Nordeste — impedem que o desenvolvimento ocorra de forma igualitária [3, 4].
+
+**2. Educação como Motor de Superação e Equalização**
+A educação é apontada como a ""chave para o sucesso"" e a ferramenta fundamental para combater desigualdades, racismo e discriminações [6, 7]. O raciocínio é que a falta de um acesso igualitário ao sistema educacional agrava a desigualdade social [7]. Para resolver isso, propõe-se a criação do **Sistema Nacional de Educação**, que visa:
+- Modernizar a gestão e organizar políticas educacionais [1].
+- Implementar o **Custo Aluno-Qualidade (CAQ)** para distribuir recursos de forma mais eficiente (""dar mais para quem precisa""), reduzindo desigualdades orçamentárias [1].
+- Integrar redes municipais e estaduais para otimizar a infraestrutura e evitar a fragmentação da trajetória do aluno [1].
+
+**3. Proteção Social e Distribuição de Renda como Base do Crescimento**
+A proteção social (SUS, Bolsa Família, Previdência Pública e valorização do salário mínimo) é vista como o instrumento que permite a ""desconcentração da riqueza"" e a universalização de direitos [8]. O argumento central é que o Brasil só cresce se houver distribuição de renda, criando um mercado de consumo robusto que sustenta o desenvolvimento local [5].
+
+**4. Desenvolvimento Regional via Investimento Estruturado**
+O desenvolvimento regional é a materialização dessas políticas em áreas carentes. Isso ocorre através de:
+- Fundos de desenvolvimento (como FNE, FNO e FCO) e bancos regionais (Basa), que fomentam a agropecuária e microempresas em estados menores [6].
+- Políticas de infraestrutura básica (luz e esgoto) em escolas do Norte e Nordeste, essenciais para que a educação efetivamente ocorra [3].
+
+### Autores e Conexões Explícitas
+
+Os autores que fazem essas conexões de modo mais explícito são:
+
+*   **Dário Berger:** Liga a **desigualdade regional** (citando o IOEB e a carência no Norte/Nordeste) à necessidade de um **Sistema Nacional de Educação** para garantir a distribuição justa de recursos e a melhoria da infraestrutura escolar [3].
+*   **Jaques Wagner:** Conecta a **superação da pobreza e desigualdade** ao centro das **políticas econômicas** (proteção social/distribuição de renda), argumentando que a distribuição é a condição para o crescimento econômico [5].
+*   **Randolfe Rodrigues:** Interliga a **desigualdade social** (dados do IBGE) à necessidade de **tributos progressivos** e uma **sólida base educacional** como caminhos para a justiça social, citando a experiência dos países nórdicos [3].
+*   **Paulo Paim:** Liga a **desigualdade de renda** ao sistema educacional, afirmando que o processo de desigualdade começa na educação que não garante acesso igualitário [7].
+
+### Limites das Conexões
+
+Os discursos apontam os seguintes limites e obstáculos:
+- **Políticos e Ideológicos:** A educação e a proteção social ficam, por vezes, ""à mercê de embates e discursos ideológicos"" [3] ou sofrem com a ""polarização ideológica barulhenta"" [4].
+- **Gestão e Articulação:** A falta de um sistema nacional de educação gera ações isoladas e inconsistentes entre União, Estados e Municípios [1].
+- **Riscos de Retrocesso:** Há críticas a reformas (como a da Previdência e a desvinculação de recursos da saúde/educação) que poderiam destruir o sistema de financiamento social e aprofundar a pobreza [3, 8].
+- **Dependência de Projetos:** A falta de projetos técnicos por parte dos governadores pode limitar a chegada de recursos federais às regiões Nordeste [4].
+
+### Referências:
+- Dário Berger (MDB/SC) | Data: 2019-11-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461387
+- Jaques Wagner (PT/BA) | Data: 2019-10-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459965
+- Randolfe Rodrigues (REDE/AP) | Data: Não fornecida no contexto | Link: Não fornecido no contexto
+- Paulo Paim (PT/RS) | Data: 2019-07-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455421
+- Dário Berger (MDB/SC) | Data: Não fornecida no contexto (Relator PLP 235/2019) | Link: Não fornecido no contexto
+- Telmário Mota (PROS/RR) | Data: 2021-09-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483436
+- Paulo Rocha (PT/PA) | Data: 2019-03-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451582",2,2,2,2,2,10,"Resposta excelente. Reconstruiu a cadeia lógica solicitada, identificou os autores e seus respectivos limites com precisão e manteve rigorosa aderência às fontes citadas."
+q15,numbers_precision,Quais numeros citados nos discursos parecem centrais para o argumento de cada autor e quais aparecem apenas como apoio periferico? Distingua os dois grupos e evite misturar estatisticas de autores diferentes.,ok,"Com base nos discursos fornecidos, a distinção entre números centrais ao argumento e números de apoio periférico é a seguinte:
+
+**Paulo Paim**
+*   **Números Centrais:**
+    *   **R$ 530 bilhões:** Valor anual da sonegação fiscal, utilizado para argumentar que o combate a esse problema poderia resolver duas reformas da previdência [1].
+    *   **Menos de 3% da população (700 mil pessoas):** Grupo que, se pagasse impostos entre 34% e 36%, permitiria ao Brasil ter uma receita de R$ 1,5 trilhão em dez anos [1].
+    *   **R$ 500 bilhões:** Valor excedente em arrecadação que seria alcançado em dez anos com a cobrança de impostos de quem tem mais, superando as expectativas do Ministro Paulo Guedes [1].
+    *   **50% dos gastos da classe política:** Percentual de corte sugerido para gerar uma economia de R$ 3 trilhões [1].
+*   **Números de Apoio Periférico:**
+    *   **5 salários mínimos:** Limite de renda para a proposta de isenção de impostos [1].
+    *   **20 a 30 salários mínimos:** Faixa de renda para a qual se propõe a manutenção de alíquotas de 27,5% ou 30% [1].
+
+**Viviane Ceolin Dallasta del Grossi**
+*   **Números Centrais:**
+    *   **40%:** Percentual de mortes violentas no Rio de Janeiro em 2019 que são homicídios decorrentes de abordagem policial [3].
+*   **Números de Apoio Periférico:**
+    *   **2017:** Ano de publicação da condenação da corte sobre a letalidade policial no Rio de Janeiro [3].
+    *   **2019:** Ano de referência dos dados do Observatório de Segurança Pública e prazo de cumprimento das determinações da corte [3].
+    *   **2016:** Ano do relatório da ONU que pediu a abolição dos autos de resistência [3].
+    *   **Mais de 100:** Quantidade de apurações sem conduta mencionadas pela Defensoria Pública do Estado de São Paulo [3].
+
+**Carlos Portinho**
+*   **Números Centrais:**
+    *   **2 mil ou 1,6 mil pessoas:** Tamanho da amostra de entrevistas em pesquisas eleitorais, considerado pelo autor como inadmissível para representar uma população de mais de 200 milhões de brasileiros [4].
+*   **Números de Apoio Periférico:**
+    *   **Mais de 200 milhões:** População total de brasileiros [4].
+
+**Jaques Wagner**
+*   **Números de Apoio Periférico:**
+    *   **1974:** Ano desde o qual o autor vive na Bahia [2].
+
+### Referências:
+- Paulo Paim (Bloco Parlamentar da Resistência Democrática/PT - RS) | Data: Não disponível | Link: Não disponível
+- VIVIANE CEOLIN DALLASTA DEL GROSSI (nan/nan) | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462922
+- Carlos Portinho (PL/RJ) | Data: 2022-10-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493818
+- Jaques Wagner (PT/BA) | Data: 2019-10-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459965",2,2,2,2,2,10,"A resposta seguiu rigorosamente a instrução, separando números centrais de periféricos por autor, sem misturar estatísticas e com citações precisas."
+q16,scope_control,"O que exatamente Paulo Paim afirma sobre capitalizacao da Previdencia, e o que seria uma extrapolacao indevida para alem do que os trechos permitem concluir?",ok,"Paulo Paim manifesta-se consistentemente de forma contrária ao regime de capitalização da Previdência, classificando-o como ""absurdo"" [3] e ""um crime"" [3].
+
+### Afirmações de Paulo Paim sobre a Capitalização
+
+*   **Natureza do Sistema:** Define a capitalização como uma ""poupança individual"" [1] ou ""seguro individual"" [2], que substitui o atual sistema solidário de repartição, onde gerações atuais financiam as anteriores [2].
+*   **Impactos Sociais e Riscos:**
+    *   **Risco de Pobreza:** Argumenta que o sistema pode levar milhões de brasileiros à miséria e pobreza [2], gerando uma ""legião de miseráveis"" [5].
+    *   **Benefícios Baixos:** Cita que, no modelo de capitalização, o segurado pode se aposentar recebendo até metade do salário mínimo [2].
+    *   **Insegurança Familiar:** Afirma que, por ser uma poupança individual, cônjuges que não contribuíram (como esposas que cuidaram do lar) podem ficar sem qualquer valor ou pensão após a morte do parceiro [4].
+    *   **Instabilidade:** Cita o economista Márcio Pochmann para afirmar que a capitalização gera instabilidade econômica e insegurança social devido ao rebaixamento de benefícios e exclusão de idosos [1].
+*   **Experiências Internacionais:** Afirma que o modelo foi adotado e ""fracassou"" em países como Chile, Colômbia, México e Peru [1, 2, 5]. Destaca que no Chile a média da aposentadoria equivale a meio salário mínimo brasileiro, havendo inclusive registros de suicídio entre idosos por falta de recursos [1, 2, 5].
+*   **Beneficiários do Sistema:** Sustenta que os únicos que se beneficiariam da capitalização seriam o sistema financeiro, especificamente os grandes bancos e fundos de pensão privados [3].
+*   **Impacto Fiscal e Administrativo:**
+    *   Menciona que a migração para a capitalização causaria perda de arrecadação (estimada por especialistas em mais de 400 bilhões [2]), comprometendo o pagamento de quem já está aposentado pelo regime atual [2].
+    *   Aponta a fragilidade da governança e os elevados custos administrativos que reduzem os rendimentos dos aposentados [5].
+*   **Inconstitucionalidade:** Menciona nota técnica da Procuradoria Federal do Direito do Cidadão (MPF) afirmando que o modelo de capitalização é inconstitucional por alterar o princípio da solidariedade da Constituição de 1988 [7].
+
+### Extrapolações Indevidas
+
+Seria uma extrapolação indevida concluir a partir dos textos que:
+*   **A capitalização é a única causa da crise previdenciária:** Paim argumenta que o déficit é, em parte, ""uma fraude"" [8] causada por desvios via DRU [8], sonegações e apropriação indébita (30 bilhões por ano [1, 3]), e não apenas pelo modelo de repartição.
+*   **Não existe qualquer consenso sobre a viabilidade da reforma:** Embora Paim seja contra, o contexto mostra que há debates com diferentes visões, incluindo a menção a especialistas do Governo com cálculos distintos dos da Unicamp [10] e a fala do Senador Paulo Tafner, que louvou a implantação da capitalização no setor público [9].
+*   **A capitalização causaria a quebra imediata do Estado:** Paim afirma explicitamente que ""não é verdade a afirmação de que o País vai quebrar"" [4] se a reforma da previdência não for aprovada.",2,2,2,2,2,10,"Resposta excelente. Atende plenamente a ambos os pontos da pergunta, utiliza citações precisas e identifica corretamente os limites interpretativos (extrapolações)."
+q17,source_focus,"Quais respostas exigiriam mais cautela por dependerem de inferencias amplas a partir de poucos trechos: as sobre educacao, as sobre desigualdade ou as sobre infraestrutura? Justifique com base nas limitacoes do proprio contexto.",ok,"As respostas sobre **infraestrutura** exigiriam a maior cautela, pois são as que possuem a menor base de evidências no contexto, dependendo de inferências amplas a partir de trechos muito pontuais.
+
+A justificativa baseada nas limitações do contexto é a seguinte:
+
+*   **Infraestrutura:** Há pouquíssimas menções diretas. As únicas referências são a ""adaptação de espaços escolares"" [1] e a disponibilização de ""dados, chips, aulas pela televisão, rádio, on-line e WhatsApp"" [3]. Qualquer conclusão ampla sobre a situação da infraestrutura educacional no país seria uma inferência arriscada, dado que o contexto não detalha a qualidade, a extensão ou a natureza dessas adaptações.
+*   **Desigualdade:** O contexto oferece bases mais sólidas, mencionando explicitamente que a saída da escola atinge prioritariamente ""estudantes em situação de vulnerabilidade, estudantes periféricos, do campo, pretos e negros"" [1], além de citar ""respostas muito assimétricas"" e ""desiguais"" entre as redes de ensino [3].
+*   **Educação:** É o tema central da maioria dos trechos, com discussões detalhadas sobre a PEC nº 13/2021 [1], a educação bilíngue de surdos [4], a busca ativa contra a evasão escolar [3] e a educação profissionalizante do Sistema S [2], permitindo respostas com menor dependência de inferências.
+
+### Referências:
+- LUCAS FERNANDES HOOGERBRUGGE | Data: 2021-08-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482648
+- LUCAS FERNANDES | Data: 2022-02-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488476
+- Paulo Paim (PT/RS) | Data: 2019-07-05 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456616
+- CLAUDIO DREWES JOSÉ DE SIQUEIRA | Data: 2021-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/479523",2,2,2,2,2,10,"Resposta excelente. Identificou corretamente a categoria com menor base de evidências, justificou comparando a densidade de informações entre os temas e citou as fontes de forma precisa."
+q18,cross_author,"Quais semelhancas de linguagem ou tema entre Paulo Paim, Confucio Moura e outros autores podem levar o sistema a confundir autoria ou proposta? Identifique os riscos concretos de confusao e ilustre com exemplos.",ok,"Com base nos discursos recuperados, as semelhanças de linguagem e tema que podem levar à confusão de autoria ou de propostas residem principalmente na convergência de pautas sociais e no estilo de interação parlamentar.
+
+Os riscos concretos de confusão são:
+
+**1. Convergência Temática em Educação e Direitos Humanos**
+Tanto Paulo Paim quanto Confúcio Moura demonstram forte alinhamento em temas de educação e justiça social, o que pode fazer com que o sistema atribua a defesa de certas bandeiras ao autor errado.
+*   **Exemplo:** No discurso de 14/03/2019, Paulo Paim afirma que as palavras-chave são ""educação, amor e solidariedade"" e expressa o desejo de ser ""soldado"" de Confúcio Moura na ""bandeira da educação"" [6]. Como ambos defendem a educação como prioridade, a atribuição de quem lidera ou propõe a pauta pode se tornar ambígua.
+
+**2. Alinhamento em Defesas da Classe Trabalhadora e Aposentados**
+Embora Paulo Paim seja o autor principal das críticas e teses técnicas sobre a reforma da previdência, Confúcio Moura frequentemente ecoa e valida essas posições em seus apartes, utilizando linguagem de apoio que mimetiza a tese do colega.
+*   **Exemplo:** Confúcio Moura descreve Paulo Paim como ""ardoroso, militante, diário, em defesa de alguns pontos da reforma da previdência"" [2] e elogia sua ""coerência de sempre"" na defesa da ""classe trabalhadora, dos aposentados"" [5]. Um sistema poderia confundir a validação de Confúcio com a autoria da tese original de Paim.
+
+**3. Estilo de Linguagem Conciliador e Respeitoso**
+Ambos utilizam um tom de voz moderado, evitando ataques pessoais e prezando pela ""conciliação"" e ""serenidade"", o que torna o estilo retórico similar.
+*   **Exemplo:** Confúcio Moura elogia a ""serenidade de um discurso pausado e profundo"" de Paim [5]. O próprio Paulo Paim confirma que adota a ""linha da conciliação, do entendimento, da construção coletiva"" e evita ""fazer ataque pessoal a ninguém"" [2]. Essa semelhança no comportamento linguístico reduz a distinção de ""estilo"" entre os dois oradores.
+
+**4. Confusão por Nome Similar (Risco de Entidade)**
+Existe um risco significativo de confusão entre o **Senador Paulo Paim** (PT/RS) e o educador **Paulo Freire**, devido à coincidência do primeiro nome e ao fato de ambos serem associados a temas de educação e transformação social no contexto do Senado.
+*   **Exemplo:** Enquanto os discursos de Paulo Paim focam em previdência e educação [1, 6], há uma sessão especial dedicada ao centenário de Paulo Freire, descrito como ""Patrono da Educação Brasileira"" e alguém que buscava a ""transformação radical da sociedade brasileira"" [4]. A similaridade temática (educação/transformação) e o nome ""Paulo"" podem induzir o sistema ao erro de entidade.
+
+### Referências:
+- Paulo Paim (PT/RS) | Data: 2019-08-30 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456916
+- Paulo Paim (PT/RS) | Data: 2019-09-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/458158
+- Confúcio Moura (MDB/RO) | Data: 2019-05-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453501
+- ANA MARIA ARAÚJO FREIRE | Data: 2021-09-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483370
+- Paulo Paim (PT/RS) | Data: 2019-08-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456622
+- Confúcio Moura (MDB/RO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451323",2,2,2,2,2,10,"Resposta excelente, com análise precisa dos riscos de confusão, exemplos concretos extraídos das fontes e identificação pertinente de risco de entidade (Paulo Paim vs Paulo Freire)."
+q19,retrieval_stress,"Se a pergunta for 'quais senadores apresentam diagnostico e solucao no mesmo discurso, sem depender de sintese entre varios discursos?', quem realmente se encaixa nisso no contexto disponivel? Cite apenas os casos sustentados com seguranca.",ok,"Com base no contexto fornecido, o senador que se encaixa nesses critérios é:
+
+*   **Dário Berger**: O senador apresenta o diagnóstico de que o déficit da previdência social é originado em grandes conglomerados, empresas e grupos financeiros que utilizam subterfúgios da legislação (como a compensação financeira de créditos) para não recolherem o que deveriam [Fonte 6]. Como solução, propõe a realização de uma reforma que ""invirta a pirâmide"", estabelecendo que aqueles que possuem mais recursos devem contribuir mais, enquanto os que possuem menos devem ser os mais beneficiados, visando a justiça social [Fonte 6].
+
+Não foram encontrados outros senadores nos discursos fornecidos que apresentem, em um único pronunciamento, simultaneamente um diagnóstico técnico/estrutural e uma respectiva proposta de solução.
+
+### Referências:
+- Dário Berger (MDB/SC) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450954",2,2,2,2,2,10,"Resposta precisa, focada estritamente no critério solicitado e devidamente fundamentada na fonte."
+q20,hallucination_check,"Entre as perguntas deste conjunto, quais tenderiam a induzir alucinacao ou excesso de confianca se o modelo nao reconhecesse limites do contexto? Explique por que e indique como uma resposta cautelosa deveria se comportar.",ok,"Com base nos documentos fornecidos, as perguntas que tenderiam a induzir alucinações ou excesso de confiança seriam aquelas que buscam **detalhes técnicos específicos, conclusões definitivas sobre a eficácia de tecnologias ou a revelação de dados sigilosos**, pois o contexto oferece apenas opiniões de convidados ou discussões preliminares, e não fatos técnicos exaustivos ou documentos oficiais.
+
+### Exemplos de perguntas indutoras e justificativas:
+
+1.  **Perguntas sobre a ""prova"" da existência de extraterrestres ou conteúdo de arquivos secretos:**
+    *   **Por que induziria ao erro:** O contexto apresenta a fala do Sr. Inajar Antonio Kurowski, que afirma que a presença está ""mais do que provada"" [Fonte 2] e que existem provas físicas e testemunhais [Fonte 2]. Um modelo sem limites de contexto poderia tratar essas afirmações como fatos científicos universais e ""verdades"" absolutas, em vez de reportá-las como a *opinião/argumento de um orador específico* em uma sessão de ufologia.
+    *   **Comportamento cauteloso:** A resposta deve deixar claro que a informação provém do discurso de um convidado específico e que as ""provas"" mencionadas são a visão daquele orador, não um consenso científico documentado no texto.
+
+2.  **Perguntas sobre a regulação final da Inteligência Artificial no Brasil:**
+    *   **Por que induziria ao erro:** O contexto menciona a análise do ""Projeto de Lei nº 872, de 2021"" [Fonte 1] e sugestões de convidados como Igor Ferreira Luna Louro e Sergio Paulo Gallindo sobre a necessidade de cautelas e setorização [Fonte 1]. Um modelo poderia alucinar que tais sugestões já fazem parte da lei aprovada ou que a lei já foi sancionada com esses termos.
+    *   **Comportamento cauteloso:** Deve informar que o texto trata de uma ""Sessão de Debates Temáticos"" para *análise* de um projeto de lei, e que as propostas mencionadas são opiniões de convidados durante a discussão, e não o texto final da lei.
+
+3.  **Perguntas sobre a ""segurança total"" das vacinas contra COVID-19:**
+    *   **Por que induziria ao erro:** O Sr. José David Urbaez afirma que a questão de a vacina ser perigosa ou experimental é ""uma página virada"" [Fonte 3]. O modelo poderia generalizar isso como uma prova médica definitiva, ignorando que se trata de um depoimento em uma sessão de debate.
+    *   **Comportamento cauteloso:** Deve atribuir a afirmação ao representante da Sociedade Brasileira de Infectologia e mencionar que ele baseia sua resposta nos protocolos de agências regulatórias como Anvisa, FDA e EMA [Fonte 3].
+
+### Resumo do comportamento cauteloso:
+Para evitar alucinações, o modelo deve:
+*   **Atribuir a autoria:** Em vez de dizer ""A ufologia é multidisciplinar"", dizer ""O Sr. Inajar Antonio Kurowski afirma que a ufologia é um campo de estudos complexo e multidisciplinar"" [Fonte 2].
+*   **Diferenciar sugestão de fato:** Diferenciar a análise de um Projeto de Lei (processo em andamento) de uma lei vigente.
+*   **Sinalizar a natureza do documento:** Reconhecer que o contexto é composto por ""Exposições de convidados"" e ""Discursos"", que representam perspectivas pessoais ou institucionais, e não enciclopédias de fatos neutros.
+
+### Referências:
+- IGOR FERREIRA LUNA LOURO (nan/nan) | Data: 2021-07-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481553
+- INAJAR ANTONIO KUROWSKI (nan/nan) | Data: 2022-06-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/492104
+- SERGIO PAULO GALLINDO (nan/nan) | Data: 2021-07-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/481559
+- JOSÉ DAVID URBAEZ (nan/nan) | Data: 2022-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488282",2,2,2,2,2,10,"Resposta excelente, identificou corretamente os riscos de alucinação baseando-se na natureza subjetiva das fontes e propôs comportamentos cautelosos precisos."

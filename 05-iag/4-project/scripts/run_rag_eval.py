@@ -67,11 +67,22 @@ def get_knowledge_id(base_url: str, token: str, knowledge_name: str) -> str:
     raise SystemExit(f'Knowledge com nome "{knowledge_name}" nao encontrada.')
 
 
-def extract_answer(payload: dict[str, Any]) -> str:
+def extract_answer(payload: Any) -> str:
+    if payload is None:
+        raise ValueError("Payload nulo retornado por /api/chat/completions.")
+    if not isinstance(payload, dict):
+        raise ValueError(f"Payload inesperado retornado por /api/chat/completions: {type(payload).__name__}")
     if "choices" in payload and payload["choices"]:
-        return payload["choices"][0]["message"]["content"]
+        message = payload["choices"][0].get("message") or {}
+        content = message.get("content")
+        if content is None:
+            raise ValueError("Campo choices[0].message.content veio nulo.")
+        return str(content)
     if "message" in payload and isinstance(payload["message"], dict):
-        return str(payload["message"].get("content", ""))
+        content = payload["message"].get("content")
+        if content is None:
+            raise ValueError("Campo message.content veio nulo.")
+        return str(content)
     return json.dumps(payload, ensure_ascii=True)
 
 
@@ -153,7 +164,15 @@ def ask_openwebui(
                     f"{response.status_code} error from /api/chat/completions: {body_excerpt}"
                 )
             response.raise_for_status()
-            return response.json()
+            data = response.json()
+            if data is None:
+                raise RuntimeError("Resposta nula retornada por /api/chat/completions.")
+            if not isinstance(data, dict):
+                raise RuntimeError(
+                    "Resposta em formato inesperado retornada por /api/chat/completions: "
+                    f"{type(data).__name__}"
+                )
+            return data
         except Exception as exc:  # noqa: BLE001
             attempt += 1
             if attempt > max_retries:
