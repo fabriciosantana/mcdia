@@ -791,12 +791,18 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.8 - Incluir validacao manual amostral
 
 - Prioridade: media
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Selecionar 5 a 7 respostas da rodada final.
   - Fazer revisao humana parcial.
   - Comparar julgamento humano versus LLM Judge.
   - Registrar convergencias e divergencias.
+- Resultado parcial:
+  - A amostra recomendada foi definida com 7 perguntas da rodada oficial base: `q03`, `q11`, `q14`, `q15`, `q16`, `q18` e `q20`.
+  - Foi gerado um pacote Markdown com a resposta completa, notas automaticas e campos prontos para preenchimento humano.
+- Resultado observado:
+  - A amostra foi efetivamente preenchida com uma revisao manual proposta, incluindo classificacao humana, fidelidade ao contexto, uso de referencias, principal problema observado e leitura de convergencia/divergencia com o juiz automatico.
+  - A maior divergencia apareceu em `q20`, em que a revisao manual considerou a resposta inadequada por erro de escopo, apesar do `10/10` atribuido automaticamente.
 - Criterios de aceite:
   - O experimento final inclui triangulacao entre avaliacao automatica e avaliacao humana amostral.
 
@@ -873,4 +879,6 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |
 | 2026-04-17 | Primeira matriz analitica da rodada oficial base gerada | [rag_eval_20260416T172816Z.question_analysis.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.question_analysis.md:1) | A rodada oficial base passou a ter leitura curta por pergunta com `retrieval_quality`, `context_faithfulness`, `reference_use` e `main_limitation`, pronta para reaproveito no manuscrito. |
+| 2026-04-17 | Pacote de validacao manual amostral preparado | [rag_eval_20260416T172816Z.manual_validation_sample.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.manual_validation_sample.md:1) | Amostra recomendada definida com 7 perguntas cobrindo controle positivo, comparacao, multi-hop, precision de numeros, extrapolacao, autoria cruzada e controle de alucinacao; pacote inclui resposta completa, notas automaticas e campos para parecer humano. |
+| 2026-04-17 | Validacao manual amostral preenchida | [rag_eval_20260416T172816Z.manual_validation_sample.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.manual_validation_sample.md:1) | Revisao manual proposta concluida para 7 perguntas; houve boa convergencia com o juiz automatico na maior parte da amostra, mas `q20` revelou divergencia importante e possivel superavaliacao automatica por erro de escopo. |
 | a preencher | a preencher | a preencher | a preencher |
