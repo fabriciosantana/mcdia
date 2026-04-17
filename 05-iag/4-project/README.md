@@ -467,6 +467,7 @@ python scripts/import_batches_to_openwebui.py \
 ## 14. Avaliação do RAG
 
 - [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json)
+- [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json)
 - [`eval/RUBRIC.md`](/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md)
 - [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md)
 - [`eval/prompts/rag_judge_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_system.md)
@@ -510,6 +511,11 @@ Uma rodada comparável precisa fixar explicitamente:
 - modelo juiz
 - parâmetros `RAG_EVAL_TEMPERATURE`, `RAG_EVAL_TOP_P`, `RAG_EVAL_MAX_TOKENS` e `RAG_EVAL_SEED`, quando definidos
 
+Versionamento do benchmark:
+
+- [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json:1): benchmark base de 20 perguntas, usado nas rodadas históricas já consolidadas;
+- [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1): benchmark expandido e melhor balanceado por categoria, recomendado para novas rodadas metodológicas.
+
 ### 14.4 Sequência oficial de execução
 
 #### Passo 1: confirmar a base congelada
@@ -546,6 +552,13 @@ Executar apenas as 3 primeiras perguntas:
 
 ```bash
 python scripts/run_rag_eval.py --limit 3
+```
+
+Executar a versão balanceada do benchmark:
+
+```bash
+python scripts/run_rag_eval.py \
+  --questions-file eval/discursos_questions_v2_balanced.json
 ```
 
 Trocar o modelo:

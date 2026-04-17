@@ -773,9 +773,10 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.7 - Expandir a bateria com melhor balanceamento por categoria
 
 - Prioridade: media
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [eval/discursos_questions.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json:1)
+  - [eval/discursos_questions_v2_balanced.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1)
 - Implementacao:
   - Aumentar o numero de perguntas por familia.
   - Garantir pelo menos 2 ou 3 perguntas por categoria critica, especialmente:
@@ -785,6 +786,10 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
     - checagem de alucinacao
     - multietapas
   - Versionar explicitamente o conjunto de perguntas.
+- Resultado observado:
+  - Foi criada uma nova versao explicitamente versionada do benchmark: [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1).
+  - O benchmark expandido passou de 20 para 25 perguntas.
+  - As categorias criticas ficaram balanceadas em pelo menos 2 perguntas cada, com `comparison=3`, `broad=2`, `multi_hop=2`, `cross_author=2` e `hallucination_check=2`.
 - Criterios de aceite:
   - O benchmark deixa de ter categorias criticas subrepresentadas.
 
@@ -885,4 +890,5 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Pacote de validacao manual amostral preparado | [rag_eval_20260416T172816Z.manual_validation_sample.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.manual_validation_sample.md:1) | Amostra recomendada definida com 7 perguntas cobrindo controle positivo, comparacao, multi-hop, precision de numeros, extrapolacao, autoria cruzada e controle de alucinacao; pacote inclui resposta completa, notas automaticas e campos para parecer humano. |
 | 2026-04-17 | Validacao manual amostral preenchida | [rag_eval_20260416T172816Z.manual_validation_sample.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.manual_validation_sample.md:1) | Revisao manual proposta concluida para 7 perguntas; houve boa convergencia com o juiz automatico na maior parte da amostra, mas `q20` revelou divergencia importante e possivel superavaliacao automatica por erro de escopo. |
 | 2026-04-17 | Protocolo reproduzivel formal consolidado no README | [README.md](/workspaces/mcdia/05-iag/4-project/README.md:467) | A secao de avaliacao passou a documentar o protocolo oficial da Opcao A, incluindo pre-condicoes, sequencia de execucao, artefatos obrigatorios, comparabilidade entre rodadas e criterios minimos de validade. |
+| 2026-04-17 | Benchmark expandido e versionado | [discursos_questions_v2_balanced.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1) | Nova versao do questionario criada com 25 perguntas e melhor balanceamento das categorias criticas; o README passou a distinguir o benchmark historico de 20 perguntas da versao v2 recomendada para novas rodadas. |
 | a preencher | a preencher | a preencher | a preencher |
