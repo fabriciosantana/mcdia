@@ -698,7 +698,7 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.3 - Executar rodadas identicas e medir estabilidade
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Executar pelo menos 3 rodadas identicas com:
     - mesma knowledge base
@@ -851,4 +851,6 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-16 | Rodada oficial completa sob o protocolo A | [rag_eval_20260416T172816Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.csv:1) | Execucao completa com 20/20 perguntas `ok`, media 9.15, minimo 6, maximo 10, com configuracao versionada em `rag_eval_20260416T172816Z.run_config.json`. |
 | 2026-04-16 | Diagnostico e correcao do erro 400 no juiz automatico | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:109) | O script passou a incluir o corpo de erro do `/api/chat/completions` nas excecoes HTTP e a chamada do juiz deixou de enviar `seed` e parametros extras que estavam gerando `400 Bad Request`. |
 | 2026-04-16 | Parametros experimentais padronizados como `RAG_EVAL_*` | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:463) | `RAG_EVAL_TEMPERATURE`, `RAG_EVAL_TOP_P`, `RAG_EVAL_MAX_TOKENS` e `RAG_EVAL_SEED` foram adicionados ao `.env`, `.env.example` e README como defaults da bateria, sem confundir configuracao experimental com configuracao global do Open WebUI. |
+| 2026-04-17 | Tres rodadas completas para analise inicial de estabilidade | [rag_eval_20260416T172816Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.csv:1) | Rodadas completas: `172816Z` media 9.15, `182240Z` media 9.55 e `232921Z` media 9.35; todas com 20/20 perguntas `ok` e mesma configuracao experimental versionada. |
+| 2026-04-17 | Variacao entre rodadas identicas quantificada | [rag_eval_20260416T232921Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T232921Z.csv:1) | Variacao observada em perguntas como `q15`, `q16`, `q18` e `q19`, indicando estabilidade operacional alta, mas sensibilidade metodologica relevante em parte do benchmark. |
 | a preencher | a preencher | a preencher | a preencher |
