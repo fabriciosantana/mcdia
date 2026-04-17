@@ -719,13 +719,16 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
 ### Tarefa 11.4 - Separar gerador e juiz em pelo menos uma rodada controlada
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Executar ao menos dois cenarios:
     - gerador e juiz com o mesmo modelo
     - gerador e juiz com modelos diferentes
   - Comparar notas agregadas e por pergunta.
   - Avaliar se a mudanca de juiz altera materialmente o resultado.
+- Resultado observado:
+  - `gemma3:12b` como juiz foi operacionalmente instavel e retornou respostas nulas em parte da bateria, inviabilizando seu uso como juiz confiavel no protocolo atual.
+  - `gemma4:31b` foi operacionalmente estavel como gerador e como juiz, mas produziu `10/10` em toda a bateria tanto no cenario `gemma4 -> gemma4` quanto no cenario `gpt-5.4-nano -> gemma4`, sugerindo um perfil de julgamento excessivamente leniente.
 - Criterios de aceite:
   - Ha evidencia objetiva para discutir a robustez do `LLM as a Judge`.
 
@@ -838,6 +841,7 @@ Use esta secao para anotar escolhas importantes feitas ao longo da execucao do p
 | Data | Item | Decisao | Observacoes |
 |---|---|---|---|
 | 2026-04-16 | Diretriz metodologica | Adotada a Opcao A para a avaliacao | A bateria automatizada deve espelhar o mais fielmente possivel o fluxo interativo do Open WebUI. |
+| 2026-04-17 | Uso de modelos locais como juiz | `gemma3:12b` descartado como juiz principal; `gemma4:31b` nao adotado como juiz principal | `gemma3:12b` apresentou respostas nulas em parte da bateria; `gemma4:31b` foi estavel, mas aparentou leniencia excessiva ao atribuir `10/10` em toda a bateria, inclusive quando julgou respostas de outro gerador. |
 | a preencher | a preencher | a preencher | a preencher |
 
 ## Registro de execucao
@@ -855,4 +859,7 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Variacao entre rodadas identicas quantificada | [rag_eval_20260416T232921Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T232921Z.csv:1) | Variacao observada em perguntas como `q15`, `q16`, `q18` e `q19`, indicando estabilidade operacional alta, mas sensibilidade metodologica relevante em parte do benchmark. |
 | 2026-04-17 | Consolidado automatico das 3 rodadas gerado | [scripts/summarize_eval_results.py](/workspaces/mcdia/05-iag/4-project/scripts/summarize_eval_results.py:1) | Script reutilizavel criado para comparar rodadas de avaliacao a partir dos CSVs e respectivos `run_config`. |
 | 2026-04-17 | Estabilidade inicial formalmente registrada | [stability_summary_20260417T012001Z.md](/workspaces/mcdia/05-iag/4-project/eval/results/stability_summary_20260417T012001Z.md:1) | Resumo formal com medias por rodada, variacao por pergunta e conclusao inicial de estabilidade operacional com variacao metodologica em parte do benchmark. |
+| 2026-04-17 | Rodadas controladas com juiz alternativo concluidas | [rag_eval_20260417T014653Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T014653Z.csv:1) | `gpt-5-nano -> gemma3:12b` confirmou que a troca de juiz altera o comportamento do experimento, mas revelou instabilidade operacional do `gemma3:12b`, com falhas por resposta nula em `q12`, `q14` e `q15`. |
+| 2026-04-17 | Testes com `gemma4:31b` como gerador e juiz concluidos | [rag_eval_20260417T022327Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T022327Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens, sugerindo boa estabilidade operacional, mas tambem possivel leniencia excessiva do juiz quando o mesmo modelo gera e julga. |
+| 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | a preencher | a preencher | a preencher | a preencher |
