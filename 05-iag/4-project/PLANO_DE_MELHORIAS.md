@@ -551,7 +551,7 @@ Transformar execucoes isoladas em historico comparavel de qualidade.
 ### Tarefa 9.1 - Consolidar comparacao entre rodadas de avaliacao
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - `eval/results/`
   - [eval-openwebui/RESULTS.md](/workspaces/mcdia/05-iag/4-project/eval-openwebui/RESULTS.md:1)
@@ -579,7 +579,7 @@ Transformar execucoes isoladas em historico comparavel de qualidade.
 ### Tarefa 9.3 - Automatizar atualizacao do relatorio de resultados
 
 - Prioridade: media
-- Status: `todo`
+- Status: `doing`
 - Implementacao:
   - Criar script como `scripts/summarize_eval_results.py`.
   - Atualizar `eval-openwebui/RESULTS.md` automaticamente.
@@ -853,4 +853,6 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-16 | Parametros experimentais padronizados como `RAG_EVAL_*` | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:463) | `RAG_EVAL_TEMPERATURE`, `RAG_EVAL_TOP_P`, `RAG_EVAL_MAX_TOKENS` e `RAG_EVAL_SEED` foram adicionados ao `.env`, `.env.example` e README como defaults da bateria, sem confundir configuracao experimental com configuracao global do Open WebUI. |
 | 2026-04-17 | Tres rodadas completas para analise inicial de estabilidade | [rag_eval_20260416T172816Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T172816Z.csv:1) | Rodadas completas: `172816Z` media 9.15, `182240Z` media 9.55 e `232921Z` media 9.35; todas com 20/20 perguntas `ok` e mesma configuracao experimental versionada. |
 | 2026-04-17 | Variacao entre rodadas identicas quantificada | [rag_eval_20260416T232921Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260416T232921Z.csv:1) | Variacao observada em perguntas como `q15`, `q16`, `q18` e `q19`, indicando estabilidade operacional alta, mas sensibilidade metodologica relevante em parte do benchmark. |
+| 2026-04-17 | Consolidado automatico das 3 rodadas gerado | [scripts/summarize_eval_results.py](/workspaces/mcdia/05-iag/4-project/scripts/summarize_eval_results.py:1) | Script reutilizavel criado para comparar rodadas de avaliacao a partir dos CSVs e respectivos `run_config`. |
+| 2026-04-17 | Estabilidade inicial formalmente registrada | [stability_summary_20260417T012001Z.md](/workspaces/mcdia/05-iag/4-project/eval/results/stability_summary_20260417T012001Z.md:1) | Resumo formal com medias por rodada, variacao por pergunta e conclusao inicial de estabilidade operacional com variacao metodologica em parte do benchmark. |
 | a preencher | a preencher | a preencher | a preencher |
