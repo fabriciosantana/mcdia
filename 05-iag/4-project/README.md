@@ -47,7 +47,6 @@ Scripts de preparação de dados para importação no Open WebUI disponível em 
 │   ├── RUBRIC.md
 │   └── discursos_questions.json
 ├── knowledge_openwebui/
-│   └── README_IMPORT.md
 └── scripts/
     ├── build_openwebui_knowledge_from_hf.py
     ├── import_batches_to_openwebui.py
@@ -65,7 +64,6 @@ flowchart LR
     subgraph Runtime
         W
         C[ChromaDB]
-        D[Docling]
     end
 
     subgraph Providers
@@ -86,7 +84,6 @@ flowchart LR
     I --> W
 
     W --> C
-    W --> D
     W --> O
     W --> A
 
@@ -138,7 +135,6 @@ flowchart TD
 
 - `open-webui`: interface, API e orquestração do RAG
 - `chromadb`: persistência vetorial
-- `docling`: processamento de documentos dentro do fluxo do Open WebUI
 
 ### Parâmetros principais usados no projeto
 
@@ -194,7 +190,6 @@ cp .env.example .env
 |---|---|
 | `OPENAI_API_KEY` | geração de respostas via OpenAI |
 | `OPENAI_MODEL` | modelo usado para geração |
-| `DOCLING_MAX_WORKERS` | número de workers do serviço Docling |
 | `RAG_EMBEDDING_ENGINE` | `ollama` ou `openai` |
 | `RAG_EMBEDDING_MODEL` | modelo de embedding |
 | `RAG_OPENAI_API_KEY` | embeddings via OpenAI |
@@ -331,14 +326,12 @@ Como o `docker-compose.yaml` usa `network_mode: host`, os serviços ficam expost
 
 - Open WebUI: `http://localhost:8080`
 - ChromaDB: `http://localhost:8000`
-- Docling: `http://localhost:5001`
 
 Para acompanhar logs:
 
 ```bash
 docker compose logs -f open-webui
 docker compose logs -f chromadb
-docker compose logs -f docling
 ```
 
 Para parar:
@@ -510,14 +503,11 @@ python scripts/import_batches_to_openwebui.py \
 - [`scripts/build_manual_validation_sample.py`](/workspaces/mcdia/05-iag/4-project/scripts/build_manual_validation_sample.py)
 - [`scripts/summarize_eval_results.py`](/workspaces/mcdia/05-iag/4-project/scripts/summarize_eval_results.py)
 
-### 14.1 Protocolo oficial reproduzível
+### 14.1 Protocolo reproduzível
 
-O protocolo oficial desta fase do projeto adota a **Opção A**:
-
-- a bateria automatizada deve espelhar o mais fielmente possível o fluxo interativo do Open WebUI;
 - o `run_rag_eval.py` usa por padrão `--answer-prompt-role=none`;
-- nesse modo, o script envia apenas a pergunta e a `collection`, deixando o servidor aplicar o `RAG_TEMPLATE` configurado no Open WebUI;
-- o arquivo [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1) é mantido como referência versionada do template RAG esperado no servidor.
+- nesse modo, o script envia apenas a pergunta e a `collection`, deixando o Open WebUI aplicar o template RAG configurado no servidor;
+- o arquivo [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1) é mantido como referência versionada do template esperado no Open WebUI.
 
 ### 14.2 Pré-condições para uma rodada válida
 
@@ -525,7 +515,7 @@ Antes de executar uma rodada que será usada em comparação metodológica:
 
 1. confirme que o Open WebUI está acessível em `OPENWEBUI_URL`;
 2. confirme que a knowledge base correta existe e está indexada;
-3. confirme que o `RAG_TEMPLATE` ativo no Open WebUI corresponde a [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1);
+3. confirme que o template RAG ativo no Open WebUI corresponde a [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md:1);
 4. confirme que o conjunto de perguntas e a rubrica são os arquivos versionados do repositório;
 5. mantenha estáveis os parâmetros experimentais `RAG_EVAL_*`, quando usados.
 
