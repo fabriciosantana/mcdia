@@ -424,6 +424,7 @@ Saídas esperadas:
 - `knowledge_openwebui/discursos_chunks.jsonl`
 - `knowledge_openwebui/build_metadata.json`
 - `knowledge_openwebui/md_batches/batch_00001.md` ... `batch_00120.md`
+- `knowledge_openwebui/import_summary_<timestamp>.json`, apos execucoes do importador
 
 Para teste rápido:
 
@@ -467,6 +468,8 @@ python scripts/import_batches_to_openwebui.py \
   --knowledge-id <knowledge_id> \
   --pattern 'knowledge_openwebui/md_batches/batch_*.md'
 ```
+
+Cada execucao do importador registra progresso via `logging` e salva um resumo operacional em `knowledge_openwebui/import_summary_<timestamp>.json`, com contagens de arquivos importados/falhos, filtros aplicados e duracao por batch.
 
 ### 13.5 Retomar de um lote específico
 

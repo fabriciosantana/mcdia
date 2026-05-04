@@ -104,3 +104,60 @@ def test_start_from_filter_semantics_match_main_sorting():
     assert [p.name for p in file_paths if p.name >= "batch_00002.md"] == [
         "batch_00003.md"
     ]
+
+
+def test_build_import_summary_aggregates_counts_selection_and_timings(tmp_path):
+    selected_files = [
+        tmp_path / "batch_00002.md",
+        tmp_path / "batch_00003.md",
+    ]
+    rows = [
+        {
+            "file_name": "batch_00002.md",
+            "status": "imported",
+            "file_id": "file-1",
+            "duration_seconds": 2.0,
+            "error": "",
+        },
+        {
+            "file_name": "batch_00003.md",
+            "status": "failed",
+            "file_id": "file-2",
+            "duration_seconds": 4.5,
+            "error": "timeout",
+        },
+    ]
+
+    summary = importer.build_import_summary(
+        executed_at_utc="20260504T000000Z",
+        finished_at_utc="20260504T000010Z",
+        duration_seconds=10.1234,
+        base_url="http://webui",
+        knowledge_id="kid",
+        pattern="knowledge_openwebui/md_batches/batch_*.md",
+        start_from="batch_00002.md",
+        limit=2,
+        total_matched_files=3,
+        skipped_by_start_from=1,
+        selected_files=selected_files,
+        rows=rows,
+        summary_path=tmp_path / "import_summary.json",
+    )
+
+    assert summary["duration_seconds"] == 10.123
+    assert summary["selection"] == {
+        "pattern": "knowledge_openwebui/md_batches/batch_*.md",
+        "start_from": "batch_00002.md",
+        "limit": 2,
+        "total_matched_files": 3,
+        "selected_files": 2,
+        "skipped_by_start_from": 1,
+    }
+    assert summary["files"] == {"imported": 1, "failed": 1, "attempted": 2}
+    assert summary["timing"]["file_duration_seconds"] == {
+        "min": 2.0,
+        "avg": 3.25,
+        "max": 4.5,
+    }
+    assert summary["file_results"][1]["error"] == "timeout"
+    assert summary["artifacts"]["import_summary"].endswith("import_summary.json")
