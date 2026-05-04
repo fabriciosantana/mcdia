@@ -184,15 +184,14 @@ Proteger o nucleo do projeto contra regressao em parsing, chunking, importacao e
 
 **Status geral**
 
-- Status: `todo`
-- Responsavel: a definir
-- Bloqueios/Dependencias:
-  - definicao do framework de testes
+- Status: `done`
+- Responsavel: Codex
+- Bloqueios/Dependencias: nenhum
 
 ### Tarefa 2.1 - Criar suite de testes para o builder
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/build_openwebui_knowledge_from_hf.py](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py:12)
   - novo diretorio sugerido: `tests/`
@@ -207,6 +206,9 @@ Proteger o nucleo do projeto contra regressao em parsing, chunking, importacao e
   - texto longo com overlap
   - fallback de `TextoDiscursoIntegral` para `Resumo`
   - ausencia total de texto
+- Resultado observado:
+  - Foi criada uma suite `pytest` para os helpers do builder em `tests/test_build_openwebui_knowledge_from_hf.py`.
+  - A cobertura inicial valida normalizacao de texto, chunking com overlap, rejeicao de overlap invalido, selecao preferencial de texto e fallback para `Resumo`/`Indexacao`.
 - Criterios de aceite:
   - Os principais helpers do builder estao cobertos.
   - Casos de borda mais provaveis passam em ambiente limpo.
@@ -214,7 +216,7 @@ Proteger o nucleo do projeto contra regressao em parsing, chunking, importacao e
 ### Tarefa 2.2 - Criar suite de testes para o avaliador
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:69)
 - Cobertura minima:
@@ -228,13 +230,16 @@ Proteger o nucleo do projeto contra regressao em parsing, chunking, importacao e
   - resposta JSON com lixo antes/depois
   - score invalido
   - score fora da faixa `0-2`
+- Resultado observado:
+  - Foi criada uma suite `pytest` para os helpers do avaliador em `tests/test_run_rag_eval.py`.
+  - A cobertura inicial valida extracao de respostas, parsing de JSON com texto antes/depois, coercao da escala `0-2`, preenchimento de templates e montagem de mensagens por modo de prompt.
 - Criterios de aceite:
   - O parser de avaliacao se comporta de forma previsivel em respostas imperfeitas do juiz.
 
 ### Tarefa 2.3 - Criar testes para o importador
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/import_batches_to_openwebui.py](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py:30)
 - Cobertura minima:
@@ -245,18 +250,26 @@ Proteger o nucleo do projeto contra regressao em parsing, chunking, importacao e
 - Implementacao:
   - Usar mocks para chamadas HTTP.
   - Evitar dependencia de instancias reais do Open WebUI nos testes.
+- Resultado observado:
+  - Foi criada uma suite `pytest` para helpers do importador em `tests/test_import_batches_to_openwebui.py`.
+  - A cobertura inicial valida carregamento de `.env`, preservacao de variaveis ja definidas, filtro semantico de `--start-from`, deteccao de rate limit da OpenAI e retry com mocks, sem depender de instancia real do Open WebUI.
 - Criterios de aceite:
   - O fluxo de retry e os filtros de arquivos podem ser validados localmente.
 
 ### Tarefa 2.4 - Integrar execucao dos testes ao fluxo normal
 
 - Prioridade: media
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - `Makefile` ou README
 - Implementacao:
   - Adicionar comando padrao `pytest`.
   - Opcionalmente criar alvo `make test`.
+- Resultado observado:
+  - Foi adicionado `pytest==9.0.2` ao `requirements.txt`.
+  - Foi criado `pytest.ini` para padronizar descoberta da suite.
+  - O README passou a documentar `pytest` como comando padrao de validacao local.
+  - A suite inicial executou com `25 passed`.
 - Criterios de aceite:
   - Existe um comando unico para rodar a suite.
 
@@ -903,6 +916,7 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Rodadas controladas com juiz alternativo concluidas | [rag_eval_20260417T014653Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T014653Z.csv:1) | `gpt-5-nano -> gemma3:12b` confirmou que a troca de juiz altera o comportamento do experimento, mas revelou instabilidade operacional do `gemma3:12b`, com falhas por resposta nula em `q12`, `q14` e `q15`. |
 | 2026-04-17 | Testes com `gemma4:31b` como gerador e juiz concluidos | [rag_eval_20260417T022327Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T022327Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens, sugerindo boa estabilidade operacional, mas tambem possivel leniencia excessiva do juiz quando o mesmo modelo gera e julga. |
 | 2026-05-04 | Metadados de geracao corrigidos para o workspace atual | [knowledge_openwebui/build_metadata.json](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json:1) | Builder atualizado para gravar caminhos absolutos atuais e caminhos relativos portaveis; artefatos regenerados com `23806` chunks e `120` batches Markdown. |
+| 2026-05-04 | Suite inicial de testes automatizados criada | [pytest.ini](/workspaces/mcdia/05-iag/4-project/pytest.ini:1) | Criados testes para builder, avaliador e importador em `tests/`; `pytest==9.0.2` adicionado ao `requirements.txt`; validacao executada com `25 passed` e `pip install --dry-run -r requirements.txt`. |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |

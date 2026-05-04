@@ -175,6 +175,14 @@ Arquivo oficial de dependências:
 
 - [`requirements.txt`](/workspaces/mcdia/05-iag/4-project/requirements.txt:1)
 
+### Testes automatizados
+
+Para validar os helpers dos scripts sem depender de serviços externos:
+
+```bash
+pytest
+```
+
 ## 8. Configuração do ambiente
 
 Crie o arquivo `.env`:

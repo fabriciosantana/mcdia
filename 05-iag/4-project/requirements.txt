@@ -2,4 +2,5 @@ chromadb==1.5.5
 huggingface_hub==1.8.0
 pandas==3.0.2
 pyarrow==23.0.1
+pytest==9.0.2
 requests==2.33.1
