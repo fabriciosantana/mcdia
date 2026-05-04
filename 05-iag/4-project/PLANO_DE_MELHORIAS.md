@@ -47,7 +47,7 @@ Garantir que qualquer pessoa consiga reconstruir a base, importar os artefatos e
 ### Tarefa 1.1 - Corrigir metadados de geracao para refletirem o workspace atual
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/build_openwebui_knowledge_from_hf.py](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py:72)
   - [knowledge_openwebui/build_metadata.json](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json:1)
@@ -58,6 +58,10 @@ Garantir que qualquer pessoa consiga reconstruir a base, importar os artefatos e
   - Gravar caminhos absolutos corretos do ambiente atual.
   - Adicionar tambem caminhos relativos ao diretorio do projeto, para facilitar portabilidade.
   - Regenerar os artefatos apos o ajuste.
+- Resultado observado:
+  - O builder passou a registrar `project_root`, caminhos absolutos do workspace atual e caminhos relativos portaveis para o JSONL e o diretorio de batches Markdown.
+  - O `build_metadata.json` foi regenerado e deixou de apontar para `/workspaces/mcdia/05-iag/2-rag/...`.
+  - A regeneracao manteve as contagens esperadas: `15729` linhas de entrada, `15726` linhas escritas, `3` linhas puladas, `23806` chunks e `120` batches Markdown.
 - Criterios de aceite:
   - `build_metadata.json` aponta apenas para caminhos do repositorio atual.
   - O arquivo inclui caminhos relativos ou outra forma portavel de referencia.
@@ -898,6 +902,7 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Estabilidade inicial formalmente registrada | [stability_summary_20260417T012001Z.md](/workspaces/mcdia/05-iag/4-project/eval/results/stability_summary_20260417T012001Z.md:1) | Resumo formal com medias por rodada, variacao por pergunta e conclusao inicial de estabilidade operacional com variacao metodologica em parte do benchmark. |
 | 2026-04-17 | Rodadas controladas com juiz alternativo concluidas | [rag_eval_20260417T014653Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T014653Z.csv:1) | `gpt-5-nano -> gemma3:12b` confirmou que a troca de juiz altera o comportamento do experimento, mas revelou instabilidade operacional do `gemma3:12b`, com falhas por resposta nula em `q12`, `q14` e `q15`. |
 | 2026-04-17 | Testes com `gemma4:31b` como gerador e juiz concluidos | [rag_eval_20260417T022327Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T022327Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens, sugerindo boa estabilidade operacional, mas tambem possivel leniencia excessiva do juiz quando o mesmo modelo gera e julga. |
+| 2026-05-04 | Metadados de geracao corrigidos para o workspace atual | [knowledge_openwebui/build_metadata.json](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json:1) | Builder atualizado para gravar caminhos absolutos atuais e caminhos relativos portaveis; artefatos regenerados com `23806` chunks e `120` batches Markdown. |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |

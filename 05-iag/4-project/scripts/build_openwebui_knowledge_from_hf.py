@@ -9,6 +9,9 @@ import pandas as pd
 from huggingface_hub import hf_hub_download, list_repo_files
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
 def normalize_text(text: str) -> str:
     text = (text or "").replace("\u00a0", " ")
     text = re.sub(r"\s+", " ", text).strip()
@@ -67,6 +70,13 @@ def resolve_parquet_path(repo_id: str, parquet_rel_path: str | None) -> Path:
     return Path(
         hf_hub_download(repo_id=repo_id, repo_type="dataset", filename=parquet_files[0])
     )
+
+
+def relative_to_project(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(PROJECT_ROOT))
+    except ValueError:
+        return ""
 
 
 def main() -> None:
@@ -131,10 +141,7 @@ def main() -> None:
     batch_index = 1
     chunk_in_batch = 0
     md_file = (md_dir / f"batch_{batch_index:05d}.md").open("w", encoding="utf-8")
-    md_file.write(
-        "# Discursos Senado - Knowledge Batch 1\n\n"
-        "Generated for OpenWebUI Knowledge ingestion.\n\n"
-    )
+    md_file.write("# Discursos Senado - Knowledge Batch 1\n\n")
 
     with jsonl_path.open("w", encoding="utf-8") as jf:
         for _, row in df.iterrows():
@@ -192,10 +199,7 @@ def main() -> None:
                     md_file = (md_dir / f"batch_{batch_index:05d}.md").open(
                         "w", encoding="utf-8"
                     )
-                    md_file.write(
-                        f"# Discursos Senado - Knowledge Batch {batch_index}\n\n"
-                        "Generated for OpenWebUI Knowledge ingestion.\n\n"
-                    )
+                    md_file.write(f"# Discursos Senado - Knowledge Batch {batch_index}\n\n")
 
                 md_file.write(f"## Chunk {chunk_id}\n")
                 md_file.write(f"- Data: {escape_md(data)}\n")
@@ -224,6 +228,7 @@ def main() -> None:
     metadata = {
         "repo_id": args.repo_id,
         "parquet_local_path": str(parquet_path),
+        "project_root": str(PROJECT_ROOT),
         "total_input_rows": total_input_rows,
         "written_rows": written_rows,
         "skipped_rows": skipped_rows,
@@ -235,7 +240,9 @@ def main() -> None:
         if total_chunks
         else 0,
         "jsonl_path": str(jsonl_path),
+        "jsonl_path_relative": relative_to_project(jsonl_path),
         "markdown_dir": str(md_dir),
+        "markdown_dir_relative": relative_to_project(md_dir),
     }
     metadata_path.write_text(
         json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8"
