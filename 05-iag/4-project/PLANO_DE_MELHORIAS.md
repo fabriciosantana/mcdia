@@ -288,7 +288,7 @@ Melhorar visibilidade sobre tempos, falhas, volume processado e resultados por e
 ### Tarefa 3.1 - Substituir `print` por logging estruturado nos scripts
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `doing`
 - Arquivos principais:
   - [scripts/import_batches_to_openwebui.py](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py:160)
   - [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:281)
@@ -302,11 +302,14 @@ Melhorar visibilidade sobre tempos, falhas, volume processado e resultados por e
 - Criterios de aceite:
   - Logs ficam legiveis e consistentes.
   - Falhas podem ser localizadas sem inspecionar o codigo.
+- Resultado parcial:
+  - O `scripts/run_rag_eval.py` passou a usar `logging` para progresso, retries e falhas.
+  - Ainda falta aplicar a mesma padronizacao ao importador.
 
 ### Tarefa 3.2 - Registrar duracao por etapa e resumo final
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `doing`
 - Implementacao:
   - Medir inicio e fim da execucao total.
   - Medir tempo por arquivo importado.
@@ -316,6 +319,10 @@ Melhorar visibilidade sobre tempos, falhas, volume processado e resultados por e
 - Criterios de aceite:
   - Cada execucao gera um resumo reutilizavel.
   - O tempo total e os gargalos ficam visiveis.
+- Resultado parcial:
+  - O avaliador passou a registrar `duration_seconds` por pergunta no JSONL/CSV.
+  - Cada rodada do avaliador passa a gerar `eval/results/*.run_summary.json` com contagens, estatisticas de nota, tempos e ponteiros para os artefatos da rodada.
+  - Ainda falta medir tempo por arquivo importado no importador.
 
 ### Tarefa 3.3 - Padronizar saidas de artefatos operacionais
 
@@ -917,6 +924,7 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Testes com `gemma4:31b` como gerador e juiz concluidos | [rag_eval_20260417T022327Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T022327Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens, sugerindo boa estabilidade operacional, mas tambem possivel leniencia excessiva do juiz quando o mesmo modelo gera e julga. |
 | 2026-05-04 | Metadados de geracao corrigidos para o workspace atual | [knowledge_openwebui/build_metadata.json](/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json:1) | Builder atualizado para gravar caminhos absolutos atuais e caminhos relativos portaveis; artefatos regenerados com `23806` chunks e `120` batches Markdown. |
 | 2026-05-04 | Suite inicial de testes automatizados criada | [pytest.ini](/workspaces/mcdia/05-iag/4-project/pytest.ini:1) | Criados testes para builder, avaliador e importador em `tests/`; `pytest==9.0.2` adicionado ao `requirements.txt`; validacao executada com `25 passed` e `pip install --dry-run -r requirements.txt`. |
+| 2026-05-04 | Observabilidade inicial do avaliador automatizada | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:1) | Avaliador passou a usar `logging`, medir duracao por pergunta, salvar `duration_seconds` no JSONL/CSV e gerar `*.run_summary.json` com estatisticas da rodada e ponteiros para os artefatos. |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |

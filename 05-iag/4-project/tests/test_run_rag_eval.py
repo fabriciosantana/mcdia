@@ -5,6 +5,7 @@ import pytest
 from scripts.run_rag_eval import (
     build_generation_messages,
     build_prompt_from_template,
+    build_run_summary,
     coerce_score,
     extract_answer,
     parse_json_object,
@@ -86,3 +87,56 @@ def test_build_generation_messages_for_none_system_and_user_template_modes():
 
     with pytest.raises(ValueError, match="answer_prompt_role invalido"):
         build_generation_messages("pergunta", "prompt", "invalido")
+
+
+def test_build_run_summary_aggregates_status_scores_and_timings(tmp_path):
+    rows = [
+        {
+            "id": "q1",
+            "category": "controle",
+            "status": "ok",
+            "total_score": 8,
+            "duration_seconds": 1.2345,
+        },
+        {
+            "id": "q2",
+            "category": "comparacao",
+            "status": "error: timeout",
+            "duration_seconds": 2.0,
+        },
+        {
+            "id": "q3",
+            "category": "controle",
+            "status": "ok",
+            "total_score": 10,
+            "duration_seconds": 3.0,
+        },
+    ]
+
+    summary = build_run_summary(
+        executed_at_utc="20260504T000000Z",
+        finished_at_utc="20260504T000010Z",
+        duration_seconds=10.1234,
+        rows=rows,
+        jsonl_path=tmp_path / "run.jsonl",
+        md_path=tmp_path / "run.md",
+        csv_path=tmp_path / "run.csv",
+        config_path=tmp_path / "run.run_config.json",
+        summary_path=tmp_path / "run.run_summary.json",
+    )
+
+    assert summary["duration_seconds"] == 10.123
+    assert summary["questions"] == {"total": 3, "ok": 2, "error": 1}
+    assert summary["scores"] == {"min": 8.0, "avg": 9.0, "max": 10.0}
+    assert summary["timing"]["question_duration_seconds"] == {
+        "min": 1.234,
+        "avg": 2.078,
+        "max": 3.0,
+    }
+    assert summary["question_timings"][1] == {
+        "id": "q2",
+        "category": "comparacao",
+        "status": "error: timeout",
+        "duration_seconds": 2.0,
+    }
+    assert summary["artifacts"]["run_summary"].endswith("run.run_summary.json")

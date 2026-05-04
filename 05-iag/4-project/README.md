@@ -248,6 +248,7 @@ Saídas esperadas ao final do fluxo:
 - `eval/results/*.csv`
 - `eval/results/*.md`
 - `eval/results/*.run_config.json`
+- `eval/results/*.run_summary.json`
 - `eval/results/*.question_analysis.csv`
 - `eval/results/*.question_analysis.md`
 
@@ -618,6 +619,7 @@ Toda rodada válida deve gerar:
 - `eval/results/*.md`
 - `eval/results/*.csv`
 - `eval/results/*.run_config.json`
+- `eval/results/*.run_summary.json`
 
 Por padrão, o script também aplica a rubrica automaticamente e preenche no `.csv`:
 
@@ -627,6 +629,7 @@ Por padrão, o script também aplica a rubrica automaticamente e preenche no `.c
 - `synthesis_score`
 - `hallucination_score`
 - `total_score`
+- `duration_seconds`
 - `review_notes`
 
 Se quiser gerar apenas as respostas e deixar a pontuacao para revisao manual posterior:

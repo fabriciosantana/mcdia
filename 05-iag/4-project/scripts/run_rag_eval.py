@@ -13,6 +13,7 @@ import argparse
 import csv
 import hashlib
 import json
+import logging
 import os
 import random
 import time
@@ -22,9 +23,18 @@ from typing import Any
 
 import requests
 
+LOGGER = logging.getLogger("run_rag_eval")
+
 
 def json_dumps_compact(value: Any) -> str:
     return json.dumps(value, ensure_ascii=True, separators=(",", ":"))
+
+
+def configure_logging(verbose: bool = False) -> None:
+    logging.basicConfig(
+        level=logging.DEBUG if verbose else logging.INFO,
+        format="%(levelname)s %(message)s",
+    )
 
 
 def load_dotenv(dotenv_path: Path) -> None:
@@ -178,7 +188,13 @@ def ask_openwebui(
             if attempt > max_retries:
                 raise RuntimeError(f"Falha apos {max_retries} retries: {exc}") from exc
             sleep_seconds = initial_backoff * (2 ** (attempt - 1)) + random.uniform(0, 1)
-            print(f"  retry {attempt}/{max_retries} em {sleep_seconds:.1f}s por erro: {exc}")
+            LOGGER.warning(
+                "retry %s/%s em %.1fs por erro: %s",
+                attempt,
+                max_retries,
+                sleep_seconds,
+                exc,
+            )
             time.sleep(sleep_seconds)
 
 
@@ -274,6 +290,76 @@ def collect_knowledge_artifact_fingerprints(project_root: Path) -> dict[str, dic
 
 
 def write_run_config(path: Path, payload: dict[str, Any]) -> None:
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def summarize_numeric(values: list[float]) -> dict[str, float | None]:
+    if not values:
+        return {"min": None, "avg": None, "max": None}
+    return {
+        "min": round(min(values), 3),
+        "avg": round(sum(values) / len(values), 3),
+        "max": round(max(values), 3),
+    }
+
+
+def build_run_summary(
+    *,
+    executed_at_utc: str,
+    finished_at_utc: str,
+    duration_seconds: float,
+    rows: list[dict[str, Any]],
+    jsonl_path: Path,
+    md_path: Path,
+    csv_path: Path,
+    config_path: Path,
+    summary_path: Path,
+) -> dict[str, Any]:
+    ok_count = sum(1 for row in rows if row.get("status") == "ok")
+    error_count = len(rows) - ok_count
+    total_scores = [
+        float(row["total_score"])
+        for row in rows
+        if row.get("status") == "ok" and row.get("total_score") not in ("", None)
+    ]
+    question_durations = [
+        float(row["duration_seconds"])
+        for row in rows
+        if row.get("duration_seconds") not in ("", None)
+    ]
+    return {
+        "executed_at_utc": executed_at_utc,
+        "finished_at_utc": finished_at_utc,
+        "duration_seconds": round(duration_seconds, 3),
+        "questions": {
+            "total": len(rows),
+            "ok": ok_count,
+            "error": error_count,
+        },
+        "scores": summarize_numeric(total_scores),
+        "timing": {
+            "question_duration_seconds": summarize_numeric(question_durations),
+        },
+        "question_timings": [
+            {
+                "id": row.get("id", ""),
+                "category": row.get("category", ""),
+                "status": row.get("status", ""),
+                "duration_seconds": row.get("duration_seconds"),
+            }
+            for row in rows
+        ],
+        "artifacts": {
+            "jsonl": str(jsonl_path),
+            "markdown": str(md_path),
+            "csv": str(csv_path),
+            "run_config": str(config_path),
+            "run_summary": str(summary_path),
+        },
+    }
+
+
+def write_run_summary(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
@@ -377,6 +463,7 @@ def write_csv_template(path: Path, rows: list[dict[str, Any]]) -> None:
         "synthesis_score",
         "hallucination_score",
         "total_score",
+        "duration_seconds",
         "review_notes",
     ]
 
@@ -397,6 +484,7 @@ def write_csv_template(path: Path, rows: list[dict[str, Any]]) -> None:
                     "synthesis_score": row.get("synthesis_score", ""),
                     "hallucination_score": row.get("hallucination_score", ""),
                     "total_score": row.get("total_score", ""),
+                    "duration_seconds": row.get("duration_seconds", ""),
                     "review_notes": row.get("review_notes", ""),
                 }
             )
@@ -503,7 +591,13 @@ def main() -> int:
         default=env_int("RAG_EVAL_SEED"),
         help="Seed enviada ao modelo gerador, quando suportado. Default: usar `RAG_EVAL_SEED` se definido.",
     )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Exibe logs detalhados da execucao.",
+    )
     args = parser.parse_args()
+    configure_logging(args.verbose)
 
     project_root = Path(__file__).resolve().parents[1]
     load_dotenv(project_root / ".env")
@@ -533,6 +627,7 @@ def main() -> int:
     md_path = output_dir / f"rag_eval_{ts}.md"
     csv_path = output_dir / f"rag_eval_{ts}.csv"
     config_path = output_dir / f"rag_eval_{ts}.run_config.json"
+    summary_path = output_dir / f"rag_eval_{ts}.run_summary.json"
 
     run_config = {
         "protocol_variant": "A",
@@ -577,10 +672,12 @@ def main() -> int:
     }
     write_run_config(config_path, run_config)
 
+    run_started_monotonic = time.monotonic()
     rows: list[dict[str, Any]] = []
     with jsonl_path.open("w", encoding="utf-8") as jsonl_file:
         for index, item in enumerate(questions, start=1):
-            print(f"[{index}/{len(questions)}] {item['id']} - {item['question']}")
+            question_started_monotonic = time.monotonic()
+            LOGGER.info("[%s/%s] %s - %s", index, len(questions), item["id"], item["question"])
             try:
                 generation_messages = build_generation_messages(
                     question=item["question"],
@@ -610,7 +707,7 @@ def main() -> int:
                     "response": response,
                 }
                 if not args.no_auto_score:
-                    print(f"  avaliando com rubrica via modelo {judge_model}")
+                    LOGGER.info("avaliando %s com rubrica via modelo %s", item["id"], judge_model)
                     judge = judge_answer(
                         base_url=base_url,
                         token=token,
@@ -625,6 +722,7 @@ def main() -> int:
                     )
                     row.update(judge)
             except Exception as exc:  # noqa: BLE001
+                LOGGER.error("erro em %s: %s", item["id"], exc)
                 row = {
                     "id": item["id"],
                     "category": item["category"],
@@ -634,14 +732,42 @@ def main() -> int:
                     "response": None,
                     "review_notes": "",
                 }
+            row["duration_seconds"] = round(time.monotonic() - question_started_monotonic, 3)
             rows.append(row)
             jsonl_file.write(json_dumps_compact(row) + "\n")
             jsonl_file.flush()
-            time.sleep(args.sleep_between)
+            LOGGER.info(
+                "pergunta %s finalizada com status=%s em %.3fs",
+                row["id"],
+                row["status"],
+                row["duration_seconds"],
+            )
+            if index < len(questions) and args.sleep_between > 0:
+                time.sleep(args.sleep_between)
 
     write_markdown_summary(md_path, rows)
     write_csv_template(csv_path, rows)
-    print(f"\nResultados salvos em:\n- {jsonl_path}\n- {md_path}\n- {csv_path}\n- {config_path}")
+    finished_at_utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_summary = build_run_summary(
+        executed_at_utc=ts,
+        finished_at_utc=finished_at_utc,
+        duration_seconds=time.monotonic() - run_started_monotonic,
+        rows=rows,
+        jsonl_path=jsonl_path,
+        md_path=md_path,
+        csv_path=csv_path,
+        config_path=config_path,
+        summary_path=summary_path,
+    )
+    write_run_summary(summary_path, run_summary)
+    LOGGER.info(
+        "resultados salvos em: %s, %s, %s, %s, %s",
+        jsonl_path,
+        md_path,
+        csv_path,
+        config_path,
+        summary_path,
+    )
     return 0
 
 
