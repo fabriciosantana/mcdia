@@ -6,6 +6,11 @@
   "written_rows": 15726,
   "skipped_rows": 3,
   "total_chunks": 23806,
+  "text_source_counts": {
+    "texto_integral": 23119,
+    "resumo": 687,
+    "indexacao": 0
+  },
   "max_words": 850,
   "overlap_words": 150,
   "chunks_per_file": 200,

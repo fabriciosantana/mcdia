@@ -45,7 +45,7 @@ def test_chunk_words_rejects_overlap_greater_than_or_equal_to_max_words():
         chunk_words("um dois tres quatro cinco", max_words=3, overlap_words=3)
 
 
-def test_choose_text_prefers_integral_text():
+def test_choose_text_prefers_integral_text_and_reports_source():
     row = pd.Series(
         {
             "TextoDiscursoIntegral": " texto integral ",
@@ -54,7 +54,7 @@ def test_choose_text_prefers_integral_text():
         }
     )
 
-    assert choose_text(row) == " texto integral "
+    assert choose_text(row) == (" texto integral ", "texto_integral")
 
 
 def test_choose_text_falls_back_to_resumo_then_indexacao():
@@ -68,7 +68,7 @@ def test_choose_text_falls_back_to_resumo_then_indexacao():
                 }
             )
         )
-        == "resumo"
+        == ("resumo", "resumo")
     )
     assert (
         choose_text(
@@ -80,12 +80,15 @@ def test_choose_text_falls_back_to_resumo_then_indexacao():
                 }
             )
         )
-        == "indexacao"
+        == ("indexacao", "indexacao")
     )
 
 
 def test_choose_text_returns_empty_when_no_text_field_is_available():
-    assert choose_text(pd.Series({"TextoDiscursoIntegral": "", "Resumo": ""})) == ""
+    assert choose_text(pd.Series({"TextoDiscursoIntegral": "", "Resumo": ""})) == (
+        "",
+        "",
+    )
 
 
 def test_relative_to_project_returns_relative_path_for_repo_files():

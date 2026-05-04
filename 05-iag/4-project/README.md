@@ -426,6 +426,8 @@ Saídas esperadas:
 - `knowledge_openwebui/md_batches/batch_00001.md` ... `batch_00120.md`
 - `knowledge_openwebui/import_summary_<timestamp>.json`, apos execucoes do importador
 
+Cada registro de `discursos_chunks.jsonl` inclui `text_source`, indicando se o texto indexado veio de `texto_integral`, `resumo` ou `indexacao`. Os batches Markdown também exibem `Origem do texto`, e o `build_metadata.json` consolida `text_source_counts`.
+
 Para teste rápido:
 
 ```bash

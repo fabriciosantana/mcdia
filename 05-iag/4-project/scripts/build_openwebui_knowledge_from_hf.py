@@ -10,6 +10,11 @@ from huggingface_hub import hf_hub_download, list_repo_files
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+TEXT_SOURCE_FIELDS = [
+    ("TextoDiscursoIntegral", "texto_integral"),
+    ("Resumo", "resumo"),
+    ("Indexacao", "indexacao"),
+]
 
 
 def normalize_text(text: str) -> str:
@@ -41,13 +46,12 @@ def chunk_words(text: str, max_words: int, overlap_words: int) -> list[str]:
     return chunks
 
 
-def choose_text(row: pd.Series) -> str:
-    preferred_fields = ["TextoDiscursoIntegral", "Resumo", "Indexacao"]
-    for field in preferred_fields:
+def choose_text(row: pd.Series) -> tuple[str, str]:
+    for field, source in TEXT_SOURCE_FIELDS:
         value = row.get(field, "")
         if isinstance(value, str) and value.strip():
-            return value
-    return ""
+            return value, source
+    return "", ""
 
 
 def escape_md(value: str) -> str:
@@ -137,6 +141,7 @@ def main() -> None:
     written_rows = 0
     skipped_rows = 0
     total_chunks = 0
+    text_source_counts = {source: 0 for _, source in TEXT_SOURCE_FIELDS}
 
     batch_index = 1
     chunk_in_batch = 0
@@ -145,7 +150,8 @@ def main() -> None:
 
     with jsonl_path.open("w", encoding="utf-8") as jf:
         for _, row in df.iterrows():
-            base_text = normalize_text(choose_text(row))
+            selected_text, text_source = choose_text(row)
+            base_text = normalize_text(selected_text)
             if not base_text:
                 skipped_rows += 1
                 continue
@@ -177,7 +183,9 @@ def main() -> None:
                     "source_id": row_id,
                     "chunk_index": i,
                     "chunk_count": len(chunks),
+                    "text_source": text_source,
                     "metadata": {
+                        "text_source": text_source,
                         "data": data,
                         "nome_autor": nome_autor,
                         "partido": partido,
@@ -208,6 +216,7 @@ def main() -> None:
                 md_file.write(f"- UF: {escape_md(uf)}\n")
                 md_file.write(f"- Casa: {escape_md(casa)}\n")
                 md_file.write(f"- Tipo: {escape_md(tipo)}\n")
+                md_file.write(f"- Origem do texto: {escape_md(text_source)}\n")
                 if texto_url:
                     md_file.write(f"- Fonte: {escape_md(texto_url)}\n")
                 if resumo:
@@ -219,6 +228,7 @@ def main() -> None:
                 md_file.write("\n\n---\n\n")
 
                 total_chunks += 1
+                text_source_counts[text_source] += 1
                 chunk_in_batch += 1
 
             written_rows += 1
@@ -233,6 +243,7 @@ def main() -> None:
         "written_rows": written_rows,
         "skipped_rows": skipped_rows,
         "total_chunks": total_chunks,
+        "text_source_counts": text_source_counts,
         "max_words": args.max_words,
         "overlap_words": args.overlap_words,
         "chunks_per_file": args.chunks_per_file,

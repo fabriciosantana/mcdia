@@ -40,7 +40,7 @@ Garantir que qualquer pessoa consiga reconstruir a base, importar os artefatos e
 
 **Status geral**
 
-- Status: `todo`
+- Status: `doing`
 - Responsavel: a definir
 - Bloqueios/Dependencias: nenhum
 
@@ -354,7 +354,7 @@ Separar claramente chunks oriundos de texto integral, resumo ou indexacao para m
 ### Tarefa 4.1 - Alterar selecao de texto para retornar conteudo e origem
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/build_openwebui_knowledge_from_hf.py](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py:41)
 - Implementacao:
@@ -365,17 +365,24 @@ Separar claramente chunks oriundos de texto integral, resumo ou indexacao para m
   - Ajustar o loop principal para persistir essa informacao.
 - Criterios de aceite:
   - Todo chunk passa a carregar o campo `text_source`.
+- Resultado:
+  - `choose_text` passou a retornar o texto escolhido e a origem (`texto_integral`, `resumo` ou `indexacao`).
+  - O loop principal usa essa origem para cada chunk gerado.
 
 ### Tarefa 4.2 - Persistir origem nos artefatos gerados
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Incluir `text_source` no JSONL.
   - Incluir `Origem do texto` nos batches Markdown.
   - Atualizar documentacao dos artefatos.
 - Criterios de aceite:
   - Um revisor consegue identificar facilmente a natureza do texto indexado.
+- Resultado:
+  - O JSONL passou a incluir `text_source` no registro do chunk e nos metadados.
+  - Os batches Markdown passaram a exibir `Origem do texto`.
+  - O `build_metadata.json` passou a consolidar `text_source_counts`.
 
 ### Tarefa 4.3 - Usar a origem nas analises de qualidade
 
@@ -930,6 +937,7 @@ Use esta secao para resumir entregas realizadas.
 | 2026-05-04 | Suite inicial de testes automatizados criada | [pytest.ini](/workspaces/mcdia/05-iag/4-project/pytest.ini:1) | Criados testes para builder, avaliador e importador em `tests/`; `pytest==9.0.2` adicionado ao `requirements.txt`; validacao executada com `25 passed` e `pip install --dry-run -r requirements.txt`. |
 | 2026-05-04 | Observabilidade inicial do avaliador automatizada | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:1) | Avaliador passou a usar `logging`, medir duracao por pergunta, salvar `duration_seconds` no JSONL/CSV e gerar `*.run_summary.json` com estatisticas da rodada e ponteiros para os artefatos. |
 | 2026-05-04 | Observabilidade basica do fluxo operacional concluida | [scripts/import_batches_to_openwebui.py](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py:1) | Importador passou a usar `logging`, medir duracao por batch e gerar `knowledge_openwebui/import_summary_<timestamp>.json`; Prioridade 3 concluida com resumos padronizados para importacao e avaliacao. |
+| 2026-05-04 | Origem do conteudo indexado persistida nos artefatos | [scripts/build_openwebui_knowledge_from_hf.py](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py:1) | Builder passou a registrar `text_source` por chunk, exibir `Origem do texto` nos batches Markdown e consolidar `text_source_counts` no `build_metadata.json`; tarefas 4.1 e 4.2 concluidas. |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |
