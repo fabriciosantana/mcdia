@@ -16,6 +16,7 @@ import json
 import logging
 import os
 import random
+import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,6 +25,18 @@ from typing import Any
 import requests
 
 LOGGER = logging.getLogger("run_rag_eval")
+SPEAKER_RE = re.compile(r"\b(?:O SR\.|A SRA\.)\s+([A-ZÁÉÍÓÚÂÊÔÃÕÇ][A-ZÁÉÍÓÚÂÊÔÃÕÇ\s.'-]{2,80}?)(?:\s*\(|\s+-)")
+MARKDOWN_AUTHOR_RE = re.compile(r"^- Autor:\s*(.+)$", re.MULTILINE)
+QUESTION_NAME_RE = re.compile(
+    r"\b([A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+"
+    r"(?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+|[a-z]{2,3})){1,3})\b"
+)
+QUESTION_NAME_STOPWORDS = {
+    "Open WebUI",
+    "Senado Federal",
+    "Data Link",
+    "Fonte Link",
+}
 
 
 def json_dumps_compact(value: Any) -> str:
@@ -262,6 +275,153 @@ def build_prompt_from_template(template: str, replacements: dict[str, str]) -> s
     return prompt
 
 
+def normalize_author_name(value: str) -> str:
+    return " ".join(value.replace(".", " ").split()).title()
+
+
+def normalize_for_match(value: str) -> str:
+    normalized = value.lower()
+    replacements = {
+        "á": "a",
+        "à": "a",
+        "â": "a",
+        "ã": "a",
+        "é": "e",
+        "ê": "e",
+        "í": "i",
+        "ó": "o",
+        "ô": "o",
+        "õ": "o",
+        "ú": "u",
+        "ç": "c",
+    }
+    for source, target in replacements.items():
+        normalized = normalized.replace(source, target)
+    return " ".join(normalized.split())
+
+
+def extract_question_author_candidates(question: str) -> list[str]:
+    candidates: set[str] = set()
+    for match in QUESTION_NAME_RE.findall(question):
+        candidate = normalize_author_name(match)
+        if candidate in QUESTION_NAME_STOPWORDS:
+            continue
+        candidates.add(candidate)
+    return sorted(candidates)
+
+
+def extract_author_mentions_from_text(text: str) -> list[str]:
+    authors: set[str] = set()
+    for match in MARKDOWN_AUTHOR_RE.findall(text):
+        author = normalize_author_name(match)
+        if author:
+            authors.add(author)
+    for match in SPEAKER_RE.findall(text):
+        author = normalize_author_name(match)
+        if author and author not in {"Presidente", "Orador"}:
+            authors.add(author)
+    return sorted(authors)
+
+
+def iter_source_metadata(source: dict[str, Any]) -> list[dict[str, Any]]:
+    metadata = source.get("metadata")
+    if isinstance(metadata, list):
+        return [item for item in metadata if isinstance(item, dict)]
+    if isinstance(metadata, dict):
+        return [metadata]
+    return []
+
+
+def extract_retrieval_signals(response: Any, question: str) -> dict[str, Any]:
+    if not isinstance(response, dict):
+        return {
+            "retrieval_source_entries": 0,
+            "retrieval_chunk_count": 0,
+            "retrieval_unique_file_count": 0,
+            "retrieval_unique_files": [],
+            "retrieval_score_count": 0,
+            "retrieval_avg_score": None,
+            "retrieval_links_present": False,
+            "retrieval_author_mentions": [],
+            "retrieval_author_count": 0,
+            "retrieval_expected_authors": [],
+            "retrieval_has_expected_author": "unknown",
+            "retrieval_author_mix_risk": "unknown",
+        }
+
+    source_entries = 0
+    chunk_count = 0
+    unique_files: set[str] = set()
+    scores: list[float] = []
+    links_present = False
+    author_mentions: set[str] = set()
+
+    for source in response.get("sources", []):
+        if not isinstance(source, dict):
+            continue
+        source_entries += 1
+        document = source.get("document")
+        documents = document if isinstance(document, list) else [document] if isinstance(document, str) else []
+        chunk_count += len(documents)
+        for document_text in documents:
+            if "http://" in document_text or "https://" in document_text:
+                links_present = True
+            author_mentions.update(extract_author_mentions_from_text(document_text))
+
+        for item in iter_source_metadata(source):
+            file_name = item.get("name") or item.get("source") or item.get("file_id")
+            if file_name:
+                unique_files.add(str(file_name))
+            score = item.get("score")
+            if isinstance(score, (int, float)):
+                scores.append(float(score))
+            metadata_text = json.dumps(item, ensure_ascii=False)
+            if "http://" in metadata_text or "https://" in metadata_text:
+                links_present = True
+
+    expected_authors = extract_question_author_candidates(question)
+    normalized_question = normalize_for_match(question)
+    expected_authors = [
+        author
+        for author in expected_authors
+        if normalize_for_match(author) in normalized_question
+    ]
+    normalized_mentions = [normalize_for_match(author) for author in author_mentions]
+    if expected_authors:
+        has_expected_author = any(
+            normalize_for_match(expected) in mention or mention in normalize_for_match(expected)
+            for expected in expected_authors
+            for mention in normalized_mentions
+        )
+        expected_author_flag = "yes" if has_expected_author else "no"
+    else:
+        expected_author_flag = "unknown"
+
+    if len(author_mentions) >= 3:
+        author_mix_risk = "high"
+    elif len(author_mentions) == 2:
+        author_mix_risk = "medium"
+    elif len(author_mentions) == 1:
+        author_mix_risk = "low"
+    else:
+        author_mix_risk = "unknown"
+
+    return {
+        "retrieval_source_entries": source_entries,
+        "retrieval_chunk_count": chunk_count,
+        "retrieval_unique_file_count": len(unique_files),
+        "retrieval_unique_files": sorted(unique_files),
+        "retrieval_score_count": len(scores),
+        "retrieval_avg_score": round(sum(scores) / len(scores), 4) if scores else None,
+        "retrieval_links_present": links_present,
+        "retrieval_author_mentions": sorted(author_mentions),
+        "retrieval_author_count": len(author_mentions),
+        "retrieval_expected_authors": expected_authors,
+        "retrieval_has_expected_author": expected_author_flag,
+        "retrieval_author_mix_risk": author_mix_risk,
+    }
+
+
 def collect_knowledge_artifact_fingerprints(project_root: Path) -> dict[str, dict[str, Any]]:
     candidates = {
         "build_metadata": project_root / "knowledge_openwebui" / "build_metadata.json",
@@ -327,6 +487,25 @@ def build_run_summary(
         for row in rows
         if row.get("duration_seconds") not in ("", None)
     ]
+    retrieval_chunk_counts = [
+        float(row["retrieval_chunk_count"])
+        for row in rows
+        if row.get("retrieval_chunk_count") not in ("", None)
+    ]
+    retrieval_file_counts = [
+        float(row["retrieval_unique_file_count"])
+        for row in rows
+        if row.get("retrieval_unique_file_count") not in ("", None)
+    ]
+    expected_author_counts = {
+        "yes": sum(1 for row in rows if row.get("retrieval_has_expected_author") == "yes"),
+        "no": sum(1 for row in rows if row.get("retrieval_has_expected_author") == "no"),
+        "unknown": sum(1 for row in rows if row.get("retrieval_has_expected_author") == "unknown"),
+    }
+    author_mix_risk_counts = {
+        label: sum(1 for row in rows if row.get("retrieval_author_mix_risk") == label)
+        for label in ("low", "medium", "high", "unknown")
+    }
     return {
         "executed_at_utc": executed_at_utc,
         "finished_at_utc": finished_at_utc,
@@ -339,6 +518,12 @@ def build_run_summary(
         "scores": summarize_numeric(total_scores),
         "timing": {
             "question_duration_seconds": summarize_numeric(question_durations),
+        },
+        "retrieval": {
+            "chunk_count": summarize_numeric(retrieval_chunk_counts),
+            "unique_file_count": summarize_numeric(retrieval_file_counts),
+            "has_expected_author": expected_author_counts,
+            "author_mix_risk": author_mix_risk_counts,
         },
         "question_timings": [
             {
@@ -443,6 +628,16 @@ def write_markdown_summary(path: Path, rows: list[dict[str, Any]]) -> None:
                 f"confianca={row['hallucination_score']} | "
                 f"total={row['total_score']}"
             )
+        lines.append("")
+        lines.append(
+            "**Retrieval**: "
+            f"sources={row.get('retrieval_source_entries', 0)} | "
+            f"chunks={row.get('retrieval_chunk_count', 0)} | "
+            f"arquivos={row.get('retrieval_unique_file_count', 0)} | "
+            f"autores={row.get('retrieval_author_count', 0)} | "
+            f"autor_esperado={row.get('retrieval_has_expected_author', 'unknown')} | "
+            f"risco_mistura_autores={row.get('retrieval_author_mix_risk', 'unknown')}"
+        )
         if row.get("review_notes"):
             lines.append("")
             lines.append(f"**Notas de revisao**: {row['review_notes']}")
@@ -464,6 +659,18 @@ def write_csv_template(path: Path, rows: list[dict[str, Any]]) -> None:
         "hallucination_score",
         "total_score",
         "duration_seconds",
+        "retrieval_source_entries",
+        "retrieval_chunk_count",
+        "retrieval_unique_file_count",
+        "retrieval_unique_files",
+        "retrieval_score_count",
+        "retrieval_avg_score",
+        "retrieval_links_present",
+        "retrieval_author_count",
+        "retrieval_author_mentions",
+        "retrieval_expected_authors",
+        "retrieval_has_expected_author",
+        "retrieval_author_mix_risk",
         "review_notes",
     ]
 
@@ -485,6 +692,18 @@ def write_csv_template(path: Path, rows: list[dict[str, Any]]) -> None:
                     "hallucination_score": row.get("hallucination_score", ""),
                     "total_score": row.get("total_score", ""),
                     "duration_seconds": row.get("duration_seconds", ""),
+                    "retrieval_source_entries": row.get("retrieval_source_entries", ""),
+                    "retrieval_chunk_count": row.get("retrieval_chunk_count", ""),
+                    "retrieval_unique_file_count": row.get("retrieval_unique_file_count", ""),
+                    "retrieval_unique_files": "; ".join(row.get("retrieval_unique_files", [])),
+                    "retrieval_score_count": row.get("retrieval_score_count", ""),
+                    "retrieval_avg_score": row.get("retrieval_avg_score", ""),
+                    "retrieval_links_present": row.get("retrieval_links_present", ""),
+                    "retrieval_author_count": row.get("retrieval_author_count", ""),
+                    "retrieval_author_mentions": "; ".join(row.get("retrieval_author_mentions", [])),
+                    "retrieval_expected_authors": "; ".join(row.get("retrieval_expected_authors", [])),
+                    "retrieval_has_expected_author": row.get("retrieval_has_expected_author", ""),
+                    "retrieval_author_mix_risk": row.get("retrieval_author_mix_risk", ""),
                     "review_notes": row.get("review_notes", ""),
                 }
             )
@@ -698,6 +917,7 @@ def main() -> int:
                     seed=args.seed,
                 )
                 answer = extract_answer(response)
+                retrieval_signals = extract_retrieval_signals(response, item["question"])
                 row = {
                     "id": item["id"],
                     "category": item["category"],
@@ -706,6 +926,7 @@ def main() -> int:
                     "status": "ok",
                     "response": response,
                 }
+                row.update(retrieval_signals)
                 if not args.no_auto_score:
                     LOGGER.info("avaliando %s com rubrica via modelo %s", item["id"], judge_model)
                     judge = judge_answer(
@@ -732,6 +953,7 @@ def main() -> int:
                     "response": None,
                     "review_notes": "",
                 }
+                row.update(extract_retrieval_signals(None, item["question"]))
             row["duration_seconds"] = round(time.monotonic() - question_started_monotonic, 3)
             rows.append(row)
             jsonl_file.write(json_dumps_compact(row) + "\n")

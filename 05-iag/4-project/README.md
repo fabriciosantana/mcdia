@@ -635,7 +635,17 @@ Por padrão, o script também aplica a rubrica automaticamente e preenche no `.c
 - `hallucination_score`
 - `total_score`
 - `duration_seconds`
+- `retrieval_source_entries`
+- `retrieval_chunk_count`
+- `retrieval_unique_file_count`
+- `retrieval_avg_score`
+- `retrieval_links_present`
+- `retrieval_author_count`
+- `retrieval_has_expected_author`
+- `retrieval_author_mix_risk`
 - `review_notes`
+
+Os campos `retrieval_*` separam sinais de recuperacao do contexto das metricas de qualidade da resposta. Eles usam heuristicas simples sobre o payload `sources` do Open WebUI, incluindo quantidade de chunks, arquivos-fonte, scores, links e possiveis autores presentes no contexto recuperado.
 
 Se quiser gerar apenas as respostas e deixar a pontuacao para revisao manual posterior:
 

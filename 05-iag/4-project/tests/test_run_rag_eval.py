@@ -7,7 +7,9 @@ from scripts.run_rag_eval import (
     build_prompt_from_template,
     build_run_summary,
     coerce_score,
+    extract_author_mentions_from_text,
     extract_answer,
+    extract_retrieval_signals,
     parse_json_object,
 )
 
@@ -87,6 +89,60 @@ def test_build_generation_messages_for_none_system_and_user_template_modes():
 
     with pytest.raises(ValueError, match="answer_prompt_role invalido"):
         build_generation_messages("pergunta", "prompt", "invalido")
+
+
+def test_extract_author_mentions_from_retrieved_text():
+    text = "\n".join(
+        [
+            "- Autor: Paulo Paim",
+            "O SR. CONFUCIO MOURA (MDB-RO. Para discursar.) - texto",
+        ]
+    )
+
+    assert extract_author_mentions_from_text(text) == ["Confucio Moura", "Paulo Paim"]
+
+
+def test_extract_retrieval_signals_counts_sources_files_scores_and_authors():
+    payload = {
+        "sources": [
+            {
+                "document": [
+                    "- Autor: Paulo Paim\nTexto com https://example.test/fonte",
+                    "O SR. CONFUCIO MOURA (MDB-RO. Para discursar.) - texto",
+                ],
+                "metadata": [
+                    {"name": "batch_00001.md", "score": 0.5},
+                    {"name": "batch_00002.md", "score": 0.7},
+                ],
+            }
+        ]
+    }
+
+    signals = extract_retrieval_signals(
+        payload,
+        "O que Paulo Paim afirma sobre previdencia?",
+    )
+
+    assert signals["retrieval_source_entries"] == 1
+    assert signals["retrieval_chunk_count"] == 2
+    assert signals["retrieval_unique_file_count"] == 2
+    assert signals["retrieval_unique_files"] == ["batch_00001.md", "batch_00002.md"]
+    assert signals["retrieval_score_count"] == 2
+    assert signals["retrieval_avg_score"] == 0.6
+    assert signals["retrieval_links_present"] is True
+    assert signals["retrieval_author_mentions"] == ["Confucio Moura", "Paulo Paim"]
+    assert signals["retrieval_author_count"] == 2
+    assert signals["retrieval_expected_authors"] == ["Paulo Paim"]
+    assert signals["retrieval_has_expected_author"] == "yes"
+    assert signals["retrieval_author_mix_risk"] == "medium"
+
+
+def test_extract_retrieval_signals_handles_missing_payload():
+    signals = extract_retrieval_signals(None, "Pergunta sem autor")
+
+    assert signals["retrieval_chunk_count"] == 0
+    assert signals["retrieval_has_expected_author"] == "unknown"
+    assert signals["retrieval_author_mix_risk"] == "unknown"
 
 
 def test_build_run_summary_aggregates_status_scores_and_timings(tmp_path):
