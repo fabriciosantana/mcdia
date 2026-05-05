@@ -545,6 +545,8 @@ python scripts/import_batches_to_openwebui.py \
 
 - [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json)
 - [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json)
+- [`eval/discursos_questions_v3_100.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.json)
+- [`eval/discursos_questions_v3_100.csv`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.csv)
 - [`eval/RUBRIC.md`](/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md)
 - [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md)
 - [`eval/prompts/rag_judge_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_system.md)
@@ -588,7 +590,9 @@ Uma rodada comparável precisa fixar explicitamente:
 Versionamento do benchmark:
 
 - [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json:1): benchmark base de 20 perguntas, usado nas rodadas históricas já consolidadas;
-- [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1): benchmark expandido e melhor balanceado por categoria, recomendado para novas rodadas metodológicas.
+- [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1): benchmark expandido intermediario com 25 perguntas;
+- [`eval/discursos_questions_v3_100.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.json:1): bateria ampliada com 100 perguntas, campos metodologicos extras e melhor cobertura de categorias criticas, recomendada para a proxima rodada experimental do artigo;
+- [`eval/discursos_questions_v3_100.csv`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.csv:1): espelho tabular da bateria v3 para revisao humana, anotacao e construcao posterior de gold standard.
 
 ### 14.4 Sequência oficial de execução
 
@@ -633,6 +637,16 @@ Executar a versão balanceada do benchmark:
 ```bash
 python scripts/run_rag_eval.py \
   --questions-file eval/discursos_questions_v2_balanced.json
+```
+
+Executar a bateria ampliada de 100 perguntas:
+
+```bash
+python scripts/run_rag_eval.py \
+  --questions-file eval/discursos_questions_v3_100.json \
+  --knowledge-name "Discursos do plenário do Senado 2019-2023 (v2)" \
+  --sleep-between 5 \
+  --verbose
 ```
 
 Trocar o modelo:
