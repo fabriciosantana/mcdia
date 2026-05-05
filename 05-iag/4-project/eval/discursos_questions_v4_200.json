@@ -1011,9 +1011,9 @@
     "answerable": "partial",
     "expected_authors": [],
     "relevant_sources_hint": [],
-    "question": "Liste todos os discursos da base que apresentam diagnostico, solucao, prazo e financiamento para politicas sociais, sem omitir nenhum caso.",
-    "expected_answer_criteria": "Deve reconhecer que a pergunta exige exaustividade dificil e responder com casos sustentados ou pedir delimitacao.",
-    "evaluation_risks": "Gerar lista completa fabricada."
+    "question": "A base permite listar, sem omissoes, todos os discursos que apresentam diagnostico, solucao, prazo e financiamento para politicas sociais? Responda de forma cautelosa, citando apenas exemplos sustentados e explicando o que impede uma lista exaustiva.",
+    "expected_answer_criteria": "Deve recusar a exaustividade sem auditoria/gold standard, citar apenas exemplos sustentados quando houver e explicar que o contexto recuperado nao garante ausencia de outros casos.",
+    "evaluation_risks": "Gerar lista completa fabricada ou afirmar inexistencia de outros casos sem auditoria da base."
   },
   {
     "id": "q050",
@@ -1727,9 +1727,9 @@
       "451538",
       "451803"
     ],
-    "question": "Como a argumentacao de Paulo Paim sobre Previdencia evolui entre fevereiro e marco de 2019 nos discursos recuperados?",
-    "expected_answer_criteria": "Deve comparar momentos, destacando continuidade ou mudanca, sem afirmar evolucao se a evidencia for insuficiente.",
-    "evaluation_risks": "Inferir trajetoria temporal com poucos trechos."
+    "question": "Com base nos discursos recuperados de Paulo Paim sobre Previdencia em fevereiro e marco de 2019, que continuidades ou mudancas podem ser afirmadas com seguranca? Se um dos meses estiver pouco representado no contexto, explicite esse limite.",
+    "expected_answer_criteria": "Deve comparar fevereiro e marco apenas quando houver evidencias recuperadas; se marco ou fevereiro estiver ausente/parcial, deve declarar limite e evitar narrativa evolutiva forte.",
+    "evaluation_risks": "Inferir trajetoria temporal com poucos trechos ou esconder a ausencia de evidencia de um dos meses."
   },
   {
     "id": "q086",
@@ -2424,9 +2424,9 @@
       "478968",
       "478967"
     ],
-    "question": "Liste todos os parlamentares envolvidos no chamado orcamento secreto e os respectivos valores recebidos.",
-    "expected_answer_criteria": "Deve recusar exaustividade sem base documental e delimitar ao que os discursos dizem.",
-    "evaluation_risks": "Fabricar nomes e valores."
+    "question": "O contexto recuperado permite listar todos os parlamentares envolvidos no chamado orcamento secreto e os respectivos valores recebidos? Responda sem inventar nomes ou valores e delimite apenas o que os discursos permitem afirmar.",
+    "expected_answer_criteria": "Deve recusar a lista exaustiva de parlamentares e valores se ela nao estiver no contexto, resumir somente mencoes verificaveis sobre o tema e explicar a insuficiencia documental.",
+    "evaluation_risks": "Fabricar nomes e valores ou penalizar uma abstencao correta por nao fornecer dados ausentes."
   },
   {
     "id": "q121",
@@ -2685,9 +2685,9 @@
       "490076",
       "491696"
     ],
-    "question": "Como separar falas favoraveis, contrarias ou preocupadas com garimpo e terras indigenas entre diferentes autores?",
-    "expected_answer_criteria": "Deve identificar posicoes divergentes e fontes por autor.",
-    "evaluation_risks": "Tomar qualquer mencao a garimpo como apoio ou rejeicao sem ler o contexto."
+    "question": "Compare falas de Chico Rodrigues, Telmario Mota, Zenaide Maia e Omar Aziz sobre garimpo, terras indigenas ou conflitos socioambientais. Separe posicoes favoraveis, contrarias e cautelosas apenas quando houver evidencia direta para cada autor.",
+    "expected_answer_criteria": "Deve verificar se os quatro autores foram recuperados; separar posicoes por autor somente com fonte direta; quando faltar evidencia para algum nome, deve declarar a lacuna.",
+    "evaluation_risks": "Tomar qualquer mencao a garimpo como apoio ou rejeicao, ou substituir os autores solicitados por outros autores recuperados."
   },
   {
     "id": "q133",
@@ -3017,9 +3017,9 @@
       "452240",
       "461035"
     ],
-    "question": "Sintetize preocupacoes institucionais sobre transparencia, democracia, CPI e funcionamento parlamentar.",
-    "expected_answer_criteria": "Deve organizar votacao, CPMI, CPI da Toga e questoes de ordem por tema.",
-    "evaluation_risks": "Misturar episodios institucionais sem situar contexto."
+    "question": "Sintetize preocupacoes institucionais sobre transparencia, democracia, CPIs e funcionamento parlamentar a partir de Randolfe Rodrigues, Angelo Coronel, Eduardo Girao e Davi Alcolumbre, separando os episodios e evitando misturar fontes sem relacao.",
+    "expected_answer_criteria": "Deve organizar votacao/questoes de ordem, CPMI das Fake News, CPI da Toga e funcionamento parlamentar por tema e autor, descartando trechos ruidosos ou sem identificador claro.",
+    "evaluation_risks": "Misturar episodios institucionais, incorporar texto ruidoso/OCR ou citar fontes sem relacao com os autores e temas pedidos."
   },
   {
     "id": "q147",
