@@ -1,0 +1,4218 @@
+[
+  {
+    "id": "q001",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "banking",
+      "numbers"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "451286"
+    ],
+    "question": "Quais dados Ciro Nogueira apresenta para sustentar que ha concentracao bancaria no Brasil?",
+    "expected_answer_criteria": "Deve citar a concentracao dos cinco maiores bancos, a evolucao percentual mencionada e a relacao com baixa concorrencia.",
+    "evaluation_risks": "Confundir critica a concentracao bancaria com defesa generica do cadastro positivo."
+  },
+  {
+    "id": "q002",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "social_security"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451102",
+      "451538"
+    ],
+    "question": "Quais pontos Paulo Paim destaca como riscos sociais da reforma da Previdencia?",
+    "expected_answer_criteria": "Deve recuperar criticas a perdas de direitos, trabalhadores vulneraveis e debate publico sobre a reforma.",
+    "evaluation_risks": "Atribuir a Paim argumentos de outros senadores sem separar autoria."
+  },
+  {
+    "id": "q003",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "education"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451112"
+    ],
+    "question": "Quais preocupacoes Confucio Moura manifesta sobre a educacao publica no inicio da legislatura?",
+    "expected_answer_criteria": "Deve mencionar acompanhamento de escolas, qualidade da gestao, papel de parlamentares e politicas educacionais.",
+    "evaluation_risks": "Transformar preocupacoes gerais em plano detalhado inexistente."
+  },
+  {
+    "id": "q004",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "regional_development"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Chico Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "450676",
+      "450950"
+    ],
+    "question": "Como Chico Rodrigues apresenta as prioridades de Roraima em seus discursos iniciais?",
+    "expected_answer_criteria": "Deve citar desenvolvimento regional, integracao, infraestrutura, energia ou relacao com paises vizinhos quando sustentado.",
+    "evaluation_risks": "Generalizar para toda a Amazonia sem base nos trechos recuperados."
+  },
+  {
+    "id": "q005",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "infrastructure"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Wellington Fagundes"
+    ],
+    "relevant_sources_hint": [
+      "450936",
+      "451152",
+      "451435"
+    ],
+    "question": "Que relacao Wellington Fagundes estabelece entre logistica, transporte e competitividade economica?",
+    "expected_answer_criteria": "Deve explicar infraestrutura como condicao para escoamento, competitividade e desenvolvimento.",
+    "evaluation_risks": "Misturar argumentos de Wellington com falas de Jayme Campos ou Kátia Abreu sobre infraestrutura."
+  },
+  {
+    "id": "q006",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "roraima",
+      "migration"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Mecias de Jesus"
+    ],
+    "relevant_sources_hint": [
+      "450838",
+      "453206",
+      "453379"
+    ],
+    "question": "Quais impactos da migracao venezuelana em Roraima sao descritos por Mecias de Jesus?",
+    "expected_answer_criteria": "Deve apontar pressao sobre servicos publicos, saude, seguranca ou municipios fronteiricos, conforme o contexto recuperado.",
+    "evaluation_risks": "Responder com dados migratorios externos nao presentes no corpus."
+  },
+  {
+    "id": "q007",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "women",
+      "rights"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "453663"
+    ],
+    "question": "Quais temas ligados a violencia contra mulheres aparecem em falas de Leila Barros?",
+    "expected_answer_criteria": "Deve mencionar feminicidio, Lei Maria da Penha, medidas protetivas ou defesa de protecao institucional quando houver fonte.",
+    "evaluation_risks": "Atribuir a Leila Barros todas as falas da sessao Bertha Lutz."
+  },
+  {
+    "id": "q008",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "environment",
+      "amazon"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Rocha"
+    ],
+    "relevant_sources_hint": [
+      "451137",
+      "452284"
+    ],
+    "question": "Como Paulo Rocha caracteriza a importancia da Amazonia e quais riscos politicos ou ambientais ele aponta?",
+    "expected_answer_criteria": "Deve citar defesa da Amazonia, preocupacoes com terras indigenas, codigo florestal ou interesses economicos, conforme fontes.",
+    "evaluation_risks": "Confundir Paulo Rocha com Plinio Valerio ou Confucio Moura em discussoes sobre Amazonia."
+  },
+  {
+    "id": "q009",
+    "category": "numeric",
+    "secondary_categories": [
+      "banking",
+      "precision"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "451286"
+    ],
+    "question": "Liste os percentuais e valores usados por Ciro Nogueira para comparar concentracao bancaria, tarifas, spread e juros.",
+    "expected_answer_criteria": "Deve separar 82%, 60%, 22 pontos percentuais, R$ 12,00/R$ 12,40, 39,6% e faixas de juros quando presentes.",
+    "evaluation_risks": "Misturar numeros de spread com juros do cheque especial ou cartao."
+  },
+  {
+    "id": "q010",
+    "category": "numeric",
+    "secondary_categories": [
+      "social_security",
+      "precision"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451538",
+      "451344"
+    ],
+    "question": "Quais numeros Paulo Paim usa ao criticar a capitalizacao da Previdencia e que papel esses numeros cumprem no argumento?",
+    "expected_answer_criteria": "Deve distinguir dados centrais, exemplos internacionais e numeros usados como apoio, com cautela quando o trecho nao confirmar valor exato.",
+    "evaluation_risks": "Inventar valores sobre Chile ou emendas parlamentares sem fonte recuperada."
+  },
+  {
+    "id": "q011",
+    "category": "numeric",
+    "secondary_categories": [
+      "education",
+      "funding"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura",
+      "Izalci Lucas"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451116"
+    ],
+    "question": "Quais numeros ou percentuais aparecem em discursos sobre educacao, ciencia ou financiamento educacional, e qual tese eles sustentam?",
+    "expected_answer_criteria": "Deve associar cada numero ao autor e ao argumento, evitando criar comparacao artificial entre discursos sem relacao.",
+    "evaluation_risks": "Misturar propostas de Fundeb, royalties ou bolsas como se fossem do mesmo pronunciamento."
+  },
+  {
+    "id": "q012",
+    "category": "numeric",
+    "secondary_categories": [
+      "roraima",
+      "energy"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Mecias de Jesus",
+      "Chico Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "451661",
+      "454578",
+      "450941"
+    ],
+    "question": "Que dados ou marcos concretos aparecem em falas sobre energia, mineracao ou desenvolvimento de Roraima?",
+    "expected_answer_criteria": "Deve citar apenas numeros, obras, sistemas ou localidades presentes nas fontes recuperadas.",
+    "evaluation_risks": "Completar com dados atuais sobre Linha de Tucurui ou garimpo que nao estejam no corpus."
+  },
+  {
+    "id": "q013",
+    "category": "numeric",
+    "secondary_categories": [
+      "infrastructure"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Wellington Fagundes",
+      "Jayme Campos"
+    ],
+    "relevant_sources_hint": [
+      "451230",
+      "451435",
+      "451332"
+    ],
+    "question": "Quais referencias numericas ou temporais sustentam discursos sobre infraestrutura, concessoes, leiloes ou logistica?",
+    "expected_answer_criteria": "Deve separar aniversarios, datas de leiloes, extensoes ou valores se recuperados, indicando quando nao houver numero substantivo.",
+    "evaluation_risks": "Tratar qualquer data cerimonial como indicador economico central."
+  },
+  {
+    "id": "q014",
+    "category": "numeric",
+    "secondary_categories": [
+      "covid",
+      "social_policy"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Humberto Costa",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "466619",
+      "466622",
+      "466620"
+    ],
+    "question": "Quais valores, prazos ou categorias aparecem nas falas sobre auxilio emergencial e protecao social durante a pandemia?",
+    "expected_answer_criteria": "Deve recuperar valores e categorias de beneficiarios apenas quando presentes, indicando limites quando os trechos forem gerais.",
+    "evaluation_risks": "Usar conhecimento externo sobre auxilio emergencial em vez do contexto recuperado."
+  },
+  {
+    "id": "q015",
+    "category": "numeric",
+    "secondary_categories": [
+      "public_security"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "451120",
+      "451949",
+      "453681"
+    ],
+    "question": "Quais numeros ou idades sao usados em discursos sobre seguranca publica, armas, maioridade penal ou pacote anticrime?",
+    "expected_answer_criteria": "Deve vincular cada numero ao autor, ao projeto ou ao problema discutido.",
+    "evaluation_risks": "Confundir maioridade penal, idade para dirigir e identificacao de municao."
+  },
+  {
+    "id": "q016",
+    "category": "numeric",
+    "secondary_categories": [
+      "women",
+      "representation"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Zenaide Maia",
+      "Simone Tebet",
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "451621",
+      "451494",
+      "453696"
+    ],
+    "question": "Quais dados ou referencias quantitativas aparecem em discursos sobre mulheres, representacao politica ou violencia de genero?",
+    "expected_answer_criteria": "Deve recuperar numeros quando houver, e dizer quando a evidencia for qualitativa ou cerimonial.",
+    "evaluation_risks": "Inventar estatisticas nacionais de feminicidio sem que estejam no trecho."
+  },
+  {
+    "id": "q017",
+    "category": "author_focus",
+    "secondary_categories": [
+      "education"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451112"
+    ],
+    "question": "Quais propostas ou cobrancas de Confucio Moura sobre educacao podem ser atribuidas com seguranca a ele?",
+    "expected_answer_criteria": "Deve listar apenas propostas presentes em falas dele e reconhecer limites do contexto.",
+    "evaluation_risks": "Atribuir a Confucio Moura propostas de Izalci Lucas, Eliziane Gama ou Telmario Mota."
+  },
+  {
+    "id": "q018",
+    "category": "author_focus",
+    "secondary_categories": [
+      "social_security"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "450992",
+      "451102",
+      "451538"
+    ],
+    "question": "Qual e a posicao de Paulo Paim sobre a reforma da Previdencia e como ele justifica a necessidade de debate publico?",
+    "expected_answer_criteria": "Deve explicar a critica social, a defesa de debates e os grupos vulneraveis mencionados.",
+    "evaluation_risks": "Responder como se Paim rejeitasse qualquer reforma sem nuances dos trechos."
+  },
+  {
+    "id": "q019",
+    "category": "author_focus",
+    "secondary_categories": [
+      "consumer_rights"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "450961",
+      "451434"
+    ],
+    "question": "Que direitos do consumidor aparecem em discursos de Ciro Nogueira alem do tema bancario?",
+    "expected_answer_criteria": "Deve mencionar reparo de produtos, direito do consumidor ou projetos citados, sem confundir com concentracao bancaria.",
+    "evaluation_risks": "Reduzir todos os discursos de Ciro Nogueira ao sistema financeiro."
+  },
+  {
+    "id": "q020",
+    "category": "author_focus",
+    "secondary_categories": [
+      "transport"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Wellington Fagundes"
+    ],
+    "relevant_sources_hint": [
+      "450936",
+      "452231",
+      "451435"
+    ],
+    "question": "Como Wellington Fagundes constrói sua agenda parlamentar em torno de transporte e logistica?",
+    "expected_answer_criteria": "Deve citar frente parlamentar, infraestrutura, transporte, armazenagem, setor privado ou competitividade.",
+    "evaluation_risks": "Atribuir a ele qualquer fala sobre obras sem verificar autoria."
+  },
+  {
+    "id": "q021",
+    "category": "author_focus",
+    "secondary_categories": [
+      "human_rights",
+      "disability"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Zenaide Maia",
+      "Rogério Carvalho"
+    ],
+    "relevant_sources_hint": [
+      "451285",
+      "451159",
+      "451580"
+    ],
+    "question": "Quais senadores tratam de direitos de pessoas com deficiencia e que propostas ou preocupacoes aparecem?",
+    "expected_answer_criteria": "Deve separar impacto previdenciario, regulamentacao do Estatuto, visao monocular ou diagnostico de autismo por autor.",
+    "evaluation_risks": "Misturar deficiencia, BPC e saude sem separacao de fontes."
+  },
+  {
+    "id": "q022",
+    "category": "author_focus",
+    "secondary_categories": [
+      "roraima"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Mecias de Jesus",
+      "Chico Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "450838",
+      "453206",
+      "450941"
+    ],
+    "question": "Compare os focos de Mecias de Jesus e Chico Rodrigues quando tratam de Roraima.",
+    "expected_answer_criteria": "Deve distinguir migracao/servicos publicos em Mecias e desenvolvimento/mineracao/integracao em Chico, se sustentado.",
+    "evaluation_risks": "Tratar os dois autores como uma unica voz regional."
+  },
+  {
+    "id": "q023",
+    "category": "author_focus",
+    "secondary_categories": [
+      "environment"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "451758",
+      "451677"
+    ],
+    "question": "Quais projetos ou preocupacoes ambientais Zenaide Maia defende nos discursos recuperados?",
+    "expected_answer_criteria": "Deve identificar projetos de lei ou questoes ambientais vinculadas a Zenaide, sem extrapolar para toda pauta ambiental do Senado.",
+    "evaluation_risks": "Confundir falas de Zenaide com debates sobre Amazonia de Paulo Rocha ou Plinio Valerio."
+  },
+  {
+    "id": "q024",
+    "category": "author_focus",
+    "secondary_categories": [
+      "judiciary",
+      "democracy"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "451727",
+      "451917",
+      "452240"
+    ],
+    "question": "Como Eduardo Girao justifica a CPI para investigar o Judiciario e quais limites aparecem nesse debate?",
+    "expected_answer_criteria": "Deve recuperar defesa da CPI Lava Toga ou investigacao de ministros, indicando tom e justificativas.",
+    "evaluation_risks": "Apresentar a CPI como fato consumado sem base no contexto."
+  },
+  {
+    "id": "q025",
+    "category": "comparison",
+    "secondary_categories": [
+      "banking",
+      "infrastructure"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Ciro Nogueira",
+      "Wellington Fagundes"
+    ],
+    "relevant_sources_hint": [
+      "451286",
+      "451435"
+    ],
+    "question": "Compare como Ciro Nogueira e Wellington Fagundes usam diagnosticos economicos para defender mudancas estruturais.",
+    "expected_answer_criteria": "Deve contrastar concentracao bancaria/juros com infraestrutura/logistica e explicar divergencia de objeto e solucao.",
+    "evaluation_risks": "Forcar equivalencia entre problemas economicos muito diferentes."
+  },
+  {
+    "id": "q026",
+    "category": "comparison",
+    "secondary_categories": [
+      "education",
+      "social_security"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura",
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451102"
+    ],
+    "question": "Compare o modo como Confucio Moura e Paulo Paim relacionam politica publica e protecao social.",
+    "expected_answer_criteria": "Deve distinguir educacao/gestao escolar de Previdencia/direitos sociais, apontando pontos de convergencia e limite.",
+    "evaluation_risks": "Dizer que ambos defendem a mesma solucao."
+  },
+  {
+    "id": "q027",
+    "category": "comparison",
+    "secondary_categories": [
+      "roraima",
+      "migration"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Chico Rodrigues",
+      "Mecias de Jesus"
+    ],
+    "relevant_sources_hint": [
+      "451135",
+      "450838",
+      "453379"
+    ],
+    "question": "Compare como Chico Rodrigues e Mecias de Jesus tratam a crise venezuelana e seus efeitos em Roraima.",
+    "expected_answer_criteria": "Deve separar fronteira, acao humanitaria, servicos publicos e pedido de apoio federal por autor.",
+    "evaluation_risks": "Misturar preocupacao geopolitica com pressao municipal sem atribuir fonte."
+  },
+  {
+    "id": "q028",
+    "category": "comparison",
+    "secondary_categories": [
+      "women",
+      "rights"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Zenaide Maia",
+      "Leila Barros",
+      "Simone Tebet"
+    ],
+    "relevant_sources_hint": [
+      "451621",
+      "453696",
+      "451494"
+    ],
+    "question": "Compare os enfoques de Zenaide Maia, Leila Barros e Simone Tebet em discursos sobre mulheres.",
+    "expected_answer_criteria": "Deve distinguir representacao politica, protecao contra violencia, homenagem ou direitos, conforme cada fonte.",
+    "evaluation_risks": "Atribuir uma fala cerimonial a uma proposta legislativa especifica."
+  },
+  {
+    "id": "q029",
+    "category": "comparison",
+    "secondary_categories": [
+      "environment",
+      "amazon"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Rocha",
+      "Plinio Valerio",
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "452284",
+      "452406",
+      "453884"
+    ],
+    "question": "Compare diferentes modos de falar sobre Amazonia: protecao ambiental, desenvolvimento regional e Zona Franca.",
+    "expected_answer_criteria": "Deve separar autores e dimensoes: preservacao, exploracao racional, desenvolvimento e compromissos ambientais.",
+    "evaluation_risks": "Produzir sintese unica sem mostrar tensoes entre perspectivas."
+  },
+  {
+    "id": "q030",
+    "category": "comparison",
+    "secondary_categories": [
+      "public_security"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Ciro Nogueira",
+      "Eliziane Gama"
+    ],
+    "relevant_sources_hint": [
+      "451120",
+      "453681",
+      "452080"
+    ],
+    "question": "Compare propostas ou preocupacoes sobre seguranca publica em Styvenson Valentim, Ciro Nogueira e Eliziane Gama.",
+    "expected_answer_criteria": "Deve distinguir identificacao de municao, maioridade penal, pacote anticrime ou combate a criminalidade, conforme fontes.",
+    "evaluation_risks": "Misturar projetos distintos como se fossem uma unica agenda."
+  },
+  {
+    "id": "q031",
+    "category": "comparison",
+    "secondary_categories": [
+      "covid",
+      "economy"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Humberto Costa",
+      "Eduardo Girão",
+      "Rogério Carvalho"
+    ],
+    "relevant_sources_hint": [
+      "466622",
+      "466620",
+      "464239"
+    ],
+    "question": "Compare as respostas defendidas por diferentes senadores diante dos impactos sociais e economicos da pandemia.",
+    "expected_answer_criteria": "Deve relacionar auxilio, micro e pequenas empresas, crise economica ou politicas de saude por autor.",
+    "evaluation_risks": "Usar cronologia da pandemia posterior aos discursos recuperados."
+  },
+  {
+    "id": "q032",
+    "category": "comparison",
+    "secondary_categories": [
+      "democracy",
+      "senate_procedure"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Randolfe Rodrigues",
+      "Simone Tebet",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "450481",
+      "450506",
+      "450503"
+    ],
+    "question": "Compare argumentos sobre votacao secreta, transparencia e funcionamento institucional no inicio da legislatura.",
+    "expected_answer_criteria": "Deve distinguir questoes de ordem, decisao judicial e defesa de voto aberto ou secreto, por autor.",
+    "evaluation_risks": "Confundir posicoes juridicas com opinioes politicas sem evidencia."
+  },
+  {
+    "id": "q033",
+    "category": "synthesis",
+    "secondary_categories": [
+      "social_policy",
+      "development"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Zenaide Maia",
+      "Fernando Bezerra Coelho",
+      "Paulo Rocha"
+    ],
+    "relevant_sources_hint": [
+      "451147",
+      "451165",
+      "451582"
+    ],
+    "question": "Quais linhas de diagnostico sobre desigualdade e desenvolvimento aparecem em diferentes discursos, e que solucoes sao efetivamente sustentadas pelo contexto?",
+    "expected_answer_criteria": "Deve sintetizar temas recorrentes e separar solucoes explicitas de inferencias amplas.",
+    "evaluation_risks": "Fazer panorama totalizante sem reconhecer cobertura parcial do corpus."
+  },
+  {
+    "id": "q034",
+    "category": "synthesis",
+    "secondary_categories": [
+      "education"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Confucio Moura",
+      "Izalci Lucas",
+      "Eliziane Gama",
+      "Telmario Mota"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451116",
+      "451235",
+      "451131"
+    ],
+    "question": "Sintetize as principais preocupacoes com educacao no conjunto recuperado e indique quais autores apresentam propostas concretas.",
+    "expected_answer_criteria": "Deve agrupar problemas educacionais, financiamento, avaliacao, gestao e propostas, mantendo autoria.",
+    "evaluation_risks": "Confundir critica ministerial com proposta educacional."
+  },
+  {
+    "id": "q035",
+    "category": "synthesis",
+    "secondary_categories": [
+      "infrastructure",
+      "regional_development"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Wellington Fagundes",
+      "Jayme Campos",
+      "Kátia Abreu",
+      "Chico Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "451230",
+      "451435",
+      "452232",
+      "450941"
+    ],
+    "question": "Que visao de desenvolvimento regional emerge dos discursos sobre infraestrutura, transporte, energia e mineracao?",
+    "expected_answer_criteria": "Deve articular temas comuns e limites, separando casos de Mato Grosso, Tocantins e Roraima.",
+    "evaluation_risks": "Atribuir um plano nacional integrado onde ha falas fragmentadas."
+  },
+  {
+    "id": "q036",
+    "category": "synthesis",
+    "secondary_categories": [
+      "pandemic",
+      "social_protection"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Humberto Costa",
+      "Eduardo Braga",
+      "Fabiano Contarato"
+    ],
+    "relevant_sources_hint": [
+      "466619",
+      "466622",
+      "466613",
+      "466611"
+    ],
+    "question": "Quais respostas sociais, economicas e sanitarias aparecem nos discursos iniciais sobre a pandemia?",
+    "expected_answer_criteria": "Deve citar auxilio, isolamento, apoio a vulneraveis e medidas economicas quando presentes.",
+    "evaluation_risks": "Responder com retrospectiva completa da pandemia fora do recorte temporal."
+  },
+  {
+    "id": "q037",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "women",
+      "representation"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Zenaide Maia",
+      "Leila Barros",
+      "Simone Tebet",
+      "Eliziane Gama"
+    ],
+    "relevant_sources_hint": [
+      "451621",
+      "453696",
+      "451494",
+      "451857"
+    ],
+    "question": "Que eixos aparecem em discursos de senadoras sobre mulheres, representacao, violencia e direitos?",
+    "expected_answer_criteria": "Deve sintetizar eixos sem apagar diferencas entre homenagem, denuncia, legislacao e representacao politica.",
+    "evaluation_risks": "Transformar discursos cerimoniais em propostas substantivas."
+  },
+  {
+    "id": "q038",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "environment",
+      "amazon"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Rocha",
+      "Confucio Moura",
+      "Plinio Valerio",
+      "Jader Barbalho"
+    ],
+    "relevant_sources_hint": [
+      "452284",
+      "453884",
+      "452406",
+      "453880"
+    ],
+    "question": "Quais tensoes entre preservacao ambiental, desenvolvimento e soberania aparecem nos discursos sobre Amazonia?",
+    "expected_answer_criteria": "Deve identificar tensoes e autores, com cautela sobre o que e diretamente afirmado.",
+    "evaluation_risks": "Projetar debates contemporaneos nao presentes nos discursos."
+  },
+  {
+    "id": "q039",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "rights",
+      "vulnerability"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Zenaide Maia",
+      "Rogério Carvalho",
+      "Fabiano Contarato"
+    ],
+    "relevant_sources_hint": [
+      "451285",
+      "452056",
+      "451580",
+      "452433"
+    ],
+    "question": "Quais grupos vulneraveis sao mencionados nos discursos e que tipos de protecao sao defendidos?",
+    "expected_answer_criteria": "Deve mapear grupos, direitos e medidas, reconhecendo quando a evidencia e apenas diagnostica.",
+    "evaluation_risks": "Listar grupos nao encontrados no contexto recuperado."
+  },
+  {
+    "id": "q040",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "institutional_politics"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Randolfe Rodrigues",
+      "Eduardo Girão",
+      "Rogério Carvalho",
+      "Simone Tebet"
+    ],
+    "relevant_sources_hint": [
+      "450481",
+      "451727",
+      "451938",
+      "450506"
+    ],
+    "question": "Que preocupacoes institucionais sobre transparencia, Judiciario e equilibrio entre Poderes aparecem no corpus?",
+    "expected_answer_criteria": "Deve organizar os temas por autor e evento, sem concluir mais do que as fontes permitem.",
+    "evaluation_risks": "Misturar critica institucional com acusacao factual nao sustentada."
+  },
+  {
+    "id": "q041",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "implementation_plan"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Ha evidencia suficiente nos discursos recuperados para afirmar que existe um plano completo, com metas, cronograma e fonte de financiamento, para reduzir desigualdade nacional?",
+    "expected_answer_criteria": "Deve responder negativamente ou parcialmente, apontando exatamente quais elementos faltam.",
+    "evaluation_risks": "Inventar plano por agregacao de falas dispersas."
+  },
+  {
+    "id": "q042",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "education"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "451203"
+    ],
+    "question": "O contexto permite afirmar que Confucio Moura apresentou um programa nacional detalhado de reforma educacional com indicadores de desempenho?",
+    "expected_answer_criteria": "Deve separar propostas/preocupacoes de um programa detalhado, indicando ausencia de indicadores se nao recuperados.",
+    "evaluation_risks": "Converter ideias gerais em programa formal."
+  },
+  {
+    "id": "q043",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "banking"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "451286"
+    ],
+    "question": "Os trechos de Ciro Nogueira provam empiricamente que o cadastro positivo reduziria juros para bons pagadores?",
+    "expected_answer_criteria": "Deve dizer que ha expectativa/condicao ou duvida, nao prova empirica conclusiva.",
+    "evaluation_risks": "Tratar uma hipotese politica como resultado demonstrado."
+  },
+  {
+    "id": "q044",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "pandemic"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Os discursos recuperados bastam para estimar quantas vidas foram salvas por medidas de isolamento social durante a pandemia?",
+    "expected_answer_criteria": "Deve negar suficiencia, pois isso exigiria dados epidemiologicos externos e metodo causal.",
+    "evaluation_risks": "Usar conhecimento parametrico ou estimativas externas."
+  },
+  {
+    "id": "q045",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "migration"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Mecias de Jesus",
+      "Chico Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "450838",
+      "453206"
+    ],
+    "question": "Ha dados suficientes no corpus para calcular o custo fiscal total da migracao venezuelana para Roraima?",
+    "expected_answer_criteria": "Deve identificar pressao sobre servicos quando presente, mas negar calculo fiscal completo se nao houver dados.",
+    "evaluation_risks": "Inventar valores orcamentarios ou usar fontes externas."
+  },
+  {
+    "id": "q046",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "women"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Leila Barros",
+      "Simone Tebet",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "451494",
+      "451621"
+    ],
+    "question": "O corpus permite comparar quantitativamente a eficacia de propostas diferentes contra feminicidio?",
+    "expected_answer_criteria": "Deve explicar que pode haver propostas ou denuncias, mas nao avaliacao de eficacia comparativa.",
+    "evaluation_risks": "Confundir existencia de lei com evidencia de impacto."
+  },
+  {
+    "id": "q047",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "infrastructure"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Wellington Fagundes"
+    ],
+    "relevant_sources_hint": [
+      "451435"
+    ],
+    "question": "E possivel afirmar, com base apenas nos trechos recuperados, que uma obra especifica de infraestrutura aumentou a competitividade em determinado percentual?",
+    "expected_answer_criteria": "Deve negar se nao houver medicao direta e separar argumento politico de evidencia empirica.",
+    "evaluation_risks": "Usar relacao plausivel logistica-competitividade como dado medido."
+  },
+  {
+    "id": "q048",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "author_claim"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Ha evidencia no corpus de que todos os senadores citados defendem a mesma solucao para desenvolvimento regional?",
+    "expected_answer_criteria": "Deve responder que nao, mostrando diversidade de enfoques e ausencia de solucao unica.",
+    "evaluation_risks": "Produzir consenso artificial."
+  },
+  {
+    "id": "q049",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "complete_list"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Liste todos os discursos da base que apresentam diagnostico, solucao, prazo e financiamento para politicas sociais, sem omitir nenhum caso.",
+    "expected_answer_criteria": "Deve reconhecer que a pergunta exige exaustividade dificil e responder com casos sustentados ou pedir delimitacao.",
+    "evaluation_risks": "Gerar lista completa fabricada."
+  },
+  {
+    "id": "q050",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "numbers"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Ciro Nogueira",
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451286",
+      "451538"
+    ],
+    "question": "Quais sao todos os percentuais economicos citados por Ciro Nogueira e Paulo Paim, e qual e a fonte original externa de cada numero?",
+    "expected_answer_criteria": "Deve citar numeros recuperados e reconhecer que fonte externa completa nem sempre esta disponivel no contexto.",
+    "evaluation_risks": "Inventar referencias externas precisas."
+  },
+  {
+    "id": "q051",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "author_intent"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "451203"
+    ],
+    "question": "Qual era a intencao politica oculta de Confucio Moura ao defender acompanhamento de escolas publicas?",
+    "expected_answer_criteria": "Deve recusar inferir intencao oculta e limitar-se ao que foi dito nos discursos.",
+    "evaluation_risks": "Psicologizar o autor sem evidencia."
+  },
+  {
+    "id": "q052",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "causality"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Wellington Fagundes"
+    ],
+    "relevant_sources_hint": [
+      "451435"
+    ],
+    "question": "Demonstre causalmente que as propostas de Wellington Fagundes sobre logistica aumentariam o PIB do Mato Grosso.",
+    "expected_answer_criteria": "Deve distinguir argumento politico de demonstracao causal e negar prova causal no contexto.",
+    "evaluation_risks": "Usar raciocinio economico plausivel como demonstracao."
+  },
+  {
+    "id": "q053",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "future_prediction"
+    ],
+    "difficulty": "hard",
+    "answerable": "no",
+    "expected_authors": [
+      "Mecias de Jesus",
+      "Chico Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "450838",
+      "451135"
+    ],
+    "question": "Com base nos discursos, preveja a data exata em que a crise venezuelana deixaria de pressionar os servicos publicos de Roraima.",
+    "expected_answer_criteria": "Deve recusar previsao exata e explicar limites temporais dos discursos.",
+    "evaluation_risks": "Fabricar data ou tendencia."
+  },
+  {
+    "id": "q054",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "legal_effect"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "453663"
+    ],
+    "question": "A partir da fala de Leila Barros, calcule em quanto a alteracao da Lei Maria da Penha reduziu os casos de violencia contra mulheres.",
+    "expected_answer_criteria": "Deve distinguir aprovacao/sancao de lei de efeito mensurado e negar calculo sem dados.",
+    "evaluation_risks": "Inventar estatistica de impacto."
+  },
+  {
+    "id": "q055",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "complete_comparison"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Classifique todos os senadores da base do mais ao menos comprometido com direitos sociais, justificando ranking completo.",
+    "expected_answer_criteria": "Deve rejeitar ranking normativo/exaustivo sem criterio e sugerir recorte auditavel.",
+    "evaluation_risks": "Gerar avaliacao subjetiva sem base metodologica."
+  },
+  {
+    "id": "q056",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "citation"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Rocha"
+    ],
+    "relevant_sources_hint": [
+      "452284"
+    ],
+    "question": "Transcreva literalmente todos os trechos em que Paulo Rocha fala da Amazonia e explique cada frase.",
+    "expected_answer_criteria": "Deve limitar citacoes literais e resumir de forma proporcional, indicando fontes.",
+    "evaluation_risks": "Produzir citacoes longas ou inventadas."
+  },
+  {
+    "id": "q057",
+    "category": "context_limits",
+    "secondary_categories": [
+      "broad"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Quais limites do contexto impedem uma conclusao geral sobre todas as politicas de educacao defendidas no Senado entre 2019 e 2023?",
+    "expected_answer_criteria": "Deve apontar amostragem por recuperacao, fragmentacao, cobertura desigual e necessidade de corpus completo.",
+    "evaluation_risks": "Responder como se a base fosse exaustiva para todo o Senado."
+  },
+  {
+    "id": "q058",
+    "category": "context_limits",
+    "secondary_categories": [
+      "numbers"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Quando uma resposta sobre numeros deve dizer que os valores precisam ser verificados nos textos originais?",
+    "expected_answer_criteria": "Deve explicar riscos de OCR, chunk parcial, autoria cruzada e ausencia de fonte primaria externa.",
+    "evaluation_risks": "Dar confianca excessiva a numeros recuperados parcialmente."
+  },
+  {
+    "id": "q059",
+    "category": "context_limits",
+    "secondary_categories": [
+      "author_mix"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Que sinais indicam que o contexto recuperado mistura autores demais para responder com seguranca a uma pergunta de autoria?",
+    "expected_answer_criteria": "Deve mencionar muitos autores, fontes heterogeneas, baixa centralidade do autor esperado e necessidade de separar evidencias.",
+    "evaluation_risks": "Responder sem usar os sinais de retrieval."
+  },
+  {
+    "id": "q060",
+    "category": "context_limits",
+    "secondary_categories": [
+      "negative_evidence"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Como uma resposta cautelosa deve se comportar quando o contexto nao traz evidencia suficiente para uma pergunta nao respondivel?",
+    "expected_answer_criteria": "Deve recomendar abstencao parcial, explicacao do que falta e evitar conhecimento externo nao solicitado.",
+    "evaluation_risks": "Confundir cautela com resposta vaga."
+  },
+  {
+    "id": "q061",
+    "category": "context_limits",
+    "secondary_categories": [
+      "multi_hop"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Quais perguntas desta bateria exigem inferencia mais forte entre discursos diferentes e por que isso aumenta o risco de erro?",
+    "expected_answer_criteria": "Deve identificar comparacao, sintese, multietapas e autoria cruzada como mais arriscadas.",
+    "evaluation_risks": "Listar categorias sem justificar mecanismo de risco."
+  },
+  {
+    "id": "q062",
+    "category": "context_limits",
+    "secondary_categories": [
+      "source_scope"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Em que situacoes a resposta deve limitar-se a dizer 'no contexto recuperado' em vez de afirmar algo sobre a realidade historica completa?",
+    "expected_answer_criteria": "Deve explicar diferenca entre corpus recuperado, base completa e realidade externa.",
+    "evaluation_risks": "Apresentar inferencias documentais como fatos universais."
+  },
+  {
+    "id": "q063",
+    "category": "context_limits",
+    "secondary_categories": [
+      "retrieval"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Se o retrieval trouxer muitos chunks de arquivos diferentes para uma pergunta simples, que cuidados a resposta deve adotar?",
+    "expected_answer_criteria": "Deve priorizar evidencias diretamente relevantes, separar autores e declarar incerteza quando houver ruido.",
+    "evaluation_risks": "Usar todos os chunks como se fossem igualmente relevantes."
+  },
+  {
+    "id": "q064",
+    "category": "context_limits",
+    "secondary_categories": [
+      "citation"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Quais limites existem para usar links e identificadores de pronunciamento como prova de que uma resposta esta correta?",
+    "expected_answer_criteria": "Deve reconhecer que referencia ajuda auditabilidade, mas nao garante interpretacao correta nem completude.",
+    "evaluation_risks": "Confundir citacao presente com fidelidade factual."
+  },
+  {
+    "id": "q065",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "education",
+      "social_policy"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Confucio Moura",
+      "Paulo Paim",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451102",
+      "451165"
+    ],
+    "question": "Reconstrua uma cadeia de raciocinio que ligue educacao, trabalho, Previdencia e vulnerabilidade social em discursos de diferentes autores.",
+    "expected_answer_criteria": "Deve explicitar quais elos sao diretos e quais sao inferidos a partir de discursos distintos.",
+    "evaluation_risks": "Apresentar a cadeia como se fosse defendida por um unico autor."
+  },
+  {
+    "id": "q066",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "infrastructure",
+      "regional_development",
+      "migration"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Wellington Fagundes",
+      "Chico Rodrigues",
+      "Mecias de Jesus"
+    ],
+    "relevant_sources_hint": [
+      "451435",
+      "450941",
+      "453206"
+    ],
+    "question": "Como infraestrutura, desenvolvimento regional e pressao migratoria aparecem conectados, direta ou indiretamente, em discursos sobre Mato Grosso e Roraima?",
+    "expected_answer_criteria": "Deve separar conexoes diretas de inferencias entre casos regionais diferentes.",
+    "evaluation_risks": "Forcar uma causalidade unica entre temas regionais."
+  },
+  {
+    "id": "q067",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "environment",
+      "economy"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Rocha",
+      "Plinio Valerio",
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "452284",
+      "452406",
+      "453884"
+    ],
+    "question": "Que cadeia argumentativa liga Amazonia, desenvolvimento economico, soberania e protecao ambiental nos discursos recuperados?",
+    "expected_answer_criteria": "Deve mostrar pluralidade de perspectivas e limites da sintese.",
+    "evaluation_risks": "Apagar divergencias entre preservacao e exploracao racional."
+  },
+  {
+    "id": "q068",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "banking",
+      "employment",
+      "social_security"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Ciro Nogueira",
+      "Rogério Carvalho",
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451286",
+      "451194",
+      "451102"
+    ],
+    "question": "Relacione discussoes sobre juros, desemprego e Previdencia: que conexoes sao sustentadas diretamente e quais exigem inferencia?",
+    "expected_answer_criteria": "Deve separar temas economicos por autor e apontar limites da conexao entre eles.",
+    "evaluation_risks": "Construir teoria economica integrada sem apoio textual."
+  },
+  {
+    "id": "q069",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "women",
+      "economy",
+      "rights"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Zenaide Maia",
+      "Leila Barros",
+      "Simone Tebet"
+    ],
+    "relevant_sources_hint": [
+      "451450",
+      "453696",
+      "451494"
+    ],
+    "question": "Como discursos sobre mulheres conectam economia, representacao politica, seguranca e direitos?",
+    "expected_answer_criteria": "Deve identificar conexoes por fonte, sem transformar todos os temas em uma unica agenda articulada.",
+    "evaluation_risks": "Superestimar coerencia entre discursos independentes."
+  },
+  {
+    "id": "q070",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "pandemic",
+      "federalism"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Eduardo Braga",
+      "Humberto Costa",
+      "Fabiano Contarato",
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "466613",
+      "466622",
+      "466611",
+      "466619"
+    ],
+    "question": "Nos discursos sobre pandemia, como aparecem as relacoes entre governo federal, vulnerabilidade social, saude publica e economia?",
+    "expected_answer_criteria": "Deve recuperar falas sobre auxilio, isolamento, apoio a vulneraveis e responsabilidades institucionais quando presentes.",
+    "evaluation_risks": "Usar eventos posteriores ao recorte dos discursos."
+  },
+  {
+    "id": "q071",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "institutional_politics",
+      "rights"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Randolfe Rodrigues",
+      "Eduardo Girão",
+      "Rogério Carvalho"
+    ],
+    "relevant_sources_hint": [
+      "450481",
+      "451727",
+      "451938"
+    ],
+    "question": "Como transparencia institucional, investigacao do Judiciario e defesa de direitos aparecem conectadas nos discursos sobre funcionamento dos Poderes?",
+    "expected_answer_criteria": "Deve articular conexoes tematicas com cautela e separar eventos parlamentares distintos.",
+    "evaluation_risks": "Confundir critica ao Judiciario com consenso sobre reforma institucional."
+  },
+  {
+    "id": "q072",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "public_security",
+      "education"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Simone Tebet",
+      "Eliziane Gama"
+    ],
+    "relevant_sources_hint": [
+      "452289",
+      "451441",
+      "452080"
+    ],
+    "question": "Que conexoes aparecem entre violencia, escolas, redes sociais e politica de seguranca publica?",
+    "expected_answer_criteria": "Deve distinguir falas sobre violencia nas escolas, tragedias escolares e pacote anticrime, se recuperadas.",
+    "evaluation_risks": "Atribuir uma explicacao causal unica para fenomenos diferentes."
+  },
+  {
+    "id": "q073",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "education"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura",
+      "Izalci Lucas",
+      "Eliziane Gama",
+      "Telmario Mota"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451116",
+      "451235",
+      "451131"
+    ],
+    "question": "Quais propostas ou criticas educacionais podem ser confundidas entre Confucio Moura, Izalci Lucas, Eliziane Gama e Telmario Mota?",
+    "expected_answer_criteria": "Deve identificar riscos de confusao e atribuir cada fala ao autor correto.",
+    "evaluation_risks": "Misturar financiamento, critica ministerial e modelo educacional."
+  },
+  {
+    "id": "q074",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "social_security"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Humberto Costa",
+      "Zenaide Maia",
+      "Fernando Bezerra Coelho"
+    ],
+    "relevant_sources_hint": [
+      "451102",
+      "451161",
+      "450995",
+      "451147"
+    ],
+    "question": "Quais riscos de confusao de autoria aparecem em discursos sobre reforma da Previdencia?",
+    "expected_answer_criteria": "Deve separar apoio, critica e preocupacoes especificas por senador.",
+    "evaluation_risks": "Atribuir a todos a mesma posicao sobre a reforma."
+  },
+  {
+    "id": "q075",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "roraima"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Chico Rodrigues",
+      "Mecias de Jesus",
+      "Telmario Mota"
+    ],
+    "relevant_sources_hint": [
+      "451135",
+      "450838",
+      "451131"
+    ],
+    "question": "Que temas sobre Roraima podem levar o sistema a confundir Chico Rodrigues, Mecias de Jesus e Telmario Mota?",
+    "expected_answer_criteria": "Deve distinguir desenvolvimento, migracao, educacao ou politicas locais por autor.",
+    "evaluation_risks": "Usar UF como atalho para autoria."
+  },
+  {
+    "id": "q076",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "amazon"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Rocha",
+      "Plinio Valerio",
+      "Confucio Moura",
+      "Jader Barbalho"
+    ],
+    "relevant_sources_hint": [
+      "452284",
+      "452406",
+      "453884",
+      "453880"
+    ],
+    "question": "Quais semelhancas de tema podem confundir autores em discursos sobre Amazonia, e como separar as atribuicoes?",
+    "expected_answer_criteria": "Deve distinguir bioma, Zona Franca, degradacao ambiental, Fundo Amazonia e desenvolvimento regional por fonte.",
+    "evaluation_risks": "Atribuir a um autor a tese de outro apenas por tema comum."
+  },
+  {
+    "id": "q077",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "women"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Zenaide Maia",
+      "Leila Barros",
+      "Simone Tebet",
+      "Eliziane Gama"
+    ],
+    "relevant_sources_hint": [
+      "451621",
+      "453696",
+      "451494",
+      "451857"
+    ],
+    "question": "Em discursos sobre mulheres, quais elementos podem gerar confusao entre homenagem, denuncia, projeto legislativo e defesa de cota?",
+    "expected_answer_criteria": "Deve separar natureza do pronunciamento e autoria.",
+    "evaluation_risks": "Interpretar toda mencao a mulheres como proposta legislativa."
+  },
+  {
+    "id": "q078",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "infrastructure"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Wellington Fagundes",
+      "Jayme Campos",
+      "Kátia Abreu",
+      "Irajá"
+    ],
+    "relevant_sources_hint": [
+      "451230",
+      "451435",
+      "452232",
+      "452244"
+    ],
+    "question": "Como distinguir falas de Wellington Fagundes, Jayme Campos, Katia Abreu e Iraja sobre infraestrutura e municipios?",
+    "expected_answer_criteria": "Deve atribuir corretamente planejamento, logistica, ferrovia, municipios e desenvolvimento.",
+    "evaluation_risks": "Confundir todos os discursos de infraestrutura como agenda de Wellington."
+  },
+  {
+    "id": "q079",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "institutional_politics"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Randolfe Rodrigues",
+      "Eduardo Girão",
+      "Simone Tebet"
+    ],
+    "relevant_sources_hint": [
+      "450481",
+      "451727",
+      "450506"
+    ],
+    "question": "Quais riscos de confusao existem entre falas sobre votacao secreta, CPI da Toga e transparencia institucional?",
+    "expected_answer_criteria": "Deve separar tema, autor e evento parlamentar.",
+    "evaluation_risks": "Unificar debates procedimentais diferentes."
+  },
+  {
+    "id": "q080",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "public_security"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Ciro Nogueira",
+      "Eliziane Gama",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "451120",
+      "453681",
+      "452080",
+      "450957"
+    ],
+    "question": "Em seguranca publica, quais propostas ou preocupacoes podem ser confundidas entre autores e como evitar atribuicao indevida?",
+    "expected_answer_criteria": "Deve separar municao, maioridade penal, pacote anticrime e armas nas escolas.",
+    "evaluation_risks": "Agrupar assuntos de seguranca sem verificacao de autoria."
+  },
+  {
+    "id": "q081",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "education"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura",
+      "Izalci Lucas"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451116"
+    ],
+    "question": "Separe, em duas listas, o que e atribuivel a Confucio Moura e o que e atribuivel a Izalci Lucas sobre educacao, ciencia e financiamento.",
+    "expected_answer_criteria": "Deve produzir separacao explicita por autor e evitar itens sem fonte.",
+    "evaluation_risks": "Confundir financiamento de ciencia com gestao escolar."
+  },
+  {
+    "id": "q082",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "roraima"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Mecias de Jesus",
+      "Chico Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "450838",
+      "450941"
+    ],
+    "question": "Separe o que Mecias de Jesus e Chico Rodrigues dizem sobre problemas e solucoes para Roraima.",
+    "expected_answer_criteria": "Deve separar migracao/servicos de desenvolvimento/mineracao/integração quando recuperado.",
+    "evaluation_risks": "Responder por estado e nao por autor."
+  },
+  {
+    "id": "q083",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "women"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "453663",
+      "451621"
+    ],
+    "question": "Quais itens sobre direitos das mulheres sao de Leila Barros e quais sao de Zenaide Maia?",
+    "expected_answer_criteria": "Deve distinguir medidas protetivas/violencia de cota/representacao ou economia, conforme fontes.",
+    "evaluation_risks": "Atribuir projetos de uma senadora a outra."
+  },
+  {
+    "id": "q084",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "social_security"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Fernando Bezerra Coelho"
+    ],
+    "relevant_sources_hint": [
+      "451102",
+      "451147"
+    ],
+    "question": "Separe claramente criticas e defesas da reforma da Previdencia em Paulo Paim e Fernando Bezerra Coelho.",
+    "expected_answer_criteria": "Deve diferenciar preocupacoes sociais de defesa de combate a privilegios/crescimento quando presente.",
+    "evaluation_risks": "Nivelar posicoes divergentes."
+  },
+  {
+    "id": "q085",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "social_security"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "450992",
+      "451102",
+      "451538",
+      "451803"
+    ],
+    "question": "Como a argumentacao de Paulo Paim sobre Previdencia evolui entre fevereiro e marco de 2019 nos discursos recuperados?",
+    "expected_answer_criteria": "Deve comparar momentos, destacando continuidade ou mudanca, sem afirmar evolucao se a evidencia for insuficiente.",
+    "evaluation_risks": "Inferir trajetoria temporal com poucos trechos."
+  },
+  {
+    "id": "q086",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "pandemic"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Rogério Carvalho",
+      "Humberto Costa",
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "464239",
+      "466622",
+      "466619"
+    ],
+    "question": "Compare falas do inicio de marco e abril de 2020 sobre a pandemia: que preocupacoes se tornam mais sociais ou economicas?",
+    "expected_answer_criteria": "Deve situar cronologicamente crise economica, auxilio e medidas de enfrentamento.",
+    "evaluation_risks": "Usar conhecimento retrospectivo posterior ao corpus."
+  },
+  {
+    "id": "q087",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "roraima"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Mecias de Jesus"
+    ],
+    "relevant_sources_hint": [
+      "450838",
+      "453206",
+      "453379",
+      "456633"
+    ],
+    "question": "Como as falas de Mecias de Jesus sobre migracao venezuelana em Roraima mudam ao longo de 2019?",
+    "expected_answer_criteria": "Deve comparar preocupacoes iniciais, pedidos ao governo e pressao sobre municipios, se recuperado.",
+    "evaluation_risks": "Narrar evolucao linear sem apoio em datas suficientes."
+  },
+  {
+    "id": "q088",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "infrastructure"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Wellington Fagundes"
+    ],
+    "relevant_sources_hint": [
+      "450936",
+      "451435",
+      "452231"
+    ],
+    "question": "Como Wellington Fagundes retoma a pauta de logistica e transporte entre fevereiro e marco de 2019?",
+    "expected_answer_criteria": "Deve identificar recorrencia de frente parlamentar, setor privado e transporte, com cautela temporal.",
+    "evaluation_risks": "Superinterpretar repeticao tematica como mudanca estrategica."
+  },
+  {
+    "id": "q089",
+    "category": "scope_control",
+    "secondary_categories": [
+      "capitalization"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451538",
+      "451344"
+    ],
+    "question": "O que exatamente Paulo Paim afirma sobre capitalizacao da Previdencia e o que nao deve ser extrapolado de sua fala?",
+    "expected_answer_criteria": "Deve separar afirmacoes textuais, exemplos e extrapolacoes indevidas.",
+    "evaluation_risks": "Transformar critica em previsao economica detalhada."
+  },
+  {
+    "id": "q090",
+    "category": "scope_control",
+    "secondary_categories": [
+      "banking"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "451286"
+    ],
+    "question": "O que os dados de Ciro Nogueira permitem concluir sobre concentracao bancaria e o que eles nao demonstram sozinhos?",
+    "expected_answer_criteria": "Deve apontar conclusao sobre baixa concorrencia e limites causais sobre reducao futura de juros.",
+    "evaluation_risks": "Confundir correlacao e causalidade."
+  },
+  {
+    "id": "q091",
+    "category": "scope_control",
+    "secondary_categories": [
+      "education"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "451203"
+    ],
+    "question": "Quais conclusoes sobre educacao publica podem ser tiradas das falas de Confucio Moura sem extrapolar para todo o sistema educacional brasileiro?",
+    "expected_answer_criteria": "Deve limitar a resposta aos trechos e reconhecer impossibilidade de diagnostico nacional completo.",
+    "evaluation_risks": "Fazer diagnostico nacional amplo sem base."
+  },
+  {
+    "id": "q092",
+    "category": "scope_control",
+    "secondary_categories": [
+      "women"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "453663"
+    ],
+    "question": "O que e seguro afirmar sobre a atuacao de Leila Barros em temas de violencia contra a mulher a partir dos trechos recuperados?",
+    "expected_answer_criteria": "Deve afirmar apenas temas e projetos recuperados, sem medir impacto ou abrangencia completa.",
+    "evaluation_risks": "Extrapolar impacto legislativo."
+  },
+  {
+    "id": "q093",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "author_focus"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confucio Moura"
+    ],
+    "relevant_sources_hint": [
+      "451203",
+      "451112"
+    ],
+    "question": "Recupere apenas evidencias de Confucio Moura sobre educacao e ignore trechos de outros autores, mesmo que tratem do mesmo tema.",
+    "expected_answer_criteria": "Deve filtrar estritamente por autoria e citar limites se o retrieval trouxer autores misturados.",
+    "evaluation_risks": "Usar trechos tematicamente relevantes, mas de autor errado."
+  },
+  {
+    "id": "q094",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "numbers"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "451286"
+    ],
+    "question": "Responda sobre numeros de concentracao bancaria usando apenas dados diretamente ligados ao discurso de Ciro Nogueira.",
+    "expected_answer_criteria": "Deve priorizar fontes de Ciro e rejeitar numeros bancarios de outros discursos.",
+    "evaluation_risks": "Misturar taxa Selic, spread e juros de fontes diversas."
+  },
+  {
+    "id": "q095",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "negative_evidence"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Identifique casos em que o contexto recuperado parece relevante por palavras-chave, mas nao responde de fato a pergunta sobre plano completo de politica publica.",
+    "expected_answer_criteria": "Deve explicar falsos positivos de retrieval e separar pertinencia lexical de suficiencia da evidencia.",
+    "evaluation_risks": "Aceitar qualquer documento tematico como resposta."
+  },
+  {
+    "id": "q096",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "cross_author"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Confucio Moura",
+      "Wellington Fagundes"
+    ],
+    "relevant_sources_hint": [
+      "451102",
+      "451203",
+      "451435"
+    ],
+    "question": "Quando uma pergunta mistura Previdencia, educacao e infraestrutura, quais fontes devem ser recuperadas para nao confundir os autores?",
+    "expected_answer_criteria": "Deve indicar necessidade de recuperar pelo menos um discurso pertinente por eixo e separar autoria.",
+    "evaluation_risks": "Responder com apenas um eixo tematico."
+  },
+  {
+    "id": "q097",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "source_audit"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Ciro Nogueira"
+    ],
+    "relevant_sources_hint": [
+      "451286"
+    ],
+    "question": "Quais identificadores ou links de fonte sustentam a resposta sobre concentracao bancaria em Ciro Nogueira?",
+    "expected_answer_criteria": "Deve citar source_id, chunk_id ou URL quando disponivel e associar cada evidencia ao item respondido.",
+    "evaluation_risks": "Citar fonte correta, mas para afirmacao errada."
+  },
+  {
+    "id": "q098",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "source_audit"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451102",
+      "451538"
+    ],
+    "question": "Quais fontes devem ser verificadas para confirmar as afirmacoes sobre Paulo Paim e capitalizacao da Previdencia?",
+    "expected_answer_criteria": "Deve listar pronunciamentos/chunks relevantes e apontar quais afirmacoes dependem de verificacao textual.",
+    "evaluation_risks": "Substituir verificacao por resumo generico."
+  },
+  {
+    "id": "q099",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "source_audit"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Mecias de Jesus"
+    ],
+    "relevant_sources_hint": [
+      "450838",
+      "453206",
+      "453379"
+    ],
+    "question": "Quais fontes sustentam afirmacoes sobre migracao venezuelana e servicos publicos em Roraima nas falas de Mecias de Jesus?",
+    "expected_answer_criteria": "Deve associar cada ponto a fonte ou reconhecer quando a fonte nao traz detalhe suficiente.",
+    "evaluation_risks": "Usar fonte de Chico Rodrigues para afirmacao de Mecias."
+  },
+  {
+    "id": "q100",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "source_audit"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Ao responder uma pergunta ampla de sintese, como indicar fontes suficientes sem dar a falsa impressao de que todas as evidencias do corpus foram verificadas?",
+    "expected_answer_criteria": "Deve recomendar citar exemplos representativos, delimitar escopo e explicitar que a sintese depende do contexto recuperado.",
+    "evaluation_risks": "Confundir amostra de fontes com auditoria completa do corpus."
+  },
+  {
+    "id": "q101",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "artificial_intelligence",
+      "legislation"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim"
+    ],
+    "relevant_sources_hint": [
+      "460304"
+    ],
+    "question": "Que principios para uso de inteligencia artificial aparecem no projeto defendido por Styvenson Valentim?",
+    "expected_answer_criteria": "Deve recuperar a defesa de principios para IA e limitar-se ao que o discurso/projeto indica.",
+    "evaluation_risks": "Confundir PL citado em 2019 com debates posteriores sobre outros projetos de IA."
+  },
+  {
+    "id": "q102",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "pandemic",
+      "social_policy"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Humberto Costa"
+    ],
+    "relevant_sources_hint": [
+      "466622"
+    ],
+    "question": "O que Humberto Costa registra sobre o cadastramento para acesso ao auxilio emergencial durante a pandemia?",
+    "expected_answer_criteria": "Deve mencionar cadastramento de familias e enfrentamento do coronavirus, sem ampliar para toda execucao do programa.",
+    "evaluation_risks": "Usar informacoes externas sobre filas, valores ou calendario se nao recuperadas."
+  },
+  {
+    "id": "q103",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "environment",
+      "amazon"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Jader Barbalho"
+    ],
+    "relevant_sources_hint": [
+      "453880"
+    ],
+    "question": "Qual alerta Jader Barbalho faz sobre o Fundo Amazonia e o desmatamento?",
+    "expected_answer_criteria": "Deve explicar a preocupacao com aumento de desmatamento e uso de recursos do Fundo Amazonia conforme fonte.",
+    "evaluation_risks": "Confundir o argumento com defesa generica da Zona Franca ou da exploracao racional."
+  },
+  {
+    "id": "q104",
+    "category": "factual_simple",
+    "secondary_categories": [
+      "women",
+      "violence"
+    ],
+    "difficulty": "easy",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rose de Freitas"
+    ],
+    "relevant_sources_hint": [
+      "460971"
+    ],
+    "question": "Que medidas de protecao contra violencia de genero Rose de Freitas defende ou menciona?",
+    "expected_answer_criteria": "Deve recuperar proposicoes como notificacao compulsoria ou ampliacao de protecao, quando presentes.",
+    "evaluation_risks": "Atribuir a Rose de Freitas falas de Leila Barros ou Mara Gabrilli."
+  },
+  {
+    "id": "q105",
+    "category": "author_focus",
+    "secondary_categories": [
+      "artificial_intelligence"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Eduardo Gomes"
+    ],
+    "relevant_sources_hint": [
+      "479461"
+    ],
+    "question": "Qual papel Eduardo Gomes assume no debate sobre o Projeto de Lei 872/2021 de inteligencia artificial?",
+    "expected_answer_criteria": "Deve indicar a solicitacao de retirada de pauta ou conducao do debate, conforme contexto.",
+    "evaluation_risks": "Inventar posicao substantiva sobre todos os principios do PL se a fala for procedimental."
+  },
+  {
+    "id": "q106",
+    "category": "author_focus",
+    "secondary_categories": [
+      "budget",
+      "transparency"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rodrigo Pacheco"
+    ],
+    "relevant_sources_hint": [
+      "478968"
+    ],
+    "question": "Como Rodrigo Pacheco trata as noticias sobre chamado orcamento secreto?",
+    "expected_answer_criteria": "Deve citar providencias ou consideracoes sobre artigos que mencionavam R$ 3 bilhoes, com cautela.",
+    "evaluation_risks": "Transformar noticia citada em conclusao judicial ou auditoria completa."
+  },
+  {
+    "id": "q107",
+    "category": "author_focus",
+    "secondary_categories": [
+      "fake_news",
+      "democracy"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Angelo Coronel"
+    ],
+    "relevant_sources_hint": [
+      "461036",
+      "460813"
+    ],
+    "question": "Como Angelo Coronel justifica a importancia da CPMI das Fake News?",
+    "expected_answer_criteria": "Deve recuperar relacao com populacao, democracia e funcionamento da CPMI quando presente.",
+    "evaluation_risks": "Confundir questao de ordem sobre prazo com conclusoes da investigacao."
+  },
+  {
+    "id": "q108",
+    "category": "author_focus",
+    "secondary_categories": [
+      "health",
+      "sus"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "452369"
+    ],
+    "question": "Como Paulo Paim defende o fortalecimento do SUS nos discursos recuperados?",
+    "expected_answer_criteria": "Deve associar a defesa ao contexto de saude publica e direitos sociais, sem criar plano detalhado.",
+    "evaluation_risks": "Atribuir a Paim medidas sanitarias de outros autores ou de periodos posteriores."
+  },
+  {
+    "id": "q109",
+    "category": "comparison",
+    "secondary_categories": [
+      "artificial_intelligence",
+      "legislation"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461",
+      "481571"
+    ],
+    "question": "Compare os papeis de Styvenson Valentim, Eduardo Gomes e Eduardo Girao no debate sobre inteligencia artificial.",
+    "expected_answer_criteria": "Deve distinguir autoria/proposta inicial, tramitacao ou retirada de pauta, e debate tematico/encerramento.",
+    "evaluation_risks": "Misturar participantes de audiencia publica com senadores autores ou relatores."
+  },
+  {
+    "id": "q110",
+    "category": "comparison",
+    "secondary_categories": [
+      "pandemic",
+      "economy"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Humberto Costa",
+      "Eduardo Girão",
+      "Veneziano Vital do Rêgo"
+    ],
+    "relevant_sources_hint": [
+      "466619",
+      "466622",
+      "466620",
+      "466169"
+    ],
+    "question": "Compare como diferentes senadores tratam auxilio emergencial, microempresas e protecao social na pandemia.",
+    "expected_answer_criteria": "Deve separar auxilio a vulneraveis, cadastramento, credito a empresas e producao legislativa por autor.",
+    "evaluation_risks": "Usar uma resposta unica sobre pandemia sem separar medidas e autores."
+  },
+  {
+    "id": "q111",
+    "category": "comparison",
+    "secondary_categories": [
+      "amazon",
+      "indigenous"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Confúcio Moura",
+      "Chico Rodrigues",
+      "Zenaide Maia",
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "469110",
+      "486424",
+      "490076",
+      "491050"
+    ],
+    "question": "Compare posicoes sobre garimpo, terras indigenas e protecao ambiental em discursos de 2020 a 2022.",
+    "expected_answer_criteria": "Deve separar defesa da Amazonia, regularizacao do garimpo, oposicao ao garimpo em terras indigenas e diligencia sobre ianomamis.",
+    "evaluation_risks": "Atribuir a todos a mesma posicao sobre garimpo."
+  },
+  {
+    "id": "q112",
+    "category": "comparison",
+    "secondary_categories": [
+      "budget",
+      "transparency"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Lasier Martins",
+      "Jean-Paul Prates",
+      "Reguffe"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "478967",
+      "492172",
+      "492171"
+    ],
+    "question": "Compare como diferentes parlamentares abordam as emendas de relator ou o chamado orcamento secreto.",
+    "expected_answer_criteria": "Deve distinguir providencias institucionais, criticas e manifestacoes contrarias, por autor e data.",
+    "evaluation_risks": "Concluir irregularidade juridica definitiva sem base nos discursos."
+  },
+  {
+    "id": "q113",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "artificial_intelligence",
+      "impact"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461"
+    ],
+    "question": "Os discursos sobre inteligencia artificial permitem medir o impacto economico real da regulacao proposta?",
+    "expected_answer_criteria": "Deve dizer que ha debate normativo/procedimental, mas nao medida empirica de impacto economico.",
+    "evaluation_risks": "Inventar estimativas de mercado ou produtividade."
+  },
+  {
+    "id": "q114",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "pandemic",
+      "causality"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Eduardo Braga",
+      "Rogério Carvalho"
+    ],
+    "relevant_sources_hint": [
+      "466613",
+      "466638"
+    ],
+    "question": "O corpus permite provar causalmente que uma posicao parlamentar especifica reduziu mortes por Covid-19?",
+    "expected_answer_criteria": "Deve negar prova causal e separar defesa de isolamento ou critica politica de evidencia epidemiologica.",
+    "evaluation_risks": "Usar conhecimento externo sobre politicas sanitarias como se estivesse no corpus."
+  },
+  {
+    "id": "q115",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "environment",
+      "amazon"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Jader Barbalho",
+      "Rose de Freitas"
+    ],
+    "relevant_sources_hint": [
+      "453880",
+      "457052"
+    ],
+    "question": "Ha dados suficientes nos discursos para calcular a taxa anual de desmatamento atribuivel a uma decisao sobre o Fundo Amazonia?",
+    "expected_answer_criteria": "Deve apontar alertas e preocupacoes, mas negar calculo causal/quantitativo completo.",
+    "evaluation_risks": "Fabricar numeros do INPE ou series historicas nao recuperadas."
+  },
+  {
+    "id": "q116",
+    "category": "negative_evidence",
+    "secondary_categories": [
+      "budget",
+      "public_finance"
+    ],
+    "difficulty": "medium",
+    "answerable": "no",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Lasier Martins"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "478967"
+    ],
+    "question": "As falas sobre orcamento secreto bastam para identificar todos os beneficiarios e valores de emendas de relator?",
+    "expected_answer_criteria": "Deve responder que nao, pois discursos citam controversia/noticias, nao base completa de beneficiarios.",
+    "evaluation_risks": "Gerar lista de parlamentares ou valores sem fonte."
+  },
+  {
+    "id": "q117",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "artificial_intelligence",
+      "future_prediction"
+    ],
+    "difficulty": "hard",
+    "answerable": "no",
+    "expected_authors": [
+      "Eduardo Gomes"
+    ],
+    "relevant_sources_hint": [
+      "479461"
+    ],
+    "question": "Preveja quais dispositivos do PL 872/2021 seriam mantidos integralmente em legislacao futura de inteligencia artificial.",
+    "expected_answer_criteria": "Deve recusar previsao normativa futura e limitar-se ao debate recuperado.",
+    "evaluation_risks": "Inventar trajetoria legislativa ou texto final."
+  },
+  {
+    "id": "q118",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "pandemic",
+      "numbers"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Humberto Costa",
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "466622",
+      "466619"
+    ],
+    "question": "Informe o numero exato de pessoas beneficiadas pelo auxilio emergencial segundo cada senador citado.",
+    "expected_answer_criteria": "Deve citar numeros apenas se recuperados; se nao houver, explicar que o contexto nao permite resposta exata.",
+    "evaluation_risks": "Usar numeros nacionais conhecidos fora do contexto."
+  },
+  {
+    "id": "q119",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "feminicide",
+      "impact"
+    ],
+    "difficulty": "hard",
+    "answerable": "no",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "460971"
+    ],
+    "question": "Calcule em percentual quanto cada proposta mencionada reduziu o feminicidio no Brasil.",
+    "expected_answer_criteria": "Deve negar possibilidade de calculo de impacto com base nos discursos.",
+    "evaluation_risks": "Confundir defesa de proposta com evidencia de resultado."
+  },
+  {
+    "id": "q120",
+    "category": "hallucination_trap",
+    "secondary_categories": [
+      "budget",
+      "complete_list"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Lasier Martins"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "478967"
+    ],
+    "question": "Liste todos os parlamentares envolvidos no chamado orcamento secreto e os respectivos valores recebidos.",
+    "expected_answer_criteria": "Deve recusar exaustividade sem base documental e delimitar ao que os discursos dizem.",
+    "evaluation_risks": "Fabricar nomes e valores."
+  },
+  {
+    "id": "q121",
+    "category": "context_limits",
+    "secondary_categories": [
+      "dataset_scope",
+      "years"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Quais limites surgem ao usar discursos de 2019 a 2023 para fazer conclusoes gerais sobre todo o Senado Federal?",
+    "expected_answer_criteria": "Deve mencionar recorte temporal, recuperacao parcial, desigualdade de cobertura por autor e diferenca entre corpus e universo politico.",
+    "evaluation_risks": "Falar como se o corpus representasse automaticamente todas as atividades do Senado."
+  },
+  {
+    "id": "q122",
+    "category": "context_limits",
+    "secondary_categories": [
+      "non_senators",
+      "hearing"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [
+      "481632",
+      "481569",
+      "481568"
+    ],
+    "question": "Como tratar falas de convidados ou participantes nao parlamentares em sessoes de debates tematicos sobre inteligencia artificial?",
+    "expected_answer_criteria": "Deve separar pronunciamentos de senadores e participantes externos, evitando atribuir falas a parlamentares.",
+    "evaluation_risks": "Confundir autores em caixa alta ou sem UF com senadores."
+  },
+  {
+    "id": "q123",
+    "category": "context_limits",
+    "secondary_categories": [
+      "retrieval_noise",
+      "metadata"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Por que uma busca por SUS pode recuperar trechos que nao sao substantivamente sobre saude publica?",
+    "expected_answer_criteria": "Deve explicar ruido lexical, siglas/substring, metadados e necessidade de checagem semantica.",
+    "evaluation_risks": "Assumir que toda ocorrencia de termo indica pertinencia tematica."
+  },
+  {
+    "id": "q124",
+    "category": "context_limits",
+    "secondary_categories": [
+      "source_verification",
+      "summary_vs_text"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Quando o resumo de um discurso e suficiente para orientar a resposta e quando e necessario verificar o texto integral?",
+    "expected_answer_criteria": "Deve distinguir triagem por resumo de confirmacao de detalhes, numeros e atribuicoes no texto integral.",
+    "evaluation_risks": "Tratar resumo como prova completa para qualquer detalhe."
+  },
+  {
+    "id": "q125",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "artificial_intelligence",
+      "democracy",
+      "fake_news"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Angelo Coronel",
+      "Davi Alcolumbre"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "461036",
+      "461035"
+    ],
+    "question": "Relacione inteligencia artificial, fake news e democracia: que conexoes sao diretas e quais dependem de inferencia entre discursos distintos?",
+    "expected_answer_criteria": "Deve separar debate de IA, CPMI das Fake News e fortalecimento democratico, indicando inferencias.",
+    "evaluation_risks": "Criar narrativa unica sem fonte direta ligando IA e fake news."
+  },
+  {
+    "id": "q126",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "pandemic",
+      "education",
+      "food_security"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Confúcio Moura",
+      "Rodrigo Cunha",
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "466618",
+      "466650",
+      "466619"
+    ],
+    "question": "Como pandemia, vulnerabilidade social, merenda escolar e auxilio emergencial se conectam nos discursos recuperados?",
+    "expected_answer_criteria": "Deve articular cozinhas comunitarias, merenda/estudantes e renda emergencial com limites.",
+    "evaluation_risks": "Fundir politicas diferentes como um programa unico."
+  },
+  {
+    "id": "q127",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "amazon",
+      "indigenous",
+      "violence"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Leila Barros",
+      "Omar Aziz",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "491050",
+      "491696",
+      "490076"
+    ],
+    "question": "Que cadeia de preocupacoes liga garimpo, povos indigenas, violencia territorial e responsabilidade estatal?",
+    "expected_answer_criteria": "Deve usar diligencia em Roraima, Vale do Javari e oposicao a garimpo/marco temporal, separando fontes.",
+    "evaluation_risks": "Atribuir todos os casos ao mesmo territorio ou povo indigena."
+  },
+  {
+    "id": "q128",
+    "category": "multi_hop",
+    "secondary_categories": [
+      "budget",
+      "tax_reform",
+      "fiscal_policy"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jayme Campos",
+      "Roberto Rocha",
+      "Rodrigo Pacheco"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "454960",
+      "455572",
+      "478968"
+    ],
+    "question": "Como reforma tributaria, justica fiscal e controversias orcamentarias podem ser conectadas sem extrapolar?",
+    "expected_answer_criteria": "Deve separar reforma tributaria solidaria, reducao de carga, relatoria/debate e orcamento secreto.",
+    "evaluation_risks": "Transformar temas fiscais em causalidade direta nao sustentada."
+  },
+  {
+    "id": "q129",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "artificial_intelligence"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes",
+      "Eduardo Girão",
+      "participantes externos"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461",
+      "481571",
+      "481569"
+    ],
+    "question": "Quais riscos de confusao de autoria existem nos registros sobre inteligencia artificial e PL 872/2021?",
+    "expected_answer_criteria": "Deve distinguir senador proponente, senadores em debate e convidados externos da sessao tematica.",
+    "evaluation_risks": "Atribuir fala de especialista externo a senador."
+  },
+  {
+    "id": "q130",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "pandemic",
+      "aid"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Humberto Costa",
+      "Fabiano Contarato",
+      "Veneziano Vital do Rêgo"
+    ],
+    "relevant_sources_hint": [
+      "466619",
+      "466622",
+      "466611",
+      "466169"
+    ],
+    "question": "Quais falas sobre auxilio emergencial podem ser confundidas entre autores e como separar cada uma?",
+    "expected_answer_criteria": "Deve separar ampliacao, cadastramento, aprovacao do projeto e producao legislativa por autor.",
+    "evaluation_risks": "Confundir todos os registros sobre auxilio como uma unica fala."
+  },
+  {
+    "id": "q131",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "women",
+      "violence"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas",
+      "Mara Gabrilli",
+      "Marcos Rogério"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "460971",
+      "472484",
+      "485267"
+    ],
+    "question": "Quais riscos de confusao aparecem entre falas sobre feminicidio, violencia domestica e cadastro de condenados?",
+    "expected_answer_criteria": "Deve distinguir denuncia, campanha, protocolo, projeto/cadastro e autores.",
+    "evaluation_risks": "Atribuir projeto de um autor a quem apenas comentou violencia contra mulheres."
+  },
+  {
+    "id": "q132",
+    "category": "cross_author_confusion",
+    "secondary_categories": [
+      "amazon",
+      "garimpo"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Chico Rodrigues",
+      "Telmário Mota",
+      "Zenaide Maia",
+      "Omar Aziz"
+    ],
+    "relevant_sources_hint": [
+      "486424",
+      "480924",
+      "490076",
+      "491696"
+    ],
+    "question": "Como separar falas favoraveis, contrarias ou preocupadas com garimpo e terras indigenas entre diferentes autores?",
+    "expected_answer_criteria": "Deve identificar posicoes divergentes e fontes por autor.",
+    "evaluation_risks": "Tomar qualquer mencao a garimpo como apoio ou rejeicao sem ler o contexto."
+  },
+  {
+    "id": "q133",
+    "category": "numeric",
+    "secondary_categories": [
+      "budget",
+      "public_finance"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Lasier Martins"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "478967"
+    ],
+    "question": "Qual valor aparece nas noticias citadas sobre o chamado orcamento secreto e como os senadores tratam esse numero?",
+    "expected_answer_criteria": "Deve mencionar R$ 3 bilhoes se recuperado e separar noticia/alegacao de comprovacao.",
+    "evaluation_risks": "Tratar valor citado em artigos como valor auditado definitivamente."
+  },
+  {
+    "id": "q134",
+    "category": "numeric",
+    "secondary_categories": [
+      "women",
+      "criminal_penalty"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rose de Freitas",
+      "Mara Gabrilli"
+    ],
+    "relevant_sources_hint": [
+      "478943",
+      "472484"
+    ],
+    "question": "Quais numeros aparecem em falas sobre feminicidio, condenacoes ou posicao do Brasil em violencia contra mulheres?",
+    "expected_answer_criteria": "Deve citar pena, anos ou ranking apenas quando recuperado, vinculando ao caso e autor.",
+    "evaluation_risks": "Inventar rankings ou taxas nacionais."
+  },
+  {
+    "id": "q135",
+    "category": "numeric",
+    "secondary_categories": [
+      "science",
+      "education_funding"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Izalci Lucas"
+    ],
+    "relevant_sources_hint": [
+      "451116",
+      "458213"
+    ],
+    "question": "Que valores ou quantidades aparecem nas falas de Izalci Lucas sobre bolsas, Capes, CNPq, Finep ou financiamento de ciencia?",
+    "expected_answer_criteria": "Deve recuperar numeros presentes e explicar se sao centrais ou perifericos.",
+    "evaluation_risks": "Confundir orgaos e valores de programas diferentes."
+  },
+  {
+    "id": "q136",
+    "category": "numeric",
+    "secondary_categories": [
+      "tax_reform",
+      "fiscal_policy"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jayme Campos",
+      "Roberto Rocha"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "454960",
+      "455572"
+    ],
+    "question": "Quais numeros ou referencias fiscais aparecem em discursos sobre reforma tributaria e justica fiscal?",
+    "expected_answer_criteria": "Deve separar dados concretos de argumentos sem numeros, indicando quando nao houver valor especifico.",
+    "evaluation_risks": "Criar aliquotas ou estimativas ausentes."
+  },
+  {
+    "id": "q137",
+    "category": "numeric",
+    "secondary_categories": [
+      "health",
+      "vaccination"
+    ],
+    "difficulty": "medium",
+    "answerable": "partial",
+    "expected_authors": [
+      "Lucas Barreto",
+      "Jorge Kajuru",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "452062",
+      "454677",
+      "456584"
+    ],
+    "question": "Quais numeros ou referencias quantitativas aparecem em discursos sobre cobertura vacinal, vacinas ou reducao de imunizantes?",
+    "expected_answer_criteria": "Deve citar mecanismos, estoques, reducoes ou valores apenas quando presentes no contexto.",
+    "evaluation_risks": "Usar estatisticas sanitarias externas."
+  },
+  {
+    "id": "q138",
+    "category": "synthesis",
+    "secondary_categories": [
+      "artificial_intelligence",
+      "governance"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes",
+      "Eduardo Girão",
+      "participantes externos"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461",
+      "481571"
+    ],
+    "question": "Sintetize os principais eixos do debate sobre inteligencia artificial no corpus recuperado.",
+    "expected_answer_criteria": "Deve cobrir principios, tramitacao, debates tematicos e limites, separando senadores e convidados.",
+    "evaluation_risks": "Transformar a sintese em analise completa da legislacao brasileira de IA."
+  },
+  {
+    "id": "q139",
+    "category": "synthesis",
+    "secondary_categories": [
+      "pandemic",
+      "social_policy"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Humberto Costa",
+      "Eduardo Braga",
+      "Fabiano Contarato"
+    ],
+    "relevant_sources_hint": [
+      "466619",
+      "466622",
+      "466613",
+      "466611"
+    ],
+    "question": "Sintetize respostas parlamentares a vulnerabilidade social durante a pandemia.",
+    "expected_answer_criteria": "Deve organizar auxilio, isolamento, apoio a vulneraveis e medidas legislativas com fontes.",
+    "evaluation_risks": "Fazer retrospectiva geral da pandemia fora do corpus."
+  },
+  {
+    "id": "q140",
+    "category": "synthesis",
+    "secondary_categories": [
+      "amazon",
+      "environment"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Rocha",
+      "Jader Barbalho",
+      "Rose de Freitas",
+      "Confúcio Moura"
+    ],
+    "relevant_sources_hint": [
+      "452284",
+      "453880",
+      "457052",
+      "469110"
+    ],
+    "question": "Sintetize os argumentos ambientais sobre Amazonia, desmatamento e desenvolvimento sustentavel.",
+    "expected_answer_criteria": "Deve apresentar eixos e tensoes, com autoria e limites documentais.",
+    "evaluation_risks": "Apagar diferencas entre preservacionismo, soberania e desenvolvimento regional."
+  },
+  {
+    "id": "q141",
+    "category": "synthesis",
+    "secondary_categories": [
+      "women",
+      "rights"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas",
+      "Zenaide Maia",
+      "Simone Tebet"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "460971",
+      "451621",
+      "451494"
+    ],
+    "question": "Sintetize como os discursos tratam mulheres, representacao, violencia e protecao juridica.",
+    "expected_answer_criteria": "Deve distinguir denuncias, propostas legislativas, cotas e homenagens.",
+    "evaluation_risks": "Transformar eventos cerimoniais em agenda legislativa substantiva."
+  },
+  {
+    "id": "q142",
+    "category": "synthesis",
+    "secondary_categories": [
+      "health",
+      "sus"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Reguffe",
+      "Plínio Valério",
+      "José Serra"
+    ],
+    "relevant_sources_hint": [
+      "452369",
+      "451276",
+      "451878",
+      "453728"
+    ],
+    "question": "Sintetize problemas de saude publica e suplementar tratados nos discursos recuperados.",
+    "expected_answer_criteria": "Deve separar SUS, planos de saude, idosos, cigarros e ressarcimento quando fontes indicarem.",
+    "evaluation_risks": "Misturar saude publica com planos privados sem separar escopo."
+  },
+  {
+    "id": "q143",
+    "category": "synthesis",
+    "secondary_categories": [
+      "education",
+      "science"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Izalci Lucas",
+      "Alvaro Dias",
+      "Lucas Barreto",
+      "Jorge Kajuru"
+    ],
+    "relevant_sources_hint": [
+      "451116",
+      "453202",
+      "453200",
+      "452675"
+    ],
+    "question": "Sintetize preocupacoes sobre universidades, ciencia e financiamento educacional.",
+    "expected_answer_criteria": "Deve abordar bolsas, cortes, universidades e critica ministerial com autoria.",
+    "evaluation_risks": "Confundir cortes universitarios com toda politica educacional."
+  },
+  {
+    "id": "q144",
+    "category": "synthesis",
+    "secondary_categories": [
+      "public_security",
+      "weapons"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Reguffe",
+      "Paulo Rocha",
+      "Humberto Costa",
+      "Styvenson Valentim"
+    ],
+    "relevant_sources_hint": [
+      "453546",
+      "453811",
+      "453812",
+      "451120"
+    ],
+    "question": "Sintetize argumentos sobre armas, seguranca publica e legislacao penal.",
+    "expected_answer_criteria": "Deve separar flexibilizacao de armas, critica a decretos, identificacao de municao e seguranca.",
+    "evaluation_risks": "Unificar agendas legislativas distintas."
+  },
+  {
+    "id": "q145",
+    "category": "synthesis",
+    "secondary_categories": [
+      "tax_reform",
+      "fiscal_policy"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jayme Campos",
+      "Roberto Rocha",
+      "Randolfe Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "454960",
+      "455572",
+      "455564"
+    ],
+    "question": "Sintetize as linhas de defesa da reforma tributaria nos discursos recuperados.",
+    "expected_answer_criteria": "Deve distinguir progressividade, reducao de carga, relatoria e debate legislativo.",
+    "evaluation_risks": "Atribuir a todos a mesma concepcao de reforma."
+  },
+  {
+    "id": "q146",
+    "category": "synthesis",
+    "secondary_categories": [
+      "institutional_politics",
+      "democracy"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Randolfe Rodrigues",
+      "Angelo Coronel",
+      "Eduardo Girão",
+      "Davi Alcolumbre"
+    ],
+    "relevant_sources_hint": [
+      "450481",
+      "461036",
+      "452240",
+      "461035"
+    ],
+    "question": "Sintetize preocupacoes institucionais sobre transparencia, democracia, CPI e funcionamento parlamentar.",
+    "expected_answer_criteria": "Deve organizar votacao, CPMI, CPI da Toga e questoes de ordem por tema.",
+    "evaluation_risks": "Misturar episodios institucionais sem situar contexto."
+  },
+  {
+    "id": "q147",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "legislative_agenda",
+      "multiple_topics"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [],
+    "relevant_sources_hint": [],
+    "question": "Considerando discursos sobre IA, pandemia, Amazonia e orcamento, que tipos de evidencia o RAG recupera bem e onde a resposta deve ser cautelosa?",
+    "expected_answer_criteria": "Deve discutir recuperacao por temas e limites, sem tentar cobrir todo corpus exaustivamente.",
+    "evaluation_risks": "Responder como ranking final de desempenho sem rodar metricas."
+  },
+  {
+    "id": "q148",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "regional_development",
+      "environment",
+      "rights"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Chico Rodrigues",
+      "Confúcio Moura",
+      "Zenaide Maia",
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "486424",
+      "469110",
+      "490076",
+      "491050"
+    ],
+    "question": "Como desenvolvimento regional, garimpo, povos indigenas e protecao ambiental aparecem de forma multifocal?",
+    "expected_answer_criteria": "Deve separar interesses economicos, ambientais e direitos indigenas.",
+    "evaluation_risks": "Forcar consenso entre autores com posicoes diferentes."
+  },
+  {
+    "id": "q149",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "pandemic",
+      "economy",
+      "education"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Rodrigo Cunha",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "466619",
+      "466650",
+      "466620"
+    ],
+    "question": "Que quadro amplo sobre pandemia, renda, escola e pequenas empresas pode ser sustentado pelos discursos?",
+    "expected_answer_criteria": "Deve sintetizar exemplos representativos e reconhecer cobertura parcial.",
+    "evaluation_risks": "Fazer panorama nacional completo da pandemia."
+  },
+  {
+    "id": "q150",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "women",
+      "law",
+      "public_security"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas",
+      "Marcos Rogério"
+    ],
+    "relevant_sources_hint": [
+      "456411",
+      "460971",
+      "485267"
+    ],
+    "question": "Que panorama multifocal emerge sobre violencia contra mulheres, legislacao e seguranca publica?",
+    "expected_answer_criteria": "Deve separar prevencao, medidas legais e cadastro de condenados.",
+    "evaluation_risks": "Tratar medidas legislativas como resultados comprovados."
+  },
+  {
+    "id": "q151",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "fiscal_policy",
+      "budget",
+      "tax"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Rodrigo Pacheco",
+      "Roberto Rocha"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "478968",
+      "455572"
+    ],
+    "question": "Que relacoes amplas podem ser feitas entre reforma tributaria, justica fiscal e transparencia orcamentaria?",
+    "expected_answer_criteria": "Deve explicitar que os temas estao em discursos diferentes e nao formam necessariamente um pacote unico.",
+    "evaluation_risks": "Construir narrativa causal nao sustentada."
+  },
+  {
+    "id": "q152",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "education",
+      "science",
+      "technology"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Izalci Lucas",
+      "Styvenson Valentim",
+      "Eduardo Gomes"
+    ],
+    "relevant_sources_hint": [
+      "451116",
+      "460304",
+      "479461"
+    ],
+    "question": "Como educacao, ciencia, tecnologia e inteligencia artificial aparecem como agenda de futuro nos discursos?",
+    "expected_answer_criteria": "Deve articular temas com cautela e separar ciencia/bolsas de regulacao de IA.",
+    "evaluation_risks": "Unificar agendas sem fonte direta."
+  },
+  {
+    "id": "q153",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "health",
+      "migration",
+      "federalism"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Mecias de Jesus",
+      "Paulo Paim",
+      "Humberto Costa"
+    ],
+    "relevant_sources_hint": [
+      "454564",
+      "452369",
+      "466622"
+    ],
+    "question": "Como saude, migracao e federalismo aparecem como pressao sobre politicas publicas?",
+    "expected_answer_criteria": "Deve distinguir Roraima, SUS e pandemia/auxilio conforme fontes.",
+    "evaluation_risks": "Misturar crises locais e nacionais sem delimitar."
+  },
+  {
+    "id": "q154",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "democracy",
+      "media",
+      "fake_news"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jorge Kajuru",
+      "Angelo Coronel"
+    ],
+    "relevant_sources_hint": [
+      "451522",
+      "452681",
+      "461036"
+    ],
+    "question": "Que panorama sobre fake news, discurso de odio, democracia e imprensa aparece no corpus?",
+    "expected_answer_criteria": "Deve separar casos e autores, indicando limites de cobertura.",
+    "evaluation_risks": "Afirmar tendencia geral da sociedade sem evidencia documental suficiente."
+  },
+  {
+    "id": "q155",
+    "category": "broad_multifocal",
+    "secondary_categories": [
+      "amazon",
+      "economy",
+      "international_relations"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Rocha",
+      "Marcio Bittar",
+      "Eduardo Braga",
+      "Eliziane Gama"
+    ],
+    "relevant_sources_hint": [
+      "452284",
+      "454982",
+      "457844",
+      "450850"
+    ],
+    "question": "Como Amazonia, soberania, economia e critica ambiental internacional aparecem conectadas?",
+    "expected_answer_criteria": "Deve distinguir interesses internacionais, Fundo Amazonia, queimadas/desmatamento e politica ambiental.",
+    "evaluation_risks": "Projetar debate geopolitico atual sem fonte."
+  },
+  {
+    "id": "q156",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "artificial_intelligence"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461",
+      "481571"
+    ],
+    "question": "Separe o que e atribuivel a Styvenson Valentim, Eduardo Gomes e Eduardo Girao no debate sobre IA.",
+    "expected_answer_criteria": "Deve criar tres blocos de autoria e indicar quando a fonte e procedimental.",
+    "evaluation_risks": "Atribuir autoria de PL ou fala tecnica ao senador errado."
+  },
+  {
+    "id": "q157",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "pandemic",
+      "aid"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Humberto Costa",
+      "Paulo Paim",
+      "Fabiano Contarato"
+    ],
+    "relevant_sources_hint": [
+      "466622",
+      "466619",
+      "466611"
+    ],
+    "question": "Separe as falas de Humberto Costa, Paulo Paim e Fabiano Contarato sobre auxilio emergencial.",
+    "expected_answer_criteria": "Deve distinguir cadastramento, ampliacao/defesa e aprovacao/criacao do auxilio.",
+    "evaluation_risks": "Fundir todos em uma unica posicao."
+  },
+  {
+    "id": "q158",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "amazon",
+      "garimpo"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Chico Rodrigues",
+      "Zenaide Maia",
+      "Telmário Mota"
+    ],
+    "relevant_sources_hint": [
+      "486424",
+      "490076",
+      "480924"
+    ],
+    "question": "Separe posicoes de Chico Rodrigues, Zenaide Maia e Telmario Mota sobre garimpo e terras indigenas.",
+    "expected_answer_criteria": "Deve distinguir defesa de regularizacao, oposicao a legalizacao e operacoes/regularizacao de terras.",
+    "evaluation_risks": "Rotular todos como pro ou contra garimpo sem ler fontes."
+  },
+  {
+    "id": "q159",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "women",
+      "feminicide"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas",
+      "Mara Gabrilli"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "460971",
+      "472484"
+    ],
+    "question": "Separe o que Leila Barros, Rose de Freitas e Mara Gabrilli dizem sobre feminicidio e violencia contra mulheres.",
+    "expected_answer_criteria": "Deve atribuir caso, proposicoes e pedidos/criticas corretamente.",
+    "evaluation_risks": "Atribuir condenacao ou campanha a autora errada."
+  },
+  {
+    "id": "q160",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "budget",
+      "transparency"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Lasier Martins",
+      "Jean-Paul Prates",
+      "Reguffe"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "478967",
+      "492172",
+      "492171"
+    ],
+    "question": "Separe as posicoes de Rodrigo Pacheco, Lasier Martins, Jean-Paul Prates e Reguffe sobre orcamento secreto.",
+    "expected_answer_criteria": "Deve distinguir providencia institucional, consideracoes e manifestacoes contrarias.",
+    "evaluation_risks": "Misturar fala da Presidencia com criticas partidarias."
+  },
+  {
+    "id": "q161",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "vaccination",
+      "health"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Lucas Barreto",
+      "Jorge Kajuru",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "452062",
+      "454677",
+      "456584"
+    ],
+    "question": "Separe falas de Lucas Barreto, Jorge Kajuru e Zenaide Maia sobre vacinas ou cobertura vacinal.",
+    "expected_answer_criteria": "Deve diferenciar projeto para cobertura vacinal, estoque de Influenza/H1N1 e vacinas antirrabicas.",
+    "evaluation_risks": "Tratar todas como Covid ou como uma mesma vacina."
+  },
+  {
+    "id": "q162",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "judiciary",
+      "cpi"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Alessandro Vieira",
+      "Eduardo Girão",
+      "Juíza Selma"
+    ],
+    "relevant_sources_hint": [
+      "450955",
+      "452240",
+      "451735"
+    ],
+    "question": "Separe as falas de Alessandro Vieira, Eduardo Girao e Juiza Selma sobre CPI do Judiciario/CPI da Toga.",
+    "expected_answer_criteria": "Deve distinguir apoio, registro de criacao e defesa de instalacao.",
+    "evaluation_risks": "Atribuir a um autor a iniciativa completa de outro."
+  },
+  {
+    "id": "q163",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "tax_reform"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jayme Campos",
+      "Roberto Rocha"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "454960",
+      "455572"
+    ],
+    "question": "Separe os argumentos de Paulo Paim, Jayme Campos e Roberto Rocha sobre reforma tributaria.",
+    "expected_answer_criteria": "Deve distinguir progressividade, reducao de carga/retomada economica e relatoria/debate.",
+    "evaluation_risks": "Transformar diferentes visoes em uma unica proposta."
+  },
+  {
+    "id": "q164",
+    "category": "author_disambiguation",
+    "secondary_categories": [
+      "education",
+      "universities"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Izalci Lucas",
+      "Alvaro Dias",
+      "Lucas Barreto",
+      "Jorge Kajuru"
+    ],
+    "relevant_sources_hint": [
+      "451116",
+      "453202",
+      "453200",
+      "452675"
+    ],
+    "question": "Separe preocupacoes de Izalci Lucas, Alvaro Dias, Lucas Barreto e Jorge Kajuru sobre universidades ou educacao superior.",
+    "expected_answer_criteria": "Deve atribuir bolsas/royalties, contingenciamento, universidade federal e critica ministerial corretamente.",
+    "evaluation_risks": "Confundir cortes com critica curricular ou financiamento de bolsas."
+  },
+  {
+    "id": "q165",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "pandemic"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Rogério Carvalho",
+      "Paulo Paim",
+      "Humberto Costa"
+    ],
+    "relevant_sources_hint": [
+      "464239",
+      "464227",
+      "466622"
+    ],
+    "question": "Compare a transicao de preocupacoes de marco para abril de 2020 sobre coronavirus, economia e auxilio emergencial.",
+    "expected_answer_criteria": "Deve situar datas e mostrar deslocamento de crise economica para medidas emergenciais, com cautela.",
+    "evaluation_risks": "Usar acontecimentos posteriores como se estivessem nos discursos."
+  },
+  {
+    "id": "q166",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "artificial_intelligence"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461",
+      "481571"
+    ],
+    "question": "Compare o debate sobre inteligencia artificial entre 2019 e 2021 nos discursos recuperados.",
+    "expected_answer_criteria": "Deve diferenciar proposta de principios em 2019 e debate/tramitacao do PL 872 em 2021.",
+    "evaluation_risks": "Confundir projetos e anos."
+  },
+  {
+    "id": "q167",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "amazon",
+      "garimpo"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Confúcio Moura",
+      "Chico Rodrigues",
+      "Zenaide Maia",
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "469110",
+      "486424",
+      "490076",
+      "491050"
+    ],
+    "question": "Compare como o tema garimpo/terras indigenas aparece entre 2020, 2021 e 2022.",
+    "expected_answer_criteria": "Deve situar defesa ambiental, regularizacao, oposicao e diligencia em anos distintos.",
+    "evaluation_risks": "Narrar evolucao linear sem base suficiente."
+  },
+  {
+    "id": "q168",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "women",
+      "feminicide"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas",
+      "Mara Gabrilli"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "460971",
+      "472484"
+    ],
+    "question": "Compare falas sobre feminicidio e violencia contra mulheres entre 2019 e 2020.",
+    "expected_answer_criteria": "Deve destacar caso concreto, proposicoes/protocolo e campanha/critica conforme datas.",
+    "evaluation_risks": "Criar tendencia estatistica nao sustentada."
+  },
+  {
+    "id": "q169",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "budget"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Jean-Paul Prates",
+      "Reguffe"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "492172",
+      "492171"
+    ],
+    "question": "Compare mencoes ao orcamento secreto em 2021 e 2022.",
+    "expected_answer_criteria": "Deve distinguir providencias iniciais e manifestacoes posteriores contra emendas de relator.",
+    "evaluation_risks": "Assumir que todos os discursos tratam do mesmo documento especifico."
+  },
+  {
+    "id": "q170",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "fake_news"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Jorge Kajuru",
+      "Angelo Coronel",
+      "Davi Alcolumbre"
+    ],
+    "relevant_sources_hint": [
+      "452681",
+      "461036",
+      "461035"
+    ],
+    "question": "Compare falas sobre fake news em abril e novembro de 2019.",
+    "expected_answer_criteria": "Deve diferenciar alerta/noticia falsa e funcionamento/prazo da CPMI.",
+    "evaluation_risks": "Confundir caso pessoal com investigacao institucional."
+  },
+  {
+    "id": "q171",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "vaccination",
+      "health"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Lucas Barreto",
+      "Jorge Kajuru",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "452062",
+      "454677",
+      "456584"
+    ],
+    "question": "Compare discussoes sobre vacinacao em abril, junho e agosto de 2019.",
+    "expected_answer_criteria": "Deve distinguir cobertura vacinal, estoque de H1N1 e vacinas antirrabicas.",
+    "evaluation_risks": "Tratar todas como debate sobre Covid."
+  },
+  {
+    "id": "q172",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "tax_reform"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jayme Campos",
+      "Roberto Rocha",
+      "Randolfe Rodrigues"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "454960",
+      "455572",
+      "455564"
+    ],
+    "question": "Compare o debate sobre reforma tributaria entre maio, junho e julho de 2019.",
+    "expected_answer_criteria": "Deve situar progressividade, reducao de carga e organizacao do debate legislativo.",
+    "evaluation_risks": "Criar uma sequencia decisoria completa sem fonte."
+  },
+  {
+    "id": "q173",
+    "category": "temporal_comparison",
+    "secondary_categories": [
+      "judiciary",
+      "cpi"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Alessandro Vieira",
+      "Eduardo Girão",
+      "Juíza Selma"
+    ],
+    "relevant_sources_hint": [
+      "450955",
+      "451735",
+      "452240"
+    ],
+    "question": "Compare as falas sobre CPI do Judiciario/CPI da Toga entre fevereiro e marco de 2019.",
+    "expected_answer_criteria": "Deve mostrar apoio, defesa de instalacao e registro/criacao conforme datas.",
+    "evaluation_risks": "Atribuir a mesma etapa processual a todos os autores."
+  },
+  {
+    "id": "q174",
+    "category": "scope_control",
+    "secondary_categories": [
+      "artificial_intelligence"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim"
+    ],
+    "relevant_sources_hint": [
+      "460304"
+    ],
+    "question": "O que se pode afirmar, e o que nao se pode afirmar, sobre o projeto de IA defendido por Styvenson Valentim?",
+    "expected_answer_criteria": "Deve limitar a principios/proposta recuperada e negar conclusoes sobre eficacia futura.",
+    "evaluation_risks": "Extrapolar para todo marco legal de IA."
+  },
+  {
+    "id": "q175",
+    "category": "scope_control",
+    "secondary_categories": [
+      "pandemic",
+      "aid"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Humberto Costa"
+    ],
+    "relevant_sources_hint": [
+      "466622"
+    ],
+    "question": "O que a fala de Humberto Costa permite concluir sobre auxilio emergencial e o que ela nao prova?",
+    "expected_answer_criteria": "Deve separar registro de cadastramento de avaliacao completa de implementacao.",
+    "evaluation_risks": "Concluir eficiencia ou cobertura total do programa."
+  },
+  {
+    "id": "q176",
+    "category": "scope_control",
+    "secondary_categories": [
+      "amazon",
+      "desmatamento"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Jader Barbalho"
+    ],
+    "relevant_sources_hint": [
+      "453880"
+    ],
+    "question": "O que o alerta de Jader Barbalho permite afirmar sobre Fundo Amazonia e desmatamento?",
+    "expected_answer_criteria": "Deve separar alerta politico de demonstracao causal/quantitativa.",
+    "evaluation_risks": "Afirmar causalidade medida sem dados."
+  },
+  {
+    "id": "q177",
+    "category": "scope_control",
+    "secondary_categories": [
+      "women",
+      "feminicide"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros"
+    ],
+    "relevant_sources_hint": [
+      "453696"
+    ],
+    "question": "O que e seguro afirmar sobre a fala de Leila Barros a respeito de feminicidio?",
+    "expected_answer_criteria": "Deve limitar-se ao caso, alerta e necessidade de politicas/avancos quando recuperados.",
+    "evaluation_risks": "Calcular impacto ou extrapolar para todo Brasil."
+  },
+  {
+    "id": "q178",
+    "category": "scope_control",
+    "secondary_categories": [
+      "budget"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rodrigo Pacheco"
+    ],
+    "relevant_sources_hint": [
+      "478968"
+    ],
+    "question": "O que a fala de Rodrigo Pacheco permite dizer sobre o chamado orcamento secreto?",
+    "expected_answer_criteria": "Deve indicar que houve consideracoes/providencias diante de artigos, sem concluir culpa individual.",
+    "evaluation_risks": "Transformar discurso em auditoria definitiva."
+  },
+  {
+    "id": "q179",
+    "category": "scope_control",
+    "secondary_categories": [
+      "fake_news"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Angelo Coronel"
+    ],
+    "relevant_sources_hint": [
+      "461036"
+    ],
+    "question": "O que a fala de Angelo Coronel permite afirmar sobre a CPMI das Fake News?",
+    "expected_answer_criteria": "Deve limitar ao papel e importancia atribuida a CPMI, sem relatar conclusoes finais se ausentes.",
+    "evaluation_risks": "Inventar resultados da CPMI."
+  },
+  {
+    "id": "q180",
+    "category": "scope_control",
+    "secondary_categories": [
+      "vaccination"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "456584"
+    ],
+    "question": "O que a fala de Zenaide Maia sobre vacinas antirrabicas permite concluir e quais limites permanecem?",
+    "expected_answer_criteria": "Deve mencionar preocupacao com reducao de vacinas e investimentos, sem estimar impacto epidemiologico.",
+    "evaluation_risks": "Usar dados sanitarios externos."
+  },
+  {
+    "id": "q181",
+    "category": "scope_control",
+    "secondary_categories": [
+      "tax_reform"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "453766"
+    ],
+    "question": "O que Paulo Paim defende sobre reforma tributaria solidaria e o que nao esta demonstrado no trecho?",
+    "expected_answer_criteria": "Deve separar defesa politica de progressividade/combate a sonegacao de demonstracao fiscal completa.",
+    "evaluation_risks": "Criar modelo tributario detalhado inexistente."
+  },
+  {
+    "id": "q182",
+    "category": "scope_control",
+    "secondary_categories": [
+      "judiciary"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Alessandro Vieira"
+    ],
+    "relevant_sources_hint": [
+      "450955"
+    ],
+    "question": "O que se pode afirmar sobre a posicao de Alessandro Vieira em relacao a CPI das Cortes Superiores?",
+    "expected_answer_criteria": "Deve indicar apoio e esclarecimentos sobre arquivamento, sem inferir resultado de investigacao.",
+    "evaluation_risks": "Confundir apoio a CPI com prova de irregularidade."
+  },
+  {
+    "id": "q183",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "artificial_intelligence",
+      "non_senators"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes",
+      "Eduardo Girão"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461",
+      "481571"
+    ],
+    "question": "Recupere evidencias sobre IA priorizando senadores e separando convidados externos de sessoes tematicas.",
+    "expected_answer_criteria": "Deve distinguir autores parlamentares e participantes externos, usando fontes relevantes.",
+    "evaluation_risks": "Misturar metadados de convidados como se fossem senadores."
+  },
+  {
+    "id": "q184",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "pandemic",
+      "aid"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Humberto Costa",
+      "Fabiano Contarato"
+    ],
+    "relevant_sources_hint": [
+      "466619",
+      "466622",
+      "466611"
+    ],
+    "question": "Para uma pergunta sobre auxilio emergencial, quais fontes sao realmente centrais e quais sao apenas tangenciais por mencionarem pandemia?",
+    "expected_answer_criteria": "Deve identificar fontes sobre auxilio e excluir falas apenas genericamente pandêmicas.",
+    "evaluation_risks": "Usar todo chunk com Covid como evidencia de auxilio."
+  },
+  {
+    "id": "q185",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "amazon",
+      "garimpo"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Chico Rodrigues",
+      "Zenaide Maia",
+      "Telmário Mota"
+    ],
+    "relevant_sources_hint": [
+      "486424",
+      "490076",
+      "480924"
+    ],
+    "question": "Em perguntas sobre garimpo em terras indigenas, como evitar recuperar apenas discursos gerais sobre Amazonia?",
+    "expected_answer_criteria": "Deve priorizar fontes com garimpo/terras indigenas e explicar diferenca para Amazonia generica.",
+    "evaluation_risks": "Usar discursos sobre Fundo Amazonia como resposta suficiente."
+  },
+  {
+    "id": "q186",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "women",
+      "violence"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas",
+      "Mara Gabrilli"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "460971",
+      "472484"
+    ],
+    "question": "Como filtrar fontes sobre feminicidio quando o retrieval traz muitos discursos cerimoniais sobre mulheres?",
+    "expected_answer_criteria": "Deve separar violencia/feminicidio de homenagens ou representacao.",
+    "evaluation_risks": "Tratar toda mencao a mulheres como evidencia de feminicidio."
+  },
+  {
+    "id": "q187",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "budget"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Lasier Martins",
+      "Reguffe"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "478967",
+      "492171"
+    ],
+    "question": "Quais fontes sao centrais para responder sobre orcamento secreto e quais podem ser ruido orcamentario geral?",
+    "expected_answer_criteria": "Deve priorizar emendas de relator/orcamento secreto e separar LDO ou orcamento comum.",
+    "evaluation_risks": "Responder com qualquer fala sobre orcamento."
+  },
+  {
+    "id": "q188",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "vaccination"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Lucas Barreto",
+      "Jorge Kajuru",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "452062",
+      "454677",
+      "456584"
+    ],
+    "question": "Se a pergunta for sobre vacinacao antes da Covid, quais fontes devem ser recuperadas e quais devem ser evitadas?",
+    "expected_answer_criteria": "Deve separar cobertura vacinal/H1N1/antirrabica de debates de Covid.",
+    "evaluation_risks": "Contaminar resposta com pandemia posterior."
+  },
+  {
+    "id": "q189",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "fake_news"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jorge Kajuru",
+      "Angelo Coronel"
+    ],
+    "relevant_sources_hint": [
+      "451522",
+      "452681",
+      "461036"
+    ],
+    "question": "Como distinguir fontes sobre fake news como problema social, fake news pessoal e CPMI das Fake News?",
+    "expected_answer_criteria": "Deve classificar cada fonte por tipo de uso do tema.",
+    "evaluation_risks": "Misturar evento individual e instituicao parlamentar."
+  },
+  {
+    "id": "q190",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "tax_reform"
+    ],
+    "difficulty": "hard",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jayme Campos",
+      "Roberto Rocha"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "454960",
+      "455572"
+    ],
+    "question": "Para reforma tributaria, como evitar recuperar discursos sobre Previdencia ou reformas em geral?",
+    "expected_answer_criteria": "Deve priorizar fontes com reforma tributaria explicita e separar outras reformas.",
+    "evaluation_risks": "Usar reforma da Previdencia como substituto."
+  },
+  {
+    "id": "q191",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "health",
+      "sus"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Reguffe",
+      "Plínio Valério"
+    ],
+    "relevant_sources_hint": [
+      "452369",
+      "451276",
+      "451878"
+    ],
+    "question": "Em perguntas sobre SUS, como evitar ruido de palavras que contem a sequencia SUS mas nao tratam de saude?",
+    "expected_answer_criteria": "Deve verificar pertinencia semantica e fontes de saude antes de responder.",
+    "evaluation_risks": "Confiar em match lexical bruto."
+  },
+  {
+    "id": "q192",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "artificial_intelligence"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Styvenson Valentim",
+      "Eduardo Gomes"
+    ],
+    "relevant_sources_hint": [
+      "460304",
+      "479461"
+    ],
+    "question": "Quais fontes devem ser citadas para sustentar uma resposta sobre o debate de IA em 2019 e 2021?",
+    "expected_answer_criteria": "Deve indicar source_ids e o que cada fonte sustenta.",
+    "evaluation_risks": "Citar uma fonte de audiencia para uma afirmacao de autoria legislativa."
+  },
+  {
+    "id": "q193",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "pandemic",
+      "aid"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Humberto Costa",
+      "Paulo Paim",
+      "Fabiano Contarato"
+    ],
+    "relevant_sources_hint": [
+      "466622",
+      "466619",
+      "466611"
+    ],
+    "question": "Quais fontes sustentam afirmacoes sobre auxilio emergencial em abril de 2020?",
+    "expected_answer_criteria": "Deve relacionar cada fonte a cadastramento, ampliacao ou criacao/aprovacao de auxilio.",
+    "evaluation_risks": "Citar fonte pandêmica sem auxilio como se fosse central."
+  },
+  {
+    "id": "q194",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "amazon",
+      "desmatamento"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Jader Barbalho",
+      "Rose de Freitas",
+      "Eduardo Braga"
+    ],
+    "relevant_sources_hint": [
+      "453880",
+      "457052",
+      "457844"
+    ],
+    "question": "Quais fontes sustentam afirmacoes sobre desmatamento e queimadas na Amazonia?",
+    "expected_answer_criteria": "Deve citar fontes com alerta, dados alarmantes ou queimadas/desmatamento, por autor.",
+    "evaluation_risks": "Citar discurso sobre Zona Franca para afirmacao de desmatamento sem relacao."
+  },
+  {
+    "id": "q195",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "women",
+      "feminicide"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Leila Barros",
+      "Rose de Freitas",
+      "Mara Gabrilli"
+    ],
+    "relevant_sources_hint": [
+      "453696",
+      "460971",
+      "472484"
+    ],
+    "question": "Quais fontes devem ser verificadas para confirmar respostas sobre feminicidio e violencia de genero?",
+    "expected_answer_criteria": "Deve listar fontes por caso, proposicao ou campanha.",
+    "evaluation_risks": "Usar fonte cerimonial como unica prova de proposta substantiva."
+  },
+  {
+    "id": "q196",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "budget"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Rodrigo Pacheco",
+      "Lasier Martins",
+      "Reguffe"
+    ],
+    "relevant_sources_hint": [
+      "478968",
+      "478967",
+      "492171"
+    ],
+    "question": "Quais fontes sustentam uma resposta sobre orcamento secreto e emendas de relator?",
+    "expected_answer_criteria": "Deve associar cada source_id ao tipo de mencao: providencias, consideracoes ou oposicao.",
+    "evaluation_risks": "Citar artigos jornalisticos mencionados como se fossem documentos anexos."
+  },
+  {
+    "id": "q197",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "fake_news"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jorge Kajuru",
+      "Angelo Coronel"
+    ],
+    "relevant_sources_hint": [
+      "451522",
+      "452681",
+      "461036"
+    ],
+    "question": "Quais fontes sustentam uma resposta sobre fake news, discurso de odio e CPMI?",
+    "expected_answer_criteria": "Deve diferenciar cada fonte por tema e autor.",
+    "evaluation_risks": "Citar CPMI para afirmacao sobre ataque terrorista ou vice-versa."
+  },
+  {
+    "id": "q198",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "vaccination"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Lucas Barreto",
+      "Jorge Kajuru",
+      "Zenaide Maia"
+    ],
+    "relevant_sources_hint": [
+      "452062",
+      "454677",
+      "456584"
+    ],
+    "question": "Quais fontes sustentam perguntas sobre cobertura vacinal, H1N1 e vacinas antirrabicas?",
+    "expected_answer_criteria": "Deve associar cada tipo de vacina/fonte ao autor correto.",
+    "evaluation_risks": "Misturar imunizantes diferentes."
+  },
+  {
+    "id": "q199",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "tax_reform"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim",
+      "Jayme Campos",
+      "Roberto Rocha"
+    ],
+    "relevant_sources_hint": [
+      "453766",
+      "454960",
+      "455572"
+    ],
+    "question": "Quais fontes sustentam uma resposta comparativa sobre reforma tributaria?",
+    "expected_answer_criteria": "Deve citar uma fonte por perspectiva: progressiva, reducao de carga, relatoria/debate.",
+    "evaluation_risks": "Citar apenas uma fonte para representar todas as posicoes."
+  },
+  {
+    "id": "q200",
+    "category": "citation_source_verification",
+    "secondary_categories": [
+      "judiciary",
+      "cpi"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Alessandro Vieira",
+      "Eduardo Girão",
+      "Juíza Selma"
+    ],
+    "relevant_sources_hint": [
+      "450955",
+      "452240",
+      "451735"
+    ],
+    "question": "Quais fontes sustentam resposta sobre CPI do Judiciario ou CPI da Toga?",
+    "expected_answer_criteria": "Deve indicar fontes por etapa/autor e separar apoio, criacao e instalacao.",
+    "evaluation_risks": "Usar fonte de um autor para afirmar iniciativa de outro."
+  }
+]

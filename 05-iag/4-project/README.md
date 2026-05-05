@@ -547,6 +547,8 @@ python scripts/import_batches_to_openwebui.py \
 - [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json)
 - [`eval/discursos_questions_v3_100.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.json)
 - [`eval/discursos_questions_v3_100.csv`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.csv)
+- [`eval/discursos_questions_v4_200.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.json)
+- [`eval/discursos_questions_v4_200.csv`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.csv)
 - [`eval/RUBRIC.md`](/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md)
 - [`eval/prompts/rag_prompt.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md)
 - [`eval/prompts/rag_judge_system.md`](/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_system.md)
@@ -592,7 +594,9 @@ Versionamento do benchmark:
 - [`eval/discursos_questions.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions.json:1): benchmark base de 20 perguntas, usado nas rodadas históricas já consolidadas;
 - [`eval/discursos_questions_v2_balanced.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1): benchmark expandido intermediario com 25 perguntas;
 - [`eval/discursos_questions_v3_100.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.json:1): bateria ampliada com 100 perguntas, campos metodologicos extras e melhor cobertura de categorias criticas, recomendada para a proxima rodada experimental do artigo;
-- [`eval/discursos_questions_v3_100.csv`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.csv:1): espelho tabular da bateria v3 para revisao humana, anotacao e construcao posterior de gold standard.
+- [`eval/discursos_questions_v3_100.csv`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.csv:1): espelho tabular da bateria v3 para revisao humana, anotacao e construcao posterior de gold standard;
+- [`eval/discursos_questions_v4_200.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.json:1): bateria ampliada consolidada com 200 perguntas, incluindo os 100 itens da v3 e mais 100 perguntas mineradas a partir do dataset de discursos;
+- [`eval/discursos_questions_v4_200.csv`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.csv:1): espelho tabular da bateria v4 para revisao humana, anotacao e gold standard.
 
 ### 14.4 Sequência oficial de execução
 
@@ -644,6 +648,16 @@ Executar a bateria ampliada de 100 perguntas:
 ```bash
 python scripts/run_rag_eval.py \
   --questions-file eval/discursos_questions_v3_100.json \
+  --knowledge-name "Discursos do plenário do Senado 2019-2023 (v2)" \
+  --sleep-between 5 \
+  --verbose
+```
+
+Executar a bateria consolidada de 200 perguntas:
+
+```bash
+python scripts/run_rag_eval.py \
+  --questions-file eval/discursos_questions_v4_200.json \
   --knowledge-name "Discursos do plenário do Senado 2019-2023 (v2)" \
   --sleep-between 5 \
   --verbose
