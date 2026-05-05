@@ -1,0 +1,174 @@
+{
+  "executed_at_utc": "20260505T142659Z",
+  "finished_at_utc": "20260505T145454Z",
+  "duration_seconds": 1674.438,
+  "questions": {
+    "total": 20,
+    "ok": 20,
+    "error": 0
+  },
+  "scores": {
+    "min": 7.0,
+    "avg": 9.35,
+    "max": 10.0
+  },
+  "timing": {
+    "question_duration_seconds": {
+      "min": 48.583,
+      "avg": 78.971,
+      "max": 120.542
+    }
+  },
+  "retrieval": {
+    "chunk_count": {
+      "min": 9.0,
+      "avg": 12.7,
+      "max": 15.0
+    },
+    "unique_file_count": {
+      "min": 6.0,
+      "avg": 8.95,
+      "max": 13.0
+    },
+    "has_expected_author": {
+      "yes": 11,
+      "no": 4,
+      "unknown": 5
+    },
+    "author_mix_risk": {
+      "low": 3,
+      "medium": 1,
+      "high": 16,
+      "unknown": 0
+    }
+  },
+  "question_timings": [
+    {
+      "id": "q01",
+      "category": "factual",
+      "status": "ok",
+      "duration_seconds": 48.583
+    },
+    {
+      "id": "q02",
+      "category": "factual",
+      "status": "ok",
+      "duration_seconds": 72.575
+    },
+    {
+      "id": "q03",
+      "category": "proposal",
+      "status": "ok",
+      "duration_seconds": 54.958
+    },
+    {
+      "id": "q04",
+      "category": "proposal",
+      "status": "ok",
+      "duration_seconds": 54.882
+    },
+    {
+      "id": "q05",
+      "category": "author_focus",
+      "status": "ok",
+      "duration_seconds": 73.075
+    },
+    {
+      "id": "q06",
+      "category": "comparison",
+      "status": "ok",
+      "duration_seconds": 89.757
+    },
+    {
+      "id": "q07",
+      "category": "synthesis",
+      "status": "ok",
+      "duration_seconds": 88.094
+    },
+    {
+      "id": "q08",
+      "category": "numbers",
+      "status": "ok",
+      "duration_seconds": 62.263
+    },
+    {
+      "id": "q09",
+      "category": "author_focus",
+      "status": "ok",
+      "duration_seconds": 70.154
+    },
+    {
+      "id": "q10",
+      "category": "broad",
+      "status": "ok",
+      "duration_seconds": 96.565
+    },
+    {
+      "id": "q11",
+      "category": "comparison",
+      "status": "ok",
+      "duration_seconds": 77.704
+    },
+    {
+      "id": "q12",
+      "category": "author_disambiguation",
+      "status": "ok",
+      "duration_seconds": 88.306
+    },
+    {
+      "id": "q13",
+      "category": "negative_evidence",
+      "status": "ok",
+      "duration_seconds": 63.139
+    },
+    {
+      "id": "q14",
+      "category": "multi_hop",
+      "status": "ok",
+      "duration_seconds": 94.724
+    },
+    {
+      "id": "q15",
+      "category": "numbers_precision",
+      "status": "ok",
+      "duration_seconds": 93.694
+    },
+    {
+      "id": "q16",
+      "category": "scope_control",
+      "status": "ok",
+      "duration_seconds": 86.707
+    },
+    {
+      "id": "q17",
+      "category": "source_focus",
+      "status": "ok",
+      "duration_seconds": 59.682
+    },
+    {
+      "id": "q18",
+      "category": "cross_author",
+      "status": "ok",
+      "duration_seconds": 116.389
+    },
+    {
+      "id": "q19",
+      "category": "retrieval_stress",
+      "status": "ok",
+      "duration_seconds": 120.542
+    },
+    {
+      "id": "q20",
+      "category": "hallucination_check",
+      "status": "ok",
+      "duration_seconds": 67.631
+    }
+  ],
+  "artifacts": {
+    "jsonl": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T142659Z.jsonl",
+    "markdown": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T142659Z.md",
+    "csv": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T142659Z.csv",
+    "run_config": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T142659Z.run_config.json",
+    "run_summary": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T142659Z.run_summary.json"
+  }
+}

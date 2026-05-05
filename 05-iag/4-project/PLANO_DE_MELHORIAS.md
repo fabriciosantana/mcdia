@@ -405,9 +405,9 @@ O campo `text_source` deve ser tratado como metadado de controle e auditoria, na
 
 Avancar para uma frente com maior impacto experimental:
 
-- Prioridade 5 - Separar avaliacao de retrieval e geracao.
 - Prioridade 11 - Preparar uma rodada experimental ampliada com bateria mais diversa.
 - Prioridade 9 - Consolidar governanca dos resultados quando houver novas rodadas.
+- Prioridade 6 - Refinar chunking apenas depois de evidencia clara da bateria ampliada.
 
 ## Prioridade 5 - Separar avaliacao de retrieval e geracao
 
@@ -572,6 +572,7 @@ Tornar a ingestao retomavel, menos manual e menos vulneravel a falhas intermiten
   - `import_summary_<timestamp>.json` passa a apontar para o `import_state.json` e contabilizar importados, falhos, pulados por resume e dry-run.
   - Foi adicionado `--dry-run` para revisar o plano de importacao sem chamar a API.
   - Foram adicionados `--sleep-between-files` e retries com backoff para arquivos cujo processamento assíncrono termina com `status=failed`, mitigando `429` do endpoint de embeddings observado nos logs do Open WebUI.
+  - A reimportacao da knowledge `Discursos do plenário do Senado 2019-2023 (v2)` foi concluida com `120/120` batches marcados como `added` e `0` falhas no estado local.
 
 ## Prioridade 8 - Endurecimento da configuracao e da infraestrutura
 
@@ -957,6 +958,7 @@ Use esta secao para anotar escolhas importantes feitas ao longo da execucao do p
 | 2026-05-04 | Separacao retrieval/geracao | Adotada primeira versao heuristica baseada no payload `sources` do Open WebUI | O avaliador passa a salvar sinais de recuperacao junto das notas de resposta; campos incertos sao marcados como `unknown` para evitar falsa precisao. |
 | 2026-05-04 | Retomada da importacao | Importador passa a usar checkpoint persistente antes da reimportacao da base | `--resume` pula apenas batches com mesmo `knowledge_id` e mesmo SHA-256 ja marcados como `added`; `--dry-run` permite revisar a operacao sem chamadas de API. |
 | 2026-05-05 | Mitigacao de rate limit em embeddings | Adicionado backoff para processamento `failed` e pausa entre batches | Logs do Open WebUI mostraram `429 Too Many Requests` em `/v1/embeddings`; o importador passou a oferecer `--process-failed-retries`, `--process-failed-initial-backoff`, `--process-failed-max-backoff` e `--sleep-between-files`. |
+| 2026-05-05 | Rodada pos-reimportacao v2 | Tratar como baseline operacional, nao como evidencia de melhoria de qualidade | A knowledge v2 difere muito pouco da original, essencialmente por metadado de controle; a rodada valida que a base reimportada funciona, mas nao deve ser interpretada como ganho experimental relevante. |
 | a preencher | a preencher | a preencher | a preencher |
 
 ## Registro de execucao
@@ -988,6 +990,9 @@ Use esta secao para resumir entregas realizadas.
 | 2026-05-04 | Primeira separacao entre retrieval e qualidade da resposta implementada | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:1) | Avaliador passou a extrair `retrieval_*` do payload `sources`, salvar no JSONL/CSV/Markdown e consolidar sinais no `run_summary.json`; Prioridade 5 concluida em versao heuristica inicial. |
 | 2026-05-04 | Importacao retomavel implementada | [scripts/import_batches_to_openwebui.py](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py:1) | Prioridade 7 concluida com `import_state.json`, `--resume`, `--dry-run`, rastreio de falhas por batch e resumo operacional apontando para o estado persistente. |
 | 2026-05-05 | Retry de processamento para falhas por embeddings | [scripts/import_batches_to_openwebui.py](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py:1) | Importador atualizado para reenviar batches quando o processamento falha antes do `file/add`, com backoff configuravel e pausa entre arquivos para reduzir `429` em embeddings. |
+| 2026-05-05 | Reimportacao da knowledge v2 concluida | estado local de importacao | A importacao finalizou com `120/120` batches adicionados e `0` falhas no `import_state.json`; os resumos de importacao permanecem artefatos operacionais locais e nao foram versionados. |
+| 2026-05-05 | Rodada operacional contra knowledge v2 concluida | [rag_eval_20260505T142659Z.run_summary.json](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T142659Z.run_summary.json:1) | Rodada com `20/20` perguntas `ok`, media `9.35`, minimo `7`, maximo `10`; usada como baseline pos-reimportacao, nao como prova de melhoria, pois o conteudo da base mudou muito pouco. |
+| 2026-05-05 | Matriz analitica da rodada v2 gerada | [rag_eval_20260505T142659Z.question_analysis.md](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T142659Z.question_analysis.md:1) | Pos-processamento registrou recuperacao `alta=19`, `media=1`, `baixa=0`; fidelidade `alta=11`, `media=8`, `baixa=1`, com fragilidade principal em autoria cruzada (`q18`). |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |
