@@ -424,6 +424,7 @@ Saídas esperadas:
 - `knowledge_openwebui/discursos_chunks.jsonl`
 - `knowledge_openwebui/build_metadata.json`
 - `knowledge_openwebui/md_batches/batch_00001.md` ... `batch_00120.md`
+- `knowledge_openwebui/import_state.json`, apos execucoes reais do importador
 - `knowledge_openwebui/import_summary_<timestamp>.json`, apos execucoes do importador
 
 Cada registro de `discursos_chunks.jsonl` inclui `text_source`, indicando se o texto indexado veio de `texto_integral`, `resumo` ou `indexacao`. Os batches Markdown também exibem `Origem do texto`, e o `build_metadata.json` consolida `text_source_counts`.
@@ -472,6 +473,26 @@ python scripts/import_batches_to_openwebui.py \
 ```
 
 Cada execucao do importador registra progresso via `logging` e salva um resumo operacional em `knowledge_openwebui/import_summary_<timestamp>.json`, com contagens de arquivos importados/falhos, filtros aplicados e duracao por batch.
+
+Antes de uma reimportacao longa, simule o plano de execucao sem chamar a API:
+
+```bash
+python scripts/import_batches_to_openwebui.py \
+  --knowledge-id <knowledge_id> \
+  --pattern 'knowledge_openwebui/md_batches/batch_*.md' \
+  --dry-run
+```
+
+Execucoes reais gravam checkpoint em `knowledge_openwebui/import_state.json`. Para retomar uma importacao interrompida sem controlar manualmente `--start-from`, use:
+
+```bash
+python scripts/import_batches_to_openwebui.py \
+  --knowledge-id <knowledge_id> \
+  --pattern 'knowledge_openwebui/md_batches/batch_*.md' \
+  --resume
+```
+
+O modo `--resume` pula apenas batches marcados como `added` para o mesmo `knowledge_id` e com o mesmo hash SHA-256.
 
 ### 13.5 Retomar de um lote específico
 

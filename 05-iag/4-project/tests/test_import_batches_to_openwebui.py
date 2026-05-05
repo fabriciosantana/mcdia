@@ -142,6 +142,9 @@ def test_build_import_summary_aggregates_counts_selection_and_timings(tmp_path):
         selected_files=selected_files,
         rows=rows,
         summary_path=tmp_path / "import_summary.json",
+        state_path=tmp_path / "import_state.json",
+        resume=True,
+        dry_run=False,
     )
 
     assert summary["duration_seconds"] == 10.123
@@ -153,7 +156,15 @@ def test_build_import_summary_aggregates_counts_selection_and_timings(tmp_path):
         "selected_files": 2,
         "skipped_by_start_from": 1,
     }
-    assert summary["files"] == {"imported": 1, "failed": 1, "attempted": 2}
+    assert summary["resume_enabled"] is True
+    assert summary["dry_run"] is False
+    assert summary["files"] == {
+        "imported": 1,
+        "failed": 1,
+        "skipped_already_imported": 0,
+        "dry_run": 0,
+        "attempted": 2,
+    }
     assert summary["timing"]["file_duration_seconds"] == {
         "min": 2.0,
         "avg": 3.25,
@@ -161,3 +172,71 @@ def test_build_import_summary_aggregates_counts_selection_and_timings(tmp_path):
     }
     assert summary["file_results"][1]["error"] == "timeout"
     assert summary["artifacts"]["import_summary"].endswith("import_summary.json")
+    assert summary["artifacts"]["import_state"].endswith("import_state.json")
+
+
+def test_import_state_updates_status_and_preserves_attempt_for_pipeline_steps(tmp_path):
+    state = importer.load_import_state(tmp_path / "missing_state.json")
+    state_path = tmp_path / "import_state.json"
+    batch_path = tmp_path / "batch_00001.md"
+    batch_path.write_text("conteudo", encoding="utf-8")
+
+    uploaded = importer.update_import_state_entry(
+        state=state,
+        state_path=state_path,
+        knowledge_id="kid",
+        file_path=batch_path,
+        status="uploaded",
+        file_id="file-1",
+    )
+    processed = importer.update_import_state_entry(
+        state=state,
+        state_path=state_path,
+        knowledge_id="kid",
+        file_path=batch_path,
+        status="processed",
+        file_id="file-1",
+    )
+    added = importer.update_import_state_entry(
+        state=state,
+        state_path=state_path,
+        knowledge_id="kid",
+        file_path=batch_path,
+        status="added",
+        file_id="file-1",
+    )
+
+    assert uploaded["attempts"] == 1
+    assert processed["attempts"] == 1
+    assert added["attempts"] == 1
+    assert importer.should_skip_imported_file(
+        state=state,
+        knowledge_id="kid",
+        file_path=batch_path,
+    )
+
+    persisted = importer.load_import_state(state_path)
+    assert persisted["imports"]["kid"]["files"]["batch_00001.md"]["status"] == "added"
+
+
+def test_should_skip_imported_file_requires_matching_hash(tmp_path):
+    state = {"version": 1, "imports": {"kid": {"files": {}}}}
+    state_path = tmp_path / "import_state.json"
+    batch_path = tmp_path / "batch_00001.md"
+    batch_path.write_text("versao 1", encoding="utf-8")
+
+    importer.update_import_state_entry(
+        state=state,
+        state_path=state_path,
+        knowledge_id="kid",
+        file_path=batch_path,
+        status="added",
+        file_id="file-1",
+    )
+    batch_path.write_text("versao 2", encoding="utf-8")
+
+    assert not importer.should_skip_imported_file(
+        state=state,
+        knowledge_id="kid",
+        file_path=batch_path,
+    )

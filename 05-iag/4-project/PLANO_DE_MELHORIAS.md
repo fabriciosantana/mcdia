@@ -281,7 +281,7 @@ Melhorar visibilidade sobre tempos, falhas, volume processado e resultados por e
 
 **Status geral**
 
-- Status: `todo`
+- Status: `done`
 - Responsavel: a definir
 - Bloqueios/Dependencias: nenhum
 
@@ -523,14 +523,14 @@ Tornar a ingestao retomavel, menos manual e menos vulneravel a falhas intermiten
 
 **Status geral**
 
-- Status: `todo`
+- Status: `done`
 - Responsavel: a definir
 - Bloqueios/Dependencias: nenhum
 
 ### Tarefa 7.1 - Adicionar checkpoint de importacao
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Arquivos principais:
   - [scripts/import_batches_to_openwebui.py](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py:217)
 - Implementacao:
@@ -539,26 +539,38 @@ Tornar a ingestao retomavel, menos manual e menos vulneravel a falhas intermiten
   - Permitir retomada automatica.
 - Criterios de aceite:
   - Uma importacao interrompida pode continuar do ponto correto.
+- Resultado:
+  - O importador passou a manter `knowledge_openwebui/import_state.json`.
+  - O estado registra `status`, `attempts`, `file_id`, hash SHA-256, tamanho, erro e `knowledge_id` por batch.
+  - O checkpoint e atualizado apos `uploaded`, `processed`, `added` e `failed`.
 
 ### Tarefa 7.2 - Criar modo `resume`
 
 - Prioridade: alta
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Adicionar flag de linha de comando para retomar importacao anterior.
   - Pular arquivos ja marcados como concluidos.
 - Criterios de aceite:
   - Nao e necessario controlar retomada manualmente por nome de arquivo.
+- Resultado:
+  - Foi adicionada a flag `--resume`.
+  - Batches ja marcados como `added` sao pulados automaticamente quando `knowledge_id` e SHA-256 coincidem.
+  - A retomada continua compativel com `--start-from` e `--limit`.
 
 ### Tarefa 7.3 - Melhorar rastreio de falhas por arquivo
 
 - Prioridade: media
-- Status: `todo`
+- Status: `done`
 - Implementacao:
   - Persistir mensagem de erro por arquivo.
   - Destacar falhas recuperaveis vs. permanentes.
 - Criterios de aceite:
   - O operador sabe exatamente quais arquivos falharam e por que.
+- Resultado:
+  - Falhas passam a ser persistidas no estado com mensagem de erro e numero de tentativas.
+  - `import_summary_<timestamp>.json` passa a apontar para o `import_state.json` e contabilizar importados, falhos, pulados por resume e dry-run.
+  - Foi adicionado `--dry-run` para revisar o plano de importacao sem chamar a API.
 
 ## Prioridade 8 - Endurecimento da configuracao e da infraestrutura
 
@@ -942,6 +954,7 @@ Use esta secao para anotar escolhas importantes feitas ao longo da execucao do p
 | 2026-04-17 | Congelamento da knowledge base | Rodadas com `run_config` passam a ser comparadas apenas quando mantem o mesmo `knowledge_id` e os mesmos fingerprints dos artefatos | O baseline atual fica associado ao `knowledge_id` `902f627d-ab07-43bb-a395-8d573117f4fc`, com verificacao formal registrada em resumo dedicado. |
 | 2026-05-04 | Uso de `text_source` | Tratado como metadado de controle, nao como eixo analitico prioritario | A base regenerada tem `23119` chunks de `texto_integral`, `687` de `resumo` e `0` de `indexacao`; a Tarefa 4.3 foi deferida e o foco recomendado passou para separacao retrieval/geracao e desenho experimental ampliado. |
 | 2026-05-04 | Separacao retrieval/geracao | Adotada primeira versao heuristica baseada no payload `sources` do Open WebUI | O avaliador passa a salvar sinais de recuperacao junto das notas de resposta; campos incertos sao marcados como `unknown` para evitar falsa precisao. |
+| 2026-05-04 | Retomada da importacao | Importador passa a usar checkpoint persistente antes da reimportacao da base | `--resume` pula apenas batches com mesmo `knowledge_id` e mesmo SHA-256 ja marcados como `added`; `--dry-run` permite revisar a operacao sem chamadas de API. |
 | a preencher | a preencher | a preencher | a preencher |
 
 ## Registro de execucao
@@ -971,6 +984,7 @@ Use esta secao para resumir entregas realizadas.
 | 2026-05-04 | Origem do conteudo indexado persistida nos artefatos | [scripts/build_openwebui_knowledge_from_hf.py](/workspaces/mcdia/05-iag/4-project/scripts/build_openwebui_knowledge_from_hf.py:1) | Builder passou a registrar `text_source` por chunk, exibir `Origem do texto` nos batches Markdown e consolidar `text_source_counts` no `build_metadata.json`; tarefas 4.1 e 4.2 concluidas. |
 | 2026-05-04 | Escopo analitico de `text_source` reavaliado | [PLANO_DE_MELHORIAS.md](/workspaces/mcdia/05-iag/4-project/PLANO_DE_MELHORIAS.md:341) | `text_source` mantido como metadado de controle; analise por origem deferida porque a base e fortemente dominada por `texto_integral`, com foco seguinte recomendado em retrieval/geracao e experimento ampliado. |
 | 2026-05-04 | Primeira separacao entre retrieval e qualidade da resposta implementada | [scripts/run_rag_eval.py](/workspaces/mcdia/05-iag/4-project/scripts/run_rag_eval.py:1) | Avaliador passou a extrair `retrieval_*` do payload `sources`, salvar no JSONL/CSV/Markdown e consolidar sinais no `run_summary.json`; Prioridade 5 concluida em versao heuristica inicial. |
+| 2026-05-04 | Importacao retomavel implementada | [scripts/import_batches_to_openwebui.py](/workspaces/mcdia/05-iag/4-project/scripts/import_batches_to_openwebui.py:1) | Prioridade 7 concluida com `import_state.json`, `--resume`, `--dry-run`, rastreio de falhas por batch e resumo operacional apontando para o estado persistente. |
 | 2026-04-17 | Teste cruzado `gpt-5.4-nano -> gemma4:31b` concluido | [rag_eval_20260417T024620Z.csv](/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260417T024620Z.csv:1) | Rodada completa com 20/20 perguntas `ok` e `10/10` em todos os itens novamente, reforcando a interpretacao de que `gemma4:31b` e estavel, mas permissivo demais para servir como juiz principal sem validacao manual adicional. |
 | 2026-04-17 | Congelamento da knowledge base formalmente registrado | [knowledge_base_freeze_20260417.md](/workspaces/mcdia/05-iag/4-project/eval/results/knowledge_base_freeze_20260417.md:1) | Resumo formal confirmou que as rodadas comparadas com `run_config` compartilham o mesmo `knowledge_id` e os mesmos fingerprints de `build_metadata.json`, `discursos_chunks.jsonl` e `md_batches/`, sem evidencia de reindexacao entre elas. |
 | 2026-04-17 | Pos-processamento analitico por pergunta implementado | [scripts/build_question_analysis.py](/workspaces/mcdia/05-iag/4-project/scripts/build_question_analysis.py:1) | Script criado para transformar o JSONL da rodada em matriz analitica por pergunta, combinando sinais de retrieval, notas do juiz e `review_notes`. |
