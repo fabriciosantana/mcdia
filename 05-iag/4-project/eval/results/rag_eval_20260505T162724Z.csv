@@ -1,0 +1,914 @@
+id,category,question,execution_status,answer,adherence_score,factual_score,source_focus_score,synthesis_score,hallucination_score,total_score,duration_seconds,retrieval_source_entries,retrieval_chunk_count,retrieval_unique_file_count,retrieval_unique_files,retrieval_score_count,retrieval_avg_score,retrieval_links_present,retrieval_author_count,retrieval_author_mentions,retrieval_expected_authors,retrieval_has_expected_author,retrieval_author_mix_risk,review_notes
+q081,author_disambiguation,"Separe, em duas listas, o que e atribuivel a Confucio Moura e o que e atribuivel a Izalci Lucas sobre educacao, ciencia e financiamento.",ok,"Abaixo estão as atribuições separadas por senador, com as evidências-chave no contexto apresentado.
+
+1) Confúcio Moura (MDB/RO) — temas de educação, ciência e financiamento
+- Defendeu a perenização do Fundeb e a necessidade de maiores recursos para o desenvolvimento da educação brasileira. (463649-001; 463649-003)
+- Enfatizou que educação é barato e investimento econômico, defendendo prioridade de recursos para a educação e o papel da educação no desenvolvimento do País. (463649-004; 463649-003)
+- Comentou sobre o financiamento da educação, incluindo a ideia de que parte dos recursos (ex.: 6% do PIB) deve ser destinado à educação, e destacou a importância de fiscalização para evitar desvio de recursos. (463649-003)
+- Reforçou a necessidade de mais recursos para a educação infantil e para o conjunto da educação pública, discutindo prioridades orçamentárias. (451112-005)
+- Exposição em defesa da educação e da importância da pesquisa científica para o desenvolvimento do País, com destaque para a Embrapa, o Butantã e as universidades públicas. (453768-003)
+- Enfatizou a educação como vetor de desenvolvimento e transformação, defendendo prioridade a investimentos em educação e ciência/tecnologia. (457847-002)
+
+2) Izalci Lucas (PSDB/DF) — temas de educação, ciência e financiamento
+- Defendeu a manutenção do Fundo Nacional de Desenvolvimento Científico e Tecnológico (FNDCT) e a necessidade de investir em inovação tecnológica, com referência à construção civil. (464216-007)
+- Apontou a necessidade de aumentar investimentos em ciência e tecnologia, relatando visita ao Sirius e defendendo mais recursos para ciência e tecnologia. (454032-003)
+- Discutiu orçamento na área da educação com defesa de investimentos em educação em tempo integral e educação de qualidade, associando o tema à inovação. (462244-003)
+- Participou de debate sobre o PLN 19 (LOA/2022), incluindo referências a ciência e tecnologia, educação e instituições como CNPQ e EMBRAPA, ligando orçamento a inovação e desenvolvimento. (487263-002)
+
+Evidências principais do contexto
+- Confúcio Moura tem amplo foco em educação como prioridade orçamentária, defesa do Fundeb/educação pública, e visão de educação como vetor de desenvolvimento, com ênfase em pesquisa e inovação. (463649-001; 451112-005; 453768-003; 457847-002; 463649-003; 463649-004)
+- Izalci Lucas enfatiza financiamento e inovação em ciência e tecnologia (FNDCT), investimentos em educação com foco em qualidade e tempo integral, e participação em discussões orçamentárias que ligam educação, ciência e tecnologia a desenvolvimento econômico e social. (464216-007; 454032-003; 462244-003; 487263-002)
+
+Limitações do que foi possível confirmar
+- As afirmações acima foram extraídas exclusivamente dos trechos fornecidos. Caso exista outro trecho relevante não incluído no contexto, não foi considerado.
+- Em alguns casos, os trechos contêm trechos longos que tratam de vários subtemas; as indicações acima sintetizam apenas os aspectos explicitamente relacionados a educação, ciência ou financiamento.
+
+Referências:
+- Izalci Lucas (PSDB/DF) | Data: 2020-03-05 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/464216
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2019-02-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451112
+- Confúcio Moura (MDB/RO) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453768
+- Confúcio Moura (MDB/RO) | Data: 2019-09-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457847
+- Izalci Lucas (PSDB/DF) | Data: 2019-11-28 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462244
+- Izalci Lucas (PSDB/DF) | Data: 2019-05-23 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454032
+- Izalci Lucas (PSDB/DF) | Data: 2021-12-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/487263",1,2,2,2,2,9,95.671,1,13,9,batch_00001.md; batch_00013.md; batch_00014.md; batch_00029.md; batch_00037.md; batch_00040.md; batch_00041.md; batch_00043.md; batch_00086.md,13,0.5627,True,2,Confúcio Moura; Izalci Lucas,Confucio Moura; Izalci Lucas,yes,medium,"A resposta apresenta as duas listas solicitadas, porém inclui seções extras (Evidências, Limitações, Referências) não pedidas. As atribuições para Confúcio Moura e Izalci Lucas estão claras e com referências correspondentes."
+q164,author_disambiguation,"Separe preocupacoes de Izalci Lucas, Alvaro Dias, Lucas Barreto e Jorge Kajuru sobre universidades ou educacao superior.",ok,"Resposta direta:
+
+- Izalci Lucas (PSDB/DF)
+  - Propõe ampliar oportunidades de acesso ao ensino superior para os jovens, defendendo medidas como o ProUni e a ampliação de vagas para universidade. Cita que é necessário ""dar aos jovens oportunidade de fazer uma faculdade"" e ampliar ações de inclusão nesse âmbito. (Chunk 1)
+  - Defende a destinação de recursos para a educação e não desvinculação orçamentária, com foco na melhoria da qualidade do ensino e na capacidade de investimento em educação básica e superior. (Chunk 8)
+  - Apoia a implementação da Educação Digital como política pública, destacando a relevância da Política Nacional de Educação Digital para jovens do ensino médio e a necessidade de ação prática/execução. (Chunk 3)
+  - Apresenta a ideia de bolsa universitária com contrapartidas, incluindo transporte e alimentação, para ampliar o acesso à educação superior, especialmente visando regiões com carência de recursos e infraestrutura. (Chunk 2)
+
+- Alvaro Dias
+  - Não encontrei informações no contexto fornecido sobre preocupações dele específicas em relação a universidades ou educação superior. Não tenho dados para separar esse conjunto de preocupações a partir do material apresentado. (Não encontrado no contexto)
+
+- Lucas Barreto
+  - Não encontrei informações no contexto fornecido sobre preocupações dele específicas em relação a universidades ou educação superior. Não tenho dados para separar esse conjunto de preocupações a partir do material apresentado. (Não encontrado no contexto)
+
+- Jorge Kajuru (PSB/GO)
+  - Enfatiza a importância da educação e a necessidade de investimento, incluindo menção a mecanismos de financiamento da educação como o FUNDEB e o cumprimento do Plano Nacional de Educação (PNE). (Chunk 9)
+  - Comenta o atraso do Brasil em metas do PNE com base em relatório do Inep e defende ações para implementação efetiva de políticas educacionais, incluindo o papel de propostas constitucionais (PEC) e financiamento estável da educação. (Chunk 11)
+  - Faz referência ao espírito de investimento em educação inspirado em exemplos históricos (como Kennedy) para ampliar a formação de educadores e a educação de qualidade, defendendo maior prioridade à educação para desenvolvimento econômico e social. (Chunk 6)
+
+Evidências principais do contexto:
+- Izalci Lucas destaca a necessidade de ampliar vagas/acesso ao ensino superior via ProUni e ENEM, bem como a importância de financiar educação com foco na qualidade e na inclusão. (Chunk 1)
+- Izalci Lucas aponta a Educação Digital (PL 4513/2020) como prioridade, ressaltando a implementação prática. (Chunk 3)
+- Izalci Lucas defende bolsas universitárias com contrapartidas e apoio logístico (transporte/alimentação) para regiões com carência. (Chunk 2)
+- Jorge Kajuru ressalta a importância da educação e a necessidade de investimento, mencionando o FUNDEB e o PNE, além de defender ações para implementação e melhoria da educação. (Chunks 9, 11)
+- Jorge Kajuru faz referência a argumentos histórico-educacionais (inspirados em Kennedy) para justificar investimento em educação e formação profissional. (Chunk 6)
+
+Limitações do que não foi possível confirmar:
+- Não há menções específicas, no contexto fornecido, às preocupações de Alvaro Dias sobre universidades ou educação superior.
+- Não há menção direta, de forma detalhada, das preocupações de Lucas Barreto sobre educação superior; o material disponível não traz trechos explícitos dele nesse tema.
+
+Referências:
+
+- Izalci Lucas (PSDB/DF) | Data: 2022-04-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/490141
+- Izalci Lucas (PSDB/DF) | Data: 2019-03-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451295
+- Izalci Lucas (PSDB/DF) | Data: 2022-12-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/495091
+- Izalci Lucas (PSDB/DF) | Data: 2021-09-03 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482936
+- Izalci Lucas (PSDB/DF) | Data: 2019-04-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453146
+- Izalci Lucas (PSDB/DF) | Data: 2021-06-30 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/480929
+- Izalci Lucas (PSDB/DF) | Data: 2022-08-29 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493497
+- Jorge Kajuru (PSB/GO) | Data: 2019-04-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452365
+- Jorge Kajuru (PSB/GO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451322
+- Jorge Kajuru (PSB/GO) | Data: 2021-04-04? (não listado) | Link: — (não encontrado; incluído apenas para referência de itens mencionados no conjunto)",2,2,2,2,2,10,88.871,1,12,11,batch_00002.md; batch_00008.md; batch_00010.md; batch_00012.md; batch_00064.md; batch_00069.md; batch_00082.md; batch_00088.md; batch_00100.md; batch_00111.md; batch_00115.md,12,0.5859,True,4,Eduardo Gomes; Izalci Lucas; Jorge Kajuru; Paulo Paim,Alvaro Dias; Izalci Lucas; Jorge Kajuru; Lucas Barreto,yes,high,"Izalci: defesa de ampliar acesso via ProUni/ENEM, financiamento de educação, Educação Digital e bolsas com contrapartidas (transporte/alimentação). Kajuru: importância da educação, financiamento (FUNDEB, PNE) e ações para implementação; referências históricas (Kennedy). Alvaro Dias e Lucas Barreto não têm dados no contexto fornecido. Estrutura clara, uso de chunks como evidência."
+q017,author_focus,Quais propostas ou cobrancas de Confucio Moura sobre educacao podem ser atribuidas com seguranca a ele?,ok,"A partir do contexto fornecido, as propostas ou cobranças de Confúcio Moura sobre educação que podem ser atribuídas com segurança a ele são:
+
+- Propôs um programa de melhoria da educação em Rondônia que valoriza a integração entre educação, saúde e assistência social, com atuação prática para levar serviços (como pré-natal e ultrassom) às camadas mais pobres e facilitar o acesso a recursos básicos, em um esforço de implementação gradual em municípios. (456240-002)
+
+- Defendeu a educação integral para crianças do ensino básico (incluindo educação infantil e fundamental) e ressaltou a necessidade de ações coordenadas para romper o ciclo da pobreza por meio da educação. (451112-005)
+
+- Defendeu a melhoria da qualidade dos professores no ensino básico, com valorização da carreira, melhoria salarial, formação em sala de aula na prática, e punição a agressões contra professores. (455270-005)
+
+- Propôs o Pacto pela Educação Básica, com foco na alfabetização na idade certa, melhoria da gestão escolar, uso de tecnologia na educação (antenas Gsat) e internet de alta qualidade via satélite, bem como atenção ao ENEM/IDEB e melhoria de escolas em 22 municípios. (483240-001)
+
+- Manifestou apoio à perenização do Fundeb e à ampliação dos recursos financeiros para o desenvolvimento da educação brasileira. (463649-001)
+
+- Anunciou e apoiou um projeto de tecnologia escolar em parceria com o Instituto Federal de Educação, para criar, implantar e manter um sistema de gerenciamento acadêmico, desenvolver software e apps para docentes, alunos e famílias, além de laboratórios temáticos e aquisição de equipamentos para escolas em 22 municípios, com continuidade no mandato e uso de emendas parlamentares. (490338-001)
+
+Evidências principais do contexto (trechos correspondentes):
+- Integração educação-saúde-assistência social em Rondônia, com abrangência municipal gradual. (456240-002)
+- Educação integral para o ensino básico, com foco em infância e juventude. (451112-005)
+- Foco na melhoria da qualidade dos professores, valorização da carreira e formação prática. (455270-005)
+- Pacto pela Educação Básica, alfabetização na idade certa, tecnologia educacional e melhoria de gestão escolar. (483240-001)
+- Defesa da perenização do Fundeb e mais recursos para educação. (463649-001)
+- Projeto de tecnologia escolar com IF, sistema de gestão, laboratórios e 22 municípios, com continuidade. (490338-001)
+
+Limitações do que não foi possível confirmar no contexto:
+- Não há detalhes adicionais sobre outras propostas específicas que possam ter sido feitas em contextos diferentes sem uma leitura adicional dos textos completos. As informações acima refletem apenas o que está claramente apresentado nos trechos fornecidos.
+
+### Referências:
+- Confúcio Moura (MDB/RO) | Data: 2019-08-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456240
+- Confúcio Moura (MDB/RO) | Data: 2019-02-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451112
+- Confúcio Moura (MDB/RO) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455270
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2021-09-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483240
+- Confúcio Moura (MDB/RO) | Data: 2022-04-12 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/489802
+- Confúcio Moura (MDB/RO) | Data: 2022-05-03 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/490338",2,2,2,2,2,10,99.117,1,12,10,batch_00001.md; batch_00008.md; batch_00013.md; batch_00022.md; batch_00026.md; batch_00041.md; batch_00068.md; batch_00075.md; batch_00094.md; batch_00099.md,12,0.6096,True,3,Confúcio Moura; Maria Eliza; Maria Eliza De Aguiar E Silva,Confucio Moura,yes,high,"Propostas atribuídas com segurança, fontes citadas de forma consistente, síntese clara e sem alucinações; limitações explícitas."
+q108,author_focus,Como Paulo Paim defende o fortalecimento do SUS nos discursos recuperados?,ok,"Resposta direta:
+Paulo Paim defende o fortalecimento do SUS defendendo-o como um sistema público, universal e de direito do cidadão, que deve receber mais investimento e não ser alvo de cortes ou privatizações. Ele mostra que o SUS é essencial para atender a maioria dos brasileiros, argumenta que o problema não é o SUS em si, mas a necessidade de mais orçamento, e critica políticas de austeridade que congelam gastos. Também aponta que o SUS é uma “política de Estado” e cita seus avanços e conquistas para sustentar a necessidade de ampliar recursos e ampliar sua capacidade de atendimento, incluindo a primazia de ações como imunizações, atenção primária, e outros serviços vitais. Em apoio, utiliza a defesa pública de Drauzio Varella de que “Sem o SUS, é a barbárie”.
+
+Evidências principais do contexto:
+- O SUS deve ser fortalecido com mais investimento, não apenas reconhecido como válido: “O problema do SUS no Brasil é que precisa de mais orçamento para poder levar a saúde pública para todos” e “não é falar mal do SUS: é fortalecê-lo, investindo mais, em saúde e em educação.” [452369-001].
+- O SUS é apresentado como um dos maiores e mais eficazes sistemas de saúde do mundo, mas sofre com orçamento insuficiente: “O SUS é um dos maiores e mais efetivos sistemas no trato da saúde pública do mundo.” e “Nenhum sistema universal tem investimentos públicos tão baixos como o nosso.” [452369-001].
+- É reconhecida a necessidade de enfrentar propostas de austeridade que congelam os gastos com saúde, defendendo a revogação de Emenda 95: “a PEC 95 ... congela os gastos por 20 anos” e a ideia de revertê-la para ampliar investimentos no SUS. [452369-001].
+- O SUS é apresentado como política de Estado, construída pela sociedade, não apenas pela gestão de governo: “É uma política de Estado e não de governo, é resultado de uma construção da sociedade brasileira...” [452369-003].
+- Avanços e componentes do SUS são destacados para justificar o fortalecimento: “avanços na atenção primária… Estratégia de Saúde da Família, Política Nacional de Imunizações, redução da mortalidade infantil, Vigilância Epidemiológica e Sanitária, Samu, AIDS/Hepatites, etc.” com o argumento de que esses pilares devem receber mais apoio financeiro. [452369-003].
+- Em apoio explícito ao argumento, citações públicas associadas ao SUS como fundamento ético e científico: “Sem o SUS, é a barbárie” (artigo citado de Drauzio Varella), utilizado para defender a importância do sistema. [456636-001].
+
+Limitações do que não foi possível confirmar:
+- O conjunto de discursos recuperados é amplo, mas as citações diretas mais relevantes para o fortalecimento do SUS vêm principalmente de 2019-04-04 (452369-001 e 452369-003) e de 2019-08-19 (456636-001). Outros trechos disponíveis abordam SUS em tom geral ou em contexto mais amplo, mas não são tão centrais quanto esses para o tema pedido.
+
+Referências:
+- Paulo Paim (PT/RS) | Data: 2019-04-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452369
+- Paulo Paim (PT/RS) | Data: 2019-04-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452369
+- Paulo Paim (PT/RS) | Data: 2019-08-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456636
+
+Observação: Quando houver citações diretas em outros trechos, foram referenciadas conforme aparecem nos trechos do contexto fornecido.",2,2,2,2,2,10,76.374,1,11,7,batch_00006.md; batch_00011.md; batch_00012.md; batch_00014.md; batch_00025.md; batch_00026.md; batch_00028.md,11,0.6544,True,3,Jorge Kajuru; Paulo Paim; Paulo Rocha,Como Paulo Paim,yes,high,"Resumo direto: a resposta apresenta argumentação clara a favor do fortalecimento do SUS, com ênfase em orçamento, defesa de política de Estado e uso de citações relevantes; refere fontes específicas e reconhece limitações de confirmação."
+q037,broad_multifocal,"Que eixos aparecem em discursos de senadoras sobre mulheres, representacao, violencia e direitos?",ok,"A partir dos discursos recuperados, os principais eixos observados sobre mulheres, representação, violência e direitos são:
+
+- Participação e representatividade das mulheres na política
+  - Destaque para a criação da Bancada Feminina no Senado e a defesa de maior participação feminina em cargos e espaços de poder, inclusive a ideia de memória institucional e prática permanente dessa pauta. Evidências: menção à Bancada Feminina e à sua atuação; defesa de cotas e de maior presença de mulheres nos espaços decisórios. (Citações: 451426-001; 451617-001; 494386-001)
+
+- Violência contra a mulher e necessidade de ações integradas
+  - Relevância dada à violência física, sexual, psicológica e patrimonial, com dados alarmantes e a necessidade de políticas públicas adequadas, proteção às vítimas e melhoria de serviços de atendimento. (Citações: 494386-001)
+
+- Legislação e políticas públicas de proteção às mulheres
+  - Citação de leis e instrumentos legais (Lei Maria da Penha; criminalização de stalking; medidas protetivas) e a importância de ampliar essas normativas e sua aplicação. (Citações: 494395-004)
+
+- Orçamento, recursos e implementação de políticas para mulheres
+  - Ênfase na disponibilidade de recursos e na execução orçamentária para programas de proteção à mulher (Casa da Mulher Brasileira, Ligue 180, etc.) como parte central da eficácia das políticas. (Citações: 494395-004)
+
+- Interseccionalidade raça/etnia e vulnerabilidades específicas
+  - Reconhecimento de que a violência impacta de forma desproporcional mulheres negras, pessoas com deficiência e outros grupos, exigindo ações diferenciadas e inclusão de raça/gênero nas políticas. (Citações: 494386-002; 487984-002)
+
+- Autonomia econômica e participação no mercado de trabalho
+  - Enfoque na independência econômica das mulheres, incluindo ações de empoderamento econômico, cotas e programas de desenvolvimento profissional. (Citações: 494395-004)
+
+- Direitos reprodutivos, saúde e acesso a itens de cuidado
+  - Menção à saúde da mulher e a necessidades como absorventes gratuitos, entre outras medidas de assistência, como parte dos direitos das mulheres. (Citações: 494395-004)
+
+- Memória histórica e luta por direitos
+  - Contextualização dos 90 anos do voto feminino, reconhecimento de trajetórias históricas de conquista de direitos e a continuidade da luta por igualdade. (Citações: 488496-001)
+
+- Conduta pública, repúdio a misoginia e combate a discurso de ódio
+  - Rechaço a atitudes misóginas e a manifestações de violência verbal, com defesa de padrões éticos e de políticas públicas que enfrentem esse comportamento. (Citações: 488687-003)
+
+- Conexão com ações e evidências internacionais
+  - Referência a marcos internacionais (Dia Internacional da Mulher, campanhas de 16 dias, etc.) para contextualizar a importância da pauta no Brasil. (Citações: 494386-001)
+
+Observação sobre limites do contexto:
+- Os eixos acima são extraídos diretamente dos trechos apresentados. Se houver necessidade de aprofundar algum eixo específico com trechos adicionais, posso trazer as citações correspondentes com mais detalhes.
+
+### Referências:
+
+- Leila Barros (PDT/DF) | Data: 2022-11-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494386
+
+- Daniella Ribeiro (PP/PB) | Data: 2019-03-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451617
+
+- Eliziane Gama (CIDADANIA/MA) | Data: 2022-03-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488687
+
+- Soraya Thronicke (PSL/MS) | Data: 2022-02-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488496
+
+- Maria Terezinha Nunes | Data: 2022-11-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494395
+
+- Leila Barros (PDT/DF) | Data: 2021-11-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/487984
+
+- Rodrigo Pacheco (PSD/MG) | Data: 2022-03-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488687",2,2,2,2,2,10,72.415,1,12,6,batch_00005.md; batch_00007.md; batch_00008.md; batch_00085.md; batch_00092.md; batch_00113.md,12,0.6691,True,7,Daniella Ribeiro; Eliziane Gama; Jorge Kajuru; Leila Barros; Maria Terezinha Nunes; Rodrigo Pacheco; Soraya Thronicke,,unknown,high,"Eixos centrais bem identificados (participação, violência, legislação, orçamento, interseccionalidade, autonomia econômica, saúde, memória histórica, conduta pública). uso de citações específicas; síntese clara e sem alucinações."
+q155,broad_multifocal,"Como Amazonia, soberania, economia e critica ambiental internacional aparecem conectadas?",ok,"Resposta direta:
+A Amazônia é tratada, nos textos, como patrimônio nacional cuja soberania do Brasil deve ser preservada, inclusive diante de críticas internacionais. Ao mesmo tempo, economia e proteção ambiental são vistos como compatíveis quando orientadas a um desenvolvimento sustentável (ex.: Zona Franca de Manaus como exemplo de integração entre produção e preservação). Governos modernos defendem cooperação internacional, mas sem abrir mão da gestão soberana do território; a crítica externa é reconhecida, porém não aceita como justificativa para abrir mão de prerrogativas nacionais. Há também a ideia de que a Amazônia sustenta o clima e a água do país, o que fortalece a necessidade de políticas que conectem conservação, desenvolvimento econômico e segurança energética.
+
+Evidências principais do contexto:
+- Soberania e equilíbrio entre desenvolvimento e proteção: “A Amazônia brasileira é, e precisa continuar a ser, nossa. Soberania é um dos princípios fundamentais da nossa República Federativa.” (Eduardo Braga, 2019-08-27). Reforça a ideia de manter a soberania enquanto se busca políticas públicas que promovam desenvolvimento sustentável. 
+- Equilíbrio entre fiscalização, tecnologia e desenvolvimento econômico: “Equilíbrio e bom senso, fiscalização e controle, tecnologia e inovação - esse é o caminho.” (Eduardo Braga, 2019-08-27). 
+- Economia integrada à proteção ambiental (Zona Franca de Manaus): defesa de que a Zona Franca sustenta emprego e desenvolvimento econômico sem abrir mão da proteção ambiental, apresentando-a como modelo de integração região/bioma. (Eduardo Braga, 2019-08-27).
+- Crítica internacional acionada, mas resistência a subordinação: “as interferências indevidas por parte de outras nações” e a ideia de não permitir que a soberania brasileira seja atropelada por pressões externas. (Eduardo Braga, 2019-08-27).
+- Concepção de três Amazônias e foco em governança nacional: “três Amazônias” (Legal, bioma, Panamazônia) e a importância de organização nacional para enfrentar desmatamento, queimadas e soberania. (Hamilton Mourão, 2020-07-14).
+- Combinação de proteção e desenvolvimento com base em ciência climática: papel da Amazônia nas mudanças climáticas globais é via de mão dupla — desmatamento aumenta emissões (e vice-versa) e requer ações tanto para reduzir o desmatamento quanto para diminuir emissões globais. (Paulo Artaxo, 2020-12-17). Observação: este trecho é de participante externo à Câmara, usado como referência de contexto climático (não senador).
+- Importância de manter a soberania frente a pressões internacionais e evitar entregas de ativos estratégicos: “Não há necessidade de vender a nossa Amazônia para os interesses internacionais.” (Hamilton Mourão, 2020-07-14).
+- Rios voadores e água como fundamentos da relação Amazônia-água-energia: a floresta atua na regulação do regime de chuvas e do abastecimento hídrico que sustenta a produção agropecuária e a energia no Brasil. (Paulo Rocha, 2019-04-23). Observação: trecho que ressalta a função hídrica da Amazônia para o país.
+- Papel da cooperação internacional na luta contra o desmatamento, sem abrir mão do modelo nacional: apresentações sobre a importância de acordos internacionais, cooperação e participação brasileira em fóruns globais, desde que respeitem a soberania. (Mourão, 2020-07-14; Paulo Rocha, 2019-04-23/2019-12-12).
+
+Limitações do que não foi possível confirmar:
+- Alguns trechos contêm números com erros de OCR (ex.: “SOO empresas” e “SOO mil empregos”) e não há confirmação de valores precisos dentro do contexto; as afirmações foram usadas de forma geral, sem depender de números inválidos.
+- A seleção de falas carrega o viés de discursos partidários e de posicionamentos institucionais; as visões representadas refletem a perspectiva de determinados atores no Senado, não uma síntese imparcial de todos os pontos de vista sobre o tema.
+- Trechos de falas de participantes não-senadores (ex.: Pa outdoors; Paulo Artaxo) foram usados apenas como contexto adicional de discussões climáticas, não como fontes oficiais de posição parlamentar.
+
+Referências:
+- Eduardo Braga (MDB/AM) | Data: 2019-08-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457844
+- Paulo Rocha (PT/PA) | Data: 2019-04-23 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452723
+- Hamilton Mourão (nan/nan) | Data: 2020-07-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/469328
+
+Observação final:
+As ligações entre Amazônia, soberania, economia e críticas internacionais aparecem fortemente nos discursos como um debate de gestão soberana com integração de políticas públicas, uso responsável de instrumentos econômicos (como ZFM), e participação em acordos globais, sempre enfatizando que desenvolvimento e proteção ambiental não são mutuamente exclusivos quando moldados por políticas nacionais sólidas.",2,2,2,2,2,10,66.77,1,8,7,batch_00001.md; batch_00004.md; batch_00010.md; batch_00023.md; batch_00040.md; batch_00049.md; batch_00051.md,8,0.6512,True,5,Eduardo Braga; Hamilton Mourão; Paulo Artaxo; Paulo Rocha; Plínio Valério,Como Amazonia,no,high,"Análise alinhada ao tema, síntese clara e uso adequado de fontes; não há alucinações. Pontos a melhorar: menção de números com OCR pode gerar imprecisões; há viés de discursos partidários, mas a avaliação reconhece isso e mantém o foco no argumento central."
+q097,citation_source_verification,Quais identificadores ou links de fonte sustentam a resposta sobre concentracao bancaria em Ciro Nogueira?,ok,"Os identificadores/links que sustentam a resposta são:
+
+- Ciro Nogueira (PP/PI) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451286
+
+### Referências:
+- Ciro Nogueira (PP/PI) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451286",2,1,2,2,2,9,33.607,1,10,8,batch_00001.md; batch_00005.md; batch_00018.md; batch_00024.md; batch_00032.md; batch_00039.md; batch_00041.md; batch_00086.md,10,0.4755,True,6,Alvaro Dias; Ciro Nogueira; Eduardo Braga; Fernando Bezerra Coelho; Izalci Lucas; Oriovisto Guimarães,Ciro Nogueira,yes,high,Fonte única fornecida; não fica claro se o link trata de concentração bancária; não há confirmação de relevância.
+q200,citation_source_verification,Quais fontes sustentam resposta sobre CPI do Judiciario ou CPI da Toga?,ok,"Fontes que sustentam informações sobre CPI do Judiciário ou CPI da Toga:
+
+- Davi Alcolumbre (DEM/AP) | Data: 2019-03-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451930
+  - Fala da Presidência sobre requerimento para criação de CPI destinada a investigar condutas de Ministros de tribunais superiores. [451930-002]
+
+- Marcos Rogério (DEM/RO) | Data: 2019-03-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451913
+  - Pela ordem; comentário sobre a proposta de criação de CPI para averiguar condutas de ministros de tribunais superiores. [451913-002]
+
+- Alessandro Vieira (PPS/SE) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450955
+  - Comunicação inadiável agradecendo apoio para a criação da CPI das Cortes Superiores do Poder Judiciário e esclarecimentos sobre o arquivamento do requerimento desta CPI. [450955-002]
+
+- Alessandro Vieira (CIDADANIA/SE) | Data: 2019-03-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451725
+  - Pela ordem; defesa da instalação da CPI para investigar ilegalidades no Poder Judiciário (CPI Lava Toga). [451725-001]
+
+- Jorge Kajuru (PSB/GO) | Data: 2019-03-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451562
+  - Defesa da instauração da Comissão Parlamentar de Inquérito (CPI) da Toga. [451562-001]
+
+- Lasier Martins (PODE/RS) | Data: 2019-03-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451568
+  - Considerações sobre decisão de encaminhar avaliações à consultoria da Casa para acelerar a instalação da CPI Lava Toga. [451568-001]
+
+- Jorge Kajuru (PSB/GO) | Data: 2019-04-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452681
+  - Alerta para o perigo das fake news; comenta notícia sobre voto de S. Exa quanto à criação da CPI da Toga. [452681-003]
+
+Observação sobre escopo:
+- As fontes acima tratam especificamente de propostas, defesas ou discussões sobre CPIs ligadas ao Judiciário (incluindo a CPI Lava Toga) ou à chamada “CPI da Toga”. Alguns itens discutem a possibilidade, requisitos regimentais e debates institucionais relacionados a essas CPIs. Se precisar, posso destacar trechos específicos que mostrem apoio, oposição ou ressalvas às CPIs. 
+
+### Referências:
+
+- Davi Alcolumbre (DEM/AP) | Data: 2019-03-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451930
+
+- Marcos Rogério (DEM/RO) | Data: 2019-03-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451913
+
+- Alessandro Vieira (PPS/SE) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450955
+
+- Alessandro Vieira (CIDADANIA/SE) | Data: 2019-03-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451725
+
+- Jorge Kajuru (PSB/GO) | Data: 2019-03-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451562
+
+- Lasier Martins (PODE/RS) | Data: 2019-03-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451568
+
+- Jorge Kajuru (PSB/GO) | Data: 2019-04-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452681
+
+- Não foram encontrados metadados adicionais no contexto para outros itens relevantes.",2,2,2,2,2,10,51.998,1,14,10,batch_00002.md; batch_00004.md; batch_00005.md; batch_00006.md; batch_00007.md; batch_00009.md; batch_00011.md; batch_00026.md; batch_00028.md; batch_00106.md,14,0.5389,True,7,Alessandro Vieira; Alvaro Dias; Davi Alcolumbre; Dias Toffoli; Jorge Kajuru; Lasier Martins; Marcos Rogério,Judiciario Ou,no,high,"Fontes oficiais (pronunciamentos do Senado) sobre CPI do Judiciário e CPI da Toga; lista com links e descrições relevantes; texto claro, sem extrapolações."
+q025,comparison,Compare como Ciro Nogueira e Wellington Fagundes usam diagnosticos economicos para defender mudancas estruturais.,ok,"Não encontrei no contexto fornecido informações sobre Ciro Nogueira para fazer uma comparação direta. Com base no material disponível, Wellington Fagundes utiliza um diagnóstico econômico específico para defender mudanças estruturais no papel do setor privado na infraestrutura: ele aponta que o eixo dinâmico das iniciativas e dos investimentos em infraestrutura tem se deslocado para o setor privado. [451435-001]
+
+Evidências principais do contexto:
+- Deslocamento do eixo dinâmico das iniciativas e dos investimentos em infraestrutura para o setor privado. [451435-001]
+- Os rótulos de indexação do discurso incluem termos como privatização, investimento, infraestrutura e setor privado, sugerindo essa orientação. [451435-001]
+
+Limitações:
+- Não há menção no contexto a Ciro Nogueira, portanto não é possível realizar a comparação solicitada com base nesses documentos. A análise disponível descreve apenas o diagnóstico e posicionamento de Wellington Fagundes em relação à participação privada em infraestrutura.
+
+Referências:
+- Wellington Fagundes (PR/MT) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451435",1,2,2,2,2,9,52.448,1,13,11,batch_00008.md; batch_00012.md; batch_00016.md; batch_00018.md; batch_00022.md; batch_00027.md; batch_00032.md; batch_00042.md; batch_00043.md; batch_00050.md; batch_00071.md,13,0.4937,True,9,Eduardo Fagnani; Guilherme Mello; Lasier Martins; Marcos Rogério; Mário Sérgio Carraro Telles; Paulo Paim; Plínio Valério; Rogério Carvalho; Wellington Fagundes,Ciro Nogueira; Wellington Fagundes,yes,high,Não houve comparação solicitada; a resposta descreve apenas Wellington Fagundes e reconhece ausência de info sobre Ciro Nogueira; utiliza uma única fonte; citações incluídas.
+q112,comparison,Compare como diferentes parlamentares abordam as emendas de relator ou o chamado orcamento secreto.,ok,"1) Resposta direta
+
+- Renan Calheiros (MDB/AL): critica veementemente o orçamento secreto, chamando-o de atraso e de falta de transparência e impessoalidade; defende critérios de isonomia na distribuição do orçamento. Cita que o projeto de resolução não resolve o problema e que o orçamento secreto não deve continuar. [495400-001]
+
+- Túlio Gadêlha (REDE/PE): reconhece o grande peso do tema, dizendo que é necessário transformar o orçamento secreto em algo transparente, com critérios de proporcionalidade e impessoalidade; ressalta que a proposta atual apresenta distorções (ex.: “R$1,46 bilhão” sob controle de quem preside as Casas) e classifica o orçamento secreto como péssimo para votar, defendendo mudanças para evitar injustiças. [494648-001]
+
+- Fernanda Melchionna (PSOL/RS): afirma que o PRN 3 é uma tentativa de salvar o orçamento secreto e institucionalizar prática criticada, apontando danos à transparência e ao interesse público; destaca o julgamento no STF e a natureza obscura do mecanismo. [494641-001]
+
+- Sâmia Bomfim (PSOL/SP): apresenta questão de ordem argumentando que o orçamento de Relator não corrige erros nem amplia despesas de forma legítima, e que o PRN 3 reforça a falta de transparência; aponta a possibilidade de reservar parcela para interesses de centrão e critica a constitucionalidade do modelo. [494631-001]
+
+- Oriovisto Guimarães (PODEMOS/PR): defende o fim imediato do orçamento secreto, defendendo distribuição igualitária de verbas entre parlamentares ou maior transparência; critica a lógica de privilégios para líderes e enfatiza a necessidade de alternância de regras. [494648-001]
+
+- Álvaro Dias (PODEMOS/PR) e Eduardo Girão (PODEMOS/PR): alinham-se a ideia de acabar com o orçamento secreto ou, ao menos, torná-lo igualitário entre parlamentares, defendendo maior transparência e controle público sobre os recursos. [494648-001]
+
+- Reguffe (UNIÃO/DF): afirma que o orçamento secreto precisa acabar, critica a desmoralização do Parlamento e defende transparência e responsabilização na destinação de recursos públicos. [492171-001]
+
+- Lasier Martins (POD­­EV/RS): expressa inconformidade com irregularidades na composição das relatorias e critica a existência de um orçamento secreto que favorece aliados do governo; ressalta a falta de transparência e a distribuição seletiva. [486225-001]
+
+2) Evidências principais do contexto
+
+- A visão de que o orçamento secreto corrompe a igualdade entre parlamentares e a transparência do processo é repetida por Renan Calheiros, Reguffe e Lasier Martins (crítica à falta de isonomia e à transparência; defesa de reforma/abolição). [495400-001], [492171-001], [486225-001]
+
+- Diversos participantes defendem a necessidade de critérios de proporcionalidade, impessoalidade e maior publicidade das emendas de relator, como no debate sobre o PRN 3 (Túlio Gadêlha, Sâmia Bomfim, Fernanda Melchionna). [494648-001], [494631-001], [494641-001]
+
+- Há consenso entre alguns senadores de que o orçamento secreto é prejudicial à democracia e à confiança pública, com propostas para acabar ou reformular o mecanismo (Oriovisto Guimarães, Álvaro Dias, Eduardo Girão, Renan Calheiros, Reguffe). [494648-001], [495400-001], [492171-001], [486225-001]
+
+- Também há crítica específica à ideia de manter ou ampliar o modelo sob justificativas políticas, como observado nas falas de Sâmia Bomfim (questionando a constitucionalidade e a eficácia do PRN 3). [494631-001]
+
+3) Limitações do que não foi possível confirmar
+
+- A identificação exata de datas para cada fala de Oriovisto Guimarães, Álvaro Dias e Eduardo Girão dentro do mesmo trecho de 494648-001 não está separada de modo distinto no conjunto apresentado; portanto, a referência temporal está consolidada como 2022-12-15 para esse conjunto de falas. [494648-001]
+
+- Não há, no contexto fornecido, uma comparação quantitativa direta entre quantias efetivamente distribuídas em posições distintas além das menções descritivas (ex.: “R$1,46 bilhão” citados por Gadêlha) sem verificação adicional de fontes oficiais; as informações numéricas estão inseridas nos discursos, não verificadas de forma externa aqui.
+
+### Referências:
+
+- Renan Calheiros (MDB/AL) | Data: 2022-12-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/495400
+- Túlio Gadêlha (REDE/PE) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494648
+- Fernanda Melchionna (PSOL/RS) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494641
+- Sâmia Bomfim (PSOL/SP) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494631
+- Oriovisto Guimarães (PODEMOS/PR) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494648
+- Álvaro Dias (PODEMOS/PR) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494648
+- Eduardo Girão (PODEMOS/PR) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494648
+- Reguffe (UNIÃO/DF) | Data: 2022-06-28 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/492171
+- Lasier Martins (PODEMOS/RS) | Data: 2021-12-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/486225",2,2,2,2,2,10,52.518,1,7,3,batch_00082.md; batch_00107.md; batch_00116.md,7,0.6608,True,7,Fernanda Melchionna; Lasier Martins; Oriovisto Guimarães; Reguffe; Renan Calheiros; Sâmia Bomfim; Túlio Gadêlha,,unknown,high,"Aborda o tema solicitando, descrevendo várias falas de parlamentares sobre o orçamento secreto; usa fontes oficiais citadas e mantém estrutura clara. Pontos fortes: adesão ao tema, coerência factual, foco nas fontes e síntese. Observações: dependência de dados de fontes sem verificação externa e algumas referências temporais podem não estar separadas com precisão."
+q057,context_limits,Quais limites do contexto impedem uma conclusao geral sobre todas as politicas de educacao defendidas no Senado entre 2019 e 2023?,ok,"Limites do contexto que impedem uma conclusão geral sobre todas as políticas de educação defendidas no Senado entre 2019 e 2023:
+
+- O material é uma amostra seletiva de falas em sessões do Senado, não um inventário abrangente de todas as políticas defendidas. As falas destacam temas como o Sistema Nacional de Educação (SNE), o Plano Nacional de Educação (PNE) e financiamento (ex.: Fundeb), mas não cobre oficialmente todas as propostas apresentadas ao longo do período. Exemplos: discurso sobre SNE, BNCC, financiamento e outros itens, conforme o conjunto de fontes; o foco fica nesses temas ao invés de uma listagem exaustiva de políticas. (Fonte: discurso de Marcelo Castro) [sem link explícito no contexto].
+
+- Cobertura temporal incompleta/pontos específicos no tempo: as fontes cobrem 2019, 2021 e 2022, mas não apresentam uma visão contínua de 2019 a 2023. Evidências de datas específicas presentes no material incluem 2019-09-11 (Kajuru), 2021-09-03 (Heleno Araújo), 2021-12-16 (Dário Berger) e 2022-06-20 (convidados em várias falas) [respectivamente: 457731, 482929, 486452, 491950/491954/491955]. Isso impede inferir sobre todo o conjunto de políticas defendidas nesses anos. (Citações: 457731; 482929; 486452; 491950; 491954; 491955)
+
+- Natureza do conteúdo: grande parte do material são exposições de convidados e sessões de debates temáticos, orientadas a balanço, avaliação ou defesa de diretrizes, não documentos oficiais de políticas votadas ou implementadas. Isso limita a compreensão de quais políticas foram efetivamente adotadas ou implementadas. (Fonte: Exposição de convidado e sessão de debates temáticos; 491950)
+
+- Foco temático restrito: o conjunto tende a privilegiar discussões sobre SNE, PNE, regulamentos, financiamento (Fundeb), Custo-Aluno-Qualidade (CAQ) e avaliação educacional, sem cobrir de forma igualitária outras áreas da educação (educação infantil, ensino superior, educação especial, credenciamento de carreiras, etc.). Esse viés ficou evidente nas falas que enfatizam esses componentes específicos. (Fonte: discurso de Marcelo Castro; 1)
+
+- Ausência de dados sobre implementação, resultados ou votações: as fontes não fornecem um mapeamento claro de quais políticas foram implementadas, quais tiveram votações, nem avaliações de impacto. Em muitos trechos, o foco está em defender estruturas como o SNE e discutir metas do PNE, sem acompanhamento de resultados. (Fontes: 491950; 486452)
+
+- Variação de perspectivas e falta de panorama consolidado: há divergência entre falas que defendem a instituição/regulamentação (p. ex., SNE) e outras que criticam políticas atuais (e.g., ataques a financiamento, educação domiciliar, censura escolar). Essa diversidade mostra que não há um consenso único apresentado no conjunto, dificultando uma conclusão única sobre o conjunto de políticas defendidas. (Fontes: 482929; 491955; 457731)
+
+Evidências principais do contexto (trechos que apoiam as observações):
+
+- O debate se concentra em Sistemática Nacional de Educação, BNCC e financiamento, com propostas como CAQ, Sinaeb e PECs, sugerindo foco restrito a esse conjunto de temas. (Fonte: discurso de Marcelo Castro) [sem link no contexto].
+
+- Sessões com objetivo de balanço do PNE: a sessão 2022-06-20 foi dedicada a avaliar o cumprimento das metas do PNE, com perguntas de convidados e participação remota, não um relatório de políticas implementadas. (Fonte: Andressa Pellanda; 491950)
+
+- Exposição de convidados destacando aspectos como educação integral, formação de professores, financiamento via Fundeb, e a necessidade de implementação de políticas relativas ao PNE/SA por meio do SNE. (Fontes: Manoel Humberto Gonzaga Lima; Luiz Miguel Martins Garcia; 491954, 491955)
+
+Limitações do que não foi possível confirmar:
+
+- Não há confirmação de uma lista completa de políticas defendidas entre 2019 e 2023; o conjunto disponível não permite afirmar que todas as políticas educacionais foram cobertas ou avaliadas.
+
+- Não há confirmação sobre quais políticas foram efetivamente aprovadas, implementadas ou tiveram impactos mensuráveis durante esse período com base nesse conjunto de textos; as falas discutem propostas e diretrizes, mas não resultados de implementação. (Contexto de balanço do PNE; 491950)
+
+Referências:
+
+- Jorge Kajuru (PATRIOTA/GO) | Data: 2019-09-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457731
+- Heleno Manoel Gomes Araújo Filho | Data: 2021-09-03 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482929
+- Dário Berger (MDB/SC) | Data: 2021-12-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/486452
+- Andressa Pellanda | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491950
+- Manoel Humberto Gonzaga Lima | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491954
+- Luiz Miguel Martins Garcia | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491955
+
+Observação: Caso queira, posso adaptar a resposta para incluir outras citações do conjunto que você indicar ou buscar trechos específicos dentro dos materiais disponíveis.",2,2,2,2,2,10,57.726,1,9,6,batch_00030.md; batch_00059.md; batch_00069.md; batch_00082.md; batch_00101.md; batch_00114.md,9,0.6369,True,7,Andressa Pellanda; Dário Berger; Heleno Manoel Gomes Araújo Filho; Jorge Kajuru; Luiz Miguel Martins Garcia; Manoel Humberto Gonzaga Lima; Marcelo Castro,,unknown,high,"Limites contextuais: amostra de falas, cobertura temporal incompleta, natureza de convidados/debate, viés temático, ausência de dados de implementação; referências citadas; não há confirmação de políticas aprovadas."
+q124,context_limits,Quando o resumo de um discurso e suficiente para orientar a resposta e quando e necessario verificar o texto integral?,ok,"Resposta direta:
+- Use o resumo para orientar a resposta quando a pergunta puder ser atendida pela ideia central, pelos temas e pelas conclusões apresentadas no resumo (Origem do texto: resumo). Em casos assim, o conteúdo disponível no resumo é suficiente para responder. Ex.: itens com resumo disponível são adequados para respostas de caráter geral. [Exemplo de resumo: 468385-001] falar sobre a pandemia. [Citação direta: 468385-001]
+- Recorra ao texto integral quando a pergunta exigir citações exatas, formulações específicas, números legais, datas completas ou detalhes processuais que não estejam contidos no resumo. Nestes casos, utilize itens com Origem do texto: texto_integral. [Exemplos de textos integrais: 494331-001; 474732-001] [Citações: 494331-001; 474732-001]
+
+Evidências principais do contexto:
+- Há itens cujo conteúdo é apresentado apenas como resumo (Origem do texto: resumo), o que sugere que perguntas sobre temas gerais podem ser respondidas sem o texto integral. Ex.: 468385-001 descreve a pandemia com conteúdo em formato de resumo. [Citação: 468385-001]
+- Há itens com texto integral disponível (Origem do texto: texto_integral), onde é possível acessar o texto completo para detalhes precisos, citações literais e dados específicos. Ex.: 494331-001 e 474732-001 indicam o uso do texto integral. [Citações: 494331-001; 474732-001]
+
+Limitações do que não foi possível confirmar:
+- Não é possível obter detalhes exatos ou citações literais apenas a partir de resumos. Nesses casos, a resposta deve se restringir ao que consta no resumo. Ex.: 468385-001 mostra apenas o conteúdo resumido, portanto não é possível confirmar dados não presentes no resumo. [Citação: 468385-001]
+- Se a pergunta exigir elementos específicos que não estão no resumo, é necessário consultar o texto integral (quando disponível) para confirmações precisas. Ex.: itens com Origem do texto: texto_integral (como 494331-001, 474732-001) devem ser usados para esse fim. [Citações: 494331-001; 474732-001]
+
+Referências:
+- Esperidião Amin (PP/SC) | Data: 2022-11-29 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494331
+- Erika Kokay (PT/DF) | Data: 2020-12-17 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/474732",2,2,2,2,2,10,37.73,1,13,11,batch_00009.md; batch_00010.md; batch_00025.md; batch_00027.md; batch_00029.md; batch_00033.md; batch_00046.md; batch_00047.md; batch_00051.md; batch_00063.md; batch_00119.md,13,0.4578,True,11,Alvaro Dias; Carlos Fávaro; Confúcio Moura; Erika Kokay; Esperidião Amin; Fernando Collor; Marcio Bittar; Marcos Rogério; Oriovisto Guimarães; Paulo Paim; Reguffe,,unknown,high,"Adere exatamente à pergunta, é factual e bem estruturada; usa fontes relevantes (origem resumo vs texto_integral), não há alucinações; aponta claramente quando consultar o texto integral."
+q073,cross_author_confusion,"Quais propostas ou criticas educacionais podem ser confundidas entre Confucio Moura, Izalci Lucas, Eliziane Gama e Telmario Mota?",ok,"Resposta direta:
+No conjunto de textos fornecidos, as propostas ou críticas educacionais registradas são, majoritariamente, associadas a Confúcio Moura. Izalci Lucas aparece apenas como referência institucional (presidente/senador que fala no plenário) sem registro de propostas próprias no material, e não há menção explícita de propostas de Eliziane Gama ou Telmário Mota nos trechos apresentados. Portanto, as possíveis confusões entre esses nomes não são suportadas pelo conteúdo disponível; as linhas de cooperação ou disputa educacional identificáveis referem-se principalmente a Confúcio Moura e aos temas ligados à educação brasileira discutidos por ele. (Izalci Lucas aparece apenas como interlocutor/autoridade mencionada, sem propostas registradas no texto; ver trecho com saudação ao presidente Izalci Lucas.) [Contexto: 454678-001, 455270-005, 463649-003, 451112-005, 454159-004, 454560-004]
+
+Propostas ou críticas educacionais atribuídas a Confúcio Moura (principais pontos identificáveis no contexto):
+- Valorização e melhoria da qualidade dos professores, com foco na formação em sala de aula e no aperfeiçoamento do desempenho docente. (O professor deve aprender a ensinar; formação centrada na prática; melhoria dos incentivos aos que desejam ser professores.) [Fonte: 455270-005]
+- Defesa da educação como investimento econômico e necessidade de mais recursos para a educação, incluindo discussão sobre financiamento e participação do PIB na educação. (Educação é barato; educação é investimento econômico; debates sobre recursos e custos.) [Fonte: 451112-005, 463649-003]
+- Perenização do Fundeb (e maior alocação de recursos para a educação básica), com fiscalização para garantir que os recursos financiem efetivamente a educação pública. [Fonte: 463649-003, 463649-004]
+- Fortalecimento de mecanismos de fiscalização e governança para a educação, incluindo críticas a nomeações políticas de diretores de escola e a necessidade de critérios de qualidade na gestão escolar. (Diretor de escola não deve ser nomeado por vereador; deve haver meritocracia/qualificações na gestão.) [Fonte: 463649-003]
+- Ênfase na qualidade da educação básica, melhoria da formação inicial e continuada de professores, bem como promoção de condições para leitura, escrita, contagem e gramática como fundamentos essenciais. [Fonte: 455270-005, 454159-004]
+- Análise histórica da educação para orientar políticas atuais, com observação de falhas federativas e necessidade de políticas coordenadas entre níveis de governo. [Fontes: 454678-001, 454560-004]
+- Relevância de diretores e gestores escolares com formação adequada e foco na prática educativa, evitando ações que coloquem interesses político-partidários acima da qualidade educativa. [Fonte: 463649-003, 454159-004]
+
+Evidências principais do contexto (trechos citados):
+- “o caminho... diz respeito à melhoria da qualidade dos professores, que é o elemento básico da escola. Melhorar o incentivo àqueles que desejam ser professores. Certamente, o item salário é importante, mas só isso não basta. É preciso também tornar a profissão socialmente mais respeitada. Abordei o tema dos diretores para exaltar o nome de uma diretora de...” [Fonte: 455270-005]
+- “educação é barato, educação é investimento econômico” e discussão sobre reserva de recursos para educação, fiscalização sobre o gasto com educação e o papel dos tribunais de contas. [Fontes: 451112-005, 463649-003]
+- “perenização do Fundeb” e defesa de maiores recursos para a educação básica; menção de controle orçamentário/receitas para educação. [Fontes: 463649-003, 463649-004]
+- “Diretor de escola não deve ser nomeado por Vereador... tem que ser por qualidade” e a ideia de melhoria da gestão escolar com critérios de competência. [Fonte: 463649-003]
+- “Ler, escrever, contar e a gramática da língua pátria devem ser os primeiros estudos de todos os membros de uma nação; esta aplicação é a mais essencial” (enfoque na alfabetização e fundamentos básicos). [Fonte: 455270-005]
+- Contexto histórico da educação na Era Vargas e a importância de políticas públicas para difusão do ensino público, laico e gratuito. [Fonte: 454678-001]
+- Referência ao papel da educação como eixo de futuro e a necessidade de ações consistentes para promover qualidade acadêmica. [Fonte: 454560-004, 454159-004]
+
+Limitações do que não foi possível confirmar no contexto:
+- Não há registro de propostas ou críticas educacionais atribuídas a Izalci Lucas além da menção dele como participante/autoridade na fala; o trecho disponível mostra apenas a saudação e diálogo, sem propostas específicas dele. (Ver: 454678-001)
+- Não há menção de propostas ou críticas atribuídas a Eliziane Gama ou Telmário Mota nos trechos apresentados. O material disponível se concentra basicamente nas falas de Confúcio Moura sobre educação.
+
+Referências:
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2019-06-17 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454560
+- Confúcio Moura (MDB/RO) | Data: 2019-05-31 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454159
+- Confúcio Moura (MDB/RO) | Data: 2019-06-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454678
+- Confúcio Moura (MDB/RO) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455270
+- Confúcio Moura (MDB/RO) | Data: 2019-02-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451112
+
+Observação: Onde o texto não traz informações sobre Eliziane Gama ou Telmário Mota, o conteúdo não pode confirmar propostas deles; o foco identificável é a atuação de Confúcio Moura sobre educação.",2,2,2,2,2,10,66.159,1,10,8,batch_00001.md; batch_00012.md; batch_00013.md; batch_00019.md; batch_00020.md; batch_00022.md; batch_00041.md; batch_00111.md,10,0.5145,True,2,Confúcio Moura; Hélvia Miridan Paranaguá Fraga,Confucio Moura; Eliziane Gama; Izalci Lucas; Telmario Mota,yes,medium,"Foco claro nas propostas de Confúcio Moura; afirma ausência de propostas atribuídas a Izalci Lucas, Eliziane Gama e Telmário Mota nos trechos apresentados; cita fontes, apresenta síntese organizada e sem alucinações."
+q132,cross_author_confusion,"Como separar falas favoraveis, contrarias ou preocupadas com garimpo e terras indigenas entre diferentes autores?",ok,"Resposta direta
+Você pode separar as falas pela posição explícita de cada autor em relação a garimpo/mineração em terras indígenas usando três categorias simples:
+- Favoráveis: autor defende ou propõe abrir espaço para atividade econômica, inclusive mineração, em terras indígenas, geralmente com regras ou marcos legais.
+- Contrárias: autor se opõe à mineração/garimpo em terras indígenas ou reforça a proteção e demarcação das terras, sem abrir espaço para exploração.
+- Preocupadas: autor reconhece problemas ou defende debate/regulamentação cuidadosa, sem tomar uma posição clara de avanço ou recuo.
+
+Evidências principais do contexto (com exemplos de cada posição)
+- Favoráveis (com marco regulatório)
+  - Marcos Rogério (DEM/RO) – trecho que defende mudanças legais para permitir a atividade mineral dentro de terras indígenas, com regulação: “Eu defendo a criação, a reformulação, do marco legal da extração mineral.” [452913-002] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452913)
+  - Eduardo Braga (MDB/AM) – afirma que a atividade econômica pode ocorrer em terras indígenas se houver arcabouço jurídico adequado, chegando a dizer que é preciso “um grupo de Senadores para construir uma legislação” para permitir a atividade econômica dentro das terras indígenas; aponta a necessidade de regulação da mineração para evitar improvisos: “a atividade econômica dentro das terras indígenas é proibida por lei… é preciso… permitir a atividade econômica dentro de terras indígenas.” [452912-001] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452912)
+- Preocupadas (reconhece problemas e defende debate/regulação cuidadosa)
+  - Marcos Rogério (DEM/RO) – outra parte do mesmo conjunto de fala enfatiza a necessidade de debate amplo e construção de legislação para o tema indígena, sugerindo cautela e estudo antes de medidas definitivas: “o tema é profundo que merece, portanto, um debate no Colégio de Líderes, merece que nós tenhamos um grupo de Senadores para construir uma legislação.” [452913-001] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452913)
+- Contrárias (proteção/tutela das terras, sem abrir espaço para garimpo)
+  - Marina Silva (nan) – defesa de não retroceder na proteção dos povos indígenas e de reconhecer o valor de suas terras como fonte de sustento, com tom de resistência a políticas que possam reduzir direitos: “Nenhum retrocesso a mais!” e foco na defesa de demarcação e direitos dos povos indígenas. [453111-003] (Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453111)
+
+Notas sobre limites do contexto
+- Há diversidade de posições entre os autores apresentados, incluindo esforços para debate, propostas de marco regulatório e defesa de proteção de terras. Em alguns trechos, há nuances entre enfatizar debate (preocupação) e propor regulação efetiva (favorável), o que pode parecer ambíguo se visto de forma isolada.
+- O conjunto de falas utilizado como evidência está baseado nas transcrições disponíveis nos trechos fornecidos. Em particular, o discurso de Paulo Paim aborda o tema de forma contundente contra a exploração/mineração em terras indígenas, mas a data e o link exatos não foram identificados no contexto fornecido, então não consta na seção de Referências.
+
+Referências:
+- O SR. EDUARDO BRAGA (MDB/AM) | Data: 2019-04-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452912
+- O SR. MARCOS ROGÉRIO (DEM/RO) | Data: 2019-04-24 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452913
+- A SRA. MARINA SILVA (nan) | Data: 2019-04-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453111",2,1,1,2,1,7,86.567,1,5,2,batch_00009.md; batch_00044.md,5,0.6009,True,4,Eduardo Braga; Marcos Rogério; Marina Silva; Paulo Paim,,unknown,high,"Resposta alinhada com a pergunta ao propor categorias; há incerteza sobre a precisão factual e atribuição de citações (mesmo autor com posições diferentes) e fontes possivelmente sintetizadas. Recomenda verificar citações, datas e referências."
+q001,factual_simple,Quais dados Ciro Nogueira apresenta para sustentar que ha concentracao bancaria no Brasil?,ok,"Dados apresentados por Ciro Nogueira para sustentar concentração bancaria no Brasil:
+
+- Os cinco maiores bancos (Banco do Brasil, Bradesco, Itaú, Santander e Caixa) concentram cerca de 82% dos ativos financeiros do país. [451286-001] 
+- Entre 2006 e 2016, esse índice subiu de 60% para 82% (variação de 22 pontos percentuais). [451286-001]
+
+Observação: as afirmações acima são apresentadas no discurso de Ciro Nogueira, data 2019-02-27. Não foram identificadas outras métricas adicionais no contexto fornecido para sustentar a conclusão de concentração. [451286-001]
+
+### Referências:
+
+- Ciro Nogueira (PP/PI) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451286",2,2,2,2,2,10,38.154,1,11,6,batch_00001.md; batch_00010.md; batch_00018.md; batch_00024.md; batch_00041.md; batch_00086.md,11,0.5316,True,6,Alvaro Dias; Carlos Viana; Ciro Nogueira; Oriovisto Guimarães; Paulo Paim; Plínio Valério,Ciro Nogueira,yes,high,"Apresenta dois dados centrais: 82% de ativos pelos cinco maiores bancos e aumento de 60% para 82% entre 2006 e 2016, cita a fonte [451286-001] e o discurso de 2019-02-27; uso adequado de referência e foco no tema."
+q104,factual_simple,Que medidas de protecao contra violencia de genero Rose de Freitas defende ou menciona?,ok,"Medidas de proteção contra violência de gênero mencionadas ou defendidas por Rose de Freitas:
+
+- Apreensão de arma de fogo em casos de violência doméstica e familiar, por meio do Projeto de Lei nº 17/2019, com pedido de inclusão na pauta. (Rose de Freitas mencionou essa medida). Fonte: 456422-001. 
+  - Citação relevante: ""Pedido de inclusão na pauta da Ordem do Dia do Projeto de Lei nº 17, de 2019, acerca da apreensão de arma de fogo em caso de violência doméstica e familiar."" 
+
+- Notificação compulsória de casos de violência contra a mulher por profissionais da saúde, para ampliar a proteção das vítimas. (Rose de Freitas defende). Fonte: 460971-005.
+  - Citação relevante: ""defesa de proposições legislativas que ampliam a proteção das mulheres contra a violência de gênero, como a notificação compulsória por profissionais da saúde de casos de violência contra a mulher e a imprescritibilidade do feminicídio."" 
+
+- Imprescritibilidade do feminicídio, como regra para não permitir prescrições do crime. (Rose de Freitas defende). Fonte: 460971-005.
+  - Citação relevante: ""a imprescritibilidade do feminicídio."" 
+
+- Medidas cautelares de urgência para preservar a vida da vítima, previstas no âmbito de debates sobre o aperfeiçoamento da Lei Maria da Penha (PL 4.194/2019), incluindo a possibilidade de afastar o agressor. (Rose de Freitas comenta esse eixo). Fonte: 484246-001.
+  - Citação relevante: ""medidas cautelares de urgência... para preservar a vida da vítima"" e referência ao debate sobre alterações na legislação de violência doméstica. 
+  - Citação adicional relevante (contextual): ""Eu quero parabenizar os colegas por avançar nesse tema... a proteção das mulheres."" (trecho que acompanha o debate)
+
+- Valorização de medidas como a Ronda Maria da Penha (medida de vigilância e dissuasão ao agressor) como parte da prática de proteção à mulher, durante discussão sobre o PL 4.194/2019. (Rose de Freitas menciona essa linha de ação). Fonte: 484246-001.
+  - Citação relevante: ""O papel das rondas nos Municípios. Essa medida é uma das medidas que constrange o agressor."" 
+  - Observação: esse ponto aparece no contexto da defesa de aperfeiçoamento legislativo para violência doméstica. 
+
+Observação sobre o que não ficou claro no contexto fornecido:
+- Não há outras medidas específicas de proteção citadas pela Rose de Freitas nos trechos apresentados além das acima (apreensão de arma; notificação compulsória; imprescritibilidade do feminicídio; medidas cautelares de urgência; ronda Maria da Penha). 
+
+### Referências:
+
+- Rose de Freitas (PODEMOS/ES) | Data: 2019-08-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456422
+- Rose de Freitas (PODEMOS/ES) | Data: 2019-11-05 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/460971
+- Rose de Freitas (MDB/ES) | Data: 2021-10-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484246",2,2,2,2,2,10,50.904,1,14,9,batch_00007.md; batch_00008.md; batch_00019.md; batch_00027.md; batch_00032.md; batch_00073.md; batch_00101.md; batch_00108.md; batch_00113.md,14,0.6254,True,9,Eliane Nogueira; Jorge Kajuru; Kátia Abreu; Leila Barros; Maria Terezinha Nunes; Paulo Paim; Rose De Freitas; Simone Tebet; Zenaide Maia,Rose De Freitas,yes,high,"Lista as medidas citadas por Rose de Freitas (apreensão de arma, notificação compulsória, imprescritibilidade do feminicídio, medidas cautelares de urgência, Ronda Maria da Penha) com referências, apresentada de forma clara e pertinente."
+q049,hallucination_trap,"Liste todos os discursos da base que apresentam diagnostico, solucao, prazo e financiamento para politicas sociais, sem omitir nenhum caso.",ok,"Resposta direta:
+Houve apenas um discurso da base que apresenta diagnóstico, solução, prazo e financiamento para políticas sociais: Paulo Rocha (PT/PA) | Data: 2020-09-25.
+
+- Diagnóstico: o discurso identifica “desafios econômicos, sociais e ambientais do Brasil para o período pós-pandemia.” [Paulo Rocha, 2020-09-25] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471758
+- Solução: propõe investimento público como mecanismo para alavancar a economia e, ao mesmo tempo, ampliar políticas sociais, especialmente “investimento na agricultura familiar e a renda básica chamada por nós de Bolsa Família.” [Paulo Rocha, 2020-09-25] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471758
+- Prazo: utiliza o marco “ para o período pós-pandemia.” [Paulo Rocha, 2020-09-25] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471758
+- Financiamento: sustenta a solução por meio de “investimento público.” [Paulo Rocha, 2020-09-25] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471758
+
+Evidências principais do contexto:
+- Diagnóstico (exemplos de diagnóstico na base): Zenaide Maia registra “demora para o diagnóstico de pessoas com deficiência” como ponto central, o que configura diagnóstico de um problema social. [Zenaide Maia, 2019-04-02] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452278
+- Financiamento (financiamento/financiamento público como solução em políticas sociais): em 452278-003 há referência a “investimento público” e ao papel de bancos estatais para financiar infraestrutura e políticas sociais, o que implica financiamento público para políticas sociais. [Zenaide Maia, 2019-04-02] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452278
+- Prazo (ausente explícito de prazo na maioria dos itens): o mesmo discurso de Zenaide Maia não fixa um prazo específico para as ações; o diagnóstico e as propostas aparecem, mas sem um prazo temporal explícito. [Zenaide Maia, 2019-04-02] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452278
+
+Limitações do que não foi possível confirmar:
+- Não há outro discurso na base que apresente, de forma explícita, diagnóstico, solução, prazo e financiamento para políticas sociais em um único bloco de fala. Existem itens que apresentam diagnóstico e financiamento (ou solução) separadamente, mas sem o conjunto completo de quatro elementos. Por exemplo, outros discursos discutem diagnóstico e financiamento (ou solução), mas não especificam um prazo claro para políticas sociais. Ex.: Zenaide Maia (2019-04-02) traz diagnóstico e financiamento, mas não prazo explícito. [Zenaide Maia, 2019-04-02] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452278
+
+Referências:
+- Paulo Rocha (PT/PA) | Data: 2020-09-25 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/471758",1,1,1,1,1,5,68.731,1,9,5,batch_00003.md; batch_00005.md; batch_00031.md; batch_00050.md; batch_00072.md,9,0.5574,True,7,Izalci Lucas; Jorge Kajuru; Paulo De Oliveira Costa; Paulo Henrique Bezerra Rodrigues Costa; Paulo Rocha; Sérgio Suchodolski; Zenaide Maia,,unknown,high,"Identifica um único discurso como atendendo aos quatro elementos, mas inclui seções extras (evidências/limitações) e afirmação não verificada sobre inexistência de outros casos; recomendável focar no item correspondente, eliminar conteúdo periférico e checar fontes."
+q120,hallucination_trap,Liste todos os parlamentares envolvidos no chamado orcamento secreto e os respectivos valores recebidos.,ok,"Não é possível atender integralmente ao pedido com o contexto fornecido: o material não apresenta uma lista de parlamentares individuais e os valores recebidos no chamado orçamento secreto. O que aparece são referências gerais, críticas, percentuais e exemplos de contextos, sem nomes de deputados ou senadores com os montantes atribuídos a cada um.
+
+Evidências principais do contexto
+- Existem afirmações de que cinco partidos destinaram aproximadamente 75% de todas as emendas do orçamento secreto (PP, PSD, Republicanos, PL e União Brasil). Fonte: Túlio Gadêlha; 494648-001. 
+- Há detalhamento de distribuições propostas para as emendas de relator (RP-9): cerca de 20% para indicações políticas de centrais, aproximadamente 5% (em torno de R$ 970 milhões) para indicações conjuntas do Relator-Geral e da CMO, e cerca de 7,5% para a Comissão Diretora do Senado (em torno de R$ 1,5 bilhão), além de 7,5% para a Comissão Diretora da Câmara dos Deputados. Fonte: Sâmia Bomfim; 494631-001.
+- Há menções a exemplos de gastos controversos e a casos citados para ilustrar a falta de transparência, como o suposto “tratoraço” e o relato de usos de recursos em cidades específicas (exemplos como a cidade mencionada com 540 mil dentes); tudo apresentado para argumentar a falta de transparência. Fonte: Fernanda Melchionna; 494641-001.
+- O texto também aborda o Projeto de Lei do Congresso Nacional (PRN) 3/2022 para ampliar a transparência das emendas de relator e críticas à manutenção de itens de orçamento secreto; há discussão sobre constitucionalidade e impessoalidade. Fonte: Sâmia Bomfim; 494631-001 e Fernanda Melchionna; 494641-001.
+- O conjunto de falas comenta que o orçamento secreto está sendo julgado pelo STF, e discute a continuidade de regras sobre RP-9 com maior controle de transparência, ainda que com críticas sobre incentivos políticos. Fontes: Sâmia Bomfim; 494631-001; Fernanda Melchionna; 494641-001; 492723-001.
+- Alguns trechos mencionam o tema de forma mais ampla (ex.: abertura de Frente Parlamentar pela Transparência; discussão histórica sobre o orçamento público), sem listar nomes de parlamentares com valores. Fontes: Soraya Thronicke; 461602-002; Rodrigo Pacheco; 478968-001; Simone Tebet; 492723-001.
+
+Limitações do que não foi possível confirmar
+- Não há no contexto fornecido uma lista de parlamentares envolvidos no orçamento secreto nem os respectivos valores recebidos.
+- As referências disponíveis apontam para estruturas, distribuições em percentuais e exemplos gerais, mas não especificam indivíduos e montantes atribuídos a cada um.
+
+Referências:
+- Rodrigo Pacheco (DEM/MG) | Data: 2021-05-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/478968
+- Renan Calheiros (MDB/AL) | Data: 2022-12-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/495400
+- Lasier Martins (PODEMOS/RS) | Data: 2021-12-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/486225
+- Oriovisto Guimarães (PODE/PR) | Data: 2022-06-28 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/492169
+- Túlio Gadêlha (REDE/PE) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494648
+- Sâmia Bomfim (PSOL/SP) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494631
+- Fernanda Melchionna (PSOL/RS) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494641
+- Simone Tebet (MDB/MS) | Data: 2022-07-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/492723
+- Soraya Thronicke (PSL/MS) | Data: 2019-11-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461602",0,2,0,1,2,5,51.112,1,11,8,batch_00014.md; batch_00038.md; batch_00044.md; batch_00058.md; batch_00082.md; batch_00106.md; batch_00107.md; batch_00116.md,11,0.5717,True,11,Alvaro Dias; Fernanda Melchionna; Lasier Martins; Oriovisto Guimarães; Paulo Paim; Renan Calheiros; Rodrigo Pacheco; Simone Tebet; Soraya Thronicke; Sâmia Bomfim; Túlio Gadêlha,,unknown,high,Não atende à pergunta (não lista parlamentares nem valores). Afirma indisponibilidade de dados no contexto (factualmente correta). Não utiliza fontes de forma clara. Síntese extensa/desorganizada; foco no que não existe. Sem alucinações flagrantes.
+q065,multi_hop,"Reconstrua uma cadeia de raciocinio que ligue educacao, trabalho, Previdencia e vulnerabilidade social em discursos de diferentes autores.",ok,"Resposta direta
+A partir de discursos no Senado, é possível reconstruir uma cadeia de raciocínio que liga educação, trabalho, Previdência e vulnerabilidade social: a educação atua como base para desenvolvimento e inclusão; a formação adequada gera empregos e renda; políticas de proteção social — como Bolsa Família e benefícios asistenciais — amortecem choques e reduzem pobreza; e reformas da Previdência têm potencial de impactar de modo desproporcional os mais vulneráveis, o que reforça a necessidade de políticas de proteção e de investimento contínuo em educação e capacitação.
+
+Evidências principais do contexto
+- Educação como base do desenvolvimento e mitigação da pobreza: a defesa da educação para o desenvolvimento do País e a referência a jovens que não trabalham nem estudam destacam a importância de educação como motor de desenvolvimento humano e social. (Veneziano Vital do Rêgo) “importância da educação para o desenvolvimento do País. situação dos 12 milhões de jovens que nem trabalham nem estudam.” e menção a CAPES como fator de recurso financeiro na educação. (464108-001)
+- Educação profissional como motor de qualificação e emprego: a educação profissional é apresentada como meio de qualificar a mão de obra e gerar empregos, reduzindo a desocupação e estimulando o crescimento econômico. (Confúcio Moura) “Defesa da importância da educação profissional para a qualificação da mão de obra e a geração de empregos.” (468062-001)
+- Proteção social e redução da vulnerabilidade por meio de programas voltados a famílias: o papel de programas sociais, especialmente Bolsa Família, na redução da pobreza e na garantia de direitos básicos, como alimentação, saúde e educação, é destacado em vários discursos. (Paulo Paim) “ONU reconhece o Bolsa Família como um dos mais necessários programas de combate à pobreza e à miséria… reduz a pobreza.” (452817-001)
+- Ligação entre educação, pobreza e políticas compensatórias: a ideia de que políticas de educação e proteção social devem ser fortalecidas para enfrentar a pobreza e a desigualdade, com menção a ações pró-educação e proteção aos mais pobres (inclui referências a Bolsa Família como instrumento de proteção e a necessidade de políticas de curto e longo prazo). (Veneziano Vital do Rêgo; 464108-001)
+- Fiscalização e preservação de direitos dos vulneráveis na Previdência: a discussão sobre mudanças em regras de benefício para pessoas com deficiência e idosos evidencia a preocupação com vulnerabilidade social no âmbito da Previdência, reforçando que alterações nessa área podem ampliar a fragilidade de quem já está em situação de risco. (Zenaide Maia) “mudança das regras para que pessoas com deficiência e idosos consigam o benefício de prestação continuada.” (463651-003)
+- Relação entre reforma da Previdência, pobreza e necessidade de políticas sociais: há apontamentos sobre o debate e a percepção pública sobre a reforma da Previdência, incluindo a ideia de que políticas sociais devem acompanhar mudanças estruturais para proteger os mais pobres. (Paulo Paim; leitura de conjuntura sobre reforma e dados eleitorais) (452618-004, 452817-001)
+- Educação como base para prevenção da violência e melhoria de condições sociais amplas: em debates que conectam educação, saúde e segurança, há ênfase na educação pública de qualidade como elemento central para reduzir violência e promover inclusão social. (Zenaide Maia; 463651-003)
+
+Limitações do que não foi possível confirmar
+- As ligações entre educação, trabalho, Previdência e vulnerabilidade são apresentadas de forma fragmentada em discursos distintos; não há um único texto que “feche” a cadeia com todas as ligações em uma linha única entre todos os elos. As citações acima provêm de diferentes autores e contextos (educação, proteção social, Previdência) e precisam ser lidas como pressupostos que se complementam, não como uma única teoria unificada.
+- Alguns trechos mencionam políticas de forma genérica (ex.: debates sobre Reforma da Previdência) sem detalhar impactos específicos na vulnerabilidade em cada grupo; as ligações são inferidas a partir de passagens sobre proteção social e pobreza.
+
+Referências:
+- Paulo Paim (PT/RS) | Data: 2019-04-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452817
+- Paulo Paim (PT/RS) | Data: 2019-04-02 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452618
+- Veneziano Vital do Rêgo (PSB/PB) | Data: 2020-02-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/464108
+- Confúcio Moura (MDB/RO) | Data: 2020-06-02 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/468062
+- Zenaide Maia (PROS/RN) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463651
+- Paulo Paim (PT/RS) | Data: 2019-11-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461046
+
+Observação final
+Caso deseje, posso reorganizar esse conjunto em uma linha do tempo com cada elo claramente marcado por autor, data e trechos exatos que embasam cada conexão na cadeia.",2,1,2,2,1,8,51.649,1,11,9,batch_00004.md; batch_00010.md; batch_00031.md; batch_00034.md; batch_00039.md; batch_00041.md; batch_00043.md; batch_00047.md; batch_00104.md,11,0.5688,True,6,Confúcio Moura; Juliana De Barros Guimarães; Maria Lúcia Fattorelli; Paulo Paim; Veneziano Vital Do Rêgo; Zenaide Maia,Reconstrua Uma,no,high,Aderência boa ao pedido e síntese clara com uso de autores relevantes; há afirmações duvidosas/duvidosas de alcance factual (ex.: referência à ONU reconhecendo o Bolsa Família) e ligações entre elos podem precisar de evidências mais diretas. Recomenda-se checar citações e incluir fontes específicas para cada conexão.
+q128,multi_hop,"Como reforma tributaria, justica fiscal e controversias orcamentarias podem ser conectadas sem extrapolar?",ok,"Resposta direta:
+Pode-se conectar reforma tributária, justiça fiscal e controvérsias orçamentárias através de um desenho institucional que combine: simplificação e não cumulatividade, progressividade para reduzir desigualdades, mecanismos de devolução de imposto para famílias de baixa renda, transição suave da repartição de receitas entre União, estados e municípios, e redução de litígios e custos administrativos. Esse conjunto permite ganhos de crescimento econômico, melhora na distribuição de renda e maior previsibilidade orçamentária, sem extrapolar o que o contexto sustenta.
+
+Evidências principais do contexto:
+- Crescimento com benefício amplo: a reforma tributária, ao promover um ambiente mais estável e previsível, pode trazer crescimento que beneficia famílias, empresas e governos, aumentando o poder de compra e a arrecadação via maior atividade econômica. “O crescimento beneficia a todos os agentes econômicos: famílias, empresas e governos.” [Bernard Appy, 2021-08-16] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482297
+
+- Não cumulatividade plena e segurança jurídica: para que a justiça fiscal exista, é essencial garantir não cumulatividade plena e reduzir litígios, o que exige clareza sobre as regras e instrumentação para evitar disputas tributárias. “A não cumulatividade... tem que ser plena. ... é preciso que haja garantia de uma não cumulatividade plena.” [Gilberto Alvarenga, 2021-08-23] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482803
+
+- Simplificação e transição entre entes federados: a ideia de simplificar o sistema, reduzir tributos e uniformizar mecanismos, aliada a uma transição que minimize perdas de receita para estados e municípios, é apontada como condição para evitar impactos budgetários desordenados. “A reforma tributária é necessária... simplificação, segurança jurídica, equidade... e transição suave entre entes federados.” [Izalci Lucas, 2019-09-19] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457851
+
+- Equidade e distribuição da carga tributária: há consenso entre interlocutores de que a reforma deve aumentar a progressividade, reduzir a regressividade do peso dos impostos sobre consumo, e considerar instrumentos como devolução de imposto para baixa renda. “A reforma tributária tem que ter como princípios: ... equidade... devolução do imposto para as famílias de baixa renda.” [Bernard Appy, 2021-08-16; também discutido por Paulo Paim e Paulo Rocha] Links: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482297 (Appy, 2021-08-16) e https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766 (Paulo Paim, 2019-05-20); https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459819 (Paulo Rocha, 2019-10-14)
+
+- Impactos distributivos e setoriais: a literatura de senadores/consumidoras aponta que o desenho deve considerar efeitos sobre setores (serviços vs bens), e que a reforma pode ser benéfica para diversos setores se bem calibrada e com transição adequada. “O maior crescimento beneficia a todos... e a distribuição de renda pode melhorar com medidas como alíquota uniforme e devolução para baixa renda.” [Bernard Appy; Rita de La Feria]. Observação: diferentes trechos discutem esses pontos, com ênfase em melhoria distributiva quando bem modelada. [Rita de La Feria, 2021-08-16; Appy, 2021-08-16] Links: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482290 (Rita de La Feria), https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482297 (Appy)
+
+- Conteúdo técnico e operacional de desenho: propostas de IBS/IVA, alíquotas uniformes, COBRANÇAS, e a ideia de impostos do consumo que melhorem a eficiência arrecadatória e reduzam burocracia também aparecem como componentes da conexão entre justiça fiscal e orçamento estável. “O IBS... descomplicaria o sistema, reduziria sonegação e o custo administrativo.” [Jayme Campos, 2019-06-27] Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454960; “notion de não cumulatividade plena” citada acima. [Gilberto Alvarenga, 2021-08-23]
+
+Limitações do que não foi possível confirmar diretamente no contexto:
+- Números consolidados de impacto orçamentário para cada ente federado não são apresentados de forma uniforme entre as diferentes propostas e estudos no material disponível. As falas discutem margens de transição, cenários de crescimento e efeitos distributivos, mas não oferecem um conjunto único de valores para arrecadação e distribuição entre União/estados/municípios.
+
+Referências:
+- Bernard Appy (nan/nan) | Data: 2021-08-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482297
+- Bernard Appy (nan/nan) | Data: 2021-08-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482297-002
+- Gilberto Alvarenga (nan/nan) | Data: 2021-08-23 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482803
+- Izalci Lucas (PSDB/DF) | Data: 2019-09-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457851
+- Jayme Campos (DEM/MT) | Data: 2019-06-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454960
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Rocha (PT/PA) | Data: 2019-10-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459819
+- Mário Sérgio Carraro Telles (nan/nan) | Data: 2021-08-23 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482811
+- Rita de La Feria (nan/nan) | Data: 2021-08-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/482290",2,2,2,2,2,10,51.166,1,13,7,batch_00014.md; batch_00018.md; batch_00029.md; batch_00035.md; batch_00043.md; batch_00065.md; batch_00071.md,13,0.5986,True,9,Bernard Appy; Dário Berger; Gilberto Alvarenga; Izalci Lucas; Jayme Campos; Mário Sérgio Carraro Telles; Paulo Paim; Paulo Rocha; Rita De La Feria,,unknown,high,"Resposta direta e bem fundamentada que conecta reforma tributária, justiça fiscal e orçamento via desenho institucional. Usa fontes pertinentes e citações relevantes; síntese clara e bem estruturada. Admite limitações de dados numéricos disponíveis e evita extrapolações indevidas."
+q041,negative_evidence,"Ha evidencia suficiente nos discursos recuperados para afirmar que existe um plano completo, com metas, cronograma e fonte de financiamento, para reduzir desigualdade nacional?",ok,"Não. Com base no contexto disponível, não há evidência suficiente para afirmar que exista um “plano completo” para reduzir a desigualdade nacional, com metas, cronograma claro e fonte de financiamento definida.
+
+Evidências-chave no contexto
+- Existe o Plano Nacional de Educação (PNE) com metas específicas (incluindo metas associadas à redução de desigualdades, como as metas 7, 8, 12, 13 e 14, além de metas que tratam de inclusão e ações afirmativas) e a ideia de monitoramento das metas. Isso mostra a presença de metas estruturadas, não um plano arbitrário isolado. [Meta 7, 8, 12-14; referências ao PNE] (LARA SIMIELLI | 2022-06-20) [Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491957)
+- Há menções explícitas de metas relacionadas à equidade no PNE (por exemplo, Meta 19 e Meta 20), associadas a gestão democrática e inclusão, que sinalizam foco em desigualdade dentro do plano. [Meta 19; Meta 20] (DENISE CARREIRA | 2022-06-20; ANDRESSA PELLANDA | 2022-06-20) [Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491956)
+- Existe um mecanismo de monitoramento, com menção de avaliação a cada dois anos pelo Inep, o que indica um componente temporal, ainda que não detalhado em termos de ações específicas por ano. (ANDRESSA PELLANDA | 2022-06-20) [Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491956]
+- Há discussões sobre financiamento e a necessidade de maior destinação de recursos para educação e políticas de igualdade, bem como críticas à insuficiência de recursos — o que sugere que, mesmo com metas, não há confirmação de uma fonte de financiamento definida no conjunto dos discursos. (DENISE CARREIRA | 2022-06-20) [Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491956]
+- Há também menção de debates sobre financiamento e reformas (por exemplo, a necessidade de políticas orçamentárias e tributárias que apoiem a educação e a redução da desigualdade), sem que haja uma assinatura explícita de uma fonte de financiamento única para o PNE ou para redução da desigualdade. (IZALCI LUCAS | 2019-05-28) [Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454065]
+
+Limitações do que pode ser confirmado
+- Não há evidência, nos trechos fornecidos, de um “plano completo” com cronograma detalhado para cada ação específica de redução da desigualdade, nem uma única fonte de financiamento claramente definida para esse fim dentro do conjunto de discursos.
+- Os discursos apontam para metas do PNE e para a necessidade de financiamento, mas não apresentam um orçamento específico ou um cronograma completo consolidado dedicado à redução da desigualdade em nível nacional.
+
+Referências
+- Lara SIMIELLI (nan/nan) | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491957
+- Denise CARREIRA (nan/nan) | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491956
+- Andressa PELLANDA (nan/nan) | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491956
+- Izalci LUCAS (PSDB/DF) | Data: 2019-05-28 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454065
+- Luiz MIGUEL MARTINS GARCIA (nan/nan) | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491955",2,2,2,2,2,10,57.914,1,14,8,batch_00011.md; batch_00013.md; batch_00017.md; batch_00032.md; batch_00039.md; batch_00041.md; batch_00101.md; batch_00111.md,14,0.5451,True,11,Ana Claudia Pereira; Andressa Pellanda; Confúcio Moura; Denise Carreira; Fabiano Contarato; Izalci Lucas; Lara Simielli; Luiz Miguel Martins Garcia; Paulo Paim; Randolfe Rodrigues; Rita Cristina De Oliveira,,unknown,high,"Resposta direta: não há plano completo com metas, cronograma e financiamento; usa evidências do PNE para sustentar; aponta limitações de financiamento."
+q116,negative_evidence,As falas sobre orcamento secreto bastam para identificar todos os beneficiarios e valores de emendas de relator?,ok,"Não. Com base no contexto fornecido, as falas não oferecem uma lista completa e confiável de beneficiários e dos valores das emendas de relator. Há controvérsia entre os relatos sobre a transparência e a controle sobre essas emendas.
+
+Evidências principais do contexto:
+- Existe a defesa de total transparência das emendas de Relator: “as emendas de Relator não são 99,99% transparentes. Elas são 100% transparentes!” e a afirmação de que “todo e qualquer recurso de emenda de Relator ... terá que ter o nome do Parlamentar que a indicou” (Marcelo Castro) [495406]. “100% transparentes” e identificação do parlamentar estão explicitados nessa fala. 
+  - Transcrição: “as emendas de Relator não são 99,99% transparentes. Elas são 100% transparentes!... terá que ter o nome do Parlamentar que a indicou” (Marcelo Castro, MDB/PI). [495406]
+
+- Há várias falas que contestam a transparência do orçamento secreto:
+  - Sâmia Bomfim sustenta que o PRN 3 reforça a falta de transparência e mantém questões constitucionais, legais e de publicidade não resolvidas. [494631]
+  - Túlio Gadêlha descreve a proposta como gravemente falha em termos de transparência e de critérios de distribuição. [494648]
+  - Reguffe afirma reiteradamente que o orçamento secreto desmoraliza o Parlamento pela falta de publicidade e de isonomia. [492171]
+  - Kim Kataguiri critica a prática e menciona que a ideia de transparência é contestada, apontando a necessidade de debate sobre a constitucionalidade e a forma de distribuição. [492834]
+
+- A resposta de que “não há garantia de que os beneficiários e os valores estejam plenamente identificáveis apenas por meio das falas” também aparece no tom crítico de discussões sobre o tema, com referências a casos de falta de transparência e de possíveis desvios citados pelos autores. [494648], [492171], [492834]
+
+Limitações do que não foi possível confirmar:
+- Não há, nos trechos, uma lista consolidada de beneficiários (municípios/estados) nem dos valores exatos de todas as emendas de relator. As falas discutem princípios de transparência, porcentagens, ou exemplos específicos, mas não fornecem um inventário completo. (Observação: há afirmações de transparência total por um parlamentar, mas não há confirmação independente das listas completas na base apresentada.) [495406], [494631], [494648], [492171], [492834]
+
+Referências:
+- Marcelo Castro (MDB/PI) | Data: 2022-12-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/495406
+- Sâmia Bomfim (PSOL/SP) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494631
+- Túlio Gadêlha (REDE/PE) | Data: 2022-12-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/494648
+- Reguffe (UNIÃO/DF) | Data: 2022-06-28 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/492171
+- Kim Kataguiri (UNIÃO/SP) | Data: 2022-07-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/492834
+- Lasier Martins (PODE/RS) | Data: 2021-12-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/486225",2,2,2,2,2,10,44.169,1,9,6,batch_00044.md; batch_00058.md; batch_00082.md; batch_00106.md; batch_00107.md; batch_00116.md,9,0.6116,True,9,Kim Kataguiri; Lasier Martins; Marcelo Castro; Paulo Paim; Reguffe; Renan Calheiros; Rodrigo Pacheco; Sâmia Bomfim; Túlio Gadêlha,,unknown,high,"Aborda a questão e afirma que não há lista consolidada; utiliza fontes pertinentes, bem estruturada e com referências, sem alucinações."
+q009,numeric,"Liste os percentuais e valores usados por Ciro Nogueira para comparar concentracao bancaria, tarifas, spread e juros.",ok,"Resposta direta:
+
+- Concentração bancária: os cinco maiores bancos concentram cerca de 82% dos ativos financeiros; esse índice subiu de 60% (em 2006) para 82% (em 2016), ou seja, um aumento de 22 pontos percentuais. (Ciro Nogueira, 2019-02-27) 
+
+- Tarifas (pacotes de serviços): a tarifa do pacote básico varia de 12,00 reais por mês (mais barata) a 12,40 reais por mês (mais cara). (Ciro Nogueira, 2019-02-27)
+
+- Spread: spread bancário médio de 39,6%. (Ciro Nogueira, 2019-02-27)
+
+- Juros (juros cobrados pelas instituições): 
+  - Cheque especial para pessoas jurídicas: 350,17% a 379,59% ao ano. (Ciro Nogueira, 2019-02-27)
+  - Cheque especial para pessoas físicas: 288,40% a 421,19% ao ano. (Ciro Nogueira, 2019-02-27)
+  - Juros dos cartões de crédito rotativos: 196,94% a 259,34% ao ano. (Ciro Nogueira, 2019-02-27)
+
+Evidências principais do contexto:
+
+- Concentração: 82% dos ativos financeiros pelo top 5; aumento de 60% (2006) para 82% (2016), aumento de 22 p.p. (Ciro Nogueira, 2019-02-27). 
+- Tarifas: pacote básico com variação de tarifa entre 12,00 e 12,40 reais/mês (Ciro Nogueira, 2019-02-27).
+- Spread: 39,6% de spread médio (Ciro Nogueira, 2019-02-27).
+- Juros: faixas de juros cobradas pelos bancos para cheque especial (PJ: 350,17%–379,59%/a; PF: 288,40%–421,19%/a) e cartão rotativo (196,94%–259,34%/a) citadas pelo orador (Ciro Nogueira, 2019-02-27).
+
+Limitações do que não foi possível confirmar:
+
+- Não há outras informações adicionais no contexto fornecido sobre esses itens além das faixas e percentuais já listados. Se precisar, posso buscar complementos dentro do mesmo conjunto de discursos, mas dentro do material apresentado não há outros números relevantes para este tema.
+
+Referências:
+
+- Ciro Nogueira (PARTIDO/UF: PP/PI) | Data: 2019-02-27 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451286",2,1,2,2,2,9,47.038,1,8,5,batch_00001.md; batch_00018.md; batch_00031.md; batch_00032.md; batch_00044.md,8,0.5238,True,4,Alvaro Dias; Ciro Nogueira; Dário Berger; Esperidião Amin,Ciro Nogueira; Liste Os,yes,high,"Resposta atende à solicitação com os números atribuídos a Ciro Nogueira e fonte indicada; está bem estruturada, mas depende de uma única fonte e pode exigir verificação externa para confirmar a factualidade."
+q137,numeric,"Quais numeros ou referencias quantitativas aparecem em discursos sobre cobertura vacinal, vacinas ou reducao de imunizantes?",ok,"Aqui estão os números e referências quantitativas que aparecem nos discursos sobre cobertura vacinal, vacinas ou redução de imunizantes, conforme o contexto fornecido:
+
+- 19 vacinas para 40 doenças (PNI, acesso gratuito) — destaque no Dia Nacional da Vacinação, afirmando o conjunto de imunizações disponíveis gratuitamente pelo PNI. Fonte citada: 484389. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484389
+
+- Capacidade de vacinar mais de 2 milhões de pessoas por dia (PNI) — citado no discurso de abertura sobre o alcance do programa. Fonte citada: 484389. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484389
+
+- PNI criado há 48 anos — referência histórica do Programa Nacional de Imunizações. Fonte citada: 484389. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484389
+
+- Mais de 12 bilhões de doses de vacinas COVID-19 aplicadas mundialmente; mais de dois terços da população mundial já recebeu ao menos uma dose (contexto de eficácia/aceitação mundial) — dados do discurso de Renato Kfouri. Fonte citada: 488276. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488276
+
+- Indivíduos internados em UTI sem dose de vacina representam menos de 20% dos internados (qualidade da proteção) — dado utilizado para argumentar sobre impacto da vacinação. Fonte citada: 488274. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488274
+
+- Cepa circulante no Brasil responsável por mais de 96% dos novos casos (contexto de eficácia de medidas) — citado no mesmo discurso sobre vacinação. Fonte citada: 488274. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488274
+
+- Letalidade de 0,31% (alguns dados de referência para a situação atual) — apresentado no discurso de Paulo Porto. Fonte citada: 488274. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488274
+
+- Zero por cento de letalidade para determinada faixa etária em Paraíba (exemplo citado) — referência de Roberta Lacerda. Fonte citada: 488278. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488278
+
+- 785 mil doses aplicadas e 305 mil crianças/adolescentes vacinadas em 15 dias de campanha (Dia D da Mobilização Nacional) — dados da campanha de vacinação infantil. Fonte citada: 484390-003. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+- Endereço da campanha: 29 de outubro como término da mobilização (Dia D) — referência da campanha nacional. Fonte citada: 484390-003. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+- 151 milhões de Dose 1, 108 milhões de Dose 2 (esquema completo) e mais de 300 milhões de doses distribuídas para COVID-19 — dados de cobertura vacinal por faixa etária e distribuição. Fonte citada: 484390-002. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+- 120 milhões de doses aplicadas na campanha de influenza (2021) — referência específica do gráfico/campanha influenza citada pelo colega (Bruno Campello de Souza). Fonte citada: 484294-004. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488294
+
+- 18 vacinas disponíveis para crianças e adolescentes; 5 para adultos e idosos; 5 para gestantes — estrutura do calendário de vacinação (PNI) para diferentes grupos. Fonte citada: 484294-004. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488294
+
+- Dados da campanha de vacinação infantil: 785 mil doses em 15 dias; 305 mil crianças/adolescentes vacinadas (repetição de ponto anterior, reforçando a escala da campanha). Fonte citada: 484390-003. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+- 3 milhões de vidas salvas todos os anos no mundo com a vacinação (citação da OMS) — referência histórica ao impacto da vacinação. Fonte citada: 484389. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484389
+
+- 68 países e 80 milhões de bebês menores de um ano em risco devido à queda de coberturas vacinais (OMS/UNICEF alerta) — referência à queda da imunização durante a pandemia. Fonte citada: 484390-004. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+- Poliomielite erradicada no Brasil; eliminação da rubéola; controle de sarampo (historicamente destacado) — referência do Dia Nacional da Vacinação/PNI (contextualização histórica de sucesso). Fontes citadas: 484389; 484390-003. Links: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484389 e https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+- Quadro de cobertura vacinal específica para poliomielite: 95% (cobertura ideal); queda para níveis abaixo de 80% em 2019/2020 (contexto de vacinação infantil) — referência em apresentação de Cassia de Fátima Rangell Fernandes. Fonte citada: 484390-003. Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+Observação sobre limitações do contexto:
+- Algumas referências numéricas aparecem em trechos diferentes de discursos (ex.: percentuais, totais de doses, faixas etárias). Em alguns casos, o mesmo tema é apresentado com números diferentes conforme o orador e o recorte temporal. Sempre que possível, associei o número ao trecho específico e à fala correspondente.
+- Em alguns trechos, termos como “mais de” são aproximados (ex.: “mais de dois terços”) e não possuem um valor exato citado no texto. Mantive a formulação original ao indicar o alcance relativo.
+
+### Referências:
+
+- Renato KFOURI (nan/nan) | Data: 2022-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488276
+
+- PAULO PORTO (nan/nan) | Data: 2022-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488274
+
+- ROBERTA LACERDA (nan/nan) | Data: 2022-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488278
+
+- ROSANE CUBER GUIMARÃES (nan/nan) | Data: 2022-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484405
+
+- CÁSSIA DE FÁTIMA RANGEL FERNANDES (nan/nan) | Data: 2021-10-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484389
+
+- BRUNO CAMPELLO DE SOUZA (nan/nan) | Data: 2022-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488294
+
+- CÁSSIA DE FÁTIMA RANGEL FERNANDES (nan/nan) | Data: 2021-10-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/484390
+
+- BRUNO CAMPELLO DE SOUZA (nan/nan) | Data: 2021-10-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488294
+
+Observação final: Se quiser, posso reorganizar as informações por tema (ex.: cobertura vacinal, eficácia, desabastecimento, vacinação infantil) ou extrair apenas os números mais recentes/mais citados.",2,2,2,1,2,9,81.21,1,11,3,batch_00072.md; batch_00087.md; batch_00088.md,11,0.6173,True,6,Bruno Campello De Souza; Cássia De Fátima Rangel Fernandes; Paulo Porto; Renato Kfouri; Roberta Lacerda; Rosane Cuber Guimarães,,unknown,high,"Resposta cobre diversos números e referências em discurso sobre cobertura vacinal; bem alinhada ao pedido. Apresenta várias fontes específicas, porém é extensa e com duplicatas, o que prejudica a concisão. Recomenda-se reorganizar por tema e evitar repetições."
+q093,retrieval_stress,"Recupere apenas evidencias de Confucio Moura sobre educacao e ignore trechos de outros autores, mesmo que tratem do mesmo tema.",ok,"A seguir, evidências de Confúcio Moura sobre educação extraídas do contexto fornecido (ignoro trechos de outros autores, conforme solicitado).
+
+- Confúcio Moura destacou a integração entre educação, saúde e assistência social como caminho para a melhoria da educação em Rondônia, ressaltando que tudo isso faz parte de um “complexo sistêmico” de educação. (456240-002)
+
+- Ele informou que o programa de melhoria da educação no estado seria ampliado progressivamente, com metas de atingir 10, depois 15 municípios, e finalmente todos os municípios do estado. (456240-002)
+
+- Em outro trecho, enfatizou a necessidade de recuperar o ambiente da escola como espaço de equilíbrio e respeito. (451323-004)
+
+- Defendeu a educação integral para crianças do ensino básico, incluindo infantil e ensino fundamental. (451112-005)
+
+- Enfatizou que a melhoria da qualidade dos professores é central, defendendo salário, maior respeito à profissão, punição de agressões e treinamento centrado na prática em sala de aula. (455270-005)
+
+- Apontou o Pacto pela Educação Básica e a alfabetização na idade certa, mencionando investimentos em tecnologia (antenas Gsat via Telebras) para levar internet a escolas e unidades básicas de saúde no interior, além de atenção ao ENEM e ao IDEB. (483240-001)
+
+- Manifestou apoio à perenização do Fundeb e à necessidade de maiores recursos para o desenvolvimento da educação brasileira. (463649-001)
+
+- Mostrou otimismo com o encontro promovido pelo Vice-Presidente da República e governadores para discutir o futuro da educação, destacando que a educação é prioridade e que o MEC tem papel central nesse processo. (495438-001)
+
+- Também apresentou uma visão histórica da educação brasileira, refletindo sobre como melhorar a situação do país e a importância de investir em educação. (455270-005)
+
+Observação sobre o uso do contexto: incluí apenas evidências associadas a Confúcio Moura; trechos de outras pessoas/autores foram ignorados conforme pedido.
+
+### Limitações do que não foi possível confirmar
+- Não ampliei com informações de outros autores que tratem de educação; foquei apenas nos trechos em que Confúcio Moura aparece como autor.
+- Algumas peças repetem temas semelhantes em diferentes discursos; selecionei os trechos mais diretos e pertinentes, evitando redundância.
+
+### Referências:
+- Confúcio Moura (MDB/RO) | Data: 2019-08-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456240
+- Confúcio Moura (MDB/RO) | Data: 2019-03-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451323
+- Confúcio Moura (MDB/RO) | Data: 2019-02-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451112
+- Confúcio Moura (MDB/RO) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455270
+- Confúcio Moura (MDB/RO) | Data: 2021-09-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/483240
+- Confúcio Moura (MDB/RO) | Data: 2020-02-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/463649
+- Confúcio Moura (MDB/RO) | Data: 2022-12-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/495438",2,2,2,2,2,10,62.653,1,10,8,batch_00001.md; batch_00008.md; batch_00022.md; batch_00026.md; batch_00041.md; batch_00068.md; batch_00075.md; batch_00116.md,10,0.6134,True,3,Confúcio Moura; Maria Eliza; Maria Eliza De Aguiar E Silva,Confucio Moura,yes,high,"Atende integralmente ao pedido: evidências de Confúcio Moura sobre educação, sem trechos de outros autores; uso de referências coerentes; texto organizado em itens curtos; não há alucinações."
+q191,retrieval_stress,"Em perguntas sobre SUS, como evitar ruido de palavras que contem a sequencia SUS mas nao tratam de saude?",ok,"Resposta direta:
+- No contexto fornecido, SUS corresponde a Sistema Único de Saúde. O material não apresenta, explicitamente, orientações sobre como evitar ruído causado por termos que contenham a sequência “SUS” mas não se relacionem com saúde. (Paulo Rocha, PT/PA | Data: 2019-08-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456140)
+
+Evidências principais do contexto:
+- SUS é definido como Sistema Único de Saúde no texto: “O Sistema Único de Saúde (SUS) é um dos maiores e mais efetivos sistemas no trato da saúde pública do mundo.” (Paulo Rocha, PT/PA | Data: 2019-08-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456140)
+
+Limitações do que não foi possível confirmar:
+- Não há orientação explícita no conjunto de trechos fornecidos sobre técnicas ou estratégias para evitar ruído de termos que contenham SUS mas não tratem de saúde.
+
+Referências:
+- Paulo Rocha (PT/PA) | Data: 2019-08-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456140",1,1,2,2,2,8,63.907,1,12,4,batch_00026.md; batch_00062.md; batch_00108.md; batch_00111.md,12,0.476,True,11,Igor Ferreira Luna Louro; Marcio Nobre Migon; Paulo Roberto Vanderlei Rebello Filho; Paulo Rocha; Rafael Robba; Rafael Tenório; Randolfe Rodrigues; Rogério Scarabel; Shirley Rodrigues Maia; Silvana Lucena Dos Santos Drago; Tiago Farina,,unknown,high,Resposta parcial que não oferece técnicas práticas; afirma ausência de orientações explícitas. Uso de fontes citadas e boa organização; verificação adicional das citações sugerida.
+q089,scope_control,O que exatamente Paulo Paim afirma sobre capitalizacao da Previdencia e o que nao deve ser extrapolado de sua fala?,ok,"Resposta direta
+
+- O que Paulo Paim afirma sobre capitalização da Previdência:
+  - Ele descreve o regime de capitalização como uma “poupança individual” e não como um sistema de seguridade solidária. Ele ilustra, por exemplo, que “Ora, poupança individual eu faço hoje. Se eu quiser, eu deposito 10%, como dizem que poderá ser. Mas, se eu quiser depositar 20%, deposito.” Isso mostra a natureza voluntária e individual da capitalização segundo a leitura dele. [citação: 450672-002] 
+  - Alega que a capitalização eliminaria grande parte das fontes de financiamento da Previdência, deixando apenas a contribuição de empregado (em torno de 10%) e abandonando as demais fontes; ele cita que “contribuição sobre o lucro, faturamento, jogos lotéricos, PIS/Pasep, contribuição sobre a folha de pagamento e todas as vezes em que se compra ou vende alguma coisa” somam cerca de 75% da arrecadação hoje, o que não poderia ser substituído por um regime de capitalização. Em seguida ele alerta: “Sabe quanto significa isso? Setenta e cinco.” [citações: 450736-002, 453766-003]
+  - Ele aponta exemplos internacionais como evidência de problemas da capitalização, citando o Chile como referência de consequências negativas: a narrativa dele inclui que, no Chile, há casos de aposentados recebendo muito pouco (meio salário mínimo, segundo ele) e, entre os idosos, até suicídio associado à falta de proteção. [citação: 450736-002]
+  - Afirma de forma explícita que a capitalização “me preocupa muito, muito” e que o regime de capitalização é inviável para o Brasil pelos impactos sociais e econômicos que provoca. [citação: 454571-004]
+  - Detalha cenários de risco: por exemplo, na capitalização, se um cônjuge contribuiu e o outro ficou em casa, ao fim da vida o benefício da pessoa que faleceu pode deixar o survivo sem nada (descrição de que, aos 85 anos, um titular que morreu deixa a esposa com “zero”). [citação: 453766-004]
+  - Sinaliza que, sob capitalização, haveria descontinuidade de várias fontes de financiamento (employer, empregado, PIS/Pasep, etc.) e que a ideia geraria um regime menos estável do que o atual. Em seus dizeres, “não precisará mais haver contribuição de empregado e empregador; não precisará mais PIS/Pasep, jogos lotéricos – e tudo contribui para a Previdência –; contribuição sobre a folha de pagamento, que é 20%; e nem, quando alguém compra ou vende alguma coisa, uma parte irá para a Previdência.” Ele lembra que isso equivaleria a retirar cerca de 75% das fontes atuais. [citações: 453766-003, 453766-004]
+  - Aponta que a capitalização, se implantada, poderia abrir caminho para privatizar benefícios não programados e, assim, transferir para a iniciativa privada parcelas que hoje são asseguradas pelo sistema público. [citação: 456916-004]
+  - Em contrapartida, ele defende caminhos alternativos para enfrentar a crise fiscal sem sacrificar trabalhadores, mencionando reformas tributárias solidárias e progressivas, com combate à sonegação e melhoria da gestão e fiscalização da Previdência, incluindo maior foco na recuperação de grandes devedores e no fim de mecanismos como DRU. [citações: 453766-003, 454571-004]
+
+- O que não deve ser extrapolado da fala de Paulo Paim:
+  - Não é correto afirmar que ele defende a capitalização como solução viável para o Brasil. Ele insiste justamente que a capitalização é preocupante e que haveria sérios riscos, citando a experiência do Chile e os riscos de insegurança para quem depende da Previdência. Ao dizer “se aprovarem a capitalização, entraremos numa seara semelhante à do Chile”, ele não está endossando o modelo, mas alertando sobre as consequências. [citação: 453766-003]
+  - Não se deve inferir que ele aprova automaticamente qualquer desenho específico de capitalização (por exemplo, com ou sem participação patronal, ou com regras de investimento determinadas). Em várias passagens ele critica a ideia de capitalização e discute apenas os problemas gerais; ele não apresenta um plano detalhado de capitalização que possa ser visto como apoio a esse modelo. [citações: 453766-003, 454571-004]
+  - Não se deve concluir que ele rejeita qualquer reforma da Previdência; pelo contrário, ele defende reformas substitutivas (reforma tributária solidária e progressiva, combate à sonegação, melhorias de gestão) como caminhos para resolver o déficit fiscal sem prejudicar trabalhadores. [citação: 453766-003]
+  - Não se pode deduzir que ele afirma que o Brasil já está “quebrado” sem a reforma; ele argumenta que há alternativas e que a capitalização não é necessária para resolver a crise fiscal. [citação: 453766-003]
+
+Observação sobre as fontes citadas:
+- As afirmações acima estão ligadas aos trechos em que Paulo Paim discute capitalização em seus discursos, conforme as seguintes publicações: 2019-02-07 (Discurso de posse); 2019-02-08; 2019-05-07/20; 2019-06-07; 2019-08-30. As citações específicas aparecem nos trechos indicados.
+
+### Referências
+
+- Paulo Paim (PT/RS) | Data: 2019-02-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450672
+- Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Paim (PT/RS) | Data: 2019-06-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454571
+- Paulo Paim (PT/RS) | Data: 2019-08-30 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456916
+
+Observação final: se quiser, posso adaptar as citações para um formato específico (ex.: apenas trechos com aspas + fonte entre parênteses) ou expandir com mais trechos do mesmo conjunto de discursos.",2,2,2,2,2,10,69.504,1,12,9,batch_00001.md; batch_00003.md; batch_00004.md; batch_00009.md; batch_00010.md; batch_00014.md; batch_00016.md; batch_00020.md; batch_00023.md,12,0.5787,True,2,Paulo Paim; Rogério Carvalho,Paulo Paim,yes,medium,"Resumo fiel aos trechos: descreve o que Paim afirma sobre capitalização, os riscos citados (Chile, perda de fontes de financiamento, impactos sociais) e o que não deve ser extrapolado; utiliza referências específicas e mantém estrutura clara."
+q182,scope_control,O que se pode afirmar sobre a posicao de Alessandro Vieira em relacao a CPI das Cortes Superiores?,ok,"Resumo direto da posição de Alessandro Vieira sobre a CPI das Cortes Superiores:
+- Ele foi o proponente da CPI das Cortes Superiores do Poder Judiciário e agradeceu o apoio recebido para a sua criação. [450955-001]
+- Defendeu a necessidade de abrir a “caixa preta” do Judiciário e promover transparência, como demanda da sociedade. [450955-001]
+- Afirmou que, se o requerimento foi arquivado por insuficiência de assinaturas, o Regimento prevê devolução para nova coleta; prometeu apresentar um novo requerimento com apoio de colegas. [451134-001]
+- Esclareceu que a CPI não ataca o mérito das decisões judiciais, mas investiga o funcionamento das cortes superiores, como velocidade de tramitação, abuso de estratégias processuais e questões operacionais. [451134-003]
+- Citou precedentes, inclusive o voto do ministro Celso de Mello, de que o Senado tem condições de investigar temas ligados ao Judiciário. [450955-002]
+- Reforçou que CPIs são direitos da Minoria e que o Senado não pode sofrer limitações arbitrárias sobre esse instrumento. [477997-001]
+- Em 2021, manteve a posição de que a CPI é legítima, um direito da minoria, e que deve ser organizada de forma técnica e bem conduzida. [477997-001]
+
+Evidências principais do contexto:
+- Proponente da CPI e participação na construção do requerimento, com reconhecimento público de apoio e divulgação do tema. [450955-001]
+- Ênfase na transparência do Judiciário e na necessidade de fiscalização pela Câmara/Senado. [450955-001]
+- Explicação do arquivamento por insuficiência de assinaturas e expectativa de reapresentação com novo texto e casos específicos. [451134-001]
+- Delimitação do objeto da CPI: avaliar funcionamento (fatos determinados) sem questionar o mérito das decisões judiciais. [451134-003]
+- Referência a entendimento do STF (Celso de Mello) sobre a possibilidade de o Senado tratar de temas ligados ao Judiciário por meio de CPI. [450955-002]
+- Defesa de que CPIs são direitos da Minoria e instrumento legítimo de fiscalização. [477997-001]
+- Reiteração, em 2021, de que a CPI é um direito da Minoria e deve ser instalada com organização técnica. [477997-001]
+
+Limitações do que não está completamente confirmado no contexto:
+- Não há no conjunto fornecido uma decisão final sobre a instalação ou arquivamento definitivo da CPI após 2019/2021; os textos indicam solicitações, recursos e defesas, mas não o desfecho final atual. A posição de Alessandro permanece apresentada como pró-CPI, com esforços para reemitir o requerimento. (Base: análise dos trechos 450955-001, 451134-001, 451134-003, 450955-002, 477997-001)
+
+Referências:
+- Alessandro Vieira (PPS/SE) | Data: 2019-02-14 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450955
+- Alessandro Vieira (PPS/SE) | Data: 2019-02-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451134
+- Alessandro Vieira (CIDADANIA/SE) | Data: 2021-04-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/477997",2,2,2,2,2,10,61.088,1,10,6,batch_00001.md; batch_00002.md; batch_00005.md; batch_00007.md; batch_00055.md; batch_00096.md,10,0.5767,True,5,Alessandro Vieira; Davi Alcolumbre; Eduardo Girão; Lasier Martins; Plínio Valério,Alessandro Vieira Em; Cortes Superiores,yes,high,"Resumo direto da posição pró-CPI de Alessandro Vieira, defesa da transparência do Judiciário e delimitação do objeto; utiliza referências específicas e reconhece a ausência de desfecho final. Sem alucinações, síntese clara e bem estruturada."
+q033,synthesis,"Quais linhas de diagnostico sobre desigualdade e desenvolvimento aparecem em diferentes discursos, e que solucoes sao efetivamente sustentadas pelo contexto?",ok,"A resposta foca nas linhas de diagnóstico sobre desigualdade e desenvolvimento presentes nos discursos e nas soluções que o próprio contexto sustenta.
+
+1) Desigualdade socioeconômica estrutural e concentração de renda
+- Diagnóstico principal: o quadro de desigualdade no Brasil é profundo e tem se agravado, com grande concentração de renda e queda de ganhos para os pobres enquanto os ricos ganham mais. Exemplos citados: queda de 3,2% para os 10% mais pobres entre 2017 e 2018, e aumento de 8,4% para o 1% mais rico; 10% mais ricos detêm parte significativa da renda, enquanto os 10% mais pobres têm parcela muito menor. Também é destacado o recorte regional, com apontamentos sobre queda do alcance de benefícios como o Bolsa Família. Citação relevante: “De 2017 para 2018, por exemplo, o ganho dos 10% mais pobres caiu 3,2% … Enquanto o 1% mais rico teve um aumento de 8,4% …” e “10% da população com maiores ganhos detinha … 43,1% da massa de rendimentos … 0,8%” dos pobres. [Fonte: Otto Alencar, 459977-002] 
+- Solução sustentada pelo contexto: usar políticas públicas e desenvolvimento econômico com circulação de recursos para reduzir desigualdades; melhoria da governança e da força do mercado interno para que o consumo e o emprego ocorram dentro do país. Citação: “Um Estado só avança quando os recursos circulam na mão do consumidor …” [Fonte: Otto Alencar, 459977-002]
+
+2) Desigualdade regional, especialmente no Nordeste
+- Diagnóstico principal: o Nordeste é desigual frente ao restante do país; dados apontam problemas como analfabetismo elevado (ex.: 17% de analfabetismo em Alagoas) e altas taxas de indicadores negativos. O discurso defende que não se pode tratar desiguais de forma igual; é preciso olhar de forma diferenciada para regiões com baixos indicadores. Citação: “O Nordeste é desigual … 17% das pessoas não sabem ler no meu Estado de Alagoas.” [Fonte: 2, trecho citado de 462.../512?; conferindo chunk 2]
+- Soluções propostas/efetivamente sustentadas:
+  - implementação da Política Nacional de Desenvolvimento Regional, com princípios de transparência, participação social, solidariedade e cooperação federativa; objetivo de promover desenvolvimento e qualidade de vida em regiões com baixos indicadores. Citação: “A Política Nacional de Desenvolvimento Regional está alicerçada em princípios … e tem como objetivo central promover o desenvolvimento e a qualidade de vida em regiões com baixos indicadores socioeconômicos.” [Fonte: 2]
+  - estruturação de governança do desenvolvimento regional e núcleo de inteligência regional para leituras mais eficientes de dados; possibilidade de maior governança e monitoramento com dados. Citação: “estruturação do sistema de governança do desenvolvimento regional e a implementação do núcleo de inteligência regional.” [Fonte: 2]
+  - maior transparência e governança para que as políticas cheguem com prioridade aos regiões mais desfavorecidas. Citação: “mas é necessário que façamos o nosso papel e também saber se aquilo que chegar aos ministérios será dada prioridade.” [Fonte: 2]
+- Observação: o próprio discurso também enfatiza a importância de dados e estatísticas para guiar a política regional. Citação: “dados são tudo para a administração.” [Fonte: 2]
+
+3) Racismo institucional e desigualdade racial
+- Diagnóstico principal: o racismo institucional e estrutural permanece como o grande desafio; as políticas públicas por vezes operam de modo que a discriminação e a exclusão se ocultem no interior do sistema de justiça e das instituições. Citação: “o racismo institucional, como desdobramento necessário do estrutural, que nos forma como Nação e como projeto de Nação, é o grande desafio a ser fissurado…” [Fonte: 462889-001 a 462889-003]
+- Soluções propostas/efetivamente sustentadas:
+  - centralidade da pauta racial na agenda de direitos humanos e a cobrança de políticas que enfrentem o racismo institucional, inclusive com linguagem jurídica que combata a negação do racismo. Citação: “a centralidade da pauta racial na agenda dos direitos humanos …” e “disputar as práticas antirracistas” [462889-003]
+  - implementação rigorosa das cotas raciais e do ensino da África, da afro-brasileira e indígena na educação, bem como monitoramento das políticas afirmativas para assegurar sua efetividade. Citações: “cobrar a efetivação de políticas para forçar o cumprimento do art. 26-A da LDB … incluir história e cultura africana, afro-brasileira e indígena” e “observância rigorosa das políticas afirmativas … cotas” [462889-003]
+  - combate ao racismo no sistema de saúde, educação e concursos, além de ampliar o debate sobre reparações históricas e justiça de transição. Citações: “monitoramento do funcionamento das cotas nas universidades …” e “políticas de reparação histórica” [462889-003]
+
+4) Desigualdade na educação e necessidade de dados para monitorar políticas
+- Diagnóstico principal: sem dados consistentes, desigualdades — especialmente entre grupos historicamente invisibilizados — permanecem ocultas; é necessário incorporar dados de desempenho, gestão democrática e políticas públicas para acompanhar metas, como as do Plano Nacional de Educação (PNE). Citações: “sem os dados, muitas desigualdades ficam invisíveis” e “dados e indicadores para monitorar todas as metas” [491957-001]
+- Soluções propostas/efetivamente sustentadas:
+  - fortalecer a governança da educação com dados confiáveis, sistemas de monitoramento (Censo, Saeb, Inep) e inclusão de dados de grupos invisibilizados para acompanhar metas do PNE. Citações: “insira dados como prioridade nesses sistemas … metas …” e “inserir na LDO … informações sobre a execução das políticas públicas” [491957-001]
+  - uso de dados para planejar políticas de gestão democrática da educação (Meta 19) e assegurar que comunidades escolares participem das decisões. Citação: “Meta 19 … consulta pública à comunidade escolar” [491957-001]
+- Observação: há foco explícito em que a ausência de dados dificulta a identificação de necessidades de grupos historicamente marginalizados (ex.: inclusão, jovens e adultos, entre outros). Citação: “metas não podem ser plenamente monitoradas pela ausência de dados e de indicadores.” [491957-001]
+
+5) Educação, inclusão, cotas e permanência estudantil como mecanismos de redução de desigualdade
+- Diagnóstico principal: as políticas de ação afirmativa, incluindo cotas raciais e a promoção de educação para minorias, são centrais para reduzir desigualdades no ensino superior, embora sua implementação tenha mostrado resultados heterogêneos e desafios de permanência. Citações: relatos sobre deficiências de implementação de cotas e a necessidade de permanência estudantil no ensino superior; dados de ingressos, formandos e evasão. [462889-003]
+- Soluções propostas/efetivamente sustentadas:
+  - ampliação e melhoria da implementação de cotas e de políticas de permanência estudantil para aumentar a equidade no acesso e na conclusão de cursos superiores. Citação: “monitoramento da política … necessidade de melhor investigar a adoção e o funcionamento desse critério de controle social … permanência estudantil.” [462889-003]
+  - continuidade de políticas de educação para o reconhecimento histórico da contribuição africana e afrodescendente, bem como a inclusão de história e cultura africana nos currículos. Citação: “inclui estudo de história e cultura africana, afro-brasileira e indígena nas matrizes curriculares” [462889-003]
+
+6) Iniciativas de inovação e modernização para reduzir desigualdades (âmbito educacional e governança)
+- Diagnóstico complementar: há consenso sobre a necessidade de governança eficaz, medição de resultados e integração entre setores para enfrentar desigualdades, incluindo o uso de tecnologia e dados para melhorar serviços públicos e políticas públicas. Citações:
+  - “governança” e “medir para avaliar” (grosso modo) como princípios de gestão pública. [2]
+  - propostas de modernização governamental com soluções tecnológicas para reduzir desigualdades digitais e melhorar serviços, incluindo govtech e inclusão digital. Citações: “govtechs … podem ajudar a transformar as plataformas governamentais” e “universalização de serviços digitais … acesso universal à rede” [3]
+  - uso de parcerias e laboratórios de inovação (laboratórios na Caatinga; economia regenerativa) para desenhar políticas interconectadas de desenvolvimento regional. Citações: “laboratório de economia regenerativa … Paulo Afonso” e “HidroSinergia/Projeto Nordeste Potência” [493667-002]
+
+Resumo das soluções efetivamente sustentadas pelo contexto
+- Políticas públicas com foco regional e governança baseada em dados (inclui núcleo de inteligência regional, transparência e monitoramento) para reduzir desigualdades regionais, com prioridade ao Nordeste (Política Nacional de Desenvolvimento Regional). Citações: quadro de diagnóstico, objetivo, governança, dados. [2]
+- Ações afirmativas (cotas), ensino de história africana e monitoramento de políticas, com ênfase na redução das desigualdades raciais no ensino e na sociedade. Citações: cotas, história africana, monitoramento. [462889-003]
+- Investimento específico em educação com dados e monitoramento do PNE, para identificar e agir sobre grupos historicamente invisibilizados; melhoria de dados nos sistemas oficiais. Citações: dados para monitorar metas; metas com dados. [491957-001]
+- Programas de combate à evasão e apoio à aprendizagem: sistema de alerta preventivo, avaliações diagnósticas, mapeamento de turmas, apoio a redes de ensino e reforço de permanência. Citações: Sistema de Alerta Preventivo, avaliações diagnósticas, alcance no Norte/Nordeste. [488474-003]
+- Modernização da gestão pública e uso de tecnologia (govtech) para ampliar eficiência, reduzir custos e ampliar acesso a serviços públicos; inclusão digital como condição de redução de desigualdade. Citações: GovTech, transformação digital, acesso universal. [3]
+- Iniciativas de desenvolvimento climático com governança multinível para ampliar ambição, participação e transparência, fortalecendo planos estaduais/municipais e atuação de atores não estatais. Citações: Parceria de Marraquexe, governança multinível, participação. [6-7]
+
+Limitações do que foi possível confirmar
+- Alguns trechos não identificam claramente o nome de um senador (ou a filiação exata) na fórmula exigida para referências formais; em alguns casos, o orador é convidado ou representante de instituição (Defensoria, ICS), o que limita a rotulação como “Nome do Senador” nas referências. Exemplos: falas de Rita Cristina de Oliveira e Deborah Duprat, que são de Defensoria/Publica, não senadores.
+- Em alguns trechos, a relação entre diagnóstico e solução é indireta ou implícita; portanto, destaquei apenas soluções explicitamente sustentadas pelo conteúdo.
+
+### Referências:
+- Otto Alencar (PSD/BA) | Data: 2019-10-16 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/459977
+- Rita Cristina de Oliveira (Defensoria Pública da União) | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462889
+- Deborah Duprat (Defensoria Pública da União) | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462882
+- Mauro Luiz Rabelo (exposição de convidado) | Data: 2022-02-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/488474
+- Sérgio Xavier (Senado Federal) | Data: 2022-09-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/493667
+- Lara Simieli (exposição de convidado) | Data: 2022-06-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/491957
+- Deborah Duprat (reiterado) | Data: 2019-12-09 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/462882
+
+Observação: Alguns trechos relevantes aparecem em outras entradas (por exemplo, falas sobre dados do PNE, educação, e políticas de equidade). Se quiser, posso ampliar a síntese com mais citações específicas de cada trecho.",2,1,2,2,1,8,84.54,1,13,8,batch_00025.md; batch_00034.md; batch_00040.md; batch_00041.md; batch_00093.md; batch_00101.md; batch_00110.md; batch_00111.md,13,0.4952,True,9,Deborah Duprat; Helber Ricardo Vieira; Izalci Lucas; Lara Simielli; Mauro Luiz Rabelo; Otto Alencar; Rita Cristina De Oliveira; Sergio Xavier; Viviane Romeiro,,unknown,high,Resumo claro e abrangente com estrutura e referências; porém números/citações específicas podem não estar verificados. Recomenda confirmar valores numéricos e a correspondência exata das citações às fontes.
+q146,synthesis,"Sintetize preocupacoes institucionais sobre transparencia, democracia, CPI e funcionamento parlamentar.",ok,"A partir do conjunto de falas e notas do Senado incluídas no contexto, as principais preocupações institucionais sobre transparência, democracia, CPIs e funcionamento parlamentar podem ser sintetizadas nos seguintes pontos:
+
+- Transparência e controle do gasto público
+  - Preocupação com a necessidade de transparência na gestão dos recursos públicos, combate à corrupção e prevenção do desperdício, incluindo o desperdício passivo e ativo e a recuperação de recursos desviados. Existe ênfase na fiscalização eficiente e na responsabilização de gestores públicos. [Fonte: Frente Parlamentar de Transparência dos Gastos Públicos; Lava Jato; transparência orçamentária] 461602.
+  - Reforço à ideia de auditorias e de maior transparência em instrumentos financeiros do governo, como leilões de títulos públicos e operações de tesouraria, para ampliar o acompanhamento pela sociedade. [Fonte: auditoria da dívida pública; transparência em leilões; operações compromissadas] 477990.
+
+- Democracia, participação cívica e legitimidade institucional
+  - Confiança no sistema eleitoral, nas urnas eletrônicas e na Justiça Eleitoral; ênfase na pacificação de ânimos e na participação responsável do cidadão como elemento essencial da democracia representativa. [Urnas eletrônicas; apelo à pacificação; participação cidadã]  Marilyn: 4.
+  - Reconhecimento de que a democracia pode conviver com mecanismos de democracia direta (referendo, iniciativa popular) como correção aos vícios da representação, desde que não substituam as eleições. [Democracia direta e representação; participação popular] 453653 e 452703.
+  - Observação de que “não há espaço para pautas distantes da realidade” e que as instituições devem ser fortalecidas em benefício de toda a sociedade, com respeito aos direitos fundamentais e ao Estado de Direito. [Harmonia entre Poderes; direitos fundamentais; Estado democrático de direito] 1, 4.
+
+- CPIs (Comissões Parlamentares de Inquérito), seus limites e funcionamento institucional
+  - Reconhecimento de que CPIs são instrumentos importantes de fiscalização, mas não devem servir para tudo; há limites constitucionais e riscos de interferência indevida em Poderes (especialmente no Judiciário), o que demanda cautela e respeito à separação de poderes. [CPI e limites constitucionais; independência do Judiciário] 451913, 452703, 477990, 451913.
+  - Debates sobre a possibilidade de ampliar o alcance de CPIs (ex.: investigar Estados e Municípios) versus a necessidade de salvaguardar prerrogativas judiciais e constitucionais; há posições que defendem que certas investigações não cabem em CPI. [Exemplos de debates sobre alcance de CPI] 477990, 453653, 451913.
+  - Observação de que a instalação de CPIs deve considerar o momento político, a legitimidade das instituições e a responsabilidade com a governança do país, evitando afrontas institucionais ou uso oportunista. [Discussão de processo e prudência] 451913, 451913.
+
+- Funcionamento parlamentar, governança, ética e agenda legislativa
+  - A ideia de que o Legislativo precisa ser produtivo e dialogar com o Executivo e o Judiciário, discutindo reformas sensíveis (previdência, tributária, administrativa, pacto federativo) com diálogo, transparência e participação social. [Reformas, harmonia entre poderes, participação popular] 1.
+  - Preocupação com a gestão interna, execução de emendas, orçamento e controles de gastos em níveis federal e local (ex.: gestão de emendas no DF; execução de recursos públicos). [Gestão de orçamento, emendas, queixas sobre execução] 454559.
+  - Ênfase ética como base para a renovação política; a necessidade de evitar a promessa vazia, a corrupção e práticas que distorçam a confiança pública, enfatizando educação cívica, responsabilidade e integridade. [Ética, crise política, participação responsável do cidadão] 6.
+
+Limitações do que foi possível confirmar no contexto
+- O conjunto é composto principalmente de falas e notas parlamentares, com foco em debates, propostas e posições de senadores. Não há dados empíricos ou estatísticos consolidando as tendências apresentadas; as informações são apresentadas na forma de discursos e deliberações, o que limita a generalização.
+
+### Referências:
+- Soraya Thronicke (PSDB/PSL/PSL) | Data: 2019-11-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/461602
+- Alvaro Dias (PODE) | Data: 2019-02-22 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451110
+- Eduardo Gomes (MDB) | Data: 2019-04-11 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452703
+- Izalci Lucas (PSDB) | Data: 2019-06-17 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454559
+- Marcos Rogério (DEM) | Data: 2019-03-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451913
+- Lasier Martins (PODE) | Data: 2019-05-15 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453653
+- Eduardo Girão (PODEMOS) | Data: 2021-04-13 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/477990
+- Izalci Lucas (PSDB) | Data: 2019-06-17 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/454559
+- Alvaro Dias (PODEMOS) | Data: 2019-07-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/455276
+
+Observação: onde é citado, o conteúdo está referenciado aos trechos específicos do contexto fornecido; não foram adicionadas informações fora do material presente.",2,1,2,2,0,7,52.098,1,14,13,batch_00001.md; batch_00004.md; batch_00005.md; batch_00006.md; batch_00009.md; batch_00011.md; batch_00015.md; batch_00019.md; batch_00022.md; batch_00038.md; batch_00056.md; batch_00086.md; batch_00109.md,14,0.5747,True,9,Alvaro Dias; Eduardo Girão; Eduardo Gomes; Esteves Colnago; Izalci Lucas; Jorge Kajuru; Lasier Martins; Marcos Rogério; Soraya Thronicke,,unknown,high,"A síntese aborda bem transparência, democracia, CPIs e funcionamento parlamentar, com organização clara e fontes citadas. Observação: há trecho 'Marilyn: 4.' que é confuso/irrelevante, sugerindo erro factual; manter foco nas fontes e evitar informações não verificadas."
+q085,temporal_comparison,Como a argumentacao de Paulo Paim sobre Previdencia evolui entre fevereiro e marco de 2019 nos discursos recuperados?,ok,"Resposta direta:
+Entre fevereiro e março de 2019, a argumentação de Paulo Paim sobre a Previdência se consolida como crítica veemente à reforma proposta, com foco no debate público, na defesa de direitos dos trabalhadores, e na rejeição da capitalização como modelo viável. Ele enfatiza a necessidade de propostas equilibradas e de diálogo institucional, além de propor mecanismos para preservar recursos da seguridade social e cobrar responsabilidade fiscal. Não tenho dados de discursos de março de 2019 no contexto fornecido.
+
+Evidências principais do contexto:
+- 8 de fevereiro de 2019: Paim critica a proposta de reforma da Previdência, defende uma aposentadoria digna, o diálogo e a participação democrática, e afirma que qualquer proposta deve ser equilibrada e atender empregados e empregadores. “queremos uma aposentadoria decente… diálogo… democracia” (citação geral do trecho). [Paulo Paim | 2019-02-08] 1) Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- 18 de fevereiro de 2019: ele afirma que, em regime de capitalização, não há como ser favorável, pedindo exemplos reais de países que tenham tido sucesso com essa abordagem; reforça a necessidade de debate público para encontrar caminhos comuns. “Se for um regime de capitalização, não tem como ser a favor, porque ninguém paga mais e vai ser só 10% do salário do trabalhador… me mostrem um país no mundo.” [Paulo Paim | 2019-02-18] 2) Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450968
+- 18 de fevereiro de 2019 (continuação): ele também propõe mecanismos de proteção à seguridade social, incluindo uma PEC para impedir destinar recursos da seguridade a outros fins, fortalecendo a ideia de preservação da saúde, educação e previdência. “Fica proibido destinar para outros fins os recursos da seguridade.” [Paulo Paim | 2019-02-18] 3) Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450968
+- 19 de fevereiro de 2019: ele reforça a expectativa de debate na Comissão de Direitos Humanos e LGP sobre a reforma, insiste em diálogo, e afirma que a discussão deve buscar um caminho comum que atenda a todos; mantém foco na defesa de causas, não de “coisas”. “dialogo, diálogo e diálogo, para… encontrarmos um caminho comum que atenda a todos.” [Paulo Paim | 2019-02-19] 4) Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450992
+
+Limitações do que não foi possível confirmar:
+- Não há registros de discursos de março de 2019 no contexto fornecido. Não posso descrever a evolução da argumentação de Paulo Paim em março com base neste conjunto de dados. Não encontrei essa informação no contexto fornecido.
+
+Referências:
+- Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Paulo Paim (PT/RS) | Data: 2019-02-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450968
+- Paulo Paim (PT/RS) | Data: 2019-02-19 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450992",1,1,2,2,1,7,58.257,1,8,6,batch_00002.md; batch_00003.md; batch_00013.md; batch_00028.md; batch_00030.md; batch_00031.md,8,0.6575,True,3,Alvaro Dias; Jean-Paul Prates; Paulo Paim,Paulo Paim,yes,high,"Aborda evolução apenas de fevereiro; março não disponível no contexto. Fontes oficiais citadas; citações podem ser parafraseadas. Estrutura clara, porém limitada pela falta de dados de março."
+q173,temporal_comparison,Compare as falas sobre CPI do Judiciario/CPI da Toga entre fevereiro e marco de 2019.,ok,"Resposta direta:
+- Em 18 de março de 2019, Jorge Kajuru defendeu a instauração da CPI da Toga, defendendo a abertura de investigação sobre o Judiciário. [451562-001]
+- Em 26 de março de 2019, Lasier Martins afirmou que não haverá a CPI do Judiciário, da Lava Toga nem da Toga, e também comentou sobre impeachment de forma reiterada. [451879-003]
+
+Evidências principais do contexto:
+- Kajuru (18/03/2019, PSB-GO) apresenta defesa da criação da CPI da Toga. [451562-001]
+- Lasier Martins (26/03/2019, PSDB/PODE/PSL/PODE, RS) afirma categórica ausência de possibilidade de a Câmara instalar a CPI da Toga (ou similares) e menciona o impeachment como opção, conforme o tom do discurso. [451879-003]
+
+Limitações do que não foi possível confirmar:
+- Não encontrei no contexto fornecido qualquer referência a falas sobre a CPI da Toga ou CPI do Judiciário ocorridas em fevereiro de 2019. Não há dados de fevereiro no material disponível; portanto, não é possível comparar essas falas com as de março com base neste conjunto. Não encontrei essa informação no contexto fornecido.
+
+Referências:
+- Jorge Kajuru (PSB/GO) | Data: 2019-03-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451562
+- Lasier Martins (PODE/PSDB/PSL/PODE - RS) | Data: 2019-03-26 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/451879",1,2,2,2,2,9,37.179,1,11,8,batch_00004.md; batch_00006.md; batch_00007.md; batch_00020.md; batch_00028.md; batch_00042.md; batch_00055.md; batch_00087.md,11,0.512,True,7,Alvaro Dias; Eduardo Girão; Elmano Férrer; Jorge Kajuru; Lasier Martins; Paulo Paim; Plínio Valério,Compare As,no,high,Adesão parcial: aborda falas de março e admite ausência de dados de fevereiro no contexto; usa fontes oficiais; apresentação organizada e com poucos sinais de alucinação.

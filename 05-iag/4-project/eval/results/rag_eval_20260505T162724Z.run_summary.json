@@ -1,0 +1,246 @@
+{
+  "executed_at_utc": "20260505T162724Z",
+  "finished_at_utc": "20260505T170249Z",
+  "duration_seconds": 2124.264,
+  "questions": {
+    "total": 32,
+    "ok": 32,
+    "error": 0
+  },
+  "scores": {
+    "min": 5.0,
+    "avg": 9.031,
+    "max": 10.0
+  },
+  "timing": {
+    "question_duration_seconds": {
+      "min": 33.607,
+      "avg": 61.539,
+      "max": 99.117
+    }
+  },
+  "retrieval": {
+    "chunk_count": {
+      "min": 5.0,
+      "avg": 10.938,
+      "max": 14.0
+    },
+    "unique_file_count": {
+      "min": 2.0,
+      "avg": 7.406,
+      "max": 13.0
+    },
+    "has_expected_author": {
+      "yes": 14,
+      "no": 4,
+      "unknown": 14
+    },
+    "author_mix_risk": {
+      "low": 0,
+      "medium": 3,
+      "high": 29,
+      "unknown": 0
+    }
+  },
+  "question_timings": [
+    {
+      "id": "q081",
+      "category": "author_disambiguation",
+      "status": "ok",
+      "duration_seconds": 95.671
+    },
+    {
+      "id": "q164",
+      "category": "author_disambiguation",
+      "status": "ok",
+      "duration_seconds": 88.871
+    },
+    {
+      "id": "q017",
+      "category": "author_focus",
+      "status": "ok",
+      "duration_seconds": 99.117
+    },
+    {
+      "id": "q108",
+      "category": "author_focus",
+      "status": "ok",
+      "duration_seconds": 76.374
+    },
+    {
+      "id": "q037",
+      "category": "broad_multifocal",
+      "status": "ok",
+      "duration_seconds": 72.415
+    },
+    {
+      "id": "q155",
+      "category": "broad_multifocal",
+      "status": "ok",
+      "duration_seconds": 66.77
+    },
+    {
+      "id": "q097",
+      "category": "citation_source_verification",
+      "status": "ok",
+      "duration_seconds": 33.607
+    },
+    {
+      "id": "q200",
+      "category": "citation_source_verification",
+      "status": "ok",
+      "duration_seconds": 51.998
+    },
+    {
+      "id": "q025",
+      "category": "comparison",
+      "status": "ok",
+      "duration_seconds": 52.448
+    },
+    {
+      "id": "q112",
+      "category": "comparison",
+      "status": "ok",
+      "duration_seconds": 52.518
+    },
+    {
+      "id": "q057",
+      "category": "context_limits",
+      "status": "ok",
+      "duration_seconds": 57.726
+    },
+    {
+      "id": "q124",
+      "category": "context_limits",
+      "status": "ok",
+      "duration_seconds": 37.73
+    },
+    {
+      "id": "q073",
+      "category": "cross_author_confusion",
+      "status": "ok",
+      "duration_seconds": 66.159
+    },
+    {
+      "id": "q132",
+      "category": "cross_author_confusion",
+      "status": "ok",
+      "duration_seconds": 86.567
+    },
+    {
+      "id": "q001",
+      "category": "factual_simple",
+      "status": "ok",
+      "duration_seconds": 38.154
+    },
+    {
+      "id": "q104",
+      "category": "factual_simple",
+      "status": "ok",
+      "duration_seconds": 50.904
+    },
+    {
+      "id": "q049",
+      "category": "hallucination_trap",
+      "status": "ok",
+      "duration_seconds": 68.731
+    },
+    {
+      "id": "q120",
+      "category": "hallucination_trap",
+      "status": "ok",
+      "duration_seconds": 51.112
+    },
+    {
+      "id": "q065",
+      "category": "multi_hop",
+      "status": "ok",
+      "duration_seconds": 51.649
+    },
+    {
+      "id": "q128",
+      "category": "multi_hop",
+      "status": "ok",
+      "duration_seconds": 51.166
+    },
+    {
+      "id": "q041",
+      "category": "negative_evidence",
+      "status": "ok",
+      "duration_seconds": 57.914
+    },
+    {
+      "id": "q116",
+      "category": "negative_evidence",
+      "status": "ok",
+      "duration_seconds": 44.169
+    },
+    {
+      "id": "q009",
+      "category": "numeric",
+      "status": "ok",
+      "duration_seconds": 47.038
+    },
+    {
+      "id": "q137",
+      "category": "numeric",
+      "status": "ok",
+      "duration_seconds": 81.21
+    },
+    {
+      "id": "q093",
+      "category": "retrieval_stress",
+      "status": "ok",
+      "duration_seconds": 62.653
+    },
+    {
+      "id": "q191",
+      "category": "retrieval_stress",
+      "status": "ok",
+      "duration_seconds": 63.907
+    },
+    {
+      "id": "q089",
+      "category": "scope_control",
+      "status": "ok",
+      "duration_seconds": 69.504
+    },
+    {
+      "id": "q182",
+      "category": "scope_control",
+      "status": "ok",
+      "duration_seconds": 61.088
+    },
+    {
+      "id": "q033",
+      "category": "synthesis",
+      "status": "ok",
+      "duration_seconds": 84.54
+    },
+    {
+      "id": "q146",
+      "category": "synthesis",
+      "status": "ok",
+      "duration_seconds": 52.098
+    },
+    {
+      "id": "q085",
+      "category": "temporal_comparison",
+      "status": "ok",
+      "duration_seconds": 58.257
+    },
+    {
+      "id": "q173",
+      "category": "temporal_comparison",
+      "status": "ok",
+      "duration_seconds": 37.179
+    }
+  ],
+  "artifacts": {
+    "jsonl": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T162724Z.jsonl",
+    "markdown": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T162724Z.md",
+    "csv": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T162724Z.csv",
+    "run_config": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T162724Z.run_config.json",
+    "run_summary": "/workspaces/mcdia/05-iag/4-project/eval/results/rag_eval_20260505T162724Z.run_summary.json"
+  }
+}

@@ -1,0 +1,90 @@
+id,category,question,execution_status,answer,adherence_score,factual_score,source_focus_score,synthesis_score,hallucination_score,total_score,duration_seconds,retrieval_source_entries,retrieval_chunk_count,retrieval_unique_file_count,retrieval_unique_files,retrieval_score_count,retrieval_avg_score,retrieval_links_present,retrieval_author_count,retrieval_author_mentions,retrieval_expected_authors,retrieval_has_expected_author,retrieval_author_mix_risk,review_notes
+q089,scope_control,"Ao responder sobre Paulo Paim e capitalizacao da Previdencia, como separar com seguranca: (a) criticas que ele faz ao modelo, (b) exemplos ou numeros que ele usa, e (c) extrapolacoes que nao devem ser atribuidas a ele?",ok,"Aqui está uma forma segura de separar o que Paulo Paim diz sobre capitalização da Previdência em três categorias, com base apenas no contexto fornecido:
+
+1) Críticas que ele faz ao modelo (capitalização)
+- Paim sustenta que o sistema de capitalização proposto é o caminho errado e que o regime atual de repartição é essencial para a seguridade do povo brasileiro. Fonte: discurso em que ele critica a proposta de reforma da Previdência e o modelo de capitalização. Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Ele descreve a capitalização como prejudicial aos trabalhadores, enfatizando que o custo seria transferido para o sistema financeiro (bancos) e que o trabalhador acabaria recebendo muito menos do que contribuiu. Paulo Paim (PT/RS) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453686
+- Paim aponta que diversos países que adotaram a capitalização (como Chile, Colômbia, México e Peru) estão voltando atrás, segundo as falas dele. Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Em debate na CCJ/CDH, ele também critica a ideia de privatizar a gestão de benefícios (como auxílio-doença, licença-maternidade), sugerindo que a capitalização abriria espaço para gestão privada e bancos ganharem com isso. Paulo Paim (PT/RS) | Data: 2019-09-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457064
+- Em síntese, ele vincula a capitalização a problemas de equidade, de retrocessos em direitos adquiridos e à ideia de que o modelo privatiza a seguridade social. Paulo Paim (PT/RS) | Data: 2019-05-07 (registro de discurso sobre o tema) | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453347
+
+2) Exemplos ou números que ele usa para sustentar as críticas
+- Contribuição previdenciária atual e possível ganho para bancos sob capitalização: ele cita que as fontes de arrecadação hoje (empregado, empregador, PIS/Pasep, lucro/faturamento, etc.) somam grandes volumes, que seriam “capturados” pela capitalização e bancos; ele cita números de arrecadação e a distribuição entre bancos e trabalhadores. Paulo Paim (PT/RS) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453686
+- Exemplo de impacto financeiro para o trabalhador ao longo do tempo sob capitalização (em números apresentados por ele/na CDH): previsão de acumulação de até R$ 275.804,02 ao longo de 40 anos, com parte substancial indo para bancos (não especificado exatamente qual % na síntese, mas ele cita que bancos ficariam com uma parcela significativa). No mesmo raciocínio, ele aponta que, com a participação dos bancos, o trabalhador poderia ficar com valores muito menores (ex.: R$ 170.102,58) e, em cenários de 59 anos de contribuição, menos de 77% do valor originalmente contribuído. Paulo Paim (PT/RS) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453686
+- Exemplo específico sobre o salário de aposentadoria sob capitalização: ele menciona um trabalhador que contribuiu por 40 anos sobre três salários mínimos poderia se aposentar com cerca de R$ 750,00 (em comparação com valor integral hoje). Paulo Paim (PT/RS) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453686
+- Estudos/questões sobre déficit e custos de implantação: ele cita números trazidos pela Unicamp e pela CPI para questionar as bases usadas pelo governo para o déficit previdenciário, sugerindo que há inconsistências no cálculo e na forma de contabilizar contribuições. Paulo Paim (PT/RS) | Data: 2019-10-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/460156
+- Sobre a capitalização: ele menciona que, segundo descrições de audiências com a Unicamp, a capitalização cria armadilhas para trabalhadores, inclusive em casos de tempo de contribuição reduzido ou mudança de regras que afetam pensionistas. Paulo Paim (PT/RS) | Data: 2019-09-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457064
+- Observação sobre o conteúdo técnico da discussão (observação de que o debate envolve dados de especialistas, inclusive da OIT, que ele cita para sustentar que a privatização não resolve problemas de longo prazo). Paulo Paim (PT/RS) | Data: 2019-09-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457064
+
+3) Extrapolações ou afirmações que não devem ser atribuídas a ele (com cautela)
+- O que se pode inferir, com base apenas no que está no contexto, é que Paim utiliza comparações internacionais (Chile, EUA) para sustentar seus argumentos contra capitalização; isso não é uma extrapolação independentemente dele, mas é parte explícita de seu discurso. Ex.: menções sobre Chile, Colômbia, México e Peru terem adotado capitalização e, segundo ele, voltarem atrás. Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Não há no conjunto apresentado uma defesa de privatizar áreas como saúde ou educação por ele; os trechos dão ênfase à previdência e à oposição à capitalização, com críticas à gestão financeira e à forma de financiamento. Em especial, trechos que tratam de fiscalização, combate à sonegação e combate aos devedores são citados para fundamentar a discussão, não uma ampliação explícita para outras áreas. Paulo Paim (PT/RS) | Data: 2019-05-20 (discurso de defesa da reforma tributária/combate à sonegação como parte da solução fiscal) | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Observação de que algumas cobranças (drus, Refis, etc.) são discutidas no contexto de financiamento da Previdência e de regras de benefícios; esses pontos são parte do debate, e nem todo detalhe de números citado é uma afirmação independente sobre a eficácia da capitalização; é parte de sua crítica ao modelo. Paulo Paim (PT/RS) | Data: 2019-02-18/2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450968 e https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453686
+
+Observação geral sobre confiabilidade no contexto
+- As informações são apresentadas como falas e números referidos pelo próprio Paulo Paim em discursos no Senado, com citações diretas a fontes públicas (textos integrais de pronunciamentos). Sempre que usar qualquer dado específico, referencie a fonte correspondente conforme apresentado nos trechos (datas, links). As interpretações sobre “capitalização” vêm diretamente dos trechos do discurso, e algumas referem-se a estimativas/cenários apresentados por ele ou por terceiros citados por ele (Unicamp, CPI, etc.).
+
+### Referências:
+
+- Paulo Paim (PT/RS) | Data: 2019-02-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450736
+- Paulo Paim (PT/RS) | Data: 2019-05-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453686
+- Paulo Paim (PT/RS) | Data: 2019-02-18 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/450968
+- Paulo Paim (PT/RS) | Data: 2019-09-06 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/457064
+- Paulo Paim (PT/RS) | Data: 2019-05-07 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453347
+- Paulo Paim (PT/RS) | Data: 2019-05-20 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453766
+- Paulo Paim (PT/RS) | Data: 2019-10-21 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/460156
+
+Observação final
+- Se quiser, posso resumir cada trecho com citações literais curtas (paráfrases com referência direta) para cada ponto, ou adaptar o formato para um quadro comparativo (críticas, números, extrapolações) com as citações logo após cada item.",2,1,2,2,1,8,124.747,1,12,9,batch_00002.md; batch_00003.md; batch_00006.md; batch_00010.md; batch_00014.md; batch_00016.md; batch_00028.md; batch_00031.md; batch_00034.md,12,0.6085,True,4,Jean-Paul Prates; Jorge Kajuru; Paulo Paim; Paulo Tafner,Paulo Paim,yes,high,"Estrutura em 3 categorias (críticas, números, extrapolações) presente e coerente. Fontes públicas citadas. No entanto, alguns números apresentados parecem não ter verificação explícita nos trechos indicados; atenção à exatidão factual."
+q191,retrieval_stress,"Como diagnosticar e reduzir ruido de retrieval quando a consulta usa a sigla SUS, mas o contexto pode trazer palavras ou trechos irrelevantes que apenas coincidem lexicalmente? Responda metodologicamente, usando sinais de retrieval e exemplos de checagem semantica.",ok,"1) Resposta direta
+
+Propõe um pipeline de recuperação com desambiguação de siglas (SUS) seguido de checagens semânticas, usando sinais de retrieval explícitos para reduzir ruído. passos-chave:
+
+- Desambiguação inicial da sigla SUS:
+  - manter apenas a leitura associada a saúde quando houver evidência lexical/contexts de saúde; bloquear leituras que não estejam relacionadas ao Sistema Único de Saúde ou a saúde pública (quando aplicável).
+
+- Sinais de retrieval (checagem de relevância antes da classificação final):
+  - Sinal de domínio: presença de vocabulário de saúde (ex.: “saúde”, “Sistema Único de Saúde”, “política de saúde”, “imunizações”, etc.).
+  - Sinal de proximidade (co-ocorrência): SUS próximo a termos de saúde ou a expressões que indiquem políticas públicas de saúde.
+  - Sinal de metadados: tipo de documento (discurso, sessão, data), área (Senado Federal), e autoria — ajudam a confirmar o tema.
+  - Sinal semântico: semelhança entre o conteúdo do documento e o conceito de SUS como sistema de saúde público.
+
+- Checagem semântica (checagens de qualidade antes de aceitar o resultado):
+  - Checagem 1: verificar se SUS está próximo de palavras-chave do domínio saúde (ex.: “Sistema Único de Saúde” ou termos como “saúde pública”, “política de saúde”). Exemplo no contexto: a referência direta ao SUS como sistema de saúde público. [citação: Veja trecho em que o SUS é apresentado como sistema de saúde] 
+  - Checagem 2: confirmar que o conteúdo discute aspectos típicos do SUS (ex.: universalidade, financiamento, orçamento, acesso, políticas públicas de saúde). Exemplo no contexto: menção de universalidade,Integralidade e debates sobre financiamento. [citação: trecho que descreve o SUS como garantia de universalidade e qualidade]
+  - Checagem 3: usar o contexto para confirmar que SUS não está sendo usado em outro sentido (ex.: sigla em contextos não relacionados à saúde). Se o texto falar de outros temas que começam com S, U ou S, mas sem ligação ao sistema de saúde, aplicar descarte ou desambiguação adicional.
+
+- Re-ranqueamento/filtragem final:
+  - reclassificar os itens retidos com base em embedding semântico (comparar a representação do texto da consulta com a representação dos documentos de saúde žele) e priorizar itens com maior similaridade ao conceito de SUS como sistema público de saúde.
+  - introduzir um peso de confiança para cada item, aumentando a prioridade de documentos com sinais de domínio fortes e proximidade semântica a saúde.
+
+- Verificação contínua:
+  - monitorar exemplos de erro (falsos positivos com outra sigla similar) e ajustar o dicionário de siglas ou as regras de desambiguação.
+
+2) Evidências principais do contexto (exemplos que ajudam a entender os sinais de SUS no conteúdo)
+
+- Sinal de domínio explícito: SUS como Sistema Único de Saúde, descrito como um dos maiores e mais efetivos sistemas de saúde pública do mundo.
+  - O Sistema Único de Saúde (SUS) é apresentado como um dos maiores e mais efetivos sistemas no trato da saúde pública do mundo. (contexto: discurso sobre saúde e SUS) [citação: trecho correspondente]
+
+- Sinal de co-ocorrência com termos de saúde/democracia:
+  - O tema do discurso é SUS, saúde e democracia para o Brasil, indicando claramente relação com saúde pública. [citação: trecho correspondente]
+
+- Sinal de metadados relevantes (documento de Senado, data, autor, etc.):
+  - Documentos neste conjunto são discursos no Senado Federal com data e autor (ex.: Data: 2019-08-08; Autor: Paulo Rocha; Partido: PT; UF: PA). Esses sinais ajudam a confirmar o domínio de saúde quando SUS é mencionado. [citação: trecho correspondente]
+
+- Sinal semântico de universalidade/financiamento (checagem semântica de conteúdo):
+  - Em algum discurso, o SUS é descrito com foco na universalidade e na necessidade de orçamento para ampliar acesso, reforçando que o conteúdo é health-policy related. [citação: trecho correspondente]
+
+Observação: os exemplos acima remetem a trechos específicos do contexto que mencionam SUS em relação à saúde pública, política de saúde e financiamento, que ajudam a confirmar o sentido health-related da sigla.
+
+3) Limitações do que não foi possível confirmar no contexto
+
+- O conjunto de trechos fornecidos não inclui um protocolo explícito de avaliação de ruído de recuperação, nem um experimento ou métrica padrão já aplicada para medir ruído nesse tipo de desambiguação. O que é possível observar é que SUS aparece sempre em contexto de saúde/direitos públicos, o que indica que, para esses textos, a desambiguação padrão tende a favorecer a leitura health-domain. Se houver fontes com usos de SUS fora da área de saúde, seria necessário incluir regras adicionais de desambiguação com base em contexto.
+
+4) Referências
+
+- Paulo Rocha (PT/PA) | Data: 2019-08-08 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/456140
+
+- Paulo Paim (PT/RS) | Data: 2019-04-04 | Link: https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/452369
+
+Observação final sobre uso de contextos: mantive o foco na relação SUS–saúde pública conforme presente nos trechos do contexto. Se desejar, posso incluir mais exemplos de sinais e correspondentes citações específicas dos trechos para cada item mencionado.",2,2,2,2,2,10,110.805,1,14,6,batch_00012.md; batch_00026.md; batch_00027.md; batch_00062.md; batch_00080.md; batch_00108.md,14,0.4118,True,13,Deborah Kelly Affonso; Eduardo Moreira De Souza; Franklin Façanha Da Silva; Izalci Lucas; Jeane Glaucia Tomazelli; Leila Barros; Paulo Paim; Paulo Rocha; Rogério Scarabel; Romário; Rosângela Machado; Shirley Rodrigues Maia; Vanessa Ziotti,,unknown,high,Pipeline metodológico claro para desambiguar SUS com sinais de retrieval e checagem semântica. Estrutura organizada e referências relevantes; há placeholders de citações e ausência de evidências empíricas no texto.

@@ -1,0 +1,55 @@
+{
+  "protocol_variant": "A",
+  "executed_at_utc": "20260505T171157Z",
+  "openwebui_base_url": "http://localhost:8080",
+  "knowledge_name": "Discursos do plenário do Senado 2019-2023 (v2)",
+  "knowledge_id": "cf25a6c6-a8ca-41d9-80fc-b735ddba2750",
+  "questions_file": {
+    "path": "/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_pilot_stratified.json",
+    "sha256": "0c3399f812b43981192ea257585088a4fa13f77562d72518b37e3ed352afdca2",
+    "count": 32
+  },
+  "generator": {
+    "model": "gpt-5-nano",
+    "prompt_file": "/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_prompt.md",
+    "prompt_sha256": "bb38baba382112fccfaab41c9c328772aed24221d5e513bfa82dc53eec35714a",
+    "prompt_text_sha256": "ea2c23d65cebeb1bd5fa6c97d32623e6055b007aaff79e50e6e1df14f9ec30d4",
+    "prompt_application_role": "none",
+    "prompt_application_note": "No modo `none`, o script nao injeta o template como mensagem; ele assume que o Open WebUI aplicara o RAG_TEMPLATE configurado no servidor.",
+    "temperature": null,
+    "top_p": null,
+    "max_tokens": null,
+    "seed": null
+  },
+  "judge": {
+    "model": "gpt-5-nano",
+    "system_prompt_file": "/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_system.md",
+    "system_prompt_sha256": "968cd895b01f5a084ef8efef2852b3b5850192a83b990232a7e410ac88c62dcc",
+    "user_prompt_file": "/workspaces/mcdia/05-iag/4-project/eval/prompts/rag_judge_user.md",
+    "user_prompt_sha256": "d73bb83d9e1885c47c7b6e205c78c3f97c23c73f960d641db74f1b68714fc8f3",
+    "same_model_as_generator": true,
+    "auto_score_enabled": true
+  },
+  "rubric": {
+    "path": "/workspaces/mcdia/05-iag/4-project/eval/RUBRIC.md",
+    "sha256": "0602d191b9fdc8aa5c631165804a8b65f084f8f1bfc9dbd3a6dd0b57c13e9b1e"
+  },
+  "knowledge_artifacts": {
+    "build_metadata": {
+      "path": "/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/build_metadata.json",
+      "sha256": "69ad1674ab82540bc40123b008bf3ec7a40afd0987f9b48e741611aa5fe824fb",
+      "size_bytes": 960
+    },
+    "discursos_chunks": {
+      "path": "/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/discursos_chunks.jsonl",
+      "sha256": "7a3fa123a56014c8847c8afce5c70b88b1400e0e1ab196fbb09a1fad81be9c2f",
+      "size_bytes": 103201931
+    },
+    "md_batches": {
+      "path": "/workspaces/mcdia/05-iag/4-project/knowledge_openwebui/md_batches",
+      "file_count": 120,
+      "sample_first_file": "batch_00001.md",
+      "sample_first_file_sha256": "e79a51a7268fce8964366cb6956a676ce175fe6485ba08303349615f65b96504"
+    }
+  }
+}
