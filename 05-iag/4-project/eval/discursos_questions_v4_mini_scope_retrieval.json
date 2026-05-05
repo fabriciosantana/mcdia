@@ -1,0 +1,44 @@
+[
+  {
+    "id": "q089",
+    "category": "scope_control",
+    "secondary_categories": [
+      "capitalization"
+    ],
+    "difficulty": "medium",
+    "answerable": "yes",
+    "expected_authors": [
+      "Paulo Paim"
+    ],
+    "relevant_sources_hint": [
+      "451538",
+      "451344"
+    ],
+    "question": "Ao responder sobre Paulo Paim e capitalizacao da Previdencia, como separar com seguranca: (a) criticas que ele faz ao modelo, (b) exemplos ou numeros que ele usa, e (c) extrapolacoes que nao devem ser atribuidas a ele?",
+    "expected_answer_criteria": "Deve deixar claro que Paim critica a capitalizacao, separar afirmacoes textuais de exemplos/numeros e explicitar limites sem atribuir a ele defesa do modelo ou previsoes nao sustentadas.",
+    "evaluation_risks": "Atribuir a Paim defesa da capitalizacao, transformar critica em previsao economica detalhada ou misturar exemplos com conclusoes proprias do modelo."
+  },
+  {
+    "id": "q191",
+    "category": "retrieval_stress",
+    "secondary_categories": [
+      "health",
+      "sus"
+    ],
+    "difficulty": "hard",
+    "answerable": "partial",
+    "expected_authors": [
+      "Paulo Paim",
+      "Reguffe",
+      "Plínio Valério"
+    ],
+    "relevant_sources_hint": [
+      "452369",
+      "451276",
+      "451878"
+    ],
+    "question": "Como diagnosticar e reduzir ruido de retrieval quando a consulta usa a sigla SUS, mas o contexto pode trazer palavras ou trechos irrelevantes que apenas coincidem lexicalmente? Responda metodologicamente, usando sinais de retrieval e exemplos de checagem semantica.",
+    "expected_answer_criteria": "Deve explicar que a resposta esperada e metodologica: verificar se os chunks tratam de Sistema Unico de Saude, checar autores/fontes, descartar coincidencias lexicais, observar mistura de autores e declarar quando o contexto recuperado nao sustenta resposta substantiva sobre saude.",
+    "evaluation_risks": "Tratar a pergunta como pedido por discursos sobre SUS, responder apenas 'nao encontrei', ou confiar em match lexical bruto sem explicar criterios de filtragem."
+  }
+]
