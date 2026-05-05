@@ -494,6 +494,22 @@ python scripts/import_batches_to_openwebui.py \
 
 O modo `--resume` pula apenas batches marcados como `added` para o mesmo `knowledge_id` e com o mesmo hash SHA-256.
 
+Se os logs do Open WebUI mostrarem `429 Too Many Requests` em `/v1/embeddings`, reduza `RAG_EMBEDDING_BATCH_SIZE` no `.env`, reinicie o `open-webui` e retome com backoff mais conservador:
+
+```bash
+python scripts/import_batches_to_openwebui.py \
+  --knowledge-id <knowledge_id> \
+  --pattern 'knowledge_openwebui/md_batches/batch_*.md' \
+  --resume \
+  --sleep-between-files 60 \
+  --process-failed-retries 5 \
+  --process-failed-initial-backoff 120 \
+  --process-failed-max-backoff 900 \
+  --verbose
+```
+
+Esses retries reenviam o batch quando o processamento assíncrono do arquivo termina com `status=failed`, caso típico quando o provedor de embeddings retorna `429` dentro do Open WebUI.
+
 ### 13.5 Retomar de um lote específico
 
 ```bash

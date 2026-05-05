@@ -34,6 +34,13 @@ LOGGER = logging.getLogger("import_batches_to_openwebui")
 STATE_VERSION = 1
 
 
+class ProcessingFailedError(RuntimeError):
+    def __init__(self, file_id: str, payload: dict[str, Any]) -> None:
+        self.file_id = file_id
+        self.payload = payload
+        super().__init__(f"Processamento falhou para arquivo {file_id}: {payload}")
+
+
 def configure_logging(verbose: bool = False) -> None:
     logging.basicConfig(
         level=logging.DEBUG if verbose else logging.INFO,
@@ -213,7 +220,7 @@ def wait_for_processing(
         if status == "completed":
             return payload
         if status == "failed":
-            raise RuntimeError(f"Processamento falhou para arquivo {file_id}: {payload}")
+            raise ProcessingFailedError(file_id=file_id, payload=payload)
 
         time.sleep(poll_interval)
 
@@ -240,6 +247,10 @@ def is_openai_rate_limit_error(exc: Exception) -> bool:
     return "429" in text and "api.openai.com/v1/embeddings" in text
 
 
+def retry_sleep_seconds(attempt: int, initial_backoff: float, max_backoff: float) -> float:
+    return min(initial_backoff * (2 ** (attempt - 1)), max_backoff) + random.uniform(0, 1)
+
+
 def add_file_to_knowledge_with_retry(
     base_url: str,
     token: str,
@@ -264,8 +275,7 @@ def add_file_to_knowledge_with_retry(
             if not is_openai_rate_limit_error(exc) or attempt > max_retries:
                 raise
 
-            sleep_seconds = min(initial_backoff * (2 ** (attempt - 1)), max_backoff)
-            sleep_seconds += random.uniform(0, 1)
+            sleep_seconds = retry_sleep_seconds(attempt, initial_backoff, max_backoff)
             LOGGER.warning(
                 "rate limit da OpenAI ao adicionar ao knowledge; tentativa %s/%s, aguardando %.1fs",
                 attempt,
@@ -303,11 +313,16 @@ def build_import_summary(
     state_path: Path,
     resume: bool,
     dry_run: bool,
+    process_failed_retries: int,
+    process_failed_initial_backoff: float,
+    process_failed_max_backoff: float,
+    sleep_between_files: float,
 ) -> dict[str, Any]:
     imported_count = sum(1 for row in rows if row.get("status") == "imported")
     failed_count = sum(1 for row in rows if row.get("status") == "failed")
     skipped_count = sum(1 for row in rows if row.get("status") == "skipped_already_imported")
     dry_run_count = sum(1 for row in rows if row.get("status") == "dry_run")
+    processing_retry_count = sum(int(row.get("processing_retries") or 0) for row in rows)
     durations = [
         float(row["duration_seconds"])
         for row in rows
@@ -321,6 +336,12 @@ def build_import_summary(
         "knowledge_id": knowledge_id,
         "resume_enabled": resume,
         "dry_run": dry_run,
+        "retry_policy": {
+            "process_failed_retries": process_failed_retries,
+            "process_failed_initial_backoff": process_failed_initial_backoff,
+            "process_failed_max_backoff": process_failed_max_backoff,
+            "sleep_between_files": sleep_between_files,
+        },
         "selection": {
             "pattern": pattern,
             "start_from": start_from,
@@ -334,6 +355,7 @@ def build_import_summary(
             "failed": failed_count,
             "skipped_already_imported": skipped_count,
             "dry_run": dry_run_count,
+            "processing_retries": processing_retry_count,
             "attempted": len(rows),
         },
         "timing": {
@@ -400,6 +422,30 @@ def main() -> int:
         type=float,
         default=120.0,
         help="Backoff maximo em segundos para retries de rate limit.",
+    )
+    parser.add_argument(
+        "--process-failed-retries",
+        type=int,
+        default=3,
+        help="Retries quando o processamento do arquivo termina com status failed, comum em 429 de embeddings.",
+    )
+    parser.add_argument(
+        "--process-failed-initial-backoff",
+        type=float,
+        default=60.0,
+        help="Backoff inicial em segundos antes de reenviar arquivo com processamento failed.",
+    )
+    parser.add_argument(
+        "--process-failed-max-backoff",
+        type=float,
+        default=600.0,
+        help="Backoff maximo em segundos antes de reenviar arquivo com processamento failed.",
+    )
+    parser.add_argument(
+        "--sleep-between-files",
+        type=float,
+        default=0.0,
+        help="Pausa em segundos entre batches, util para evitar rate limit de embeddings.",
     )
     parser.add_argument(
         "--state-file",
@@ -480,6 +526,7 @@ def main() -> int:
             "duration_seconds": None,
             "error": "",
             "attempts": 0,
+            "processing_retries": 0,
         }
         if args.resume and should_skip_imported_file(
             state=import_state,
@@ -504,56 +551,96 @@ def main() -> int:
 
         LOGGER.info("[%s/%s] Importando %s", index, len(file_paths), file_path.name)
         try:
-            upload_payload = upload_file(base_url, token, file_path)
-            file_id = upload_payload["id"]
-            row["file_id"] = file_id
-            state_entry = update_import_state_entry(
-                state=import_state,
-                state_path=state_path,
-                knowledge_id=args.knowledge_id,
-                file_path=file_path,
-                status="uploaded",
-                file_id=file_id,
-            )
-            row["attempts"] = state_entry["attempts"]
-            LOGGER.info("upload ok para %s -> file_id=%s", file_path.name, file_id)
+            for processing_attempt in range(1, args.process_failed_retries + 2):
+                upload_payload = upload_file(base_url, token, file_path)
+                file_id = upload_payload["id"]
+                row["file_id"] = file_id
+                state_entry = update_import_state_entry(
+                    state=import_state,
+                    state_path=state_path,
+                    knowledge_id=args.knowledge_id,
+                    file_path=file_path,
+                    status="uploaded",
+                    file_id=file_id,
+                )
+                row["attempts"] = state_entry["attempts"]
+                LOGGER.info(
+                    "upload ok para %s -> file_id=%s (tentativa de processamento %s/%s)",
+                    file_path.name,
+                    file_id,
+                    processing_attempt,
+                    args.process_failed_retries + 1,
+                )
 
-            wait_for_processing(
-                base_url=base_url,
-                token=token,
-                file_id=file_id,
-                timeout_seconds=args.timeout_seconds,
-                poll_interval=args.poll_interval,
-            )
-            state_entry = update_import_state_entry(
-                state=import_state,
-                state_path=state_path,
-                knowledge_id=args.knowledge_id,
-                file_path=file_path,
-                status="processed",
-                file_id=file_id,
-            )
-            row["attempts"] = state_entry["attempts"]
-            LOGGER.info("processamento concluido para %s", file_path.name)
+                try:
+                    wait_for_processing(
+                        base_url=base_url,
+                        token=token,
+                        file_id=file_id,
+                        timeout_seconds=args.timeout_seconds,
+                        poll_interval=args.poll_interval,
+                    )
+                except ProcessingFailedError as exc:
+                    state_entry = update_import_state_entry(
+                        state=import_state,
+                        state_path=state_path,
+                        knowledge_id=args.knowledge_id,
+                        file_path=file_path,
+                        status="failed",
+                        file_id=file_id,
+                        error=str(exc),
+                    )
+                    row["attempts"] = state_entry["attempts"]
+                    row["processing_retries"] = processing_attempt - 1
+                    row["error"] = str(exc)
+                    if processing_attempt > args.process_failed_retries:
+                        raise
+                    sleep_seconds = retry_sleep_seconds(
+                        processing_attempt,
+                        args.process_failed_initial_backoff,
+                        args.process_failed_max_backoff,
+                    )
+                    LOGGER.warning(
+                        "processamento failed para %s; reenviando em %.1fs "
+                        "(retry %s/%s). Se o log do Open WebUI indicar 429, isto reduz a pressao no endpoint de embeddings.",
+                        file_path.name,
+                        sleep_seconds,
+                        processing_attempt,
+                        args.process_failed_retries,
+                    )
+                    time.sleep(sleep_seconds)
+                    continue
 
-            add_file_to_knowledge_with_retry(
-                base_url=base_url,
-                token=token,
-                knowledge_id=args.knowledge_id,
-                file_id=file_id,
-                max_retries=args.max_add_retries,
-                initial_backoff=args.initial_backoff,
-                max_backoff=args.max_backoff,
-            )
-            state_entry = update_import_state_entry(
-                state=import_state,
-                state_path=state_path,
-                knowledge_id=args.knowledge_id,
-                file_path=file_path,
-                status="added",
-                file_id=file_id,
-            )
-            row["attempts"] = state_entry["attempts"]
+                state_entry = update_import_state_entry(
+                    state=import_state,
+                    state_path=state_path,
+                    knowledge_id=args.knowledge_id,
+                    file_path=file_path,
+                    status="processed",
+                    file_id=file_id,
+                )
+                row["attempts"] = state_entry["attempts"]
+                LOGGER.info("processamento concluido para %s", file_path.name)
+
+                add_file_to_knowledge_with_retry(
+                    base_url=base_url,
+                    token=token,
+                    knowledge_id=args.knowledge_id,
+                    file_id=file_id,
+                    max_retries=args.max_add_retries,
+                    initial_backoff=args.initial_backoff,
+                    max_backoff=args.max_backoff,
+                )
+                state_entry = update_import_state_entry(
+                    state=import_state,
+                    state_path=state_path,
+                    knowledge_id=args.knowledge_id,
+                    file_path=file_path,
+                    status="added",
+                    file_id=file_id,
+                )
+                row["attempts"] = state_entry["attempts"]
+                break
             LOGGER.info("%s adicionado ao knowledge", file_path.name)
             imported += 1
             imported_files.append(file_path.name)
@@ -581,6 +668,9 @@ def main() -> int:
             row["status"],
             row["duration_seconds"],
         )
+        if index < len(file_paths) and args.sleep_between_files > 0:
+            LOGGER.info("aguardando %.1fs antes do proximo batch", args.sleep_between_files)
+            time.sleep(args.sleep_between_files)
 
     finished_at_utc = utc_timestamp()
     import_summary = build_import_summary(
@@ -600,6 +690,10 @@ def main() -> int:
         state_path=state_path,
         resume=args.resume,
         dry_run=args.dry_run,
+        process_failed_retries=args.process_failed_retries,
+        process_failed_initial_backoff=args.process_failed_initial_backoff,
+        process_failed_max_backoff=args.process_failed_max_backoff,
+        sleep_between_files=args.sleep_between_files,
     )
     write_import_summary(summary_path, import_summary)
 

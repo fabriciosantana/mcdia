@@ -98,6 +98,32 @@ def test_add_file_to_knowledge_with_retry_does_not_retry_non_rate_limit(monkeypa
     assert len(calls) == 1
 
 
+def test_wait_for_processing_raises_specific_error_on_failed_status(monkeypatch):
+    class FakeResponse:
+        status_code = 200
+
+        def json(self):
+            return {"status": "failed", "detail": "429 embeddings"}
+
+    monkeypatch.setattr(importer.requests, "get", lambda *args, **kwargs: FakeResponse())
+
+    with pytest.raises(importer.ProcessingFailedError, match="Processamento falhou"):
+        importer.wait_for_processing(
+            base_url="http://webui",
+            token="token",
+            file_id="file-1",
+            timeout_seconds=30,
+            poll_interval=0,
+        )
+
+
+def test_retry_sleep_seconds_caps_backoff_and_adds_jitter(monkeypatch):
+    monkeypatch.setattr(importer.random, "uniform", lambda _start, _end: 0.5)
+
+    assert importer.retry_sleep_seconds(1, initial_backoff=10, max_backoff=60) == 10.5
+    assert importer.retry_sleep_seconds(4, initial_backoff=10, max_backoff=60) == 60.5
+
+
 def test_start_from_filter_semantics_match_main_sorting():
     file_paths = sorted(Path(name) for name in ["batch_00003.md", "batch_00001.md"])
 
@@ -145,6 +171,10 @@ def test_build_import_summary_aggregates_counts_selection_and_timings(tmp_path):
         state_path=tmp_path / "import_state.json",
         resume=True,
         dry_run=False,
+        process_failed_retries=3,
+        process_failed_initial_backoff=60,
+        process_failed_max_backoff=600,
+        sleep_between_files=5,
     )
 
     assert summary["duration_seconds"] == 10.123
@@ -158,11 +188,18 @@ def test_build_import_summary_aggregates_counts_selection_and_timings(tmp_path):
     }
     assert summary["resume_enabled"] is True
     assert summary["dry_run"] is False
+    assert summary["retry_policy"] == {
+        "process_failed_retries": 3,
+        "process_failed_initial_backoff": 60,
+        "process_failed_max_backoff": 600,
+        "sleep_between_files": 5,
+    }
     assert summary["files"] == {
         "imported": 1,
         "failed": 1,
         "skipped_already_imported": 0,
         "dry_run": 0,
+        "processing_retries": 0,
         "attempted": 2,
     }
     assert summary["timing"]["file_duration_seconds"] == {
