@@ -871,6 +871,8 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
   - [eval/discursos_questions_v3_100.csv](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.csv:1)
   - [eval/discursos_questions_v4_200.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.json:1)
   - [eval/discursos_questions_v4_200.csv](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.csv:1)
+  - [eval/discursos_questions_v4_pilot_stratified.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_pilot_stratified.json:1)
+  - [eval/discursos_questions_v4_pilot_stratified.csv](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_pilot_stratified.csv:1)
 - Implementacao:
   - Aumentar o numero de perguntas por familia.
   - Garantir pelo menos 2 ou 3 perguntas por categoria critica, especialmente:
@@ -891,6 +893,7 @@ Transformar a avaliacao do projeto em um protocolo de pesquisa reproduzivel, com
   - Foi criada a bateria consolidada [`eval/discursos_questions_v4_200.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.json:1), com os `100` itens da v3 e mais `100` perguntas geradas a partir da leitura do dataset de discursos.
   - A v4 amplia a cobertura de temas para IA/PL 872, pandemia, auxilio emergencial, vacinas, Amazonia, desmatamento, garimpo, povos indigenas, feminicidio, universidades, ciencia, reforma tributaria, orcamento secreto, fake news, Judiciario, saude e SUS.
   - A distribuicao final da v4 fica equilibrada em `16` categorias, com `12` ou `13` perguntas por categoria.
+  - Foi criado o piloto estratificado [`eval/discursos_questions_v4_pilot_stratified.json`](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_pilot_stratified.json:1), com `32` perguntas e exatamente `2` perguntas por categoria da v4.
 - Criterios de aceite:
   - O benchmark deixa de ter categorias criticas subrepresentadas.
 
@@ -1014,4 +1017,5 @@ Use esta secao para resumir entregas realizadas.
 | 2026-04-17 | Benchmark expandido e versionado | [discursos_questions_v2_balanced.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v2_balanced.json:1) | Nova versao do questionario criada com 25 perguntas e melhor balanceamento das categorias criticas; o README passou a distinguir o benchmark historico de 20 perguntas da versao v2 recomendada para novas rodadas. |
 | 2026-05-05 | Bateria experimental ampliada para o artigo | [discursos_questions_v3_100.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v3_100.json:1) | Criada bateria com `100` perguntas e espelho CSV, alinhada ao plano experimental do artigo, incluindo categorias criticas, respondibilidade, dificuldade, autores esperados, pistas de fontes, criterios de resposta e riscos de avaliacao. |
 | 2026-05-05 | Bateria experimental consolidada em 200 perguntas | [discursos_questions_v4_200.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_200.json:1) | Criada versao consolidada com `200` perguntas e categorias equilibradas (`12` ou `13` itens por categoria), incorporando mais temas extraidos do dataset de discursos. |
+| 2026-05-05 | Piloto estratificado da bateria v4 | [discursos_questions_v4_pilot_stratified.json](/workspaces/mcdia/05-iag/4-project/eval/discursos_questions_v4_pilot_stratified.json:1) | Criado subconjunto com `32` perguntas, duas por categoria, para validar calibracao da bateria antes da rodada completa de `200` perguntas. |
 | a preencher | a preencher | a preencher | a preencher |
