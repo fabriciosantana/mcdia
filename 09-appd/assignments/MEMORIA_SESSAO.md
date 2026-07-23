@@ -31,6 +31,14 @@ O notebook foi executado integralmente e contém as saídas, tabelas e gráficos
 Na última validação, as 13 células de código estavam executadas e nenhuma
 célula apresentava erro.
 
+O cabeçalho contém um botão **Abrir no Google Colab** apontando para:
+
+`https://colab.research.google.com/github/fabriciosantana/mcdia/blob/main/09-appd/assignments/atividade_inferencia_causal_mais_medicos.ipynb`
+
+O botão depende de o notebook estar publicado na branch `main` do repositório
+`fabriciosantana/mcdia` no GitHub. Alterações locais só aparecerão no Colab
+depois de commit e push.
+
 Arquivos auxiliares:
 
 - `atividade_inferencia_causal_mais_medicos.html`: exportação para leitura e
