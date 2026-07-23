@@ -36,7 +36,6 @@ Arquivos auxiliares:
   linha por município;
 - `preparar_dados_reais.py`: reconstrói a base analítica a partir dos arquivos
   brutos;
-- `construir_notebook.py`: gera a estrutura do notebook;
 - `data/README.md`: documenta as fontes e a reprodução;
 - `data/raw/.gitignore`: impede que os arquivos brutos grandes sejam
   versionados.
@@ -328,15 +327,9 @@ Isso deve produzir:
 
 `09-appd/assignments/data/processed/mais_medicos_icsap_go.csv`
 
-Para reconstruir o notebook:
-
-```bash
-python 09-appd/assignments/construir_notebook.py
-```
-
-Observação: esse comando gera novamente o notebook e remove as saídas
-anteriores. Em seguida, é preciso executá-lo para preservar resultados e
-gráficos:
+O notebook é o documento principal da atividade e está versionado com sua
+estrutura, resultados e gráficos. Depois de reconstruir a base, ele pode ser
+executado novamente com:
 
 ```bash
 JUPYTER_CONFIG_DIR=/tmp/mcdia-jupyter-config \
@@ -364,4 +357,3 @@ Se o trabalho for retomado sem alterar o período:
 
 Se o professor exigir apenas a estratégia de identificação, pode-se reduzir a
 ênfase na estimativa numérica e manter os dados reais como ilustração.
-
