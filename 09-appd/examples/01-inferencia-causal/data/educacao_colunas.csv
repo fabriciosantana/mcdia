@@ -1,0 +1,343 @@
+coluna,dtype,rotulo
+cod_dtm,int16,codigo da datametrica para o domicilio
+s00a1,float64,uf
+codigo_d,float64,codigo do codificador
+codigo_1,float64,codigo do digitador
+numero_d,float64,número do questionário
+s00a7,float64,codigo do entrevistador
+npes,float64,nÚmero de ordem da pessoa
+s02ac,float64,situaÇÃo
+s02ad,float64,sexo
+s02af,float64,idade
+s02ae_di,float64,data de nascimento: dia
+s02ae_me,float64,data de nascimento: mes
+s02ae_an,float64,data de nascimento: ano
+s02ae,datetime64[s],
+vis1,datetime64[s],1st visit to hhold
+age,float64,Idade (decimal)
+s02a5,float64,qual a relaÇÃo de convivÊncia que (nome)tem com o responsÁve
+s02a6,float64,o pai mora no domicÍlio?
+s02a7,float64,nÚmero de ordem do pai
+s02a8,float64,a mÃe mora no domicÍlio?
+s02a9,float64,nÚmero de ordem da mÃe
+s02a10,float64,nome É titular de cartÃo do bolsa familia
+s02a_nor,float64,numero de ordem do respondente
+s02a12,float64,qual É o estado civil/conjugal de
+s02a13,float64,tem certidÃo de nasci-mento ou casa-mento?
+s02a14,float64,tem documento de identidade (registro geral)?
+s02a15,float64,tem cpf?
+s02a16,float64,tem tÍtulo de eleitor?
+s02a17,float64,qual a cor ou raca de nome?
+s02a18,float64,nacionalidade
+s02a19,float64,ha quanto tempo mora neste municipio?
+s02a20,float64,ha quanto tempo mora neste domicilio?
+s02a21,float64,onde viveu a maior parte do tempo atÉ seus 14 anos?
+s02b1,str,qual era a ocupaÇÃo de (nome) antes de sair de casa?
+s02b2,float64,qual o codigo de ocupacao de nome antes de sair de casa
+s02b3,float64,onde mora o pai de nome?
+s02b5,float64,por que nome saiu de casa?
+s02b6,float64,onde nome mora atualmente?
+s02b7,float64,qual o estado civil/conjugal de nome?
+s02b_nor,float64,nÚmero de ordem do respondente
+s02b4_an,str,em que mes e ano nome saiu de casa?: ano
+s02b4_me,str,em que mes e ano nome saiu de casa?: mes
+s02b4,datetime64[s],
+s02b8,float64,qual o ultimo curso que nome completou tendo sido aprovada?
+s02b9,float64,qual a ultima serie que nome completou sendo sido aprovada?
+s02b10,str,qual e a atual ocupacao de nome?
+s02b11,float64,qual o codigo de ocupacao atual de nome?
+s02b12,float64,nos ultimos 12 meses nome enviou presentes ou dinheiro para
+s02b13,float64,com que frequencia nome enviou presentes ou dinheiro
+s02b14,float64,qual foi o valor total dos presentes e dinheiro que nome env
+s02b15,float64,por causa de nome o seu domicilio perdeu ou teve reducao do
+s02c1,float64,nome apresenta alguma deficiencia?
+s02c3,float64,qual a altura/ comprimento de (nome) (metros e centímetros)?
+s02c4,float64,a altura foi medida?
+s02c5,float64,como foi feita a medida?
+s02c6,float64,qual o peso de [nome] (quilos e gramas)? peso 1
+s02c7,float64,qual o peso de nome (quilos e gramas)? peso 2
+s02c8,float64,qual o peso do adulto que segurou a crianÇa na balanÇa? (qui
+s02c9,float64,foi pesado?
+s02c10,float64,numero de ordem da mae de nome
+s02c_nor,float64,numero de ordem do respondente
+s02c2a,float64,medicao da altura e comprimento
+s02c2b,float64,qual a altura/ comprimento de (nome) (metros e centímetros)?
+s03a1,float64,(nome) sabe ler e escrever um bilhete simples no idioma que
+s03a2,float64,"no ano passado, (nome) frequentava escola ou creche?"
+s03a3,float64,qual e o curso que (nome) frequentava no ano passado?
+s03a4,float64,qual a serie que (nome) frequentava no ano passado?
+s03a5,float64,(nome) frequenta escola ou creche atualmente?
+s03a6,float64,por que (nome) nao frequenta?
+s03a7,float64,quantos anos (nome) tinha quando deixou de frequentar escola
+s03a8,float64,"qual o curso mais elevado que (nome) frequentou, no qual con"
+s03a9,float64,qual e a ultima concluida co aprovacao?
+s03a_nor,float64,numero de ordem do respondente secao3
+s03a10,float64,qual e o curso que (nome) frequenta atualmente?
+s03a11,float64,qual e a serie que (nome) frequenta atualmente?
+s03a12,float64,qual e o turno que (nome) frequenta atualmente?
+s03a13,float64,(nome) faz alguma refeicao gratuita na escola?
+s03a14,float64,com que frequencia (nome) faz refeicoes gratuitas na escola?
+s03a15,float64,quantas refeicoes gratuitas (nome) faz por dia na escola?
+s03a16,float64,qual o principal meio de transporte habitualmente utilizado
+s03a18,float64,"nos ultimos 30 dias, (nome) faltou aula em dias que a escola"
+s03a19,float64,"nos ultimos 7 dias, quantos dias a escola de (nome) esteve a"
+s03a20,float64,nos ultimos 7 dias quantos dias (nome) foi a escola?
+s03a21,float64,qual foi o principal motivo pelo qual deixou de ir a escola
+s03a17_h,float64,quanto tempo gasta habitualmente para ir a escola: hora
+s03a17_m,float64,quanto tempo gasta habitualmente para ir a escola: minutos
+s03a17,datetime64[ms],
+s03a22,float64,quantos anos (nome) tinha quando iniciou a primeira serie do
+s03a23,float64,por que (nome) iniciou a escola com atraso?
+s03a24,float64,(nome) ja repetiu alguma serie na escola?
+s03a26,float64,alguma vez (nome) parou de estudar?
+s03a27,float64,por quanto tempo?
+s03a29,float64,(nome) voltou a estudar?
+s03a25a,float64,qual a serie (nome) repetiu? primeira resposta
+s03a25b,float64,qual a serie (nome) repetiu? segunda resposta
+s03a25c,float64,qual a serie (nome) repetiu? terceira resposta
+s03a28a,float64,por que nome parou de estudar? primeira resposta
+s03a28b,float64,por que nome parou de estudar? segunda resposta
+s03a28c,float64,por que nome parou de estudar? terceira resposta
+s03a30a,float64,por que (nome) voltou a estudar? primeira resposta?
+s03a30b,float64,por que (nome) voltou a estudar? segunda resposta?
+s03a30c,float64,por que (nome) voltou a estudar? terceira resposta?
+s03b1,float64,"neste ano, teve algum gasto de educacao com (nome)"
+s03b2,float64,quanto gastou em mensalidades escolares de (nome) nos ultimo
+s03b3,float64,quanto gastou em transporte escolar de (nome) nos ultimos 30
+s03b4,float64,quanto gastou com a merenda escolar de (nome) nos ultimos 30
+s03b5,float64,quanto gastou de material escolar de (nome) em 2009?
+s03b6,float64,quanto gastou com a matricula de (nome) em 2009
+s03b7,float64,quanto gastou com uniformes para (nome) em 2009?
+s03b8,float64,quanto gastou com (nome) a titulo de outras despesas com edu
+s03b_nor,float64,numero de ordem do respondente secao 3 ii
+s03a25,float64,
+s03a28,float64,
+s03a30,float64,
+s04a1,float64,como avalia o estado de saude de (nome)?
+s04a2,float64,(nome) tem algum problema de saude ou teve algum outro probl
+s04a3,float64,"nos ultimos 30 dias, qual foi o principal problema de saude?"
+s04a4,float64,(nome) precisou de atendimento medico ou de saude nos ultimo
+s04a5,float64,quantos dias de atividades escolares e/ou de trabalho (nome)
+s04a6,float64,(nome) tem cobertura de plano de saude ou seguro-saude?
+s04a_nor,float64,numero de ordem do respondente secao 4
+source,float64,
+s04d1,float64,esta gravida?
+s04d2,float64,em que mes de gestacao?
+s04d3,float64,"(nome) ficou gravida alguma vez, apos 5/12/2005?"
+s04d4,float64,a sua gravides completou 9 meses?
+s04d5,float64,quantas consultas pre-natal realizou?
+s04d6,float64,quem realizou as consultas de pre-natal?
+s04d_nor,float64,numero do respondente secao 4 parte d
+s04e1,float64,qual foi o comprimento ao nascer de (nome)
+s04e2,float64,qual foi o peso ao nascer de (nome)
+s04e3,float64,(nome) completou os 9 meses de gestacao ?
+s04e4,float64,(nome) foi alimentado com leite materno?
+s04e5,float64,por que (nome) nunca foi amamentado?
+s04e6,float64,por que (nome) deixou de ser amamentado?
+s04e7,float64,por quant tempo (nome) foi ou e alimentado com leite materno
+s04e8,float64,por quento tempo (nome) recebeu leite no peito e outros alim
+s04e_nor,float64,numero de ordem do respondente - secao 4
+s04f1,float64,(nome) tem um cartao da crianca/cartao de vacina?
+s04f2,float64,posso ver o cartao da crianca/cartao de vacina?
+s04f_nor,float64,numero de ordem do respondente secao f
+s04f3_an,float64,anti-polio 1 dose: ano
+s04f3_di,float64,anti-polio 1 dose: dia
+s04f3_me,float64,anti-polio 1 dose: mes
+s04f4_an,float64,anti-polio 2 dose: ano
+s04f4_di,float64,anti-polio 2 dose: dia
+s04f4_me,float64,anti-polio 2 dose: mes
+s04f5_an,float64,anti-polio 3 dose: ano
+s04f5_di,float64,anti-polio 3 dose: dia
+s04f5_me,float64,anti-polio 3 dose: mes
+s04f6_an,float64,anti-polio ultimo reforco: ano
+s04f6_di,float64,anti-polio ultimo reforco: dia
+s04f6_me,float64,anti-polio ultimo reforco: mes
+s04f10_a,float64,dpt 4: ano
+s04f10_d,float64,dpt 4: dia
+s04f10_m,float64,dpt 4: mes
+s04f7_an,float64,dpt 1: ano
+s04f7_di,float64,dpt 1: dia
+s04f7_me,float64,dpt 1: mes
+s04f8_an,float64,dpt 2: ano
+s04f8_di,float64,dpt 2: dia
+s04f8_me,float64,dpt 2: mes
+s04f9_an,float64,dpt 3: ano
+s04f9_di,float64,dpt 3: dia
+s04f9_me,float64,dpt 3: mes
+s04f11_a,float64,contra hepatite b 1: ano
+s04f11_d,float64,contra hepatite b 1: dia
+s04f11_m,float64,contra hepatite b 1: mes
+s04f12_a,float64,contra hepatite b 2: ano
+s04f12_d,float64,contra hepatite b 2: dia
+s04f12_m,float64,contra hepatite b 2: mes
+s04f13_a,float64,contra hepatite b 3: ano
+s04f13_d,float64,contra hepatite b 3: dia
+s04f13_m,float64,contra hepatite b 3: mes
+s04f14_a,float64,bcg: ano
+s04f14_d,float64,bcg: dia
+s04f14_m,float64,bcg: mes
+s04f15_a,float64,contra sarampo: ano
+s04f15_d,float64,contra sarampo: dia
+s04f15_m,float64,contra sarampo: mes
+s04f16_a,float64,triplice viral ou reforco contra sarampo: ano
+s04f16_d,float64,triplice viral ou reforco contra sarampo: dia
+s04f16_m,float64,triplice viral ou reforco contra sarampo: mes
+s04f3,datetime64[s],
+s04f4,datetime64[s],
+s04f5,datetime64[s],
+s04f6,datetime64[s],
+s04f7,datetime64[s],
+s04f8,datetime64[s],
+s04f9,datetime64[s],
+s04f10,datetime64[s],
+s04f11,datetime64[s],
+s04f12,datetime64[s],
+s04f13,datetime64[s],
+s04f14,datetime64[s],
+s04f15,datetime64[s],
+s04f16,datetime64[s],
+s05a1,float64,(nome) ajuda nas tarefas domesticas?
+s05a2,float64,"tipicamente, quantas horas por semana (nome) gasta nessas ta"
+s05a3,float64,[nome] trabalha ou ja trabalhou alguma vez
+s05a4,datetime64[s],em que mes e ano trabalhou pela ultima vez?
+s05a5,float64,com que idade comeÇou a trabalhar
+s05a7,float64,[nome] procurou trabalho nos ultimos 30 dias?
+s05a8,float64,[nome} procurou trabalho nos ultimos 7 dias?
+s05a_nor,float64,numero de ordem do respondente secao 5 parte a
+s05a6a,float64,mes trabalhado - ago 08
+s05a6b,float64,mes trabalhado - set 08
+s05a6c,float64,mes trabalhado - out 08
+s05a6d,float64,mes trabalhado - nov 08
+s05a6e,float64,mes trabalhado - dez 08
+s05a6f,float64,mes trabalhado - jan 09
+s05a6g,float64,mes trabalhado - fev 09
+s05a6h,float64,mes trabalhado - mar 09
+s05a6i,float64,mes trabalhado - abr 09
+s05a6j,float64,mes trabalhado - mai 09
+s05a6k,float64,mes trabalhado - jun 09
+s05a6l,float64,mes trabalhado - jul 09
+s05a6m,float64,mes trabalhado - ago 09
+year,str,
+s05b1,str,ocupacao 1
+s05b2,float64,codigo da ocupacao 1
+s05b3,float64,ramo de atividade
+s05b4,float64,posicao na ocupacao
+s05b5,float64,horas habitualmente trabalhadas na semana
+s05b7,float64,contribui/contribuiu para previdencia social
+s05b8,float64,recebeu/recebe em bens?
+s05b9,float64,recebeu/recebe em dinheiro?
+s05b10,float32,"nesse trabalho, qual foi o rendimento mensal, incluindo vale"
+s05b_nor,float64,numero de ordem do respondente secao 5 parte b
+s05b6a,float64,mes trabalhado na ocupacao - ago 08
+s05b6b,float64,mes trabalhado na ocupacao - set 08
+s05b6c,float64,mes trabalhado na ocupacao - out 08
+s05b6d,float64,mes trabalhado na ocupacao - nov 08
+s05b6e,float64,mes trabalhado na ocupacao - dez 08
+s05b6f,float64,mes trabalhado na ocupacao - jan 09
+s05b6g,float64,mes trabalhado na ocupacao - fev 09
+s05b6h,float64,mes trabalhado na ocupacao - mar 09
+s05b6i,float64,mes trabalhado na ocupacao - abr 09
+s05b6j,float64,mes trabalhado na ocupacao - mai 09
+s05b6k,float64,mes trabalhado na ocupacao - jun 09
+s05b6l,float64,mes trabalhado na ocupacao - jul 09
+s05b6m,float64,mes trabalhado na ocupacao - ago 09
+s05b1_2,str,ocupacao 2
+s05b10_2,float64,"nesse trabalho, qual foi o rendimento mensal, incluindo vale"
+s05b2_2,float64,codigo da ocupacao 2
+s05b3_2,float64,ramo de atividade 2
+s05b4_2,float64,posicao na ocupacao 2
+s05b5_2,float64,horas habitualmente trabalhadas na semana
+s05b6a_2,float64,mes trabalhado na ocupacao - ago 08
+s05b6b_2,float64,mes trabalhado na ocupacao - set 08
+s05b6c_2,float64,mes trabalhado na ocupacao - out 08
+s05b6d_2,float64,mes trabalhado na ocupacao - nov 08
+s05b6e_2,float64,mes trabalhado na ocupacao - dez 08
+s05b6f_2,float64,mes trabalhado na ocupacao - jan 09
+s05b6g_2,float64,mes trabalhado na ocupacao - fev 09
+s05b6h_2,float64,mes trabalhado na ocupacao - mar 09
+s05b6i_2,float64,mes trabalhado na ocupacao - abr 09
+s05b6j_2,float64,mes trabalhado na ocupacao - mai 09
+s05b6k_2,float64,mes trabalhado na ocupacao - jun 09
+s05b6l_2,float64,mes trabalhado na ocupacao - jul 09
+s05b6m_2,float64,mes trabalhado na ocupacao - ago 09
+s05b7_2,float64,contribui/contribuiu para previdencia social
+s05b8_2,float64,recebeu/recebe em bens?
+s05b9_2,float64,recebeu/recebe em dinheiro?
+s05b1_3,str,ocupacao 1
+s05b10_3,float64,"nesse trabalho, qual foi o rendimento mensal, incluindo vale"
+s05b2_3,float64,codigo da ocupacao 1
+s05b3_3,float64,ramo de atividade
+s05b4_3,float64,posicao na ocupacao
+s05b5_3,float64,horas habitualmente trabalhadas na semana
+s05b6a_3,float64,mes trabalhado na ocupacao - ago 08
+s05b6b_3,float64,mes trabalhado na ocupacao - set 08
+s05b6c_3,float64,mes trabalhado na ocupacao - out 08
+s05b6d_3,float64,mes trabalhado na ocupacao - nov 08
+s05b6e_3,float64,mes trabalhado na ocupacao - dez 08
+s05b6f_3,float64,mes trabalhado na ocupacao - jan 09
+s05b6g_3,float64,mes trabalhado na ocupacao - fev 09
+s05b6h_3,float64,mes trabalhado na ocupacao - mar 09
+s05b6i_3,float64,mes trabalhado na ocupacao - abr 09
+s05b6j_3,float64,mes trabalhado na ocupacao - mai 09
+s05b6k_3,float64,mes trabalhado na ocupacao - jun 09
+s05b6l_3,float64,mes trabalhado na ocupacao - jul 09
+s05b6m_3,float64,mes trabalhado na ocupacao - ago 09
+s05b7_3,float64,contribui/contribuiu para previdencia social
+s05b8_3,float64,recebeu/recebe em bens?
+s05b9_3,float64,recebeu/recebe em dinheiro?
+s05c1,float64,com que idade [nome] comecou a trabalhar?
+s05c2,str,qual foi a ocupacao de [nome] nesse primeiro trabalho?
+s05c3,float64,qual o codigo de ocupacao de [nome] nesse primeiro trabalho?
+s05c4,float64,como [nome] conseguiu esse trabalho?
+s05c5,float64,por quanto tempo [nome] ficou/esta nesse emprego?
+s05c6,float64,neste primeiro emprego [nome] teve/tem carteira assinada?
+s05c_nor,float64,numero de ordem do respondente secao 5 parte c
+s06x1,float64,em agosto/2009 [nome] recebeu aposentadoria ou pensao de ins
+s06x2,float64,quanto [nome] recebeu?
+s06x3,float64,em agosto/09 [nome] recebeu seguo desemprego?
+s06x4,float64,quanto [nome] recebeu?
+s06x5,float64,em agosto/09 [nome] recebeu pensao alimenticia?
+s06x6,float64,quanto [nome] recebeu?
+s06x7,float64,"em agosto/09 [nome] recebeu alimentos, roupas ou outras merc"
+s06x8,float64,qual o valor estimado?
+s06x9,float64,em agosto/09 [nome] recebeu outros rendimentos?
+s06x10,float64,quanto [nome] recebeu?
+s06x_nor,float64,numero de ordem do respondente secao 6
+s07a1,float64,[nome] realizou gastos com transporte publico durante os ult
+s07a2,float64,quanto[nome] gastou com transporte publico nos ultimos 7 dia
+s07a3,float64,[nome] realizou gastos com transporte particular durante os
+s07a4,float64,"quanto [nome] gastou com combustivel, manutencao, estacionam"
+s07a5,float64,[nome] realizou gastos com comunicacoes durante os ultimos 3
+s07a6,float64,quanto [nome] gastou com comunicacoes nos ultimos 30 dias?
+s07a_nor,float64,numero de ordem do respondente secao 7
+s07b1,float64,[nome] consumiu alimentos ou bebidas fora de casa nos ultimo
+s07b2,float64,quanto [nome] gastou com alimentos e bebidas fora de casa no
+s07b3,float64,"[nome] realizou gastos com bebidas alcoolicas fora de casa,"
+s07b4,float64,quanto [nome]gastou nos ultimos 7 dias?
+s07b_nor,float64,numero de ordem do respondente secao 7 parte b
+attend_now,float64,Child currently attends school/daycare
+attend_ever,float64,Child has ever attended school/daycare
+attend_lastyear,float64,Child attended school/daycare last year
+grade_now,float64,Recoded grade level now: regular series only
+grade_lastyear,float64,Recoded grade level last year: regular series only
+dropout,float64,"Whether child dropped out, given that they attended school last year"
+return,float64,"Whether child returned, given that they did not attend school last year"
+grade_prog2,float64,Grade progression by 1 or 2 levels (vs. dropout/repeat):reg only
+grade_rep2,float64,Grade repetition (vs. dropout or grade prog by 1 or 2 levels): reg only
+dropout2,float64,Dropout (vs. grade repetition or grade prog by 1 or 2 levels):reg only
+p_attend7,float64,"Proportion of days that school was open and child did attend, in past 7 days (co"
+d_miss7,float64,"Number of days that school was open and child did not attend, in the past 7 days"
+if_miss30,float64,If child missed any school in past 30 days (constructed; assume yes if report mi
+if_miss7,float64,If child missed any school in past 7 days (constructed; assume yes if reason rep
+educ1,float64,
+educ2,float64,
+educ3,float64,
+educ4,float64,
+educ5,float64,
+educ6,float64,
+educ7,float64,
+tot_ed_exp,float64,Total education related expenditures (constructed)
+any_ed_exp,float64,Dummy for reports educational expenditures
+educ,float64,Education Level
+educ_hs,float64,High school education or above
+educ_elem,float64,Has only elementary education

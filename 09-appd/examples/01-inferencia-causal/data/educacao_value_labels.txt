@@ -1,0 +1,1377 @@
+== EDUC_ELE ==
+  0: No
+  1: Yes
+
+== EDUC_HS ==
+  0: No
+  1: Yes
+
+== EDUC ==
+  1: Preschool
+  2: Elementary/Middle
+  3: High School
+  4: BA,MA,PhD
+
+== ANY_ED_E ==
+  0: No
+  1: Yes
+
+== IF_MISS7 ==
+  0: No
+  1: Yes
+
+== IF_MISS3 ==
+  0: No
+  1: Yes
+
+== ATTEND_L ==
+  0: No
+  1: Yes
+
+== ATTEND_E ==
+  0: No
+  1: Yes
+
+== ATTEND_N ==
+  0: No
+  1: Yes
+
+== LABU ==
+  1: Sim e sabe quanto gastou
+  2: Sim, mas nao sabe quanto gastou
+  3: Sim, mas nao declarou quanto gastou
+  4: Nao
+
+== LABT ==
+  1: Sim e sabe quanto gastou
+  2: Sim, mas nao sabe quanto gastou
+  3: Sim, mas nao declarou quanto gastou
+  4: Nao
+
+== LABS ==
+  1: Sim
+  2: Nao
+
+== S05C6 ==
+  1: Sim
+  2: Nao
+
+== S05C4 ==
+  1: Atraves de indicacao de um parente
+  2: Atraves de indicacao de um amigo da familia
+  3: Atraves de indicacao de um amigo dele
+  4: Respondeu um anuncio no jornal/radio/TV
+  5: Atraves da Agencia do Trabalho
+  6: Fez um concurso publico
+  7: Atraves de um curso de capacitacao
+  8: Atraves de indicacao de professor
+  9: Outra Maneira
+
+== S05C3 ==
+  111: Membros superiores do poder legislativo, executivo e judiciário
+  113: Chefes de pequenas populações
+  114: Dirigentes e administradores de organização de interesse público
+  121: Diretores gerais
+  122: Diretores de produção e operações
+  123: Diretores de áreas de apoio
+  131: Diretores e gerentes em empresa de serviços de saúde, de educação, ou de serviços culturais, sociais ou pessoais
+  141: Gerentes de produção e operações
+  142: Gerentes de áreas de apoio
+  201: Profissionais da biotecnologia e metrologia
+  202: Profissionais da eletromecânica
+  203: Pesquisadores
+  204: Profissionais de investigação criminal
+  211: Matemáticos, estatísticos e afins
+  212: Profissionais da informática
+  213: Físicos, químicos e afins
+  214: Engenheiros, arquitetos e afins
+  215: Profissionais em navegação aérea, marítima e fluvial
+  221: Biólogos e afins
+  222: Agrônomos e afins
+  223: Profissionais da medicina, saúde e afins
+  224: Profissionais da educação física
+  231: Professores de nível superior na educação infantil e no ensino fundamental
+  232: Professores do ensino médio
+  233: Professores e instrutores do ensino profissional
+  234: Professores do ensino superior
+  239: Outros professores de ensino não classificados anteriormente
+  241: Advogados, procuradores, tabeliões e afins
+  242: Advogados do poder judiciário e da segurança pública
+  251: Cientistas sociais, psicólogos e afins
+  252: Profissionais de organização e administração de empresas e afins
+  253: Profissionais de relações públicas, publicidade, marketing e comercialização
+  254: Auditores fiscais públicos
+  261: Profissionais da comunicação e da informação
+  262: Profissionais de espetáculos e das artes
+  263: Membros de cultos religiosos e afins
+  300: Técnicos mecatrônicos e eletromecânicos
+  301: Técnicos em laboratório
+  311: Técnico em ciências físicas e químicas
+  312: Técnicos em construção civil, de edificações e obras de infraestrutura
+  313: Técnicos em eletroeletrônica e fotônica
+  314: Técnicos em metalmecânica
+  316: Técnicos em mineralogia e geologia
+  317: Técnicos em informática
+  318: Desenhistas técnicos e modelistas
+  319: Outros técnicos de nível médio das ciências físicas, químicas, engenharias e afins
+  320: Técnicos em biologia
+  321: Técnicos da produção agropecuária
+  322: Técnicos da ciência da saúde humana
+  323: Técnicos da ciência da saúde animal
+  324: Técnicos em operação de equipamentos e instrumentos de diagnóstico
+  325: Técnicos de bioquímica e da biotecnologia
+  328: Técnicos em necrópsia e taxidermistas
+  331: Professores de nível médio na educação infantil, no ensino fundamental e no profissionalizante
+  332: Professores leigos no ensino fundamental e no  profissionalizante
+  333: Instrutores e professores de escolas livres
+  334: Inspetores de alunos e afins
+  341: Técnicos em navegação áerea, marítima e fluvial
+  342: Técnicos em transportes
+  351: Técnicos das ciências administrativas
+  352: Técnicos de inspeção, fiscalização e coordenação administrativa
+  353: Técnicos de nível médio em operações financeiras
+  354: Técnicos de nivel médio em operações comerciais
+  371: Técnicos de serviços culturais
+  372: Técnicos em operação de câmara fotográfica , cinema e de televisão
+  373: Técnicos em operação de emissoras de rádio, sistemas de televisão e produtoras de vídeo
+  374: Técnicos em operação de aparelhos de sonorização, cenografia e projeção
+  375: Decoradores e vitrinistas
+  376: Artistas de artes populares e modelos
+  377: Atletas, desportistas e afins
+  391: Técnicos de nivel médio em operações industriais
+  395: Técnicos de apoio em pesquisa e desenvolvimento
+  410: Supervisores de serviços administrativos, exceto de atendimento ao público
+  411: Escriturários em geral, agentes, assistentes e auxiliares administrativos
+  412: Secretários de expediente e operadores de máquinas de escritórios
+  413: Escriturários contábeis e de finanças
+  414: Escriturários de controle de materiais e de apoio À produção
+  415: Auxiliares de serviços de biblioteca, documentação e correios
+  420: Supervisores de atendimento ao público
+  421: Caixas, bilheteiros e afins
+  422: Trabalhadores de informações ao público
+  423: Despachantes
+  424: Entrevistadores, recenseadores e afins
+  510: Supervisores dos serviços
+  511: Trabalhadores dos serviços de transporte e turismo
+  512: Trabalhadores dos serviços domésticos em geral
+  513: Trabalhadores dos serviços de hotelaria e alimentação
+  514: Trab. nos serviços de administração, conservação e manutenção de edifícios e logradouros
+  515: Trabalhadores dos serviços de saúde
+  516: Trabalhadores nos serviços de embelezamento e cuidados pessoais
+  517: Trabalhadores nos serviços de proteção e segurança
+  519: Outros trabalhadores de serviços diversos
+  520: Supervisores de vendas e de prestação de serviços
+  521: Vendedores e demonstradores
+  523: Instaladores de produtos e acessórios
+  524: Vendedores a domicílio, ambulantes e em bancas
+  611: Produtores agropecuários em geral
+  612: Produtores agrícolas
+  613: Produtores em pecuária
+  620: Supervisores na exploração agropecuária
+  621: Trabalhadores na exploração agropecuária em geral
+  622: Trabalhadores agrícolas
+  623: Trabalhadores na pecuária
+  630: Supervisores na exploração florestal e pesca
+  631: Pescadores e caçadores
+  632: Extrativistas florestais
+  641: Trabalhadores da mecanização agropecuária
+  642: Trabalhadores da mecanização florestal
+  643: Trabalhadores da irrigação e drenagem
+  710: Supervisores da extração mineral e da construção civil
+  711: Trabalhadores da extração mineral
+  712: Trabalhadores de beneficiamento de minérios e pedras ornamentais
+  715: Trabalhadores da construção civil e obras públicas
+  716: Trabalhadores de acabamento de obras
+  717: Ajudantes de obras
+  720: Supervisores da transformação de metais e de compósitos
+  721: Trabalhadores de usinagem de metais e de compósitos
+  722: Trabalhadores de conformação de metais e de compósitos
+  723: Trab. de tratamento térmico e de superfícies de metais e de compósitos
+  724: Trab. de montagem de tubulações, estruturas metálicas e de compósitos
+  725: Montadores de máquinas e aparelhos mecânicos
+  730: Supervisores de montagens e instalações eletroeletrônicas
+  731: Montadores e instaladores de equipamentos eletroeletrônicos em geral
+  732: Instaladores e reparadores de linhas e cabos elétricos e de comunicações
+  740: Supervisores da mecânica de precisão e instrumentos musicais
+  741: Montadores e ajustadores de instrumentos de precisão
+  742: Montadores e ajustadores de instrumentos musicais
+  750: Supervisores de joalheria, vidraria, cerâmica e afins
+  751: Joalheiros e ourives
+  752: Vidreiros, ceramistas e afins
+  760: Supervisores nas indústrias têxtil, do curtimento, do vestuário e das artes gráficas
+  761: Trabalhadores das industrias têxteis
+  762: Trabalhadores do tratamento de couros e peles
+  763: Trabalhadores da confecção de roupas
+  764: Trabalhadores da confecção de calçados
+  765: Trabalhadores da confecção de artefatos de tecidos e couros
+  766: Trabalhadores da produção gráfica
+  768: Trabalhadores artesanais das atividades têxteis, do vestuário e das artes gráficas
+  770: Supervisores em indústria de madeira, mobiliário e da carpintaria veicular
+  771: Marceneiros e afins
+  772: Trabalhadores da preparação da madeira
+  773: Trab. da transformação da madeira e da fabricação do mobiliário
+  774: Trabalhadores de montagem de móveis e artefatos de madeira
+  775: Trabalhadores em acabamento de madeira e de mobiliário
+  776: Trabalhadores artesanais da madeira e do mobiliário
+  777: Trabalhadores da carpintaria veicular
+  780: Supervisores de trabalhadores de embalagem e etiquetagem
+  781: Operadores de robôs e equipamentos especiais
+  782: Condutores de veículos e operadores de equipamentos de elevação e de movimentação de cargas
+  783: Trabalhadores de manobras sobre trilhos e movimentação e cargas
+  784: Embaladores e alimentadores de produção
+  810: Supervisores de produção, em indústrias químicas, petroquímicas e afins
+  811: Operadores de instalações em indústrias químicas, petroquímicas e afins
+  812: Trabalhadores da fabricação de munição e explosivos químicos
+  813: Operadores de outras instalações químicas, petroquímicas e afins
+  818: Operadores de operação unitária de laboratório transversal para toda indústria de processos
+  820: Supervisores de produção em indústrias siderúrgicas
+  821: Operadores de instalações e equipamentos de produção de metais e ligas primeira fusão
+  822: Operadores de instalações e equipamentos de produção de metais e ligas segunda fusão
+  823: Trab. de instalações e equipamentos de material de construção, cerâmica e vidro
+  828: Trabalhadores artesanais da siderurgia e de materiais de construção
+  830: Supervisores da fabricação de celulose e papel
+  831: Trabalhadores da preparação de pasta de papel
+  832: Trabalhadores da fabricação de papel
+  833: Confeccionadores de produtos de papel e papelão
+  840: Supervisores da fabricação de alimentos, bebidas e fumo
+  841: Operadores de equipamentos na preparação de alimentos e bebidas
+  842: Operadores na preparação de fumo e na fabricação de charutos e cigarros
+  848: Trabalhadores artesanais na  agroindústria, na indústria de alimentos e do fumo
+  860: Supervisores da produção de utilidades
+  861: Operadores na geração e distribuição de energia centrais hidrelétricas
+  862: Operadores de utilidades
+  910: Supervisores em serviços de reparação e manutenção mecânica
+  911: Mecânicos de manutenção de máquinas e equipamentos industriais, comerciais e residenciais
+  913: Mecânicos de manutenção de máquinas pesadas e equipamentos agrícolas
+  914: Mecânicos de manutenção veicular
+  915: Reparadores de instrumentos e equipamentos de precisão
+  919: Outros trabalhadores na reparação e manutenção de equipamentos
+  950: Supervisores de manutenção eletroeletrônica e eletromecânica
+  951: Eletricistas eletrônicos de manutenção industrial, comercial e residencial
+  953: Eletricistas eletrônicos de manutenção veicular
+  954: Mantenedores eletromecânicos
+  991: Outros trabalhadores da conservação e manutenção exceto trabalhadores elementares
+  992: Trabalhadores elementares da manutenção
+
+== LABR ==
+  1: Sim
+  2: Nao
+
+== LABQ ==
+  0: Nao
+  1: Sim
+
+== S05B4_3 ==
+  1: Empregade com carteira assinada
+  2: Empregado sem carteira assinada
+  3: Empregador
+  4: Trabalhador por conta propria (autonomo, diarista sem carteira assinada, etc.)
+  5: Cooperativado
+  6: Rural- trabalhador na producao para consumo proprio ou uso
+  9: Nao remunerado
+
+== S05B3_3 ==
+  1: Agricultura
+  2: Industria
+  3: Construcao civil
+  4: Comercio
+  5: Transporte
+  6: Outros servicos
+  7: Administracao publica
+
+== S05B2_3 ==
+  111: Membros superiores do poder legislativo, executivo e judiciário
+  113: Chefes de pequenas populações
+  114: Dirigentes e administradores de organização de interesse público
+  121: Diretores gerais
+  122: Diretores de produção e operações
+  123: Diretores de áreas de apoio
+  131: Diretores e gerentes em empresa de serviços de saúde, de educação, ou de serviços culturais, sociais ou pessoais
+  141: Gerentes de produção e operações
+  142: Gerentes de áreas de apoio
+  201: Profissionais da biotecnologia e metrologia
+  202: Profissionais da eletromecânica
+  203: Pesquisadores
+  204: Profissionais de investigação criminal
+  211: Matemáticos, estatísticos e afins
+  212: Profissionais da informática
+  213: Físicos, químicos e afins
+  214: Engenheiros, arquitetos e afins
+  215: Profissionais em navegação aérea, marítima e fluvial
+  221: Biólogos e afins
+  222: Agrônomos e afins
+  223: Profissionais da medicina, saúde e afins
+  224: Profissionais da educação física
+  231: Professores de nível superior na educação infantil e no ensino fundamental
+  232: Professores do ensino médio
+  233: Professores e instrutores do ensino profissional
+  234: Professores do ensino superior
+  239: Outros professores de ensino não classificados anteriormente
+  241: Advogados, procuradores, tabeliões e afins
+  242: Advogados do poder judiciário e da segurança pública
+  251: Cientistas sociais, psicólogos e afins
+  252: Profissionais de organização e administração de empresas e afins
+  253: Profissionais de relações públicas, publicidade, marketing e comercialização
+  254: Auditores fiscais públicos
+  261: Profissionais da comunicação e da informação
+  262: Profissionais de espetáculos e das artes
+  263: Membros de cultos religiosos e afins
+  300: Técnicos mecatrônicos e eletromecânicos
+  301: Técnicos em laboratório
+  311: Técnico em ciências físicas e químicas
+  312: Técnicos em construção civil, de edificações e obras de infraestrutura
+  313: Técnicos em eletroeletrônica e fotônica
+  314: Técnicos em metalmecânica
+  316: Técnicos em mineralogia e geologia
+  317: Técnicos em informática
+  318: Desenhistas técnicos e modelistas
+  319: Outros técnicos de nível médio das ciências físicas, químicas, engenharias e afins
+  320: Técnicos em biologia
+  321: Técnicos da produção agropecuária
+  322: Técnicos da ciência da saúde humana
+  323: Técnicos da ciência da saúde animal
+  324: Técnicos em operação de equipamentos e instrumentos de diagnóstico
+  325: Técnicos de bioquímica e da biotecnologia
+  328: Técnicos em necrópsia e taxidermistas
+  331: Professores de nível médio na educação infantil, no ensino fundamental e no profissionalizante
+  332: Professores leigos no ensino fundamental e no  profissionalizante
+  333: Instrutores e professores de escolas livres
+  334: Inspetores de alunos e afins
+  341: Técnicos em navegação áerea, marítima e fluvial
+  342: Técnicos em transportes
+  351: Técnicos das ciências administrativas
+  352: Técnicos de inspeção, fiscalização e coordenação administrativa
+  353: Técnicos de nível médio em operações financeiras
+  354: Técnicos de nivel médio em operações comerciais
+  371: Técnicos de serviços culturais
+  372: Técnicos em operação de câmara fotográfica , cinema e de televisão
+  373: Técnicos em operação de emissoras de rádio, sistemas de televisão e produtoras de vídeo
+  374: Técnicos em operação de aparelhos de sonorização, cenografia e projeção
+  375: Decoradores e vitrinistas
+  376: Artistas de artes populares e modelos
+  377: Atletas, desportistas e afins
+  391: Técnicos de nivel médio em operações industriais
+  395: Técnicos de apoio em pesquisa e desenvolvimento
+  410: Supervisores de serviços administrativos, exceto de atendimento ao público
+  411: Escriturários em geral, agentes, assistentes e auxiliares administrativos
+  412: Secretários de expediente e operadores de máquinas de escritórios
+  413: Escriturários contábeis e de finanças
+  414: Escriturários de controle de materiais e de apoio À produção
+  415: Auxiliares de serviços de biblioteca, documentação e correios
+  420: Supervisores de atendimento ao público
+  421: Caixas, bilheteiros e afins
+  422: Trabalhadores de informações ao público
+  423: Despachantes
+  424: Entrevistadores, recenseadores e afins
+  510: Supervisores dos serviços
+  511: Trabalhadores dos serviços de transporte e turismo
+  512: Trabalhadores dos serviços domésticos em geral
+  513: Trabalhadores dos serviços de hotelaria e alimentação
+  514: Trab. nos serviços de administração, conservação e manutenção de edifícios e logradouros
+  515: Trabalhadores dos serviços de saúde
+  516: Trabalhadores nos serviços de embelezamento e cuidados pessoais
+  517: Trabalhadores nos serviços de proteção e segurança
+  519: Outros trabalhadores de serviços diversos
+  520: Supervisores de vendas e de prestação de serviços
+  521: Vendedores e demonstradores
+  523: Instaladores de produtos e acessórios
+  524: Vendedores a domicílio, ambulantes e em bancas
+  611: Produtores agropecuários em geral
+  612: Produtores agrícolas
+  613: Produtores em pecuária
+  620: Supervisores na exploração agropecuária
+  621: Trabalhadores na exploração agropecuária em geral
+  622: Trabalhadores agrícolas
+  623: Trabalhadores na pecuária
+  630: Supervisores na exploração florestal e pesca
+  631: Pescadores e caçadores
+  632: Extrativistas florestais
+  641: Trabalhadores da mecanização agropecuária
+  642: Trabalhadores da mecanização florestal
+  643: Trabalhadores da irrigação e drenagem
+  710: Supervisores da extração mineral e da construção civil
+  711: Trabalhadores da extração mineral
+  712: Trabalhadores de beneficiamento de minérios e pedras ornamentais
+  715: Trabalhadores da construção civil e obras públicas
+  716: Trabalhadores de acabamento de obras
+  717: Ajudantes de obras
+  720: Supervisores da transformação de metais e de compósitos
+  721: Trabalhadores de usinagem de metais e de compósitos
+  722: Trabalhadores de conformação de metais e de compósitos
+  723: Trab. de tratamento térmico e de superfícies de metais e de compósitos
+  724: Trab. de montagem de tubulações, estruturas metálicas e de compósitos
+  725: Montadores de máquinas e aparelhos mecânicos
+  730: Supervisores de montagens e instalações eletroeletrônicas
+  731: Montadores e instaladores de equipamentos eletroeletrônicos em geral
+  732: Instaladores e reparadores de linhas e cabos elétricos e de comunicações
+  740: Supervisores da mecânica de precisão e instrumentos musicais
+  741: Montadores e ajustadores de instrumentos de precisão
+  742: Montadores e ajustadores de instrumentos musicais
+  750: Supervisores de joalheria, vidraria, cerâmica e afins
+  751: Joalheiros e ourives
+  752: Vidreiros, ceramistas e afins
+  760: Supervisores nas indústrias têxtil, do curtimento, do vestuário e das artes gráficas
+  761: Trabalhadores das industrias têxteis
+  762: Trabalhadores do tratamento de couros e peles
+  763: Trabalhadores da confecção de roupas
+  764: Trabalhadores da confecção de calçados
+  765: Trabalhadores da confecção de artefatos de tecidos e couros
+  766: Trabalhadores da produção gráfica
+  768: Trabalhadores artesanais das atividades têxteis, do vestuário e das artes gráficas
+  770: Supervisores em indústria de madeira, mobiliário e da carpintaria veicular
+  771: Marceneiros e afins
+  772: Trabalhadores da preparação da madeira
+  773: Trab. da transformação da madeira e da fabricação do mobiliário
+  774: Trabalhadores de montagem de móveis e artefatos de madeira
+  775: Trabalhadores em acabamento de madeira e de mobiliário
+  776: Trabalhadores artesanais da madeira e do mobiliário
+  777: Trabalhadores da carpintaria veicular
+  780: Supervisores de trabalhadores de embalagem e etiquetagem
+  781: Operadores de robôs e equipamentos especiais
+  782: Condutores de veículos e operadores de equipamentos de elevação e de movimentação de cargas
+  783: Trabalhadores de manobras sobre trilhos e movimentação e cargas
+  784: Embaladores e alimentadores de produção
+  810: Supervisores de produção, em indústrias químicas, petroquímicas e afins
+  811: Operadores de instalações em indústrias químicas, petroquímicas e afins
+  812: Trabalhadores da fabricação de munição e explosivos químicos
+  813: Operadores de outras instalações químicas, petroquímicas e afins
+  818: Operadores de operação unitária de laboratório transversal para toda indústria de processos
+  820: Supervisores de produção em indústrias siderúrgicas
+  821: Operadores de instalações e equipamentos de produção de metais e ligas primeira fusão
+  822: Operadores de instalações e equipamentos de produção de metais e ligas segunda fusão
+  823: Trab. de instalações e equipamentos de material de construção, cerâmica e vidro
+  828: Trabalhadores artesanais da siderurgia e de materiais de construção
+  830: Supervisores da fabricação de celulose e papel
+  831: Trabalhadores da preparação de pasta de papel
+  832: Trabalhadores da fabricação de papel
+  833: Confeccionadores de produtos de papel e papelão
+  840: Supervisores da fabricação de alimentos, bebidas e fumo
+  841: Operadores de equipamentos na preparação de alimentos e bebidas
+  842: Operadores na preparação de fumo e na fabricação de charutos e cigarros
+  848: Trabalhadores artesanais na  agroindústria, na indústria de alimentos e do fumo
+  860: Supervisores da produção de utilidades
+  861: Operadores na geração e distribuição de energia centrais hidrelétricas
+  862: Operadores de utilidades
+  910: Supervisores em serviços de reparação e manutenção mecânica
+  911: Mecânicos de manutenção de máquinas e equipamentos industriais, comerciais e residenciais
+  913: Mecânicos de manutenção de máquinas pesadas e equipamentos agrícolas
+  914: Mecânicos de manutenção veicular
+  915: Reparadores de instrumentos e equipamentos de precisão
+  919: Outros trabalhadores na reparação e manutenção de equipamentos
+  950: Supervisores de manutenção eletroeletrônica e eletromecânica
+  951: Eletricistas eletrônicos de manutenção industrial, comercial e residencial
+  953: Eletricistas eletrônicos de manutenção veicular
+  954: Mantenedores eletromecânicos
+  991: Outros trabalhadores da conservação e manutenção exceto trabalhadores elementares
+  992: Trabalhadores elementares da manutenção
+
+== LABP ==
+  1: Sim
+  2: Nao
+
+== LABO ==
+  0: Nao
+  1: Sim
+
+== S05B4_2 ==
+  1: Empregade com carteira assinada
+  2: Empregado sem carteira assinada
+  3: Empregador
+  4: Trabalhador por conta propria (autonomo, diarista sem carteira assinada, etc.)
+  5: Cooperativado
+  6: Rural- trabalhador na producao para consumo proprio ou uso
+  9: Nao remunerado
+
+== S05B3_2 ==
+  1: Agricultura
+  2: Industria
+  3: Construcao civil
+  4: Comercio
+  5: Transporte
+  6: Outros servicos
+  7: Administracao publica
+
+== S05B2_2 ==
+  111: Membros superiores do poder legislativo, executivo e judiciário
+  113: Chefes de pequenas populações
+  114: Dirigentes e administradores de organização de interesse público
+  121: Diretores gerais
+  122: Diretores de produção e operações
+  123: Diretores de áreas de apoio
+  131: Diretores e gerentes em empresa de serviços de saúde, de educação, ou de serviços culturais, sociais ou pessoais
+  141: Gerentes de produção e operações
+  142: Gerentes de áreas de apoio
+  201: Profissionais da biotecnologia e metrologia
+  202: Profissionais da eletromecânica
+  203: Pesquisadores
+  204: Profissionais de investigação criminal
+  211: Matemáticos, estatísticos e afins
+  212: Profissionais da informática
+  213: Físicos, químicos e afins
+  214: Engenheiros, arquitetos e afins
+  215: Profissionais em navegação aérea, marítima e fluvial
+  221: Biólogos e afins
+  222: Agrônomos e afins
+  223: Profissionais da medicina, saúde e afins
+  224: Profissionais da educação física
+  231: Professores de nível superior na educação infantil e no ensino fundamental
+  232: Professores do ensino médio
+  233: Professores e instrutores do ensino profissional
+  234: Professores do ensino superior
+  239: Outros professores de ensino não classificados anteriormente
+  241: Advogados, procuradores, tabeliões e afins
+  242: Advogados do poder judiciário e da segurança pública
+  251: Cientistas sociais, psicólogos e afins
+  252: Profissionais de organização e administração de empresas e afins
+  253: Profissionais de relações públicas, publicidade, marketing e comercialização
+  254: Auditores fiscais públicos
+  261: Profissionais da comunicação e da informação
+  262: Profissionais de espetáculos e das artes
+  263: Membros de cultos religiosos e afins
+  300: Técnicos mecatrônicos e eletromecânicos
+  301: Técnicos em laboratório
+  311: Técnico em ciências físicas e químicas
+  312: Técnicos em construção civil, de edificações e obras de infraestrutura
+  313: Técnicos em eletroeletrônica e fotônica
+  314: Técnicos em metalmecânica
+  316: Técnicos em mineralogia e geologia
+  317: Técnicos em informática
+  318: Desenhistas técnicos e modelistas
+  319: Outros técnicos de nível médio das ciências físicas, químicas, engenharias e afins
+  320: Técnicos em biologia
+  321: Técnicos da produção agropecuária
+  322: Técnicos da ciência da saúde humana
+  323: Técnicos da ciência da saúde animal
+  324: Técnicos em operação de equipamentos e instrumentos de diagnóstico
+  325: Técnicos de bioquímica e da biotecnologia
+  328: Técnicos em necrópsia e taxidermistas
+  331: Professores de nível médio na educação infantil, no ensino fundamental e no profissionalizante
+  332: Professores leigos no ensino fundamental e no  profissionalizante
+  333: Instrutores e professores de escolas livres
+  334: Inspetores de alunos e afins
+  341: Técnicos em navegação áerea, marítima e fluvial
+  342: Técnicos em transportes
+  351: Técnicos das ciências administrativas
+  352: Técnicos de inspeção, fiscalização e coordenação administrativa
+  353: Técnicos de nível médio em operações financeiras
+  354: Técnicos de nivel médio em operações comerciais
+  371: Técnicos de serviços culturais
+  372: Técnicos em operação de câmara fotográfica , cinema e de televisão
+  373: Técnicos em operação de emissoras de rádio, sistemas de televisão e produtoras de vídeo
+  374: Técnicos em operação de aparelhos de sonorização, cenografia e projeção
+  375: Decoradores e vitrinistas
+  376: Artistas de artes populares e modelos
+  377: Atletas, desportistas e afins
+  391: Técnicos de nivel médio em operações industriais
+  395: Técnicos de apoio em pesquisa e desenvolvimento
+  410: Supervisores de serviços administrativos, exceto de atendimento ao público
+  411: Escriturários em geral, agentes, assistentes e auxiliares administrativos
+  412: Secretários de expediente e operadores de máquinas de escritórios
+  413: Escriturários contábeis e de finanças
+  414: Escriturários de controle de materiais e de apoio À produção
+  415: Auxiliares de serviços de biblioteca, documentação e correios
+  420: Supervisores de atendimento ao público
+  421: Caixas, bilheteiros e afins
+  422: Trabalhadores de informações ao público
+  423: Despachantes
+  424: Entrevistadores, recenseadores e afins
+  510: Supervisores dos serviços
+  511: Trabalhadores dos serviços de transporte e turismo
+  512: Trabalhadores dos serviços domésticos em geral
+  513: Trabalhadores dos serviços de hotelaria e alimentação
+  514: Trab. nos serviços de administração, conservação e manutenção de edifícios e logradouros
+  515: Trabalhadores dos serviços de saúde
+  516: Trabalhadores nos serviços de embelezamento e cuidados pessoais
+  517: Trabalhadores nos serviços de proteção e segurança
+  519: Outros trabalhadores de serviços diversos
+  520: Supervisores de vendas e de prestação de serviços
+  521: Vendedores e demonstradores
+  523: Instaladores de produtos e acessórios
+  524: Vendedores a domicílio, ambulantes e em bancas
+  611: Produtores agropecuários em geral
+  612: Produtores agrícolas
+  613: Produtores em pecuária
+  620: Supervisores na exploração agropecuária
+  621: Trabalhadores na exploração agropecuária em geral
+  622: Trabalhadores agrícolas
+  623: Trabalhadores na pecuária
+  630: Supervisores na exploração florestal e pesca
+  631: Pescadores e caçadores
+  632: Extrativistas florestais
+  641: Trabalhadores da mecanização agropecuária
+  642: Trabalhadores da mecanização florestal
+  643: Trabalhadores da irrigação e drenagem
+  710: Supervisores da extração mineral e da construção civil
+  711: Trabalhadores da extração mineral
+  712: Trabalhadores de beneficiamento de minérios e pedras ornamentais
+  715: Trabalhadores da construção civil e obras públicas
+  716: Trabalhadores de acabamento de obras
+  717: Ajudantes de obras
+  720: Supervisores da transformação de metais e de compósitos
+  721: Trabalhadores de usinagem de metais e de compósitos
+  722: Trabalhadores de conformação de metais e de compósitos
+  723: Trab. de tratamento térmico e de superfícies de metais e de compósitos
+  724: Trab. de montagem de tubulações, estruturas metálicas e de compósitos
+  725: Montadores de máquinas e aparelhos mecânicos
+  730: Supervisores de montagens e instalações eletroeletrônicas
+  731: Montadores e instaladores de equipamentos eletroeletrônicos em geral
+  732: Instaladores e reparadores de linhas e cabos elétricos e de comunicações
+  740: Supervisores da mecânica de precisão e instrumentos musicais
+  741: Montadores e ajustadores de instrumentos de precisão
+  742: Montadores e ajustadores de instrumentos musicais
+  750: Supervisores de joalheria, vidraria, cerâmica e afins
+  751: Joalheiros e ourives
+  752: Vidreiros, ceramistas e afins
+  760: Supervisores nas indústrias têxtil, do curtimento, do vestuário e das artes gráficas
+  761: Trabalhadores das industrias têxteis
+  762: Trabalhadores do tratamento de couros e peles
+  763: Trabalhadores da confecção de roupas
+  764: Trabalhadores da confecção de calçados
+  765: Trabalhadores da confecção de artefatos de tecidos e couros
+  766: Trabalhadores da produção gráfica
+  768: Trabalhadores artesanais das atividades têxteis, do vestuário e das artes gráficas
+  770: Supervisores em indústria de madeira, mobiliário e da carpintaria veicular
+  771: Marceneiros e afins
+  772: Trabalhadores da preparação da madeira
+  773: Trab. da transformação da madeira e da fabricação do mobiliário
+  774: Trabalhadores de montagem de móveis e artefatos de madeira
+  775: Trabalhadores em acabamento de madeira e de mobiliário
+  776: Trabalhadores artesanais da madeira e do mobiliário
+  777: Trabalhadores da carpintaria veicular
+  780: Supervisores de trabalhadores de embalagem e etiquetagem
+  781: Operadores de robôs e equipamentos especiais
+  782: Condutores de veículos e operadores de equipamentos de elevação e de movimentação de cargas
+  783: Trabalhadores de manobras sobre trilhos e movimentação e cargas
+  784: Embaladores e alimentadores de produção
+  810: Supervisores de produção, em indústrias químicas, petroquímicas e afins
+  811: Operadores de instalações em indústrias químicas, petroquímicas e afins
+  812: Trabalhadores da fabricação de munição e explosivos químicos
+  813: Operadores de outras instalações químicas, petroquímicas e afins
+  818: Operadores de operação unitária de laboratório transversal para toda indústria de processos
+  820: Supervisores de produção em indústrias siderúrgicas
+  821: Operadores de instalações e equipamentos de produção de metais e ligas primeira fusão
+  822: Operadores de instalações e equipamentos de produção de metais e ligas segunda fusão
+  823: Trab. de instalações e equipamentos de material de construção, cerâmica e vidro
+  828: Trabalhadores artesanais da siderurgia e de materiais de construção
+  830: Supervisores da fabricação de celulose e papel
+  831: Trabalhadores da preparação de pasta de papel
+  832: Trabalhadores da fabricação de papel
+  833: Confeccionadores de produtos de papel e papelão
+  840: Supervisores da fabricação de alimentos, bebidas e fumo
+  841: Operadores de equipamentos na preparação de alimentos e bebidas
+  842: Operadores na preparação de fumo e na fabricação de charutos e cigarros
+  848: Trabalhadores artesanais na  agroindústria, na indústria de alimentos e do fumo
+  860: Supervisores da produção de utilidades
+  861: Operadores na geração e distribuição de energia centrais hidrelétricas
+  862: Operadores de utilidades
+  910: Supervisores em serviços de reparação e manutenção mecânica
+  911: Mecânicos de manutenção de máquinas e equipamentos industriais, comerciais e residenciais
+  913: Mecânicos de manutenção de máquinas pesadas e equipamentos agrícolas
+  914: Mecânicos de manutenção veicular
+  915: Reparadores de instrumentos e equipamentos de precisão
+  919: Outros trabalhadores na reparação e manutenção de equipamentos
+  950: Supervisores de manutenção eletroeletrônica e eletromecânica
+  951: Eletricistas eletrônicos de manutenção industrial, comercial e residencial
+  953: Eletricistas eletrônicos de manutenção veicular
+  954: Mantenedores eletromecânicos
+  991: Outros trabalhadores da conservação e manutenção exceto trabalhadores elementares
+  992: Trabalhadores elementares da manutenção
+
+== LABN ==
+  0: Nao
+  1: Sim
+
+== LABM ==
+  1: Sim
+  2: Nao
+
+== S05B4 ==
+  1: Empregade com carteira assinada
+  2: Empregado sem carteira assinada
+  3: Empregador
+  4: Trabalhador por conta propria (autonomo, diarista sem carteira assinada, etc.)
+  5: Cooperativado
+  6: Rural- trabalhador na producao para consumo proprio ou uso
+  9: Nao remunerado
+
+== S05B3 ==
+  1: Agricultura
+  2: Industria
+  3: Construcao civil
+  4: Comercio
+  5: Transporte
+  6: Outros servicos
+  7: Administracao publica
+
+== S05B2 ==
+  111: Membros superiores do poder legislativo, executivo e judiciário
+  113: Chefes de pequenas populações
+  114: Dirigentes e administradores de organização de interesse público
+  121: Diretores gerais
+  122: Diretores de produção e operações
+  123: Diretores de áreas de apoio
+  131: Diretores e gerentes em empresa de serviços de saúde, de educação, ou de serviços culturais, sociais ou pessoais
+  141: Gerentes de produção e operações
+  142: Gerentes de áreas de apoio
+  201: Profissionais da biotecnologia e metrologia
+  202: Profissionais da eletromecânica
+  203: Pesquisadores
+  204: Profissionais de investigação criminal
+  211: Matemáticos, estatísticos e afins
+  212: Profissionais da informática
+  213: Físicos, químicos e afins
+  214: Engenheiros, arquitetos e afins
+  215: Profissionais em navegação aérea, marítima e fluvial
+  221: Biólogos e afins
+  222: Agrônomos e afins
+  223: Profissionais da medicina, saúde e afins
+  224: Profissionais da educação física
+  231: Professores de nível superior na educação infantil e no ensino fundamental
+  232: Professores do ensino médio
+  233: Professores e instrutores do ensino profissional
+  234: Professores do ensino superior
+  239: Outros professores de ensino não classificados anteriormente
+  241: Advogados, procuradores, tabeliões e afins
+  242: Advogados do poder judiciário e da segurança pública
+  251: Cientistas sociais, psicólogos e afins
+  252: Profissionais de organização e administração de empresas e afins
+  253: Profissionais de relações públicas, publicidade, marketing e comercialização
+  254: Auditores fiscais públicos
+  261: Profissionais da comunicação e da informação
+  262: Profissionais de espetáculos e das artes
+  263: Membros de cultos religiosos e afins
+  300: Técnicos mecatrônicos e eletromecânicos
+  301: Técnicos em laboratório
+  311: Técnico em ciências físicas e químicas
+  312: Técnicos em construção civil, de edificações e obras de infraestrutura
+  313: Técnicos em eletroeletrônica e fotônica
+  314: Técnicos em metalmecânica
+  316: Técnicos em mineralogia e geologia
+  317: Técnicos em informática
+  318: Desenhistas técnicos e modelistas
+  319: Outros técnicos de nível médio das ciências físicas, químicas, engenharias e afins
+  320: Técnicos em biologia
+  321: Técnicos da produção agropecuária
+  322: Técnicos da ciência da saúde humana
+  323: Técnicos da ciência da saúde animal
+  324: Técnicos em operação de equipamentos e instrumentos de diagnóstico
+  325: Técnicos de bioquímica e da biotecnologia
+  328: Técnicos em necrópsia e taxidermistas
+  331: Professores de nível médio na educação infantil, no ensino fundamental e no profissionalizante
+  332: Professores leigos no ensino fundamental e no  profissionalizante
+  333: Instrutores e professores de escolas livres
+  334: Inspetores de alunos e afins
+  341: Técnicos em navegação áerea, marítima e fluvial
+  342: Técnicos em transportes
+  351: Técnicos das ciências administrativas
+  352: Técnicos de inspeção, fiscalização e coordenação administrativa
+  353: Técnicos de nível médio em operações financeiras
+  354: Técnicos de nivel médio em operações comerciais
+  371: Técnicos de serviços culturais
+  372: Técnicos em operação de câmara fotográfica , cinema e de televisão
+  373: Técnicos em operação de emissoras de rádio, sistemas de televisão e produtoras de vídeo
+  374: Técnicos em operação de aparelhos de sonorização, cenografia e projeção
+  375: Decoradores e vitrinistas
+  376: Artistas de artes populares e modelos
+  377: Atletas, desportistas e afins
+  391: Técnicos de nivel médio em operações industriais
+  395: Técnicos de apoio em pesquisa e desenvolvimento
+  410: Supervisores de serviços administrativos, exceto de atendimento ao público
+  411: Escriturários em geral, agentes, assistentes e auxiliares administrativos
+  412: Secretários de expediente e operadores de máquinas de escritórios
+  413: Escriturários contábeis e de finanças
+  414: Escriturários de controle de materiais e de apoio À produção
+  415: Auxiliares de serviços de biblioteca, documentação e correios
+  420: Supervisores de atendimento ao público
+  421: Caixas, bilheteiros e afins
+  422: Trabalhadores de informações ao público
+  423: Despachantes
+  424: Entrevistadores, recenseadores e afins
+  510: Supervisores dos serviços
+  511: Trabalhadores dos serviços de transporte e turismo
+  512: Trabalhadores dos serviços domésticos em geral
+  513: Trabalhadores dos serviços de hotelaria e alimentação
+  514: Trab. nos serviços de administração, conservação e manutenção de edifícios e logradouros
+  515: Trabalhadores dos serviços de saúde
+  516: Trabalhadores nos serviços de embelezamento e cuidados pessoais
+  517: Trabalhadores nos serviços de proteção e segurança
+  519: Outros trabalhadores de serviços diversos
+  520: Supervisores de vendas e de prestação de serviços
+  521: Vendedores e demonstradores
+  523: Instaladores de produtos e acessórios
+  524: Vendedores a domicílio, ambulantes e em bancas
+  611: Produtores agropecuários em geral
+  612: Produtores agrícolas
+  613: Produtores em pecuária
+  620: Supervisores na exploração agropecuária
+  621: Trabalhadores na exploração agropecuária em geral
+  622: Trabalhadores agrícolas
+  623: Trabalhadores na pecuária
+  630: Supervisores na exploração florestal e pesca
+  631: Pescadores e caçadores
+  632: Extrativistas florestais
+  641: Trabalhadores da mecanização agropecuária
+  642: Trabalhadores da mecanização florestal
+  643: Trabalhadores da irrigação e drenagem
+  710: Supervisores da extração mineral e da construção civil
+  711: Trabalhadores da extração mineral
+  712: Trabalhadores de beneficiamento de minérios e pedras ornamentais
+  715: Trabalhadores da construção civil e obras públicas
+  716: Trabalhadores de acabamento de obras
+  717: Ajudantes de obras
+  720: Supervisores da transformação de metais e de compósitos
+  721: Trabalhadores de usinagem de metais e de compósitos
+  722: Trabalhadores de conformação de metais e de compósitos
+  723: Trab. de tratamento térmico e de superfícies de metais e de compósitos
+  724: Trab. de montagem de tubulações, estruturas metálicas e de compósitos
+  725: Montadores de máquinas e aparelhos mecânicos
+  730: Supervisores de montagens e instalações eletroeletrônicas
+  731: Montadores e instaladores de equipamentos eletroeletrônicos em geral
+  732: Instaladores e reparadores de linhas e cabos elétricos e de comunicações
+  740: Supervisores da mecânica de precisão e instrumentos musicais
+  741: Montadores e ajustadores de instrumentos de precisão
+  742: Montadores e ajustadores de instrumentos musicais
+  750: Supervisores de joalheria, vidraria, cerâmica e afins
+  751: Joalheiros e ourives
+  752: Vidreiros, ceramistas e afins
+  760: Supervisores nas indústrias têxtil, do curtimento, do vestuário e das artes gráficas
+  761: Trabalhadores das industrias têxteis
+  762: Trabalhadores do tratamento de couros e peles
+  763: Trabalhadores da confecção de roupas
+  764: Trabalhadores da confecção de calçados
+  765: Trabalhadores da confecção de artefatos de tecidos e couros
+  766: Trabalhadores da produção gráfica
+  768: Trabalhadores artesanais das atividades têxteis, do vestuário e das artes gráficas
+  770: Supervisores em indústria de madeira, mobiliário e da carpintaria veicular
+  771: Marceneiros e afins
+  772: Trabalhadores da preparação da madeira
+  773: Trab. da transformação da madeira e da fabricação do mobiliário
+  774: Trabalhadores de montagem de móveis e artefatos de madeira
+  775: Trabalhadores em acabamento de madeira e de mobiliário
+  776: Trabalhadores artesanais da madeira e do mobiliário
+  777: Trabalhadores da carpintaria veicular
+  780: Supervisores de trabalhadores de embalagem e etiquetagem
+  781: Operadores de robôs e equipamentos especiais
+  782: Condutores de veículos e operadores de equipamentos de elevação e de movimentação de cargas
+  783: Trabalhadores de manobras sobre trilhos e movimentação e cargas
+  784: Embaladores e alimentadores de produção
+  810: Supervisores de produção, em indústrias químicas, petroquímicas e afins
+  811: Operadores de instalações em indústrias químicas, petroquímicas e afins
+  812: Trabalhadores da fabricação de munição e explosivos químicos
+  813: Operadores de outras instalações químicas, petroquímicas e afins
+  818: Operadores de operação unitária de laboratório transversal para toda indústria de processos
+  820: Supervisores de produção em indústrias siderúrgicas
+  821: Operadores de instalações e equipamentos de produção de metais e ligas primeira fusão
+  822: Operadores de instalações e equipamentos de produção de metais e ligas segunda fusão
+  823: Trab. de instalações e equipamentos de material de construção, cerâmica e vidro
+  828: Trabalhadores artesanais da siderurgia e de materiais de construção
+  830: Supervisores da fabricação de celulose e papel
+  831: Trabalhadores da preparação de pasta de papel
+  832: Trabalhadores da fabricação de papel
+  833: Confeccionadores de produtos de papel e papelão
+  840: Supervisores da fabricação de alimentos, bebidas e fumo
+  841: Operadores de equipamentos na preparação de alimentos e bebidas
+  842: Operadores na preparação de fumo e na fabricação de charutos e cigarros
+  848: Trabalhadores artesanais na  agroindústria, na indústria de alimentos e do fumo
+  860: Supervisores da produção de utilidades
+  861: Operadores na geração e distribuição de energia centrais hidrelétricas
+  862: Operadores de utilidades
+  910: Supervisores em serviços de reparação e manutenção mecânica
+  911: Mecânicos de manutenção de máquinas e equipamentos industriais, comerciais e residenciais
+  913: Mecânicos de manutenção de máquinas pesadas e equipamentos agrícolas
+  914: Mecânicos de manutenção veicular
+  915: Reparadores de instrumentos e equipamentos de precisão
+  919: Outros trabalhadores na reparação e manutenção de equipamentos
+  950: Supervisores de manutenção eletroeletrônica e eletromecânica
+  951: Eletricistas eletrônicos de manutenção industrial, comercial e residencial
+  953: Eletricistas eletrônicos de manutenção veicular
+  954: Mantenedores eletromecânicos
+  991: Outros trabalhadores da conservação e manutenção exceto trabalhadores elementares
+  992: Trabalhadores elementares da manutenção
+
+== LABL ==
+  0: Nao
+  1: Sim
+
+== S05A3 ==
+  1: Sim, trabalha
+  2: Sim, nao trabalha, mas ja trabalhou
+  3: Nunca trabalhou
+
+== LABK ==
+  1: Sim
+  2: Nao
+
+== S04F2 ==
+  1: Sim
+  2: Nao
+
+== S04F1 ==
+  1: Sim
+  2: Nunca teve
+  3: Nao tem agora
+
+== S04E8 ==
+  0: Nunca recebeu leite materno e outros alimentos sumultaneamente
+
+== S04E6 ==
+  1: A mae nao teve leite
+  2: Disponibilidade de tempo por parte de mae
+  3: Motivos de saude de mae
+  4: Motivos de saude de crianca
+  5: A mae sentia dores no peito
+  6: O leite e fraco
+  7: Passou dos 6 meses
+  8: A mae nao quis mais
+  9: A crianca nao quis mais
+  10: Outro motivo relacionado a mae
+  11: Outro motivo relacionado a crianca
+
+== S04E5 ==
+  1: A mae no teve leite
+  2: Disponibilidade de tempo por parte da mae
+  3: Motivoes de saude da mae
+  4: Motivos de saude de crianca
+  5: A mae sentia dores no peito
+  6: O leite e fraco
+  7: A crianca nao aceitou o peito
+  8: A mae nao quis mais
+
+== S04E4 ==
+  1: Sim, mas deixou de ser amamentado
+  2: Ainda e amamentado
+  3: Nunca foi amamentado
+
+== S04E3 ==
+  1: Sim
+  2: Nao
+
+== S04D6 ==
+  1: Medico
+  2: Enfermeira / Auxiliar de enfermagem
+  3: Parteira (informal)
+  4: Outra pessoa
+
+== LABJ ==
+  1: Sim
+  2: Nao
+
+== SOURCE ==
+  0: DTM's
+  1: BEN's
+
+== S04A3 ==
+  1: Acidente / lesao
+  2: Problema odontologico
+  3: Gripe / resfriado
+  4: Bronquite / pneumonia 5'Infeccao
+  6: Doenca cronica
+  7: Diarreia
+  8: Outro
+
+== LABI ==
+  1: Sim
+  2: Nao
+
+== S04A1 ==
+  1: Muito bom
+  2: Bom
+  3: Regular
+  4: Ruim
+  5: Muito ruim
+  6: Nao sabe avaliar
+
+== S03B1 ==
+  1: Sim
+  2: Nao
+
+== LABH ==
+  1: Para conseguir emprego
+  2: Por causa da minha religiao
+  3: Por causa do trabalho
+  4: Para aumentar a renda
+  5: Para conseguir status social/pessoal
+  6: Para progredir na vida
+  7: Pressao da familia
+  8: Auto-realizacao
+  9: Obter prestigio/respeito
+  10: Conseguir a autonomia
+  11: E uma obrigacao/dever de todo cidadao
+  12: E um direito
+  13: Por prazer
+  14: Ficou bom de saude
+  15: Para desenvolver um negocio proprio
+  16: Por causa de Bolsa Familia
+  17: Outro motivo
+
+== LABG ==
+  1: Problemas de saude/doenca
+  2: Precisou trabalhar
+  3: Precisou ajudar o pai/mae no trabalhar
+  4: Precisou ficar em casa para olhar os irmaos
+  5: Precisou ficar em casa para cuidar de pessoas
+  6: Nao gosta da escola
+  7: Nao gosta da professor
+  8: Nao que estudar / Nao se sente motivado
+  9: Nao teve quem o(a) levasse
+  10: Problema de violencia na vzinhanca da escola ou do domicilio
+  11: Violencia dentro da escola
+  12: Outro motivo
+
+== LABF ==
+  1: Primeira
+  2: Segunda
+  3: Terceira
+  4: Quarta
+  5: Quinta
+  6: Sexta
+  7: Setima
+  8: Oitava
+  9: Primeiro ano do ensino medio
+  10: Segundo ano do ensino medio
+  11: Terceiro ano do ensino medio
+
+== LABE ==
+  1: Sim
+  2: Nao
+
+== S03A23 ==
+  1: Problemas de saude/doenca
+  2: Precisou trabalhar
+  3: Precisou ajudar o pai/mae no trabalhar
+  4: Precisou ficar em casa para olhar os irmaos
+  5: Precisou ficar em casa para cuidar de pessoa doente
+  6: Nao quer estudar / Nao se sente motivado
+  7: Nao teve quem o (a) levasse
+  8: Problema de violencia na vizinhanca da escola ou do domicilio
+  9: Violencia dentro do escola
+  10: Nao tinha vagas nas escolas
+  11: Nao havia escola
+  12: Outro motivo
+
+== S03A21 ==
+  1: Problemas de saude/doenca
+  2: Precisou trabalhar
+  3: Precisou ajudar o pai/mae no trabalhar
+  4: Precisou ficar em casa para olhar os irmaos
+  5: Precisou ficar em casa para cuidar de pessoas
+  6: Nao gosta da escola
+  7: Nao gosta da professor
+  8: Nao que estudar / Nao se sente motivado
+  9: Nao teve quem o(a) levasse
+  10: Problema de violencia na vzinhanca da escola ou do domicilio
+  11: Violencia dentro da escola
+  12: Chuva
+  13: Outro motivo
+
+== S03A18 ==
+  1: Sim
+  2: Nao
+
+== S03A16 ==
+  1: Onibus publico
+  2: Trem/metro
+  3: Metro/onibus
+  4: Trem/metro/onibus
+  5: Transporte escolar (van, kombi, onibus escolar
+  6: Carro ou moto particular
+  7: Outro veiculo proprio motorizado (lancha, trator)
+  8: Transporte proprio nao-motorizado (bicicleta, cavalo, canoa, etc.)
+  9: Outro tipo
+  10: Nao utiliza (vai a pe)
+
+== S03A13 ==
+  1: Sim
+  2: Nao
+
+== S03A12 ==
+  1: Manha
+  2: Tarde
+  3: Noite
+  4: Manha e tarde
+  5: Manha e noite
+  6: Tarde e noite
+  7: Turno intermdiario (parte manha e parte tarde)
+
+== S03A11 ==
+  1: Primeira
+  2: Segunda
+  3: Terceira
+  4: Quarta
+  5: Quinta
+  6: Sexta
+  7: Setima
+  8: Oitava
+
+== S03A10 ==
+  1: Creche
+  2: Pre-escolar
+  3: Classe de alfabetizacao
+  4: Alfabetizacao de adultos /  alfabetizacao de Jovens e Adultos
+  5: Ensino fundamental ou 1 grau- regular seriado
+  6: Ensino fundamental ou 1 grau- regular nao-seriado
+  7: Supletivo / Educacao de Jovens e Adultos
+  8: Ensino medio ou 2 grau- regular seriado
+  9: Ensino medio ou 2 grau- regular nao-seriado
+  10: Supletivo / Educacao de Jovens e Adultos (medio ou 2 grau)
+  11: Pre-vestibular
+  12: Superior- graduacao
+  13: Pos graduacao em geral (Especializacao, Mestrado, ou doutorado
+  14: Nao frequenta
+  15: Nao se aplica
+
+== S03A9 ==
+  1: Primeira
+  2: Segunda
+  3: Terceira
+  4: Quarta
+  5: Quinta
+  6: Sexta
+  7: Setima
+  8: Oitava
+
+== S03A8 ==
+  1: Creche
+  2: Pre-escolar
+  3: Classe de alfabetizacao
+  4: Alfabetizacao de adultos /  alfabetizacao de Jovens e Adultos
+  5: Ensino fundamental ou 1 grau- regular seriado
+  6: Ensino fundamental ou 1 grau- regular nao-seriado
+  7: Supletivo / Educacao de Jovens e Adultos
+  8: Ensino medio ou 2 grau- regular seriado
+  9: Ensino medio ou 2 grau- regular nao-seriado
+  10: Supletivo / Educacao de Jovens e Adultos (medio ou 2 grau)
+  11: Pre-vestibular
+  12: Superior- graduacao
+  13: Pos graduacao em geral (Especializacao, Mestrado, ou doutorado
+
+== S03A6 ==
+  1: Precisa trabalhar
+  2: Precisa ajudar pai/mae no trabalho
+  3: Precisa tomar conta de filhos
+  4: Nao tem escola perto
+  5: E caro
+  6: Ja formou
+  7: Engravidou/casou
+  8: Doenca
+  9: Nao gosta de estudas
+  10: Tomar conta de irmaos
+  11: Outro motivo
+  12: Nao tem vaga
+
+== S03A5 ==
+  1: Sim, rede particular
+  2: Sim, rede publica municipal
+  3: Sim, rede publica estadual
+  4: Sim, rede publixa federal
+  5: Nao, ja frequentou
+  6: Nao, nunca frequentou
+
+== S03A4 ==
+  1: Primeria
+  2: Segunda
+  3: Terceira
+  4: Quarta
+  5: Quinta
+  6: Sexta
+  7: Setima
+  8: Otiava
+
+== S03A3 ==
+  1: Creche
+  2: Pre-escolar
+  3: Classe de alfabetizacao
+  4: Alfabetizacao de adultos /  alfabetizacao de Jovens e Adultos
+  5: Ensino fundamental ou 1 grau- regular seriado
+  6: Ensino fundamental ou 1 grau- regular nao-seriado
+  7: Supletivo / Educacao de Jovens e Adultos
+  8: Ensino medio ou 2 grau- regular seriado
+  9: Ensino medio ou 2 grau- regular nao-seriado
+  10: Supletivo / Educacao de Jovens e Adultos (medio ou 2 grau)
+  11: Pre-vestibular
+  12: Superior- graduacao
+  13: Pos graduacao em geral (Especializacao, Mestrado, ou doutorado
+  14: Nao frequenta
+  15: Nao se aplica
+
+== S03A2 ==
+  1: Sim, rede particular
+  2: Sim, rede publica municipal
+  3: Sim, rede publica estadual
+  4: Sim, rede publica federal
+  5: Nao
+
+== S03A1 ==
+  1: Sim
+  2: Nao
+
+== S02C2A ==
+  1: Trena
+  2: Antropometro
+
+== S02C9 ==
+  1: Sim
+  2: Nao, ausente
+  3: Nao, doente
+  4: Nao, nao quis ou nao foi permitido
+  5: Nao, outro motivo
+  6: Recusa
+
+== S02C5 ==
+  1: Em pe
+  2: Deitado
+
+== S02C4 ==
+  1: Sim
+  2: Nao, doente
+  3: Nao, nao quis ou nao foi permitido
+  4: Nao, outro motivo
+  5: Nao, ausente
+
+== S02C1 ==
+  1: Sim
+  2: Nao
+
+== S02B13 ==
+  1: Diaria
+  2: Semanal
+  3: Quinzenal
+  4: Mensal
+  5: Bimensal
+  6: Trimestral- a cada tres meses
+  7: Quadrimestral- a cada quatro meses
+  8: Semestral- a cada seix meses
+  9: Nao tem un periodo certo
+
+== LABD ==
+  1: Sim
+  2: Nao
+
+== S02B9 ==
+  1: Primeria
+  2: Segunda
+  3: Terceira
+  4: Quarta
+  5: Quinta
+  6: Sexta
+  7: Setima
+  8: Oitava
+
+== S02B8 ==
+  1: Creche
+  2: Pre-escolar
+  3: Classe de alfabetizacao
+  4: Alfabetizacao de adultos/jovens e adultos
+  5: Ensino fundamental ou 1 grau- regular seriado
+  6: Ensino fundamental ou 1 grau- regular nao seriado
+  7: Supletivo / Educacao de Jovens e Adultos
+  8: Ensino medio ou 2 grau-regular seriado
+  9: Ensino medio ou 2 grau- regular nao seriado
+  10: Supletivo /  Eduacao de Jovens e adultos (medio ou 2 grau)
+  11: Pre-vestibular
+  12: Superior-graduacao
+  13: Pos graduacao em geral
+  14: Nao frequenta
+
+== S02A21 ==
+  1: Area urbana da capital
+  2: Area rural da capital
+  3: Area urbana do interior
+  4: Area rural do interior
+
+== LABC ==
+  1: Menos de 1 ano
+  2: De 1 a menos de 2 anos
+  3: De 2 a menos de 3 anos
+  4: De 3 a menos de 4 anos
+  5: De 4 a menos de 5 anos
+  6: De 5 a 9 anos
+  7: 10 anos ou mais
+  8: Sempre viveu
+
+== S02A18 ==
+  1: Brasileiro nato
+  2: Brasileiro naturalizado
+  3: Estrangeiro
+
+== S02A17 ==
+  1: Branca
+  2: Preta
+  3: Parda
+  4: Amarela
+  5: Indigena
+
+== LABB ==
+  1: Sim
+  2: Nao
+
+== S02A12 ==
+  1: Solteiro- para pessoa que tem estado civil de solteiro
+  2: Casado no civil e religiosa
+  3: Casado so no civil- para pessoa que tem estado civil de casado
+  4: Casado so no religioso
+  5: Uniao consensual- para a pessoa que vive em companhia de conjuge com quem nao contraiu casamento civil ou religioso
+  6: Desquitado/separado judicialmente- para pessoa que tem estado civil de desquitada
+  7: Divorciado- para pessoa que tem estado civil de divorciad a homologado por decisao judicial
+  8: Separado de fato
+  9: Viveu- para pessoa que tem estado civil de viuvo
+
+== LABA ==
+  1: Sim
+  2: Nao
+
+== S02A5 ==
+  1: Pessoa responsavel
+  2: Conjuge, companheiro(a)
+  3: Filho(a), enteado(a)
+  4: Pai, mae, sogro(a)
+  5: Neto(a), bisneto(a)
+  6: Irmao, irma
+  7: Nora, genro
+  8: Outro parente
+  9: Agregado
+  10: Pensionista
+  11: Empregado domestico
+  12: Parente de empregado domestico
+
+== S02AD ==
+  1: Masculino
+  2: Femenino
+
+== S02AC ==
+  1: Ja Morava
+  2: Morreu
+  3: Nao mora mais, mudou-se
+  4: Nova, nao morava em 2005
+  5: Nunca morou
+  6: Morava,mais nao estava na lista
+
+== S00A1 ==
+  11: Rondonia
+  12: Acre
+  13: Amazonas
+  14: Roraima
+  15: Para
+  16: Amapa
+  17: Tocatins
+  21: Maranhao
+  22: Piaui
+  23: Ceara
+  24: Rio Grande do Norte
+  25: Paraiba
+  26: Pernambuco
+  27: Alagoas
+  28: Sergipe
+  29: Bahia
+  31: Minas Gerais
+  32: Espirito Santo
+  33: Rio de Janeiro
+  35: Sao Paolo
+  41: Parana
+  42: Santa Catarina
+  43: Rio Grande do Sul
+  50: Mato Grosso do Sul
+  51: Mato Grosso
+  52: Golas
+  53: Distrito Federal
+
