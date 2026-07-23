@@ -39,6 +39,12 @@ O botão depende de o notebook estar publicado na branch `main` do repositório
 `fabriciosantana/mcdia` no GitHub. Alterações locais só aparecerão no Colab
 depois de commit e push.
 
+A apresentação inicial explicita o ATT, a fotografia de 29/11/2013, o desfecho
+de 2014–2015, os 29 tratados, os 217 controles e a ponderação por escore de
+propensão. A conclusão em uma frase informa o ATT de `-19,50`, o intervalo
+bootstrap `[-83,11; 34,16]` e as limitações de imprecisão, desequilíbrio
+territorial e mensuração incompleta dos confundidores.
+
 Arquivos auxiliares:
 
 - `atividade_inferencia_causal_mais_medicos.html`: exportação para leitura e
@@ -75,7 +81,9 @@ Estrutura atual do notebook, sem numeração nas seções:
 A introdução apresenta os conceitos necessários de resultados potenciais,
 contrafactual, ATE/ATT/ATU, confundimento, DAG, backdoor, mediador, colisor,
 positividade, suporte comum e escore de propensão. O último parágrafo descreve
-a organização do notebook.
+a organização do notebook. Ela também define brevemente consistência, ausência
+de interferência, ignorabilidade condicional e positividade para tornar as
+hipóteses de identificação compreensíveis a leitores iniciantes.
 
 ## 3. Recorte empírico atual
 
