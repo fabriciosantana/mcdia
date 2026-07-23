@@ -28,10 +28,14 @@ Arquivo principal:
 - `atividade_inferencia_causal_mais_medicos.ipynb`
 
 O notebook foi executado integralmente e contém as saídas, tabelas e gráficos.
-Na última validação, nenhuma célula apresentou erro.
+Na última validação, as 13 células de código estavam executadas e nenhuma
+célula apresentava erro.
 
 Arquivos auxiliares:
 
+- `atividade_inferencia_causal_mais_medicos.html`: exportação para leitura e
+  inspeção visual; foi gerada com 7 figuras e 14 tabelas e ainda aparece como
+  arquivo não versionado no Git;
 - `data/processed/mais_medicos_icsap_go.csv`: base analítica pronta, com uma
   linha por município;
 - `preparar_dados_reais.py`: reconstrói a base analítica a partir dos arquivos
@@ -39,6 +43,31 @@ Arquivos auxiliares:
 - `data/README.md`: documenta as fontes e a reprodução;
 - `data/raw/.gitignore`: impede que os arquivos brutos grandes sejam
   versionados.
+
+O antigo `construir_notebook.py` foi removido deliberadamente. O notebook
+executado e versionado é agora a única fonte do conteúdo analítico. Não
+reintroduzir um gerador que duplique o notebook, salvo exigência explícita do
+professor.
+
+Estrutura atual do notebook, sem numeração nas seções:
+
+1. Introdução;
+2. Fontes de dados;
+3. Análise exploratória de dados;
+4. Política, pergunta e desenho;
+5. Resultados potenciais e estimando;
+6. DAG e critério de backdoor;
+7. Dados reais e construção das variáveis;
+8. Diagnóstico do ajuste e suporte comum;
+9. Estimação do ATT;
+10. Hipóteses e ameaças à validade;
+11. Conclusão;
+12. Referências e fontes.
+
+A introdução apresenta os conceitos necessários de resultados potenciais,
+contrafactual, ATE/ATT/ATU, confundimento, DAG, backdoor, mediador, colisor,
+positividade, suporte comum e escore de propensão. O último parágrafo descreve
+a organização do notebook.
 
 ## 3. Recorte empírico atual
 
@@ -219,6 +248,31 @@ O escore de propensão utiliza:
 - log da população;
 - região de saúde.
 
+O notebook também apresenta:
+
+- análise exploratória de cobertura, assimetria, valores extremos,
+  heterogeneidade regional e mudanças pré–pós;
+- distribuição dos escores para diagnóstico de sobreposição;
+- diferenças padronizadas de todas as covariáveis do escore antes e depois da
+  ponderação ATT;
+- gráfico de equilíbrio e tabela ordenada pelo desequilíbrio residual.
+
+Diagnóstico de equilíbrio:
+
+- a ponderação reduziu fortemente o desequilíbrio do log da população;
+- as diferenças padronizadas das duas taxas prévias ficaram próximas de 0,10;
+- persistiu desequilíbrio territorial importante;
+- maiores diferenças padronizadas residuais: Entorno Sul `0,484`, Entorno
+  Norte `0,397` e Central `0,373`;
+- Pireneus permaneceu em valor absoluto `0,285`;
+- várias regiões sem tratados não permitem comparação interna entre tratados e
+  controles.
+
+Interpretação: os pesos melhoram a comparabilidade nas covariáveis contínuas,
+mas não produzem equilíbrio territorial satisfatório. Isso é uma limitação
+concreta de positividade e reforça que o ATT ponderado é uma estimativa
+observacional ajustada, não prova de que todo backdoor foi bloqueado.
+
 Resultados salvos no notebook:
 
 | Estimador | Estimativa | IC bootstrap 95% |
@@ -257,6 +311,8 @@ Formulação sugerida:
   reduzindo o contraste.
 - Mensuração: o SIH representa internações financiadas pelo SUS.
 - Poucos tratados: somente 29 municípios na coorte inicial.
+- Equilíbrio residual: várias regiões permanecem longe da referência
+  descritiva de diferença padronizada absoluta de 0,10 depois da ponderação.
 - Validade externa: o resultado de Goiás não representa automaticamente o
   Brasil.
 
@@ -343,17 +399,93 @@ jupyter nbconvert --to notebook --execute --inplace \
 O ambiente pode exigir autorização para abrir os sockets locais do kernel
 Jupyter.
 
-## 13. Próximos passos possíveis
+Para gerar novamente a versão HTML:
 
-Se o trabalho for retomado sem alterar o período:
+```bash
+JUPYTER_CONFIG_DIR=/tmp/mcdia-jupyter-config \
+JUPYTER_DATA_DIR=/tmp/mcdia-jupyter-data \
+JUPYTER_RUNTIME_DIR=/tmp/mcdia-jupyter-runtime \
+jupyter nbconvert --to html \
+  09-appd/assignments/atividade_inferencia_causal_mais_medicos.ipynb \
+  --output atividade_inferencia_causal_mais_medicos.html
+```
 
-1. revisar linguagem acadêmica e identificação dos integrantes;
-2. verificar padrão bibliográfico exigido pelo professor;
-3. decidir se o script gerador deve permanecer na entrega;
-4. acrescentar dados pré-tratamento de CNES/ESF, Censo/Atlas Brasil e finanças
-   municipais;
-5. reestimar o ATT e revisar suporte comum;
-6. exportar o notebook para HTML ou PDF, se solicitado.
+O HTML foi gerado sem erro. O `nbconvert` apenas avisou que seis imagens não
+possuem texto alternativo. A inspeção estrutural confirmou Introdução, Fontes,
+EDA, diagnóstico renomeado, gráfico de equilíbrio, Conclusão e referências,
+sem `Traceback`.
+
+## 13. Estado de versionamento e entrega
+
+Na última verificação, o Git mostrava:
+
+- `M MEMORIA_SESSAO.md`;
+- `M atividade_inferencia_causal_mais_medicos.ipynb`;
+- `?? atividade_inferencia_causal_mais_medicos.html`.
+
+O arquivo `construir_notebook.py` não existe mais no diretório e não aparece
+como pendência separada no estado atual do Git.
+
+Os arquivos brutos existem localmente em `data/raw/`, mas estão ignorados e não
+devem ser versionados nem incluídos em um ZIP da pasta inteira. A pasta
+`__pycache__/` também está ignorada. Para upload manual, selecionar
+explicitamente:
+
+1. `atividade_inferencia_causal_mais_medicos.ipynb`;
+2. `atividade_inferencia_causal_mais_medicos.html`, se o formato for aceito;
+3. `preparar_dados_reais.py`;
+4. `data/processed/mais_medicos_icsap_go.csv`;
+5. `data/README.md`.
+
+`MEMORIA_SESSAO.md` é um documento interno de continuidade; só deve fazer parte
+do pacote submetido se o repositório completo for a forma de entrega.
+
+As referências metodológicas atuais incluem Angrist e Pischke; Hernán e
+Robins; Rosenbaum e Rubin; Rubin; Pearl; e Pearl e Mackenzie, além das fontes
+institucionais. Verificar apenas se o professor exige um padrão bibliográfico
+específico.
+
+## 14. Próximos passos reais para finalizar
+
+1. confirmar o nome completo de “Giovane” e revisar os nomes dos demais
+   integrantes na capa;
+2. confirmar se a entrega exige `.ipynb`, HTML, PDF ou repositório;
+3. abrir o HTML em navegador para uma última inspeção humana de quebras,
+   equações, tabelas e legendas;
+4. decidir se o HTML deve ser versionado;
+5. registrar intencionalmente no Git o notebook, a memória e, se escolhido, o
+   HTML;
+6. fazer `push` e/ou upload na plataforma indicada;
+7. depois do envio, conferir se o arquivo pode ser aberto ou baixado pela
+   plataforma.
+
+O conteúdo acadêmico já foi avaliado contra o enunciado e atende aos requisitos:
+política diferente do Bolsa Família, resultados potenciais, ATT definido e
+justificado, DAG com confundidores, mediador e colisor, caminhos de backdoor e
+justificativa explícita das variáveis que devem e não devem ser controladas.
+Não é necessário acrescentar nova análise para atender formalmente à tarefa.
 
 Se o professor exigir apenas a estratégia de identificação, pode-se reduzir a
 ênfase na estimativa numérica e manter os dados reais como ilustração.
+
+## 15. Convenções para futuras edições
+
+- Editar diretamente o notebook; não recriar `construir_notebook.py`.
+- Depois de alterar código, executar o notebook inteiro e confirmar que todas
+  as células têm `execution_count` e não há saída do tipo `error`.
+- Depois de alterar somente Markdown, preservar as saídas existentes e
+  regenerar o HTML se ele fizer parte da entrega.
+- Não escrever que o PMM “causou” ou “comprovou” redução. Formulação preferida:
+  **estimativa observacional ajustada, compatível com o DAG sob as hipóteses
+  declaradas**.
+- Resultado principal a manter consistente em texto, tabela e conclusão:
+  ATT ponderado `-19,50`, IC bootstrap 95% `[-83,11; 34,16]`.
+- Tratar `±0,10` no gráfico de equilíbrio como referência descritiva, não como
+  teste ou garantia de identificação.
+- Não excluir automaticamente valores extremos: municípios pequenos têm taxas
+  mais voláteis e a população-alvo completa foi preservada.
+- Não controlar variáveis posteriores que sejam mediadoras ou colisores ao
+  estimar o efeito total.
+- Se o período ou a definição do tratamento mudar, refazer toda a base, o DAG,
+  o suporte comum, o equilíbrio, o bootstrap e a conclusão; não reaproveitar os
+  números atuais.
