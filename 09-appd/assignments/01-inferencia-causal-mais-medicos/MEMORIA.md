@@ -47,6 +47,9 @@ territorial e mensuração incompleta dos confundidores.
 
 Arquivos auxiliares:
 
+- `../TEORIA.md`: guia integrado de estudo das atividades 1 e 2; a Parte I
+  cobre resultados potenciais, ATT, DAG, backdoor, hipóteses de identificação,
+  escore de propensão, balanceamento, bootstrap e interpretação dos resultados;
 - `atividade_inferencia_causal_mais_medicos.html`: exportação para leitura e
   inspeção visual; foi gerada com 7 figuras e 14 tabelas e ainda aparece como
   arquivo não versionado no Git;
