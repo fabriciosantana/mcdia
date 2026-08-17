@@ -1,0 +1,20 @@
+# Mapa de proveniência e reaproveitamento
+
+| Material de origem | Papel na dissertação | Destino inicial | Cuidado editorial |
+|---|---|---|---|
+| `chatbot-rag-pre/sections/01-introducao.tex` | Problema, pergunta, justificativa e objetivos | Capítulo 1 | Atualizar linguagem prospectiva somente quando houver evidência final |
+| `chatbot-rag-pre/sections/02-referencial-teorico.tex` | Fundamentos e lacuna | Capítulos 2 e 3 | Separar referencial conceitual de comparação crítica dos trabalhos |
+| `chatbot-rag-pre/sections/03-hipoteses.tex` | Hipóteses de trabalho e critérios de verificação | Capítulo 4; discussão no capítulo 7 | Não tratar como teste causal clássico |
+| `chatbot-rag-pre/sections/04-metodologia.tex` | Desenho planejado, protocolo e matriz metodológica | Capítulo 4 | Converter futuro em procedimento realizado apenas após execução |
+| `chatbot-rag/` | Prova de conceito e evidência preliminar | Capítulos 3, 5 e 7 | Não apresentar como resultado final da dissertação |
+| `4-project/README.md` e scripts | Implementação e reprodutibilidade | Capítulo 5 e apêndices | Conferir configuração efetivamente usada na rodada final |
+| `4-project/eval/` | Baterias, rubricas, prompts e resultados | Capítulos 4 e 6; apêndices | Congelar a versão escolhida e registrar hashes |
+| `4-project/knowledge_openwebui/build_metadata.json` | Manifesto da base preparada | Capítulo 5 | Verificar se corresponde ao corpus final |
+| `chatbot-rag/literatura/` | Triagem e comparação bibliográfica | Capítulo 3 | Verificar cada referência e atualizar a busca |
+
+## Linha de demarcação da evidência
+
+1. O artigo demonstra viabilidade preliminar com bateria pequena e avaliação automatizada acompanhada de inspeção humana amostral.
+2. A dissertação amplia o desenho com bateria balanceada, conjunto de referência, avaliação formal da recuperação, baselines, avaliação humana independente e comparação controlada com juiz automatizado.
+3. Números do artigo só podem aparecer identificados como resultados preliminares ou antecedentes do estudo.
+4. Números dos capítulos de resultados e discussão devem vir de uma execução final congelada e documentada.

@@ -1,0 +1,63 @@
+%% Compatibilidade com a versão de biblatex-abnt do TeX Live 2023 presente no
+%% ambiente local. Versões recentes já declaram a opção `accite' usada pela
+%% classe do IDP; este shim apenas evita que a versão antiga rejeite a opção.
+\makeatletter
+\AddToHook{package/biblatex/before}{%
+  \define@boolkey{blx@opt@pre}{accite}[true]{}%
+}
+\makeatother
+
+\documentclass[mestrado,rascunho]{idp}
+
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{pdflscape}
+
+\addbibresource{referencias.bib}
+\input{config/dados}
+
+\begin{document}
+
+\pretextual
+
+\capa
+\folhaderosto
+\fichacatalografica
+\folhadeaprovacao
+
+% Habilitar quando os textos pessoais estiverem preenchidos:
+% \input{pretextual/dedicatoria}
+% \input{pretextual/agradecimentos}
+% \input{pretextual/epigrafe}
+\input{pretextual/resumo}
+\input{pretextual/abstract}
+
+\listailustracoes
+\listatabelas
+\listaquadros
+\listagraficos
+\input{pretextual/siglas}
+\sumario
+
+\textual
+
+\input{capitulos/01-introducao}
+\input{capitulos/02-referencial-teorico}
+\input{capitulos/03-trabalhos-relacionados}
+\input{capitulos/04-procedimentos-metodologicos}
+\input{capitulos/05-artefato-e-caso-empirico}
+\input{capitulos/06-resultados}
+\input{capitulos/07-discussao}
+\input{capitulos/08-consideracoes-finais}
+
+\postextual
+
+\referencias
+\input{postextual/apendices}
+% Habilitar se houver material de terceiros a anexar:
+% \input{postextual/anexos}
+
+\end{document}
