@@ -9,6 +9,10 @@ latexmk -pdf main.tex
 latexmk -c
 ```
 
+O `latexmkrc` direciona os arquivos auxiliares para `aux/` e o PDF para
+`out/main.pdf`. Os dois diretórios são criados automaticamente na primeira
+compilação.
+
 O documento está em modo `rascunho`. Campos institucionais ainda desconhecidos aparecem como pendências; a opção `entrega` só deve ser ativada após seu preenchimento e conferência.
 
 ## Onde escrever

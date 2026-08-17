@@ -20,7 +20,7 @@ Antes de alterações substantivas, leia o arquivo afetado, `documentacao/MAPA_F
 - Manter recuperação, geração, avaliação humana e julgamento automatizado como camadas analíticas distintas.
 - Tratar o sistema como artefato sociotécnico e calibrar as conclusões ao alcance das evidências.
 - Todo capítulo primário deve ter parágrafo introdutório antes da primeira subseção.
-- Compilar após alterações em `.tex` ou `.bib` com `latexmk -pdf main.tex` e verificar `main.log`.
+- Compilar após alterações em `.tex` ou `.bib` com `latexmk -pdf main.tex`, verificar `aux/main.log` e confirmar a geração de `out/main.pdf`.
 
 ## Estado editorial
 

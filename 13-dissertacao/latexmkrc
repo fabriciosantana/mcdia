@@ -3,6 +3,9 @@
 
 $pdf_mode = 1;              # pdflatex
 $bibtex_use = 2;
+$out_dir = 'out';           # PDF e demais produtos finais
+$aux_dir = 'aux';           # arquivos intermediarios de compilacao
+$max_repeat = 5;
 $biber = 'biber --input-encoding=utf8 --output-encoding=utf8 %O %S';
 $pdflatex = 'pdflatex -interaction=nonstopmode -synctex=1 -file-line-error %O %S';
 
