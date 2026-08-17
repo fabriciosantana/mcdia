@@ -4,9 +4,9 @@ Este diretório contém a dissertação de mestrado em Administração Pública 
 
 ## Fontes de contexto
 
-- Pré-projeto: `../06-iag/5-project-paper/chatbot-rag-pre/`.
-- Artigo/prova de conceito: `../06-iag/5-project-paper/chatbot-rag/`.
-- Implementação e evidências: `../06-iag/4-project/`.
+- Pré-projeto: `../../06-iag/5-project-paper/chatbot-rag-pre/`.
+- Artigo/prova de conceito: `../../06-iag/5-project-paper/chatbot-rag/`.
+- Implementação e evidências: `../../06-iag/4-project/`.
 - Template institucional: `/workspaces/TemplateLatexIDP/`.
 
 Antes de alterações substantivas, leia o arquivo afetado, `documentacao/MAPA_FONTES.md`, `documentacao/PLANO_REDACAO.md` e as instruções do diretório-fonte pertinente.
