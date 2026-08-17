@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor white
+skinparam dpi 180
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam roundcorner 8
+skinparam ArrowColor #333333
+skinparam nodesep 18
+skinparam ranksep 22
+skinparam rectangle {
+  BorderColor #333333
+  BackgroundColor #F7F7F7
+  FontColor #111111
+}
+
+top to bottom direction
+
+rectangle "Acervo documental\nDiscursos e metadados" as corpus
+rectangle "Preparação dos dados\nlimpeza, segmentação e chunks" as prep
+rectangle "Indexação vetorial\nembeddings e metadados" as index
+rectangle "Consulta do usuário\npergunta em linguagem natural" as query
+rectangle "Recuperação\nbusca, filtros e reranqueamento" as retrieval
+rectangle "Contexto recuperado\ntrechos e fontes" as context
+rectangle "Geração da resposta\nLLM + prompt" as generation
+rectangle "Resposta verificável\nfontes, limites e incerteza" as answer
+rectangle "Avaliação\nrecuperação, geração e verificabilidade" as evaluation
+
+corpus --> prep
+prep --> index
+index --> retrieval
+query --> retrieval
+retrieval --> context
+context --> generation
+query --> generation
+generation --> answer
+answer --> evaluation
+context --> evaluation
+
+@enduml

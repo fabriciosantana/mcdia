@@ -1,0 +1,4 @@
+interface:
+  display_name: "PDF Final Review"
+  short_description: "Review compiled academic PDFs visually."
+  default_prompt: "Use $pdf-final-review to inspect the compiled article PDF for layout, tables, figures, citations, and final presentation issues."

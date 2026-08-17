@@ -1,0 +1,21 @@
+\section{Caracterização do problema}
+
+\subsection{Problema da administração pública}
+
+O problema central abordado neste trabalho consiste na dificuldade de transformar grandes acervos de discursos legislativos em bases efetivamente consultáveis por meio de perguntas em linguagem natural, com respostas úteis, contextualizadas e verificáveis. Embora esses discursos sejam públicos, seu volume, diversidade temática, dispersão temporal e variação formal tornam a recuperação de argumentos, posicionamentos, temas recorrentes e referências históricas uma tarefa complexa quando realizada por meio de mecanismos tradicionais de busca \parencite{kavcic2024historicalViewer,blanco2025plenarioPalanqueEstudio,blanco2026letrasGraudas}.
+
+Na prática, esse quadro impacta diferentes atores institucionais. Gabinetes parlamentares podem precisar recuperar rapidamente posicionamentos anteriores sobre determinado tema; equipes técnicas precisam localizar subsídios para notas, relatórios e pareceres; pesquisadores e jornalistas demandam acesso qualificado a discursos para fins analíticos; e cidadãos interessados em transparência e controle social podem se beneficiar de instrumentos que tornem o acervo mais acessível e inteligível \parencite{bandeiraBernardes2016information}. Na ausência de uma camada de recuperação semântica, o acesso ao conteúdo tende a ser fragmentado, lento e altamente dependente de conhecimento prévio sobre a estrutura documental e os termos empregados nos discursos \parencite{gao2023ragSurvey,martelloteViola2025organizacaoConhecimento,geunis2023parliamentaryMonitoring}.
+
+Desse modo, o \textit{chatbot} legislativo com RAG proposto neste trabalho procura enfrentar essa lacuna ao acrescentar uma camada de mediação informacional que combina recuperação semântica, contextualização documental e geração textual ancorada em evidências.
+
+\subsection{Partes interessadas}
+
+As partes interessadas no projeto abrangem, em primeiro lugar, gabinetes parlamentares, consultorias legislativas e assessorias técnicas, que demandam acesso rápido e qualificado a discursos e posicionamentos anteriores. Também se incluem equipes de transparência, gestão da informação e tecnologia, para as quais são particularmente relevantes aspectos de governança, manutenção, rastreabilidade e evolução da solução.
+
+Além disso, pesquisadores das áreas de ciência política, direito, administração pública e ciência da informação constituem público potencial do sistema, bem como cidadãos e organizações da sociedade civil interessados em controle social e acompanhamento da atividade parlamentar \parencite{martelloteViola2025organizacaoConhecimento,geunis2023parliamentaryMonitoring}.
+
+\subsection{Critérios de sucesso}
+
+Os critérios de sucesso definidos para este trabalho incluem os seguintes aspectos: a capacidade de indexar uma base representativa de discursos parlamentares; a recuperação de trechos relevantes para perguntas factuais e analíticas; a geração de respostas em português fundamentadas no contexto recuperado; a apresentação de referências e metadados associados aos discursos utilizados; a automatização das etapas de importação e avaliação; e a reprodutibilidade da solução.
+
+Tais critérios dialogam com recomendações da literatura para sistemas RAG e avaliação automatizada, que enfatizam avaliação contínua, reprodutibilidade e rastreabilidade como propriedades desejáveis em soluções voltadas ao tratamento de informação institucionalmente relevante \parencite{gao2023ragSurvey,saadFalconEtAl2024ares,esEtAl2023ragas}.

@@ -1,0 +1,49 @@
+\section{Introdução}
+
+\subsection{Contextualização}
+
+O avanço dos grandes modelos de linguagem (\textit{large language models} -- LLMs) ampliou significativamente o interesse por soluções capazes de responder perguntas em linguagem natural \parencite{minaee2024llmSurvey}. No setor público, esse interesse é particularmente relevante diante de acervos extensos, dinâmicos e heterogêneos, tais como legislação, pareceres, notas técnicas, discursos parlamentares e documentos administrativos \parencite{ipu2024aiParliaments}. Nesses ambientes, o desafio não se restringe ao armazenamento da informação, mas abrange, sobretudo, sua recuperação qualificada, contextualizada e verificável \parencite{wfd2023guidelinesAiParliaments}.
+
+Apesar de seu potencial, o uso direto de LLMs apresenta limitações amplamente discutidas na literatura, entre as quais se destacam a alucinação, a dependência do conhecimento incorporado aos dados de treinamento e a dificuldade de identificar as evidências utilizadas na produção das respostas \parencite{gao2023ragSurvey}. Tais limitações assumem maior gravidade em contextos institucionais nos quais se exigem transparência, verificabilidade, controle das fontes e responsabilização pelos conteúdos produzidos \parencite{wfd2023guidelinesAiParliaments}.
+
+Nesse cenário, a abordagem \textit{retrieval-augmented generation} (RAG) apresenta-se como alternativa tecnicamente promissora, pois, em vez de depender exclusivamente do conhecimento internalizado no modelo, sistemas RAG recuperam trechos relevantes de uma base documental externa e os incorporam ao contexto da geração \parencite{gao2023ragSurvey}. Com isso, a abordagem pode elevar a precisão factual e a atualidade das respostas, ao mesmo tempo em que favorece a explicitação das fontes que as sustentam \parencite{gao2023ragSurvey}.
+
+No contexto do Parlamento brasileiro, a organização do conhecimento legislativo e a ampliação do acesso qualificado à informação constituem desafios relevantes de pesquisa aplicada. Como observam \textcite{martelloteViola2025organizacaoConhecimento}, o emprego de inteligência artificial nesse domínio deve ser acompanhado de atenção à estrutura informacional, à mediação documental e à explicabilidade dos resultados.
+
+Com base nessas questões, o presente trabalho propõe o desenvolvimento de um \textit{chatbot} legislativo baseado em RAG, voltado à consulta de discursos da 56\textordfeminine{} Legislatura do Senado Federal.
+
+\subsection{Motivação}
+
+A administração pública contemporânea opera sob crescente pressão por transparência, rastreabilidade, eficiência e capacidade de resposta \parencite{un2015responsiveGovernance}. No ambiente parlamentar, a consulta a discursos e pronunciamentos mostra-se relevante para diversas finalidades, tais como análise temática, comparação de posicionamentos, apoio técnico a gabinetes, elaboração de relatórios, produção de subsídios e atendimento ao cidadão \parencite{skubicFiser2024discourseReview}. Estudos da Consultoria Legislativa do Senado mostram, além disso, que os pronunciamentos em plenário entre 2007 e 2024 apresentam transformações relevantes em volume, extensão, interatividade e complexidade textual, reforçando a pertinência de tratá-los como corpus dinâmico de pesquisa institucional \parencite{blanco2025plenarioPalanqueEstudio,blanco2026letrasGraudas}. Entretanto, a simples disponibilização pública desses documentos não garante, por si só, acesso eficiente à informação que eles contêm \parencite{geunis2023parliamentaryMonitoring}.
+
+Em grandes acervos discursivos, mecanismos tradicionais de busca, predominantemente baseados em correspondência lexical, tendem a ser insuficientes quando o usuário formula perguntas complexas, comparativas, interpretativas ou orientadas à síntese \parencite{gupta2024comprehensiveRag}. Além disso, em bases documentais extensas, a recuperação da informação frequentemente depende de conhecimento prévio sobre vocabulário, datas, autores ou sobre a própria organização do acervo, o que dificulta o acesso substantivo à informação mesmo quando ela está formalmente disponível \parencite{bandeiraBernardes2016information,geunis2023parliamentaryMonitoring}. Como consequência, a informação permanece formalmente acessível, mas substantivamente difícil de explorar \parencite{bandeiraBernardes2016information,geunis2023parliamentaryMonitoring}.
+
+Paralelamente, soluções baseadas exclusivamente em LLMs generalistas podem produzir respostas plausíveis e linguisticamente bem estruturadas, porém desprovidas de fundamentação verificável \parencite{anhHoang2025hallucinations,gao2023ragSurvey}. Em domínios institucionais, tal comportamento é particularmente problemático, pois compromete a confiança, a responsabilização e o uso controlado da tecnologia \parencite{deAlmeidaSantos2025aiGovernance,wfd2023guidelinesAiParliaments}. A literatura de RAG indica que parte desses riscos pode ser mitigada ao ancorar a geração em documentos externos, controláveis e atualizáveis, desde que isso seja combinado a práticas de avaliação, versionamento, rastreabilidade e monitoramento contínuo \parencite{gao2023ragSurvey,saadFalconEtAl2024ares,esEtAl2023ragas}.
+
+Dessa forma, este trabalho é motivado pela necessidade de investigar uma solução tecnicamente viável e institucionalmente adequada para ampliar o acesso qualificado a discursos parlamentares, combinando busca semântica, geração textual e verificação documental.
+
+\subsection{Problema de pesquisa}
+
+Diante desse quadro, formula-se o seguinte problema de pesquisa: como obter, por meio de consultas em linguagem natural aos discursos da 56\textordfeminine{} Legislatura do Senado Federal, respostas úteis, fundamentadas em evidências recuperadas e compatíveis com exigências de verificação institucional?
+
+Esse problema de pesquisa decorre da constatação de que o acesso documental, embora formalmente assegurado, ainda enfrenta limitações relevantes quando se exigem recuperação semântica, síntese orientada ao usuário e indicação clara das fontes utilizadas na resposta \parencite{bandeiraBernardes2016information,geunis2023parliamentaryMonitoring,gao2023ragSurvey}.
+
+\subsection{Objetivos}
+
+O objetivo geral deste trabalho é desenvolver e demonstrar uma prova de conceito reprodutível de \textit{chatbot} legislativo baseada em RAG para consulta a discursos parlamentares da 56\textordfeminine{} Legislatura do Senado Federal, com foco na produção de respostas fundamentadas em evidências recuperadas e compatíveis com exigências de verificação institucional.
+
+Como objetivos específicos, definem-se:
+\begin{enumerate}
+  \item estruturar uma base de conhecimento consultável a partir dos discursos parlamentares;
+  \item possibilitar a formulação de perguntas em linguagem natural com respostas fundamentadas em trechos recuperados;
+  \item avaliar empiricamente a qualidade inicial da recuperação e das respostas geradas;
+  \item documentar uma arquitetura reprodutível, modular e passível de evolução para cenários institucionais.
+\end{enumerate}
+
+Em razão de sua natureza construtiva, o estudo não formula hipóteses experimentais no sentido clássico. A avaliação é orientada por critérios de verificação associados à construção e demonstração de um artefato computacional: base documental indexável, recuperação de evidências, geração fundamentada, rastreabilidade das fontes, automação do fluxo e reprodutibilidade. Essa orientação aproxima o trabalho da \textit{Design Science Research}, na qual a produção e a avaliação de artefatos constituem forma legítima de investigação em sistemas de informação \parencite{hevnerEtAl2004designScience,peffersEtAl2007dsrm}.
+
+\subsection{Justificativa}
+
+A relevância deste estudo decorre de sua contribuição em dois planos complementares. No plano prático, a pesquisa investiga uma forma de ampliar o acesso qualificado a informações parlamentares públicas, com potencial para fortalecer transparência, memória institucional e apoio a atividades de gabinete, pesquisa e controle social \parencite{ipu2024aiParliaments,geunis2023parliamentaryMonitoring}. No plano metodológico e aplicado, o trabalho examina a aplicação de técnicas contemporâneas de recuperação e geração em um domínio documental complexo, marcado por exigências elevadas de explicabilidade, confiabilidade e vinculação às fontes \parencite{martelloteViola2025organizacaoConhecimento,wfd2023guidelinesAiParliaments}.
+
+Além disso, o estudo se justifica pela aderência do problema a desafios concretos da administração pública digital. Em vez de tratar a inteligência artificial como mecanismo autônomo de produção de respostas, propõe-se uma abordagem em que a geração textual é condicionada por fontes documentais públicas, controláveis e auditáveis. Essa orientação é coerente com demandas institucionais por uso responsável da IA em contextos sensíveis \parencite{deAlmeidaSantos2025aiGovernance,wfd2023guidelinesAiParliaments}.

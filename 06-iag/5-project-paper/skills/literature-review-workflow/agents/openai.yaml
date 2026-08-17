@@ -1,0 +1,4 @@
+interface:
+  display_name: "Literature Review Workflow"
+  short_description: "Plan rigorous literature reviews."
+  default_prompt: "Use $literature-review-workflow to plan, execute, and document a rigorous literature review for this article."

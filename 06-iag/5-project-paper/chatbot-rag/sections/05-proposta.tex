@@ -1,0 +1,68 @@
+\section{Proposta de solução}
+
+\subsection{Enquadramento metodológico}
+
+O trabalho adota uma orientação construtiva e aplicada, compatível com a \textit{Design Science Research} em sistemas de informação. Nessa perspectiva, a contribuição científica pode decorrer da construção, demonstração e avaliação de um artefato destinado a enfrentar um problema relevante em seu contexto de uso \parencite{hevnerEtAl2004designScience}. No presente estudo, o artefato de design não se restringe à interface conversacional: ele compreende o \textit{pipeline} de preparação documental, a base vetorial enriquecida por metadados legislativos, o fluxo RAG configurado no Open WebUI, o \textit{prompt} operacional, os \textit{scripts} de ingestão e avaliação e os artefatos que permitem auditoria das execuções.
+
+O desenho do estudo também dialoga com a metodologia de \textit{Design Science Research} proposta por \textcite{peffersEtAl2007dsrm}. A identificação do problema aparece na caracterização do acesso qualificado a discursos parlamentares; os objetivos de solução são explicitados na introdução e nos critérios de sucesso; o desenho e desenvolvimento do artefato são descritos nesta seção; a demonstração e a avaliação são apresentadas nos experimentos; e a comunicação ocorre por meio deste manuscrito e dos artefatos públicos do projeto. Essa correspondência deve ser entendida como enquadramento metodológico proporcional a uma prova de conceito reprodutível, e não como validação institucional definitiva da solução.
+
+\subsection{Arquitetura do chatbot legislativo}
+
+A solução proposta concretiza-se em um \textit{chatbot} legislativo que utiliza a abordagem RAG para responder a consultas sobre discursos da 56\textordfeminine{} Legislatura do Senado Federal. A arquitetura compreende cinco componentes articulados: uma instância do Open WebUI, utilizada como interface de interação e orquestração do fluxo RAG; \textit{scripts} em Python empregados na extração, preparação, importação e avaliação do conteúdo documental; o ChromaDB, utilizado como banco vetorial acessado por HTTP; o Ollama, mantido como alternativa para integração com modelos locais; e a API da OpenAI, utilizada na configuração experimental validada para geração de \textit{embeddings} e respostas.
+
+A solução foi definida para operar localmente com uso de Docker e preparada para funcionar tanto com \textit{embeddings} locais, via Ollama, quanto com \textit{embeddings} providos por serviços externos, como a API da OpenAI. Na configuração experimental validada, adotou-se esta segunda opção. Essa flexibilidade amplia a adaptabilidade da solução a diferentes restrições institucionais de infraestrutura, custo ou política tecnológica.
+
+\subsection{Pipeline desenvolvido}
+
+O \textit{pipeline} do projeto inicia-se com a aquisição dos dados, baseada no \textit{dataset} utilizado no projeto\footnote{\href{https://huggingface.co/datasets/fabriciosantana/discursos-senado-legislatura-56}{\textit{Dataset} público no Hugging Face}.}, que reúne discursos da 56\textordfeminine{} Legislatura do Senado Federal. Esse \textit{dataset} foi construído em trabalho anterior a partir do portal de dados abertos do Senado. Na etapa de pré-processamento e seleção textual, priorizou-se o campo ``TextoDiscursoIntegral'', recorrendo-se aos campos ``Resumo'' e ``Indexacao'' quando necessário, de modo a privilegiar o conteúdo mais completo e informativo na construção da base.
+
+Em seguida, realizou-se o \textit{chunking}, com geração de segmentos enriquecidos por metadados relevantes\footnote{\href{https://github.com/fabriciosantana/mcdia/blob/main/05-iag/4-project/knowledge_openwebui/build_metadata.json}{Metadados públicos da base construída}.}. Esses metadados incluem data, autor, partido, unidade da federação, tipo de uso da palavra, resumo, indexação e URL do texto integral. Tal modelagem favorece não apenas a recuperação semântica, mas também a verificação posterior das respostas, uma vez que permite reconstituir a origem documental dos trechos utilizados.
+
+A partir desses segmentos, foram gerados lotes de ingestão para o Open WebUI em formato Markdown, além de um arquivo \texttt{jsonl} de referência\footnote{\href{https://github.com/fabriciosantana/mcdia/blob/main/05-iag/4-project/knowledge_openwebui/discursos_chunks.jsonl}{Arquivo público de chunks em JSONL}.}. A importação desses lotes foi automatizada por script responsável por realizar o upload, monitorar o processamento e viabilizar a inclusão dos conteúdos na \textit{knowledge base} do Open WebUI. Concluída a ingestão, procedeu-se à indexação vetorial, com geração e persistência dos \textit{embeddings} no ChromaDB.
+
+Na etapa de consulta, o fluxo RAG opera com recuperação vetorial, montagem do contexto recuperado, aplicação do \textit{prompt} operacional configurado no Open WebUI\footnote{\href{https://github.com/fabriciosantana/mcdia/blob/main/05-iag/4-project/eval/prompts/rag_prompt.md}{\textit{Prompt} operacional público}.} e geração da resposta pelo modelo, com parte desses passos internalizada na própria plataforma. Por fim, a avaliação foi apoiada por automação em Python, que consulta a \textit{knowledge base} via API e produz saídas nos formatos \texttt{.jsonl}, \texttt{.md} e \texttt{.csv}, viabilizando análise estruturada, avaliação por LLM como juiz, revisão qualitativa e comparação entre execuções.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  node distance=0.72cm,
+  box/.style={
+    draw,
+    rounded corners,
+    align=center,
+    minimum width=4.8cm,
+    minimum height=0.82cm,
+    font=\small
+  },
+  arrow/.style={-{Latex}, thick}
+]
+\node[box] (dataset) {Dataset de discursos\\56\textordfeminine{} Legislatura};
+\node[box, below=of dataset] (prep) {Preparação documental\\seleção textual, chunking e metadados};
+\node[box, below=of prep] (ingest) {Artefatos de ingestão\\Markdown em lotes e JSONL};
+\node[box, below=of ingest] (openwebui) {Open WebUI\\ingestão e orquestração RAG};
+\node[box, below=of openwebui] (vector) {Embeddings e ChromaDB\\indexação vetorial};
+\node[box, below=of vector] (query) {Consulta em linguagem natural\\recuperação, contexto e geração};
+\node[box, below=of query] (eval) {Avaliação\\LLM juiz, rubrica e análise manual};
+
+\draw[arrow] (dataset) -- (prep);
+\draw[arrow] (prep) -- (ingest);
+\draw[arrow] (ingest) -- (openwebui);
+\draw[arrow] (openwebui) -- (vector);
+\draw[arrow] (vector) -- (query);
+\draw[arrow] (query) -- (eval);
+\end{tikzpicture}
+\caption{Fluxo geral da prova de conceito RAG para consulta a discursos legislativos}
+\label{fig:pipeline-rag}
+\end{figure}
+
+\subsection{Principais contribuições}
+
+O projeto apresenta contribuições em dois níveis complementares: técnico-metodológico e institucional. No plano técnico-metodológico, o trabalho constrói uma prova de conceito reprodutível de \textit{chatbot} legislativo com RAG, adaptada a um acervo real do Senado Federal. A contribuição não consiste em propor um \textit{benchmark} definitivo para avaliação de RAG legislativo, mas em documentar um \textit{pipeline} completo, com preparação da base, enriquecimento de \textit{chunks} por metadados, ingestão, consulta, avaliação automatizada, análise qualitativa e discussão explícita dos limites observados. Nesse percurso, o estudo evidencia empiricamente a sensibilidade do desempenho à formulação das perguntas, ao controle de escopo, à escolha do LLM juiz e à configuração da recuperação semântica.
+
+No plano institucional, a solução oferece evidência inicial de viabilidade para aplicar técnicas contemporâneas de recuperação e geração ao contexto do Parlamento brasileiro, aproximando recomendações gerais da literatura sobre RAG às condições de um acervo legislativo público já explorado por estudos computacionais sobre discursos em plenário \parencite{blanco2025plenarioPalanqueEstudio,blanco2026letrasGraudas}. Desse modo, o trabalho contribui para a discussão sobre uso responsável de inteligência artificial em contextos parlamentares e sobre formas de manter as respostas vinculadas a documentos verificáveis.
+
+\subsection{Riscos e limitações}
+
+Os principais riscos e limitações identificados relacionam-se à sensibilidade do desempenho à estratégia de \textit{chunking}, à possibilidade de combinação excessiva de fontes em perguntas muito abertas, à dependência da qualidade dos documentos e metadados de origem, ao risco de respostas excessivamente amplas ou inferenciais e à variabilidade da avaliação por LLM como juiz. Além disso, em cenários de restrição de recursos computacionais locais, a solução pode depender operacionalmente de serviços externos, tanto para geração de \textit{embeddings} quanto para parte da geração de respostas.
+
+Esses riscos devem ser compreendidos em perspectiva ampliada. A literatura sobre RAG e governança pública de IA indica que sistemas apoiados em recuperação documental podem melhorar o controle sobre fontes e contexto, mas não eliminam automaticamente problemas de qualidade documental, conformidade, monitoramento ou avaliação \parencite{gao2023ragSurvey,deAlmeidaSantos2025aiGovernance,saadFalconEtAl2024ares}. Em outras palavras, o RAG reduz determinadas fragilidades do uso isolado de LLMs, mas não substitui processos institucionais de revisão.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Article Action Plan"
+  short_description: "Continue article improvement plans."
+  default_prompt: "Continue the article action plan: read the notes, choose the next appropriate action, implement it, and update progress markers."

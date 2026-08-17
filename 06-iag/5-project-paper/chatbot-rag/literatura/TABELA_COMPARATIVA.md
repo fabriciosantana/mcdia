@@ -1,0 +1,16 @@
+# Tabela comparativa de trabalhos relacionados
+
+Tabela de apoio para a issue #3. A versao compacta foi incorporada em `sections/03-fundamentacao.tex`.
+
+| Trabalho | Corpus/dados | Idioma/jurisdicao | Metodo/pipeline | Avaliacao | Artefatos | Diferenca em relacao ao artigo |
+|---|---|---|---|---|---|---|
+| Blanco (2025, 2026) | Discursos em plenario do Senado Federal | Portugues/Brasil | Analise computacional descritiva, leiturabilidade e tracos morfossintaticos | Analise quantitativa e textual | Textos para Discussao do Senado | Mesmo dominio empirico, mas sem sistema RAG ou interface conversacional. |
+| Martellote Viola et al. (2025) | Dados e informacoes legislativas brasileiras | Portugues/Brasil | IA e organizacao do conhecimento legislativo | Discussao aplicada | Artigo academico | Aproxima o dominio brasileiro, mas nao implementa nem avalia chatbot RAG sobre discursos. |
+| Khaliq et al. (2024) | Conteudo politico para fact-checking | Ingles/domino politico amplo | RAG multimodal para verificacao factual | Avaliacao de fact-checking | Artigo e artefatos do trabalho | Usa RAG com evidencias no dominio politico, mas o objetivo e fact-checking, nao consulta de acervo parlamentar. |
+| Chouhan e Gertz (2024) | Documentos legislativos da Uniao Europeia, energia | Ingles/Uniao Europeia | LexDrafter, RAG para redacao de definicoes legislativas | Demonstracao e avaliacao funcional | Codigo indicado pelos autores | Diretamente legislativo e RAG, mas voltado a redacao terminologica, nao a respostas auditaveis sobre discursos. |
+| Rogiers et al. (2024) | Politica nacional belga | Ingles/Belgica | Sumarizacao hierarquica e interface conversacional | Avaliacao do sistema de recuperacao/interface | Nao identificado na triagem | Proximo por interface conversacional parlamentar, mas difere em corpus, lingua e desenho de sumarizacao. |
+| Matoshi et al. (2025) | Negocios parlamentares suicos | Ingles/Suica | Topic modeling e RAG em projetos-piloto | Avaliacao de acesso digital parlamentar | Publicacao institucional/academica | Muito proximo em finalidade de acesso parlamentar, mas em outra jurisdicao e com foco em indexacao tematica. |
+| Garrison et al. (2024) | National Defense Authorization Act dos EUA | Ingles/EUA | RAG para sumarizacao e consulta de legislacao longa | Avaliacao de RAG em documento legislativo | Relatorio IDA publico | Forte para legislacao longa, mas nao trata discursos parlamentares nem Senado brasileiro. |
+| Colombo et al. (2025) | Legislacao italiana em grafo | Italiano/Italia | LegisSearch com grafo, embeddings, LLM e busca vetorial | Comparacao com BM25/TF-IDF e estudo de ablacao | Modulo Python mencionado no artigo | Muito forte metodologicamente, mas voltado a leis e relacoes normativas, nao discursos. |
+| Mosbach et al. (2025) | Debates parlamentares do Bundestag | Alemao/Alemanha | RAG hibrido com grafo de conhecimento e recuperacao vetorial | Demonstracao em preprint | Preprint publico | Proximo por debates parlamentares, mas com arquitetura hibrida e outro contexto institucional. |
+| Sarnikar (2025) | Textos legislativos longos | Ingles/legislacao geral | LLMs para consulta e compreensao de textos longos | Avaliacao em conferencia | Nao identificado na triagem | Dialoga com textos legislativos extensos, mas nao enfatiza discursos, metadados parlamentares ou reproducibilidade. |

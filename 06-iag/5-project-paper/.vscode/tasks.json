@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "LaTeX: Build chatbot-rag",
+      "type": "shell",
+      "command": "mkdir -p out && latexmk -pdf -interaction=nonstopmode -synctex=1 -outdir=out main.tex",
+      "options": {
+        "cwd": "${workspaceFolder}/chatbot-rag"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "LaTeX: Clean chatbot-rag",
+      "type": "shell",
+      "command": "latexmk -c -outdir=out main.tex",
+      "options": {
+        "cwd": "${workspaceFolder}/chatbot-rag"
+      }
+    }
+  ]
+}

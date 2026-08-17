@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chatbot RAG Article"
+  short_description: "Work on the chatbot RAG academic article."
+  default_prompt: "Work on the chatbot-rag article using its local AGENTS.md, notes, action plan, LaTeX sources, and bibliography."

@@ -1,0 +1,66 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{parskip}
+\usepackage{longtable}
+\usepackage{fvextra}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+\usepackage[
+  backend=biber,
+  style=abnt,
+  sorting=nty,
+  maxcitenames=2,
+  maxbibnames=99,
+  uniquelist=false,
+  repeatfields=false,
+  noslsn=true
+]{biblatex}
+\addbibresource{chatbot-rag.bib}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\emergencystretch=2em
+\setlist[enumerate]{leftmargin=2em}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=blue}
+
+\begin{document}
+
+\begin{center}
+{\large Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa}\par
+Mestrado em Administração Pública -- Ciência de Dados e Inteligência Artificial\par
+Turma: 2005.2\par
+Disciplina: Inteligência Artificial Generativa\par
+Professor: Marcelo Pita\par
+Alunos: Analécia Rorato; Fabricio Fernandes Santana; Paulo Ceser Siqueira Neves
+
+\vspace{1.5em}
+{\LARGE \textbf{Chatbot legislativo com RAG para respostas auditáveis sobre discursos da 56\textordfeminine{} Legislatura do Senado Federal}}\par
+
+\vspace{0.75em}
+Repositório: \url{https://github.com/fabriciosantana/mcdia/tree/main/05-iag/4-project}
+\end{center}
+
+\input{sections/01-resumo}
+\input{sections/02-introducao}
+\input{sections/03-fundamentacao}
+\input{sections/04-caracterizacao}
+\input{sections/05-proposta}
+\input{sections/06-experimentos}
+\input{sections/07-conclusao}
+\input{sections/08-declaracoes}
+\input{sections/08-referencias}
+% Apêndices mantidos no repositório, mas omitidos da versão atual do artigo.
+% Os artefatos correspondentes são referenciados por notas de rodapé no texto.
+% \input{sections/09-apendice-a}
+% \input{sections/10-apendice-b}
+% \input{sections/11-apendice-c}
+\end{document}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scientific Writing Clarity"
+  short_description: "Improve scientific prose clarity."
+  default_prompt: "Use $scientific-writing-clarity to revise this manuscript section for clarity, concision, precision, and academic rigor."

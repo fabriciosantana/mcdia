@@ -1,0 +1,4 @@
+interface:
+  display_name: "Academic LaTeX Review"
+  short_description: "Review and improve academic LaTeX manuscripts with rigor."
+  default_prompt: "Review this LaTeX article for academic rigor, clarity, consistency, citations, and publication readiness."

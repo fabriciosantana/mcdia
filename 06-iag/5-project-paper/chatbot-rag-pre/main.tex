@@ -1,0 +1,154 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{csquotes}
+\usepackage{titlesec}
+\usepackage[
+  backend=biber,
+  style=abnt,
+  sorting=nty,
+  maxcitenames=2,
+  maxbibnames=99,
+  uniquelist=false,
+  repeatfields=false,
+  noslsn=true
+]{biblatex}
+
+\addbibresource{references.bib}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\emergencystretch=2em
+\setlist[enumerate]{leftmargin=2.2em}
+\setlist[itemize]{leftmargin=2.2em}
+
+\titleformat{\section}{\normalfont\bfseries\uppercase}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries\uppercase}{\thesubsubsection.}{0.5em}{}
+
+\newcommand{\instituicao}{Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa}
+\newcommand{\programa}{Programa de Pós-Graduação em Administração Pública}
+\newcommand{\nivel}{Mestrado Profissional}
+\newcommand{\discente}{Fabricio Fernandes Santana}
+\newcommand{\titulo}{Técnicas de avaliação de sistemas RAG}
+\newcommand{\subtitulo}{aplicação empírica a discursos parlamentares do Senado Federal}
+\newcommand{\local}{Brasília/DF}
+\newcommand{\dataentrega}{Maio/2026}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+\begin{center}
+\instituicao\par
+\programa\par
+\nivel\par
+
+\vfill
+
+{\bfseries\MakeUppercase{\titulo}}\par
+\vspace{0.5cm}
+{\bfseries\subtitulo}\par
+
+\vfill
+
+\MakeUppercase{\discente}\par
+
+\vfill
+
+\local\par
+\dataentrega
+\end{center}
+\end{titlepage}
+
+\begin{titlepage}
+\begin{center}
+\MakeUppercase{\discente}\par
+
+\vfill
+
+{\bfseries\MakeUppercase{\titulo}}\par
+\vspace{0.5cm}
+{\bfseries\subtitulo}\par
+
+\vfill
+\end{center}
+
+\hfill
+\begin{minipage}{0.52\textwidth}
+Pré-projeto de dissertação apresentado como requisito final para avaliação na disciplina de Projeto de Pesquisa, do Mestrado Profissional em Administração Pública, do Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP), ministrada pelos Profs. Drs. Hélio Bomfim de Macêdo Filho e Marcelo Rodrigo de Souza Pita.
+\end{minipage}
+
+\vfill
+
+\begin{center}
+\local\par
+\dataentrega
+\end{center}
+\end{titlepage}
+
+\begin{titlepage}
+\begin{center}
+\MakeUppercase{\discente}\par
+
+\vspace{3cm}
+
+{\bfseries\MakeUppercase{\titulo}}\par
+\vspace{0.5cm}
+{\bfseries\subtitulo}\par
+
+\vspace{3cm}
+
+\textbf{BANCA EXAMINADORA:}\par
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent\rule{\textwidth}{0.4pt}\par
+Prof. Dr. Hélio Bomfim de Macêdo Filho\par
+Projeto de Pesquisa
+
+\vspace{1cm}
+
+\noindent\rule{\textwidth}{0.4pt}\par
+Prof. Dr. Marcelo Rodrigo de Souza Pita\par
+Projeto de Pesquisa
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
+
+\input{sections/01-introducao}
+\input{sections/02-referencial-teorico}
+\input{sections/03-hipoteses}
+\input{sections/04-metodologia}
+\input{sections/05-cronograma}
+\input{sections/06-referencias}
+
+\end{document}
