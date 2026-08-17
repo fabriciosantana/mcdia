@@ -210,3 +210,4 @@ _data/
 .vscode/settings.json
 05-iag/3-agentes/gmail-mcp-server/credentials.json
 05-iag/3-agentes/gmail-mcp-server/token.json
+/05-oec/Licitacoes_Consolidado.csv
