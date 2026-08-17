@@ -230,4 +230,6 @@ aux/
 *.snm
 *.synctex.gz
 *.toc
-
+*.csv
+*.json
+*.zip
