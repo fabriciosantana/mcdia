@@ -29,6 +29,13 @@ Cada janela é salva em `<diretorio-saida>/lotes/`. Ao executar novamente o
 mesmo comando, os lotes existentes são reutilizados. Use `--sobrescrever` para
 refazê-los. Consulte todas as opções com:
 
+Antes de gravar cada lote e o arquivo consolidado, o script aplica um esquema
+canônico compatível com o dataset do projeto anterior: mantém a ordem estável
+das colunas, inclui colunas opcionais ausentes e ordena campos de objetos
+aninhados. Colunas novas da API são preservadas, sem alterar a posição dos
+campos de resultado. As janelas `__janela_inicio` e `__janela_fim` registram os
+meses efetivamente consultados e, por isso, podem diferir de coletas antigas.
+
 O padrão é `--modo-lotes calendario`: cada consulta fica contida em um mês
 civil e aproveita corretamente meses de 28, 29, 30 ou 31 dias. Se o período
 começar ou terminar no meio do mês, somente o primeiro ou o último lote será

@@ -27,6 +27,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any, Iterable
 
+import numpy as np
 import pandas as pd
 import requests
 from requests.adapters import HTTPAdapter
@@ -38,6 +39,42 @@ MAX_DIAS_POR_LOTE = 29
 STATUS_FORCELIST = (429, 500, 502, 503, 504)
 COLUNAS_TEXTO = (
     "CodigoPronunciamento",
+    "TextoDiscursoIntegral",
+    "ok",
+    "status",
+    "msg",
+)
+
+# Ordem observada no dataset versionado usado pelo projeto anterior. Manter um
+# esquema explícito evita que colunas raras mudem de posição conforme o mês em
+# que aparecem pela primeira vez durante a consolidação dos lotes.
+COLUNAS_CANONICAS = (
+    "id",
+    "CodigoPronunciamento",
+    "Casa",
+    "Data",
+    "Resumo",
+    "Indexacao",
+    "TextoIntegral",
+    "TextoIntegralTxt",
+    "UrlTextoBinario",
+    "TipoAutor",
+    "FuncaoAutor",
+    "NomeAutor",
+    "CodigoParlamentar",
+    "Partido",
+    "UF",
+    "TipoUsoPalavra.Codigo",
+    "TipoUsoPalavra.Sigla",
+    "TipoUsoPalavra.Descricao",
+    "TipoUsoPalavra.IndicadorAtivo",
+    "Publicacoes.Publicacao",
+    "Apartes.Aparteante",
+    "__janela_inicio",
+    "__janela_fim",
+    "CargoAutor",
+    "OrgaoAutor",
+    "PaisAutor",
     "TextoDiscursoIntegral",
     "ok",
     "status",
@@ -214,6 +251,61 @@ def preparar_para_download(df_discursos: pd.DataFrame) -> pd.DataFrame:
     return df.loc[urls_validas].copy()
 
 
+def normalizar_objeto_aninhado(valor: Any) -> Any:
+    """Ordena chaves recursivamente para serialização Parquet determinística."""
+    if isinstance(valor, np.ndarray):
+        valor = valor.tolist()
+    if isinstance(valor, list):
+        return [normalizar_objeto_aninhado(item) for item in valor]
+    if isinstance(valor, dict):
+        return {
+            chave: normalizar_objeto_aninhado(valor[chave])
+            for chave in sorted(valor)
+        }
+    return valor
+
+
+def normalizar_estrutura(df: pd.DataFrame) -> pd.DataFrame:
+    """Aplica ordem canônica de colunas e de campos aninhados.
+
+    Colunas novas eventualmente introduzidas pela API são preservadas entre os
+    metadados canônicos e os campos de resultado, evitando perda silenciosa.
+    """
+    resultado = df.copy()
+
+    for coluna in COLUNAS_CANONICAS:
+        if coluna not in resultado.columns:
+            resultado[coluna] = pd.NA
+
+    for coluna in ("Publicacoes.Publicacao",):
+        resultado[coluna] = resultado[coluna].map(normalizar_objeto_aninhado)
+
+    extras = [
+        coluna for coluna in resultado.columns if coluna not in COLUNAS_CANONICAS
+    ]
+    campos_resultado = list(COLUNAS_TEXTO[1:])
+    prefixo = [
+        coluna for coluna in COLUNAS_CANONICAS if coluna not in campos_resultado
+    ]
+    ordem = prefixo + extras + campos_resultado
+    return resultado.loc[:, ordem]
+
+
+def validar_estrutura_canonica(df: pd.DataFrame) -> None:
+    """Interrompe a gravação se o esquema mínimo estiver fora do padrão."""
+    ausentes = [coluna for coluna in COLUNAS_CANONICAS if coluna not in df.columns]
+    if ausentes:
+        raise ValueError(f"colunas canônicas ausentes: {ausentes}")
+
+    posicoes = {coluna: df.columns.get_loc(coluna) for coluna in COLUNAS_CANONICAS}
+    for anterior, posterior in zip(COLUNAS_CANONICAS, COLUNAS_CANONICAS[1:]):
+        if posicoes[anterior] >= posicoes[posterior]:
+            raise ValueError(
+                "ordem de colunas incompatível com o esquema canônico: "
+                f"{anterior} deve anteceder {posterior}"
+            )
+
+
 def recuperar_texto(
     sessao: requests.Session,
     codigo: str,
@@ -326,15 +418,16 @@ def processar_lote(
     """Processa uma janela ou reutiliza seu parquet intermediário."""
     if destino.exists() and not args.sobrescrever:
         LOG.info("Reutilizando lote existente: %s", destino)
-        return pd.read_parquet(destino)
+        return normalizar_estrutura(pd.read_parquet(destino))
 
     discursos = recuperar_lista_discursos(
         sessao, inicio, fim, args.timeout_lista
     )
     LOG.info("Metadados recuperados no lote: %d", len(discursos))
     if discursos.empty:
-        discursos.to_parquet(destino, index=False, compression="zstd")
-        return discursos
+        vazio = normalizar_estrutura(discursos)
+        vazio.to_parquet(destino, index=False, compression="zstd")
+        return vazio
 
     para_download = preparar_para_download(discursos)
     LOG.info("Discursos com URL de texto integral: %d", len(para_download))
@@ -348,6 +441,8 @@ def processar_lote(
 
     final = discursos.merge(textos, on="CodigoPronunciamento", how="left")
     final["ok"] = final["ok"].fillna(False).astype(bool)
+    final = normalizar_estrutura(final)
+    validar_estrutura_canonica(final)
     final.to_parquet(destino, index=False, engine="pyarrow", compression="zstd")
     LOG.info(
         "Lote salvo: %s (%d discursos; %d textos obtidos)",
@@ -490,6 +585,9 @@ def executar(args: argparse.Namespace) -> Path:
         consolidado = consolidado.drop_duplicates(
             subset=["CodigoPronunciamento"], keep="last"
         )
+
+    consolidado = normalizar_estrutura(consolidado)
+    validar_estrutura_canonica(consolidado)
 
     nome = f"discursos_{args.data_inicio.isoformat()}_{args.data_fim.isoformat()}"
     parquet = saida / f"{nome}.parquet"
