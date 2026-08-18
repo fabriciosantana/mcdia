@@ -1,17 +1,15 @@
-# Execução e ambiente de notebooks
-jupyterlab>=4.2,<5
-ipykernel>=6.29,<7
-
 # Aquisição e manipulação dos dados
-huggingface-hub>=0.27,<2
-pandas>=2.2,<3
-numpy>=1.26,<2.5
-pyarrow>=17,<22
+huggingface-hub
+pandas
+numpy
+pyarrow
 
 # Estatística e visualização
-scipy>=1.13,<2
-matplotlib>=3.9,<4
-seaborn>=0.13,<1
+scipy
+matplotlib
+seaborn
 
 # Análise textual orientada a RAG
-scikit-learn>=1.5,<2
+scikit-learn
+nltk
+datasketch

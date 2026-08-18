@@ -16,6 +16,7 @@ python -m pip install -r 13-dissertacao/notebooks/requirements.txt
 | Ordem | Notebook | Finalidade | Situação |
 |---:|---|---|---|
 | 01 | `01-analisar-base-discursos-rag.ipynb` | Auditoria completa, análise exploratória e avaliação da prontidão do corpus para uma solução RAG | Criado |
+| 02 | `02-avaliar-recuperacao-rag.ipynb` | Construção do corpus indexado e avaliação comparativa da recuperação lexical, vetorial e híbrida | Planejado |
 
 ## Convenções
 
@@ -23,4 +24,3 @@ python -m pip install -r 13-dissertacao/notebooks/requirements.txt
 - Um notebook pode baixar dados públicos quando o arquivo necessário não estiver disponível localmente.
 - Tabelas ou figuras destinadas à dissertação devem ser exportadas apenas para diretórios próprios, sem sobrescrever os dados de origem.
 - Novos notebooks devem receber prefixos numéricos sequenciais e ser registrados neste catálogo.
-
