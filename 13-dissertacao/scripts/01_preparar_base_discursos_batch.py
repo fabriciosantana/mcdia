@@ -16,6 +16,7 @@ Lotes existentes são reutilizados por padrão, permitindo retomar execuções.
 from __future__ import annotations
 
 import argparse
+import calendar
 import csv
 import datetime as dt
 import logging
@@ -33,6 +34,7 @@ from urllib3.util.retry import Retry
 
 
 BASE_URL = "https://legis.senado.leg.br/dadosabertos/"
+MAX_DIAS_POR_LOTE = 29
 STATUS_FORCELIST = (429, 500, 502, 503, 504)
 COLUNAS_TEXTO = (
     "CodigoPronunciamento",
@@ -59,8 +61,11 @@ def montar_intervalos(
     inicio: dt.date, fim: dt.date, dias_por_lote: int
 ) -> list[tuple[dt.date, dt.date]]:
     """Gera janelas inclusivas e contíguas com até ``dias_por_lote`` dias."""
-    if dias_por_lote < 1 or dias_por_lote > 31:
-        raise ValueError("dias_por_lote deve estar entre 1 e 31")
+    if dias_por_lote < 1 or dias_por_lote > MAX_DIAS_POR_LOTE:
+        raise ValueError(
+            "dias_por_lote deve estar entre 1 e 29; a API do Senado limita "
+            "cada consulta a, no máximo, um mês de calendário"
+        )
     if fim < inicio:
         raise ValueError("a data final deve ser igual ou posterior à inicial")
 
@@ -71,6 +76,33 @@ def montar_intervalos(
         intervalos.append((atual, fim_lote))
         atual = fim_lote + dt.timedelta(days=1)
     return intervalos
+
+
+def montar_intervalos_calendario(
+    inicio: dt.date, fim: dt.date
+) -> list[tuple[dt.date, dt.date]]:
+    """Gera janelas contidas em cada mês civil do período solicitado."""
+    if fim < inicio:
+        raise ValueError("a data final deve ser igual ou posterior à inicial")
+
+    intervalos: list[tuple[dt.date, dt.date]] = []
+    atual = inicio
+    while atual <= fim:
+        ultimo_dia = calendar.monthrange(atual.year, atual.month)[1]
+        fim_do_mes = dt.date(atual.year, atual.month, ultimo_dia)
+        fim_lote = min(fim_do_mes, fim)
+        intervalos.append((atual, fim_lote))
+        atual = fim_lote + dt.timedelta(days=1)
+    return intervalos
+
+
+def obter_intervalos(args: argparse.Namespace) -> list[tuple[dt.date, dt.date]]:
+    """Seleciona a estratégia de particionamento solicitada."""
+    if args.modo_lotes == "calendario":
+        return montar_intervalos_calendario(args.data_inicio, args.data_fim)
+    return montar_intervalos(
+        args.data_inicio, args.data_fim, args.dias_por_lote
+    )
 
 
 def criar_sessao(
@@ -354,10 +386,22 @@ def criar_parser() -> argparse.ArgumentParser:
         "--diretorio-saida", type=Path, default=Path("_data")
     )
     parser.add_argument(
+        "--modo-lotes",
+        choices=("calendario", "dias"),
+        default="calendario",
+        help=(
+            "estratégia: um mês civil por lote (calendario, padrão) "
+            "ou quantidade fixa de dias (dias)"
+        ),
+    )
+    parser.add_argument(
         "--dias-por-lote",
         type=int,
-        default=31,
-        help="dias por consulta à API (1 a 31; padrão: 31)",
+        default=MAX_DIAS_POR_LOTE,
+        help=(
+            "dias por consulta quando --modo-lotes=dias "
+            "(1 a 29; padrão seguro: 29)"
+        ),
     )
     parser.add_argument(
         "--tamanho-lote-textos",
@@ -398,7 +442,7 @@ def criar_parser() -> argparse.ArgumentParser:
 
 
 def validar_argumentos(args: argparse.Namespace) -> None:
-    montar_intervalos(args.data_inicio, args.data_fim, args.dias_por_lote)
+    obter_intervalos(args)
     if args.tamanho_lote_textos < 1:
         raise ValueError("tamanho_lote_textos deve ser positivo")
     if args.trabalhadores < 1:
@@ -415,10 +459,12 @@ def executar(args: argparse.Namespace) -> Path:
     lotes_dir = saida / "lotes"
     lotes_dir.mkdir(parents=True, exist_ok=True)
 
-    intervalos = montar_intervalos(
-        args.data_inicio, args.data_fim, args.dias_por_lote
+    intervalos = obter_intervalos(args)
+    LOG.info(
+        "Período dividido em %d lote(s), no modo %s",
+        len(intervalos),
+        args.modo_lotes,
     )
-    LOG.info("Período dividido em %d lote(s)", len(intervalos))
     sessao = criar_sessao(args.tentativas, args.backoff, args.trabalhadores)
     dataframes: list[pd.DataFrame] = []
 
