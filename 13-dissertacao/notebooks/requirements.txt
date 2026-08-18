@@ -13,3 +13,4 @@ seaborn
 scikit-learn
 nltk
 datasketch
+stopwordsiso
