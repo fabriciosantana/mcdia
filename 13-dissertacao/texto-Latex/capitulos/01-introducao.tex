@@ -12,7 +12,38 @@ Entretanto, o uso de RAG não elimina o desafio relacionado à qualidade e à ve
 \caption{Componentes de um \textit{pipeline} RAG relevantes para a avaliação de recuperação, geração e verificabilidade}
 \label{fig:rag-pipeline}
 \centering
-\includegraphics[width=0.88\textwidth]{figuras/rag-pipeline.png}
+\begin{tikzpicture}[
+  node distance=5mm and 7mm,
+  componente/.style={draw, rounded corners, align=center, minimum height=9mm, text width=0.29\textwidth, font=\small},
+  avaliacao/.style={draw, dashed, rounded corners, align=center, minimum height=8mm, text width=0.25\textwidth, font=\small},
+  fluxo/.style={-{Latex[length=2mm]}, thick},
+  afericao/.style={-{Latex[length=2mm]}, dashed}
+]
+  \node[componente] (acervo) {Acervo documental\\discursos e metadados};
+  \node[componente, below=of acervo] (preparo) {Preparação dos dados\\limpeza, segmentação e trechos};
+  \node[componente, below=of preparo] (indice) {Índice vetorial\\\textit{embeddings} e metadados};
+  \node[componente, right=of indice] (consulta) {Consulta do usuário\\pergunta em linguagem natural};
+  \node[componente, below=of indice, xshift=.18\textwidth] (recuperacao) {Recuperação\\busca, filtros e reranqueamento};
+  \node[componente, below=of recuperacao] (contexto) {Contexto recuperado\\trechos e fontes};
+  \node[componente, below=of contexto] (geracao) {Geração da resposta\\LLM e \textit{prompt}};
+  \node[componente, below=of geracao] (resposta) {Resposta gerada\\fontes, limites e incerteza};
+
+  \node[avaliacao, left=of recuperacao] (avalrec) {Avaliação da recuperação\\pertinência e ranqueamento};
+  \node[avaliacao, right=of geracao] (avalger) {Avaliação da geração\\correção e aderência};
+  \node[avaliacao, right=of resposta] (avalver) {Avaliação da verificabilidade\\afirmações e fontes};
+
+  \draw[fluxo] (acervo) -- (preparo);
+  \draw[fluxo] (preparo) -- (indice);
+  \draw[fluxo] (indice) -- (recuperacao);
+  \draw[fluxo] (consulta) -- (recuperacao);
+  \draw[fluxo] (recuperacao) -- (contexto);
+  \draw[fluxo] (contexto) -- (geracao);
+  \draw[fluxo] (consulta.south) |- (geracao.east);
+  \draw[fluxo] (geracao) -- (resposta);
+  \draw[afericao] (recuperacao) -- (avalrec);
+  \draw[afericao] (geracao) -- (avalger);
+  \draw[afericao] (resposta) -- (avalver);
+\end{tikzpicture}
 \fonte{Elaborada pelo autor (2026).}
 \end{figure}
 
@@ -24,15 +55,15 @@ Esse problema avaliativo é especialmente relevante para organizações da admin
 
 No Poder Legislativo, essas exigências assumem contornos próprios. Discursos parlamentares, debates, proposições, pareceres e demais documentos públicos registram posições políticas, justificativas, argumentos técnicos e trajetórias institucionais que interessam a parlamentares, equipes técnicas, pesquisadores, jornalistas, organizações da sociedade civil e cidadãos \parencite{geunis2023parliamentaryMonitoring,skubicFiser2024discourseReview}. Embora a publicidade desses documentos seja condição necessária para a transparência, ela não garante, por si só, acesso substantivo à informação \parencite{bandeiraBernardes2016information}. Grandes acervos legislativos combinam volume elevado, diversidade temática, dispersão temporal, variação terminológica, autoria múltipla e dependência de metadados, características que desafiam métodos tradicionais de recuperação da informação e também tensionam sistemas RAG \parencite{manningEtAl2008informationRetrieval,skubicFiser2024discourseReview,martelloteViola2025organizacaoConhecimento}.
 
-No Senado Federal brasileiro, os pronunciamentos em plenário constituem um corpus especialmente pertinente para investigar esse problema. Estudos do Núcleo de Estudos e Pesquisas da Consultoria Legislativa indicam que esses registros combinam grande volume documental, variação de extensão, diversidade temática, interatividade e complexidade textual, além de refletirem diferentes usos políticos e institucionais do discurso parlamentar \parencite{blanco2025plenarioPalanqueEstudio,blanco2026letrasGraudas}. Essas características tornam o corpus adequado para uma investigação aplicada sobre avaliação de RAG, pois exigem recuperar evidências em acervo heterogêneo, preservar autoria e contexto, lidar com perguntas de complexidade variável e reconhecer situações em que a informação disponível não sustenta resposta conclusiva.
+No Senado Federal brasileiro, os pronunciamentos em plenário constituem um \textit{corpus} especialmente pertinente para investigar esse problema. Estudos do Núcleo de Estudos e Pesquisas da Consultoria Legislativa indicam que esses registros combinam grande volume documental, variação de extensão, diversidade temática, interatividade e complexidade textual, além de refletirem diferentes usos políticos e institucionais do discurso parlamentar \parencite{blanco2025plenarioPalanqueEstudio,blanco2026letrasGraudas}. Essas características tornam o \textit{corpus} adequado para uma investigação aplicada sobre avaliação de RAG, pois exigem recuperar evidências em acervo heterogêneo, preservar autoria e contexto, lidar com perguntas de complexidade variável e reconhecer situações em que a informação disponível não sustenta resposta conclusiva.
 
-O tema desta pesquisa, portanto, é o estudo e a aplicação de técnicas de avaliação de sistemas RAG em um sistema voltado à consulta de discursos da 56\textordfeminine{} Legislatura do Senado Federal, recorte escolhido por oferecer delimitação temporal controlada, volume documental expressivo --- aproximadamente 15 mil discursos --- e viabilidade de tratamento empírico do corpus. Esse recorte permite examinar, em condições observáveis, como diferentes técnicas de avaliação podem capturar dimensões complementares da qualidade das respostas e das evidências recuperadas, tais como pertinência das evidências, fidelidade ao contexto recuperado, precisão de autoria, utilidade da resposta, tratamento da insuficiência documental \parencite{esEtAl2023ragas,saadFalconEtAl2024ares,pipitoneAlami2024legalbenchRag}.
+O tema desta pesquisa, portanto, é o estudo e a aplicação de técnicas de avaliação de sistemas RAG em um sistema voltado à consulta de discursos da 56\textordfeminine{} Legislatura do Senado Federal, recorte escolhido por oferecer delimitação temporal controlada, volume documental expressivo --- aproximadamente 15 mil discursos --- e viabilidade de tratamento empírico do \textit{corpus}. Esse recorte permite examinar, em condições observáveis, como diferentes técnicas de avaliação podem capturar dimensões complementares da qualidade das respostas e das evidências recuperadas, tais como pertinência das evidências, fidelidade ao contexto recuperado, precisão de autoria, utilidade da resposta e tratamento da insuficiência documental \parencite{esEtAl2023ragas,saadFalconEtAl2024ares,pipitoneAlami2024legalbenchRag}.
 
 \subsection{Apresentação da problemática e da pergunta de pesquisa}
 
 O problema de pesquisa decorre da lacuna quanto a um protocolo articulado para organizar e aplicar técnicas de avaliação de sistemas RAG em domínios institucionais específicos. Essa lacuna será examinada empiricamente a partir de um sistema RAG voltado à consulta de discursos da 56\textordfeminine{} Legislatura do Senado Federal, utilizado como caso empírico para analisar recuperação documental, geração de respostas e verificabilidade das fontes.
 
-Órgãos públicos acumulam acervos de alto valor institucional, mas a adoção de sistemas generativos para explorá-los exige critérios capazes de indicar quando uma resposta é útil, verificável e suficientemente ancorada nas fontes. A literatura sobre RAG já propõe métricas, benchmarks, rubricas, avaliações humanas e estratégias baseadas no paradigma \textit{LLM-as-a-judge}, mas ainda há desafios para organizar essas técnicas em um protocolo aplicável a contextos institucionais específicos, nos quais recuperação, geração e verificabilidade das fontes precisam ser analisadas em conjunto \parencite{gao2023ragSurvey,esEtAl2023ragas,saadFalconEtAl2024ares,liuEtAl2025judgeRag}.
+Órgãos públicos acumulam acervos de alto valor institucional, mas a adoção de sistemas generativos para explorá-los exige critérios capazes de indicar quando uma resposta é útil, verificável e suficientemente ancorada nas fontes. A literatura sobre RAG já propõe métricas, \textit{benchmarks}, rubricas, avaliações humanas e estratégias baseadas no paradigma \textit{LLM-as-a-judge}, mas ainda há desafios para organizar essas técnicas em um protocolo aplicável a contextos institucionais específicos, nos quais recuperação, geração e verificabilidade das fontes precisam ser analisadas em conjunto \parencite{gao2023ragSurvey,esEtAl2023ragas,saadFalconEtAl2024ares,liuEtAl2025judgeRag}.
 
 Em contextos jurídico-legislativos, estudos já exploram RAG, LLMs e recuperação semântica em legislação, parlamentos e política, incluindo \textit{fact-checking} político e redação legislativa \parencite{khaliq2024ragar,chouhanGertz2024lexdrafter}, consulta a legislação extensa e interfaces conversacionais \parencite{garrisonEtAl2024talkNdaa,rogiersEtAl2024kamerraad,matoshiEtAl2025parliamentRag}, além de sistemas híbridos com grafos de conhecimento \parencite{colomboEtAl2025legisSearch,mosbachEtAl2025worldAvatarParliament}. No contexto brasileiro, há estudos sobre discursos parlamentares e organização do conhecimento legislativo \parencite{blanco2025plenarioPalanqueEstudio,blanco2026letrasGraudas,martelloteViola2025organizacaoConhecimento}. Ainda assim, permanece lacuna quanto à organização de técnicas de avaliação de RAG, de forma articulada, para analisar recuperação documental, geração de respostas e verificabilidade das fontes em acervos legislativos brasileiros.
 
@@ -40,7 +71,7 @@ Diante disso, formula-se a seguinte pergunta de pesquisa: \textbf{como técnicas
 
 A justificativa prática da pesquisa está na necessidade de avaliar, com critérios explícitos, sistemas generativos aplicados a acervos documentais de interesse público \parencite{wfd2023guidelinesAiParliaments,ipu2024aiParliaments,deAlmeidaSantos2025aiGovernance}. Sistemas RAG podem ampliar a mediação entre usuários e documentos legislativos, mas seu uso institucional exige critérios capazes de indicar quando a resposta está adequadamente ancorada em fontes, quando extrapola o contexto recuperado e quando deve explicitar incerteza ou insuficiência documental. Assim, a contribuição esperada não está em defender a adoção automática de sistemas generativos, mas em oferecer uma forma mais criteriosa de avaliá-los antes de qualquer uso ampliado.
 
-No plano científico, a pesquisa se justifica porque a avaliação de RAG ainda é um campo em consolidação, especialmente quando transposta de \textit{benchmarks} genéricos para domínios públicos específicos. Métricas de recuperação, rubricas de geração, avaliação humana e avaliações baseadas no paradigma \textit{LLM-as-a-judge} medem dimensões complementares, mas nenhuma delas, isoladamente, resolve o problema de verificar qualidade, rastreabilidade e verificabilidade das fontes. Ao tratar o protocolo avaliativo como artefato metodológico aplicado a um sistema RAG em contexto institucional, a dissertação pretende organizar essas técnicas e aplicá-las a um corpus legislativo brasileiro \parencite{hevnerEtAl2004designScience,peffersEtAl2007dsrm}, distinguindo dimensões que, na prática, tendem a aparecer sobrepostas: recuperação documental, geração de respostas, julgamento automatizado, validação humana e verificabilidade das fontes \parencite{esEtAl2023ragas,saadFalconEtAl2024ares,pipitoneAlami2024legalbenchRag}.
+No plano científico, a pesquisa se justifica porque a avaliação de RAG ainda é um campo em consolidação, especialmente quando transposta de \textit{benchmarks} genéricos para domínios públicos específicos. Métricas de recuperação, rubricas de geração, avaliação humana e avaliações baseadas no paradigma \textit{LLM-as-a-judge} medem dimensões complementares, mas nenhuma delas, isoladamente, resolve o problema de verificar qualidade, rastreabilidade e verificabilidade das fontes. A organização e a aplicação do protocolo produzem um artefato metodológico destinado a enfrentar um problema institucional relevante e, por isso, aproximam o desenho da pesquisa da \textit{Design Science Research} \parencite{hevnerEtAl2004designScience,peffersEtAl2007dsrm}. Nesse enquadramento, a dissertação pretende organizar as técnicas avaliativas e aplicá-las a um \textit{corpus} legislativo brasileiro, distinguindo dimensões que, na prática, tendem a aparecer sobrepostas: recuperação documental, geração de respostas, julgamento automatizado, validação humana e verificabilidade das fontes \parencite{esEtAl2023ragas,saadFalconEtAl2024ares,pipitoneAlami2024legalbenchRag}.
 
 \subsection{Enunciação dos objetivos}
 
@@ -51,12 +82,12 @@ Organizar técnicas de avaliação de sistemas RAG em um protocolo articulado e 
 \subsubsection{Específicos}
 
 \begin{enumerate}
-  \item sistematizar a literatura sobre técnicas de avaliação de RAG, incluindo métricas de recuperação, avaliação de geração, benchmarks, rubricas, avaliação humana e avaliações baseadas no paradigma \textit{LLM-as-a-judge};
-  \item selecionar, a partir da sistematização da literatura, técnicas de avaliação de RAG a serem aplicadas ao caso empírico, contemplando recuperação documental, geração de respostas e verificabilidade das fontes;
-  \item caracterizar o acervo de discursos parlamentares da 56\textordfeminine{} Legislatura do Senado Federal como caso empírico da pesquisa;
-  \item construir uma bateria de perguntas de teste, com categorias, respostas esperadas e evidências documentais de referência;
-  \item aplicar ao caso empírico o protocolo de avaliação organizado a partir das técnicas selecionadas;
-  \item analisar a complementaridade e os limites das técnicas avaliativas quando aplicadas a um acervo legislativo real, com foco na recuperação documental, na geração de respostas e na verificabilidade das fontes.
+  \item Sistematizar a literatura sobre técnicas de avaliação de RAG, incluindo métricas de recuperação, avaliação de geração, \textit{benchmarks}, rubricas, avaliação humana e avaliações baseadas no paradigma \textit{LLM-as-a-judge};
+  \item Selecionar, a partir da sistematização da literatura, técnicas de avaliação de RAG a serem aplicadas ao caso empírico, contemplando recuperação documental, geração de respostas e verificabilidade das fontes;
+  \item Caracterizar o acervo de discursos parlamentares da 56\textordfeminine{} Legislatura do Senado Federal como caso empírico da pesquisa;
+  \item Construir uma bateria de perguntas de teste, com categorias, respostas esperadas e evidências documentais de referência;
+  \item Aplicar ao caso empírico o protocolo de avaliação organizado a partir das técnicas selecionadas;
+  \item Analisar a complementaridade e os limites das técnicas avaliativas quando aplicadas a um acervo legislativo real, com foco na recuperação documental, na geração de respostas e na verificabilidade das fontes.
 \end{enumerate}
 
-Em conjunto, esses objetivos conectam três níveis do estudo: a sistematização conceitual das técnicas de avaliação, a organização dessas técnicas em protocolo empírico e a análise dos resultados no contexto do corpus legislativo. Essa sequência busca garantir que a pergunta de pesquisa seja respondida por evidências observáveis, e não apenas por revisão bibliográfica ou demonstração técnica isolada.
+Em conjunto, esses objetivos conectam três níveis do estudo: a sistematização conceitual das técnicas de avaliação, a organização dessas técnicas em protocolo empírico e a análise dos resultados no contexto do \textit{corpus} legislativo. Essa sequência busca garantir que a pergunta de pesquisa seja respondida por evidências observáveis, e não apenas por revisão bibliográfica ou demonstração técnica isolada.
