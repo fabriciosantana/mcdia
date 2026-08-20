@@ -1309,3 +1309,322 @@ atividade observacional, as hipóteses substituem a aleatorização; no
 experimento, a aleatorização fortalece a validade interna, mas não resolve
 automaticamente não conformidade, perdas, interferência, ética ou
 generalização.
+
+# Parte III — Atividade 3: Bolsa Família e evasão escolar
+
+## 1. Pergunta, população e estimando
+
+A terceira atividade retorna à AIBF II e estende a análise de pareamento e
+escore de propensão feita em aula. O desfecho da aula era `p_attend7`, a
+proporção de dias frequentados na última semana. A entrega usa `dropout`, que
+vale 1 para abandono escolar e 0 para permanência entre crianças e adolescentes
+que estudavam no ano anterior.
+
+Os elementos da pergunta são:
+
+| Elemento | Definição |
+|---|---|
+| Unidade | pessoa de 6 a 17 anos |
+| Tratamento | viver em domicílio com ao menos um titular do cartão do PBF |
+| Controle | C1: domicílio cadastrado, mas não beneficiário |
+| Desfecho | evasão escolar, `dropout` |
+| População analítica | pessoas com `dropout` observado e covariáveis completas |
+| Estimando | ATT entre beneficiários com suporte comum |
+
+Formalmente:
+
+\[
+ATT=E[Y(1)-Y(0)\mid D=1].
+\]
+
+O ATT responde o que teria acontecido com os beneficiários se, contrariando o
+observado, seus domicílios não tivessem recebido o programa. Como `Y=1` é um
+resultado ruim, ATT negativo favorece o programa. O efeito é uma **diferença de
+risco**: `-0,011` corresponde a menos 1,1 ponto percentual, não a menos 1,1% de
+risco relativo.
+
+## 2. Por que usar somente o controle C1
+
+A AIBF II distingue beneficiários, controles cadastrados (C1) e controles não
+cadastrados (C2). Inscrição no Cadastro Único pode refletir informação,
+motivação, acesso a serviços e capacidade de lidar com a burocracia. Comparar
+beneficiários com C2 acrescentaria esse mecanismo de seleção ao mecanismo de
+concessão do benefício.
+
+Beneficiários e C1 atravessaram ao menos o filtro comum do cadastro. Isso não
+garante ignorabilidade, mas torna a comparação substantivamente mais plausível.
+No código, a filtragem por `estrato_amostral` deve ocorrer explicitamente; não
+basta classificar toda observação sem titular como controle.
+
+## 3. Por que evasão e qual é a população implícita
+
+`p_attend7` é muito concentrada em 1 e oferece pouca variação. Evasão é um
+desfecho de política claro, binário e diretamente interpretável. Entretanto,
+`dropout` só existe para quem estudava no ano anterior. A conclusão, portanto,
+não vale para toda criança pobre, mas para beneficiários que pertencem a essa
+subpopulação e têm dados completos.
+
+Essa restrição também pode causar **viés de seleção**. Se o tratamento anterior
+afetou a chance de estudar no ano anterior, condicionar nessa condição seleciona
+uma variável potencialmente pós-tratamento. A base transversal usada na aula
+não permite resolver isso. Na defesa, essa limitação deve ser mencionada antes
+de generalizar o resultado.
+
+## 4. Conjunto de ajuste e temporalidade
+
+O notebook usa as mesmas sete covariáveis da aula:
+
+- idade;
+- sexo;
+- escolaridade do chefe do domicílio;
+- número de moradores;
+- número de cômodos;
+- número de dormitórios;
+- água canalizada.
+
+Elas representam composição demográfica e vulnerabilidade socioeconômica, que
+podem influenciar tanto a concessão do benefício quanto a evasão. Não entram
+frequência recente, faltas, série atual, renda contemporânea ou mecanismos como
+merenda: variáveis posteriores ao tratamento podem ser mediadores, colisores ou
+descendentes e mudar o efeito total pretendido.
+
+O princípio é escolher covariáveis pelo papel causal e pela precedência
+temporal, não por correlação com `Y`, significância estatística ou ganho de AUC.
+A limitação é que o extrato não mede completamente renda prévia, qualidade e
+distância da escola, motivação familiar, oferta local e choques domésticos.
+
+## 5. Ignorabilidade, positividade, consistência e interferência
+
+A hipótese central é:
+
+\[
+(Y(0),Y(1))\perp D\mid X.
+\]
+
+Ela afirma que, dentro de perfis iguais de `X`, beneficiários e controles C1
+seriam permutáveis. É uma hipótese sobre resultados potenciais não observados e
+não pode ser testada pelo love plot. Balancear `X` mostra que o método executou
+o ajuste pretendido; não mostra que `X` contém todos os confundidores.
+
+Também são necessárias:
+
+- **positividade:** todo perfil tratado relevante possui chance positiva de
+  aparecer como controle;
+- **consistência:** `D=1` representa uma versão suficientemente definida do
+  tratamento, embora valor e duração do benefício possam variar;
+- **não interferência:** o benefício de um domicílio não altera os resultados
+  potenciais de outro, hipótese ameaçada por redes familiares ou efeitos locais;
+- **mensuração adequada:** tratamento, abandono e covariáveis precisam
+  representar os conceitos pretendidos.
+
+## 6. Escore de propensão
+
+O escore é:
+
+\[
+e(X)=P(D=1\mid X).
+\]
+
+Sob ignorabilidade dado `X`, unidades com o mesmo escore têm, em expectativa,
+a mesma distribuição de `X` nos dois grupos. O escore reduz um vetor de
+covariáveis a uma dimensão, mas não cria informação onde não há suporte e não
+corrige confundidores ausentes.
+
+Não existe um escore intrínseco da família. Ele depende da definição de
+tratamento, amostra, rodada, controles e covariáveis. Nesta entrega são
+comparados:
+
+1. **regressão logística**, com relação linear aditiva no logito;
+2. **random forest calibrado**, capaz de representar interações e não
+   linearidades.
+
+Ambos produzem previsões out-of-fold em cinco partições. O random forest usa
+folhas mínimas para regularização e calibração sigmoide interna. Separar treino
+e previsão reduz o otimismo do ajuste. Calibração importa porque IPW interpreta
+o escore como probabilidade, não apenas como ranking.
+
+### Por que AUC não escolhe o melhor escore
+
+AUC mede discriminação do tratamento. Um valor muito alto pode significar que
+tratados e controles são fáceis de separar e, portanto, que há pouca
+sobreposição. O objetivo causal é produzir balanceamento depois do ajuste. Na
+atividade, o random forest tem AUC um pouco maior, mas seu IPW deixa uma
+covariável acima do limiar de SMD; a logística é mais convincente para o uso
+causal.
+
+## 7. Pareamento para ATT
+
+Cada tratado é associado ao controle de escore mais próximo. A busca parte dos
+tratados porque o contrafactual desejado é `Y(0)` para quem recebeu o programa.
+Parear no sentido contrário estimaria o ATU.
+
+A entrega usa um vizinho e reposição. Reposição permite que um bom controle
+represente mais de um tratado, importante quando há menos controles que
+beneficiários. O ATT é:
+
+\[
+\widehat{ATT}_{match}=\frac{1}{N_1}\sum_{i:D_i=1}
+\{Y_i-Y_{j(i)}\}.
+\]
+
+O peso de cada controle no diagnóstico é o número de vezes em que foi usado.
+Pareamento pode ter menor tamanho efetivo e ser sensível à especificação do
+escore. Perfis diferentes também podem compartilhar o mesmo escore; por isso o
+balanceamento deve ser verificado nas covariáveis originais.
+
+## 8. IPW correto para ATT
+
+Os pesos de ATT são:
+
+\[
+w_i^{ATT}=D_i+(1-D_i)\frac{e(X_i)}{1-e(X_i)}.
+\]
+
+Tratados recebem peso 1. Controles com perfil comum entre tratados recebem
+maior peso. A forma normalizada de Hájek calcula:
+
+\[
+\widehat{ATT}_{IPW}=
+\frac{\sum_iD_iY_i}{\sum_iD_i}-
+\frac{\sum_i(1-D_i)w_iY_i}{\sum_i(1-D_i)w_i}.
+\]
+
+Esses pesos não são os pesos de ATE `1/e(X)` e `1/[1-e(X)]` usados no exemplo
+didático da aula. Misturar pesos de ATE com uma pergunta de ATT produz
+estimandos incoerentes.
+
+Escores de controle próximos de 1 geram pesos grandes. Deve-se inspecionar peso
+máximo, distribuição e tamanho efetivo da amostra, e não truncar pesos apenas
+porque o resultado ficou instável. Truncamento muda a população implícita e
+precisa ser declarado.
+
+## 9. Suporte comum e tamanho efetivo
+
+A análise restringe cada modelo à interseção dos intervalos de escore de
+tratados e controles. Quase todos os tratados permanecem, mas a conclusão
+formal passa a ser o ATT dos beneficiários com suporte observado.
+
+O tamanho efetivo é:
+
+\[
+ESS=\frac{(\sum_iw_i)^2}{\sum_iw_i^2}.
+\]
+
+Mesmo com milhares de linhas, pesos concentrados podem equivaler a uma amostra
+muito menor. No pareamento, o ESS dos controles fica próximo de mil; no IPW,
+próximo de dois mil. Isso ajuda a explicar por que o pareamento varia mais entre
+logística e random forest.
+
+## 10. SMD e love plot
+
+Para uma covariável contínua, a SMD antes do ajuste é:
+
+\[
+SMD=\frac{\bar X_1-\bar X_0}
+{\sqrt{(s_1^2+s_0^2)/2}}.
+\]
+
+Depois do ajuste, as médias são ponderadas, mas a entrega mantém o desvio-padrão
+pré-ajuste no denominador. Isso torna a escala comparável antes e depois. Para
+indicadores binários, a interpretação é análoga. `|SMD|<0,1` é uma regra
+prática, não um teste ou garantia causal.
+
+O love plot coloca `|SMD|` de todas as covariáveis antes e depois em um mesmo
+gráfico. Na amostra bruta, quatro das sete covariáveis superam 0,1, sobretudo
+escolaridade do chefe, moradores, água e cômodos. Depois:
+
+- logística + pareamento: máximo `|SMD|=0,035`;
+- logística + IPW: máximo `|SMD|=0,041`;
+- random forest + pareamento: máximo `|SMD|=0,035`;
+- random forest + IPW: máximo `|SMD|=0,108`, em água canalizada.
+
+O diagnóstico favorece o escore logístico. Um love plot bonito, porém, só fala
+sobre as colunas mostradas.
+
+## 11. Resultados empíricos
+
+A amostra final contém 8.484 pessoas: 6.054 beneficiárias e 2.430 controles C1.
+A evasão observada é 6,89% nos beneficiários e 7,86% nos controles, diferença
+bruta de `-0,97` ponto percentual.
+
+| Escore | Método | ATT aproximado |
+|---|---|---:|
+| Logística | pareamento 1:1 | -1,55 p.p. |
+| Logística | IPW-ATT | -1,11 p.p. |
+| Random forest calibrado | pareamento 1:1 | -2,33 p.p. |
+| Random forest calibrado | IPW-ATT | -1,11 p.p. |
+
+O IPW é estável à troca do modelo; o pareamento é mais sensível. A especificação
+principal mais defensável é logística + IPW: produz bom balanceamento, maior ESS
+que o pareamento e ATT de aproximadamente `-1,11` p.p. O notebook apresenta
+intervalos normais aproximados com erro-padrão agrupado por domicílio. Eles
+capturam dependência intradomiciliar, mas condicionam nos escores estimados e
+podem subestimar a incerteza total. Para a especificação principal, o IC95%
+aproximado é `[-2,62; 0,41]` p.p. e inclui zero: a direção é compatível com
+redução da evasão, mas a estimativa não é suficientemente precisa para afastar
+efeito nulo nesse nível de confiança.
+
+## 12. Como defender a interpretação
+
+Uma formulação adequada é:
+
+> Entre beneficiários de 6 a 17 anos, com evasão observada, casos completos e
+> suporte nos controles cadastrados, o ajuste por escore é compatível com uma
+> redução de cerca de 1,1 ponto percentual na evasão pelo estimador principal.
+> Essa leitura é causal somente se as sete covariáveis tornarem tratamento
+> ignorável e se consistência, positividade e não interferência forem válidas.
+
+Não se deve dizer que o love plot provou causalidade, que ML descobriu o escore
+verdadeiro, que ausência de significância prova efeito zero ou que o resultado
+vale para todas as crianças brasileiras.
+
+### Perguntas prováveis na apresentação
+
+**Por que ATT, e não ATE?**  
+Porque a pergunta retrospectiva é se o programa funcionou para quem o recebeu.
+O ATT também evita extrapolar o efeito para famílias não beneficiárias com
+perfis possivelmente distintos.
+
+**Por que não usar C2?**  
+Porque não cadastrados não passaram pelo mesmo processo de seleção para o
+Cadastro Único. C1 reduz, embora não elimine, diferenças não observadas ligadas
+à iniciativa de se cadastrar.
+
+**Por que logística se o random forest prevê melhor?**  
+Porque previsão do tratamento não é o objetivo. A logística produziu melhor
+balanceamento no IPW; esse é o diagnóstico pertinente ao desenho causal.
+
+**Por que calibrar o random forest?**  
+Porque IPW usa probabilidades em razões de chances. Um ranking correto com
+probabilidades mal calibradas gera pesos errados ou extremos.
+
+**Por que os métodos dão números diferentes?**  
+Pareamento reutiliza controles locais e descarta informação efetiva; IPW usa
+todos os controles no suporte com pesos contínuos. Ambos também respondem às
+aproximações dos respectivos modelos de escore.
+
+**Balanceamento confirma ignorabilidade?**  
+Não. Confirma equilíbrio somente nas covariáveis observadas. Ignorabilidade
+inclui a afirmação não testável de que não restou confundimento relevante.
+
+**Qual é a principal ameaça?**  
+Confundimento residual por renda prévia detalhada, qualidade da escola,
+motivação familiar e condições locais, além da seleção de quem possui
+`dropout` observado.
+
+**Por que agrupar a incerteza por domicílio?**  
+Tratamento é domiciliar e irmãos compartilham ambiente e choques; tratá-los como
+independentes produziria erro-padrão excessivamente otimista.
+
+## 13. Síntese integrada das três atividades
+
+A atividade 1 usa DAG e backdoor para explicitar como uma avaliação
+observacional depende de confundidores medidos. A atividade 2 mostra como um
+sorteio cria comparabilidade e desloca o foco para ITT, poder, não conformidade
+e ética. A atividade 3 aprofunda a primeira estratégia: alinha todos os métodos
+ao ATT, compara especificações do escore, verifica sobreposição, pesos, ESS e
+SMD, e demonstra por que desempenho preditivo não substitui diagnóstico causal.
+
+As três chegam à mesma regra: o número final não carrega causalidade sozinho.
+Pergunta, estimando, desenho, temporalidade, suporte, diagnóstico e hipóteses
+substantivas precisam permanecer alinhados do início à interpretação.
