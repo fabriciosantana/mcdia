@@ -32,5 +32,6 @@
   "latex-workshop.latex.clean.fileTypes": [
     "%DIR%/aux/**/*",
     "%DIR%/out/*.synctex.gz"
-  ]
+  ],
+  "postman.settings.dotenv-detection-notification-visibility": false
 }
