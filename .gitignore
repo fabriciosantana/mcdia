@@ -207,6 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 _data/
+data/
 
 out/
 aux/
