@@ -1,0 +1,36 @@
+{
+  "latex-workshop.latex.outDir": "%DIR%/out",
+  "latex-workshop.latex.recipe.default": "latexmk (aux e out)",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (aux e out)",
+      "tools": [
+        "latexmk_aux_out"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk_aux_out",
+      "command": "latexmk",
+      "args": [
+        "-cd",
+        "-r",
+        "%DIR%/latexmkrc",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-synctex=1",
+        "-file-line-error",
+        "-auxdir=%DIR%/aux",
+        "-outdir=%DIR%/out",
+        "%DOC%"
+      ],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.clean.method": "glob",
+  "latex-workshop.latex.clean.fileTypes": [
+    "%DIR%/aux/**/*",
+    "%DIR%/out/*.synctex.gz"
+  ]
+}
