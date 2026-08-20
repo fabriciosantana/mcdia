@@ -225,7 +225,6 @@ aux/
 *.log
 *.nav
 *.out
-*.pdf
 *.run.xml
 *.snm
 *.synctex.gz
