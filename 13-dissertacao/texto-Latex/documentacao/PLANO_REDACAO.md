@@ -3,14 +3,14 @@
 ## Fase 1 — consolidação do desenho
 
 - [ ] Confirmar título, orientação, área, linha de pesquisa e calendário de defesa.
-- [ ] Revisar alinhamento entre pergunta, objetivo geral, objetivos específicos, hipóteses e matriz metodológica.
+- [~] Revisar alinhamento entre pergunta, objetivo geral, objetivos específicos, hipóteses e matriz metodológica. A consolidação inicial do Capítulo 4 foi realizada; a versão final depende do protocolo e da avaliação humana.
 - [ ] Definir a versão final do protocolo, os baselines e os critérios de sucesso.
 - [ ] Definir plano e dimensionamento da avaliação humana.
 - [ ] Atualizar e documentar a revisão de literatura.
 
 ## Fase 2 — congelamento e execução
 
-- [ ] Congelar corpus, código, configurações, perguntas e conjunto de referência.
+- [~] Congelar corpus, código, configurações, perguntas e conjunto de referência. O corpus foi congelado e auditado; código experimental, perguntas e conjunto de referência permanecem pendentes.
 - [ ] Registrar versões, hashes, modelos, prompts, parâmetros e datas.
 - [ ] Executar piloto e registrar mudanças previamente ao experimento principal.
 - [ ] Executar recuperação, geração, baselines e avaliações.
@@ -19,7 +19,7 @@
 ## Fase 3 — capítulos empíricos
 
 - [ ] Fechar o Capítulo 3 com quadro comparativo auditável.
-- [ ] Atualizar o Capítulo 4 do tempo futuro para os procedimentos efetivamente realizados.
+- [~] Atualizar o Capítulo 4 do tempo futuro para os procedimentos efetivamente realizados. Constituição e análise exploratória do corpus foram atualizadas; as etapas experimentais permanecem prospectivas.
 - [ ] Documentar artefato e corpus no Capítulo 5.
 - [ ] Apresentar observações, inclusive negativas, no Capítulo 6.
 - [ ] Interpretar achados e ameaças à validade no Capítulo 7.
