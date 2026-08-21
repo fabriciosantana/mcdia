@@ -225,6 +225,6 @@ aux/
 *.snm
 *.synctex.gz
 *.toc
-*.csv
+
 *.zip
 *.parquet
