@@ -1,0 +1,5 @@
+tamanho_chunk,sobreposição,chunks_totais,chunks_por_documento,documentos_em_um_chunk_pct
+256,32,84567,5.38,22.06
+512,64,45971,2.92,37.94
+768,96,33297,2.12,52.98
+1024,128,27130,1.72,64.66

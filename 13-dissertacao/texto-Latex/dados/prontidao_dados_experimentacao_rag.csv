@@ -1,0 +1,7 @@
+indicador,valor_pct,referência,situação
+Documentos indexáveis,99.98,>= 99%,Adequado
+Cobertura de texto integral,95.61,>= 90%,Adequado
+Registros sem conteúdo,0.02,< 1%,Adequado
+Cópias exatas excedentes,0.18,< 2%,Adequado
+Documentos com menos de 50 palavras,8.21,< 10%,Adequado
+Menor cobertura entre filtros,86.81,>= 90%,Requer tratamento
