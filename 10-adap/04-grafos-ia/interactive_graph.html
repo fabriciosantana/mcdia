@@ -1,0 +1,366 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"group": "Pessoa", "id": "656.670.106-07", "label": "Ingrid Dias Alves", "shape": "dot", "title": "Ingrid Dias Alves"}, {"group": "Empresa", "id": "09.169.985/0001-58", "label": "L\u00edder Empreendimentos e Servi\u00e7os S.A.", "shape": "dot", "title": "L\u00edder Empreendimentos e Servi\u00e7os S.A."}, {"group": "Empresa", "id": "29.973.763/0001-09", "label": "Delta Consultoria ME", "shape": "dot", "title": "Delta Consultoria ME"}, {"group": "Empresa", "id": "59.514.846/0001-92", "label": "Atrium Gest\u00e3o e Servi\u00e7os Eireli", "shape": "dot", "title": "Atrium Gest\u00e3o e Servi\u00e7os Eireli"}, {"group": "Empresa", "id": "60.366.909/0001-90", "label": "Inova Alimentos e Servi\u00e7os Ltda.", "shape": "dot", "title": "Inova Alimentos e Servi\u00e7os Ltda."}, {"group": "Pessoa", "id": "812.191.361-66", "label": "Sofia Lopes Moraes", "shape": "dot", "title": "Sofia Lopes Moraes"}, {"group": "Contador", "id": "DF-131244/O", "label": "Sofia Lopes Moraes", "shape": "dot", "title": "Sofia Lopes Moraes"}, {"group": "Pessoa", "id": "623.166.587-92", "label": "Gisele Souza Carvalho", "shape": "dot", "title": "Gisele Souza Carvalho"}, {"group": "Empresa", "id": "13.953.767/0001-87", "label": "Omega Empreendimentos S.A.", "shape": "dot", "title": "Omega Empreendimentos S.A."}, {"group": "Empresa", "id": "59.826.204/0001-29", "label": "Conecta Sistemas Eireli", "shape": "dot", "title": "Conecta Sistemas Eireli"}, {"group": "Empresa", "id": "86.872.774/0001-28", "label": "Forte Com\u00e9rcio e Servi\u00e7os Eireli", "shape": "dot", "title": "Forte Com\u00e9rcio e Servi\u00e7os Eireli"}, {"group": "Pessoa", "id": "831.727.889-11", "label": "Adriana Mendes Cavalcanti", "shape": "dot", "title": "Adriana Mendes Cavalcanti"}, {"group": "Pessoa", "id": "822.782.489-79", "label": "Heitor Carvalho Teixeira", "shape": "dot", "title": "Heitor Carvalho Teixeira"}, {"group": "Contador", "id": "GO-191161/O", "label": "Gisele Souza Carvalho", "shape": "dot", "title": "Gisele Souza Carvalho"}, {"group": "Pessoa", "id": "518.506.716-05", "label": "Diego Freitas Gomes", "shape": "dot", "title": "Diego Freitas Gomes"}, {"group": "Pessoa", "id": "229.413.186-07", "label": "Vanessa Ara\u00fajo Cavalcanti", "shape": "dot", "title": "Vanessa Ara\u00fajo Cavalcanti"}, {"group": "Contador", "id": "BA-356787/O", "label": "Diego Freitas Gomes", "shape": "dot", "title": "Diego Freitas Gomes"}, {"group": "Licitacao", "id": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:174", "label": "LIC-2024-0005", "shape": "dot", "title": "LIC-2024-0005"}, {"group": "Orgao", "id": "ORG-020", "label": "Autarquia de Seguran\u00e7a Alimentar e Nutricional (ASAN)", "shape": "dot", "title": "Autarquia de Seguran\u00e7a Alimentar e Nutricional (ASAN)"}, {"group": "Empresa", "id": "27.648.350/0001-15", "label": "Nexus Sistemas Eireli", "shape": "dot", "title": "Nexus Sistemas Eireli"}, {"group": "Licitacao", "id": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:179", "label": "LIC-2024-0010", "shape": "dot", "title": "LIC-2024-0010"}, {"group": "Orgao", "id": "ORG-003", "label": "Ag\u00eancia Reguladora de Transportes Urbanos (ARTU)", "shape": "dot", "title": "Ag\u00eancia Reguladora de Transportes Urbanos (ARTU)"}, {"group": "Empresa", "id": "80.184.514/0001-83", "label": "Global Log\u00edstica ME", "shape": "dot", "title": "Global Log\u00edstica ME"}, {"group": "Empresa", "id": "34.874.016/0001-45", "label": "Multi Empreendimentos Ltda.", "shape": "dot", "title": "Multi Empreendimentos Ltda."}, {"group": "Licitacao", "id": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:183", "label": "LIC-2024-0014", "shape": "dot", "title": "LIC-2024-0014"}, {"group": "Empresa", "id": "95.931.034/0001-06", "label": "Gamma Com\u00e9rcio Ltda.", "shape": "dot", "title": "Gamma Com\u00e9rcio Ltda."}, {"group": "Empresa", "id": "02.563.421/0001-56", "label": "Inova Sistemas ME", "shape": "dot", "title": "Inova Sistemas ME"}, {"group": "Empresa", "id": "39.117.182/0001-10", "label": "Omega Alimentos EPP", "shape": "dot", "title": "Omega Alimentos EPP"}, {"group": "Empresa", "id": "09.805.009/0001-44", "label": "Sul Seguran\u00e7a EPP", "shape": "dot", "title": "Sul Seguran\u00e7a EPP"}, {"group": "Empresa", "id": "81.219.136/0001-99", "label": "Delta Distribuidora e Servi\u00e7os S.A.", "shape": "dot", "title": "Delta Distribuidora e Servi\u00e7os S.A."}, {"group": "Empresa", "id": "45.868.501/0001-22", "label": "Max Empreendimentos e Servi\u00e7os S.A.", "shape": "dot", "title": "Max Empreendimentos e Servi\u00e7os S.A."}, {"group": "Empresa", "id": "20.163.287/0001-88", "label": "Beta Suprimentos e Servi\u00e7os S.A.", "shape": "dot", "title": "Beta Suprimentos e Servi\u00e7os S.A."}, {"group": "Empresa", "id": "46.688.937/0001-00", "label": "Nexus Empreendimentos ME", "shape": "dot", "title": "Nexus Empreendimentos ME"}]);
+                  edges = new vis.DataSet([{"from": "656.670.106-07", "title": "E_SOCIO_DE", "to": "09.169.985/0001-58"}, {"from": "656.670.106-07", "title": "E_SOCIO_DE", "to": "29.973.763/0001-09"}, {"from": "656.670.106-07", "title": "E_SOCIO_DE", "to": "59.514.846/0001-92"}, {"from": "656.670.106-07", "title": "E_SOCIO_DE", "to": "60.366.909/0001-90"}, {"from": "09.169.985/0001-58", "title": "E_SOCIO_DE", "to": "812.191.361-66"}, {"from": "09.169.985/0001-58", "title": "E_SOCIO_DE", "to": "623.166.587-92"}, {"from": "09.169.985/0001-58", "title": "E_SOCIO_DE", "to": "518.506.716-05"}, {"from": "09.169.985/0001-58", "title": "PARTICIPOU_DE", "to": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:174"}, {"from": "09.169.985/0001-58", "title": "PARTICIPOU_DE", "to": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:179"}, {"from": "09.169.985/0001-58", "title": "PARTICIPOU_DE", "to": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:183"}, {"from": "09.169.985/0001-58", "title": "PRESTA_SERVICO_PARA", "to": "DF-131244/O"}, {"from": "59.514.846/0001-92", "title": "PARTICIPOU_DE", "to": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:183"}, {"from": "59.514.846/0001-92", "title": "PRESTA_SERVICO_PARA", "to": "DF-131244/O"}, {"from": "812.191.361-66", "title": "E_CONTADOR", "to": "DF-131244/O"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "95.931.034/0001-06"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "27.648.350/0001-15"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "80.184.514/0001-83"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "39.117.182/0001-10"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "09.805.009/0001-44"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "81.219.136/0001-99"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "34.874.016/0001-45"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "45.868.501/0001-22"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "20.163.287/0001-88"}, {"from": "DF-131244/O", "title": "PRESTA_SERVICO_PARA", "to": "46.688.937/0001-00"}, {"from": "623.166.587-92", "title": "E_SOCIO_DE", "to": "13.953.767/0001-87"}, {"from": "623.166.587-92", "title": "E_SOCIO_DE", "to": "59.826.204/0001-29"}, {"from": "623.166.587-92", "title": "E_SOCIO_DE", "to": "86.872.774/0001-28"}, {"from": "623.166.587-92", "title": "E_MAE_DE", "to": "831.727.889-11"}, {"from": "623.166.587-92", "title": "E_PAI_DE", "to": "822.782.489-79"}, {"from": "623.166.587-92", "title": "E_CONTADOR", "to": "GO-191161/O"}, {"from": "518.506.716-05", "title": "E_MAE_DE", "to": "229.413.186-07"}, {"from": "518.506.716-05", "title": "E_CONTADOR", "to": "BA-356787/O"}, {"from": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:174", "title": "PROMOVIDA_POR", "to": "ORG-020"}, {"from": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:174", "title": "PARTICIPOU_DE", "to": "27.648.350/0001-15"}, {"from": "ORG-020", "title": "PROMOVIDA_POR", "to": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:183"}, {"from": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:179", "title": "PROMOVIDA_POR", "to": "ORG-003"}, {"from": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:179", "title": "PARTICIPOU_DE", "to": "80.184.514/0001-83"}, {"from": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:179", "title": "PARTICIPOU_DE", "to": "34.874.016/0001-45"}, {"from": "34.874.016/0001-45", "title": "PARTICIPOU_DE", "to": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:183"}, {"from": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:183", "title": "PARTICIPOU_DE", "to": "95.931.034/0001-06"}, {"from": "4:533a1428-e17b-40e7-8158-6ced63cb6efd:183", "title": "PARTICIPOU_DE", "to": "02.563.421/0001-56"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics",
+            "nodes",
+            "edges"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
