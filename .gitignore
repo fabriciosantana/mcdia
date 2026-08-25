@@ -208,7 +208,7 @@ __marimo__/
 
 _data/
 data/
-vectordb/
+vectordb*/
 
 out/
 aux/
