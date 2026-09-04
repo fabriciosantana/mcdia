@@ -7796,26 +7796,108 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c9ad657c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><a href="https://colab.research.google.com/github/fabriciosantana/mcdia/blob/main/09-appd/assignments/04-did-bolsa-familia-evasao/atividade_did_bolsa_familia_evasao.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"/></a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d9eb5aa2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa</strong></p>
+<p>Programa de Pós-Graduação em Administração Pública — Mestrado Profissional</p>
+<p><strong>Disciplina:</strong> Avaliação de Políticas Públicas com Dados<br/>
+<strong>Atividade:</strong> Diferenças em diferenças — Bolsa Família e evasão escolar<br/>
+<strong>Grupo:</strong> Analécia Borato, Fabricio Santana, Giovanni Brígido, Paulo Ceser</p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=694ccb2b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Efeito-do-Bolsa-Familia-sobre-a-evasao-escolar:-diferencas-em-diferencas">Efeito do Bolsa Familia sobre a evasao escolar: diferencas em diferencas<a class="anchor-link" href="#Efeito-do-Bolsa-Familia-sobre-a-evasao-escolar:-diferencas-em-diferencas">¶</a></h1><h2 id="Pergunta-e-desenho">Pergunta e desenho<a class="anchor-link" href="#Pergunta-e-desenho">¶</a></h2><p>Qual foi o efeito do Bolsa Familia sobre a evasao escolar media dos domicilios
-entre 2005 e 2009? O desfecho e <code>dropout_med</code>, diferente de <code>attend_med</code>, usado
+<h1 id="Efeito-do-Bolsa-Fam%C3%ADlia-sobre-a-evas%C3%A3o-escolar:-diferen%C3%A7as-em-diferen%C3%A7as">Efeito do Bolsa Família sobre a evasão escolar: diferenças em diferenças<a class="anchor-link" href="#Efeito-do-Bolsa-Fam%C3%ADlia-sobre-a-evas%C3%A3o-escolar:-diferen%C3%A7as-em-diferen%C3%A7as">¶</a></h1><h2 id="Pergunta-e-desenho">Pergunta e desenho<a class="anchor-link" href="#Pergunta-e-desenho">¶</a></h2><p>Qual foi o efeito do Bolsa Família sobre a evasão escolar média dos domicílios
+entre 2005 e 2009? O desfecho é <code>dropout_med</code>, diferente de <code>attend_med</code>, usado
 como exemplo principal em aula.</p>
 <ul>
-<li><strong>Unidade:</strong> domicilio (<code>cod_dtm</code>).</li>
-<li><strong>Periodo pre:</strong> 2005; <strong>periodo pos:</strong> 2009.</li>
-<li><strong>Comparacao principal:</strong> beneficiarios em 2009 (<code>T1</code>) versus inscritos no
-Cadastro Unico que nao recebiam o beneficio (<code>C1</code>).</li>
-<li><strong>Placebo:</strong> <code>C1</code> versus nao inscritos (<code>C2</code>), tratando artificialmente <code>C1</code>.</li>
-<li><strong>Estimando:</strong> DiD medio na amostra de domicilios observados nas duas rodadas.</li>
+<li><strong>Unidade:</strong> domicílio (<code>cod_dtm</code>).</li>
+<li><strong>Período pré:</strong> 2005; <strong>período pós:</strong> 2009.</li>
+<li><strong>Comparação principal:</strong> beneficiários em 2009 (<code>T1</code>) versus inscritos no
+Cadastro Único que não recebiam o benefício (<code>C1</code>).</li>
+<li><strong>Placebo:</strong> <code>C1</code> versus não inscritos (<code>C2</code>), tratando artificialmente <code>C1</code>.</li>
+<li><strong>Estimando:</strong> DiD médio na amostra de domicílios observados nas duas rodadas.</li>
 </ul>
-<p>Sao estimadas duas especificacoes: regressao canonica com a interacao
-tratado x pos e TWFE com efeitos fixos de domicilio e ano. Os erros-padrao sao
-agrupados por domicilio.</p>
+<p>São estimadas duas especificações: regressão canônica com a interação
+tratado × pós e TWFE com efeitos fixos de domicílio e ano. Os erros-padrão são
+agrupados por domicílio.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=adqXh5hWTySE">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pip</span> install linearmodels
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Defaulting to user installation because normal site-packages is not writeable
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Requirement already satisfied: linearmodels in /home/vscode/.local/lib/python3.14/site-packages (7.0)
+Requirement already satisfied: numpy&lt;3,&gt;=1.22.3 in /home/vscode/.local/lib/python3.14/site-packages (from linearmodels) (2.5.2)
+Requirement already satisfied: pandas&gt;=1.4.0 in /home/vscode/.local/lib/python3.14/site-packages (from linearmodels) (3.0.5)
+Requirement already satisfied: scipy&gt;=1.8.0 in /home/vscode/.local/lib/python3.14/site-packages (from linearmodels) (1.18.1)
+Requirement already satisfied: statsmodels&gt;=0.13.0 in /home/vscode/.local/lib/python3.14/site-packages (from linearmodels) (0.14.6)
+Requirement already satisfied: mypy_extensions&gt;=0.4 in /home/vscode/.local/lib/python3.14/site-packages (from linearmodels) (1.1.0)
+Requirement already satisfied: pyhdfe&gt;=0.1 in /home/vscode/.local/lib/python3.14/site-packages (from linearmodels) (0.2.0)
+Requirement already satisfied: formulaic&gt;=1.2.1 in /home/vscode/.local/lib/python3.14/site-packages (from linearmodels) (1.2.2)
+Requirement already satisfied: interface-meta&gt;=1.2.0 in /home/vscode/.local/lib/python3.14/site-packages (from formulaic&gt;=1.2.1-&gt;linearmodels) (2.0.1)
+Requirement already satisfied: narwhals&gt;=1.17 in /home/vscode/.local/lib/python3.14/site-packages (from formulaic&gt;=1.2.1-&gt;linearmodels) (2.25.0)
+Requirement already satisfied: typing-extensions&gt;=4.2.0 in /opt/conda/lib/python3.14/site-packages (from formulaic&gt;=1.2.1-&gt;linearmodels) (4.16.0)
+Requirement already satisfied: wrapt&gt;=1.17.0rc1 in /home/vscode/.local/lib/python3.14/site-packages (from formulaic&gt;=1.2.1-&gt;linearmodels) (2.4.0rc5)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /home/vscode/.local/lib/python3.14/site-packages (from pandas&gt;=1.4.0-&gt;linearmodels) (2.9.0.post0)
+Requirement already satisfied: six&gt;=1.5 in /home/vscode/.local/lib/python3.14/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas&gt;=1.4.0-&gt;linearmodels) (1.17.0)
+Requirement already satisfied: patsy&gt;=0.5.6 in /home/vscode/.local/lib/python3.14/site-packages (from statsmodels&gt;=0.13.0-&gt;linearmodels) (1.0.2)
+Requirement already satisfied: packaging&gt;=21.3 in /opt/conda/lib/python3.14/site-packages (from statsmodels&gt;=0.13.0-&gt;linearmodels) (26.3)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Note: you may need to restart the kernel to use updated packages.
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -7824,7 +7906,7 @@ agrupados por domicilio.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -7841,6 +7923,45 @@ agrupados por domicilio.</p>
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=IladFMvWTAiV">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+    <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">'/content/drive'</span><span class="p">,</span> <span class="n">force_remount</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">caminho</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"/content/drive/MyDrive/Colab Notebooks/data/aula04_painel.csv"</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Execução local detectada; o Google Drive não será montado.'</span><span class="p">)</span>
+    <span class="n">caminho</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"./data/aula04_painel.csv"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">caminho</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">"Nao foi possivel localizar aula04_painel.csv"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Arquivo encontrado em </span><span class="si">{</span><span class="n">caminho</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Execução local detectada; o Google Drive não será montado.
+Arquivo encontrado em data/aula04_painel.csv
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9861093e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -7848,10 +7969,10 @@ agrupados por domicilio.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="1.-Dados-e-recorte-analitico">1. Dados e recorte analitico<a class="anchor-link" href="#1.-Dados-e-recorte-analitico">¶</a></h2><p>A base e o painel domiciliar da AIBF II preparado para o Modulo 04. Para cada
-comparacao, mantemos apenas valores observados de <code>dropout_med</code> e domicilios
-presentes em 2005 e 2009. Essa decisao evita que diferencas entre a regressao
-canonica e o TWFE sejam produzidas apenas por amostras distintas.</p>
+<h2 id="1.-Dados-e-recorte-anal%C3%ADtico">1. Dados e recorte analítico<a class="anchor-link" href="#1.-Dados-e-recorte-anal%C3%ADtico">¶</a></h2><p>A base é o painel domiciliar da AIBF II preparado para o Módulo 04. Para cada
+comparação, mantemos apenas valores observados de <code>dropout_med</code> e domicílios
+presentes em 2005 e 2009. Essa decisão evita que diferenças entre a regressão
+canônica e o TWFE sejam produzidas apenas por amostras distintas.</p>
 </div>
 </div>
 </div>
@@ -7860,18 +7981,10 @@ canonica e o TWFE sejam produzidas apenas por amostras distintas.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">candidatos</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">"../../examples/04-diferencas-em-diferencas/data/aula04_painel.csv"</span><span class="p">),</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">"09-appd/examples/04-diferencas-em-diferencas/data/aula04_painel.csv"</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="n">caminho</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">candidatos</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">caminho</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">"Nao foi possivel localizar aula04_painel.csv"</span><span class="p">)</span>
-
-<span class="n">aibf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">caminho</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">aibf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">caminho</span><span class="p">)</span>
 <span class="n">necessarias</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"cod_dtm"</span><span class="p">,</span> <span class="s2">"ano"</span><span class="p">,</span> <span class="s2">"grupo"</span><span class="p">,</span> <span class="s2">"pos"</span><span class="p">,</span> <span class="s2">"dropout_med"</span><span class="p">}</span>
 <span class="k">assert</span> <span class="n">necessarias</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">aibf</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">aibf</span><span class="p">[</span><span class="s2">"ano"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="o">==</span> <span class="p">{</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">2009</span><span class="p">}</span>
@@ -7900,7 +8013,7 @@ canonica e o TWFE sejam produzidas apenas por amostras distintas.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">preparar_painel</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">grupos</span><span class="p">,</span> <span class="n">grupo_tratado</span><span class="p">):</span>
@@ -7934,7 +8047,7 @@ canonica e o TWFE sejam produzidas apenas por amostras distintas.</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7986,13 +8099,13 @@ canonica e o TWFE sejam produzidas apenas por amostras distintas.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="2.-Tabela-2-x-2-e-estimativa-manual">2. Tabela 2 x 2 e estimativa manual<a class="anchor-link" href="#2.-Tabela-2-x-2-e-estimativa-manual">¶</a></h2><p>O estimador e</p>
+<h2 id="2.-Tabela-2-%C3%97-2-e-estimativa-manual">2. Tabela 2 × 2 e estimativa manual<a class="anchor-link" href="#2.-Tabela-2-%C3%97-2-e-estimativa-manual">¶</a></h2><p>O estimador é</p>
 <p>$$
-\widehat{DiD}=(\bar Y_{T,pos}-\bar Y_{T,pre})
-              -(\bar Y_{C,pos}-\bar Y_{C,pre}).
+\widehat{DiD}=(\bar Y_{T,pós}-\bar Y_{T,pré})
+              -(\bar Y_{C,pós}-\bar Y_{C,pré}).
 $$</p>
-<p>Como evasao e um desfecho desfavoravel, coeficientes negativos sao compativeis
-com um efeito benefico do programa.</p>
+<p>Como evasão é um desfecho desfavorável, coeficientes negativos são compatíveis
+com um efeito benéfico do programa.</p>
 </div>
 </div>
 </div>
@@ -8001,7 +8114,7 @@ com um efeito benefico do programa.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tabela_2x2</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
@@ -8083,7 +8196,7 @@ com um efeito benefico do programa.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">medias</span> <span class="o">=</span> <span class="n">principal</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"ano"</span><span class="p">,</span> <span class="s2">"grupo"</span><span class="p">])[</span><span class="s2">"dropout_med"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
@@ -8124,12 +8237,12 @@ com um efeito benefico do programa.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="3.-Especificacao-1:-regressao-com-interacao">3. Especificacao 1: regressao com interacao<a class="anchor-link" href="#3.-Especificacao-1:-regressao-com-interacao">¶</a></h2><p>$$
+<h2 id="3.-Especifica%C3%A7%C3%A3o-1:-regress%C3%A3o-com-intera%C3%A7%C3%A3o">3. Especificação 1: regressão com interação<a class="anchor-link" href="#3.-Especifica%C3%A7%C3%A3o-1:-regress%C3%A3o-com-intera%C3%A7%C3%A3o">¶</a></h2><p>$$
 Y_{it}=\alpha+\beta Tratado_i+\gamma Pos_t
        +\delta(Tratado_i\times Pos_t)+\varepsilon_{it}.
 $$</p>
-<p>O coeficiente $\delta$ e a DiD. A inferencia permite dependencia arbitraria
-entre as duas observacoes do mesmo domicilio.</p>
+<p>O coeficiente $\delta$ é a DiD. A inferência permite dependência arbitrária
+entre as duas observações do mesmo domicílio.</p>
 </div>
 </div>
 </div>
@@ -8138,7 +8251,7 @@ entre as duas observacoes do mesmo domicilio.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">estimar_interacao</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
@@ -8189,15 +8302,15 @@ entre as duas observacoes do mesmo domicilio.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.-Especificacao-2:-TWFE">4. Especificacao 2: TWFE<a class="anchor-link" href="#4.-Especificacao-2:-TWFE">¶</a></h2><p>$$
+<h2 id="4.-Especifica%C3%A7%C3%A3o-2:-TWFE">4. Especificação 2: TWFE<a class="anchor-link" href="#4.-Especifica%C3%A7%C3%A3o-2:-TWFE">¶</a></h2><p>$$
 Y_{it}=\alpha_i+\gamma_t+\delta D_{it}+\varepsilon_{it},
 $$</p>
-<p>em que $\alpha_i$ absorve caracteristicas do domicilio constantes no tempo,
+<p>em que $\alpha_i$ absorve características do domicílio constantes no tempo,
 $\gamma_t$ absorve choques comuns do ano e $D_{it}=Tratado_i\times Pos_t$.</p>
-<p>Em um painel 2 x 2 balanceado, o coeficiente deve coincidir com o da interacao.
+<p>Em um painel 2 × 2 balanceado, o coeficiente deve coincidir com o da interação.
 No <code>PanelOLS</code>, <code>count_effects=False</code> evita contar efeitos fixos absorvidos no
-ajuste de graus de liberdade quando a covariancia ja e agrupada pela entidade;
-assim, a correcao de pequena amostra fica comparavel a da regressao anterior.</p>
+ajuste de graus de liberdade quando a covariância já é agrupada pela entidade;
+assim, a correção de pequena amostra fica comparável à da regressão anterior.</p>
 </div>
 </div>
 </div>
@@ -8206,7 +8319,7 @@ assim, a correcao de pequena amostra fica comparavel a da regressao anterior.</p
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">estimar_twfe</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
@@ -8229,7 +8342,7 @@ assim, a correcao de pequena amostra fica comparavel a da regressao anterior.</p
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <table class="simpletable">
 <caption>PanelOLS Estimation Summary</caption>
@@ -8246,7 +8359,7 @@ assim, a correcao de pequena amostra fica comparavel a da regressao anterior.</p
 <th>Date:</th> <td>Fri, Sep 04 2026</td> <th>  R-squared (Overall):</th> <td>-0.0066</td>
 </tr>
 <tr>
-<th>Time:</th> <td>16:24:17</td> <th>  Log-likelihood     </th> <td>3784.2</td>
+<th>Time:</th> <td>16:53:34</td> <th>  Log-likelihood     </th> <td>3784.2</td>
 </tr>
 <tr>
 <th>Cov. Estimator:</th> <td>Clustered</td> <th> </th> <td></td>
@@ -8293,7 +8406,7 @@ assim, a correcao de pequena amostra fica comparavel a da regressao anterior.</p
 <tr>
 <th>D</th> <td>-0.0056</td> <td>0.0100</td> <td>-0.5635</td> <td>0.5731</td> <td>-0.0252</td> <td>0.0139</td>
 </tr>
-</table><br/><br/>F-test for Poolability: 1.1031<br/>P-value: 0.0028<br/>Distribution: F(3201,3199)<br/><br/>Included effects: Entity, Time<br/>id: 0x7c63108c5be0
+</table><br/><br/>F-test for Poolability: 1.1031<br/>P-value: 0.0028<br/>Distribution: F(3201,3199)<br/><br/>Included effects: Entity, Time<br/>id: 0x7787b737eba0
 </div>
 </div>
 </div>
@@ -8305,11 +8418,11 @@ assim, a correcao de pequena amostra fica comparavel a da regressao anterior.</p
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="5.-Placebo-C1-x-C2">5. Placebo C1 x C2<a class="anchor-link" href="#5.-Placebo-C1-x-C2">¶</a></h2><p>Repetimos as duas especificacoes entre dois grupos que nao receberam o
-tratamento, atribuindo artificialmente o status tratado a <code>C1</code>. Um efeito
-placebo grande ou preciso sugeriria trajetorias diferenciadas entre os grupos
-mesmo sem Bolsa Familia e enfraqueceria o desenho. Resultado proximo de zero e
-impreciso e tranquilizador, mas nao demonstra que T1 e C1 teriam tendencias
+<h2 id="5.-Placebo-C1-%C3%97-C2">5. Placebo C1 × C2<a class="anchor-link" href="#5.-Placebo-C1-%C3%97-C2">¶</a></h2><p>Repetimos as duas especificações entre dois grupos que não receberam o
+tratamento, atribuindo artificialmente o status de tratado a <code>C1</code>. Um efeito
+placebo grande ou preciso sugeriria trajetórias diferenciadas entre os grupos
+mesmo sem Bolsa Família e enfraqueceria o desenho. Um resultado próximo de zero e
+impreciso é tranquilizador, mas não demonstra que T1 e C1 teriam tendências
 paralelas sem o programa.</p>
 </div>
 </div>
@@ -8319,7 +8432,7 @@ paralelas sem o programa.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">tab_placebo</span><span class="p">,</span> <span class="n">did_placebo</span> <span class="o">=</span> <span class="n">tabela_2x2</span><span class="p">(</span><span class="n">placebo</span><span class="p">)</span>
@@ -8394,7 +8507,7 @@ paralelas sem o programa.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">linha_resultado</span><span class="p">(</span><span class="n">comparacao</span><span class="p">,</span> <span class="n">especificacao</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">ep</span><span class="p">,</span> <span class="n">pvalor</span><span class="p">,</span> <span class="n">intervalo</span><span class="p">,</span> <span class="n">n_dom</span><span class="p">):</span>
@@ -8530,37 +8643,37 @@ paralelas sem o programa.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="6.-Interpretacao">6. Interpretacao<a class="anchor-link" href="#6.-Interpretacao">¶</a></h2><p>Na comparacao principal, a evasao media aumentou de <strong>2,32% para 7,53%</strong> em
-T1 (+5,22 p.p.) e de <strong>2,95% para 8,73%</strong> em C1 (+5,78 p.p.). A diferenca das
-variacoes foi <strong>-0,56 p.p.</strong>: sob tendencias paralelas, o Bolsa Familia esta
-associado a um aumento da evasao 0,56 ponto percentual menor entre os
-beneficiarios. Interacao e TWFE entregam o mesmo coeficiente porque usam o
-mesmo painel 2 x 2 balanceado.</p>
-<p>O intervalo de 95% da especificacao com interacao e aproximadamente
-<strong>[-2,52; 1,39] p.p.</strong> (<code>p=0,573</code>). Portanto, a direcao e favoravel, mas a
-estimativa e imprecisa e compativel tanto com uma reducao modesta quanto com
-efeito nulo ou pequeno aumento. Nao se rejeitar a hipotese nula nao prova
-ausencia de efeito.</p>
-<p>No placebo, a evasao cresceu 5,78 p.p. em C1 e 6,22 p.p. em C2. A DiD foi
-<strong>-0,43 p.p.</strong>, tambem proxima de zero e imprecisa (IC95% da interacao de
-aproximadamente <strong>[-2,32; 1,45] p.p.</strong>; <code>p=0,652</code>). O placebo nao revela uma
-mudanca diferencial estatisticamente detectavel entre os controles. Isso e
-coerente com o desenho principal, mas nao valida sozinho tendencias paralelas
+<h2 id="6.-Interpreta%C3%A7%C3%A3o">6. Interpretação<a class="anchor-link" href="#6.-Interpreta%C3%A7%C3%A3o">¶</a></h2><p>Na comparação principal, a evasão média aumentou de <strong>2,32% para 7,53%</strong> em
+T1 (+5,22 p.p.) e de <strong>2,95% para 8,73%</strong> em C1 (+5,78 p.p.). A diferença das
+variações foi <strong>−0,56 p.p.</strong>: sob tendências paralelas, o Bolsa Família está
+associado a um aumento da evasão 0,56 ponto percentual menor entre os
+beneficiários. A interação e o TWFE entregam o mesmo coeficiente porque usam o
+mesmo painel 2 × 2 balanceado.</p>
+<p>O intervalo de 95% da especificação com interação é aproximadamente
+<strong>[−2,52; 1,39] p.p.</strong> (<code>p=0,573</code>). Portanto, a direção é favorável, mas a
+estimativa é imprecisa e compatível tanto com uma redução modesta quanto com
+efeito nulo ou pequeno aumento. Não se rejeitar a hipótese nula não prova
+ausência de efeito.</p>
+<p>No placebo, a evasão cresceu 5,78 p.p. em C1 e 6,22 p.p. em C2. A DiD foi
+<strong>−0,43 p.p.</strong>, também próxima de zero e imprecisa (IC95% da interação de
+aproximadamente <strong>[−2,32; 1,45] p.p.</strong>; <code>p=0,652</code>). O placebo não revela uma
+mudança diferencial estatisticamente detectável entre os controles. Isso é
+coerente com o desenho principal, mas não valida sozinho tendências paralelas
 entre T1 e C1.</p>
 <h3 id="Limites">Limites<a class="anchor-link" href="#Limites">¶</a></h3><ul>
-<li>Existem apenas um periodo pre e um pos; nao e possivel inspecionar
-pre-tendencias.</li>
-<li>A leitura causal exige tendencias paralelas, ausencia de antecipacao,
-transbordamentos e choques simultaneos especificos de grupo.</li>
-<li><code>dropout_med</code> e uma media domiciliar e sua disponibilidade depende da
-composicao etaria/escolar observada; restringir ao painel completo muda a
-populacao-alvo e pode gerar selecao por atrito.</li>
-<li>T1, C1 e C2 nao foram sorteados. O placebo e um diagnostico indireto, nao uma
-prova da identificacao causal.</li>
+<li>Existe apenas um período pré e um pós; não é possível inspecionar
+pré-tendências.</li>
+<li>A leitura causal exige tendências paralelas, ausência de antecipação,
+transbordamentos e choques simultâneos específicos de grupo.</li>
+<li><code>dropout_med</code> é uma média domiciliar e sua disponibilidade depende da
+composição etária/escolar observada; restringir ao painel completo muda a
+população-alvo e pode gerar seleção por atrito.</li>
+<li>T1, C1 e C2 não foram sorteados. O placebo é um diagnóstico indireto, não uma
+prova da identificação causal.</li>
 </ul>
-<p>Em sintese, T1 apresenta evolucao ligeiramente melhor que C1, mas a diferenca
-e pequena e estatisticamente imprecisa; o placebo tambem e pequeno. A evidencia
-e sugestiva na direcao de menor evasao, nao conclusiva.</p>
+<p>Em síntese, T1 apresenta evolução ligeiramente melhor que C1, mas a diferença
+é pequena e estatisticamente imprecisa; o placebo também é pequeno. A evidência
+é sugestiva na direção de menor evasão, não conclusiva.</p>
 </div>
 </div>
 </div>
@@ -8571,13 +8684,13 @@ e sugestiva na direcao de menor evasao, nao conclusiva.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Referencias">Referencias<a class="anchor-link" href="#Referencias">¶</a></h2><ul>
-<li>BRASIL. Ministerio do Desenvolvimento Social. <em>Avaliacao de Impacto do
-Programa Bolsa Familia - 2a rodada (AIBF II)</em>. Brasilia: MDS, 2012.</li>
+<h2 id="Refer%C3%AAncias">Referências<a class="anchor-link" href="#Refer%C3%AAncias">¶</a></h2><ul>
+<li>BRASIL. Ministério do Desenvolvimento Social. <em>Avaliação de Impacto do
+Programa Bolsa Família — 2ª rodada (AIBF II)</em>. Brasília: MDS, 2012.</li>
 <li>BERTRAND, M.; DUFLO, E.; MULLAINATHAN, S. How Much Should We Trust
 Differences-in-Differences Estimates? <em>Quarterly Journal of Economics</em>, 2004.</li>
-<li>DE BRAUW, A. et al. The Impact of Bolsa Familia on Schooling. <em>World
-Development</em>, v. 70, p. 303-316, 2015.</li>
+<li>DE BRAUW, A. et al. The Impact of Bolsa Família on Schooling. <em>World
+Development</em>, v. 70, p. 303–316, 2015.</li>
 <li>ROTH, J. et al. What's Trending in Difference-in-Differences? A Synthesis of
 the Recent Econometrics Literature. <em>Journal of Econometrics</em>, 2023.</li>
 </ul>
