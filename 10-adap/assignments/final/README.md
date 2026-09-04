@@ -64,6 +64,20 @@ avaliador compara TF–IDF, recuperação vetorial e fusão por Reciprocal Rank
 Fusion (RRF). Não compartilhe o `.env` nem inclua a chave em células do
 notebook.
 
+O avaliador também produz `resultados/pool_julgamento.xlsx`. Preencha somente
+as colunas `julgamento_relevancia` e `observacoes`, usando a escala indicada na
+aba `Instruções`. Para reduzir viés, não consulte `pool_chave_metodos.csv` antes
+de terminar os julgamentos.
+
+Depois de preencher e salvar todos os 205 julgamentos com `0`, `1` ou `2`,
+calcule Precision@5, Precision@10, recall dentro do pool, MRR e nDCG@10:
+
+```bash
+python scripts/calcular_metricas_julgadas.py
+```
+
+O valor `?` deve ser adjudicado antes do cálculo final.
+
 ## Compilação do artigo
 
 ```bash

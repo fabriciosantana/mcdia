@@ -102,6 +102,14 @@ consolidado ocupa aproximadamente 18,1 MB. Resultados comparativos: TF--IDF
 (0,00; 0,30; 0,40; 0,112; 44,5) e híbrido RRF (0,10; 0,30; 0,50; 0,212;
 11,5). O artigo e o notebook já incorporam a leitura crítica desses resultados.
 
+Foi gerado um pool cego com a união dos dez primeiros resultados de TF--IDF,
+OpenAI e híbrido para cada pergunta. Após deduplicação, há 205 pares para
+revisão em `resultados/pool_julgamento.xlsx`. O avaliador deve preencher apenas
+`julgamento_relevancia` (0, 1 ou 2) e `observacoes`, sem consultar previamente
+`pool_chave_metodos.csv`. O script `scripts/calcular_metricas_julgadas.py`
+calcula Precision@5, Precision@10, recall dentro do pool, MRR e nDCG@10 depois
+que todos os itens forem julgados.
+
 ## Comandos de retomada
 
 ```bash
