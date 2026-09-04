@@ -42,6 +42,28 @@ células. O notebook não requer chave de API. Além da auditoria do corpus, ele
 gera uma prova de conceito TF–IDF sobre uma amostra de mil documentos e exporta
 os resultados usados no artigo para `resultados/` e `figuras/`.
 
+## Avaliação com embeddings da OpenAI
+
+Preencha `OPENAI_API_KEY` no arquivo `.env`. O `.env` e o cache de embeddings
+são ignorados pelo Git. Valide primeiro o plano sem chamar a API:
+
+```bash
+python scripts/gerar_embeddings_openai.py --planejar
+```
+
+Depois gere os embeddings e execute a comparação:
+
+```bash
+python scripts/gerar_embeddings_openai.py
+python scripts/avaliar_recuperacao.py
+```
+
+O gerador usa `text-embedding-3-large` com 512 dimensões, respeita o limite por
+entrada, cria lotes por orçamento de tokens e mantém checkpoints retomáveis. O
+avaliador compara TF–IDF, recuperação vetorial e fusão por Reciprocal Rank
+Fusion (RRF). Não compartilhe o `.env` nem inclua a chave em células do
+notebook.
+
 ## Compilação do artigo
 
 ```bash

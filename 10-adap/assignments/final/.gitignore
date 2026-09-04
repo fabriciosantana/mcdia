@@ -1,5 +1,7 @@
 dados/*
 !dados/.gitkeep
+.env
+cache_embeddings/
 out/
 *.aux
 *.bbl

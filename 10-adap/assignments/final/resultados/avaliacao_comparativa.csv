@@ -1,0 +1,31 @@
+metodo,id,tema,melhor_rank,hit_1,hit_5,hit_10,reciprocal_rank,primeiro_resultado
+TF-IDF,Q01,Previdência e pessoa com deficiência,3,0,1,1,0.3333333333333333,451159
+TF-IDF,Q02,Meio ambiente,1,1,1,1,1.0,453880
+TF-IDF,Q03,Direitos das mulheres,53,0,0,0,0.018867924528301886,472904
+TF-IDF,Q04,Educação,22,0,0,0,0.045454545454545456,488977
+TF-IDF,Q05,Economia e combustíveis,193,0,0,0,0.0051813471502590676,491748
+TF-IDF,Q06,Povos indígenas,1,1,1,1,1.0,450944
+TF-IDF,Q07,Desinformação,117,0,0,0,0.008547008547008548,494496
+TF-IDF,Q08,Inteligência artificial,2,0,1,1,0.5,481541
+TF-IDF,Q09,Armas e processo legislativo,13,0,0,0,0.07692307692307693,477756
+TF-IDF,Q10,Proteção de dados,56,0,0,0,0.017857142857142856,488301
+OpenAI,Q01,Previdência e pessoa com deficiência,55,0,0,0,0.01818181818181818,493132
+OpenAI,Q02,Meio ambiente,262,0,0,0,0.003816793893129771,456729
+OpenAI,Q03,Direitos das mulheres,10,0,0,1,0.1,492049
+OpenAI,Q04,Educação,790,0,0,0,0.0012658227848101266,479156
+OpenAI,Q05,Economia e combustíveis,3641,0,0,0,0.00027464982147761604,483891
+OpenAI,Q06,Povos indígenas,34,0,0,0,0.029411764705882353,477785
+OpenAI,Q07,Desinformação,2,0,1,1,0.5,481180
+OpenAI,Q08,Inteligência artificial,5,0,1,1,0.2,481513
+OpenAI,Q09,Armas e processo legislativo,4,0,1,1,0.25,454745
+OpenAI,Q10,Proteção de dados,80,0,0,0,0.0125,481545
+Híbrido RRF,Q01,Previdência e pessoa com deficiência,7,0,0,1,0.14285714285714285,451757
+Híbrido RRF,Q02,Meio ambiente,21,0,0,0,0.047619047619047616,490906
+Híbrido RRF,Q03,Direitos das mulheres,9,0,0,1,0.1111111111111111,456474
+Híbrido RRF,Q04,Educação,85,0,0,0,0.011764705882352941,482940
+Híbrido RRF,Q05,Economia e combustíveis,380,0,0,0,0.002631578947368421,486415
+Híbrido RRF,Q06,Povos indígenas,5,0,1,1,0.2,477785
+Híbrido RRF,Q07,Desinformação,14,0,0,0,0.07142857142857142,494496
+Híbrido RRF,Q08,Inteligência artificial,1,1,1,1,1.0,460304
+Híbrido RRF,Q09,Armas e processo legislativo,2,0,1,1,0.5,477756
+Híbrido RRF,Q10,Proteção de dados,36,0,0,0,0.027777777777777776,484476

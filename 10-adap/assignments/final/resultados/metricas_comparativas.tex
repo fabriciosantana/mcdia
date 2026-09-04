@@ -1,0 +1,13 @@
+\begin{table}
+\caption{Comparação dos métodos de recuperação.}
+\label{tab:recuperacao}
+\begin{tabular}{lrrrrrr}
+\toprule
+metodo & consultas & hit_1 & hit_5 & hit_10 & mrr & mediana_rank \\
+\midrule
+TF-IDF & 10 & 0.200 & 0.400 & 0.400 & 0.301 & 17.500 \\
+OpenAI & 10 & 0.000 & 0.300 & 0.400 & 0.112 & 44.500 \\
+Híbrido RRF & 10 & 0.100 & 0.300 & 0.500 & 0.212 & 11.500 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -24,6 +24,10 @@
 - Caso sejam incorporados embeddings ou geração em nuvem, criar `.env` ignorado
   pelo Git. Chaves prováveis: `OPENAI_API_KEY`; `HF_TOKEN` é opcional para o
   dataset público.
+- A integração de embeddings OpenAI foi preparada com
+  `text-embedding-3-large`, 512 dimensões, checkpoints retomáveis e fusão RRF.
+  O `.env` existe e está ignorado; a chave foi preenchida pelo usuário e a
+  execução efetiva foi concluída.
 
 ## Exigências do enunciado
 
@@ -80,12 +84,23 @@
 2. Ampliar os julgamentos de relevância da coleção inicial para permitir uma
    avaliação temática; a avaliação atual mede apenas localização de item
    conhecido por Hit@k e MRR.
-3. Decidir se haverá comparação empírica com recuperação vetorial ou híbrida.
-4. Revisar e ampliar as referências com fontes primárias e confirmar os dados
+3. Revisar e ampliar as referências com fontes primárias e confirmar os dados
    bibliográficos antes da entrega.
-5. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
+4. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
    abstenção e supervisão humana.
-6. Realizar revisão textual e visual final do PDF de quatro páginas.
+5. Realizar revisão textual e visual final do PDF de quatro páginas.
+
+O planejamento da execução vetorial contabilizou 15.039 documentos, 10
+perguntas, 19.926.075 tokens após truncamento explícito em 8.000 tokens por
+documento, 104 documentos truncados e 101 lotes. Após informar a chave, executar
+`python scripts/gerar_embeddings_openai.py` e, em seguida,
+`python scripts/avaliar_recuperacao.py`.
+
+A execução com `text-embedding-3-large` e 512 dimensões foi concluída. O cache
+consolidado ocupa aproximadamente 18,1 MB. Resultados comparativos: TF--IDF
+(Hit@1 0,20; Hit@5 0,40; Hit@10 0,40; MRR 0,301; mediana 17,5), OpenAI
+(0,00; 0,30; 0,40; 0,112; 44,5) e híbrido RRF (0,10; 0,30; 0,50; 0,212;
+11,5). O artigo e o notebook já incorporam a leitura crítica desses resultados.
 
 ## Comandos de retomada
 
