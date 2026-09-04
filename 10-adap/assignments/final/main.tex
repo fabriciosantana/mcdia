@@ -1,0 +1,144 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[round,authoryear]{natbib}
+
+\geometry{margin=2.5cm}
+\setstretch{1.15}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+\title{Recuperação aumentada por geração para análise auditável de discursos do Senado Federal}
+\author{Fabricio Santana\\
+  \small E-mail: \texttt{[PREENCHER]}\\
+  \small Órgão/área de atuação: [PREENCHER]}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Este short paper propõe uma solução de recuperação aumentada por geração
+(\textit{retrieval-augmented generation}, RAG) para apoiar a consulta auditável
+a pronunciamentos do Senado Federal. A proposta combina recuperação de
+informação, geração condicionada às evidências recuperadas e apresentação dos
+metadados das fontes. Busca-se reduzir o esforço necessário para localizar e
+sintetizar manifestações parlamentares sem substituir a análise humana nem
+atribuir ao modelo a verificação autônoma de fatos ou de conformidade. O corpus
+é composto pelos discursos da 56ª Legislatura, obtidos de fonte pública e
+disponibilizados em formato estruturado no Hugging Face. A avaliação proposta
+abrange qualidade dos dados, desempenho da recuperação e fidelidade das
+respostas às evidências. Espera-se produzir um mecanismo reprodutível de apoio
+à transparência e à accountability legislativa, acompanhado de trilhas de
+auditoria e salvaguardas contra respostas não fundamentadas.
+
+\noindent\textbf{Palavras-chave:} accountability; discursos parlamentares;
+recuperação de informação; RAG; inteligência artificial generativa.
+\end{abstract}
+
+\section{Contextualização e descrição do problema}
+
+O Senado Federal disponibiliza dados de pronunciamentos parlamentares em seu
+portal de dados abertos \citep{senadoDadosAbertos}. Embora a publicidade dos
+registros seja indispensável, o volume textual e a dispersão dos metadados
+dificultam a localização e a comparação manual de manifestações relacionadas a
+um tema, período ou parlamentar. Buscas estritamente lexicais também podem não
+recuperar documentos semanticamente próximos que empreguem vocabulários
+diferentes.
+
+Nesse contexto, propõe-se investigar como uma solução RAG auditável pode apoiar
+pesquisadores, servidores e instâncias de controle na consulta a pronunciamentos
+da 56ª Legislatura. O sistema terá natureza assistiva: deverá recuperar trechos,
+sintetizar apenas as evidências disponíveis e apresentar autor, data, partido,
+unidade da Federação e endereço da fonte. Não se pretende inferir intenção,
+determinar a veracidade de declarações nem automatizar juízos sobre parlamentares.
+
+\section{Fundamentação e técnica selecionada}
+
+A arquitetura RAG associa um mecanismo de recuperação documental a um modelo
+gerador, condicionando a resposta ao contexto selecionado
+\citep{lewis2020rag}. Em comparação com a consulta manual, a recuperação
+semântica amplia as formas de expressão aceitas; em comparação com o uso isolado
+de um modelo de linguagem, a recuperação oferece evidências verificáveis e
+reduz a dependência do conhecimento paramétrico do modelo.
+
+A escolha é adequada ao problema porque o objeto de análise é essencialmente
+textual e já contém metadados úteis à rastreabilidade. A auditabilidade, porém,
+depende de controles adicionais: versionamento do corpus, registro dos
+parâmetros, citações obrigatórias, possibilidade de abstenção e avaliação
+separada da recuperação e da geração.
+
+\section{Metodologia proposta e dados}
+
+O corpus será obtido diretamente do conjunto
+\path{fabriciosantana/discursos-senado-legislatura-56}, publicado no Hugging
+Face \citep{datasetDiscursos}. A base contém metadados dos pronunciamentos e o
+texto integral quando sua coleta foi bem-sucedida. Antes da indexação serão
+avaliados esquema, duplicidades, campos ausentes, cobertura textual, datas e
+consistência dos identificadores. A revisão também distinguirá falha de coleta
+de inexistência de discurso, evitando interpretar ausência de texto como
+ausência de atividade parlamentar.
+
+O fluxo proposto compreende: (1) download e registro de versão e hash do
+arquivo; (2) validação e normalização dos dados com Python e pandas; (3) seleção
+do texto e dos metadados; (4) segmentação dos discursos em trechos com
+sobreposição; (5) indexação lexical e vetorial; (6) recuperação híbrida dos
+trechos mais relevantes; (7) geração de resposta condicionada às evidências; e
+(8) apresentação das citações e armazenamento da trilha de execução.
+
+A avaliação utilizará perguntas definidas previamente e respectivos documentos
+relevantes. A etapa de recuperação será mensurada, conforme a disponibilidade
+de julgamentos de relevância, por \textit{Recall@k}, precisão em $k$ e
+\textit{Mean Reciprocal Rank}. A geração será examinada quanto à correção das
+citações, cobertura da pergunta, fidelidade aos trechos e capacidade de
+abstenção. Uma amostra será submetida à conferência humana, pois avaliações
+automáticas não substituem a inspeção das evidências.
+
+Os dados são públicos, mas o tratamento deverá observar finalidade,
+necessidade, integridade e segurança. A solução manterá os textos em seu
+contexto documental, respeitará a Lei de Acesso à Informação
+\citep{brasil2011lai} e considerará os princípios da Lei Geral de Proteção de
+Dados \citep{brasil2018lgpd}. Perfis ou classificações individuais não serão
+produzidos sem base metodológica e finalidade legítima.
+
+\section{Resultados esperados e impacto}
+
+Espera-se obter um protótipo capaz de responder a questões temáticas com links
+e metadados que permitam ao usuário conferir cada afirmação. Os principais
+entregáveis serão o corpus versionado, o índice de recuperação, um conjunto de
+perguntas de avaliação, métricas reprodutíveis e registros das evidências usadas
+em cada resposta.
+
+A aplicação pode reduzir o tempo de pesquisa e ampliar a cobertura documental
+de análises legislativas. Seus resultados devem ser entendidos como subsídio,
+e não como prova autônoma. Entre as limitações estão discursos sem texto
+integral, erros nos metadados, perda de contexto durante a segmentação, falhas
+de recuperação, vieses do corpus e alucinações do modelo gerador. Falsos
+negativos podem omitir pronunciamentos relevantes, enquanto falsos positivos
+podem associar trechos apenas superficialmente relacionados à pergunta.
+
+\section{Considerações finais}
+
+A proposta articula transparência legislativa, governança de dados e IA
+generativa em um fluxo que privilegia a rastreabilidade. Sua viabilidade decorre
+da existência de dados públicos estruturados e de ferramentas maduras para
+preparação, indexação e avaliação. Como próximos passos, serão construídos o
+conjunto de referência, a comparação entre recuperação lexical, vetorial e
+híbrida e os critérios de abstenção. A adoção institucional dependerá ainda de
+validação com usuários, monitoramento contínuo e definição explícita de
+responsabilidades sobre as conclusões produzidas.
+
+\bibliographystyle{plainnat}
+\bibliography{referencias}
+
+\end{document}
