@@ -2,6 +2,7 @@ dados/*
 !dados/.gitkeep
 .env
 cache_embeddings/
+resultados/julgamentos_llm_checkpoint.jsonl
 out/
 *.aux
 *.bbl

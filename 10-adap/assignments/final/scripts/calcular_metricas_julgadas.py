@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import math
 from pathlib import Path
 
@@ -17,10 +18,19 @@ def dcg(relevancias: list[int]) -> float:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--fonte", choices=("humano", "llm"), default="humano")
+    args = parser.parse_args()
     resultados = RAIZ / "resultados"
-    revisao = pd.read_excel(resultados / "pool_julgamento.xlsx", sheet_name="Julgamento")
+    if args.fonte == "llm":
+        revisao = pd.read_csv(resultados / "pool_julgado_llm.csv")
+        valores = pd.to_numeric(revisao["relevancia_final"], errors="coerce")
+        sufixo = "llm"
+    else:
+        revisao = pd.read_excel(resultados / "pool_julgamento.xlsx", sheet_name="Julgamento")
+        valores = pd.to_numeric(revisao["julgamento_relevancia"], errors="coerce")
+        sufixo = "humanas"
     chave = pd.read_csv(resultados / "pool_chave_metodos.csv")
-    valores = pd.to_numeric(revisao["julgamento_relevancia"], errors="coerce")
     invalidos = revisao.loc[~valores.isin([0, 1, 2]), "item_id"].tolist()
     if invalidos:
         raise ValueError(
@@ -64,10 +74,10 @@ def main() -> None:
         mrr_pool=("mrr_pool", "mean"),
         ndcg_10=("ndcg_10", "mean"),
     ).reset_index()
-    detalhado.to_csv(resultados / "metricas_julgadas_por_pergunta.csv", index=False)
-    resumo.to_csv(resultados / "metricas_julgadas_resumo.csv", index=False)
+    detalhado.to_csv(resultados / f"metricas_julgadas_{sufixo}_por_pergunta.csv", index=False)
+    resumo.to_csv(resultados / f"metricas_julgadas_{sufixo}_resumo.csv", index=False)
     resumo.to_latex(
-        resultados / "metricas_julgadas_resumo.tex", index=False,
+        resultados / f"metricas_julgadas_{sufixo}_resumo.tex", index=False,
         float_format="%.3f", caption="Desempenho no pool com julgamento humano.",
         label="tab:metricas-julgadas",
     )

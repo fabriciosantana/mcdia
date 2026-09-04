@@ -1,0 +1,16 @@
+{
+  "modelo": "gpt-5.4-mini-2026-03-17",
+  "itens": 205,
+  "concordancia_exata_passagens": 0.6292682926829268,
+  "kappa_ponderado_quadratico": 0.6898519639197962,
+  "divergencias": 76,
+  "adjudicacoes": 136,
+  "distribuicao_rotulos": {
+    "0": 43,
+    "1": 80,
+    "2": 82
+  },
+  "input_tokens": 455893,
+  "output_tokens": 65167,
+  "amostra_humana": 40
+}

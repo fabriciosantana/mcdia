@@ -105,6 +105,13 @@ mede busca de item conhecido por Hit@$k$ e \textit{Mean Reciprocal Rank} (MRR),
 mas não estima \textit{recall} temático, pois outros documentos potencialmente
 relevantes ainda não foram julgados.
 
+Para ampliar os julgamentos, reuniu-se a união dos dez primeiros resultados de
+cada método, totalizando 205 pares após deduplicação. Um LLM avaliador, sem
+acesso ao método ou à posição, atribuiu relevância 0, 1 ou 2 em duas passagens.
+Divergências, baixa confiança ou evidência insuficiente foram adjudicadas por
+uma terceira chamada com contexto ampliado. Uma amostra estratificada de 40
+itens foi reservada para posterior validação por especialista.
+
 Os dados são públicos, mas o tratamento deverá observar finalidade,
 necessidade, integridade e segurança. A solução manterá os textos em seu
 contexto documental, respeitará a Lei de Acesso à Informação
@@ -142,6 +149,13 @@ podem favorecer correspondências lexicais; o índice contém apenas o texto
 integral, e apenas um documento foi rotulado por consulta. Logo, as diferenças
 não permitem generalização estatística e devem orientar uma avaliação temática
 com julgamentos mais abrangentes.
+
+Nas duas passagens do juiz, a concordância exata foi 62,9\% e o kappa ponderado
+quadrático foi 0,690; 136 itens exigiram adjudicação. Com os rótulos finais do
+LLM, o híbrido obteve os maiores valores de Precision@5 (0,92), Precision@10
+(0,89), recall dentro do pool em dez resultados (0,566) e nDCG@10 (0,840). Os
+valores são preliminares: medem concordância com o juiz automatizado e somente
+serão usados como evidência final após a validação da amostra humana.
 
 Espera-se que o protótipo completo responda a questões temáticas com links e
 metadados que permitam ao usuário conferir cada afirmação. Os principais

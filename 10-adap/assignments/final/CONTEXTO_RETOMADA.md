@@ -81,9 +81,8 @@
 ## Pendências conhecidas
 
 1. Incluir um diagrama simples do pipeline proposto, se houver espaço.
-2. Ampliar os julgamentos de relevância da coleção inicial para permitir uma
-   avaliação temática; a avaliação atual mede apenas localização de item
-   conhecido por Hit@k e MRR.
+2. Preencher os 40 itens de `amostra_validacao_humana.xlsx` para validar o juiz
+   automatizado e calcular concordância com o especialista.
 3. Revisar e ampliar as referências com fontes primárias e confirmar os dados
    bibliográficos antes da entrega.
 4. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
@@ -109,6 +108,16 @@ revisão em `resultados/pool_julgamento.xlsx`. O avaliador deve preencher apenas
 `pool_chave_metodos.csv`. O script `scripts/calcular_metricas_julgadas.py`
 calcula Precision@5, Precision@10, recall dentro do pool, MRR e nDCG@10 depois
 que todos os itens forem julgados.
+
+Foi executado julgamento cego com `gpt-5.4-mini-2026-03-17`: duas passagens por
+item e adjudicação nos casos divergentes, de baixa confiança ou insuficientes.
+Houve concordância exata de 62,9%, kappa ponderado quadrático de 0,690, 76
+divergências e 136 adjudicações. Distribuição final: 43 itens com rótulo 0, 80
+com rótulo 1 e 82 com rótulo 2. O consumo foi 455.893 tokens de entrada e
+65.167 de saída. Com esses rótulos, o híbrido obteve Precision@5 0,92,
+Precision@10 0,89, recall no pool 0,566 e nDCG@10 0,840. Uma amostra
+estratificada de 40 itens está em `resultados/amostra_validacao_humana.xlsx` e
+ainda precisa de julgamento do especialista.
 
 ## Comandos de retomada
 
