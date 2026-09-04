@@ -19,9 +19,9 @@
 \setlength{\parskip}{0pt}
 
 \title{Recuperação aumentada por geração para análise auditável de discursos do Senado Federal}
-\author{Fabricio Santana\\
-  \small E-mail: \texttt{[PREENCHER]}\\
-  \small Órgão/área de atuação: [PREENCHER]}
+\author{Fabricio Fernandes Santana\\
+  \small E-mail: \texttt{fabricio.santana@gmail.com}\\
+  \small Senado Federal --- Coordenadoria de Informática Legislativa}
 \date{}
 
 \begin{document}
@@ -80,9 +80,8 @@ separada da recuperação e da geração.
 
 \section{Metodologia proposta e dados}
 
-O corpus será obtido diretamente do conjunto
-\path{fabriciosantana/discursos-senado-legislatura-56}, publicado no Hugging
-Face \citep{datasetDiscursos}. A base contém metadados dos pronunciamentos e o
+O corpus será obtido diretamente do conjunto de discursos da 56ª Legislatura,
+publicado no Hugging Face por \citet{datasetDiscursos}. A base contém metadados dos pronunciamentos e o
 texto integral quando sua coleta foi bem-sucedida. Antes da indexação serão
 avaliados esquema, duplicidades, campos ausentes, cobertura textual, datas e
 consistência dos identificadores. A revisão também distinguirá falha de coleta
@@ -96,13 +95,14 @@ sobreposição; (5) indexação lexical e vetorial; (6) recuperação híbrida d
 trechos mais relevantes; (7) geração de resposta condicionada às evidências; e
 (8) apresentação das citações e armazenamento da trilha de execução.
 
-A avaliação utilizará perguntas definidas previamente e respectivos documentos
-relevantes. A etapa de recuperação será mensurada, conforme a disponibilidade
-de julgamentos de relevância, por \textit{Recall@k}, precisão em $k$ e
-\textit{Mean Reciprocal Rank}. A geração será examinada quanto à correção das
-citações, cobertura da pergunta, fidelidade aos trechos e capacidade de
-abstenção. Uma amostra será submetida à conferência humana, pois avaliações
-automáticas não substituem a inspeção das evidências.
+A prova de conceito usa TF--IDF com unigramas e bigramas e similaridade do
+cosseno. Foram elaboradas dez perguntas a partir dos resumos oficiais, cada uma
+associada a um pronunciamento conhecido, enquanto somente os textos integrais
+formaram o índice. O experimento mede busca de item conhecido por Hit@$k$ e
+\textit{Mean Reciprocal Rank} (MRR). Ele não estima \textit{recall} temático,
+pois outros documentos potencialmente relevantes ainda não foram julgados. A
+avaliação futura da geração deverá examinar correção das citações, cobertura da
+pergunta, fidelidade aos trechos e capacidade de abstenção.
 
 Os dados são públicos, mas o tratamento deverá observar finalidade,
 necessidade, integridade e segurança. A solução manterá os textos em seu
@@ -111,11 +111,33 @@ contexto documental, respeitará a Lei de Acesso à Informação
 Dados \citep{brasil2018lgpd}. Perfis ou classificações individuais não serão
 produzidos sem base metodológica e finalidade legítima.
 
-\section{Resultados esperados e impacto}
+\section{Resultados e impacto esperado}
 
-Espera-se obter um protótipo capaz de responder a questões temáticas com links
-e metadados que permitam ao usuário conferir cada afirmação. Os principais
-entregáveis serão o corpus versionado, o índice de recuperação, um conjunto de
+A auditoria identificou 15.729 pronunciamentos e 15.039 textos integrais
+disponíveis, correspondentes a 95,61\% do corpus. Não foram encontrados
+identificadores duplicados nem datas inválidas; partido e unidade da Federação
+estavam ausentes em 2.074 registros. Essa ausência coincide principalmente com
+autores externos e deve ser distinguida de erro cadastral. O corpus abrange 1º
+de fevereiro de 2019 a 10 de janeiro de 2023, 1.794 autores e 32 partidos.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{figuras/cobertura_temporal.pdf}
+  \caption{Pronunciamentos e disponibilidade de texto integral por mês.}
+  \label{fig:cobertura}
+\end{figure}
+
+No baseline, o pronunciamento conhecido foi recuperado na primeira posição em
+20\% das dez consultas, nas cinco primeiras posições em 40\% e nas dez
+primeiras também em 40\%. O MRR foi 0,301 e a mediana da melhor posição foi
+17,5. O resultado demonstra a viabilidade do fluxo, mas também mostra que a
+correspondência lexical isolada é insuficiente para várias formulações. Isso
+fundamenta a comparação posterior com recuperação vetorial e fusão híbrida, sem
+pressupor que maior similaridade semântica garantirá relevância.
+
+Espera-se que o protótipo completo responda a questões temáticas com links e
+metadados que permitam ao usuário conferir cada afirmação. Os principais
+entregáveis serão o corpus versionado, o índice de recuperação, o conjunto de
 perguntas de avaliação, métricas reprodutíveis e registros das evidências usadas
 em cada resposta.
 
@@ -132,9 +154,10 @@ podem associar trechos apenas superficialmente relacionados à pergunta.
 A proposta articula transparência legislativa, governança de dados e IA
 generativa em um fluxo que privilegia a rastreabilidade. Sua viabilidade decorre
 da existência de dados públicos estruturados e de ferramentas maduras para
-preparação, indexação e avaliação. Como próximos passos, serão construídos o
-conjunto de referência, a comparação entre recuperação lexical, vetorial e
-híbrida e os critérios de abstenção. A adoção institucional dependerá ainda de
+preparação, indexação e avaliação. Como próximos passos, o conjunto inicial de
+referência deverá receber julgamentos adicionais, seguidos da comparação entre
+recuperação lexical, vetorial e híbrida e da definição dos critérios de
+abstenção. A adoção institucional dependerá ainda de
 validação com usuários, monitoramento contínuo e definição explícita de
 responsabilidades sobre as conclusões produzidas.
 

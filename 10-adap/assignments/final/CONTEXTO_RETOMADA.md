@@ -18,6 +18,9 @@
   parlamentares, verificar fatos ou inferir intenções.
 - O notebook atual deve permanecer reproduzível sem serviços pagos ou chaves de
   API. O baseline é lexical, baseado em TF–IDF.
+- Identificação informada: Fabricio Fernandes Santana, Coordenador de
+  Informática Legislativa no Senado Federal, e-mail
+  `fabricio.santana@gmail.com`.
 - Caso sejam incorporados embeddings ou geração em nuvem, criar `.env` ignorado
   pelo Git. Chaves prováveis: `OPENAI_API_KEY`; `HF_TOKEN` é opcional para o
   dataset público.
@@ -64,24 +67,25 @@
   50 mil termos.
 - O notebook foi executado integralmente sem erro.
 - O LaTeX foi compilado integralmente sem erro para `out/main.pdf`.
-- O PDF atual tem três páginas e deverá chegar a 4--6 após incorporar resultados,
-  tabela, figura e maior detalhamento metodológico.
+- Foi criada uma coleção inicial de dez consultas de localização de item
+  conhecido em `avaliacao/perguntas_referencia.json`.
+- Resultados do TF--IDF em dez consultas: Hit@1 = 0,20; Hit@5 = 0,40;
+  Hit@10 = 0,40; MRR = 0,301; mediana do melhor rank = 17,5.
+- Os resultados e a figura temporal foram incorporados ao artigo, que passou a
+  quatro páginas e permaneceu compilando sem erros.
 
 ## Pendências conhecidas
 
-1. Preencher no artigo o e-mail e o órgão/área de atuação de Fabricio Santana.
-2. Incorporar ao `main.tex` os resultados efetivos do notebook, evitando tratar
-   resultados esperados como resultados já medidos.
-3. Inserir a tabela de qualidade e a figura temporal no artigo.
-4. Incluir um diagrama simples do pipeline proposto.
-5. Definir um pequeno conjunto de perguntas e julgamentos de relevância para
-   demonstrar como Recall@k e MRR seriam calculados; decidir se haverá avaliação
-   empírica ou apenas protocolo proposto.
-6. Revisar e ampliar as referências com fontes primárias e confirmar os dados
+1. Incluir um diagrama simples do pipeline proposto, se houver espaço.
+2. Ampliar os julgamentos de relevância da coleção inicial para permitir uma
+   avaliação temática; a avaliação atual mede apenas localização de item
+   conhecido por Hit@k e MRR.
+3. Decidir se haverá comparação empírica com recuperação vetorial ou híbrida.
+4. Revisar e ampliar as referências com fontes primárias e confirmar os dados
    bibliográficos antes da entrega.
-7. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
+5. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
    abstenção e supervisão humana.
-8. Ajustar o texto final para 4--6 páginas e realizar revisão visual do PDF.
+6. Realizar revisão textual e visual final do PDF de quatro páginas.
 
 ## Comandos de retomada
 

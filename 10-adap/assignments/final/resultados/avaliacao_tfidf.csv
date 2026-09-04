@@ -1,0 +1,11 @@
+id,tema,melhor_rank,hit_1,hit_5,hit_10,reciprocal_rank,primeiro_resultado
+Q01,Previdência e pessoa com deficiência,3,0,1,1,0.3333333333333333,451159
+Q02,Meio ambiente,1,1,1,1,1.0,453880
+Q03,Direitos das mulheres,53,0,0,0,0.018867924528301886,472904
+Q04,Educação,22,0,0,0,0.045454545454545456,488977
+Q05,Economia e combustíveis,193,0,0,0,0.0051813471502590676,491748
+Q06,Povos indígenas,1,1,1,1,1.0,450944
+Q07,Desinformação,117,0,0,0,0.008547008547008548,494496
+Q08,Inteligência artificial,2,0,1,1,0.5,481541
+Q09,Armas e processo legislativo,13,0,0,0,0.07692307692307693,477756
+Q10,Proteção de dados,56,0,0,0,0.017857142857142856,488301

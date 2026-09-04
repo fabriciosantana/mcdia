@@ -9,6 +9,8 @@ auditável para consulta a discursos do Senado Federal.
 - `referencias.bib`: referências bibliográficas;
 - `analise_corpus_discursos.ipynb`: auditoria, caracterização, segmentação e
   baseline de recuperação lexical;
+- `avaliacao/perguntas_referencia.json`: coleção inicial de perguntas e
+  documentos conhecidos para avaliação da recuperação;
 - `scripts/baixar_dados_hf.py`: download reproduzível do corpus no Hugging Face;
 - `dados/`: dados baixados localmente (ignorados pelo Git);
 - `resultados/`: tabelas produzidas pelo notebook;

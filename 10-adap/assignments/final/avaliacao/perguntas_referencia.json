@@ -1,0 +1,62 @@
+[
+  {
+    "id": "Q01",
+    "pergunta": "Qual pronunciamento tratou do impacto da reforma da previdência sobre o Estatuto da Pessoa com Deficiência e a avaliação da deficiência?",
+    "documentos_relevantes": ["451285"],
+    "tema": "Previdência e pessoa com deficiência"
+  },
+  {
+    "id": "Q02",
+    "pergunta": "Qual discurso alertou para aumento do desmatamento da Amazônia relacionado ao uso de recursos do Fundo Amazônia para regularização fundiária?",
+    "documentos_relevantes": ["453880"],
+    "tema": "Meio ambiente"
+  },
+  {
+    "id": "Q03",
+    "pergunta": "Qual pronunciamento solicitou que o Senado se posicionasse ativamente contra a violência à mulher e em defesa dos direitos femininos?",
+    "documentos_relevantes": ["451492"],
+    "tema": "Direitos das mulheres"
+  },
+  {
+    "id": "Q04",
+    "pergunta": "Qual discurso abordou a história da educação brasileira desde 1930, o futuro do Fundeb e a importância de diretores e professores?",
+    "documentos_relevantes": ["454159"],
+    "tema": "Educação"
+  },
+  {
+    "id": "Q05",
+    "pergunta": "Qual pronunciamento relacionou o endividamento das famílias ao aumento do preço dos combustíveis anunciado pela Petrobras?",
+    "documentos_relevantes": ["452012"],
+    "tema": "Economia e combustíveis"
+  },
+  {
+    "id": "Q06",
+    "pergunta": "Qual discurso denunciou a ocupação da terra indígena Uru Eu Uau Uau em Rondônia e pediu atuação da Polícia Federal?",
+    "documentos_relevantes": ["450944"],
+    "tema": "Povos indígenas"
+  },
+  {
+    "id": "Q07",
+    "pergunta": "Qual pronunciamento discutiu fake news sobre a pandemia e defendeu a importância do Projeto de Lei 2630 de 2020?",
+    "documentos_relevantes": ["468065"],
+    "tema": "Desinformação"
+  },
+  {
+    "id": "Q08",
+    "pergunta": "Qual pronunciamento defendeu projeto de lei destinado a estabelecer princípios para o uso da inteligência artificial no Brasil?",
+    "documentos_relevantes": ["460304"],
+    "tema": "Inteligência artificial"
+  },
+  {
+    "id": "Q09",
+    "pergunta": "Qual pronunciamento respondeu questão de ordem sobre a retirada de pauta do PDL 55 de 2021 relativo à flexibilização da aquisição de armas?",
+    "documentos_relevantes": ["477798"],
+    "tema": "Armas e processo legislativo"
+  },
+  {
+    "id": "Q10",
+    "pergunta": "Qual pronunciamento apresentou uma reflexão sobre a proteção de dados pessoais na atualidade?",
+    "documentos_relevantes": ["454036"],
+    "tema": "Proteção de dados"
+  }
+]
