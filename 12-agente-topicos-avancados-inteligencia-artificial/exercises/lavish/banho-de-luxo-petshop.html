@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banho de Luxo | Pet Spa</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :where(.grid, .flex) > * { min-width: 0; }
+    :where(p, h1, h2, h3, label, span) { overflow-wrap: anywhere; }
+    body {
+      margin: 0;
+      background: #fbfaff;
+      color: #45444d;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    .sans { font-family: Arial, Helvetica, sans-serif; }
+    .sun { color: #70419a; }
+    .soft-shadow { box-shadow: 0 22px 60px rgba(53, 66, 207, .14); }
+    .hero-art {
+      background: linear-gradient(125deg, rgba(112,65,154,.32), rgba(53,66,207,.08)),
+        url("https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=85") center/cover;
+    }
+    .generated-art {
+      background: linear-gradient(0deg, rgba(53,66,207,.50), rgba(112,65,154,.08)),
+        url("https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1200&q=85") center/cover;
+    }
+    .paw { letter-spacing: .05em; }
+    #previewImage { display: none; }
+    #resultPanel { display: none; }
+    #uploadPanel.has-image #dropContent { display: none; }
+    #uploadPanel.has-image #previewImage { display: block; }
+    @media (max-width: 640px) { .steps .step { font-size: .72rem; } }
+  </style>
+</head>
+<body>
+  <header class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-8">
+    <a class="flex items-center gap-3" href="#" aria-label="Pet Spa, página inicial">
+      <span class="flex h-11 w-11 items-center justify-center rounded-full bg-[#3542cf] text-xl text-white">✦</span>
+      <span><strong class="text-xl tracking-tight text-[#3542cf]">Pet Spa</strong><span class="block sans text-[10px] font-bold tracking-[.22em] text-[#6f6c79]">GROOMING &amp; BEM-ESTAR</span></span>
+    </a>
+    <nav class="sans hidden items-center gap-7 text-sm font-bold text-[#514e5d] md:flex">
+      <a href="#como-funciona">Como funciona</a><a href="#servicos">Serviços</a><a href="#unidades">Unidades</a>
+    </nav>
+    <a class="btn rounded-full border-0 bg-[#3542cf] px-5 text-white hover:bg-[#2935aa]" href="#experiencia">Agendar banho</a>
+  </header>
+
+  <main>
+    <section class="mx-auto grid max-w-7xl gap-9 px-5 pb-14 pt-7 lg:grid-cols-[1.02fr_.98fr] lg:items-center lg:px-8 lg:pb-24">
+      <div class="order-2 lg:order-1">
+        <div class="sans mb-5 inline-flex items-center gap-2 rounded-full bg-[#70419a]/15 px-4 py-2 text-xs font-bold tracking-wide text-[#56356e]"><span>✦</span> A EXPERIÊNCIA PET SPA</div>
+        <h1 class="max-w-xl text-5xl leading-[.96] tracking-tight text-[#3542cf] sm:text-6xl lg:text-7xl">O banho dos sonhos do seu melhor amigo.</h1>
+        <p class="sans mt-6 max-w-lg text-lg leading-relaxed text-[#5b5964]">Envie uma foto e veja seu cachorro em uma experiência de spa exclusiva. Depois, é só reservar seu cuidado de verdade.</p>
+        <a href="#experiencia" class="btn mt-8 rounded-full border-0 bg-[#70419a] px-7 text-white hover:bg-[#5d3580]">Criar meu retrato <span aria-hidden="true">→</span></a>
+        <div class="sans mt-10 flex gap-7 text-sm text-[#5b5964]"><span><strong class="block text-xl text-[#3542cf]">+12 mil</strong>pets cuidados</span><span><strong class="block text-xl text-[#3542cf]">4.9/5</strong>amor em cada visita</span></div>
+      </div>
+      <div class="hero-art soft-shadow order-1 min-h-90 overflow-hidden rounded-[2.5rem] p-6 sm:min-h-125 lg:order-2">
+        <div class="ml-auto w-fit rounded-2xl bg-white/90 px-4 py-3 backdrop-blur"><span class="sans text-xs font-bold text-[#3542cf]">banho &amp; tosa com carinho</span></div>
+      </div>
+    </section>
+
+    <section id="experiencia" class="bg-[#3542cf] px-5 py-16 lg:px-8 lg:py-24">
+      <div class="mx-auto max-w-6xl">
+        <div class="text-center">
+          <p class="sans text-xs font-bold tracking-[.2em] text-[#e6ddf3]">UM GOSTINHO DO PET SPA</p>
+          <h2 class="mt-3 text-4xl text-white sm:text-5xl">Do clique ao banho em três passos.</h2>
+        </div>
+        <ul class="steps steps-vertical mt-11 w-full text-white sm:steps-horizontal">
+          <li class="step step-warning">Envie uma foto</li><li class="step step-warning">Veja o retrato mágico</li><li class="step">Reserve o banho</li>
+        </ul>
+
+        <div class="mt-12 grid gap-7 lg:grid-cols-2">
+          <section id="uploadPanel" class="rounded-[2rem] bg-[#f3f1f8] p-6 sm:p-9">
+            <span class="sans rounded-full bg-[#70419a]/15 px-3 py-1 text-xs font-bold text-[#56356e]">PASSO 1</span>
+            <h3 class="mt-5 text-3xl text-[#3542cf]">Quem vai ganhar esse spa?</h3>
+            <p class="sans mt-3 text-[#5b5964]">Escolha uma foto bem iluminada do rostinho do seu cachorro.</p>
+            <label for="petPhoto" class="mt-6 block cursor-pointer overflow-hidden rounded-3xl border-2 border-dashed border-[#b8b4c8] bg-white p-5 transition hover:border-[#70419a]">
+              <img id="previewImage" class="h-54 w-full rounded-2xl object-cover" alt="Prévia da foto selecionada">
+              <div id="dropContent" class="py-10 text-center">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#ebe9f4] text-2xl text-[#70419a]">♧</div>
+                <p class="sans mt-4 font-bold text-[#3542cf]">Clique para escolher a foto</p>
+                <p class="sans mt-1 text-sm text-[#787483]">JPG ou PNG, até 10 MB</p>
+              </div>
+            </label>
+            <input id="petPhoto" class="hidden" type="file" accept="image/png,image/jpeg">
+            <button id="generateButton" class="btn mt-5 w-full rounded-full border-0 bg-[#3542cf] text-white hover:bg-[#2935aa]">Criar banho de luxo <span aria-hidden="true">✦</span></button>
+            <p class="sans mt-3 text-center text-xs text-[#787483]">Protótipo: a imagem é usada somente nesta demonstração.</p>
+          </section>
+
+          <section id="resultPanel" class="rounded-[2rem] bg-white p-4 sm:p-5">
+            <div class="generated-art relative flex min-h-112 flex-col justify-between rounded-[1.45rem] p-6">
+              <span class="sans w-fit rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-[#3542cf]">RETRATO PRONTO ✦</span>
+              <div class="rounded-2xl bg-[#3542cf]/90 p-5 text-white backdrop-blur">
+                <p class="sans text-xs font-bold tracking-wider text-[#e6ddf3]">SEU PET MERECE ISSO DE VERDADE</p>
+                <h3 class="mt-1 text-3xl leading-tight">Hora de transformar fantasia em cuidado.</h3>
+                <button class="btn mt-4 rounded-full border-0 bg-[#70419a] text-white hover:bg-[#5d3580]" onclick="bookingModal.showModal()">Agendar banho agora <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </section>
+
+          <section id="emptyResult" class="flex min-h-112 flex-col items-center justify-center rounded-[2rem] border border-dashed border-[#c9c3df] p-8 text-center">
+            <span class="text-4xl text-[#e6ddf3]">✦</span><h3 class="mt-5 text-3xl text-white">A magia começa com uma foto.</h3><p class="sans mt-3 max-w-sm text-[#e7e5f0]">Vamos criar um retrato que deixa qualquer rabo abanando.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="mx-auto max-w-6xl px-5 py-17 lg:px-8">
+      <div class="grid gap-8 md:grid-cols-3">
+        <article class="rounded-3xl bg-[#f0eef7] p-7"><span class="paw sun text-2xl">01</span><h3 class="mt-6 text-2xl text-[#3542cf]">Cuidado que acolhe</h3><p class="sans mt-3 text-[#5b5964]">Produtos suaves, água na temperatura ideal e muita paciência.</p></article>
+        <article class="rounded-3xl bg-[#f5edf9] p-7"><span class="paw text-2xl text-[#70419a]">02</span><h3 class="mt-6 text-2xl text-[#3542cf]">Detalhes que encantam</h3><p class="sans mt-3 text-[#5b5964]">Perfume delicado, laço especial e uma foto para guardar.</p></article>
+        <article class="rounded-3xl bg-[#70419a] p-7 text-white"><span class="paw text-2xl text-[#e6ddf3]">03</span><h3 class="mt-6 text-2xl">Bem-estar de verdade</h3><p class="sans mt-3 text-[#f0ebf6]">Profissionais apaixonados por cuidar de cada personalidade.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sans bg-[#292342] px-5 py-8 text-center text-sm text-[#e7e5f0]">Pet Spa · carinho que faz bem <span class="mx-2 text-[#cfc0e4]">✦</span> banho &amp; tosa premium</footer>
+
+  <dialog id="bookingModal" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box rounded-[2rem] bg-[#fbfaff]">
+      <span class="sans rounded-full bg-[#70419a]/15 px-3 py-1 text-xs font-bold text-[#56356e]">PRÓXIMO PASSO</span>
+      <h3 class="mt-4 text-3xl text-[#3542cf]">Vamos marcar esse momento?</h3>
+      <p class="sans mt-2 text-[#5b5964]">Escolha o melhor dia e nossa equipe confirma tudo por WhatsApp.</p>
+      <fieldset class="fieldset mt-5"><legend class="fieldset-legend sans text-[#3542cf]">Seu WhatsApp</legend><input class="input w-full border-[#d6d2e3] bg-white" placeholder="(00) 00000-0000" type="tel"></fieldset>
+      <fieldset class="fieldset"><legend class="fieldset-legend sans text-[#3542cf]">Unidade preferida</legend><select class="select w-full border-[#d6d2e3] bg-white"><option>Jardins</option><option>Vila Madalena</option><option>Pinheiros</option></select></fieldset>
+      <div class="modal-action"><form method="dialog" class="flex w-full gap-3"><button class="btn flex-1 rounded-full btn-ghost">Agora não</button><button class="btn flex-1 rounded-full border-0 bg-[#3542cf] text-white hover:bg-[#2935aa]">Pedir agendamento</button></form></div>
+    </div>
+  </dialog>
+
+  <script>
+    const photoInput = document.getElementById('petPhoto');
+    const uploadPanel = document.getElementById('uploadPanel');
+    const previewImage = document.getElementById('previewImage');
+    const generateButton = document.getElementById('generateButton');
+    const resultPanel = document.getElementById('resultPanel');
+    const emptyResult = document.getElementById('emptyResult');
+
+    photoInput.addEventListener('change', () => {
+      const [file] = photoInput.files;
+      if (!file) return;
+      previewImage.src = URL.createObjectURL(file);
+      uploadPanel.classList.add('has-image');
+    });
+
+    generateButton.addEventListener('click', () => {
+      generateButton.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Criando o retrato...';
+      generateButton.disabled = true;
+      window.setTimeout(() => {
+        resultPanel.style.display = 'block';
+        emptyResult.style.display = 'none';
+        generateButton.innerHTML = 'Retrato criado <span aria-hidden="true">✓</span>';
+      }, 950);
+    });
+  </script>
+</body>
+</html>

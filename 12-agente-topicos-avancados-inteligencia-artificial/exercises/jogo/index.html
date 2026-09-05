@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Sol Errante</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; overflow: hidden;
+    background: #05060a;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #eee;
+  }
+  #ui {
+    position: fixed; top: 0; right: 0; width: 260px; height: 100%;
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(6px);
+    border-left: 1px solid #333;
+    padding: 16px; box-sizing: border-box;
+    z-index: 10;
+    overflow-y: auto;
+  }
+  #ui h2 { font-size: 16px; margin: 0 0 12px; color: #ffcf8a; }
+  .ctrl { margin-bottom: 18px; }
+  .ctrl label { display: block; font-size: 12px; margin-bottom: 4px; color: #bbb; }
+  .ctrl input[type=range] { width: 100%; }
+  .ctrl .val { float: right; color: #ffcf8a; }
+  #info {
+    position: fixed; left: 10px; bottom: 10px; font-size: 12px; color: #888;
+    z-index: 10;
+  }
+  canvas { display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="ui">
+  <h2>☀ Controles</h2>
+  <div class="ctrl">
+    <label>Inércia (massa) <span class="val" id="v-massa">6</span></label>
+    <input type="range" id="massa" min="1" max="20" step="0.5" value="6">
+  </div>
+  <div class="ctrl">
+    <label>Aleatoriedade do movimento <span class="val" id="v-rand">3</span></label>
+    <input type="range" id="rand" min="0" max="15" step="0.5" value="3">
+  </div>
+  <div class="ctrl">
+    <label>Quantidade de obstáculos <span class="val" id="v-obs">6</span></label>
+    <input type="range" id="obs" min="0" max="20" step="1" value="6">
+  </div>
+  <div class="ctrl">
+    <label>Força do arraste <span class="val" id="v-forca">1</span></label>
+    <input type="range" id="forca" min="0.1" max="3" step="0.1" value="1">
+  </div>
+</div>
+<div id="info">Clique e arraste sobre a bola, na direção que quer empurrá-la, e solte.</div>
+
+<script>
+(() => {
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth - 260;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// ---------- Controles ----------
+const els = {
+  massa: document.getElementById('massa'),
+  rand: document.getElementById('rand'),
+  obs: document.getElementById('obs'),
+  forca: document.getElementById('forca'),
+};
+const vals = {
+  massa: document.getElementById('v-massa'),
+  rand: document.getElementById('v-rand'),
+  obs: document.getElementById('v-obs'),
+  forca: document.getElementById('v-forca'),
+};
+function syncVals() {
+  vals.massa.textContent = els.massa.value;
+  vals.rand.textContent = els.rand.value;
+  vals.obs.textContent = els.obs.value;
+  vals.forca.textContent = els.forca.value;
+}
+Object.values(els).forEach(el => el.addEventListener('input', () => {
+  syncVals();
+  if (el === els.obs) buildObstacles();
+}));
+syncVals();
+
+// ---------- Bola (sol) ----------
+const ball = {
+  x: 0, y: 0, r: 34,
+  vx: 2, vy: 1.4,
+};
+
+function resetBallPos() {
+  ball.x = canvas.width / 2;
+  ball.y = canvas.height / 2;
+}
+resetBallPos();
+
+// ---------- Obstáculos ----------
+let obstacles = [];
+function buildObstacles() {
+  const n = parseInt(els.obs.value, 10);
+  obstacles = [];
+  for (let i = 0; i < n; i++) {
+    let tries = 0;
+    let ox, oy, orad;
+    do {
+      orad = 20 + Math.random() * 35;
+      ox = orad + Math.random() * (canvas.width - orad * 2);
+      oy = orad + Math.random() * (canvas.height - orad * 2);
+      tries++;
+    } while (
+      tries < 50 &&
+      Math.hypot(ox - ball.x, oy - ball.y) < orad + ball.r + 60
+    );
+    obstacles.push({ x: ox, y: oy, r: orad, hue: 190 + Math.random() * 40 });
+  }
+}
+buildObstacles();
+
+// ---------- Arraste (interação) ----------
+let dragging = false;
+let dragStart = null; // ponto onde o clique começou (relativo a bola)
+let dragCurrent = null;
+
+function getMouse(e) {
+  const rect = canvas.getBoundingClientRect();
+  const cx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+  const cy = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+  return { x: cx, y: cy };
+}
+
+function onDown(e) {
+  const m = getMouse(e);
+  const d = Math.hypot(m.x - ball.x, m.y - ball.y);
+  if (d <= ball.r * 1.6) {
+    dragging = true;
+    dragStart = m;
+    dragCurrent = m;
+    e.preventDefault();
+  }
+}
+function onMove(e) {
+  if (!dragging) return;
+  dragCurrent = getMouse(e);
+}
+function onUp(e) {
+  if (!dragging) return;
+  dragging = false;
+  const dx = dragCurrent.x - dragStart.x;
+  const dy = dragCurrent.y - dragStart.y;
+  const massa = parseFloat(els.massa.value);
+  const forcaMul = parseFloat(els.forca.value);
+  // impulso = força do arraste / massa (inércia grande => mudança pequena)
+  const impulseScale = (forcaMul * 6) / massa;
+  ball.vx += dx * impulseScale * 0.05;
+  ball.vy += dy * impulseScale * 0.05;
+  dragStart = null;
+  dragCurrent = null;
+}
+
+canvas.addEventListener('mousedown', onDown);
+window.addEventListener('mousemove', onMove);
+window.addEventListener('mouseup', onUp);
+canvas.addEventListener('touchstart', onDown, { passive: false });
+window.addEventListener('touchmove', onMove, { passive: false });
+window.addEventListener('touchend', onUp);
+
+// ---------- Física ----------
+function step() {
+  const massa = parseFloat(els.massa.value);
+  const rand = parseFloat(els.rand.value);
+
+  // aleatoriedade: pequena força browniana constante, inversamente afetada pela massa
+  if (rand > 0) {
+    const ang = Math.random() * Math.PI * 2;
+    const mag = (rand * 0.02) / Math.sqrt(massa);
+    ball.vx += Math.cos(ang) * mag;
+    ball.vy += Math.sin(ang) * mag;
+  }
+
+  // atrito leve para não acelerar infinitamente
+  const friction = 0.995;
+  ball.vx *= friction;
+  ball.vy *= friction;
+
+  // limitar velocidade máxima
+  const maxSpeed = 9;
+  const speed = Math.hypot(ball.vx, ball.vy);
+  if (speed > maxSpeed) {
+    ball.vx = (ball.vx / speed) * maxSpeed;
+    ball.vy = (ball.vy / speed) * maxSpeed;
+  }
+
+  ball.x += ball.vx;
+  ball.y += ball.vy;
+
+  // colisão com paredes
+  if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx *= -0.85; }
+  if (ball.x + ball.r > canvas.width) { ball.x = canvas.width - ball.r; ball.vx *= -0.85; }
+  if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy *= -0.85; }
+  if (ball.y + ball.r > canvas.height) { ball.y = canvas.height - ball.r; ball.vy *= -0.85; }
+
+  // colisão com obstáculos
+  for (const o of obstacles) {
+    const dx = ball.x - o.x;
+    const dy = ball.y - o.y;
+    const dist = Math.hypot(dx, dy);
+    const minDist = ball.r + o.r;
+    if (dist < minDist && dist > 0) {
+      const nx = dx / dist, ny = dy / dist;
+      const overlap = minDist - dist;
+      ball.x += nx * overlap;
+      ball.y += ny * overlap;
+      const dot = ball.vx * nx + ball.vy * ny;
+      ball.vx -= 2 * dot * nx;
+      ball.vy -= 2 * dot * ny;
+      ball.vx *= 0.9;
+      ball.vy *= 0.9;
+    }
+  }
+}
+
+// ---------- Renderização ----------
+let flameTime = 0;
+
+function drawBackground() {
+  ctx.fillStyle = '#05060a';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // estrelas sutis
+  ctx.save();
+  ctx.globalAlpha = 0.5;
+  for (let i = 0; i < 60; i++) {
+    const sx = (i * 197) % canvas.width;
+    const sy = (i * 331) % canvas.height;
+    ctx.fillStyle = '#556';
+    ctx.fillRect(sx, sy, 1.5, 1.5);
+  }
+  ctx.restore();
+}
+
+function drawObstacles() {
+  for (const o of obstacles) {
+    const g = ctx.createRadialGradient(o.x - o.r * 0.3, o.y - o.r * 0.3, o.r * 0.1, o.x, o.y, o.r);
+    g.addColorStop(0, `hsl(${o.hue}, 30%, 35%)`);
+    g.addColorStop(1, `hsl(${o.hue}, 40%, 10%)`);
+    ctx.beginPath();
+    ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.stroke();
+  }
+}
+
+function drawSun() {
+  const { x, y, r } = ball;
+
+  // halo externo pulsante
+  const pulse = 1 + Math.sin(flameTime * 2) * 0.05;
+  const haloR = r * 2.6 * pulse;
+  const halo = ctx.createRadialGradient(x, y, r * 0.5, x, y, haloR);
+  halo.addColorStop(0, 'rgba(255, 200, 80, 0.35)');
+  halo.addColorStop(0.4, 'rgba(255, 140, 40, 0.15)');
+  halo.addColorStop(1, 'rgba(255, 80, 20, 0)');
+  ctx.beginPath();
+  ctx.arc(x, y, haloR, 0, Math.PI * 2);
+  ctx.fillStyle = halo;
+  ctx.fill();
+
+  // "labaredas" - pontas irregulares ao redor do núcleo
+  ctx.save();
+  ctx.translate(x, y);
+  const spikes = 18;
+  ctx.beginPath();
+  for (let i = 0; i <= spikes; i++) {
+    const a = (i / spikes) * Math.PI * 2;
+    const noise = Math.sin(a * 5 + flameTime * 3) * 0.5 + Math.sin(a * 9 - flameTime * 4) * 0.3;
+    const rr = r * (1.15 + noise * 0.18);
+    const px = Math.cos(a) * rr;
+    const py = Math.sin(a) * rr;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  const flameGrad = ctx.createRadialGradient(0, 0, r * 0.2, 0, 0, r * 1.4);
+  flameGrad.addColorStop(0, '#fff6d0');
+  flameGrad.addColorStop(0.35, '#ffd24a');
+  flameGrad.addColorStop(0.65, '#ff8a1e');
+  flameGrad.addColorStop(1, '#ff3d00');
+  ctx.fillStyle = flameGrad;
+  ctx.fill();
+  ctx.restore();
+
+  // núcleo brilhante sólido
+  const core = ctx.createRadialGradient(x - r * 0.25, y - r * 0.25, r * 0.05, x, y, r);
+  core.addColorStop(0, '#ffffff');
+  core.addColorStop(0.25, '#fff4c2');
+  core.addColorStop(0.6, '#ffb347');
+  core.addColorStop(1, '#ff6a00');
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fillStyle = core;
+  ctx.fill();
+
+  // brilho especular
+  ctx.beginPath();
+  ctx.arc(x - r * 0.3, y - r * 0.35, r * 0.25, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fill();
+}
+
+function drawDragIndicator() {
+  if (!dragging || !dragStart || !dragCurrent) return;
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 6]);
+  ctx.beginPath();
+  ctx.moveTo(ball.x, ball.y);
+  const dx = dragCurrent.x - dragStart.x;
+  const dy = dragCurrent.y - dragStart.y;
+  ctx.lineTo(ball.x + dx, ball.y + dy);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  // seta na ponta
+  const angle = Math.atan2(dy, dx);
+  const tipX = ball.x + dx, tipY = ball.y + dy;
+  ctx.beginPath();
+  ctx.moveTo(tipX, tipY);
+  ctx.lineTo(tipX - 10 * Math.cos(angle - 0.4), tipY - 10 * Math.sin(angle - 0.4));
+  ctx.lineTo(tipX - 10 * Math.cos(angle + 0.4), tipY - 10 * Math.sin(angle + 0.4));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.fill();
+  ctx.restore();
+}
+
+function loop() {
+  flameTime += 0.02;
+  step();
+  drawBackground();
+  drawObstacles();
+  drawSun();
+  drawDragIndicator();
+  requestAnimationFrame(loop);
+}
+
+window.addEventListener('resize', () => {
+  resetBallPos();
+  buildObstacles();
+});
+
+loop();
+})();
+</script>
+</body>
+</html>
