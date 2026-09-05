@@ -64,38 +64,30 @@ avaliador compara TF–IDF, recuperação vetorial e fusão por Reciprocal Rank
 Fusion (RRF). Não compartilhe o `.env` nem inclua a chave em células do
 notebook.
 
-O avaliador também produz `resultados/pool_julgamento.xlsx`. Preencha somente
-as colunas `julgamento_relevancia` e `observacoes`, usando a escala indicada na
-aba `Instruções`. Para reduzir viés, não consulte `pool_chave_metodos.csv` antes
-de terminar os julgamentos.
+O avaliador também produz um pool cego com a união dos dez primeiros resultados
+de cada método em `resultados/pool_avaliacao.xlsx`. A correspondência entre os
+itens e os rankings permanece separada em `pool_chave_metodos.csv`.
 
-Depois de preencher e salvar todos os 205 julgamentos com `0`, `1` ou `2`,
-calcule Precision@5, Precision@10, recall dentro do pool, MRR e nDCG@10:
-
-```bash
-python scripts/calcular_metricas_julgadas.py
-```
-
-O valor `?` deve ser adjudicado antes do cálculo final.
-
-## Julgamento assistido por LLM
+## Julgamento por LLM
 
 Para produzir dois julgamentos cegos por item e adjudicar automaticamente
 divergências, baixa confiança ou informação insuficiente:
 
 ```bash
 python scripts/julgar_pool_llm.py
-python scripts/calcular_metricas_julgadas.py --fonte llm
+python scripts/calcular_metricas_julgadas.py
 ```
 
 O processo usa um snapshot fixo do modelo, Structured Outputs e checkpoints. A
-saída principal é `pool_julgado_llm.xlsx`. A planilha
-`amostra_validacao_humana.xlsx` contém 40 itens estratificados; preencha
-`julgamento_especialista` com `0`, `1` ou `2` antes da análise final de
-concordância. Os rótulos automáticos não devem ser descritos como padrão-ouro
-humano. Para evitar ancoragem, os rótulos do LLM ficam separados em
-`amostra_validacao_humana_chave.csv`, que não deve ser consultado antes do
-preenchimento.
+saída principal é `pool_julgado_llm.xlsx`. Cada par recebe dois julgamentos cegos
+na escala 0--2; divergências, baixa confiança ou insuficiência de informação são
+adjudicadas em uma terceira chamada com contexto ampliado. O cálculo seguinte
+produz Precision@5, Precision@10, recall dentro do pool, MRR e nDCG@10.
+
+Não há etapa de avaliação humana. Portanto, os rótulos devem ser descritos como
+uma aproximação automática de relevância, e não como padrão-ouro. A concordância
+entre as duas passagens mede consistência interna do procedimento, não sua
+validade externa.
 
 ## Compilação do artigo
 

@@ -95,8 +95,6 @@ def gerar_pool(
                     linha.get("TextoDiscursoIntegral", ""), pergunta["pergunta"]
                 ),
                 "url_texto_integral": linha.get("TextoIntegral"),
-                "julgamento_relevancia": "",
-                "observacoes": "",
             })
             chave = {
                 "item_id": item_id,
@@ -110,20 +108,11 @@ def gerar_pool(
 
     revisao = pd.DataFrame(linhas_revisao).sort_values(["pergunta_id", "item_id"], kind="stable")
     chave = pd.DataFrame(linhas_chave).sort_values("item_id", kind="stable")
-    revisao.to_csv(resultados / "pool_julgamento.csv", index=False)
+    revisao.to_csv(resultados / "pool_avaliacao.csv", index=False)
     chave.to_csv(resultados / "pool_chave_metodos.csv", index=False)
-    instrucoes = pd.DataFrame({"Instruções para julgamento": [
-        "Preencha somente julgamento_relevancia e observacoes.",
-        "2 = diretamente relevante para responder à pergunta.",
-        "1 = parcialmente relevante ou apenas contextual.",
-        "0 = não relevante.",
-        "? = informação insuficiente para julgar.",
-        "Não consulte pool_chave_metodos.csv antes de concluir os julgamentos.",
-    ]})
-    with pd.ExcelWriter(resultados / "pool_julgamento.xlsx", engine="openpyxl") as escritor:
-        revisao.to_excel(escritor, sheet_name="Julgamento", index=False)
-        instrucoes.to_excel(escritor, sheet_name="Instruções", index=False)
-        planilha = escritor.book["Julgamento"]
+    with pd.ExcelWriter(resultados / "pool_avaliacao.xlsx", engine="openpyxl") as escritor:
+        revisao.to_excel(escritor, sheet_name="Pool", index=False)
+        planilha = escritor.book["Pool"]
         planilha.freeze_panes = "A2"
         planilha.auto_filter.ref = planilha.dimensions
         larguras = {
@@ -139,7 +128,6 @@ def gerar_pool(
                 alinhamento.vertical = "top"
                 alinhamento.wrap_text = True
                 celula.alignment = alinhamento
-        escritor.book["Instruções"].column_dimensions["A"].width = 90
     return len(revisao)
 
 
@@ -205,7 +193,7 @@ def main() -> None:
                     label="tab:recuperacao")
     print(resumo.to_string(index=False))
     quantidade_pool = gerar_pool(perguntas, corpus, matrizes, resultados)
-    print(f"Pool cego criado com {quantidade_pool} itens em pool_julgamento.xlsx")
+    print(f"Pool cego criado com {quantidade_pool} itens em pool_avaliacao.xlsx")
 
 
 if __name__ == "__main__":

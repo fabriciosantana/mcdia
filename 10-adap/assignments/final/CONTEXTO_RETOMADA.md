@@ -28,6 +28,8 @@
   `text-embedding-3-large`, 512 dimensões, checkpoints retomáveis e fusão RRF.
   O `.env` existe e está ignorado; a chave foi preenchida pelo usuário e a
   execução efetiva foi concluída.
+- A avaliação de relevância será exclusivamente automática, por LLM como juiz.
+  Não haverá etapa de avaliação humana; os rótulos não constituem padrão-ouro.
 
 ## Exigências do enunciado
 
@@ -81,13 +83,11 @@
 ## Pendências conhecidas
 
 1. Incluir um diagrama simples do pipeline proposto, se houver espaço.
-2. Preencher os 40 itens de `amostra_validacao_humana.xlsx` para validar o juiz
-   automatizado e calcular concordância com o especialista.
-3. Revisar e ampliar as referências com fontes primárias e confirmar os dados
+2. Revisar e ampliar as referências com fontes primárias e confirmar os dados
    bibliográficos antes da entrega.
-4. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
+3. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
    abstenção e supervisão humana.
-5. Realizar revisão textual e visual final do PDF de quatro páginas.
+4. Realizar revisão textual e visual final do PDF de quatro páginas.
 
 O planejamento da execução vetorial contabilizou 15.039 documentos, 10
 perguntas, 19.926.075 tokens após truncamento explícito em 8.000 tokens por
@@ -102,12 +102,11 @@ consolidado ocupa aproximadamente 18,1 MB. Resultados comparativos: TF--IDF
 11,5). O artigo e o notebook já incorporam a leitura crítica desses resultados.
 
 Foi gerado um pool cego com a união dos dez primeiros resultados de TF--IDF,
-OpenAI e híbrido para cada pergunta. Após deduplicação, há 205 pares para
-revisão em `resultados/pool_julgamento.xlsx`. O avaliador deve preencher apenas
-`julgamento_relevancia` (0, 1 ou 2) e `observacoes`, sem consultar previamente
+OpenAI e híbrido para cada pergunta. Após deduplicação, há 205 pares em
+`resultados/pool_avaliacao.xlsx`; a chave dos rankings está separada em
 `pool_chave_metodos.csv`. O script `scripts/calcular_metricas_julgadas.py`
-calcula Precision@5, Precision@10, recall dentro do pool, MRR e nDCG@10 depois
-que todos os itens forem julgados.
+calcula Precision@5, Precision@10, recall dentro do pool, MRR e nDCG@10 com os
+rótulos finais do LLM.
 
 Foi executado julgamento cego com `gpt-5.4-mini-2026-03-17`: duas passagens por
 item e adjudicação nos casos divergentes, de baixa confiança ou insuficientes.
@@ -115,9 +114,9 @@ Houve concordância exata de 62,9%, kappa ponderado quadrático de 0,690, 76
 divergências e 136 adjudicações. Distribuição final: 43 itens com rótulo 0, 80
 com rótulo 1 e 82 com rótulo 2. O consumo foi 455.893 tokens de entrada e
 65.167 de saída. Com esses rótulos, o híbrido obteve Precision@5 0,92,
-Precision@10 0,89, recall no pool 0,566 e nDCG@10 0,840. Uma amostra
-estratificada de 40 itens está em `resultados/amostra_validacao_humana.xlsx` e
-ainda precisa de julgamento do especialista.
+Precision@10 0,89, recall no pool 0,566 e nDCG@10 0,840. Por decisão
+metodológica, não haverá validação humana. A concordância entre passagens mede
+consistência interna, não validade externa, e o artigo registra essa limitação.
 
 ## Comandos de retomada
 

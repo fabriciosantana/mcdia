@@ -1,8 +1,7 @@
-"""Calcula métricas após o preenchimento do pool_julgamento.xlsx."""
+"""Calcula métricas de recuperação com os julgamentos finais do LLM."""
 
 from __future__ import annotations
 
-import argparse
 import math
 from pathlib import Path
 
@@ -18,24 +17,14 @@ def dcg(relevancias: list[int]) -> float:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--fonte", choices=("humano", "llm"), default="humano")
-    args = parser.parse_args()
     resultados = RAIZ / "resultados"
-    if args.fonte == "llm":
-        revisao = pd.read_csv(resultados / "pool_julgado_llm.csv")
-        valores = pd.to_numeric(revisao["relevancia_final"], errors="coerce")
-        sufixo = "llm"
-    else:
-        revisao = pd.read_excel(resultados / "pool_julgamento.xlsx", sheet_name="Julgamento")
-        valores = pd.to_numeric(revisao["julgamento_relevancia"], errors="coerce")
-        sufixo = "humanas"
+    revisao = pd.read_csv(resultados / "pool_julgado_llm.csv")
+    valores = pd.to_numeric(revisao["relevancia_final"], errors="coerce")
     chave = pd.read_csv(resultados / "pool_chave_metodos.csv")
     invalidos = revisao.loc[~valores.isin([0, 1, 2]), "item_id"].tolist()
     if invalidos:
         raise ValueError(
-            f"Ainda há {len(invalidos)} julgamentos vazios, '?' ou inválidos. "
-            "Conclua/adjudique todos com 0, 1 ou 2 antes do cálculo."
+            f"Há {len(invalidos)} julgamentos LLM vazios ou inválidos."
         )
     revisao = revisao.assign(relevancia=valores.astype(int)).merge(
         chave, on="item_id", how="left", validate="one_to_one"
@@ -74,11 +63,11 @@ def main() -> None:
         mrr_pool=("mrr_pool", "mean"),
         ndcg_10=("ndcg_10", "mean"),
     ).reset_index()
-    detalhado.to_csv(resultados / f"metricas_julgadas_{sufixo}_por_pergunta.csv", index=False)
-    resumo.to_csv(resultados / f"metricas_julgadas_{sufixo}_resumo.csv", index=False)
+    detalhado.to_csv(resultados / "metricas_julgadas_llm_por_pergunta.csv", index=False)
+    resumo.to_csv(resultados / "metricas_julgadas_llm_resumo.csv", index=False)
     resumo.to_latex(
-        resultados / f"metricas_julgadas_{sufixo}_resumo.tex", index=False,
-        float_format="%.3f", caption="Desempenho no pool com julgamento humano.",
+        resultados / "metricas_julgadas_llm_resumo.tex", index=False,
+        float_format="%.3f", caption="Desempenho no pool com julgamento por LLM.",
         label="tab:metricas-julgadas",
     )
     print(resumo.to_string(index=False))

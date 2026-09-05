@@ -10,8 +10,8 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
-\usepackage[round,authoryear]{natbib}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=blue]{hyperref}
+\usepackage[alf]{abntex2cite}
 
 \geometry{margin=2.5cm}
 \setstretch{1.15}
@@ -49,12 +49,17 @@ recuperação de informação; RAG; inteligência artificial generativa.
 \section{Contextualização e descrição do problema}
 
 O Senado Federal disponibiliza dados de pronunciamentos parlamentares em seu
-portal de dados abertos \citep{senadoDadosAbertos}. Embora a publicidade dos
+portal de dados abertos \cite{senadoDadosAbertos}. Embora a publicidade dos
 registros seja indispensável, o volume textual e a dispersão dos metadados
 dificultam a localização e a comparação manual de manifestações relacionadas a
-um tema, período ou parlamentar. Buscas estritamente lexicais também podem não
+um tema, período ou parlamentar, problema também observado em sistemas de
+acesso a debates legislativos \cite{matoshiEtAl2025parliamentRag}. Buscas
+estritamente lexicais também podem não
 recuperar documentos semanticamente próximos que empreguem vocabulários
-diferentes.
+diferentes \cite{manningEtAl2008informationRetrieval}.
+No setor público, a incorporação de ciência de dados pode alterar não apenas a
+produção e a análise de informações, mas também as práticas de transparência e
+accountability \cite{agostinoEtAl2025dataScience}.
 
 Nesse contexto, propõe-se investigar como uma solução RAG auditável pode apoiar
 pesquisadores, servidores e instâncias de controle na consulta a pronunciamentos
@@ -67,21 +72,25 @@ determinar a veracidade de declarações nem automatizar juízos sobre parlament
 
 A arquitetura RAG associa um mecanismo de recuperação documental a um modelo
 gerador, condicionando a resposta ao contexto selecionado
-\citep{lewis2020rag}. Em comparação com a consulta manual, a recuperação
+\cite{lewis2020rag}. Em comparação com a consulta manual, a recuperação
 semântica amplia as formas de expressão aceitas; em comparação com o uso isolado
 de um modelo de linguagem, a recuperação oferece evidências verificáveis e
-reduz a dependência do conhecimento paramétrico do modelo.
+reduz a dependência do conhecimento paramétrico do modelo
+\cite{gao2023ragSurvey}.
 
 A escolha é adequada ao problema porque o objeto de análise é essencialmente
-textual e já contém metadados úteis à rastreabilidade. A auditabilidade, porém,
-depende de controles adicionais: versionamento do corpus, registro dos
-parâmetros, citações obrigatórias, possibilidade de abstenção e avaliação
-separada da recuperação e da geração.
+textual e já contém metadados úteis à rastreabilidade. Neste trabalho,
+auditabilidade designa a possibilidade de examinar dados, parâmetros,
+resultados e evidências do sistema, não uma certificação formal de auditoria.
+Ela depende de controles técnicos e processuais complementares
+\cite{mokander2023auditing}: versionamento do corpus, registro dos parâmetros,
+citações obrigatórias, possibilidade de abstenção e avaliação separada da
+recuperação e da geração \cite{saadFalconEtAl2024ares}.
 
 \section{Metodologia proposta e dados}
 
 O corpus será obtido diretamente do conjunto de discursos da 56ª Legislatura,
-publicado no Hugging Face por \citet{datasetDiscursos}. A base contém metadados dos pronunciamentos e o
+publicado no Hugging Face por \citeonline{datasetDiscursos}. A base contém metadados dos pronunciamentos e o
 texto integral quando sua coleta foi bem-sucedida. Antes da indexação serão
 avaliados esquema, duplicidades, campos ausentes, cobertura textual, datas e
 consistência dos identificadores. A revisão também distinguirá falha de coleta
@@ -93,30 +102,36 @@ arquivo; (2) validação e normalização dos dados com Python e pandas; (3) sel
 do texto e dos metadados; (4) segmentação dos discursos em trechos com
 sobreposição; (5) indexação lexical e vetorial; (6) recuperação híbrida dos
 trechos mais relevantes; (7) geração de resposta condicionada às evidências; e
-(8) apresentação das citações e armazenamento da trilha de execução.
+(8) apresentação das citações e armazenamento da trilha de execução. A
+separação desses componentes permite avaliar a recuperação independentemente
+da resposta gerada \cite{gao2023ragSurvey,saadFalconEtAl2024ares}.
 
 A prova de conceito compara TF--IDF, embeddings do modelo Large da OpenAI, com
 512 dimensões, e fusão dos rankings por
-\textit{Reciprocal Rank Fusion} (RRF). Foram elaboradas dez perguntas a partir
+\textit{Reciprocal Rank Fusion} (RRF), método que combina rankings sem exigir
+comparabilidade entre seus escores \cite{cormackEtAl2009rrf}. Foram elaboradas dez perguntas a partir
 dos resumos oficiais, cada uma associada a um pronunciamento conhecido, enquanto
 somente os textos integrais formaram os índices. Entradas acima do limite foram
 truncadas em 8 mil tokens, afetando 104 dos 15.039 documentos. O experimento
 mede busca de item conhecido por Hit@$k$ e \textit{Mean Reciprocal Rank} (MRR),
 mas não estima \textit{recall} temático, pois outros documentos potencialmente
-relevantes ainda não foram julgados.
+relevantes ainda não foram julgados \cite{manningEtAl2008informationRetrieval}.
 
 Para ampliar os julgamentos, reuniu-se a união dos dez primeiros resultados de
 cada método, totalizando 205 pares após deduplicação. Um LLM avaliador, sem
 acesso ao método ou à posição, atribuiu relevância 0, 1 ou 2 em duas passagens.
 Divergências, baixa confiança ou evidência insuficiente foram adjudicadas por
-uma terceira chamada com contexto ampliado. Uma amostra estratificada de 40
-itens foi reservada para posterior validação por especialista.
+uma terceira chamada com contexto ampliado, estratégia coerente com propostas
+de avaliação automatizada de RAG e de controle de consistência do juiz
+\cite{saadFalconEtAl2024ares,liuEtAl2025judgeRag}. Não houve avaliação humana dos
+pares; assim, esses rótulos constituem uma aproximação automática de relevância,
+e não um padrão-ouro \cite{chenEtAl2024judgeBias}.
 
 Os dados são públicos, mas o tratamento deverá observar finalidade,
 necessidade, integridade e segurança. A solução manterá os textos em seu
 contexto documental, respeitará a Lei de Acesso à Informação
-\citep{brasil2011lai} e considerará os princípios da Lei Geral de Proteção de
-Dados \citep{brasil2018lgpd}. Perfis ou classificações individuais não serão
+\cite{brasil2011lai} e considerará os princípios da Lei Geral de Proteção de
+Dados \cite{brasil2018lgpd}. Perfis ou classificações individuais não serão
 produzidos sem base metodológica e finalidade legítima.
 
 \section{Resultados e impacto esperado}
@@ -152,10 +167,28 @@ com julgamentos mais abrangentes.
 
 Nas duas passagens do juiz, a concordância exata foi 62,9\% e o kappa ponderado
 quadrático foi 0,690; 136 itens exigiram adjudicação. Com os rótulos finais do
-LLM, o híbrido obteve os maiores valores de Precision@5 (0,92), Precision@10
-(0,89), recall dentro do pool em dez resultados (0,566) e nDCG@10 (0,840). Os
-valores são preliminares: medem concordância com o juiz automatizado e somente
-serão usados como evidência final após a validação da amostra humana.
+LLM, o híbrido obteve os maiores valores em quatro das cinco métricas da
+Tabela~\ref{tab:metricas-julgadas}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Desempenho no pool com julgamento por LLM.}
+  \label{tab:metricas-julgadas}
+  \small
+  \begin{tabular}{lccccc}
+    \toprule
+    Método & P@5 & P@10 & R@10$_{pool}$ & MRR & nDCG@10 \\
+    \midrule
+    TF--IDF     & 0,84 & 0,81 & 0,488 & \textbf{1,00} & 0,719 \\
+    OpenAI      & 0,84 & 0,82 & 0,533 & 0,95 & 0,690 \\
+    Híbrido RRF & \textbf{0,92} & \textbf{0,89} & \textbf{0,566} & \textbf{1,00} & \textbf{0,840} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+A concordância entre passagens quantifica a consistência interna, mas não
+valida os rótulos contra julgamentos independentes
+\cite{liuEtAl2025judgeRag,chenEtAl2024judgeBias}.
 
 Espera-se que o protótipo completo responda a questões temáticas com links e
 metadados que permitam ao usuário conferir cada afirmação. Os principais
@@ -169,20 +202,26 @@ e não como prova autônoma. Entre as limitações estão discursos sem texto
 integral, erros nos metadados, perda de contexto durante a segmentação, falhas
 de recuperação, vieses do corpus e alucinações do modelo gerador. Falsos
 negativos podem omitir pronunciamentos relevantes, enquanto falsos positivos
-podem associar trechos apenas superficialmente relacionados à pergunta.
+podem associar trechos apenas superficialmente relacionados à pergunta
+\cite{jiEtAl2023hallucinationSurvey}.
+Além disso, um juiz baseado em LLM pode reproduzir vieses, interpretar de modo
+instável a rubrica ou favorecer correspondências semânticas semelhantes às do
+método vetorial. A dupla passagem e a adjudicação mitigam inconsistências, mas
+não eliminam esse possível viés do avaliador \cite{chenEtAl2024judgeBias}.
 
 \section{Considerações finais}
 
 A proposta articula transparência legislativa, governança de dados e IA
 generativa em um fluxo que privilegia a rastreabilidade. Sua viabilidade decorre
 da existência de dados públicos estruturados e de ferramentas maduras para
-preparação, indexação e avaliação. Como próximos passos, o conjunto inicial de
-referência deverá receber julgamentos adicionais, seguidos da avaliação da
-geração e da definição dos critérios de abstenção. A adoção institucional dependerá ainda de
+preparação, indexação e avaliação
+\cite{manningEtAl2008informationRetrieval,saadFalconEtAl2024ares}. Como próximos
+passos, o conjunto inicial de referência deverá ser ampliado, seguido da
+avaliação da geração e da definição dos critérios de abstenção. A adoção institucional dependerá ainda de
 validação com usuários, monitoramento contínuo e definição explícita de
 responsabilidades sobre as conclusões produzidas.
 
-\bibliographystyle{plainnat}
+\bibliographystyle{abntex2-alf}
 \bibliography{referencias}
 
 \end{document}

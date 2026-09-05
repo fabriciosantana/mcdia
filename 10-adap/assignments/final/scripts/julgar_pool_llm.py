@@ -135,35 +135,12 @@ def executar_pendentes(
     return existentes
 
 
-def selecionar_amostra(df: pd.DataFrame, tamanho_por_pergunta: int = 4) -> pd.DataFrame:
-    """Seleciona divergências primeiro e completa estratos por pergunta e rótulo."""
-    partes = []
-    for _, grupo in df.groupby("pergunta_id", sort=True):
-        ordenado = grupo.assign(
-            prioridade=(
-                grupo["divergencia_passagens"].astype(int) * 4
-                + grupo["houve_adjudicacao"].astype(int) * 2
-                + grupo["confianca_final"].map({"baixa": 2, "media": 1, "alta": 0}).fillna(0)
-            )
-        ).sort_values(["prioridade", "relevancia_final", "item_id"], ascending=[False, True, True])
-        escolhidos = []
-        for rotulo in (0, 1, 2):
-            candidatos = ordenado[ordenado["relevancia_final"].eq(rotulo)]
-            if len(candidatos):
-                escolhidos.append(candidatos.iloc[[0]])
-        parcial = pd.concat(escolhidos) if escolhidos else ordenado.iloc[0:0]
-        restantes = ordenado[~ordenado["item_id"].isin(parcial["item_id"])]
-        parcial = pd.concat([parcial, restantes.head(max(0, tamanho_por_pergunta - len(parcial)))])
-        partes.append(parcial.head(tamanho_por_pergunta))
-    return pd.concat(partes).drop(columns="prioridade").sort_values(["pergunta_id", "item_id"])
-
-
 def main() -> None:
     load_dotenv(RAIZ / ".env")
     if not os.getenv("OPENAI_API_KEY"):
         raise RuntimeError("OPENAI_API_KEY ausente no arquivo .env")
-    pool_path = RAIZ / "resultados/pool_julgamento.xlsx"
-    pool = pd.read_excel(pool_path, sheet_name="Julgamento", dtype={"codigo_pronunciamento": str})
+    pool_path = RAIZ / "resultados/pool_avaliacao.xlsx"
+    pool = pd.read_excel(pool_path, sheet_name="Pool", dtype={"codigo_pronunciamento": str})
     parquets = sorted((RAIZ / "dados").glob("*.parquet"))
     if len(parquets) != 1:
         raise RuntimeError(f"Esperado exatamente um parquet: {parquets}")
@@ -220,26 +197,6 @@ def main() -> None:
     saida.to_csv(RAIZ / "resultados/pool_julgado_llm.csv", index=False)
     saida.to_excel(RAIZ / "resultados/pool_julgado_llm.xlsx", index=False)
 
-    amostra_com_chave = selecionar_amostra(saida)
-    colunas_llm = [
-        "item_id", "llm_passagem_1", "llm_passagem_2", "divergencia_passagens",
-        "houve_adjudicacao", "relevancia_final", "confianca_final",
-        "informacao_suficiente_final", "justificativa_llm", "evidencia_llm",
-        "modelo_julgador",
-    ]
-    amostra_com_chave[colunas_llm].to_csv(
-        RAIZ / "resultados/amostra_validacao_humana_chave.csv", index=False
-    )
-    colunas_cegas = [
-        "item_id", "pergunta_id", "tema", "pergunta", "codigo_pronunciamento",
-        "autor", "data", "partido", "uf", "resumo_oficial",
-        "trecho_texto_integral", "url_texto_integral",
-    ]
-    amostra = amostra_com_chave[colunas_cegas].copy()
-    amostra["julgamento_especialista"] = ""
-    amostra["observacoes_especialista"] = ""
-    amostra.to_excel(RAIZ / "resultados/amostra_validacao_humana.xlsx", index=False)
-
     todos_registros = list(existentes.values())
     resumo = {
         "modelo": MODELO,
@@ -253,7 +210,6 @@ def main() -> None:
         "distribuicao_rotulos": saida["relevancia_final"].value_counts().sort_index().to_dict(),
         "input_tokens": sum(item.get("input_tokens") or 0 for item in todos_registros),
         "output_tokens": sum(item.get("output_tokens") or 0 for item in todos_registros),
-        "amostra_humana": len(amostra),
     }
     (RAIZ / "resultados/resumo_julgamento_llm.json").write_text(
         json.dumps(resumo, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
