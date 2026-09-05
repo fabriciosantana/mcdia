@@ -1,0 +1,19 @@
+{
+  "versao": "1.0",
+  "fonte": "dados/brutos/arrecadacao-estado-metadados.pdf",
+  "paginas_pdf": [2, 3],
+  "inicio_recorte": "2000-01-01",
+  "fim_recorte": "2025-12-01",
+  "nota": "Intervalos inclusivos de publicação, não de vigência jurídica dos tributos. Regras transcritas do dicionário, não inferidas dos vazios do CSV.",
+  "regras": [
+    {"coluna": "COFINS", "inicio": "2000-01-01", "fim": "2003-12-01"},
+    {"coluna": "COFINS - FINANCEIRAS", "inicio": "2004-01-01", "fim": null},
+    {"coluna": "COFINS - DEMAIS", "inicio": "2004-01-01", "fim": null},
+    {"coluna": "CONTRIBUIÇÃO PARA O PIS/PASEP", "inicio": "2000-01-01", "fim": "2003-12-01"},
+    {"coluna": "CONTRIBUIÇÃO PARA O PIS/PASEP - FINANCEIRAS", "inicio": "2004-01-01", "fim": null},
+    {"coluna": "CONTRIBUIÇÃO PARA O PIS/PASEP - DEMAIS", "inicio": "2004-01-01", "fim": null},
+    {"coluna": "CSLL", "inicio": "2000-01-01", "fim": "2003-12-01"},
+    {"coluna": "CSLL - FINANCEIRAS", "inicio": "2004-01-01", "fim": null},
+    {"coluna": "CSLL - DEMAIS", "inicio": "2004-01-01", "fim": null}
+  ]
+}

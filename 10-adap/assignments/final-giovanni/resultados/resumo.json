@@ -1,0 +1,22 @@
+{
+  "registros_arquivo": 8613,
+  "colunas_arquivo": 45,
+  "registros_recorte": 8424,
+  "meses_recorte": 312,
+  "ufs": 27,
+  "painel_completo": true,
+  "regras_temporais": 9,
+  "celulas_avaliadas": 75816,
+  "celulas_aplicaveis": 46656,
+  "ausencias_ingenuas": 29160,
+  "ausencias_previstas": 29160,
+  "ausencias_aplicaveis": 0,
+  "presencas_fora_intervalo": 0,
+  "ocorrencias": 0,
+  "formatos_apenas_en": 5625,
+  "formatos_ambiguos": 3120,
+  "regras_sha256": "950235407d89bf564d7ddb007753bbdb0880ac2ea8b9089c0e0154b5b6c76e59",
+  "script_sha256": "bb6278a2d6fcfcbfec54f31ee4ed8d0e0c8c90c709858198f31cdc9f52bd0db8",
+  "completude_ingenua_pct": 61.53846153846154,
+  "completude_condicionada_pct": 100.0
+}

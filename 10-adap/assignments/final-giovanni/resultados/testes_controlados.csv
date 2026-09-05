@@ -1,0 +1,14 @@
+cenario,esperado,observado,aprovado
+sem_mutacao,,,True
+nulo_aplicavel,ausencia_aplicavel,ausencia_aplicavel,True
+valor_fora_intervalo,presenca_fora_intervalo,presenca_fora_intervalo,True
+numero_invalido,numero_invalido,numero_invalido,True
+mes_invalido,chave_ausente;data_invalida,chave_ausente;data_invalida,True
+uf_invalida,chave_ausente;uf_invalida,chave_ausente;uf_invalida,True
+zero_legitimo,,,True
+milhar_decimal,,,True
+sinal_negativo,,,True
+limite_dezembro_2003,ausencia_aplicavel,ausencia_aplicavel,True
+limite_janeiro_2004,ausencia_aplicavel,ausencia_aplicavel,True
+duplicacao,chave_duplicada,chave_duplicada,True
+remocao_registro,chave_ausente,chave_ausente,True

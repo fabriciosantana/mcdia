@@ -1,0 +1,20 @@
+[
+  {
+    "arquivo": "arrecadacao-estado.csv",
+    "url": "https://www.gov.br/receitafederal/dados/arrecadacao-estado.csv",
+    "url_final": "https://www.gov.br/receitafederal/dados/arrecadacao-estado.csv",
+    "coletado_em_utc": "2026-09-05T14:17:53.538678+00:00",
+    "sha256": "e4fdc308fa3b4dbce4ba1b6ad988123f272dd325c835788eb60ed2d059d41627",
+    "bytes": 2407961,
+    "last_modified": null
+  },
+  {
+    "arquivo": "arrecadacao-estado-metadados.pdf",
+    "url": "https://www.gov.br/receitafederal/dados/arrecadacao-estado-metadados.pdf",
+    "url_final": "https://www.gov.br/receitafederal/dados/arrecadacao-estado-metadados.pdf",
+    "coletado_em_utc": "2026-09-05T14:17:54.113874+00:00",
+    "sha256": "44ee7e5208227e1863076e7fc8054b2b39151add7e770e5ef29e5a29d4910fc5",
+    "bytes": 127074,
+    "last_modified": null
+  }
+]
