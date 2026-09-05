@@ -38,10 +38,10 @@ completude; governança; Python.
 \section{Contextualização e descrição do problema}
 A Receita Federal publica uma série de arrecadação mensal por unidade da
 Federação, com valores em reais e categorias de receitas administradas e não
-administradas pelo órgão \cite{rfbDados,rfbDicionario}. No contexto de uso desses
-dados por um auditor, o problema aqui delimitado é avaliar se a série aberta
-oferece cobertura adequada para análises e relatórios. Trata-se de uma
-oportunidade de controle da informação, cuja relevância decorre da necessidade
+administradas pelo órgão \cite{rfbDados,rfbDicionario}. Este trabalho examina a
+completude dessa publicação como requisito para seu uso em análises e
+relatórios de auditoria. A proposta se insere na governança da informação
+tributária, cuja relevância decorre da necessidade
 de examinar completude e adequação dos dados antes de utilizá-los como evidência
 \cite{gao2019}.
 
@@ -55,10 +55,11 @@ sejam indevidamente encaminhadas como falhas de completude?}
 
 A proposta busca reduzir revisões desnecessárias e preservar o significado
 dos campos, coerentemente com a compreensão de que qualidade depende do
-contexto de uso \cite{wang1996}. Não se afirma que a Receita utilize hoje uma
-validação indiscriminada: essa abordagem foi construída como referência de
-comparação. Tampouco o estudo identifica contribuintes, estima sonegação ou
-atribui desempenho a unidades administrativas.
+contexto de uso \cite{wang1996}. Para comparar as medidas, adotou-se uma
+contagem simples de vazios como referência experimental, sem caracterizá-la
+como prática vigente na Receita. O objeto da análise é a qualidade da
+publicação agregada; a identificação de contribuintes, a estimação de sonegação
+e a avaliação de desempenho de unidades administrativas estão fora do escopo.
 
 \section{Fundamentação e técnica selecionada}
 A técnica escolhida é a verificação de qualidade por regras determinísticas,
@@ -80,14 +81,14 @@ O denominador $N$ corresponde às células das nove colunas no recorte. O conte�
 Presença fora do intervalo gera uma ocorrência própria, pois pode indicar
 mudança do arquivo ou desatualização do dicionário.
 
-A abordagem é apropriada porque cada decisão pode ser explicada por uma regra
-e uma data verificáveis. Um modelo de linguagem acrescentaria incerteza à
-aplicação de intervalos já explícitos. O registro das regras e dos indicadores
+A abordagem permite relacionar cada classificação a uma regra e a uma data
+verificáveis. A aplicação determinística dos intervalos documentados torna
+o procedimento passível de reprodução e inspeção. O registro das regras e dos indicadores
 adota o princípio de explicitar as métricas e sua proveniência, discutido pelo
 W3C \cite{w3c2016}; não houve implementação do vocabulário RDF dessa organização.
 
 \section{Metodologia e dados}
-Foram baixados diretamente do repositório oficial o CSV e seu dicionário em PDF,
+O procedimento de aquisição obteve diretamente do repositório oficial o CSV e seu dicionário em PDF,
 com preservação dos arquivos originais, endereços, horário UTC e hashes SHA-256.
 A análise utiliza janeiro de 2000 a dezembro de 2025, mantendo um intervalo de
 anos completos. O arquivo adquirido também contém meses de 2026, que ficaram
@@ -167,11 +168,11 @@ adotada e à versão do arquivo.
 \caption{Comparação anual das medidas nas nove colunas selecionadas.}
 \end{figure}
 
-Os 13 cenários controlados passaram pelos critérios esperados. O produto
-operacional é uma tabela de ocorrências com chave, coluna, regra e valor
+Os 13 cenários controlados produziram as classes de ocorrência esperadas. O
+procedimento gerou uma tabela de ocorrências com chave, coluna, regra e valor
 original, acompanhada da classificação de todas as células do recorte. Na base
-observada, a tabela ficou sem ocorrências segundo os controles definidos. Um
-uso possível é verificar novas versões antes de incorporá-las a relatórios e
+observada, a tabela ficou sem ocorrências segundo os controles definidos.
+Propõe-se utilizar esse controle na verificação de novas versões antes de incorporá-las a relatórios e
 encaminhar divergências ao responsável pelos dados.
 
 Os ganhos de tempo e de redução de retrabalho permanecem potenciais, pois não
