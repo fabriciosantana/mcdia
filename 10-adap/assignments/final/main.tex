@@ -28,7 +28,7 @@
 \maketitle
 
 \begin{abstract}
-Este short paper propõe uma solução de recuperação aumentada por geração
+Este artigo curto propõe uma solução de recuperação aumentada por geração
 (\textit{retrieval-augmented generation}, RAG) para apoiar a consulta auditável
 a pronunciamentos do Senado Federal. A proposta combina recuperação de
 informação, geração condicionada às evidências recuperadas e apresentação dos
@@ -52,14 +52,14 @@ O Senado Federal disponibiliza dados de pronunciamentos parlamentares em seu
 portal de dados abertos \cite{senadoDadosAbertos}. Embora a publicidade dos
 registros seja indispensável, o volume textual e a dispersão dos metadados
 dificultam a localização e a comparação manual de manifestações relacionadas a
-um tema, período ou parlamentar, problema também observado em sistemas de
-acesso a debates legislativos \cite{matoshiEtAl2025parliamentRag}. Buscas
-estritamente lexicais também podem não
+um tema, período ou parlamentar. Buscas estritamente lexicais também podem não
 recuperar documentos semanticamente próximos que empreguem vocabulários
 diferentes \cite{manningEtAl2008informationRetrieval}.
 No setor público, a incorporação de ciência de dados pode alterar não apenas a
 produção e a análise de informações, mas também as práticas de transparência e
-accountability \cite{agostinoEtAl2025dataScience}.
+prestação de contas (accountability) \cite{agostinoEtAl2025dataScience}. Sem um
+apoio automatizado, a pesquisa manual eleva o tempo de resposta e o risco de
+omitir pronunciamentos relevantes.
 
 Nesse contexto, propõe-se investigar como uma solução RAG auditável pode apoiar
 pesquisadores, servidores e instâncias de controle na consulta a pronunciamentos
@@ -80,10 +80,9 @@ reduz a dependência do conhecimento paramétrico do modelo
 
 A escolha é adequada ao problema porque o objeto de análise é essencialmente
 textual e já contém metadados úteis à rastreabilidade. Neste trabalho,
-auditabilidade designa a possibilidade de examinar dados, parâmetros,
-resultados e evidências do sistema, não uma certificação formal de auditoria.
-Ela depende de controles técnicos e processuais complementares
-\cite{mokander2023auditing}: versionamento do corpus, registro dos parâmetros,
+auditabilidade não significa certificação formal, mas a possibilidade de
+examinar dados, parâmetros, resultados e evidências por meio de controles
+técnicos e processuais \cite{mokander2023auditing}: versionamento do corpus, registro dos parâmetros,
 citações obrigatórias, possibilidade de abstenção e avaliação separada da
 recuperação e da geração \cite{saadFalconEtAl2024ares}.
 
@@ -106,7 +105,8 @@ trechos mais relevantes; (7) geração de resposta condicionada às evidências;
 separação desses componentes permite avaliar a recuperação independentemente
 da resposta gerada \cite{gao2023ragSurvey,saadFalconEtAl2024ares}.
 
-A prova de conceito compara TF--IDF, embeddings do modelo Large da OpenAI, com
+A prova de conceito compara TF--IDF, representações vetoriais
+(\textit{embeddings}) do modelo Large da OpenAI, com
 512 dimensões, e fusão dos rankings por
 \textit{Reciprocal Rank Fusion} (RRF), método que combina rankings sem exigir
 comparabilidade entre seus escores \cite{cormackEtAl2009rrf}. Foram elaboradas dez perguntas a partir
@@ -118,7 +118,8 @@ mas não estima \textit{recall} temático, pois outros documentos potencialmente
 relevantes ainda não foram julgados \cite{manningEtAl2008informationRetrieval}.
 
 Para ampliar os julgamentos, reuniu-se a união dos dez primeiros resultados de
-cada método, totalizando 205 pares após deduplicação. Um LLM avaliador, sem
+cada método, totalizando 205 pares após deduplicação. Um grande modelo de
+linguagem (LLM) como juiz, sem
 acesso ao método ou à posição, atribuiu relevância 0, 1 ou 2 em duas passagens.
 Divergências, baixa confiança ou evidência insuficiente foram adjudicadas por
 uma terceira chamada com contexto ampliado, estratégia coerente com propostas
@@ -151,10 +152,10 @@ de fevereiro de 2019 a 10 de janeiro de 2023, 1.794 autores e 32 partidos.
 \end{figure}
 
 O TF--IDF obteve Hit@1 de 20\%, Hit@5 e Hit@10 de 40\%, MRR de 0,301 e
-mediana de rank 17,5. A busca vetorial obteve, respectivamente, 0\%, 30\%, 40\%,
+mediana da posição 17,5. A busca vetorial obteve, respectivamente, 0\%, 30\%, 40\%,
 0,112 e 44,5. A fusão híbrida alcançou 10\%, 30\%, 50\%, 0,212 e 11,5. Portanto,
 o método lexical apresentou o maior MRR, enquanto o híbrido ampliou a cobertura
-em dez resultados e reduziu a mediana do rank. Os embeddings não foram
+em dez resultados e reduziu a mediana da posição. As representações vetoriais não foram
 superiores de forma geral, embora tenham beneficiado consultas específicas
 sobre desinformação e processo legislativo.
 
@@ -222,6 +223,10 @@ validação com usuários, monitoramento contínuo e definição explícita de
 responsabilidades sobre as conclusões produzidas.
 
 \bibliographystyle{abntex2-alf}
+\begingroup
+\small
+\setstretch{1.0}
 \bibliography{referencias}
+\endgroup
 
 \end{document}

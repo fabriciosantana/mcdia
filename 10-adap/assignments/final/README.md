@@ -92,7 +92,10 @@ validade externa.
 ## Compilação do artigo
 
 ```bash
+python scripts/verificar_consistencia_artigo.py
 latexmk -pdf main.tex
 ```
 
-O PDF será criado em `out/main.pdf`.
+O primeiro comando confere os principais números do texto contra os artefatos
+reproduzidos. O PDF será criado em `out/main.pdf`. Consulte
+`CHECKLIST_ENTREGA.md` para a conferência pela rubrica e o arquivo de submissão.

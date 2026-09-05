@@ -52,6 +52,10 @@
   proveniência.
 - `requirements.txt`: dependências Python.
 - `latexmkrc`: compilação do artigo para `out/`.
+- `scripts/verificar_consistencia_artigo.py`: validação dos principais números
+  do texto contra os CSVs e o resumo do juiz.
+- `CHECKLIST_ENTREGA.md`: conferência pela rubrica e instruções de submissão.
+- `entrega/trabalho_final_fabricio_santana.pdf`: cópia limpa para submissão.
 - `resultados/`: CSVs e tabela LaTeX produzidos pelo notebook.
 - `figuras/cobertura_temporal.{pdf,png}`: figura produzida pelo notebook.
 - `dados/`: parquet e proveniência locais, ignorados pelo Git.
@@ -77,8 +81,12 @@
   conhecido em `avaliacao/perguntas_referencia.json`.
 - Resultados do TF--IDF em dez consultas: Hit@1 = 0,20; Hit@5 = 0,40;
   Hit@10 = 0,40; MRR = 0,301; mediana do melhor rank = 17,5.
-- Os resultados e a figura temporal foram incorporados ao artigo, que passou a
-  quatro páginas e permaneceu compilando sem erros.
+- Os resultados, a figura temporal e a tabela comparativa foram incorporados ao
+  artigo, que passou a cinco páginas e permaneceu compilando sem erros.
+- A bibliografia usa o estilo autor-data da ABNT, com citações em azul. Foram
+  incorporadas referências da disciplina de Agostino et al. (2025), para a
+  relação entre ciência de dados e accountability pública, e Mökander (2023),
+  para a definição de auditabilidade de sistemas de IA.
 
 ## Pendências conhecidas
 
@@ -87,7 +95,7 @@
    bibliográficos antes da entrega.
 3. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
    abstenção e supervisão humana.
-4. Realizar revisão textual e visual final do PDF de quatro páginas.
+4. Realizar revisão textual e visual final do PDF de cinco páginas.
 
 O planejamento da execução vetorial contabilizou 15.039 documentos, 10
 perguntas, 19.926.075 tokens após truncamento explícito em 8.000 tokens por
