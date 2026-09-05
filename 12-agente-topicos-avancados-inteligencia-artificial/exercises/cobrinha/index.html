@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cobrinha — um clássico de bolso</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #101b18; color: #edf5d9; font-family: system-ui, sans-serif; padding: 32px 18px; }
+    main { max-width: 580px; margin: auto; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .eyebrow { color: #b5d477; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
+    h1 { font-size: clamp(36px, 8vw, 54px); letter-spacing: -3px; margin: 4px 0; }
+    .badge { border: 1px solid #45563a; border-radius: 30px; padding: 8px 12px; color: #b5d477; font-size: 12px; white-space: nowrap; }
+    .intro, footer { color: #a3b2a5; font-size: 14px; line-height: 1.6; }
+    .scores { display: flex; gap: 12px; margin: 24px 0 16px; }
+    .score { flex: 1; background: #1b2b23; border: 1px solid #344333; border-radius: 12px; padding: 12px 18px; }
+    .score span { display: block; color: #a3b2a5; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+    .score strong { font-size: 28px; font-variant-numeric: tabular-nums; }
+    .board { position: relative; border: 8px solid #344333; border-radius: 16px; overflow: hidden; background: #c7d5a1; box-shadow: 0 20px 60px #0004; }
+    canvas { display: block; width: 100%; height: auto; touch-action: none; }
+    .overlay { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; background: #c7d5a1eb; color: #253b27; padding: 20px; }
+    .overlay[hidden] { display: none; }
+    h2 { margin: 0 0 10px; font-size: 28px; }
+    .overlay p { margin: 0 0 20px; line-height: 1.5; }
+    button, select { font: inherit; border-radius: 8px; border: 1px solid #536745; padding: 12px 16px; background: #223a2c; color: #edf5d9; cursor: pointer; }
+    button:hover { background: #35533c; }
+    button:focus-visible, select:focus-visible { outline: 3px solid #e5a35e; outline-offset: 3px; }
+    button:disabled { opacity: .4; cursor: default; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
+    label { font-size: 13px; color: #a3b2a5; }
+    select { padding: 10px; margin-left: 6px; }
+    .pad { display: grid; grid-template-columns: repeat(3, 52px); gap: 6px; justify-content: center; margin: 20px auto; }
+    .pad button { font-size: 22px; padding: 8px; touch-action: manipulation; }
+    .pad button:first-child { grid-column: 2; }
+    .pad button:nth-child(2) { grid-column: 1; }
+    footer { text-align: center; font-size: 12px; }
+  </style>
+</head>
+<body>
+<main>
+  <header><div><span class="eyebrow">Pequenas pausas · grandes recordes</span><h1>Cobrinha<span style="color:#b5d477">.</span></h1></div><span class="badge">CLÁSSICO / 01</span></header>
+  <p class="intro">Coma, cresça e encontre seu caminho. Só não dê um nó em si mesmo.</p>
+  <div class="scores"><div class="score"><span>Pontos</span><strong id="score">0</strong></div><div class="score"><span>Seu recorde</span><strong id="best">0</strong></div></div>
+  <div class="board">
+    <canvas id="game" width="600" height="600" role="img" aria-label="Tabuleiro do jogo da cobrinha"></canvas>
+    <div class="overlay" id="overlay"><h2 id="title">Vamos jogar?</h2><p id="message">Pegue as frutas. Evite as paredes e o próprio corpo.</p><button id="start">Começar partida →</button></div>
+  </div>
+  <div class="toolbar"><label>Ritmo <select id="speed"><option value="180">Tranquilo</option><option value="125" selected>Clássico</option><option value="80">Acelerado</option></select></label><button id="pause" disabled>Pausar</button><button id="restart">Recomeçar</button></div>
+  <div class="pad" aria-label="Controles de direção"><button data-dir="up" aria-label="Cima">↑</button><button data-dir="left" aria-label="Esquerda">←</button><button data-dir="down" aria-label="Baixo">↓</button><button data-dir="right" aria-label="Direita">→</button></div>
+  <footer>Setas ou WASD para mover · Espaço para pausar<br>No celular, use os botões ou deslize sobre o tabuleiro.</footer>
+  <p id="status" role="status" style="text-align:center;color:#b5d477;font-size:13px">Pronto para começar.</p>
+</main>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const canvas = $('game'), ctx = canvas.getContext('2d');
+  const size = 20, cell = canvas.width / size;
+  const directions = { up: {x:0,y:-1}, down: {x:0,y:1}, left: {x:-1,y:0}, right: {x:1,y:0} };
+  let snake, direction, queued, fruit, points, timer, state = 'ready', best = 0;
+  try { best = Math.max(0, Number(localStorage.getItem('cobrinha-recorde')) || 0); } catch {}
+  $('best').textContent = best;
+  function reset() {
+    snake = [{x:9,y:10},{x:8,y:10},{x:7,y:10}];
+    direction = directions.right; queued = null; points = 0;
+    $('score').textContent = points; placeFruit(); draw();
+  }
+  function placeFruit() {
+    const free = [];
+    for (let y=0;y<size;y++) for (let x=0;x<size;x++) {
+      if (!snake.some(part => part.x===x && part.y===y)) free.push({x,y});
+    }
+    fruit = free[Math.floor(Math.random()*free.length)] || null;
+  }
+  function draw() {
+    ctx.fillStyle = '#c7d5a1'; ctx.fillRect(0,0,600,600);
+    ctx.strokeStyle = '#263e2710'; ctx.lineWidth = 1;
+    for(let i=0;i<=size;i++) {
+      ctx.beginPath(); ctx.moveTo(i*cell,0); ctx.lineTo(i*cell,600); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0,i*cell); ctx.lineTo(600,i*cell); ctx.stroke();
+    }
+    if (fruit) {
+      ctx.fillStyle = '#ad512f'; ctx.beginPath(); ctx.arc((fruit.x+.5)*cell,(fruit.y+.55)*cell,10,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#3e612f'; ctx.fillRect((fruit.x+.5)*cell,(fruit.y+.08)*cell,4,7);
+    }
+    snake.forEach((part,i) => {
+      ctx.fillStyle = i===0 ? '#213d2b' : '#42633a';
+      ctx.fillRect(part.x*cell+2,part.y*cell+2,cell-4,cell-4);
+    });
+    const head = snake[0];
+    ctx.fillStyle = '#e8f0cb';
+    for(const side of [-1,1]) {
+      ctx.fillRect((head.x+.5)*cell+direction.x*6+direction.y*side*6-2,(head.y+.5)*cell+direction.y*6+direction.x*side*6-2,4,4);
+    }
+  }
+  function schedule() { clearInterval(timer); timer = setInterval(tick, Number($('speed').value)); }
+  function start() {
+    clearInterval(timer); reset(); state = 'playing'; $('overlay').hidden = true;
+    $('pause').disabled = false; $('pause').textContent = 'Pausar'; $('status').textContent = 'Boa partida!'; schedule();
+  }
+  function finish(won) {
+    clearInterval(timer); state = 'over'; $('pause').disabled = true;
+    $('title').textContent = won ? 'Tabuleiro completo!' : 'Fim de jogo';
+    $('message').textContent = `Você fez ${points} pontos. ${won ? 'Que partida!' : 'Que tal tentar mais uma vez?'}`;
+    $('start').textContent = 'Jogar de novo →'; $('overlay').hidden = false;
+    $('status').textContent = `${won ? 'Vitória' : 'Fim de jogo'}: ${points} pontos.`;
+  }
+  function tick() {
+    if (state !== 'playing') return;
+    if (queued) { direction = queued; queued = null; }
+    const head = {x:snake[0].x+direction.x,y:snake[0].y+direction.y};
+    const eating = fruit && head.x===fruit.x && head.y===fruit.y;
+    const body = eating ? snake : snake.slice(0,-1);
+    if (head.x<0 || head.x>=size || head.y<0 || head.y>=size || body.some(p=>p.x===head.x && p.y===head.y)) { finish(false); return; }
+    snake.unshift(head);
+    if (!eating) snake.pop();
+    else {
+      points += 10; $('score').textContent = points;
+      if (points>best) {
+        best = points; $('best').textContent = best;
+        try { localStorage.setItem('cobrinha-recorde', String(best)); } catch {}
+      }
+      placeFruit();
+    }
+    draw(); if (!fruit) finish(true);
+  }
+  function turn(name) {
+    if (state!=='playing' || queued) return;
+    const next = directions[name];
+    if (next.x===-direction.x && next.y===-direction.y) return;
+    if (next.x!==direction.x || next.y!==direction.y) queued = next;
+  }
+  function pause() {
+    if (state==='playing') {
+      state = 'paused'; clearInterval(timer); $('title').textContent = 'Uma pausa.';
+      $('message').textContent = 'Sua cobrinha espera por você.'; $('start').textContent = 'Continuar →';
+      $('overlay').hidden = false; $('pause').textContent = 'Continuar'; $('status').textContent = 'Jogo pausado.';
+    } else if (state==='paused') {
+      state = 'playing'; $('overlay').hidden = true; $('pause').textContent = 'Pausar'; $('status').textContent = 'Boa partida!'; schedule();
+    }
+  }
+  $('start').addEventListener('click', () => state==='paused' ? pause() : start());
+  $('restart').addEventListener('click', start);
+  $('pause').addEventListener('click', pause);
+  $('speed').addEventListener('change', () => { if(state==='playing') schedule(); });
+  document.querySelectorAll('[data-dir]').forEach(button => button.addEventListener('click', () => turn(button.dataset.dir)));
+  const keys = {ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',s:'down',a:'left',d:'right'};
+  document.addEventListener('keydown', event => {
+    if (event.target.tagName==='SELECT' || event.altKey || event.ctrlKey || event.metaKey) return;
+    const key = event.key.length===1 ? event.key.toLowerCase() : event.key;
+    if (keys[key]) { event.preventDefault(); turn(keys[key]); }
+    if (event.code==='Space' && event.target.tagName!=='BUTTON') { event.preventDefault(); if(!event.repeat) pause(); }
+  });
+  let touch = null;
+  canvas.addEventListener('pointerdown', event => { touch = {x:event.clientX,y:event.clientY}; canvas.setPointerCapture(event.pointerId); });
+  canvas.addEventListener('pointerup', event => {
+    if (!touch) return;
+    const dx=event.clientX-touch.x, dy=event.clientY-touch.y; touch=null;
+    if (Math.max(Math.abs(dx),Math.abs(dy))<12) return;
+    turn(Math.abs(dx)>Math.abs(dy) ? (dx>0?'right':'left') : (dy>0?'down':'up'));
+  });
+  canvas.addEventListener('pointercancel', () => { touch=null; });
+  document.addEventListener('visibilitychange', () => { if(document.hidden && state==='playing') pause(); });
+  reset();
+})();
+</script>
+</body>
+</html>
