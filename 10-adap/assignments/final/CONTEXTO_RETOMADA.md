@@ -1,6 +1,6 @@
 # Contexto para retomada do trabalho final
 
-Última atualização: 4 de setembro de 2026.
+Última atualização: 5 de setembro de 2026.
 
 ## Decisões tomadas
 
@@ -9,7 +9,7 @@
 - Todos os artefatos devem permanecer em `10-adap/assignments/final/`.
 - Tema escolhido: proposta de uma solução RAG auditável para consulta e análise
   de discursos do Senado Federal.
-- Título de trabalho: **Recuperação aumentada por geração para análise auditável
+- Título de trabalho: **Proposta de recuperação aumentada por geração para análise auditável
   de discursos do Senado Federal**.
 - O corpus deve ser obtido diretamente do dataset público
   `fabriciosantana/discursos-senado-legislatura-56`, no Hugging Face.
@@ -47,7 +47,8 @@
 - `main.tex`: primeira versão completa do short paper.
 - `referencias.bib`: bibliografia inicial.
 - `analise_corpus_discursos.ipynb`: notebook executado com aquisição,
-  auditoria, caracterização, chunking e baseline TF–IDF.
+  auditoria, caracterização e demonstração de segmentação e TF–IDF sobre mil
+  documentos; a comparação final dos três métodos ocorre no nível documental.
 - `scripts/baixar_dados_hf.py`: download independente e registro de
   proveniência.
 - `requirements.txt`: dependências Python.
@@ -84,18 +85,22 @@
 - Os resultados, a figura temporal e a tabela comparativa foram incorporados ao
   artigo, que passou a cinco páginas e permaneceu compilando sem erros.
 - A bibliografia usa o estilo autor-data da ABNT, com citações em azul. Foram
-  incorporadas referências da disciplina de Agostino et al. (2025), para a
+  incorporadas referências da disciplina de Agostino et al. (2026; publicação
+  antecipada on-line em 2025), para a
   relação entre ciência de dados e accountability pública, e Mökander (2023),
   para a definição de auditabilidade de sistemas de IA.
 
 ## Pendências conhecidas
 
-1. Incluir um diagrama simples do pipeline proposto, se houver espaço.
-2. Revisar e ampliar as referências com fontes primárias e confirmar os dados
-   bibliográficos antes da entrega.
-3. Revisar criticamente LAI, LGPD, vieses, falsos positivos/negativos,
-   abstenção e supervisão humana.
-4. Realizar revisão textual e visual final do PDF de cinco páginas.
+1. Leitura final pelo autor antes da submissão.
+2. A geração de respostas, a avaliação de fidelidade e a validação com usuários
+   permanecem como próximos passos do projeto, não como partes executadas neste trabalho.
+
+A revisão final distinguiu a segmentação demonstrativa (mil documentos e 5.696
+trechos) da avaliação comparativa no nível documental (15.039 discursos),
+explicitou o recorte do pool e dos excertos fornecidos ao LLM, delimitou o
+R@10 do pool e registrou os riscos do envio de textos a uma API externa. O PDF
+permanece com cinco páginas.
 
 O planejamento da execução vetorial contabilizou 15.039 documentos, 10
 perguntas, 19.926.075 tokens após truncamento explícito em 8.000 tokens por

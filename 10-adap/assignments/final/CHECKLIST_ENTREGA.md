@@ -6,15 +6,17 @@
   dificuldade de localizar e comparar pronunciamentos em grande corpus textual;
   público-alvo, natureza assistiva e limites de uso estão explícitos.
 - **Adequação metodológica e técnica (35%)**: o artigo descreve aquisição,
-  auditoria, segmentação, TF--IDF, embeddings, RRF, avaliação em item conhecido,
-  pool de relevância e LLM como juiz. O notebook e os scripts reproduzem o fluxo.
+  auditoria, demonstração de segmentação, TF--IDF, embeddings, RRF, avaliação
+  em item conhecido, pool de relevância e LLM como juiz. O texto distingue a
+  demonstração em trechos da comparação final no nível documental.
 - **Viabilidade de dados e governança (15%)**: fonte, cobertura, ausências,
   duplicidades, período, hash, LAI e LGPD estão documentados.
 - **Impacto e resultados (15%)**: há métricas para três métodos, tabela
   comparativa, benefícios operacionais e limitações de recuperação, geração e
   julgamento automatizado.
-- **Estrutura, clareza e formatação (10%)**: PDF em A4 com cinco páginas, Times
-  New Roman equivalente, corpo 12, referências 11, margens de 2,5 cm,
+- **Estrutura, clareza e formatação (10%)**: PDF em A4 com cinco páginas, fonte
+  equivalente à Times New Roman,
+  corpo 12, referências 11, margens de 2,5 cm,
   espaçamento 1,15 e referências no padrão autor-data da ABNT.
 
 ## Validação técnica

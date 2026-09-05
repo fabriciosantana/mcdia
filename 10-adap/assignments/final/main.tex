@@ -18,29 +18,27 @@
 \setlength{\parindent}{1.25cm}
 \setlength{\parskip}{0pt}
 
-\title{Recuperação aumentada por geração para análise auditável de discursos do Senado Federal}
+\title{Proposta de recuperação aumentada por geração para análise auditável de discursos do Senado Federal}
 \author{Fabricio Fernandes Santana\\
   \small E-mail: \texttt{fabricio.santana@gmail.com}\\
-  \small Senado Federal --- Coordenadoria de Informática Legislativa}
+  \small Senado Federal --- Coordenadoria de Informática Legislativa e Parlamentar}
 \date{}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Este artigo curto propõe uma solução de recuperação aumentada por geração
+Este artigo propõe uma solução de recuperação aumentada por geração
 (\textit{retrieval-augmented generation}, RAG) para apoiar a consulta auditável
-a pronunciamentos do Senado Federal. A proposta combina recuperação de
-informação, geração condicionada às evidências recuperadas e apresentação dos
-metadados das fontes. Busca-se reduzir o esforço necessário para localizar e
-sintetizar manifestações parlamentares sem substituir a análise humana nem
-atribuir ao modelo a verificação autônoma de fatos ou de conformidade. O corpus
-é composto pelos discursos da 56ª Legislatura, obtidos de fonte pública e
-disponibilizados em formato estruturado no Hugging Face. A avaliação proposta
-abrange qualidade dos dados, desempenho da recuperação e fidelidade das
-respostas às evidências. Espera-se produzir um mecanismo reprodutível de apoio
-à transparência e à accountability legislativa, acompanhado de trilhas de
-auditoria e salvaguardas contra respostas não fundamentadas.
+a pronunciamentos do Senado Federal. O desenho da solução combina recuperação
+de informação, geração condicionada às evidências e apresentação dos metadados
+das fontes. Busca-se localizar e sintetizar manifestações sem substituir a
+análise humana nem atribuir ao modelo a verificação autônoma de fatos ou de
+conformidade. O corpus reúne discursos da 56ª Legislatura obtidos de fonte
+pública e estruturados no Hugging Face. Avaliaram-se a qualidade dos dados e a
+recuperação; a fidelidade das respostas integra etapa futura. O trabalho
+apresenta um fluxo experimental reprodutível, com registro das evidências e
+salvaguardas previstas contra respostas sem fundamento.
 
 \noindent\textbf{Palavras-chave:} accountability; discursos parlamentares;
 recuperação de informação; RAG; inteligência artificial generativa.
@@ -61,10 +59,11 @@ prestação de contas (accountability) \cite{agostinoEtAl2025dataScience}. Sem u
 apoio automatizado, a pesquisa manual eleva o tempo de resposta e o risco de
 omitir pronunciamentos relevantes.
 
-Nesse contexto, propõe-se investigar como uma solução RAG auditável pode apoiar
+Nesse contexto, investigou-se a viabilidade de uma solução RAG auditável para apoiar
 pesquisadores, servidores e instâncias de controle na consulta a pronunciamentos
-da 56ª Legislatura. O sistema terá natureza assistiva: deverá recuperar trechos,
-sintetizar apenas as evidências disponíveis e apresentar autor, data, partido,
+da 56ª Legislatura. A prova de conceito recupera documentos; em sua versão
+completa, o sistema deverá sintetizar apenas as evidências disponíveis e
+apresentar autor, data, partido,
 unidade da Federação e endereço da fonte. Não se pretende inferir intenção,
 determinar a veracidade de declarações nem automatizar juízos sobre parlamentares.
 
@@ -86,27 +85,29 @@ técnicos e processuais \cite{mokander2023auditing}: versionamento do corpus, re
 citações obrigatórias, possibilidade de abstenção e avaliação separada da
 recuperação e da geração \cite{saadFalconEtAl2024ares}.
 
-\section{Metodologia proposta e dados}
+\section{Metodologia e dados}
 
-O corpus será obtido diretamente do conjunto de discursos da 56ª Legislatura,
+O corpus foi obtido diretamente do conjunto de discursos da 56ª Legislatura,
 publicado no Hugging Face por \citeonline{datasetDiscursos}. A base contém metadados dos pronunciamentos e o
-texto integral quando sua coleta foi bem-sucedida. Antes da indexação serão
+texto integral quando sua coleta foi bem-sucedida. Antes da indexação, foram
 avaliados esquema, duplicidades, campos ausentes, cobertura textual, datas e
-consistência dos identificadores. A revisão também distinguirá falha de coleta
+consistência dos identificadores. A revisão também distinguiu falha de coleta
 de inexistência de discurso, evitando interpretar ausência de texto como
 ausência de atividade parlamentar.
 
-O fluxo proposto compreende: (1) download e registro de versão e hash do
-arquivo; (2) validação e normalização dos dados com Python e pandas; (3) seleção
-do texto e dos metadados; (4) segmentação dos discursos em trechos com
-sobreposição; (5) indexação lexical e vetorial; (6) recuperação híbrida dos
-trechos mais relevantes; (7) geração de resposta condicionada às evidências; e
-(8) apresentação das citações e armazenamento da trilha de execução. A
-separação desses componentes permite avaliar a recuperação independentemente
-da resposta gerada \cite{gao2023ragSurvey,saadFalconEtAl2024ares}.
+O fluxo implementado compreendeu: (1) download e registro da revisão e do hash
+do arquivo; (2) validação e normalização com Python e pandas; (3) seleção de
+texto e metadados; (4) demonstração de segmentação com sobreposição; (5)
+indexação lexical e vetorial; (6) fusão dos rankings; e (7) armazenamento dos
+resultados. A segmentação de mil documentos produziu 5.696 trechos; para uma
+comparação uniforme, a avaliação dos três métodos indexou os 15.039 discursos
+no nível documental. A geração de
+respostas e a apresentação automatizada das citações permanecem como extensão
+futura. Essa separação permite avaliar a recuperação independentemente da
+resposta gerada \cite{gao2023ragSurvey,saadFalconEtAl2024ares}.
 
-A prova de conceito compara TF--IDF, representações vetoriais
-(\textit{embeddings}) do modelo Large da OpenAI, com
+A prova de conceito compara TF--IDF com até 80 mil termos, representações
+vetoriais (\textit{embeddings}) do modelo \texttt{text-embedding-3-large}, com
 512 dimensões, e fusão dos rankings por
 \textit{Reciprocal Rank Fusion} (RRF), método que combina rankings sem exigir
 comparabilidade entre seus escores \cite{cormackEtAl2009rrf}. Foram elaboradas dez perguntas a partir
@@ -122,20 +123,24 @@ cada método, totalizando 205 pares após deduplicação. Um grande modelo de
 linguagem (LLM) como juiz, sem
 acesso ao método ou à posição, atribuiu relevância 0, 1 ou 2 em duas passagens.
 Divergências, baixa confiança ou evidência insuficiente foram adjudicadas por
-uma terceira chamada com contexto ampliado, estratégia coerente com propostas
+uma terceira chamada. As duas passagens receberam o resumo e um excerto de até
+1.200 caracteres selecionado por termos da pergunta; a adjudicação recebeu até
+30 mil caracteres iniciais. Essa estratégia é coerente com propostas
 de avaliação automatizada de RAG e de controle de consistência do juiz
 \cite{saadFalconEtAl2024ares,liuEtAl2025judgeRag}. Não houve avaliação humana dos
 pares; assim, esses rótulos constituem uma aproximação automática de relevância,
 e não um padrão-ouro \cite{chenEtAl2024judgeBias}.
 
-Os dados são públicos, mas o tratamento deverá observar finalidade,
-necessidade, integridade e segurança. A solução manterá os textos em seu
-contexto documental, respeitará a Lei de Acesso à Informação
-\cite{brasil2011lai} e considerará os princípios da Lei Geral de Proteção de
-Dados \cite{brasil2018lgpd}. Perfis ou classificações individuais não serão
-produzidos sem base metodológica e finalidade legítima.
+Os dados são públicos, mas seu tratamento deve observar finalidade,
+necessidade, integridade e segurança. O desenho proposto prevê a manutenção dos
+textos em seu contexto documental, em conformidade com a Lei de Acesso à
+Informação \cite{brasil2011lai} e com os princípios da Lei Geral de Proteção de
+Dados \cite{brasil2018lgpd}. Também exclui a produção de perfis ou classificações
+individuais sem base metodológica e finalidade legítima. O envio dos textos a
+uma API externa também exige análise de segurança, retenção, minimização e
+condições contratuais antes de eventual adoção institucional.
 
-\section{Resultados e impacto esperado}
+\section{Resultados e impacto potencial}
 
 A auditoria identificou 15.729 pronunciamentos e 15.039 textos integrais
 disponíveis, correspondentes a 95,61\% do corpus. Não foram encontrados
@@ -159,7 +164,7 @@ em dez resultados e reduziu a mediana da posição. As representações vetoriai
 superiores de forma geral, embora tenham beneficiado consultas específicas
 sobre desinformação e processo legislativo.
 
-O resultado demonstra a viabilidade do fluxo e desaconselha presumir que maior
+O resultado fornece evidência preliminar da viabilidade do fluxo e desaconselha presumir que maior
 similaridade semântica garante relevância. As perguntas derivadas dos resumos
 podem favorecer correspondências lexicais; o índice contém apenas o texto
 integral, e apenas um documento foi rotulado por consulta. Logo, as diferenças
@@ -168,7 +173,7 @@ com julgamentos mais abrangentes.
 
 Nas duas passagens do juiz, a concordância exata foi 62,9\% e o kappa ponderado
 quadrático foi 0,690; 136 itens exigiram adjudicação. Com os rótulos finais do
-LLM, o híbrido obteve os maiores valores em quatro das cinco métricas da
+LLM, o híbrido obteve os maiores valores em quatro das cinco métricas descritivas da
 Tabela~\ref{tab:metricas-julgadas}.
 
 \begin{table}[htbp]
@@ -187,34 +192,36 @@ Tabela~\ref{tab:metricas-julgadas}.
   \end{tabular}
 \end{table}
 
-A concordância entre passagens quantifica a consistência interna, mas não
-valida os rótulos contra julgamentos independentes
-\cite{liuEtAl2025judgeRag,chenEtAl2024judgeBias}.
+A concordância quantifica a consistência interna, mas não valida os rótulos
+contra julgamentos independentes \cite{liuEtAl2025judgeRag,chenEtAl2024judgeBias}.
+O R@10$_{pool}$ considera apenas os itens relevantes da união avaliada, não a
+revocação no corpus completo.
 
-Espera-se que o protótipo completo responda a questões temáticas com links e
-metadados que permitam ao usuário conferir cada afirmação. Os principais
-entregáveis serão o corpus versionado, o índice de recuperação, o conjunto de
-perguntas de avaliação, métricas reprodutíveis e registros das evidências usadas
-em cada resposta.
+Como extensão futura, o protótipo completo deverá responder a questões temáticas
+com links e metadados que permitam ao usuário conferir cada afirmação. Esta
+etapa produziu o corpus versionado, o índice de recuperação, o conjunto de
+perguntas de avaliação, métricas reprodutíveis e registros das evidências
+recuperadas.
 
 A aplicação pode reduzir o tempo de pesquisa e ampliar a cobertura documental
 de análises legislativas. Seus resultados devem ser entendidos como subsídio,
 e não como prova autônoma. Entre as limitações estão discursos sem texto
-integral, erros nos metadados, perda de contexto durante a segmentação, falhas
+integral, erros nos metadados, perda de contexto pelo truncamento, falhas
 de recuperação, vieses do corpus e alucinações do modelo gerador. Falsos
 negativos podem omitir pronunciamentos relevantes, enquanto falsos positivos
 podem associar trechos apenas superficialmente relacionados à pergunta
 \cite{jiEtAl2023hallucinationSurvey}.
 Além disso, um juiz baseado em LLM pode reproduzir vieses, interpretar de modo
-instável a rubrica ou favorecer correspondências semânticas semelhantes às do
-método vetorial. A dupla passagem e a adjudicação mitigam inconsistências, mas
-não eliminam esse possível viés do avaliador \cite{chenEtAl2024judgeBias}.
+instável a rubrica ou favorecer o método vetorial. A seleção dos excertos pode
+omitir evidências. Dupla passagem e adjudicação mitigam inconsistências, mas não
+eliminam esses vieses \cite{chenEtAl2024judgeBias}.
 
 \section{Considerações finais}
 
 A proposta articula transparência legislativa, governança de dados e IA
-generativa em um fluxo que privilegia a rastreabilidade. Sua viabilidade decorre
-da existência de dados públicos estruturados e de ferramentas maduras para
+generativa em um fluxo que privilegia a rastreabilidade. O experimento sustenta
+a viabilidade técnica preliminar das etapas de aquisição, auditoria e
+recuperação, apoiadas por dados públicos estruturados e ferramentas maduras para
 preparação, indexação e avaliação
 \cite{manningEtAl2008informationRetrieval,saadFalconEtAl2024ares}. Como próximos
 passos, o conjunto inicial de referência deverá ser ampliado, seguido da

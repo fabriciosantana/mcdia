@@ -8,7 +8,7 @@ auditável para consulta a discursos do Senado Federal.
 - `main.tex`: fonte principal do short paper;
 - `referencias.bib`: referências bibliográficas;
 - `analise_corpus_discursos.ipynb`: auditoria, caracterização, segmentação e
-  baseline de recuperação lexical;
+  baseline de recuperação lexical em trechos;
 - `avaliacao/perguntas_referencia.json`: coleção inicial de perguntas e
   documentos conhecidos para avaliação da recuperação;
 - `scripts/baixar_dados_hf.py`: download reproduzível do corpus no Hugging Face;
@@ -64,7 +64,9 @@ avaliador compara TF–IDF, recuperação vetorial e fusão por Reciprocal Rank
 Fusion (RRF). Não compartilhe o `.env` nem inclua a chave em células do
 notebook.
 
-O avaliador também produz um pool cego com a união dos dez primeiros resultados
+Na comparação final, os três métodos indexam os 15.039 textos no nível do
+documento; a segmentação do notebook é uma demonstração separada sobre mil
+documentos. O avaliador também produz um pool cego com a união dos dez primeiros resultados
 de cada método em `resultados/pool_avaliacao.xlsx`. A correspondência entre os
 itens e os rankings permanece separada em `pool_chave_metodos.csv`.
 
