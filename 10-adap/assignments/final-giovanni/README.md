@@ -28,7 +28,7 @@ cópias. O notebook explica e executa o procedimento.
 
 - `Guia e Orientações do Trabalho Final.pdf`: cópia do enunciado da disciplina.
 - `main.tex`, `referencias.bib`, `latexmkrc`: short paper LaTeX, referências ABNT,
-  citações azuis; o e-mail permanece explicitamente pendente.
+  citações azuis; e-mail informado: `giovannibrigido@gmail.com`.
 - `revisao/minuta_giovanni_brigido.pdf`: PDF de cinco páginas para revisão.
 - `analise_arrecadacao.ipynb`: notebook executável e comentado.
 - `scripts/baixar_dados.py`: aquisição e validação de hashes.
@@ -67,6 +67,6 @@ analise_arrecadacao.ipynb --ExecutePreprocessor.timeout=300`.
 ## Estado
 
 Minuta preparada com pesquisa, execução e verificação técnica. A submissão
-depende do e-mail e da revisão de Giovanni, conforme o caráter individual do
+depende da revisão de Giovanni, conforme o caráter individual do
 enunciado. O documento não afirma que ele realizou atividades institucionais,
 que as regras foram homologadas pela Receita ou que houve validação externa.

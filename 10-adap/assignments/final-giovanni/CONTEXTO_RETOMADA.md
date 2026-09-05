@@ -4,7 +4,7 @@ Data: 5 de setembro de 2026.
 
 Giovanni Brígido é Auditor-Fiscal da Receita Federal, conforme informação do
 solicitante. Nome e órgão usados sem presumir especialidade ou lotação. E-mail
-ainda não informado. Minuta depende de revisão do autor por exigência de
+informado: `giovannibrigido@gmail.com`. Minuta depende de revisão do autor por exigência de
 individualidade no guia. Não registrar a condição de saúde nos artefatos.
 
 Tema escolhido: auditoria da completude temporal da arrecadação por UF.
@@ -27,5 +27,5 @@ cinco páginas, cinco referências, citações azuis. Fonte Times equivalente,
 Consultar README, NOTA_METODOLOGICA e REVISAO_AUTOR. O usuário anterior já
 submeteu seu trabalho em `../final`; não alterar aquele projeto.
 
-Próximos passos: e-mail; leitura/adaptação por Giovanni; confirmar condições
+Próximos passos: leitura/adaptação por Giovanni; confirmar condições
 de apoio/autoria com a disciplina; recompilar e preparar versão para submissão.

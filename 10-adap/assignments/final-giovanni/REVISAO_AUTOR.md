@@ -6,7 +6,7 @@ por Giovanni. A pesquisa e a programação não substituem essa etapa.
 
 ## Pendências concretas
 
-1. Informar o e-mail no cabeçalho de `main.tex`.
+1. Conferir o e-mail informado no cabeçalho: `giovannibrigido@gmail.com`.
 2. Confirmar nome, cargo e órgão; a lotação específica não foi presumida.
 3. Ler o PDF, adequar a redação e confirmar se a oportunidade de governança de
    dados é pertinente ao seu contexto profissional.
