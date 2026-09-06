@@ -1,0 +1,41 @@
+{
+  "prepared_on": "2026-09-06",
+  "references": [
+    {
+      "id": "ares",
+      "download_url": "https://aclanthology.org/2024.naacl-long.20.pdf",
+      "canonical_url": "https://aclanthology.org/2024.naacl-long.20.pdf",
+      "access_date": "2026-09-06",
+      "local_file": "fontes/ares.pdf",
+      "sha256": "5a585d88f7b63c06439a4ecb8fd3165615d637e2061f242bff3f6ec3a209bd34",
+      "consulted_scope": "seções 1–7, páginas impressas 338–346; apêndices não fichados",
+      "structural_preflight": "PASS",
+      "preflight_file": "fontes/ares.preflight.json",
+      "verification_note": "Excertos conferidos no texto extraído da versão identificada."
+    },
+    {
+      "id": "kamerraad",
+      "download_url": "https://arxiv.org/pdf/2404.17597v1",
+      "canonical_url": "https://arxiv.org/pdf/2404.17597v1",
+      "access_date": "2026-09-06",
+      "local_file": "fontes/kamerraad.pdf",
+      "sha256": "595c8bac4fb6a635411809e97063e2037ad5d07a5921b2c1190fae1bf4bf78c7",
+      "consulted_scope": "preprint v1, páginas 1–4, integral",
+      "structural_preflight": "PASS",
+      "preflight_file": "fontes/kamerraad.preflight.json",
+      "verification_note": "Excertos conferidos no texto extraído da versão identificada."
+    },
+    {
+      "id": "ipu",
+      "download_url": "https://www.eerstekamer.nl/nonav/bijlage/20241211/use_cases_voor_ai_in_parlementen/document3/f%3D/vmj3e6pxuggr.pdf",
+      "canonical_url": "https://www.ipu.org/file/20635/download",
+      "access_date": "2026-09-06",
+      "local_file": "fontes/ipu.pdf",
+      "sha256": "4a532f87ee8389197bf3f6448f741c51269e1336dd686138f25f4477b4e481ab",
+      "consulted_scope": "introdução, p. 3; caso 024, p. 150–151; parcial",
+      "structural_preflight": "UNAVAILABLE",
+      "preflight_file": "fontes/ipu.preflight.json",
+      "verification_note": "Excertos e páginas impressas 3 e 151 conferidos visualmente; preflight permanece UNAVAILABLE."
+    }
+  ]
+}

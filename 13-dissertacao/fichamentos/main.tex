@@ -1,0 +1,39 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{newtxtext}
+\usepackage[a4paper,margin=19mm,top=17mm,bottom=18mm,headheight=14pt,headsep=6mm,footskip=9mm]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\definecolor{accent}{HTML}{234A60}
+\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent,pdftitle={Fichamentos-piloto — revisão da literatura},pdfsubject={ARES, KamerRaad e IPU}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily Dissertação · Revisão da literatura}
+\fancyhead[R]{\small\sffamily Fichamentos-piloto}
+\fancyfoot[L]{\footnotesize Preparação assistida por IA · 06/09/2026 · Para revisão do pesquisador}
+\fancyfoot[R]{\small\thepage/\pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.05}
+\setlist[itemize]{leftmargin=4mm,itemsep=3pt,topsep=3pt,parsep=0pt}
+\newcommand{\fichatitulo}[3]{%
+  {\small\sffamily\color{accent}\textbf{#1}\hfill #2\par}
+  \vspace{2mm}{\LARGE\sffamily\bfseries #3\par}\vspace{2mm}}
+\newcommand{\campo}[1]{\par\addvspace{5pt}{\sffamily\bfseries\color{accent}#1}\par\nopagebreak}
+\newcommand{\excerto}[3]{\item \textbf{#1:} ``#2''\par{\small\color{accent}#3}}
+\newcommand{\registro}[1]{\vfill\hrule\vspace{2mm}{\footnotesize #1\par
+Leitura do pesquisador: não registrada. Observações para a orientação:\par}\vspace{7mm}}
+\begin{document}
+\input{fichas/01-ares}
+\clearpage
+\input{fichas/02-kamerraad}
+\clearpage
+\input{fichas/03-ipu}
+\end{document}

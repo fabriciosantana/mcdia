@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/kamerraad.pdf",
+  "sha256": "595c8bac4fb6a635411809e97063e2037ad5d07a5921b2c1190fae1bf4bf78c7",
+  "declared_page_count": 4,
+  "enumerated_page_count": 4,
+  "reader_page_count": 4,
+  "warnings": [],
+  "generated_at": "2026-09-06T22:21:38.282846+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

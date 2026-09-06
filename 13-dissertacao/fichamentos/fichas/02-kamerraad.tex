@@ -1,0 +1,29 @@
+\fichatitulo{02 · APLICAÇÃO PARLAMENTAR}{Artigo de conferência · 2024}{KamerRaad}
+{\small ROGIERS, Alexander; BUYL, Maarten; KANG, Bo; DE BIE, Tijl.
+\textit{KamerRaad: Enhancing Information Retrieval in Belgian National Politics Through Hierarchical Summarization and Conversational Interfaces}.
+In: \textit{Machine Learning and Knowledge Discovery in Databases. Research Track and Demo Track}. Cham: Springer, 2024. v. 14948, p. 409--412.
+\href{https://doi.org/10.1007/978-3-031-70371-3_30}{DOI: 10.1007/978-3-031-70371-3\_30}.\par}
+
+\campo{Problema e objetivo}
+Facilitar a consulta a documentos parlamentares belgas extensos e dispersos, permitindo ao usuário avançar da pergunta às fontes e a explicações contextualizadas.
+
+\campo{Principal contribuição · síntese interpretativa}
+Apresenta uma aplicação que combina sumarização hierárquica, metadados e interação conversacional. Resumos de diferentes extensões ajudam a lidar com o limite de contexto, preservando caminhos de acesso aos documentos originais.
+
+\campo{Método e evidência}
+Descreve coleta, segmentação e enriquecimento de falas parlamentares. Usa GPT-4 na sumarização e rotulagem; BGE-M3 e GEITje-7B-ultra na recuperação e geração, respectivamente. A interface recebe feedback binário. A evidência apresentada é uma descrição do sistema com demonstração de uso (seções 2--3, p. 2--4 do preprint).
+
+\campo{Resumo extrativo · fragmentos literais selecionados}
+\begin{itemize}
+\excerto{Organização documental}{pre-processing step of hierarchical summarization}{p. 2 do preprint, Introdução, parágrafo Contributions.}
+\excerto{Rastreabilidade}{summaries and generated responses back to its source documents}{p. 3 do preprint, seção 2.}
+\excerto{Retorno dos usuários}{Users can provide explicit, binary feedback}{p. 4 do preprint, seção 3, Implementation Details.}
+\end{itemize}
+
+\campo{Limitações e alcance}
+Na versão consultada, não são apresentados benchmark quantitativo, comparação controlada de recuperadores ou avaliação humana sistemática. O feedback é descrito como insumo para melhorias futuras, sem resultados de sua análise.
+
+\campo{Relação com a dissertação · análise proposta}
+É um comparador próximo para o capítulo de trabalhos relacionados: compartilha o domínio parlamentar e a preocupação com fontes. O contraste útil é entre demonstrar uma interface e avaliar seu desempenho. No nosso protocolo, convém examinar se resumir antes da recuperação preserva evidências necessárias a perguntas sobre autoria, tempo e afirmações específicas.
+
+\registro{Conteúdo consultado: \href{https://arxiv.org/pdf/2404.17597v1}{preprint arXiv:2404.17597v1}, p. 1--4, integral. Metadados da publicação conferidos na Springer; excertos usam a paginação do preprint. A bibliografia local diverge em autor e páginas; detalhes no README.}

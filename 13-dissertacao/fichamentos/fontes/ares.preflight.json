@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/ares.pdf",
+  "sha256": "5a585d88f7b63c06439a4ecb8fd3165615d637e2061f242bff3f6ec3a209bd34",
+  "declared_page_count": 17,
+  "enumerated_page_count": 17,
+  "reader_page_count": 17,
+  "warnings": [],
+  "generated_at": "2026-09-06T22:21:37.112667+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}
