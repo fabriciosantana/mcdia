@@ -1,12 +1,14 @@
 # Fichamentos-piloto
 
-Documento independente da dissertação, com três páginas A4, uma por referência. Preparado em 6 de setembro de 2026 para revisão do pesquisador e ajuste do formato com o orientador. O conteúdo foi preparado com assistência de IA; nenhuma leitura humana foi presumida ou registrada.
+Documento independente da dissertação, com cinco páginas A4: três fichas (uma por referência), matriz comparativa e síntese temática. Revisado em 7 de setembro de 2026 para revisão do pesquisador e ajuste do formato com o orientador. O conteúdo foi preparado com assistência de IA; O pesquisador declarou ter lido os fichamentos; não declarou leitura dos textos-fonte.
 
 ## Arquivos e compilação
 
 - `main.tex`: modelo visual e ordem das fichas.
 - `fichas/01-ares.tex`, `02-kamerraad.tex` e `03-ipu.tex`: conteúdo editável.
 - `fichas/modelo.tex`: ficha vazia para duplicar; não integra o PDF-piloto.
+- `sintese/01-matriz.tex`: comparação estruturada das três referências.
+- `sintese/02-sintese.tex`: síntese temática e questões para a continuidade da revisão.
 - `out/main.pdf`: PDF compilado.
 - `fontes/manifesto.json`: URLs, hashes, escopos de consulta e resultados da inspeção estrutural.
 - `fontes/*.preflight.json`: diagnósticos estruturais dos PDFs de origem.
@@ -23,7 +25,7 @@ O `latexmkrc` local direciona auxiliares para `aux/` e o PDF para `out/`. Não c
 
 Fonte de corpo de 11 pontos, entrelinha de 1,05, margens laterais de 19 mm, títulos discretos em azul escuro e links clicáveis. Cada ficha distingue a contribuição interpretada, fragmentos extrativos em inglês e a análise proposta para a dissertação. Não foram produzidas traduções que pudessem ser confundidas com transcrições literais.
 
-As fichas contêm excertos curtos e seletivos, não um resumo extrativo extenso de todos os argumentos. As páginas e seções permitem retomar o contexto das passagens. A área inferior registra o escopo consultado nesta preparação e reserva espaço para observações. “Leitura do pesquisador: não registrada” não significa que o pesquisador não tenha lido o texto; significa que não houve declaração de leitura nesta sessão.
+As fichas contêm excertos curtos e seletivos, não um resumo extrativo extenso de todos os argumentos. As páginas e seções permitem retomar o contexto das passagens. A área inferior registra o escopo consultado nesta preparação e reserva espaço para observações. “Leitura do texto-fonte pelo pesquisador: não registrada” não significa que o pesquisador não tenha lido o texto; significa que não houve declaração de leitura desses textos-fonte nesta sessão.
 
 ## Fontes e versões consultadas
 
@@ -45,11 +47,15 @@ A inspeção estrutural ARS retornou `PASS` para ARES e KamerRaad. Para a cópia
 
 A verificação final abrange contagem de páginas, correspondência dos nove excertos com as passagens de origem, ausência de avisos de transbordamento na compilação e inspeção visual das três fichas. O piloto não constitui revisão sistemática nem certificação de completude da bibliografia.
 
+## Revisão de 7 de setembro de 2026
+
+Separados método, contribuição e resultado/orientação; distinguida a ressalva da fonte da análise crítica; explicitados destino e uso na dissertação. O bloco extrativo passou a se chamar “Excertos-chave”, pois contém fragmentos seletivos, não um resumo extenso. Mantidos o idioma original e os excertos já conferidos. Acrescentadas matriz comparativa e síntese temática com localizadores, sem inferir lacunas pela contagem de trabalhos ou pela leitura parcial. Nenhuma alteração nas hipóteses ou na bibliografia da dissertação.
+
 ## Pontos para avaliar com o orientador
 
 - Os três fragmentos extrativos são suficientes ou é preferível reduzir outros campos para ampliar esse bloco?
 - O texto em inglês deve permanecer sozinho ou vir acompanhado de tradução identificada?
-- A relação com a dissertação deve aparecer na própria ficha ou na futura síntese comparativa?
+- O aproveitamento específico de cada ficha e a síntese temática estão suficientemente distintos?
 - O corpo de 11 pontos e o espaço de anotações funcionam bem na leitura impressa?
 
 Para ampliar o documento, copie `fichas/modelo.tex`, preencha o conteúdo e inclua o arquivo em `main.tex` com uma quebra de página. A contagem total no rodapé é automática. Se uma ficha exceder uma página, revise a seleção e a concisão do conteúdo antes de reduzir a fonte.

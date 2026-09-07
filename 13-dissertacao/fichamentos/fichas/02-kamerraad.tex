@@ -10,20 +10,25 @@ Facilitar a consulta a documentos parlamentares belgas extensos e dispersos, per
 \campo{Principal contribuição · síntese interpretativa}
 Apresenta uma aplicação que combina sumarização hierárquica, metadados e interação conversacional. Resumos de diferentes extensões ajudam a lidar com o limite de contexto, preservando caminhos de acesso aos documentos originais.
 
-\campo{Método e evidência}
-Descreve coleta, segmentação e enriquecimento de falas parlamentares. Usa GPT-4 na sumarização e rotulagem; BGE-M3 e GEITje-7B-ultra na recuperação e geração, respectivamente. A interface recebe feedback binário. A evidência apresentada é uma descrição do sistema com demonstração de uso (seções 2--3, p. 2--4 do preprint).
+\campo{Método}
+Descreve coleta, segmentação e sumarização com GPT-4; recuperação com BGE-M3 e geração com GEITje-7B-ultra (seção 3, p. 3--4 do preprint).
 
-\campo{Resumo extrativo · fragmentos literais selecionados}
+\campo{Resultado apresentado}
+Apresenta uma aplicação e seu fluxo de consulta às fontes (figuras 1--2). Na versão consultada, não há comparação quantitativa de desempenho; não é possível estimar o ganho da sumarização hierárquica.
+
+\campo{Excertos-chave · seleção literal}
 \begin{itemize}
 \excerto{Organização documental}{pre-processing step of hierarchical summarization}{p. 2 do preprint, Introdução, parágrafo Contributions.}
 \excerto{Rastreabilidade}{summaries and generated responses back to its source documents}{p. 3 do preprint, seção 2.}
 \excerto{Retorno dos usuários}{Users can provide explicit, binary feedback}{p. 4 do preprint, seção 3, Implementation Details.}
 \end{itemize}
 
-\campo{Limitações e alcance}
-Na versão consultada, não são apresentados benchmark quantitativo, comparação controlada de recuperadores ou avaliação humana sistemática. O feedback é descrito como insumo para melhorias futuras, sem resultados de sua análise.
+\campo{Limitações declaradas e análise crítica}
+\textbf{Autores:} descrevem limites de contexto como desafio e o uso de feedback como melhoria futura (seções 1 e 3).
+\textbf{Análise da ficha:} o preprint não apresenta avaliação humana sistemática nem resultados do feedback; isso não prova que avaliações nunca tenham sido realizadas.
 
-\campo{Relação com a dissertação · análise proposta}
-É um comparador próximo para o capítulo de trabalhos relacionados: compartilha o domínio parlamentar e a preocupação com fontes. O contraste útil é entre demonstrar uma interface e avaliar seu desempenho. No nosso protocolo, convém examinar se resumir antes da recuperação preserva evidências necessárias a perguntas sobre autoria, tempo e afirmações específicas.
+\campo{Aproveitamento na dissertação · proposta}
+\textbf{Destino:} seção 3 e descrição do artefato na seção 6.
+\textbf{Uso:} comparar o tratamento de documentos longos e a ligação entre resposta e fonte. Orienta a pergunta sobre perda de evidência na sumarização, sem justificar sua adoção automática nem comprovar uma lacuna em toda a literatura.
 
 \registro{Conteúdo consultado: \href{https://arxiv.org/pdf/2404.17597v1}{preprint arXiv:2404.17597v1}, p. 1--4, integral. Metadados da publicação conferidos na Springer; excertos usam a paginação do preprint. A bibliografia local diverge em autor e páginas; detalhes no README.}

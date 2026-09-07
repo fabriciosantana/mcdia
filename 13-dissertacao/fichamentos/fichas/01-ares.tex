@@ -10,20 +10,25 @@ Como avaliar componentes de RAG com menor esforço de anotação humana, preserv
 \campo{Principal contribuição · síntese interpretativa}
 Combina juízes treinados com dados sintéticos e inferência apoiada por predições (PPI). Separa relevância do contexto, fidelidade da resposta e relevância da resposta; usa anotações humanas para corrigir estimativas e construir intervalos de confiança.
 
-\campo{Método e evidência}
-Gera exemplos sintéticos, ajusta classificadores DeBERTa-v3-Large e compara avaliações em conjuntos de KILT, SuperGLUE e AIS. Parte da comparação usa sistemas simulados com proporções conhecidas de acertos. O estudo relata melhora de ordenação com PPI (seções 3--5, p. 340--345).
+\campo{Método}
+Treina juízes com dados sintéticos e avalia conjuntos de KILT, SuperGLUE e AIS; parte dos testes utiliza sistemas simulados com proporções conhecidas de acertos (seções 3--4).
 
-\campo{Resumo extrativo · fragmentos literais selecionados}
+\campo{Resultado principal}
+Frente ao RAGAS 0.0.18, relata aumento médio de 0,065 e 0,132 no coeficiente de ordenação Kendall $\tau$, respectivamente para relevância do contexto e da resposta. São resultados da comparação experimental descrita, não ganhos de recuperação do nosso sistema (seção 5.1, p. 343, tabela 1).
+
+\campo{Excertos-chave · seleção literal}
 \begin{itemize}
 \excerto{Dimensões}{context relevance, answer faithfulness, and answer relevance}{p. 338, Introdução; página 1 do PDF.}
 \excerto{Calibração}{PPI improved the ranking prediction accuracy}{p. 343, seção 5.1; página 6 do PDF.}
 \excerto{Participação humana}{ARES relies on a small set of annotations}{p. 346, seção 7; página 9 do PDF.}
 \end{itemize}
 
-\campo{Limitações e alcance}
-Os autores apontam dependência de anotadores familiarizados com o domínio, recursos computacionais e avaliação principal em inglês. A transferência entre idiomas exige cautela (seções 5.3 e 7, p. 345--346).
+\campo{Limitações declaradas e análise crítica}
+\textbf{Autores:} necessidade de anotação especializada, recursos computacionais e avaliação principal em inglês (seção 7).
+\textbf{Análise da ficha:} os testes com sistemas simulados e a mudança de idioma limitam a transferência direta para nosso caso.
 
-\campo{Relação com a dissertação · análise proposta}
-Ajuda a estruturar a separação entre recuperação e geração e a discussão de H3. Para o protocolo do Senado, a pergunta é como aferir o erro do juiz com julgamentos humanos independentes. Adotar apenas um prompt de avaliação não reproduz o método ARES; tampouco seus resultados demonstram desempenho em português ou no nosso corpus.
+\campo{Aproveitamento na dissertação · proposta}
+\textbf{Destino:} seções 3 e 5; discussão de H3 na seção 8.
+\textbf{Uso:} fundamentar a distinção entre dimensões avaliativas e a aferição do erro do juiz com referência humana. ARES não determina o tamanho da nossa amostra nem demonstra que H3 será corroborada.
 
 \registro{Fonte consultada nesta preparação: PDF publicado, seções 1--7 (p. 338--346); apêndices não fichados. Excertos em inglês, sem tradução. Chave no projeto: \texttt{saadFalconEtAl2024ares}.}
