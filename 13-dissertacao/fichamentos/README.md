@@ -1,6 +1,6 @@
 # Fichamentos da revisão da literatura
 
-Atualizado em 08/09/2026: **53 fichas de uma página**, nove páginas de matriz temática e duas de síntese (64 páginas). Das 52 entradas selecionadas em `texto-Latex/referencias.bib`, sete permanecem pendentes de acesso ou confirmação de versão. Consulte [o controle de cobertura](CONTROLE_COBERTURA.md).
+Atualizado em 08/09/2026: **53 fichas de uma página**, nove páginas de matriz temática e duas de síntese (64 páginas). Das 52 entradas selecionadas em `texto-Latex/referencias.bib`, sete permanecem pendentes de acesso ou confirmação de versão. Consulte [o controle de cobertura](documentacao/CONTROLE_COBERTURA.md).
 
 A coleção foi preparada com assistência de IA. Cada ficha distingue contribuição interpretativa, excertos literais, natureza da evidência, limitações e aproveitamento proposto. A leitura é frequentemente focal: livros, revisões e relatórios extensos não são apresentados como integralmente lidos. A leitura dos textos-fonte pelo pesquisador não foi registrada; ele declarou leitura dos três fichamentos-piloto.
 
@@ -18,14 +18,14 @@ O `latexmkrc` direciona auxiliares para `aux/` e o PDF para [out/main.pdf](out/m
 
 ## Evidência e rastreabilidade
 
-- `inventario.csv` e `inventario.json`: situação das 52 referências, recortes e arquivos.
+- `dados/inventario.csv` e `dados/inventario.json`: situação das 52 referências, recortes e arquivos.
 - `fontes/manifesto.json`: versões consultadas, URLs, hashes e escopos.
 - `fontes/*.preflight.json`: inspeção estrutural dos PDFs; não certifica conteúdo científico.
 - `fontes/lote-*-excertos.json`: cotejo literal, normalizando espaços, ligaturas e hifenização de linhas.
 - `fontes/obtencao-*.json`: tentativas de obtenção, inclusive falhas.
 - `fontes/pesquisa-bibliografica-adicional-2026-09-08.md`: relatório da busca adicional e critérios de incorporação.
 - `fontes/bibliografia-adicional-candidata.bib`: candidatas adicionais separadas da bibliografia principal.
-- `lote-01-dados.json` e `lote-02-dados.json`: notas estruturadas da preparação, preservadas como histórico; **não são fonte de regeneração automática**. Ajustes editoriais finais podem existir apenas no `.tex`.
+- `dados/historico/lote-01-dados.json` e `dados/historico/lote-02-dados.json`: notas estruturadas da preparação, preservadas como histórico; **não são fonte de regeneração automática**. Ajustes editoriais finais podem existir apenas no `.tex`.
 
 Excertos são curtos e seletivos, no idioma original; não constituem transcrição extensa de todos os argumentos. Localizadores permitem retomar o contexto. A síntese relaciona temas sem presumir equivalência entre experimentos, descrições institucionais e ensaios conceituais.
 

@@ -24,7 +24,7 @@ O documento contém nove seções principais, na ordem de inclusão em `main.tex
 
 - [x] Preparar fichamentos das 45 fontes acessíveis/consultadas, com uma página por referência, recorte de leitura, excertos localizados e análise crítica. Coleção em `../../fichamentos/out/main.pdf`; conteúdo editável em `../../fichamentos/fichas/`.
 - [x] Expandir matriz temática e síntese de trabalho para a coleção; manter inventário das 52 entradas e proveniência das fontes.
-- [~] Completar a cobertura: sete referências dependem de acesso ou confirmação de versão, descritas em `../../fichamentos/CONTROLE_COBERTURA.md`. Fichamento focal não atesta leitura integral nem leitura do pesquisador.
+- [~] Completar a cobertura: sete referências dependem de acesso ou confirmação de versão, descritas em `../../fichamentos/documentacao/CONTROLE_COBERTURA.md`. Fichamento focal não atesta leitura integral nem leitura do pesquisador.
 - [~] Revisar as fichas com o pesquisador e aprofundar métodos/resultados das fontes centrais. Auditoria editorial concluída; falta a conferência substantiva final pelo pesquisador.
 - [~] Resolver divergências de versões e metadados antes de atualizar `referencias.bib`; as cinco fontes prioritárias já foram verificadas e incorporadas, mas as demais divergências permanecem.
 - [x] Incorporar as cinco fontes prioritárias aos capítulos 2 e 3 e registrar a busca complementar; não inferir lacuna apenas da seleção existente.
