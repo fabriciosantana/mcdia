@@ -1,0 +1,19 @@
+{
+  "data": "2026-09-08",
+  "finalidade": "pacote de acompanhamento para reunião com o orientador",
+  "artefatos": [
+    "revisao_bibliografica_acompanhamento.ipynb",
+    "sintese_executiva.md",
+    "decisoes_orientador.md",
+    "revisao_bibliografica_acompanhamento.html"
+  ],
+  "fontes_canonicas": [
+    "../../fichamentos/dados/inventario.csv",
+    "../../fichamentos/dados/inventario.json",
+    "../../fichamentos/documentacao/CONTROLE_COBERTURA.md",
+    "../../fichamentos/documentacao/AUDITORIA_REVISAO_BIBLIOGRAFICA-2026-09-08.md",
+    "../../fichamentos/out/main.pdf",
+    "../../texto-Latex/capitulos/02-referencial-teorico.tex",
+    "../../texto-Latex/capitulos/03-trabalhos-relacionados.tex"
+  ]
+}
