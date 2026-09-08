@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/thakurEtAl2021beir.pdf",
+  "sha256": "3e34e224ea186759abedb52ebe7e047834f401cbfebc75933540dabf7cee81ca",
+  "declared_page_count": 21,
+  "enumerated_page_count": 21,
+  "reader_page_count": 21,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:05:28.427523+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

@@ -1,0 +1,28 @@
+\fichatitulo{22 · RECUPERAÇÃO}{EMNLP · 2020}{Dense Passage Retrieval}
+{\small Karpukhin et al. \textit{Dense Passage Retrieval for Open-Domain Question Answering}. EMNLP · 2020. \href{https://aclanthology.org/2020.emnlp-main.550.pdf}{Fonte consultada}.\par}
+
+\campo{Problema e objetivo}
+É possível recuperar passagens com representações densas aprendidas?
+
+\campo{Principal contribuição · síntese interpretativa}
+Apresenta DPR, com codificadores separados para pergunta e passagem e treinamento supervisionado de suas representações.
+
+\campo{Método / natureza da evidência}
+Avaliação em perguntas de domínio aberto, medindo recuperação de passagens e resposta extrativa.
+
+\campo{Resultado ou argumento principal}
+O resumo relata ganhos de 9 a 19 pontos percentuais na acurácia de recuperação top-20 em comparação com Lucene-BM25 nos conjuntos avaliados.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{1}{a simple dual-encoder framework}{Resumo.}
+\excerto{2}{top-20 passage retrieval accuracy}{Resumo.}
+\end{itemize}
+
+\campo{Limitações e análise crítica}
+Análise da ficha: disponibilidade de pares supervisionados e distribuição dos dados condicionam os ganhos. Encontrar a passagem não assegura fidelidade de uma resposta gerada posteriormente.
+
+\campo{Aproveitamento na dissertação · proposta}
+Fundamentação: explicar recuperação densa e separar avaliação do recuperador e do gerador.
+
+\registro{Fonte consultada nesta preparação: Resumo e apresentação da arquitetura. Chave: \texttt{karpukhinEtAl2020dpr}.}

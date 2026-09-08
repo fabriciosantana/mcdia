@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/anhHoang2025hallucinations.pdf",
+  "sha256": "cd40caafc88a04302e8f06588657052b149f565b1ec8c961676f285c8ba2ee37",
+  "declared_page_count": 21,
+  "enumerated_page_count": 21,
+  "reader_page_count": 21,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:05:28.763975+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

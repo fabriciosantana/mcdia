@@ -1,0 +1,28 @@
+\fichatitulo{10 · APLICAÇÃO LEGISLATIVA}{Artigo de conferência · 2024}{LexDrafter}
+{\small CHOUHAN, Ashish; GERTZ, Michael. \textit{LexDrafter: Terminology Drafting for Legislative Documents Using Retrieval Augmented Generation}. LREC-COLING, 2024, p. 10448--10458. \href{https://aclanthology.org/2024.lrec-main.913/}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como apoiar a harmonização de definições terminológicas na elaboração de documentos legislativos da União Europeia?
+
+\campo{Principal contribuição · síntese interpretativa}
+Articula um corpus de documentos e um de definições. Permite reutilizar definições existentes ou gerar uma definição a partir de fragmentos recuperados; o usuário decide sobre o aproveitamento (seções 4 e 6).
+
+\campo{Método}
+No domínio de energia do EUR-Lex, processa 539 atos em HTML; identifica 1.330 fragmentos para 1.007 termos. Compara definições de Vicuna e LLaMA-2 com definições existentes, por BLEU, BERTScore e BLEURT (seção 5).
+
+\campo{Resultado principal}
+A tabela 1 informa BERTScore F1 de 0,82 e BLEURT de 0,47 para ambos os modelos, na precisão apresentada, enquanto BLEU-4 é 0,04 e 0,05. Similaridade semântica e coincidência lexical produzem leituras distintas.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Referência}{we use ground truth definitions}{seção 5.2, p. 10454.}
+\excerto{Limite}{fine-tuned BLEURT scores are not presented}{seção 5.2, p. 10455.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: BLEURT foi treinado fora do domínio jurídico; seu ajuste permanece trabalho em andamento (seção 5.2). \textbf{Análise da ficha:} o texto afirma vantagem em três métricas, mas a tabela arredondada empata BERTScore e BLEURT. A avaliação descrita não comprova correção jurídica por especialistas nem economia de tempo.
+
+\campo{Aproveitamento na dissertação · proposta}
+Trabalhos relacionados: caracterizar uma aplicação legislativa de redação terminológica. Metodologia: separar similaridade, suporte documental e correção; a tarefa difere de consultar discursos.
+
+\registro{Fonte consultada nesta preparação: PDF publicado; consulta focal de Introdução, fluxo de definições (seção 4.2), Experimentos e Conclusões. Apêndice A não fichado. Excertos em inglês. Chave: \texttt{chouhanGertz2024lexdrafter}.}

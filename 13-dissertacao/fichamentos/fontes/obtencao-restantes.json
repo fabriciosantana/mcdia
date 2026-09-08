@@ -1,0 +1,224 @@
+[
+  {
+    "key": "hevnerEtAl2004designScience",
+    "status": "sem URL direta identificada",
+    "original_url": "https://aisel.aisnet.org/misq/vol28/iss1/6/"
+  },
+  {
+    "key": "peffersEtAl2007dsrm",
+    "status": "sem URL direta identificada",
+    "original_url": "https://doi.org/10.2753/MIS0742-1222240302"
+  },
+  {
+    "key": "bandeiraBernardes2016information",
+    "status": "falha",
+    "url": "https://revistas.ufpr.br/rsp/article/download/48709/29166",
+    "error": "404 Client Error: Not Found for url: https://revistas.ufpr.br/rsp/article/download/48709/29166"
+  },
+  {
+    "key": "geunis2023parliamentaryMonitoring",
+    "status": "sem URL direta identificada",
+    "original_url": "https://www.idea.int/publications/catalogue/html/parliamentary-monitoring-organizations-partners-parliamentary"
+  },
+  {
+    "key": "martelloteViola2025organizacaoConhecimento",
+    "status": "sem URL direta identificada",
+    "original_url": "https://isko.org.br/ojs/index.php/iskobrasil/article/view/52"
+  },
+  {
+    "key": "minaee2024llmSurvey",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2402.06196v1",
+    "sha256": "239e3f03535abc642403438cd9e43d0183aac32657d53e09e00b8c2e995785fa"
+  },
+  {
+    "key": "anhHoang2025hallucinations",
+    "status": "sem URL direta identificada",
+    "original_url": "https://www.frontiersin.org/articles/10.3389/frai.2025.1622292/full"
+  },
+  {
+    "key": "dahlEtAl2024largeLegalFictions",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2401.01301v1",
+    "sha256": "004d505710f71ddf8f0a46b4b86cfe8c337d07aecc05d088e19b51c38c95a55d"
+  },
+  {
+    "key": "wfd2023guidelinesAiParliaments",
+    "status": "obtido",
+    "url": "https://www.agora-parl.org/sites/default/files/agora-documents/English%20-%20WFD%20AI%20Guidelines%20for%20Parliaments.pdf",
+    "sha256": "1dc67984fa02209d92afac7e6569e677d5e19cad24a9355fe1701a6336e8d0ed"
+  },
+  {
+    "key": "deAlmeidaSantos2025aiGovernance",
+    "status": "sem URL direta identificada",
+    "original_url": "https://www.sciencedirect.com/science/article/pii/S0740624X24000959"
+  },
+  {
+    "key": "gao2023ragSurvey",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2312.10997v1",
+    "sha256": "c3a866efb9711bb2b25585fed1ac81fb26554528e4d2ab4afb50988947393090"
+  },
+  {
+    "key": "gupta2024comprehensiveRag",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2410.12837v1",
+    "sha256": "0e0ea3430c2cba9a8f5dd06e17581e7cdaa42184130b69ff733a5ff9fc6a37db"
+  },
+  {
+    "key": "matoshiEtAl2025parliamentRag",
+    "status": "sem URL direta identificada",
+    "original_url": "https://doi.org/10.1109/ICEDEG65568.2025.11081627"
+  },
+  {
+    "key": "colomboEtAl2025legisSearch",
+    "status": "obtido",
+    "url": "https://link.springer.com/content/pdf/10.1007/s10506-025-09482-6.pdf",
+    "sha256": "67e08e2dc32824ae038a54c70d7c7d11f587e760cea0b0f8a83a35b96e3b8a0b"
+  },
+  {
+    "key": "mosbachEtAl2025worldAvatarParliament",
+    "status": "obtido",
+    "url": "https://como.ceb.cam.ac.uk/media/preprints/c4e-preprint-338.pdf",
+    "sha256": "c9d486b07836b39e74b1f5e397078d0021df88b84de6072bf40cb819193da876"
+  },
+  {
+    "key": "blanco2025plenarioPalanqueEstudio",
+    "status": "falha",
+    "url": "https://www2.senado.leg.br/bdsf/bitstream/handle/id/814594/TD355.pdf",
+    "error": "Não é PDF"
+  },
+  {
+    "key": "blanco2026letrasGraudas",
+    "status": "sem URL direta identificada",
+    "original_url": "https://www12.senado.leg.br/publicacoes/estudos-legislativos/tipos-de-estudos/textos-para-discussao/td357"
+  },
+  {
+    "key": "manningEtAl2008informationRetrieval",
+    "status": "obtido",
+    "url": "https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf",
+    "sha256": "ab67ad67d89309a3d03de219173cfdea471e856a5083c83e49b11be8c01581ea"
+  },
+  {
+    "key": "thakurEtAl2021beir",
+    "status": "sem URL direta identificada",
+    "original_url": "https://openreview.net/forum?id=wCu6T5xFjeJ"
+  },
+  {
+    "key": "vaswani2017attention",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/1706.03762v1",
+    "sha256": "0a9bff1be3575cf9fe26a4a3d3a9175bc791ecec90de8b9deba4cff75d2b9476"
+  },
+  {
+    "key": "gao2024modularRag",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2407.21059v1",
+    "sha256": "a9e0dbaa7ae4384c0f9213c2515f2a7a06d9ec4f5f5ca5f71b2629ddffce592b"
+  },
+  {
+    "key": "nie2024textEmbeddingSurvey",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2412.09165v1",
+    "sha256": "92020dea5749e442510ec319c4ca96368eedebee7751a4574a907898bf1a7d88"
+  },
+  {
+    "key": "gil2022projetosPesquisa",
+    "status": "sem URL direta identificada",
+    "original_url": ""
+  },
+  {
+    "key": "lakatosMarconi2021metodologia",
+    "status": "sem URL direta identificada",
+    "original_url": ""
+  },
+  {
+    "key": "creswellPlanoClark2018mixedMethods",
+    "status": "sem URL direta identificada",
+    "original_url": ""
+  },
+  {
+    "key": "brownEtAl2020fewShotLearners",
+    "status": "obtido",
+    "url": "https://proceedings.neurips.cc/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf",
+    "sha256": "5fb1e3b8062688f5023ee63a9641d39c8c86922f2bca98535dcba084af7f719e"
+  },
+  {
+    "key": "zhaoEtAl2023llmSurvey",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2303.18223v1",
+    "sha256": "d58be5fc39608dc9aec45194c602436d793f2f2bf56f267d0e38d6258a9f7a9e"
+  },
+  {
+    "key": "kaplanEtAl2020scalingLaws",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2001.08361v1",
+    "sha256": "a41bd7877fd1a6bcbba096b2619618bd2f90e02488f2365644903eb2f7c6a494"
+  },
+  {
+    "key": "hoffmannEtAl2022computeOptimal",
+    "status": "obtido",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2022/file/c1e2faff6f588870935f114ebe04a3e5-Paper-Conference.pdf",
+    "sha256": "1e9f9c9d41306b611ee8dc01745fe38bff2ba9400c38ee0dbd6fdf571c20fd25"
+  },
+  {
+    "key": "ouyangEtAl2022instructGpt",
+    "status": "obtido",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2022/file/b1efde53be364a73914f58805a001731-Paper-Conference.pdf",
+    "sha256": "4ed5ef926ed5ad385d30ee4319f9b13650da29a3f015bc4e888bd669ee4670e5"
+  },
+  {
+    "key": "devlinEtAl2019bert",
+    "status": "obtido",
+    "url": "https://aclanthology.org/N19-1423.pdf",
+    "sha256": "987545ffb087f1ece898142c403a516baeabeb70ce19089397fac6f7db12c3d4"
+  },
+  {
+    "key": "raffelEtAl2020t5",
+    "status": "obtido",
+    "url": "https://jmlr.org/papers/volume21/20-074/20-074.pdf",
+    "sha256": "66cf9f77e46691853703eb6982dea337a53361d509fb99be719b5410c5467e41"
+  },
+  {
+    "key": "bommasaniEtAl2021foundationModels",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2108.07258v1",
+    "sha256": "7d7de90261ec22654cd360b7925886d75321db35ab6ff9412d8893da760ffe67"
+  },
+  {
+    "key": "benderEtAl2021stochasticParrots",
+    "status": "falha",
+    "url": "https://faculty.washington.edu/ebender/papers/Stochastic_Parrots.pdf",
+    "error": "403 Client Error: Forbidden for url: https://dl.acm.org/doi/10.1145/3442188.3445922"
+  },
+  {
+    "key": "jiEtAl2023hallucinationSurvey",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2202.03629v1",
+    "sha256": "e02b62a1d76b3e364b45f6a4e443f95581b450db32beb158a623f094f53cf960"
+  },
+  {
+    "key": "liangEtAl2023helm",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2211.09110v1",
+    "sha256": "eb365cc3cbb46cfb36fb272261c017a6456de54d9d96138ef39f3d647fd232f1"
+  },
+  {
+    "key": "karpukhinEtAl2020dpr",
+    "status": "obtido",
+    "url": "https://aclanthology.org/2020.emnlp-main.550.pdf",
+    "sha256": "2abfc7991519be2b8ce30215905516fdb593218b7bf59e50ece0d8a088a7c4d5"
+  },
+  {
+    "key": "khattabZaharia2020colbert",
+    "status": "obtido",
+    "url": "https://arxiv.org/pdf/2004.12832v1",
+    "sha256": "0f97faf9743e12d2f0108fc65a2639bc9447c09f1a185942ecd525f6de317a95"
+  },
+  {
+    "key": "izacardGrave2021passageRetrieval",
+    "status": "obtido",
+    "url": "https://aclanthology.org/2021.eacl-main.74.pdf",
+    "sha256": "a0b8708f35c78bc5799322a91e042f33233a5e48226c400843082c8a76b01175"
+  }
+]

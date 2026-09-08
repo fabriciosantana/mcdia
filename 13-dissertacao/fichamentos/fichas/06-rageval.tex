@@ -1,0 +1,28 @@
+\fichatitulo{06 · CONJUNTOS DE AVALIAÇÃO}{Artigo de conferência · 2025}{RAGEval}
+{\small ZHU, Kunlun et al. \textit{RAGEval: Scenario Specific RAG Evaluation Dataset Generation Framework}. ACL, v. 1: Long Papers, 2025, p. 8520--8544. \href{https://aclanthology.org/2025.acl-long.418/}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como produzir dados de avaliação de RAG específicos de domínio e medir o conteúdo factual das respostas?
+
+\campo{Principal contribuição · síntese interpretativa}
+Encadeia esquema, configurações, documentos sintéticos, perguntas, respostas, referências e pontos-chave. Distingue completude, alucinação e irrelevância, além de métricas de recuperação (seção 3).
+
+\campo{Método}
+DragonBall reúne 6.711 perguntas em chinês e inglês, nos domínios financeiro, jurídico e médico. O apêndice C verifica amostras de dados e compara avaliações humanas e automáticas; não se trata de anotação humana integral do conjunto.
+
+\campo{Resultado principal}
+As configurações de tamanho de trecho e top-k favorecem tipos distintos de pergunta. No experimento financeiro em inglês, os melhores ajustes diferem entre perguntas factuais, de raciocínio e de comparação numérica (seção 4.3.3, figura 3).
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Dimensões}{Completeness, Hallucination, and Irrelevance}{Resumo, p. 8520.}
+\excerto{Configuração}{no single configuration uniformly benefits all query types}{seção 4.3.3, p. 8527.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: geração sintética sujeita a alucinações e custos de modelos fechados (Limitations). \textbf{Análise da ficha:} a aproximação temática ao domínio jurídico não demonstra representatividade de perguntas sobre discursos parlamentares em português.
+
+\campo{Aproveitamento na dissertação · proposta}
+Trabalhos relacionados e Metodologia: organizar tipos de pergunta e conferir a ligação entre resposta esperada e trechos de suporte; validar qualquer pergunta sintética contra o corpus real.
+
+\registro{Fonte consultada nesta preparação: PDF publicado; consulta focal das seções 3--4, Limitations e apêndice C (verificação humana). Demais apêndices não fichados. Excertos em inglês. Chave: \texttt{zhuEtAl2025rageval}.}

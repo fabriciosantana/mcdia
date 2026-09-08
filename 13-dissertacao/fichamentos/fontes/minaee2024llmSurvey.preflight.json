@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/minaee2024llmSurvey.pdf",
+  "sha256": "239e3f03535abc642403438cd9e43d0183aac32657d53e09e00b8c2e995785fa",
+  "declared_page_count": 43,
+  "enumerated_page_count": 43,
+  "reader_page_count": 43,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:41.937510+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

@@ -1,0 +1,28 @@
+\fichatitulo{24 · RECUPERAÇÃO E GERAÇÃO}{EACL · 2021}{Fusion-in-Decoder}
+{\small Izacard; Grave. \textit{Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering}. EACL · 2021. \href{https://aclanthology.org/2021.eacl-main.74.pdf}{Fonte consultada}.\par}
+
+\campo{Problema e objetivo}
+Como combinar evidência distribuída entre passagens recuperadas?
+
+\campo{Principal contribuição · síntese interpretativa}
+Propõe processar passagens separadamente no codificador e fundir suas representações no decodificador para gerar respostas.
+
+\campo{Método / natureza da evidência}
+Experimentos de perguntas de domínio aberto, incluindo Natural Questions e TriviaQA, variando a quantidade de passagens.
+
+\campo{Resultado ou argumento principal}
+A arquitetura consegue explorar até cem passagens nas condições estudadas, ampliando a combinação de evidências.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{1}{combine evidence from multiple passages}{Resumo.}
+\excerto{2}{up to one hundred passages}{Introdução.}
+\end{itemize}
+
+\campo{Limitações e análise crítica}
+Análise da ficha: ganhos dependem da arquitetura, treinamento e tarefa. O resultado não autoriza fixar cem trechos como configuração ótima de qualquer sistema RAG.
+
+\campo{Aproveitamento na dissertação · proposta}
+Fundamentação: distinguir fusão no decodificador de simples concatenação em um prompt; testar quantidade de contexto.
+
+\registro{Fonte consultada nesta preparação: Resumo e apresentação do método. Chave: \texttt{izacardGrave2021passageRetrieval}.}

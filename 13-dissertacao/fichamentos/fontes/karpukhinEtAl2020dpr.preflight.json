@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/karpukhinEtAl2020dpr.pdf",
+  "sha256": "2abfc7991519be2b8ce30215905516fdb593218b7bf59e50ece0d8a088a7c4d5",
+  "declared_page_count": 13,
+  "enumerated_page_count": 13,
+  "reader_page_count": 13,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:13.336914+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/liangEtAl2023helm.pdf",
+  "sha256": "eb365cc3cbb46cfb36fb272261c017a6456de54d9d96138ef39f3d647fd232f1",
+  "declared_page_count": 163,
+  "enumerated_page_count": 163,
+  "reader_page_count": 163,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:21.059574+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

@@ -1,6 +1,6 @@
 # Plano de redação e pesquisa
 
-Atualizado em 6 de setembro de 2026, a partir da inspeção dos arquivos, das saídas salvas do notebook 01, da conferência direta do Parquet e da compilação do rascunho. A análise exploratória completa não foi reexecutada nessa conferência.
+Estado do corpus conferido em 6 de setembro de 2026, a partir da inspeção dos arquivos, das saídas salvas do notebook 01, da conferência direta do Parquet e da compilação do rascunho. A análise exploratória completa não foi reexecutada nessa conferência.
 
 Legenda: `[x]` concluído no escopo indicado; `[~]` parcialmente concluído; `[ ]` pendente. As ações abaixo não representam aprovação de mudanças nas hipóteses ou no recorte do corpus.
 
@@ -19,6 +19,17 @@ O documento contém nove seções principais, na ordem de inclusão em `main.tex
 | 7. Resultados | `06-resultados.tex` | Estrutura com `TODO`; depende da execução experimental final. |
 | 8. Discussão | `07-discussao.tex` | Estrutura com `TODO`; depende dos resultados e de sua interpretação. |
 | 9. Considerações finais | `08-consideracoes-finais.tex` | Estrutura com `TODO`; depende das contribuições efetivamente demonstradas. |
+
+## Próxima entrega: revisão da literatura (atualização de 08/09/2026)
+
+- [x] Preparar fichamentos das 45 fontes acessíveis/consultadas, com uma página por referência, recorte de leitura, excertos localizados e análise crítica. Coleção em `../../fichamentos/out/main.pdf`; conteúdo editável em `../../fichamentos/fichas/`.
+- [x] Expandir matriz temática e síntese de trabalho para a coleção; manter inventário das 52 entradas e proveniência das fontes.
+- [~] Completar a cobertura: sete referências dependem de acesso ou confirmação de versão, descritas em `../../fichamentos/CONTROLE_COBERTURA.md`. Fichamento focal não atesta leitura integral nem leitura do pesquisador.
+- [ ] Revisar as fichas com o pesquisador e aprofundar métodos/resultados das fontes centrais.
+- [ ] Resolver divergências de versões e metadados antes de atualizar `referencias.bib`.
+- [ ] Incorporar a comparação crítica aos capítulos 2 e 3 e documentar eventual busca complementar; não inferir lacuna apenas da seleção existente.
+
+A entrega bibliográfica é a prioridade imediata indicada pelo pesquisador. As etapas do corpus e do experimento abaixo permanecem necessárias.
 
 ## Sequência proposta para retomada
 
@@ -39,7 +50,7 @@ O documento contém nove seções principais, na ordem de inclusão em `main.tex
 - [~] Definir a versão final do protocolo, os baselines e os critérios de sucesso. BM25, recuperação vetorial e híbrida já estão previstos; faltam configurações, quantidade e distribuição das perguntas, regras de relevância e tratamento das perguntas não respondíveis.
 - [ ] Definir uma referência de avaliação que permita comparação justa entre diferentes segmentações, preservando a ligação entre evidência, trecho e pronunciamento.
 - [ ] Definir rubrica, plano e dimensionamento da avaliação humana, piloto, independência dos julgamentos, tratamento de divergências e análise de concordância.
-- [~] Atualizar e documentar a revisão de literatura. Há bibliografia e síntese narrativa, mas faltam busca documentada e comparação dos trabalhos mais próximos para sustentar a lacuna.
+- [~] Atualizar e documentar a revisão de literatura. Há 45 fichamentos, matriz temática e síntese de trabalho em documento independente; faltam sete fontes, aprofundamento dos estudos centrais, busca complementar documentada e incorporação da comparação ao capítulo para sustentar a lacuna.
 
 ## Fase 2 — congelamento e execução
 

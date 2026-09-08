@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/kaplanEtAl2020scalingLaws.pdf",
+  "sha256": "a41bd7877fd1a6bcbba096b2619618bd2f90e02488f2365644903eb2f7c6a494",
+  "declared_page_count": 30,
+  "enumerated_page_count": 30,
+  "reader_page_count": 30,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:03.592967+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

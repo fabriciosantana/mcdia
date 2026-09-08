@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/devlinEtAl2019bert.pdf",
+  "sha256": "987545ffb087f1ece898142c403a516baeabeb70ce19089397fac6f7db12c3d4",
+  "declared_page_count": 16,
+  "enumerated_page_count": 16,
+  "reader_page_count": 16,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:05.951172+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

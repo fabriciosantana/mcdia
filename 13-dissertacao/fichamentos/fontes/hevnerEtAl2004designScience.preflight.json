@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/hevnerEtAl2004designScience.pdf",
+  "sha256": "fc827ea7cf5f20dcd0207fecd25489ccb854195c2581d33183ce5235e046a121",
+  "declared_page_count": 32,
+  "enumerated_page_count": 32,
+  "reader_page_count": 32,
+  "warnings": [],
+  "generated_at": "2026-09-08T12:39:54.005064+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

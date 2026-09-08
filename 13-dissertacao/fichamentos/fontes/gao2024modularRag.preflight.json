@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/gao2024modularRag.pdf",
+  "sha256": "a9e0dbaa7ae4384c0f9213c2515f2a7a06d9ec4f5f5ca5f71b2629ddffce592b",
+  "declared_page_count": 17,
+  "enumerated_page_count": 17,
+  "reader_page_count": 17,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:48.476771+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

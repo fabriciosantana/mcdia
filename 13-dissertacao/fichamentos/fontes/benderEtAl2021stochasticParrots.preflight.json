@@ -1,0 +1,14 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "UNAVAILABLE",
+  "file": "fichamentos/fontes/benderEtAl2021stochasticParrots.pdf",
+  "sha256": "e283b37a14e894c105ca26003d8cf5447535e8a73423cd7f1001d7b46af6c1d6",
+  "declared_page_count": 14,
+  "enumerated_page_count": 14,
+  "reader_page_count": 14,
+  "warnings": [
+    "xref-coverage: object number(s) [856] present in the file but absent from the active xref chain (possible stale startxref / unreachable newer revision)"
+  ],
+  "generated_at": "2026-09-08T12:39:54.422391+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

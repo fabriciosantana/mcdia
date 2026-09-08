@@ -1,0 +1,28 @@
+\fichatitulo{09 · FUNDAMENTO DE RAG}{Artigo de conferência · 2020}{RAG: formulação original}
+{\small LEWIS, Patrick et al. \textit{Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks}. Advances in Neural Information Processing Systems, v. 33, 2020, p. 9459--9474. \href{https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como combinar o conhecimento armazenado nos parâmetros do modelo com uma memória documental recuperável para tarefas intensivas em conhecimento?
+
+\campo{Principal contribuição · síntese interpretativa}
+Formaliza RAG-Sequence e RAG-Token, que marginalizam documentos recuperados na geração. Integra recuperação neural com geração seq2seq e ajusta os componentes no aprendizado (seção 2).
+
+\campo{Método}
+Usa índice da Wikipédia de dezembro de 2018 e tarefas de perguntas e respostas, geração de perguntas e verificação de afirmações. Compara modelos paramétricos e modelos com recuperação (seções 3--4).
+
+\campo{Resultado principal}
+Em 452 pares de perguntas geradas para Jeopardy, avaliadores consideram RAG mais factual em 42,7\% dos casos, BART em 7,1\% e ambos factuais em 17\%. São categorias específicas da comparação, não uma taxa geral de respostas corretas (seção 4.3).
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Memória}{parametric and non-parametric memory}{Resumo.}
+\excerto{Dependência da fonte}{will probably never be entirely factual and completely devoid of bias}{Broader Impact.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: fontes externas, inclusive a Wikipédia, podem conter inexatidões e vieses (Broader Impact). \textbf{Análise da ficha:} a arquitetura treinada do artigo não é idêntica a um pipeline que apenas inclui trechos em prompts de um LLM; os ganhos não são transferíveis automaticamente.
+
+\campo{Aproveitamento na dissertação · proposta}
+Referencial teórico: definir RAG e distinguir a formulação original da implementação usada na dissertação. Metodologia: justificar medir geração e recuperação sem presumir eliminação de alucinações.
+
+\registro{Fonte consultada nesta preparação: PDF publicado; consulta focal de Resumo, seções 2--4, Discussão e Broader Impact. Apêndices não fichados. Verificação estrutural automática indisponível; usados localizadores textuais por seção. Excertos em inglês. Chave: \texttt{lewisEtAl2020rag}.}

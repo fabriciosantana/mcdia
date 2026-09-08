@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/raffelEtAl2020t5.pdf",
+  "sha256": "66cf9f77e46691853703eb6982dea337a53361d509fb99be719b5410c5467e41",
+  "declared_page_count": 67,
+  "enumerated_page_count": 67,
+  "reader_page_count": 67,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:09.018926+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

@@ -1,0 +1,28 @@
+\fichatitulo{13 · AVALIAÇÃO LEGISLATIVA}{Relatório técnico · 2024}{Talk to the NDAA}
+{\small GARRISON, Kevin; FISHER, William M.; BERGE, Astrid I. \textit{Talk to the NDAA: Evaluating Retrieval Augmented Generation (RAG) on Congressional Legislation using Large Language Models (LLM)}. IDA Product 3001199, ago. 2024. \href{https://www.ida.org/-/media/feature/publications/t/ta/talk-to-the-ndaa/3001199.ashx}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como parâmetros de recuperação afetam respostas sobre legislação de defesa dos Estados Unidos?
+
+\campo{Principal contribuição · síntese interpretativa}
+Compara Mistral-7b e GPT-4 variando tamanho e quantidade de trechos, com medidas de tempo, fidelidade e relevância (seção 1).
+
+\campo{Método}
+Oito perguntas; avaliadores LlamaIndex usam GPT-4 e retornam aprovação/reprovação. Também examina respostas qualitativamente (seções 1.A e 2).
+
+\campo{Resultado principal}
+Mistral obtém 89\% de aprovação em fidelidade, contra 77\% do GPT-4; em relevância, GPT-4 obtém 73\%, contra 45\% do Mistral (seção 1.B). São julgamentos automáticos.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Contexto}{more context does not always improve performance}{seção 1.A, Model Parameters.}
+\excerto{Incerteza}{it is unclear why}{seção 1.B, Response Evaluation.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: não explicam plenamente diferenças do juiz em respostas semelhantes (seção 1.B). \textbf{Análise da ficha:} oito perguntas e comparação entre execução local e serviço remoto restringem generalização. O uso de GPT-4 como gerador e juiz exige exame de possível viés.
+
+\campo{Aproveitamento na dissertação · proposta}
+Trabalhos relacionados e Metodologia: comparar fidelidade e relevância, examinar erros do juiz e controlar condições de latência.
+
+\registro{Fonte consultada nesta preparação: Extração web do PDF oficial; consulta focal das seções 1 e 2. Downloads diretos falharam (HTTP 404); sem PDF local, localizadores por seção, não por página. Excertos em inglês. Chave: \texttt{garrisonEtAl2024talkNdaa}.}

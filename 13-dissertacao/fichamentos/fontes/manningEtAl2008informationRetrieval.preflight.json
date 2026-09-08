@@ -1,0 +1,14 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "UNAVAILABLE",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/manningEtAl2008informationRetrieval.pdf",
+  "sha256": "ab67ad67d89309a3d03de219173cfdea471e856a5083c83e49b11be8c01581ea",
+  "declared_page_count": 581,
+  "enumerated_page_count": 581,
+  "reader_page_count": 581,
+  "warnings": [
+    "pypdf: Ignoring wrong pointing object 3293 0 (offset 2397)"
+  ],
+  "generated_at": "2026-09-07T14:02:59.439061+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

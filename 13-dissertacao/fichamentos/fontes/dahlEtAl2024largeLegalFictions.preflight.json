@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/dahlEtAl2024largeLegalFictions.pdf",
+  "sha256": "004d505710f71ddf8f0a46b4b86cfe8c337d07aecc05d088e19b51c38c95a55d",
+  "declared_page_count": 37,
+  "enumerated_page_count": 37,
+  "reader_page_count": 37,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:42.703470+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

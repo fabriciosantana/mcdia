@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/bandeiraBernardes2016information.pdf",
+  "sha256": "3ff7c6cfb3a3aca84ee5cc014663e2e4eb404462242eb21a7c6e19dbd9a8a24e",
+  "declared_page_count": 17,
+  "enumerated_page_count": 17,
+  "reader_page_count": 17,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:53.242963+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

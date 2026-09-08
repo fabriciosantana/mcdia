@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/judge.pdf",
+  "sha256": "d4055d540359ac92b08ac003662e42903341bf6c77f82a1233881651a69e284d",
+  "declared_page_count": 20,
+  "enumerated_page_count": 20,
+  "reader_page_count": 20,
+  "warnings": [],
+  "generated_at": "2026-09-07T13:52:13.127647+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

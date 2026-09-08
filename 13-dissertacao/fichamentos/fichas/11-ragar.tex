@@ -1,0 +1,29 @@
+\fichatitulo{11 · VERIFICAÇÃO POLÍTICA}{Artigo de workshop · 2024}{RAGAR}
+{\small KHALIQ, Mohammed Abdul; CHANG, Paul Yu-Chun; MA, Mingyang; PFLUGFELDER, Bernhard; MILETIĆ, Filip. \textit{RAGAR, Your Falsehood Radar: RAG-Augmented Reasoning for Political Fact-Checking using Multimodal Large Language Models}. FEVER, 2024, p. 280--296. \href{https://aclanthology.org/2024.fever-1.29/}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como usar recuperação e raciocínio iterativo para verificar afirmações políticas que combinam texto e imagem?
+
+\campo{Principal contribuição · síntese interpretativa}
+Propõe Chain of RAG e Tree of RAG: perguntas sucessivas usam evidências já obtidas; a versão em árvore seleciona evidências entre alternativas antes do veredito (seção 4).
+
+\campo{Método}
+Avalia 300 afirmações de PolitiFact selecionadas do MOCHEG, equilibradas entre sustentadas e refutadas. Três anotadores avaliam explicações de 50 casos cujos vereditos estavam corretos (seções 3 e 5).
+
+\campo{Resultado principal}
+ToRAG com CoTVP e CoVe obtém F1 ponderado de 0,85, contra 0,71 do baseline de subperguntas. A diferença de 0,14 pertence à tarefa binária selecionada (tabela 1).
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Métodos}{Chain of RAG (CoRAG) and Tree of RAG (ToRAG)}{Resumo, p. 280.}
+\excerto{Recorte}{we purposefully discard the NEI}{seção 3, p. 282.}
+\excerto{Repetições}{unable to provide variance estimates}{seção 7, p. 288.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: busca web variável, custo que impede estimar variância por repetição e exclusão de evidência insuficiente (seção 7). \textbf{Análise da ficha:} as explicações avaliadas pertencem apenas a acertos; isso não estima sua qualidade em falhas. Veracidade política e fidelidade a um discurso são objetos distintos.
+
+\campo{Aproveitamento na dissertação · proposta}
+Trabalhos relacionados e Metodologia: contrastar checagem externa com resposta apoiada no acervo; incluir tratamento explícito de perguntas sem evidência suficiente.
+
+\registro{Fonte consultada nesta preparação: PDF publicado; consulta focal de Resumo, seções 3--5 e 7. Apêndices não fichados. Excertos em inglês. Chave: \texttt{khaliq2024ragar}.}

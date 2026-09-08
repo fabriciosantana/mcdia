@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/wfd2023guidelinesAiParliaments.pdf",
+  "sha256": "1dc67984fa02209d92afac7e6569e677d5e19cad24a9355fe1701a6336e8d0ed",
+  "declared_page_count": 49,
+  "enumerated_page_count": 49,
+  "reader_page_count": 49,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:43.152219+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

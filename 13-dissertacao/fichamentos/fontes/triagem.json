@@ -1,0 +1,19 @@
+{
+  "data": "2026-09-07",
+  "origem": "texto-Latex/referencias.bib",
+  "sha256": "3bbe1621f52a597c8a44e6fecb72a0e6cdf2fef3572382b625c0ff6c443ed600",
+  "total": 52,
+  "criterios_duplicatas": [
+    "chave exata normalizada",
+    "título normalizado",
+    "DOI normalizado",
+    "eprint normalizado"
+  ],
+  "duplicatas": {
+    "key": [],
+    "title": [],
+    "doi": [],
+    "eprint": []
+  },
+  "limite": "Não é resolução semântica de todas as versões em bases externas; apenas comparação dos campos presentes."
+}

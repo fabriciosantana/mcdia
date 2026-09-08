@@ -1,0 +1,28 @@
+\fichatitulo{32 · FUNDAMENTO}{NeurIPS · 2020}{Language Models are Few-Shot Learners}
+{\small Brown et al. \textit{Language Models are Few-Shot Learners}. NeurIPS · 2020. \href{https://proceedings.neurips.cc/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf}{Fonte consultada}.\par}
+
+\campo{Problema e objetivo}
+Até que ponto exemplos no contexto permitem executar tarefas sem ajuste de parâmetros?
+
+\campo{Principal contribuição · síntese interpretativa}
+Apresenta GPT-3 e avalia aprendizagem em contexto nas condições zero-shot, one-shot e few-shot.
+
+\campo{Método / natureza da evidência}
+Modelo autorregressivo de 175 bilhões de parâmetros; tarefas recebem instruções e exemplos no prompt, sem atualizações de gradiente na avaliação.
+
+\campo{Resultado ou argumento principal}
+O desempenho varia entre tarefas e com a quantidade de exemplos; o estudo demonstra a utilidade da adaptação por contexto.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{1}{without any gradient updates or fine-tuning}{Resumo.}
+\excerto{2}{few-shot demonstrations}{Resumo.}
+\end{itemize}
+
+\campo{Limitações e análise crítica}
+Análise da ficha: resultados em benchmarks não asseguram generalização ao domínio parlamentar. Exemplos, distribuição de teste e possível contaminação precisam ser controlados.
+
+\campo{Aproveitamento na dissertação · proposta}
+Fundamentação e metodologia: distinguir demonstrações no prompt de fine-tuning e registrar exemplos usados.
+
+\registro{Fonte consultada nesta preparação: Resumo e introdução. Chave: \texttt{brownEtAl2020fewShotLearners}.}

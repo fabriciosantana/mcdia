@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/bommasaniEtAl2021foundationModels.pdf",
+  "sha256": "7d7de90261ec22654cd360b7925886d75321db35ab6ff9412d8893da760ffe67",
+  "declared_page_count": 211,
+  "enumerated_page_count": 211,
+  "reader_page_count": 211,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:18.537567+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

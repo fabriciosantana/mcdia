@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/vaswani2017attention.pdf",
+  "sha256": "0a9bff1be3575cf9fe26a4a3d3a9175bc791ecec90de8b9deba4cff75d2b9476",
+  "declared_page_count": 15,
+  "enumerated_page_count": 15,
+  "reader_page_count": 15,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:47.399261+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

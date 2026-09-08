@@ -1,0 +1,32 @@
+[
+  {
+    "key": "hevnerEtAl2004designScience",
+    "url": "https://aisel.aisnet.org/cgi/viewcontent.cgi?article=2693&context=misq",
+    "status": "falha",
+    "error": "403 Client Error: Forbidden for url: https://aisel.aisnet.org/cgi/viewcontent.cgi?article=2693&context=misq"
+  },
+  {
+    "key": "peffersEtAl2007dsrm",
+    "url": "https://citeseerx.ist.psu.edu/document?doi=f434877eafb05eb24e49a10633e1fae2ef18bedf&repid=rep1&type=pdf",
+    "status": "falha",
+    "error": "HTTPSConnectionPool(host='citeseerx.ist.psu.edu', port=443): Max retries exceeded with url: /document?doi=f434877eafb05eb24e49a10633e1fae2ef18bedf&repid=rep1&type=pdf (Caused by ConnectTimeoutError(<HTTPSConnection(host='citeseerx.ist.psu.edu', port=443) at 0x71c802c95940>, 'Connection to citeseerx.ist.psu.edu timed out. (connect timeout=45)'))"
+  },
+  {
+    "key": "thakurEtAl2021beir",
+    "url": "https://arxiv.org/pdf/2104.08663v1",
+    "status": "obtido",
+    "sha256": "3e34e224ea186759abedb52ebe7e047834f401cbfebc75933540dabf7cee81ca"
+  },
+  {
+    "key": "martelloteViola2025organizacaoConhecimento",
+    "url": "https://isko.org.br/ojs/index.php/iskobrasil/article/download/52/54/685",
+    "status": "falha",
+    "error": "406 Client Error: Not Acceptable for url: https://isko.org.br/ojs/index.php/iskobrasil/article/download/52/54/685"
+  },
+  {
+    "key": "anhHoang2025hallucinations",
+    "url": "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1622292/pdf",
+    "status": "obtido",
+    "sha256": "cd40caafc88a04302e8f06588657052b149f565b1ec8c961676f285c8ba2ee37"
+  }
+]

@@ -1,0 +1,28 @@
+\fichatitulo{23 · RECUPERAÇÃO}{Preprint v1 · 2020}{ColBERT}
+{\small Khattab; Zaharia. \textit{{ColBERT}: Efficient and Effective Passage Search via Contextualized Late Interaction over {BERT}}. Preprint v1 · 2020. \href{https://arxiv.org/pdf/2004.12832v1}{Fonte consultada}.\par}
+
+\campo{Problema e objetivo}
+Como combinar interação contextual e eficiência na busca?
+
+\campo{Principal contribuição · síntese interpretativa}
+Propõe interação tardia entre representações de tokens, permitindo pré-computar as representações dos documentos.
+
+\campo{Método / natureza da evidência}
+Codifica consulta e documento separadamente; calcula interações entre tokens para pontuar a relevância.
+
+\campo{Resultado ou argumento principal}
+O texto apresenta uma alternativa entre representações únicas por documento e modelos que processam conjuntamente cada par consulta-documento.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{1}{pre-compute document representations offline}{Resumo.}
+\excerto{2}{late interaction architecture}{Resumo.}
+\end{itemize}
+
+\campo{Limitações e análise crítica}
+Análise da ficha: múltiplos vetores por documento implicam custos de armazenamento e busca. Comparações devem explicitar índice, hardware e qualidade, sem inferir superioridade para qualquer corpus.
+
+\campo{Aproveitamento na dissertação · proposta}
+Fundamentação e metodologia: justificar uma eventual comparação entre recuperação lexical, densa e interação tardia.
+
+\registro{Fonte consultada nesta preparação: Resumo e introdução. Chave: \texttt{khattabZaharia2020colbert}.}

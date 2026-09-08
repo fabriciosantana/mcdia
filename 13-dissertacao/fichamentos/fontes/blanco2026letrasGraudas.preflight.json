@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/blanco2026letrasGraudas.pdf",
+  "sha256": "52f3eabbff909de98df46e6361f6459cfc36070dbdededb0752459a0bb09b31a",
+  "declared_page_count": 61,
+  "enumerated_page_count": 61,
+  "reader_page_count": 61,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:53.978617+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

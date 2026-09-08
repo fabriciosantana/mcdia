@@ -1,0 +1,386 @@
+[
+  {
+    "key": "bandeiraBernardes2016information",
+    "quote": "there is still little evidence of enabling citizen participation in the legislative process",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "bandeiraBernardes2016information",
+    "quote": "information about parliamentary activity",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "colomboEtAl2025legisSearch",
+    "quote": "we do not have a ranking of such laws",
+    "locator": "Discussão das limitações",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "colomboEtAl2025legisSearch",
+    "quote": "the impact of LLM-based query expansion varies across thematic areas",
+    "locator": "Discussão da tabela 6",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "mosbachEtAl2025worldAvatarParliament",
+    "quote": "our informal experiments with human users",
+    "locator": "Discussão",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "mosbachEtAl2025worldAvatarParliament",
+    "quote": "it should not be concluded that this is necessarily due to the use of knowledge graphs",
+    "locator": "Discussão",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "blanco2025plenarioPalanqueEstudio",
+    "quote": "As medidas aqui apresentadas são essencialmente descritivas",
+    "locator": "Discussão",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "blanco2025plenarioPalanqueEstudio",
+    "quote": "correlação não implica causação",
+    "locator": "Discussão",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "blanco2026letrasGraudas",
+    "quote": "mais de 300 palavras",
+    "locator": "Procedimentos de seleção",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "blanco2026letrasGraudas",
+    "quote": "conversacional mediado",
+    "locator": "Conclusão",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "wfd2023guidelinesAiParliaments",
+    "quote": "is dependent on the specific application and intended use",
+    "locator": "Diretriz 5.7",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "wfd2023guidelinesAiParliaments",
+    "quote": "There are no known examples.",
+    "locator": "Diretriz 5.3",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "manningEtAl2008informationRetrieval",
+    "quote": "Relevance is assessed relative to an information need, not a query.",
+    "locator": "Seção 8.1",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "manningEtAl2008informationRetrieval",
+    "quote": "These information needs are best designed by domain experts.",
+    "locator": "Seção 8.5",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "thakurEtAl2021beir",
+    "quote": "BM25 is a robust baseline",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "thakurEtAl2021beir",
+    "quote": "high computational costs",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "karpukhinEtAl2020dpr",
+    "quote": "a simple dual-encoder framework",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "karpukhinEtAl2020dpr",
+    "quote": "top-20 passage retrieval accuracy",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "khattabZaharia2020colbert",
+    "quote": "pre-compute document representations offline",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "khattabZaharia2020colbert",
+    "quote": "late interaction architecture",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "izacardGrave2021passageRetrieval",
+    "quote": "combine evidence from multiple passages",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "izacardGrave2021passageRetrieval",
+    "quote": "up to one hundred passages",
+    "locator": "Introdução",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "minaee2024llmSurvey",
+    "quote": "characteristics, contributions and limitations",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "minaee2024llmSurvey",
+    "quote": "LLM evaluation metrics",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "gao2023ragSurvey",
+    "quote": "Naive RAG, Advanced RAG, and Modular RAG",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "gao2023ragSurvey",
+    "quote": "pre-retrieval and post-retrieval",
+    "locator": "Advanced RAG",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "gupta2024comprehensiveRag",
+    "quote": "scalability, bias, and ethical concerns",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "gupta2024comprehensiveRag",
+    "quote": "high computational overhead",
+    "locator": "Conclusão",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "gao2024modularRag",
+    "quote": "routing, scheduling, and fusion mechanisms",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "gao2024modularRag",
+    "quote": "linear, conditional, branching, and looping",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "nie2024textEmbeddingSurvey",
+    "quote": "LLMs as text embedders",
+    "locator": "Taxonomia",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "nie2024textEmbeddingSurvey",
+    "quote": "false negatives",
+    "locator": "Discussão de desafios",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "zhaoEtAl2023llmSurvey",
+    "quote": "pre-training, adaptation tuning, utilization, and capacity evaluation",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "zhaoEtAl2023llmSurvey",
+    "quote": "prompt sensitivity",
+    "locator": "Discussão de avaliação",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "vaswani2017attention",
+    "quote": "based solely on attention mechanisms",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "vaswani2017attention",
+    "quote": "dispensing with recurrence and convolutions entirely",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "brownEtAl2020fewShotLearners",
+    "quote": "without any gradient updates or fine-tuning",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "brownEtAl2020fewShotLearners",
+    "quote": "few-shot demonstrations",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "kaplanEtAl2020scalingLaws",
+    "quote": "cross-entropy loss",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "kaplanEtAl2020scalingLaws",
+    "quote": "stopping significantly before convergence",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "hoffmannEtAl2022computeOptimal",
+    "quote": "the model size and the number of training tokens should be scaled equally",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "hoffmannEtAl2022computeOptimal",
+    "quote": "under a given compute budget",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "ouyangEtAl2022instructGpt",
+    "quote": "on our prompt distribution",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "ouyangEtAl2022instructGpt",
+    "quote": "InstructGPT still makes simple mistakes",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "devlinEtAl2019bert",
+    "quote": "left and right context in all layers",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "devlinEtAl2019bert",
+    "quote": "next sentence prediction",
+    "locator": "Introdução",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "raffelEtAl2020t5",
+    "quote": "a text-to-text format",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "raffelEtAl2020t5",
+    "quote": "pre-training objectives, architectures, unlabeled data sets, transfer approaches",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "liangEtAl2023helm",
+    "quote": "noting what’s missing or underrepresented",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "liangEtAl2023helm",
+    "quote": "standardized conditions",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "anhHoang2025hallucinations",
+    "quote": "Prompt Sensitivity (PS)",
+    "locator": "Seção 4.2",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "anhHoang2025hallucinations",
+    "quote": "Model Variability (MV)",
+    "locator": "Seção 4.2",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "dahlEtAl2024largeLegalFictions",
+    "quote": "specific, verifiable questions",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "dahlEtAl2024largeLegalFictions",
+    "quote": "cannot always predict",
+    "locator": "Resumo",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "jiEtAl2023hallucinationSurvey",
+    "quote": "Faithfulness in NLG",
+    "locator": "Palavras-chave",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "jiEtAl2023hallucinationSurvey",
+    "quote": "Factuality in NLG",
+    "locator": "Palavras-chave",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "bommasaniEtAl2021foundationModels",
+    "quote": "single points of failure",
+    "locator": "Introdução",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "bommasaniEtAl2021foundationModels",
+    "quote": "emergence and homogenization",
+    "locator": "Resumo / introdução",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "hevnerEtAl2004designScience",
+    "quote": "Design-science research must produce a viable artifact",
+    "locator": "Tabela 1, diretriz 1",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "hevnerEtAl2004designScience",
+    "quote": "The utility, quality, and efficacy of a design artifact must be rigorously demonstrated",
+    "locator": "Diretriz 3",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "benderEtAl2021stochasticParrots",
+    "quote": "we risk incurring documentation debt",
+    "locator": "Introdução",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "benderEtAl2021stochasticParrots",
+    "quote": "research that centers the people who stand to be adversely affected by the resulting technology",
+    "locator": "Seção 7",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "martelloteViola2025organizacaoConhecimento",
+    "quote": "abordagem qualitativa com objetivo exploratório",
+    "locator": "Seção 2",
+    "literal_match_normalized": true
+  },
+  {
+    "key": "martelloteViola2025organizacaoConhecimento",
+    "quote": "para a identificação do objetivo e dos resultados esperados",
+    "locator": "Seção 4",
+    "literal_match_normalized": true
+  }
+]

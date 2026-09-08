@@ -1,0 +1,312 @@
+[
+  {
+    "id": "ragas",
+    "key": "esEtAl2023ragas",
+    "num": 4,
+    "title": "RAGAS",
+    "area": "AVALIAÇÃO DE RAG",
+    "kind": "Artigo de demonstração · 2024",
+    "ref": "ES, Shahul; JAMES, Jithin; ESPINOSA-ANKE, Luis; SCHOCKAERT, Steven. \\textit{RAGAs: Automated Evaluation of Retrieval Augmented Generation}. EACL: System Demonstrations, 2024, p. 150--158.",
+    "url": "https://aclanthology.org/2024.eacl-demo.16/",
+    "problem": "Como avaliar um pipeline quando não há respostas de referência disponíveis para cada pergunta? O trabalho busca medidas automáticas que distingam o contexto recuperado da resposta gerada.",
+    "contribution": "Operacionaliza fidelidade ao contexto, relevância da resposta e relevância do contexto por decomposição em afirmações, geração reversa de perguntas e seleção de sentenças. As métricas dispensam respostas humanas de referência em sua aplicação (seção 3).",
+    "method": "Constrói WikiEval a partir de 50 páginas da Wikipédia. Dois anotadores comparam pares; discordâncias são discutidas. A validação das métricas utiliza essa referência humana (seções 4--5).",
+    "result": "Na tabela 4, a concordância com a preferência humana é 0,95 para fidelidade, 0,78 para relevância da resposta e 0,70 para relevância do contexto. São acurácias de comparação pareada, não correlações nem taxas universais de acerto de RAG.",
+    "quotes": [
+      [
+        "Fundamentação",
+        "the answer should be grounded in the given context",
+        "seção 3, p. 152"
+      ],
+      [
+        "Dificuldade",
+        "We found context relevance to be the hardest quality dimension to evaluate",
+        "seção 5, p. 155"
+      ]
+    ],
+    "limits": "Autores: dificuldade de selecionar sentenças em contextos longos e instabilidade entre execuções e APIs (seções 5--5.1).",
+    "critical": "a validação em WikiEval não substitui uma amostra do Senado; dispensar referências durante o cálculo não dispensa validar o avaliador.",
+    "use": "Referencial teórico, Trabalhos relacionados e Metodologia: definir métricas separadas e comparar o juiz com anotação humana em H3.",
+    "scope": "PDF publicado de 2024; consulta focal das seções 1, 3--5.1 e ressalvas finais. A chave do projeto remete ao preprint de 2023; não houve comparação integral entre versões."
+  },
+  {
+    "id": "judge",
+    "key": "liuEtAl2025judgeRag",
+    "num": 5,
+    "title": "ConsJudge",
+    "area": "CONFIABILIDADE DO JUIZ",
+    "kind": "Artigo de conferência · 2025",
+    "ref": "LIU, Shuliang et al. \\textit{Judge as A Judge: Improving the Evaluation of Retrieval-Augmented Generation through the Judge-Consistency of Large Language Models}. Findings of ACL, 2025, p. 5788--5807.",
+    "url": "https://aclanthology.org/2025.findings-acl.301/",
+    "problem": "Como reduzir a sensibilidade dos julgamentos de um LLM à combinação de critérios apresentada no prompt?",
+    "contribution": "Propõe ConsJudge: produzir julgamentos sob diferentes combinações de dimensões, estimar sua consistência por similaridade de embeddings e usar os julgamentos mais e menos consistentes como preferências no treinamento DPO (seção 3.2).",
+    "method": "O juiz escolhe melhores e piores respostas e depois orienta o treinamento de geradores RAG. A avaliação reúne tarefas de perguntas e respostas e diálogo; também compara julgamentos com GLM-4-plus (seções 3--5).",
+    "result": "Na ablação com juiz Llama3-8B e gerador MiniCPM-2.4B, retirar a resposta de referência reduz a média de acurácia de 52,34 para 41,07 nos três conjuntos apresentados. O resultado evidencia a dependência dessa referência no experimento (tabela 3).",
+    "quotes": [
+      [
+        "Dimensões",
+        "hallucination, completeness, coherence, and semantic consistency",
+        "seção 3.1, p. 5790"
+      ],
+      [
+        "Sensibilidade",
+        "the judgment results are often sensitive to the evaluation prompts",
+        "Limitation, p. 5796"
+      ]
+    ],
+    "limits": "Autores: qualidade dos prompts e da similaridade calculada por embeddings limita o método (Limitation).",
+    "critical": "concordância com outro LLM e consistência entre prompts não equivalem a concordância humana; o procedimento não é livre de respostas de referência.",
+    "use": "Trabalhos relacionados e Metodologia: testar sensibilidade do juiz aos critérios e examinar H3 com referência humana própria. Não implica adotar treinamento DPO na dissertação.",
+    "scope": "PDF publicado; consulta focal de Introdução, seções 3--5, tabela 3 e Limitation. Apêndices não fichados."
+  },
+  {
+    "id": "rageval",
+    "key": "zhuEtAl2025rageval",
+    "num": 6,
+    "title": "RAGEval",
+    "area": "CONJUNTOS DE AVALIAÇÃO",
+    "kind": "Artigo de conferência · 2025",
+    "ref": "ZHU, Kunlun et al. \\textit{RAGEval: Scenario Specific RAG Evaluation Dataset Generation Framework}. ACL, v. 1: Long Papers, 2025, p. 8520--8544.",
+    "url": "https://aclanthology.org/2025.acl-long.418/",
+    "problem": "Como produzir dados de avaliação de RAG específicos de domínio e medir o conteúdo factual das respostas?",
+    "contribution": "Encadeia esquema, configurações, documentos sintéticos, perguntas, respostas, referências e pontos-chave. Distingue completude, alucinação e irrelevância, além de métricas de recuperação (seção 3).",
+    "method": "DragonBall reúne 6.711 perguntas em chinês e inglês, nos domínios financeiro, jurídico e médico. O apêndice C verifica amostras de dados e compara avaliações humanas e automáticas; não se trata de anotação humana integral do conjunto.",
+    "result": "As configurações de tamanho de trecho e top-k favorecem tipos distintos de pergunta. No experimento financeiro em inglês, os melhores ajustes diferem entre perguntas factuais, de raciocínio e de comparação numérica (seção 4.3.3, figura 3).",
+    "quotes": [
+      [
+        "Dimensões",
+        "Completeness, Hallucination, and Irrelevance",
+        "Resumo, p. 8520"
+      ],
+      [
+        "Configuração",
+        "no single configuration uniformly benefits all query types",
+        "seção 4.3.3, p. 8527"
+      ]
+    ],
+    "limits": "Autores: geração sintética sujeita a alucinações e custos de modelos fechados (Limitations).",
+    "critical": "a aproximação temática ao domínio jurídico não demonstra representatividade de perguntas sobre discursos parlamentares em português.",
+    "use": "Trabalhos relacionados e Metodologia: organizar tipos de pergunta e conferir a ligação entre resposta esperada e trechos de suporte; validar qualquer pergunta sintética contra o corpus real.",
+    "scope": "PDF publicado; consulta focal das seções 3--4, Limitations e apêndice C (verificação humana). Demais apêndices não fichados."
+  },
+  {
+    "id": "legalbench",
+    "key": "pipitoneAlami2024legalbenchRag",
+    "num": 7,
+    "title": "LegalBench-RAG",
+    "area": "RECUPERAÇÃO JURÍDICA",
+    "kind": "Preprint v1 · 2024",
+    "ref": "PIPITONE, Nicholas; HOUIR ALAMI, Ghita. \\textit{LegalBench-RAG: A Benchmark for Retrieval-Augmented Generation in the Legal Domain}. arXiv:2408.10343v1, 19 ago. 2024.",
+    "url": "https://arxiv.org/abs/2408.10343v1",
+    "problem": "Como avaliar se a recuperação localiza os trechos jurídicos necessários, em vez de apenas encontrar documentos ou fornecer contexto extenso?",
+    "contribution": "Reconstrói consultas e intervalos de caracteres de suporte a partir de quatro conjuntos associados ao LegalBench. Torna a localização precisa de evidências o objeto da avaliação, separando recuperação de geração (seções 3--4).",
+    "method": "Reúne contratos e políticas de privacidade; compara estratégias de segmentação com e sem reranqueamento. Agrega métricas com peso igual entre conjuntos, independentemente do número de perguntas (seção 4).",
+    "result": "As tabelas 4--7 mostram variação de precisão e revocação conforme k, conjunto e configuração. A seção 5.1 favorece a divisão recursiva sem reranqueador, mas não há superioridade uniforme em todas as células; a leitura deve preservar cada configuração.",
+    "quotes": [
+      [
+        "Rastreabilidade",
+        "file path, the exact quote, and the precise character indices",
+        "seção 3.3, p. 5"
+      ],
+      [
+        "Escopo",
+        "the queries in this benchmark are always answered by exactly one document",
+        "seção 3.5, p. 5"
+      ]
+    ],
+    "limits": "Autores: cobertura documental limitada e ausência de consultas que exijam vários documentos (seção 3.5).",
+    "critical": "o resumo/tabela 1 registra 6.858 pares, mas a seção 3.3.1 informa 6.889. A divergência permanece registrada; não adotar um total sem esclarecimento.",
+    "use": "Trabalhos relacionados e Metodologia: definir evidências por trecho e avaliar recuperação separadamente da geração. O benchmark não mede a correção final da resposta nem valida o corpus do Senado.",
+    "scope": "Preprint v1; consulta focal das seções 1, 3--5 e tabelas 1, 4--7. Apêndices não fichados."
+  },
+  {
+    "id": "geval",
+    "key": "liuEtAl2023geval",
+    "num": 8,
+    "title": "G-Eval",
+    "area": "AVALIAÇÃO DA GERAÇÃO",
+    "kind": "Artigo de conferência · 2023",
+    "ref": "LIU, Yang; ITER, Dan; XU, Yichong; WANG, Shuohang; XU, Ruochen; ZHU, Chenguang. \\textit{G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment}. EMNLP, 2023, p. 2511--2522.",
+    "url": "https://aclanthology.org/2023.emnlp-main.153/",
+    "problem": "Como aproximar a avaliação automática de textos gerados dos julgamentos humanos, além da sobreposição lexical?",
+    "contribution": "Combina critérios explícitos, etapas de avaliação geradas pelo modelo e preenchimento de um formulário de pontuação. Usa probabilidades dos escores para obter avaliações mais granulares (seção 2).",
+    "method": "Meta-avalia versões com GPT-3.5 e GPT-4 em SummEval, Topical-Chat e QAGS, comparando correlações com julgamentos humanos e realizando ablações (seções 3--4).",
+    "result": "No SummEval, G-Eval-4 atinge correlação média de Spearman de 0,514, ante 0,474 do UniEval na tabela 1. O valor resume dimensões daquele benchmark de sumarização; não é acurácia nem validação de respostas parlamentares.",
+    "quotes": [
+      [
+        "Procedimento",
+        "a form-filling paradigm",
+        "Resumo, p. 2511"
+      ],
+      [
+        "Risco",
+        "may have a bias towards the LLM-generated texts",
+        "Limitations, p. 2518"
+      ]
+    ],
+    "limits": "Autores: possível preferência por textos de LLMs e risco de reforçar seus próprios critérios ao reutilizar a avaliação no treinamento (seção 4 e Limitations).",
+    "critical": "a consistência factual de resumos não cobre, por si só, a recuperação nem a verificabilidade das citações em RAG.",
+    "use": "Referencial teórico e Metodologia: elaborar rubricas e comparar julgamentos humanos e automatizados em H3; registrar modelo, prompt e forma de agregação.",
+    "scope": "PDF publicado; consulta focal do método, resultados das seções 3--4 e Limitations. Prompts dos apêndices não fichados."
+  },
+  {
+    "id": "lewis",
+    "key": "lewisEtAl2020rag",
+    "num": 9,
+    "title": "RAG: formulação original",
+    "area": "FUNDAMENTO DE RAG",
+    "kind": "Artigo de conferência · 2020",
+    "ref": "LEWIS, Patrick et al. \\textit{Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks}. Advances in Neural Information Processing Systems, v. 33, 2020, p. 9459--9474.",
+    "url": "https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html",
+    "problem": "Como combinar o conhecimento armazenado nos parâmetros do modelo com uma memória documental recuperável para tarefas intensivas em conhecimento?",
+    "contribution": "Formaliza RAG-Sequence e RAG-Token, que marginalizam documentos recuperados na geração. Integra recuperação neural com geração seq2seq e ajusta os componentes no aprendizado (seção 2).",
+    "method": "Usa índice da Wikipédia de dezembro de 2018 e tarefas de perguntas e respostas, geração de perguntas e verificação de afirmações. Compara modelos paramétricos e modelos com recuperação (seções 3--4).",
+    "result": "Em 452 pares de perguntas geradas para Jeopardy, avaliadores consideram RAG mais factual em 42,7% dos casos, BART em 7,1% e ambos factuais em 17%. São categorias específicas da comparação, não uma taxa geral de respostas corretas (seção 4.3).",
+    "quotes": [
+      [
+        "Memória",
+        "parametric and non-parametric memory",
+        "Resumo, p. 1 do PDF"
+      ],
+      [
+        "Dependência da fonte",
+        "will probably never be entirely factual and completely devoid of bias",
+        "Broader Impact, p. 10 do PDF"
+      ]
+    ],
+    "limits": "Autores: fontes externas, inclusive a Wikipédia, podem conter inexatidões e vieses (Broader Impact).",
+    "critical": "a arquitetura treinada do artigo não é idêntica a um pipeline que apenas inclui trechos em prompts de um LLM; os ganhos não são transferíveis automaticamente.",
+    "use": "Referencial teórico: definir RAG e distinguir a formulação original da implementação usada na dissertação. Metodologia: justificar medir geração e recuperação sem presumir eliminação de alucinações.",
+    "scope": "PDF publicado; consulta focal de Resumo, seções 2--4, Discussão e Broader Impact. Apêndices não fichados; localizadores pela paginação do PDF."
+  },
+  {
+    "id": "lexdrafter",
+    "key": "chouhanGertz2024lexdrafter",
+    "num": 10,
+    "title": "LexDrafter",
+    "area": "APLICAÇÃO LEGISLATIVA",
+    "kind": "Artigo de conferência · 2024",
+    "ref": "CHOUHAN, Ashish; GERTZ, Michael. \\textit{LexDrafter: Terminology Drafting for Legislative Documents Using Retrieval Augmented Generation}. LREC-COLING, 2024, p. 10448--10458.",
+    "url": "https://aclanthology.org/2024.lrec-main.913/",
+    "problem": "Como apoiar a harmonização de definições terminológicas na elaboração de documentos legislativos da União Europeia?",
+    "contribution": "Articula um corpus de documentos e um de definições. Permite reutilizar definições existentes ou gerar uma definição a partir de fragmentos recuperados; o usuário decide sobre o aproveitamento (seções 4 e 6).",
+    "method": "No domínio de energia do EUR-Lex, processa 539 atos em HTML; identifica 1.330 fragmentos para 1.007 termos. Compara definições de Vicuna e LLaMA-2 com definições existentes, por BLEU, BERTScore e BLEURT (seção 5).",
+    "result": "A tabela 1 informa BERTScore F1 de 0,82 e BLEURT de 0,47 para ambos os modelos, na precisão apresentada, enquanto BLEU-4 é 0,04 e 0,05. Similaridade semântica e coincidência lexical produzem leituras distintas.",
+    "quotes": [
+      [
+        "Referência",
+        "we use ground truth definitions",
+        "seção 5.2, p. 10454"
+      ],
+      [
+        "Limite",
+        "fine-tuned BLEURT scores are not presented",
+        "seção 5.2, p. 10455"
+      ]
+    ],
+    "limits": "Autores: BLEURT foi treinado fora do domínio jurídico; seu ajuste permanece trabalho em andamento (seção 5.2).",
+    "critical": "o texto afirma vantagem em três métricas, mas a tabela arredondada empata BERTScore e BLEURT. A avaliação descrita não comprova correção jurídica por especialistas nem economia de tempo.",
+    "use": "Trabalhos relacionados: caracterizar uma aplicação legislativa de redação terminológica. Metodologia: separar similaridade, suporte documental e correção; a tarefa difere de consultar discursos.",
+    "scope": "PDF publicado; consulta focal de Introdução, fluxo de definições (seção 4.2), Experimentos e Conclusões. Apêndice A não fichado."
+  },
+  {
+    "id": "ragar",
+    "key": "khaliq2024ragar",
+    "num": 11,
+    "title": "RAGAR",
+    "area": "VERIFICAÇÃO POLÍTICA",
+    "kind": "Artigo de workshop · 2024",
+    "ref": "KHALIQ, Mohammed Abdul; CHANG, Paul Yu-Chun; MA, Mingyang; PFLUGFELDER, Bernhard; MILETIĆ, Filip. \\textit{RAGAR, Your Falsehood Radar: RAG-Augmented Reasoning for Political Fact-Checking using Multimodal Large Language Models}. FEVER, 2024, p. 280--296.",
+    "url": "https://aclanthology.org/2024.fever-1.29/",
+    "problem": "Como usar recuperação e raciocínio iterativo para verificar afirmações políticas que combinam texto e imagem?",
+    "contribution": "Propõe Chain of RAG e Tree of RAG: perguntas sucessivas usam evidências já obtidas; a versão em árvore seleciona evidências entre alternativas antes do veredito (seção 4).",
+    "method": "Avalia 300 afirmações de PolitiFact selecionadas do MOCHEG, equilibradas entre sustentadas e refutadas. Três anotadores avaliam explicações de 50 casos cujos vereditos estavam corretos (seções 3 e 5).",
+    "result": "ToRAG com CoTVP e CoVe obtém F1 ponderado de 0,85, contra 0,71 do baseline de subperguntas. A diferença de 0,14 pertence à tarefa binária selecionada (tabela 1).",
+    "quotes": [
+      [
+        "Métodos",
+        "Chain of RAG (CoRAG) and Tree of RAG (ToRAG)",
+        "Resumo, p. 280"
+      ],
+      [
+        "Recorte",
+        "we purposefully discard the NEI",
+        "seção 3, p. 282"
+      ],
+      [
+        "Repetições",
+        "unable to provide variance estimates",
+        "seção 7, p. 288"
+      ]
+    ],
+    "limits": "Autores: busca web variável, custo que impede estimar variância por repetição e exclusão de evidência insuficiente (seção 7).",
+    "critical": "as explicações avaliadas pertencem apenas a acertos; isso não estima sua qualidade em falhas. Veracidade política e fidelidade a um discurso são objetos distintos.",
+    "use": "Trabalhos relacionados e Metodologia: contrastar checagem externa com resposta apoiada no acervo; incluir tratamento explícito de perguntas sem evidência suficiente.",
+    "scope": "PDF publicado; consulta focal de Resumo, seções 3--5 e 7. Apêndices não fichados."
+  },
+  {
+    "id": "skubic",
+    "key": "skubicFiser2024discourseReview",
+    "num": 12,
+    "title": "Pesquisa sobre discurso parlamentar",
+    "area": "CONTEXTO PARLAMENTAR",
+    "kind": "Revisão de literatura · 2024",
+    "ref": "SKUBIC, Jure; FIŠER, Darja. \\textit{Parliamentary Discourse Research in Political Science: Literature Review}. ParlaCLARIN IV, 2024, p. 1--11.",
+    "url": "https://aclanthology.org/2024.parlaclarin-1.1/",
+    "problem": "Quais métodos a ciência política emprega para estudar registros parlamentares, e como corpora e técnicas de análise textual podem contribuir?",
+    "contribution": "Organiza trabalhos por abordagem metodológica e aproxima pesquisa política e linguística de corpus. Destaca documentação e metadados como condições para reutilizar acervos de maneira contextualizada (seções 3 e 5).",
+    "method": "Seleciona 24 artigos de 2012--2022, com filtros de disciplina, relevância/citação e explicitação metodológica. Apresenta até dois exemplos por abordagem, dada a heterogeneidade das perguntas (seção 3).",
+    "result": "No conjunto selecionado, 12 dos 24 artigos usam análise de conteúdo; os demais abrangem discurso, sentimento, temas, métodos mistos e text-as-data. É uma descrição da seleção, não estimativa da prevalência em toda a ciência política (seção 3.2).",
+    "quotes": [
+      [
+        "Corpus da revisão",
+        "24 relevant papers",
+        "seção 3.1, p. 2"
+      ],
+      [
+        "Método",
+        "content analysis",
+        "seção 3.2, p. 2"
+      ],
+      [
+        "Documentação",
+        "clearly and in detail document their compilation decisions",
+        "seção 5, p. 9"
+      ]
+    ],
+    "limits": "Fonte: recorte temporal e seleção por relevância/citação, com apresentação de exemplos representativos (seção 3).",
+    "critical": "esses filtros restringem a cobertura. A revisão não testa RAG, nem demonstra que acesso automatizado gere transparência ou participação.",
+    "use": "Referencial teórico, Informação legislativa, transparência e acervos parlamentares: justificar metadados, contexto e documentação do corpus. Diferenciar recuperação de informação de interpretação política.",
+    "scope": "PDF publicado; consulta focal de Introdução, seleção/contagem de métodos (seção 3) e Discussão/Conclusão (seção 5). Estudos individuais da seção 4 não fichados."
+  },
+  {
+    "id": "ndaa",
+    "key": "garrisonEtAl2024talkNdaa",
+    "num": 13,
+    "title": "Talk to the NDAA",
+    "area": "AVALIAÇÃO LEGISLATIVA",
+    "kind": "Relatório técnico · 2024",
+    "ref": "GARRISON, Kevin; FISHER, William M.; BERGE, Astrid I. \\textit{Talk to the NDAA: Evaluating Retrieval Augmented Generation (RAG) on Congressional Legislation using Large Language Models (LLM)}. IDA Product 3001199, ago. 2024.",
+    "url": "https://www.ida.org/-/media/feature/publications/t/ta/talk-to-the-ndaa/3001199.ashx",
+    "problem": "Como parâmetros de recuperação afetam respostas sobre legislação de defesa dos Estados Unidos?",
+    "contribution": "Compara Mistral-7b e GPT-4 variando tamanho e quantidade de trechos, com medidas de tempo, fidelidade e relevância (seção 1).",
+    "method": "Oito perguntas; avaliadores LlamaIndex usam GPT-4 e retornam aprovação/reprovação. Também examina respostas qualitativamente (seções 1.A e 2).",
+    "result": "Mistral obtém 89% de aprovação em fidelidade, contra 77% do GPT-4; em relevância, GPT-4 obtém 73%, contra 45% do Mistral (seção 1.B). São julgamentos automáticos.",
+    "quotes": [
+      [
+        "Contexto",
+        "more context does not always improve performance",
+        "seção 1.A, Model Parameters"
+      ],
+      [
+        "Incerteza",
+        "it is unclear why",
+        "seção 1.B, Response Evaluation"
+      ]
+    ],
+    "limits": "Autores: não explicam plenamente diferenças do juiz em respostas semelhantes (seção 1.B).",
+    "critical": "oito perguntas e comparação entre execução local e serviço remoto restringem generalização. O uso de GPT-4 como gerador e juiz exige exame de possível viés.",
+    "use": "Trabalhos relacionados e Metodologia: comparar fidelidade e relevância, examinar erros do juiz e controlar condições de latência.",
+    "scope": "Extração web do PDF oficial; consulta focal das seções 1 e 2. Downloads diretos falharam (HTTP 404); sem PDF local, localizadores por seção, não por página."
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/brownEtAl2020fewShotLearners.pdf",
+  "sha256": "5fb1e3b8062688f5023ee63a9641d39c8c86922f2bca98535dcba084af7f719e",
+  "declared_page_count": 25,
+  "enumerated_page_count": 25,
+  "reader_page_count": 25,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:55.670029+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/ragar.pdf",
+  "sha256": "8bb1a0d2f643f2d1ecf4fdfa3f74d326bbecaf2e32ff3d042ca5f69b81327705",
+  "declared_page_count": 17,
+  "enumerated_page_count": 17,
+  "reader_page_count": 17,
+  "warnings": [],
+  "generated_at": "2026-09-07T13:52:14.621147+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

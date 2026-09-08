@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-08",
+  "pdf": "out/main.pdf",
+  "pdf_sha256": "dd9e3193718548c03e7db5a91c0bf166417635ec31c7fd02ec7aa4d0a6acf45e",
+  "pages": 56,
+  "one_page_fichas": 45,
+  "matrix_pages": 9,
+  "synthesis_pages": 2,
+  "selected_references": 52,
+  "pending_references": 7,
+  "latex_warnings": [],
+  "quote_audit": "Todos os excertos dos lotes 1 e 2 tiveram correspondência literal após normalização; pilotos mantêm conferências anteriores. Isso não substitui leitura contextual.",
+  "visual_review": "Miniaturas das 56 páginas; inspeção ampliada das páginas 39, 46 e 56 antes do último ajuste de pontuação.",
+  "limits": "Consultas focais/parciais conforme fichas. Não atesta leitura integral nem revisão humana dos textos-fonte."
+}

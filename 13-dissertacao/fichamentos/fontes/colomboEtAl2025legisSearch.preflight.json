@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/colomboEtAl2025legisSearch.pdf",
+  "sha256": "67e08e2dc32824ae038a54c70d7c7d11f587e760cea0b0f8a83a35b96e3b8a0b",
+  "declared_page_count": 27,
+  "enumerated_page_count": 27,
+  "reader_page_count": 27,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:51.775123+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

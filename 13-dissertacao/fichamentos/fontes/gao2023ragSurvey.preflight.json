@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/gao2023ragSurvey.pdf",
+  "sha256": "c3a866efb9711bb2b25585fed1ac81fb26554528e4d2ab4afb50988947393090",
+  "declared_page_count": 26,
+  "enumerated_page_count": 26,
+  "reader_page_count": 26,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:41.846005+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

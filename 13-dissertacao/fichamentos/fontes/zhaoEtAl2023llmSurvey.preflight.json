@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/zhaoEtAl2023llmSurvey.pdf",
+  "sha256": "d58be5fc39608dc9aec45194c602436d793f2f2bf56f267d0e38d6258a9f7a9e",
+  "declared_page_count": 51,
+  "enumerated_page_count": 51,
+  "reader_page_count": 51,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:00.069373+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

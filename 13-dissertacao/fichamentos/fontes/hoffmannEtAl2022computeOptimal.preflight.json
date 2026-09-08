@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/hoffmannEtAl2022computeOptimal.pdf",
+  "sha256": "1e9f9c9d41306b611ee8dc01745fe38bff2ba9400c38ee0dbd6fdf571c20fd25",
+  "declared_page_count": 15,
+  "enumerated_page_count": 15,
+  "reader_page_count": 15,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:07.262175+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

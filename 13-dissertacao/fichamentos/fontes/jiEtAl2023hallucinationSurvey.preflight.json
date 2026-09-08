@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/jiEtAl2023hallucinationSurvey.pdf",
+  "sha256": "e02b62a1d76b3e364b45f6a4e443f95581b450db32beb158a623f094f53cf960",
+  "declared_page_count": 41,
+  "enumerated_page_count": 41,
+  "reader_page_count": 41,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:11.299487+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

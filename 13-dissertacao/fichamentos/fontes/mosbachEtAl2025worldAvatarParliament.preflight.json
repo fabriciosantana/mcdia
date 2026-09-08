@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/mosbachEtAl2025worldAvatarParliament.pdf",
+  "sha256": "c9d486b07836b39e74b1f5e397078d0021df88b84de6072bf40cb819193da876",
+  "declared_page_count": 32,
+  "enumerated_page_count": 32,
+  "reader_page_count": 32,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:45.658645+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

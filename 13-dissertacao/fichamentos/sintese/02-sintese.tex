@@ -1,27 +1,37 @@
-\fichatitulo{05 · SÍNTESE TEMÁTICA}{Interpretação do piloto}{O que as leituras articulam}
-Esta síntese relaciona as três fichas por tema. As propostas para a dissertação são interpretações de trabalho, sujeitas à análise do pesquisador. Os códigos [A], [K] e [I] remetem às fontes e aos localizadores da matriz.
+\fichatitulo{S1 · SÍNTESE TEMÁTICA}{Interpretação de trabalho}{Da recuperação à utilidade parlamentar}
+Esta síntese articula as 45 referências fichadas, nos recortes declarados. Os números remetem às fichas e aos localizadores nelas registrados. Trata-se de uma revisão da seleção existente, com sete referências pendentes; não de uma busca sistemática exaustiva.
 
-\campo{1. Qualidade exige definir o objeto da avaliação}
-As fontes permitem distinguir a avaliação do componente, a apresentação da aplicação e a formulação de expectativas institucionais. Esses objetos se complementam, mas não são intercambiáveis: uma descrição funcional não estabelece uma medida de desempenho, e uma medida técnica não responde sozinha à pergunta sobre utilidade institucional ([A], seções 3--5; [K], seções 2--3; [I], Introdução e caso 024).
+\campo{1. A qualidade tem objetos distintos}
+Manning distingue relevância documental e utilidade para o usuário (20, seções 8.1 e 8.6). DPR, ColBERT e BEIR tratam de recuperação (21–23); Lewis e Fusion-in-Decoder articulam recuperação e geração (09 e 24). ARES e RAGAS operacionalizam dimensões específicas da avaliação de RAG (01 e 04). Essas contribuições permitem organizar uma avaliação em camadas, mas suas pontuações não podem ser reunidas como se medissem a mesma propriedade.
 
-\textbf{Implicação proposta:} explicitar na metodologia o que cada instrumento observa. A conexão entre relevância, fidelidade e verificabilidade precisa ser definida para o nosso caso, sem transformar os três termos em sinônimos.
+\textbf{Proposta para a dissertação:} definir separadamente a relevância dos trechos, a fidelidade da resposta ao contexto e a correção das afirmações verificáveis. A distinção de Ji et al. entre conteúdo contraditório e conteúdo sem suporte ajuda a explicitar que ausência de evidência no contexto não equivale automaticamente a falsidade externa (41, tipologia).
 
-\campo{2. A participação humana assume funções diferentes}
-Anotação de referência, retorno de usuários e satisfação cumprem papéis distintos na comparação. A aproximação temática não autoriza reuni-los em uma única categoria de validação humana ([A], seções 3.3 e 5.1; [K], seção 3; [I], caso 024, Success metrics).
+\campo{2. A configuração depende da tarefa e da arquitetura}
+RAGEval examina configurações em domínios e tipos de perguntas distintos (06, seção 4). LegalBench-RAG focaliza localização de evidências jurídicas (07, seções 3–5), enquanto LegisSearch agrega expansão de consultas e estrutura documental (15, tabela 6 e limitações). A capacidade de Fusion-in-Decoder de aproveitar muitas passagens pertence a uma arquitetura específica (24); não estabelece o melhor tamanho de contexto para qualquer LLM.
 
-\textbf{Implicação proposta:} separar, no protocolo, julgamento de qualidade documental e experiência do usuário. O primeiro se relaciona diretamente com H3; o segundo demandaria um instrumento próprio caso venha a integrar a pesquisa.
+\textbf{Proposta para a dissertação:} manter baseline lexical, controlar componentes e avaliar resultados por tipo de pergunta. Consultas que exigem contagem, relações ou agregações devem ser distinguidas das respondidas por um trecho, como sugere a aplicação do World Avatar (16, discussão). Melhorias observadas após várias mudanças simultâneas não identificam qual componente as produziu.
 
-\campo{3. Há complementaridade, sem contradição demonstrada}
-Neste recorte, as fontes não oferecem testes equivalentes que permitam decidir qual sistema é melhor. As diferenças decorrem principalmente de finalidade, desenho e evidência apresentada. Não foi identificada uma contradição empírica comparável; isso não significa que a literatura mais ampla seja consensual ([A], seção 4; [K], seções 2--4; [I], Introdução).
+\campo{3. Os juízes também precisam ser avaliados}
+ARES usa evidência humana em seu processo de estimação; RAGAS valida métricas com comparações anotadas; ConsJudge busca consistência do juiz, inclusive em relação a outro modelo (01, 04 e 05). G-Eval discute a relação entre julgamento automático e humano, com possibilidade de viés (08). Esses desenhos atribuem funções distintas às pessoas e aos modelos.
 
-\textbf{Implicação proposta:} usar os textos para justificar critérios de comparação e perguntas a investigar. O fato de uma ficha não conter determinado resultado não basta para afirmar originalidade ou lacuna de pesquisa.
+\textbf{Proposta para a dissertação:} definir uma amostra humana, uma rubrica e um procedimento de resolução de divergências. Concordância com outro LLM, preferência de usuários e concordância com anotação especializada devem ser reportadas separadamente. HELM reforça a necessidade de explicitar validade, variabilidade e limites de agregação (38, seção 11).
 
-\campo{Questões para orientar a continuidade da revisão}
-\begin{itemize}
-\item Quais estudos avaliam conjuntamente recuperação, geração e suporte documental de afirmações em acervos parlamentares?
-\item Como são construídos os conjuntos de referência e tratadas as divergências entre julgamentos humanos e automatizados?
-\item Há evidência comparável em português e em condições próximas às do corpus da dissertação?
-\end{itemize}
+\clearpage
+\fichatitulo{S2 · SÍNTESE TEMÁTICA}{Interpretação de trabalho}{Contexto, limites e uso na redação}
+\campo{4. Utilidade institucional exige evidência própria}
+O estudo de portais de Bernardes e Leston-Bandeira distingue oferta de informação e participação (14, conclusão). IPU e WFD apresentam casos e diretrizes; estas incluem acordo sobre precisão mínima e monitoramento (03, caso 024; 19, diretrizes 5.3 e 5.7). São referências úteis para formular objetivos e critérios, mas não substituem demonstrações de impacto.
 
-\campo{Próxima etapa bibliográfica}
-Aplicar a matriz às demais referências selecionadas e documentar a busca complementar. Cada afirmação de convergência, divergência ou lacuna deverá remeter às passagens pertinentes e respeitar o alcance dos desenhos estudados. A quantidade de referências concordantes, isoladamente, não mede a força da evidência.
+KamerRaad, LexDrafter e RAGAR ocupam tarefas diferentes: consulta parlamentar, elaboração de definições legislativas e verificação de afirmações (02, 10 e 11). O mapeamento brasileiro de Viola et al. acrescenta contexto organizacional, com resultados esperados descritos documentalmente (45, seções 2–4). A aproximação institucional não torna os testes tecnicamente equivalentes.
+
+\textbf{Proposta para a dissertação:} justificar a utilidade pretendida e reconhecer quais aspectos serão efetivamente medidos. Os estudos de Blanco ajudam a contextualizar a seleção e transformação dos discursos; suas associações descritivas não estabelecem causas (17–18, discussão e conclusão).
+
+\campo{5. Escala e preferência não garantem factualidade}
+Transformer, BERT e T5 sustentam conceitos de arquitetura e representação (31, 36–37). Brown et al. mostram adaptação por exemplos no contexto (32). Kaplan e Hoffmann estudam alocação de computação sob regimes específicos (33–34); InstructGPT avalia alinhamento a preferências em uma distribuição de prompts (35). Nenhum desses resultados basta para escolher o melhor sistema parlamentar sem avaliação local.
+
+Bommasani et al. distinguem avaliação do modelo e de sua adaptação; Bender et al. discutem documentação de dados, custos e pessoas afetadas (42, seção 4.4; 44, seção 7). Dahl et al. mostram erros em consultas jurídicas delimitadas (40). Esses textos ajudam a formular condições de avaliação e limites, sem autorizar transferir taxas de alucinação entre domínios.
+
+\campo{6. A contribuição precisa ser demonstrada}
+Hevner et al. vinculam artefato, problema relevante e avaliação rigorosa (43, tabela 1 e diretriz 3). Para a dissertação, isso sugere ligar decisões do sistema a critérios verificáveis e documentar alternativas. As revisões de LLMs, embeddings e RAG organizam o vocabulário (25–30); comparações empíricas devem retornar aos estudos primários.
+
+\campo{Pendências antes de consolidar o capítulo}
+Aprofundar métodos e resultados das fontes centrais, resolver versões bibliográficas e obter os sete textos pendentes. Investigar, no conjunto e em eventual busca complementar, avaliações em português, suporte documental por afirmação e divergências humano–juiz. A ausência de um resultado nas fichas não comprova lacuna nem originalidade. Esta síntese orienta a redação e o protocolo; não confirma as hipóteses da dissertação.

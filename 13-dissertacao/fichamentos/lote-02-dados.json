@@ -1,0 +1,770 @@
+[
+  {
+    "key": "bandeiraBernardes2016information",
+    "title": "Informação e engajamento parlamentar",
+    "author": "Bernardes; Leston-Bandeira",
+    "version": "Artigo · 2016",
+    "area": "CONTEXTO",
+    "scope": "Resumo, seção III e conclusão (VI).",
+    "problem": "Como os portais parlamentares articulam informação e participação?",
+    "contribution": "Distingue acesso à informação institucional, informação sobre atividades e possibilidades de engajamento, comparando Brasil e Reino Unido.",
+    "method": "Estudo comparativo das câmaras baixas, com análise de portais e entrevistas com funcionários.",
+    "result": "Predomina a oferta de informação; os mecanismos de interação não demonstram, por si, participação efetiva no processo legislativo.",
+    "crit": "Análise da ficha: o estudo descreve instituições e tecnologias de seu período. Não avalia RAG nem mede o efeito causal de uma interface sobre a participação.",
+    "use": "Introdução: justificar o problema de acesso sem equiparar desempenho técnico a democratização.",
+    "quotes": [
+      [
+        "there is still little evidence of enabling citizen participation in the legislative process",
+        "Resumo"
+      ],
+      [
+        "information about parliamentary activity",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "colomboEtAl2025legisSearch",
+    "title": "LegisSearch",
+    "author": "Colombo et al.",
+    "version": "Artigo · 2025",
+    "area": "APLICAÇÃO",
+    "scope": "Resumo, introdução, tabela 6 e discussão das limitações.",
+    "problem": "Como melhorar a localização de legislação italiana relevante?",
+    "contribution": "Integra grafo de propriedades, metadados legislativos, representações vetoriais e etapas com LLM para apoiar busca e navegação.",
+    "method": "Comparação da recuperação com e sem expansão e filtragem por LLM, usando conjuntos temáticos de atos relevantes.",
+    "result": "A média de recall@5 passa de 0,25 para 0,35 na tabela 6; os ganhos variam entre temas. Trata-se de recuperação, não de avaliação de respostas geradas.",
+    "crit": "Autores: o conjunto de referência não ordena as leis relevantes. Análise da ficha: consultas oriundas de listas temáticas podem diferir das necessidades de usuários reais.",
+    "use": "Trabalhos relacionados: comparar recuperação e filtros de metadados, com análise por tema.",
+    "quotes": [
+      [
+        "we do not have a ranking of such laws",
+        "Discussão das limitações"
+      ],
+      [
+        "the impact of LLM-based query expansion varies across thematic areas",
+        "Discussão da tabela 6"
+      ]
+    ]
+  },
+  {
+    "key": "mosbachEtAl2025worldAvatarParliament",
+    "title": "The World Avatar no parlamento",
+    "author": "Mosbach et al.",
+    "version": "Preprint 338 · 2025",
+    "area": "APLICAÇÃO",
+    "scope": "Resumo e discussão/conclusão; consulta parcial.",
+    "problem": "Como responder a perguntas sobre discursos do Bundestag e suas relações?",
+    "contribution": "Combina busca vetorial sobre discursos e grafo de conhecimento para explorar conteúdo e metadados parlamentares.",
+    "method": "Prova de conceito que compara abordagens de consulta e examina a adequação das respostas; inclui experiências informais com usuários.",
+    "result": "A discussão mostra que perguntas relacionais e de contagem exigem tratamento diferente de perguntas respondidas por trechos individuais.",
+    "crit": "Análise da ficha: métricas que valorizam referências a discursos podem desfavorecer respostas agregadas corretas. Alterações de arquitetura e de prompts dificultam atribuir diferenças exclusivamente ao grafo.",
+    "use": "Trabalhos relacionados: separar perguntas factuais, agregações e relações entre entidades.",
+    "quotes": [
+      [
+        "our informal experiments with human users",
+        "Discussão"
+      ],
+      [
+        "it should not be concluded that this is necessarily due to the use of knowledge graphs",
+        "Discussão"
+      ]
+    ]
+  },
+  {
+    "key": "blanco2025plenarioPalanqueEstudio",
+    "title": "Plenário, palanque e estúdio",
+    "author": "Blanco",
+    "version": "Texto para Discussão 355 · 2025",
+    "area": "CORPUS",
+    "scope": "Resumo, apresentação metodológica, discussão e conclusão.",
+    "problem": "Como se transformaram os discursos no Senado entre 2007 e 2024?",
+    "contribution": "Relaciona evolução dos pronunciamentos, dinâmica do plenário e comunicação audiovisual por meio de indicadores descritivos.",
+    "method": "Análise de discursos e metadados, com processamento computacional e exploração temática.",
+    "result": "Identifica redução de frequência, duração e interação, com recuperação parcial posterior; discute mudanças na função comunicativa dos pronunciamentos.",
+    "crit": "Autor: as medidas são descritivas e correlação não implica causação. Análise da ficha: explicações envolvendo redes sociais exigem desenhos próprios; o corpus não deve ser presumido idêntico ao da dissertação.",
+    "use": "Contextualização do corpus: documentar temporalidade, seleção dos discursos e mudanças de formato.",
+    "quotes": [
+      [
+        "As medidas aqui apresentadas são essencialmente descritivas",
+        "Discussão"
+      ],
+      [
+        "correlação não implica causação",
+        "Discussão"
+      ]
+    ]
+  },
+  {
+    "key": "blanco2026letrasGraudas",
+    "title": "Letras graúdas",
+    "author": "Blanco",
+    "version": "Texto para Discussão 357 · 2026",
+    "area": "CORPUS",
+    "scope": "Resumo, procedimentos de seleção e conclusão.",
+    "problem": "Como variaram características linguísticas dos discursos do Senado?",
+    "contribution": "Produz uma descrição longitudinal de legibilidade e composição morfossintática, interpretando mudanças no registro discursivo.",
+    "method": "Analisa 37.455 discursos com mais de 300 palavras, de 2007 a 2024; exclui apartes e aplica processamento linguístico com spaCy.",
+    "result": "Relata redução da complexidade medida e mudanças na distribuição de classes gramaticais; propõe a interpretação de um registro conversacional mediado.",
+    "crit": "Análise da ficha: legibilidade calculada não mede diretamente compreensão cidadã. O limiar de extensão e a normalização condicionam o conjunto analisado; associações temporais não isolam causas.",
+    "use": "Descrição dos dados: explicitar filtros, transcrições, extensão e possíveis diferenças entre períodos.",
+    "quotes": [
+      [
+        "mais de 300 palavras",
+        "Procedimentos de seleção"
+      ],
+      [
+        "conversacional mediado",
+        "Conclusão"
+      ]
+    ]
+  },
+  {
+    "key": "wfd2023guidelinesAiParliaments",
+    "title": "Diretrizes de IA em parlamentos",
+    "author": "Fitsilis; von Lucke; De Vrieze (eds.)",
+    "version": "Guia · julho de 2024",
+    "area": "INSTITUCIONAL",
+    "scope": "Apresentação e diretrizes 4.4, 5.3 e 5.7. A chave bibliográfica registra 2023; o PDF consultado é de 2024.",
+    "problem": "Que critérios devem orientar a adoção parlamentar de IA?",
+    "contribution": "Organiza 40 diretrizes em seis áreas, relacionando governança, direitos, desenho de sistemas e capacitação.",
+    "method": "Documento orientador construído com contribuições de especialistas; o recorte focal trata de impacto, confiabilidade e aceitação.",
+    "result": "Recomenda testes, monitoramento, correção de falhas e acordo com interessados sobre a precisão mínima antes da aceitação do sistema.",
+    "crit": "O próprio guia informa ausência de exemplos conhecidos para algumas recomendações. Análise da ficha: diretriz não demonstra eficácia empírica nem equivale a certificação ou obrigação legal.",
+    "use": "Metodologia: discutir critérios de aceitação por tarefa e custos de falsos positivos e negativos.",
+    "quotes": [
+      [
+        "is dependent on the specific application and intended use",
+        "Diretriz 5.7"
+      ],
+      [
+        "There are no known examples.",
+        "Diretriz 5.3"
+      ]
+    ]
+  },
+  {
+    "key": "manningEtAl2008informationRetrieval",
+    "title": "Avaliação em recuperação da informação",
+    "author": "Manning; Raghavan; Schütze",
+    "version": "Livro · edição on-line 2009",
+    "area": "RECUPERAÇÃO",
+    "scope": "Capítulo 8: trechos das seções 8.1, 8.3, 8.4, 8.5 e 8.6. Livro originalmente publicado em 2008; PDF on-line identificado como 2009.",
+    "problem": "Como avaliar a relevância dos documentos recuperados?",
+    "contribution": "Sistematiza coleções de teste, necessidades de informação, julgamentos de relevância e medidas de recuperação, distinguindo-as da utilidade para o usuário.",
+    "method": "Exposição didática de conceitos e procedimentos; recorte de capítulo, não fichamento integral do livro.",
+    "result": "A avaliação exige coleção, consultas vinculadas a necessidades e julgamentos. Medidas de conjuntos diferem de medidas que consideram a posição dos resultados.",
+    "crit": "Autores: julgar relevância tem custo, e coleções grandes usam avaliações parciais. Análise da ficha: resultados dependem da representatividade das perguntas e do protocolo de anotação.",
+    "use": "Metodologia: definir unidade recuperada, relevância, profundidade de avaliação e avaliação humana.",
+    "quotes": [
+      [
+        "Relevance is assessed relative to an information need, not a query.",
+        "Seção 8.1"
+      ],
+      [
+        "These information needs are best designed by domain experts.",
+        "Seção 8.5"
+      ]
+    ]
+  },
+  {
+    "key": "thakurEtAl2021beir",
+    "title": "BEIR",
+    "author": "Thakur et al.",
+    "version": "Preprint v1 · 2021",
+    "area": "RECUPERAÇÃO",
+    "scope": "Resumo e apresentação do benchmark. Versão arXiv v1: 17 conjuntos e nove modelos; não confundir com versões posteriores.",
+    "problem": "Os recuperadores generalizam para domínios sem ajuste específico?",
+    "contribution": "Propõe um benchmark heterogêneo para avaliar recuperação fora da distribuição de treinamento.",
+    "method": "Compara abordagens lexicais, densas e de reordenação em tarefas variadas, sob transferência sem treinamento no domínio de destino.",
+    "result": "Na versão consultada, BM25 constitui uma referência robusta; reordenadores obtêm resultados fortes com maior custo computacional.",
+    "crit": "Análise da ficha: médias entre coleções ocultam diferenças por domínio. A evidência histórica não determina qual recuperador será melhor em discursos parlamentares em português.",
+    "use": "Metodologia: manter baseline lexical e comparar qualidade, custo e desempenho por tipo de consulta.",
+    "quotes": [
+      [
+        "BM25 is a robust baseline",
+        "Resumo"
+      ],
+      [
+        "high computational costs",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "karpukhinEtAl2020dpr",
+    "title": "Dense Passage Retrieval",
+    "author": "Karpukhin et al.",
+    "version": "EMNLP · 2020",
+    "area": "RECUPERAÇÃO",
+    "scope": "Resumo e apresentação da arquitetura.",
+    "problem": "É possível recuperar passagens com representações densas aprendidas?",
+    "contribution": "Apresenta DPR, com codificadores separados para pergunta e passagem e treinamento supervisionado de suas representações.",
+    "method": "Avaliação em perguntas de domínio aberto, medindo recuperação de passagens e resposta extrativa.",
+    "result": "O resumo relata ganhos de 9 a 19 pontos percentuais na acurácia de recuperação top-20 em comparação com Lucene-BM25 nos conjuntos avaliados.",
+    "crit": "Análise da ficha: disponibilidade de pares supervisionados e distribuição dos dados condicionam os ganhos. Encontrar a passagem não assegura fidelidade de uma resposta gerada posteriormente.",
+    "use": "Fundamentação: explicar recuperação densa e separar avaliação do recuperador e do gerador.",
+    "quotes": [
+      [
+        "a simple dual-encoder framework",
+        "Resumo"
+      ],
+      [
+        "top-20 passage retrieval accuracy",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "khattabZaharia2020colbert",
+    "title": "ColBERT",
+    "author": "Khattab; Zaharia",
+    "version": "Preprint v1 · 2020",
+    "area": "RECUPERAÇÃO",
+    "scope": "Resumo e introdução.",
+    "problem": "Como combinar interação contextual e eficiência na busca?",
+    "contribution": "Propõe interação tardia entre representações de tokens, permitindo pré-computar as representações dos documentos.",
+    "method": "Codifica consulta e documento separadamente; calcula interações entre tokens para pontuar a relevância.",
+    "result": "O texto apresenta uma alternativa entre representações únicas por documento e modelos que processam conjuntamente cada par consulta-documento.",
+    "crit": "Análise da ficha: múltiplos vetores por documento implicam custos de armazenamento e busca. Comparações devem explicitar índice, hardware e qualidade, sem inferir superioridade para qualquer corpus.",
+    "use": "Fundamentação e metodologia: justificar uma eventual comparação entre recuperação lexical, densa e interação tardia.",
+    "quotes": [
+      [
+        "pre-compute document representations offline",
+        "Resumo"
+      ],
+      [
+        "late interaction architecture",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "izacardGrave2021passageRetrieval",
+    "title": "Fusion-in-Decoder",
+    "author": "Izacard; Grave",
+    "version": "EACL · 2021",
+    "area": "RECUPERAÇÃO E GERAÇÃO",
+    "scope": "Resumo e apresentação do método.",
+    "problem": "Como combinar evidência distribuída entre passagens recuperadas?",
+    "contribution": "Propõe processar passagens separadamente no codificador e fundir suas representações no decodificador para gerar respostas.",
+    "method": "Experimentos de perguntas de domínio aberto, incluindo Natural Questions e TriviaQA, variando a quantidade de passagens.",
+    "result": "A arquitetura consegue explorar até cem passagens nas condições estudadas, ampliando a combinação de evidências.",
+    "crit": "Análise da ficha: ganhos dependem da arquitetura, treinamento e tarefa. O resultado não autoriza fixar cem trechos como configuração ótima de qualquer sistema RAG.",
+    "use": "Fundamentação: distinguir fusão no decodificador de simples concatenação em um prompt; testar quantidade de contexto.",
+    "quotes": [
+      [
+        "combine evidence from multiple passages",
+        "Resumo"
+      ],
+      [
+        "up to one hundred passages",
+        "Introdução"
+      ]
+    ]
+  },
+  {
+    "key": "minaee2024llmSurvey",
+    "title": "Panorama de grandes modelos de linguagem",
+    "author": "Minaee et al.",
+    "version": "Preprint v1 · 2024",
+    "area": "REVISÃO",
+    "scope": "Resumo, mapa de organização e trechos de desafios; consulta parcial.",
+    "problem": "Como organizar famílias, desenvolvimento e avaliação dos LLMs?",
+    "contribution": "Reúne características e limitações de famílias de modelos e organiza recursos para sua construção, utilização e ampliação.",
+    "method": "Revisão de literatura técnica; apresenta modelos, dados, avaliação e problemas em aberto.",
+    "result": "Oferece um mapa conceitual para situar abordagens e vocabulário. Não constitui um novo experimento comparativo de RAG.",
+    "crit": "Análise da ficha: a cobertura reflete a versão de fevereiro de 2024 e não equivale a um inventário atualizado. Resultados de modelos específicos devem ser citados a partir dos estudos primários.",
+    "use": "Fundamentação: selecionar conceitos necessários e encaminhar afirmações empíricas às fontes originais.",
+    "quotes": [
+      [
+        "characteristics, contributions and limitations",
+        "Resumo"
+      ],
+      [
+        "LLM evaluation metrics",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "gao2023ragSurvey",
+    "title": "Panorama de RAG",
+    "author": "Gao et al.",
+    "version": "Preprint v1 · 2023",
+    "area": "REVISÃO",
+    "scope": "Resumo, arquitetura, Advanced RAG e trecho de avaliação; consulta parcial.",
+    "problem": "Como organizar estratégias de geração aumentada por recuperação?",
+    "contribution": "Sistematiza os paradigmas Naive, Advanced e Modular RAG e as etapas de recuperação, geração e ampliação.",
+    "method": "Revisão e taxonomia de técnicas, incluindo processamento anterior e posterior à recuperação.",
+    "result": "Ajuda a localizar alterações de pipeline e relações entre seus componentes, sem fornecer uma configuração universalmente ótima.",
+    "crit": "Análise da ficha: o trecho sobre ARES nesta v1 contém descrição e comparação que precisam ser confrontadas com o artigo primário. Não usar a revisão como evidência da superioridade de um avaliador.",
+    "use": "Fundamentação: adotar a taxonomia; para resultados e métricas, recorrer a ARES, RAGAS e demais fontes primárias.",
+    "quotes": [
+      [
+        "Naive RAG, Advanced RAG, and Modular RAG",
+        "Resumo"
+      ],
+      [
+        "pre-retrieval and post-retrieval",
+        "Advanced RAG"
+      ]
+    ]
+  },
+  {
+    "key": "gupta2024comprehensiveRag",
+    "title": "Revisão abrangente de RAG",
+    "author": "Gupta et al.",
+    "version": "Preprint v1 · 2024",
+    "area": "REVISÃO",
+    "scope": "Resumo e seção 7 (conclusão).",
+    "problem": "Quais componentes e desafios estruturam as aplicações de RAG?",
+    "contribution": "Reúne arquitetura, evolução, aplicações e desafios de sistemas que integram recuperação e geração.",
+    "method": "Revisão narrativa; o recorte consultado concentra-se na organização e nas conclusões.",
+    "result": "Destaca problemas de escala, custos e qualidade dos dados, além de vieses e questões éticas.",
+    "crit": "Análise da ficha: enumeração de aplicações e benefícios não demonstra eficácia em todos os domínios. Esta leitura focal não verifica individualmente todos os estudos citados.",
+    "use": "Fundamentação: mapear dimensões do problema; sustentar comparações quantitativas com os experimentos originais.",
+    "quotes": [
+      [
+        "scalability, bias, and ethical concerns",
+        "Resumo"
+      ],
+      [
+        "high computational overhead",
+        "Conclusão"
+      ]
+    ]
+  },
+  {
+    "key": "gao2024modularRag",
+    "title": "Modular RAG",
+    "author": "Gao et al.",
+    "version": "Preprint v1 · 2024",
+    "area": "ARQUITETURA",
+    "scope": "Resumo e introdução.",
+    "problem": "Como representar pipelines RAG além de uma sequência linear fixa?",
+    "contribution": "Decompõe sistemas em módulos e operadores, com mecanismos explícitos de roteamento, agendamento e fusão.",
+    "method": "Estrutura conceitual para organizar padrões de execução e combinações de componentes.",
+    "result": "Distingue formas lineares, condicionais, ramificadas e iterativas de recuperação e geração.",
+    "crit": "Análise da ficha: a organização conceitual não comprova ganho automático ao adicionar módulos. Mais etapas podem introduzir custo e dificultar atribuir resultados a um componente.",
+    "use": "Metodologia: descrever claramente o pipeline e planejar ablações para cada alteração relevante.",
+    "quotes": [
+      [
+        "routing, scheduling, and fusion mechanisms",
+        "Resumo"
+      ],
+      [
+        "linear, conditional, branching, and looping",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "nie2024textEmbeddingSurvey",
+    "title": "Embeddings na era dos LLMs",
+    "author": "Nie et al.",
+    "version": "Preprint v1 · 2024",
+    "area": "REVISÃO",
+    "scope": "Resumo, taxonomia e trechos sobre desafios; consulta parcial.",
+    "problem": "Como LLMs e representações vetoriais de texto se relacionam?",
+    "contribution": "Organiza o uso de LLMs para melhorar embeddings, produzir representações e interpretar informação codificada.",
+    "method": "Revisão que articula geração e anotação de dados, modelos de representação e operações sobre embeddings.",
+    "result": "Evidencia diferentes papéis dos LLMs e desafios de treinamento, incluindo falsos negativos e contextos com poucos recursos.",
+    "crit": "Análise da ficha: qualidade depende de tarefa, domínio e idioma. Sem avaliação local, uma taxonomia não justifica escolher um modelo de embeddings para discursos brasileiros.",
+    "use": "Fundamentação: distinguir modelo gerador e modelo de representação; explicitar o critério experimental de seleção.",
+    "quotes": [
+      [
+        "LLMs as text embedders",
+        "Taxonomia"
+      ],
+      [
+        "false negatives",
+        "Discussão de desafios"
+      ]
+    ]
+  },
+  {
+    "key": "zhaoEtAl2023llmSurvey",
+    "title": "A Survey of Large Language Models",
+    "author": "Zhao et al.",
+    "version": "Preprint v1 · 2023",
+    "area": "REVISÃO",
+    "scope": "Resumo, introdução e trechos de alinhamento, avaliação e perspectivas.",
+    "problem": "Quais etapas organizam o desenvolvimento e uso dos LLMs?",
+    "contribution": "Articula pré-treinamento, adaptação, utilização e avaliação de capacidades em um panorama técnico.",
+    "method": "Revisão de modelos, estratégias e tarefas, com discussão de desafios e direções de pesquisa.",
+    "result": "Permite distinguir formação do modelo, adaptação posterior e uso por prompts; também discute sensibilidade às instruções.",
+    "crit": "Análise da ficha: conceitos e exemplos refletem a versão de março de 2023. Descrições de capacidades emergentes não devem ser convertidas em garantias universais de comportamento.",
+    "use": "Fundamentação: delimitar quais etapas são modificadas pela dissertação e quais permanecem herdadas do modelo.",
+    "quotes": [
+      [
+        "pre-training, adaptation tuning, utilization, and capacity evaluation",
+        "Resumo"
+      ],
+      [
+        "prompt sensitivity",
+        "Discussão de avaliação"
+      ]
+    ]
+  },
+  {
+    "key": "vaswani2017attention",
+    "title": "Attention Is All You Need",
+    "author": "Vaswani et al.",
+    "version": "Preprint v1 · 2017",
+    "area": "FUNDAMENTO",
+    "scope": "Resumo e apresentação inicial da arquitetura.",
+    "problem": "Como modelar sequências com maior paralelização?",
+    "contribution": "Introduz o Transformer, baseado em atenção, dispensando recorrência e convoluções na arquitetura proposta.",
+    "method": "Modelo codificador-decodificador avaliado em tradução automática, com atenção e informação posicional.",
+    "result": "Apresenta ganhos de qualidade e eficiência de treinamento nos experimentos de tradução relatados.",
+    "crit": "Análise da ficha: a evidência original é de tradução; não demonstra factualidade, compreensão parlamentar ou eficácia de RAG. Valores podem variar entre versões do artigo.",
+    "use": "Fundamentação: explicar a arquitetura apenas na profundidade necessária para compreender os componentes usados.",
+    "quotes": [
+      [
+        "based solely on attention mechanisms",
+        "Resumo"
+      ],
+      [
+        "dispensing with recurrence and convolutions entirely",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "brownEtAl2020fewShotLearners",
+    "title": "Language Models are Few-Shot Learners",
+    "author": "Brown et al.",
+    "version": "NeurIPS · 2020",
+    "area": "FUNDAMENTO",
+    "scope": "Resumo e introdução.",
+    "problem": "Até que ponto exemplos no contexto permitem executar tarefas sem ajuste de parâmetros?",
+    "contribution": "Apresenta GPT-3 e avalia aprendizagem em contexto nas condições zero-shot, one-shot e few-shot.",
+    "method": "Modelo autorregressivo de 175 bilhões de parâmetros; tarefas recebem instruções e exemplos no prompt, sem atualizações de gradiente na avaliação.",
+    "result": "O desempenho varia entre tarefas e com a quantidade de exemplos; o estudo demonstra a utilidade da adaptação por contexto.",
+    "crit": "Análise da ficha: resultados em benchmarks não asseguram generalização ao domínio parlamentar. Exemplos, distribuição de teste e possível contaminação precisam ser controlados.",
+    "use": "Fundamentação e metodologia: distinguir demonstrações no prompt de fine-tuning e registrar exemplos usados.",
+    "quotes": [
+      [
+        "without any gradient updates or fine-tuning",
+        "Resumo"
+      ],
+      [
+        "few-shot demonstrations",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "kaplanEtAl2020scalingLaws",
+    "title": "Scaling Laws for Neural Language Models",
+    "author": "Kaplan et al.",
+    "version": "Preprint v1 · 2020",
+    "area": "ESCALA",
+    "scope": "Resumo e introdução.",
+    "problem": "Como a perda de modelagem varia com parâmetros, dados e computação?",
+    "contribution": "Descreve relações empíricas de escala para a perda de entropia cruzada de modelos de linguagem.",
+    "method": "Ajuste de tendências observadas ao variar tamanho do modelo, quantidade de dados e orçamento computacional.",
+    "result": "Discute alocação de computação que favorece modelos maiores e interrupção do treinamento antes da convergência nas condições analisadas.",
+    "crit": "Análise da ficha: tendências empíricas dependem do regime experimental. Reduzir perda não equivale a melhorar fidelidade de RAG; confrontar pressupostos com Hoffmann et al.",
+    "use": "Fundamentação: contextualizar custo e escala sem usar número de parâmetros como substituto da avaliação de tarefa.",
+    "quotes": [
+      [
+        "cross-entropy loss",
+        "Resumo"
+      ],
+      [
+        "stopping significantly before convergence",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "hoffmannEtAl2022computeOptimal",
+    "title": "Training Compute-Optimal Large Language Models",
+    "author": "Hoffmann et al.",
+    "version": "NeurIPS · 2022",
+    "area": "ESCALA",
+    "scope": "Resumo e introdução.",
+    "problem": "Como distribuir um orçamento fixo entre parâmetros e tokens de treinamento?",
+    "contribution": "Reavalia a alocação ótima de computação, enfatizando crescimento conjunto de modelo e dados.",
+    "method": "Estuda mais de 400 modelos e apresenta Chinchilla, com 70 bilhões de parâmetros, treinado com mais dados que Gopher sob orçamento semelhante.",
+    "result": "Os resultados sustentam dimensionar conjuntamente parâmetros e tokens no regime estudado.",
+    "crit": "Análise da ficha: a comparação depende de dados, treinamento e orçamento. Não implica que um gerador maior ou menor será superior no corpus da dissertação.",
+    "use": "Fundamentação: comparar escala e eficiência; explicitar por que avaliação local continua necessária.",
+    "quotes": [
+      [
+        "the model size and the number of training tokens should be scaled equally",
+        "Resumo"
+      ],
+      [
+        "under a given compute budget",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "ouyangEtAl2022instructGpt",
+    "title": "Training language models to follow instructions",
+    "author": "Ouyang et al.",
+    "version": "NeurIPS · 2022",
+    "area": "ALINHAMENTO",
+    "scope": "Resumo e introdução.",
+    "problem": "Como aproximar respostas das instruções e preferências humanas?",
+    "contribution": "Combina demonstrações supervisionadas, rankings humanos e aprendizagem por reforço para ajustar modelos de linguagem.",
+    "method": "Treina InstructGPT a partir de demonstrações e preferências; avalia respostas na distribuição de prompts utilizada no estudo.",
+    "result": "O modelo de 1,3 bilhão de parâmetros é preferido ao GPT-3 de 175 bilhões nessa distribuição. Preferência constitui o resultado específico comparado.",
+    "crit": "Autores: persistem erros simples. Análise da ficha: preferência humana não equivale a verdade factual nem garante aderência a evidências parlamentares.",
+    "use": "Fundamentação: diferenciar alinhamento, utilidade percebida e fidelidade às fontes recuperadas.",
+    "quotes": [
+      [
+        "on our prompt distribution",
+        "Resumo"
+      ],
+      [
+        "InstructGPT still makes simple mistakes",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "devlinEtAl2019bert",
+    "title": "BERT",
+    "author": "Devlin et al.",
+    "version": "NAACL · 2019",
+    "area": "REPRESENTAÇÃO",
+    "scope": "Resumo e introdução.",
+    "problem": "Como aprender representações contextualizadas bidirecionais transferíveis?",
+    "contribution": "Propõe pré-treinamento bidirecional profundo, seguido de adaptação para tarefas de linguagem.",
+    "method": "Combina modelagem de linguagem mascarada e previsão da próxima sentença; ajusta o modelo para tarefas supervisionadas.",
+    "result": "Relata melhorias em onze tarefas de processamento de linguagem natural.",
+    "crit": "Análise da ficha: BERT não é um gerador autorregressivo completo nem um recuperador de passagens pronto. Usá-lo em busca requer definir representação, treinamento e função de similaridade.",
+    "use": "Fundamentação: distinguir codificadores, geradores e adaptação para recuperação.",
+    "quotes": [
+      [
+        "left and right context in all layers",
+        "Resumo"
+      ],
+      [
+        "next sentence prediction",
+        "Introdução"
+      ]
+    ]
+  },
+  {
+    "key": "raffelEtAl2020t5",
+    "title": "Exploring the Limits of Transfer Learning",
+    "author": "Raffel et al.",
+    "version": "JMLR · 2020",
+    "area": "FUNDAMENTO",
+    "scope": "Resumo, introdução e seção 2.1; consulta parcial.",
+    "problem": "Como comparar estratégias de transferência em tarefas heterogêneas?",
+    "contribution": "Unifica problemas de linguagem no formato texto-para-texto e apresenta T5 e o corpus C4.",
+    "method": "Estudo comparativo de objetivos, arquiteturas, dados e estratégias de transferência; o recorte consultado caracteriza o desenho e o modelo.",
+    "result": "A formulação comum permite expressar diferentes tarefas com entradas e saídas textuais e comparar escolhas dentro de um mesmo enquadramento.",
+    "crit": "Análise da ficha: esta leitura focal não reproduz todas as ablações. A uniformidade de formato não elimina diferenças entre critérios de avaliação ou necessidades dos usuários.",
+    "use": "Fundamentação: situar modelos codificador-decodificador e separar formato da tarefa de qualidade da resposta.",
+    "quotes": [
+      [
+        "a text-to-text format",
+        "Resumo"
+      ],
+      [
+        "pre-training objectives, architectures, unlabeled data sets, transfer approaches",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "liangEtAl2023helm",
+    "title": "HELM",
+    "author": "Liang et al.",
+    "version": "Preprint v1 · 2022",
+    "area": "AVALIAÇÃO",
+    "scope": "Resumo e seção 11. Chave da bibliografia: 2023; versão consultada: novembro de 2022.",
+    "problem": "Como avaliar modelos de linguagem além de uma única medida?",
+    "contribution": "Propõe avaliação ampla e explícita de cenários, métricas e lacunas de cobertura.",
+    "method": "Compara 30 modelos sob condições padronizadas; combina acurácia, calibração, robustez, justiça, viés, toxicidade e eficiência.",
+    "result": "Expõe compromissos entre modelos e tarefas, dificultando reduzir resultados a um ranking único.",
+    "crit": "Autores: validade e confiabilidade dos conjuntos não possuem garantia uniforme; limitações de amostragem e sementes afetam significância. Análise da ficha: escolher métricas exige justificar o que representam no uso parlamentar.",
+    "use": "Metodologia: separar dimensões, reportar variabilidade e evitar agregar pontuações incompatíveis sem justificativa.",
+    "quotes": [
+      [
+        "noting what’s missing or underrepresented",
+        "Resumo"
+      ],
+      [
+        "standardized conditions",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "anhHoang2025hallucinations",
+    "title": "Alucinações: prompts e modelos",
+    "author": "Anh-Hoang; Tran; Nguyen",
+    "version": "Frontiers in AI · 2025",
+    "area": "RISCOS",
+    "scope": "Resumo, definições, seção 4 e trechos da seção 5; consulta parcial.",
+    "problem": "Como distinguir variação associada ao prompt e ao modelo nas alucinações?",
+    "contribution": "Propõe um quadro diagnóstico com sensibilidade a prompts e variabilidade entre modelos, articulado a uma revisão de alucinações.",
+    "method": "Descreve comparações entre modelos e variantes de instrução, com protocolos e métricas de atribuição.",
+    "result": "O enquadramento sugere examinar conjuntamente fatores de modelo e prompt, em vez de atribuir todo erro a um único componente.",
+    "crit": "Análise da ficha: variação observada não basta para identificar causa. Há menções a GPT-4 na seção 4 e declaração de uso exclusivo de modelos abertos na seção 5; a relação entre exemplos e experimentos requer esclarecimento antes de reutilizar números.",
+    "use": "Metodologia: testar sensibilidade a prompts; não adotar resultados quantitativos sem conferir o protocolo completo.",
+    "quotes": [
+      [
+        "Prompt Sensitivity (PS)",
+        "Seção 4.2"
+      ],
+      [
+        "Model Variability (MV)",
+        "Seção 4.2"
+      ]
+    ]
+  },
+  {
+    "key": "dahlEtAl2024largeLegalFictions",
+    "title": "Large Legal Fictions",
+    "author": "Dahl et al.",
+    "version": "Preprint v1 · 2024",
+    "area": "RISCOS",
+    "scope": "Resumo e introdução/tipologia. A bibliografia cita a publicação; ficha usa arXiv v1.",
+    "problem": "Com que frequência modelos erram perguntas verificáveis sobre decisões judiciais?",
+    "contribution": "Avalia alucinações jurídicas e a capacidade de reconhecer limites ou premissas incorretas.",
+    "method": "Perguntas sobre casos federais dos Estados Unidos, incluindo informações específicas e verificáveis e formulações contrafactuais.",
+    "result": "O resumo da v1 relata taxas de 69% para GPT-3.5 a 88% para Llama 2 nas condições avaliadas; não são taxas gerais para todo uso jurídico ou RAG.",
+    "crit": "Análise da ficha: domínio, formulação das perguntas e versões dos modelos delimitam os resultados. Não transferir essas porcentagens para aplicações parlamentares com recuperação.",
+    "use": "Problema e metodologia: incluir verificabilidade, perguntas sem suporte e tratamento de premissas falsas.",
+    "quotes": [
+      [
+        "specific, verifiable questions",
+        "Resumo"
+      ],
+      [
+        "cannot always predict",
+        "Resumo"
+      ]
+    ]
+  },
+  {
+    "key": "jiEtAl2023hallucinationSurvey",
+    "title": "Survey of Hallucination in NLG",
+    "author": "Ji et al.",
+    "version": "Preprint v1 · 2022",
+    "area": "REVISÃO E RISCOS",
+    "scope": "Resumo, organização inicial e exemplos de tipologia. Bibliografia: publicação de 2023; fonte consultada: v1 de 2022.",
+    "problem": "Como caracterizar e avaliar alucinações em geração de linguagem?",
+    "contribution": "Organiza o fenômeno em diferentes tarefas e distingue relações com a entrada e com o conhecimento factual.",
+    "method": "Revisão de sumarização, diálogo, perguntas e respostas, geração a partir de dados e tradução.",
+    "result": "A tipologia separa conteúdo que contradiz a entrada de conteúdo sem suporte nela, oferecendo base para especificar o objeto da avaliação.",
+    "crit": "Análise da ficha: conteúdo não sustentado pela entrada pode ser verdadeiro externamente. Definições operacionais variam por tarefa; esta consulta parcial não audita todas as métricas e técnicas da revisão.",
+    "use": "Fundamentação: definir fidelidade ao contexto e factualidade separadamente, com exemplos de erro parlamentar.",
+    "quotes": [
+      [
+        "Faithfulness in NLG",
+        "Palavras-chave"
+      ],
+      [
+        "Factuality in NLG",
+        "Palavras-chave"
+      ]
+    ]
+  },
+  {
+    "key": "bommasaniEtAl2021foundationModels",
+    "title": "Oportunidades e riscos dos modelos de base",
+    "author": "Bommasani et al.",
+    "version": "Relatório / preprint v1 · 2021",
+    "area": "FUNDAMENTO E RISCOS",
+    "scope": "Resumo, seção 1 e abertura da seção 4.4 (avaliação); relatório não lido integralmente.",
+    "problem": "Quais consequências decorrem de reutilizar modelos de base em muitas aplicações?",
+    "contribution": "Articula oportunidades e riscos da emergência de capacidades e da homogeneização de componentes tecnológicos.",
+    "method": "Relatório multidisciplinar; o recorte focal aborda conceito e dificuldades de avaliação de modelos adaptáveis.",
+    "result": "Distingue avaliação do modelo de base e avaliação de sistemas especializados, dependentes também do mecanismo de adaptação.",
+    "crit": "Análise da ficha: o relatório não constitui um experimento único que quantifique todos os riscos. Reutilização ampla pode propagar falhas, mas o impacto precisa ser examinado em cada aplicação.",
+    "use": "Fundamentação e discussão: avaliar o sistema RAG completo e documentar dependências de modelos compartilhados.",
+    "quotes": [
+      [
+        "single points of failure",
+        "Introdução"
+      ],
+      [
+        "emergence and homogenization",
+        "Resumo / introdução"
+      ]
+    ]
+  },
+  {
+    "key": "hevnerEtAl2004designScience",
+    "title": "Design Science em Sistemas de Informação",
+    "author": "Hevner et al.",
+    "version": "MIS Quarterly · 2004",
+    "area": "METODOLOGIA",
+    "scope": "Resumo, introdução, tabela 1 e discussão das diretrizes 1–3; exemplares não fichados.",
+    "problem": "Como produzir conhecimento por meio da construção e avaliação de artefatos?",
+    "contribution": "Articula relevância do problema e rigor da pesquisa em sete diretrizes para Design Science.",
+    "method": "Ensaio metodológico com quadro conceitual e aplicação ilustrativa a três pesquisas; o recorte focal concentra-se nas diretrizes.",
+    "result": "Exige artefato viável, problema relevante, avaliação, contribuição verificável, rigor, busca de soluções e comunicação apropriada.",
+    "crit": "Análise da ficha: construir um protótipo não basta para demonstrar contribuição científica. Critérios de avaliação devem decorrer do problema e do contexto organizacional, sem tratar as diretrizes como formulário mecânico.",
+    "use": "Metodologia: relacionar o artefato RAG, o problema parlamentar, as decisões de projeto e a evidência de utilidade.",
+    "quotes": [
+      [
+        "Design-science research must produce a viable artifact",
+        "Tabela 1, diretriz 1"
+      ],
+      [
+        "The utility, quality, and efficacy of a design artifact must be rigorously demonstrated",
+        "Diretriz 3"
+      ]
+    ]
+  },
+  {
+    "key": "benderEtAl2021stochasticParrots",
+    "title": "On the Dangers of Stochastic Parrots",
+    "author": "Bender; Gebru; McMillan-Major; Shmitchell",
+    "version": "FAccT · 2021",
+    "area": "RISCOS",
+    "scope": "Resumo, introdução, seção 7 e conclusão.",
+    "problem": "Quais custos e riscos acompanham a busca por modelos de linguagem cada vez maiores?",
+    "contribution": "Relaciona escala, custos ambientais e financeiros, documentação de dados e efeitos sociais do texto sintético.",
+    "method": "Ensaio crítico apoiado em literatura; formula recomendações de pesquisa e desenho com participação dos grupos afetados.",
+    "result": "Defende documentar e selecionar dados, considerar alternativas técnicas e antecipar danos antes de consolidar decisões de desenvolvimento.",
+    "crit": "Análise da ficha: argumentos e recomendações não equivalem a estimativas experimentais de erro em todos os modelos. Aplicá-los ao RAG parlamentar exige identificar usuários, pessoas afetadas e situações concretas de falha.",
+    "use": "Discussão: tratar proveniência dos dados, custo, atribuição de responsabilidade e avaliação dos piores casos.",
+    "quotes": [
+      [
+        "we risk incurring documentation debt",
+        "Introdução"
+      ],
+      [
+        "research that centers the people who stand to be adversely affected by the resulting technology",
+        "Seção 7"
+      ]
+    ]
+  },
+  {
+    "key": "martelloteViola2025organizacaoConhecimento",
+    "title": "IA na organização do conhecimento parlamentar",
+    "author": "Viola; Felipe; Sales",
+    "version": "ISKO Brasil · 2025",
+    "area": "CONTEXTO",
+    "scope": "Extração web do PDF oficial: resumo e seções 2–4, até recuperação de documentos. Sem PDF local; leitura parcial.",
+    "problem": "Como a Câmara utiliza IA na organização do conhecimento?",
+    "contribution": "Mapeia iniciativas e resultados esperados a partir de documentos institucionais.",
+    "method": "Pesquisa qualitativa, exploratória, bibliográfica e documental; consulta portais da Câmara e da IPU.",
+    "result": "Agrupa seis ferramentas em quatro categorias, incluindo transcrição, classificação e recuperação.",
+    "crit": "Análise da ficha: descrição documental e resultados esperados não demonstram impacto causal nem desempenho comparativo de RAG.",
+    "use": "Contextualização: identificar tarefas legislativas e distinguir benefícios esperados de resultados medidos.",
+    "quotes": [
+      [
+        "abordagem qualitativa com objetivo exploratório",
+        "Seção 2"
+      ],
+      [
+        "para a identificação do objetivo e dos resultados esperados",
+        "Seção 4"
+      ]
+    ]
+  }
+]

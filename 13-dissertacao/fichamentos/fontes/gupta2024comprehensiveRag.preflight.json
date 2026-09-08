@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/gupta2024comprehensiveRag.pdf",
+  "sha256": "0e0ea3430c2cba9a8f5dd06e17581e7cdaa42184130b69ff733a5ff9fc6a37db",
+  "declared_page_count": 18,
+  "enumerated_page_count": 18,
+  "reader_page_count": 18,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:42.254064+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

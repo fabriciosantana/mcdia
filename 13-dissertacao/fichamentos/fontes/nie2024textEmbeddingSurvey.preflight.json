@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/nie2024textEmbeddingSurvey.pdf",
+  "sha256": "92020dea5749e442510ec319c4ca96368eedebee7751a4574a907898bf1a7d88",
+  "declared_page_count": 28,
+  "enumerated_page_count": 28,
+  "reader_page_count": 28,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:02:52.541219+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

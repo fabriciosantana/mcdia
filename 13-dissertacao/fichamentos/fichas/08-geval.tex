@@ -1,0 +1,28 @@
+\fichatitulo{08 · AVALIAÇÃO DA GERAÇÃO}{Artigo de conferência · 2023}{G-Eval}
+{\small LIU, Yang; ITER, Dan; XU, Yichong; WANG, Shuohang; XU, Ruochen; ZHU, Chenguang. \textit{G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment}. EMNLP, 2023, p. 2511--2522. \href{https://aclanthology.org/2023.emnlp-main.153/}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como aproximar a avaliação automática de textos gerados dos julgamentos humanos, além da sobreposição lexical?
+
+\campo{Principal contribuição · síntese interpretativa}
+Combina critérios explícitos, etapas de avaliação geradas pelo modelo e preenchimento de um formulário de pontuação. Usa probabilidades dos escores para obter avaliações mais granulares (seção 2).
+
+\campo{Método}
+Meta-avalia versões com GPT-3.5 e GPT-4 em SummEval, Topical-Chat e QAGS, comparando correlações com julgamentos humanos e realizando ablações (seções 3--4).
+
+\campo{Resultado principal}
+No SummEval, G-Eval-4 atinge correlação média de Spearman de 0,514, ante 0,474 do UniEval na tabela 1. O valor resume dimensões daquele benchmark de sumarização; não é acurácia nem validação de respostas parlamentares.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Procedimento}{a form-filling paradigm}{Resumo, p. 2511.}
+\excerto{Risco}{may have a bias towards the LLM-generated texts}{Limitations, p. 2518.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: possível preferência por textos de LLMs e risco de reforçar seus próprios critérios ao reutilizar a avaliação no treinamento (seção 4 e Limitations). \textbf{Análise da ficha:} a consistência factual de resumos não cobre, por si só, a recuperação nem a verificabilidade das citações em RAG.
+
+\campo{Aproveitamento na dissertação · proposta}
+Referencial teórico e Metodologia: elaborar rubricas e comparar julgamentos humanos e automatizados em H3; registrar modelo, prompt e forma de agregação.
+
+\registro{Fonte consultada nesta preparação: PDF publicado; consulta focal do método, resultados das seções 3--4 e Limitations. Prompts dos apêndices não fichados. Excertos em inglês. Chave: \texttt{liuEtAl2023geval}.}

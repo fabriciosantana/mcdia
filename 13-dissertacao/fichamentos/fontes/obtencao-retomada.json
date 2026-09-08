@@ -1,0 +1,20 @@
+[
+  {
+    "key": "hevnerEtAl2004designScience",
+    "url": "https://ailab-ua.github.io/courses/MIS611D/hevner-2004-design_science_in_is_research.pdf",
+    "status": "obtido",
+    "sha256": "fc827ea7cf5f20dcd0207fecd25489ccb854195c2581d33183ce5235e046a121"
+  },
+  {
+    "key": "peffersEtAl2007dsrm",
+    "url": "https://zhang.ist.psu.edu/teaching/504/readings/Peffers.pdf",
+    "status": "falha",
+    "error": "HTTPSConnectionPool(host='zhang.ist.psu.edu', port=443): Max retries exceeded with url: /teaching/504/readings/Peffers.pdf (Caused by ConnectTimeoutError(<HTTPSConnection(host='zhang.ist.psu.edu', port=443) at 0x7e888e4df110>, 'Connection to zhang.ist.psu.edu timed out. (connect timeout=18)'))"
+  },
+  {
+    "key": "benderEtAl2021stochasticParrots",
+    "url": "https://s10251.pcdn.co/pdf/2021-bender-parrots.pdf",
+    "status": "obtido",
+    "sha256": "e283b37a14e894c105ca26003d8cf5447535e8a73423cd7f1001d7b46af6c1d6"
+  }
+]

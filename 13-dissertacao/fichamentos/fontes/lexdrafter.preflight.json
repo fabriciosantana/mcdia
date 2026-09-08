@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/lexdrafter.pdf",
+  "sha256": "ea6d332568837ff55c54b3a14a5bdb7d4bb279737708af701d159c4cca7d665e",
+  "declared_page_count": 11,
+  "enumerated_page_count": 11,
+  "reader_page_count": 11,
+  "warnings": [],
+  "generated_at": "2026-09-07T13:52:14.068347+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

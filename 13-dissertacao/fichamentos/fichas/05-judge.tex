@@ -1,0 +1,28 @@
+\fichatitulo{05 · CONFIABILIDADE DO JUIZ}{Artigo de conferência · 2025}{ConsJudge}
+{\small LIU, Shuliang et al. \textit{Judge as A Judge: Improving the Evaluation of Retrieval-Augmented Generation through the Judge-Consistency of Large Language Models}. Findings of ACL, 2025, p. 5788--5807. \href{https://aclanthology.org/2025.findings-acl.301/}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como reduzir a sensibilidade dos julgamentos de um LLM à combinação de critérios apresentada no prompt?
+
+\campo{Principal contribuição · síntese interpretativa}
+Propõe ConsJudge: produzir julgamentos sob diferentes combinações de dimensões, estimar sua consistência por similaridade de embeddings e usar os julgamentos mais e menos consistentes como preferências no treinamento DPO (seção 3.2).
+
+\campo{Método}
+O juiz escolhe melhores e piores respostas e depois orienta o treinamento de geradores RAG. A avaliação reúne tarefas de perguntas e respostas e diálogo; também compara julgamentos com GLM-4-plus (seções 3--5).
+
+\campo{Resultado principal}
+Na ablação com juiz Llama3-8B e gerador MiniCPM-2.4B, retirar a resposta de referência reduz a média de acurácia de 52,34 para 41,07 nos três conjuntos apresentados. O resultado evidencia a dependência dessa referência no experimento (tabela 3).
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Dimensões}{hallucination, completeness, coherence, and semantic consistency}{seção 3.1, p. 5790.}
+\excerto{Sensibilidade}{the judgment results are often sensitive to the evaluation prompts}{Limitation, p. 5796.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: qualidade dos prompts e da similaridade calculada por embeddings limita o método (Limitation). \textbf{Análise da ficha:} concordância com outro LLM e consistência entre prompts não equivalem a concordância humana; o procedimento não é livre de respostas de referência.
+
+\campo{Aproveitamento na dissertação · proposta}
+Trabalhos relacionados e Metodologia: testar sensibilidade do juiz aos critérios e examinar H3 com referência humana própria. Não implica adotar treinamento DPO na dissertação.
+
+\registro{Fonte consultada nesta preparação: PDF publicado; consulta focal de Introdução, seções 3--5, tabela 3 e Limitation. Apêndices não fichados. Excertos em inglês. Chave: \texttt{liuEtAl2025judgeRag}.}

@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/ouyangEtAl2022instructGpt.pdf",
+  "sha256": "4ed5ef926ed5ad385d30ee4319f9b13650da29a3f015bc4e888bd669ee4670e5",
+  "declared_page_count": 15,
+  "enumerated_page_count": 15,
+  "reader_page_count": 15,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:05.577617+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

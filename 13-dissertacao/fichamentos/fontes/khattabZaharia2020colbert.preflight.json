@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/khattabZaharia2020colbert.pdf",
+  "sha256": "0f97faf9743e12d2f0108fc65a2639bc9447c09f1a185942ecd525f6de317a95",
+  "declared_page_count": 10,
+  "enumerated_page_count": 10,
+  "reader_page_count": 10,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:13.937853+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

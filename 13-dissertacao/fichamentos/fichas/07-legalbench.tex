@@ -1,0 +1,28 @@
+\fichatitulo{07 · RECUPERAÇÃO JURÍDICA}{Preprint v1 · 2024}{LegalBench-RAG}
+{\small PIPITONE, Nicholas; HOUIR ALAMI, Ghita. \textit{LegalBench-RAG: A Benchmark for Retrieval-Augmented Generation in the Legal Domain}. arXiv:2408.10343v1, 19 ago. 2024. \href{https://arxiv.org/abs/2408.10343v1}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como avaliar se a recuperação localiza os trechos jurídicos necessários, em vez de apenas encontrar documentos ou fornecer contexto extenso?
+
+\campo{Principal contribuição · síntese interpretativa}
+Reconstrói consultas e intervalos de caracteres de suporte a partir de quatro conjuntos associados ao LegalBench. Torna a localização precisa de evidências o objeto da avaliação, separando recuperação de geração (seções 3--4).
+
+\campo{Método}
+Reúne contratos e políticas de privacidade; compara estratégias de segmentação com e sem reranqueamento. Agrega métricas com peso igual entre conjuntos, independentemente do número de perguntas (seção 4).
+
+\campo{Resultado principal}
+As tabelas 4--7 mostram variação de precisão e revocação conforme k, conjunto e configuração. A seção 5.1 favorece a divisão recursiva sem reranqueador, mas não há superioridade uniforme em todas as células; a leitura deve preservar cada configuração.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Rastreabilidade}{file path, the exact quote, and the precise character indices}{seção 3.3, p. 5.}
+\excerto{Escopo}{the queries in this benchmark are always answered by exactly one document}{seção 3.5, p. 5.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: cobertura documental limitada e ausência de consultas que exijam vários documentos (seção 3.5). \textbf{Análise da ficha:} o resumo/tabela 1 registra 6.858 pares, mas a seção 3.3.1 informa 6.889. A divergência permanece registrada; não adotar um total sem esclarecimento.
+
+\campo{Aproveitamento na dissertação · proposta}
+Trabalhos relacionados e Metodologia: definir evidências por trecho e avaliar recuperação separadamente da geração. O benchmark não mede a correção final da resposta nem valida o corpus do Senado.
+
+\registro{Fonte consultada nesta preparação: Preprint v1; consulta focal das seções 1, 3--5 e tabelas 1, 4--7. Apêndices não fichados. Excertos em inglês. Chave: \texttt{pipitoneAlami2024legalbenchRag}.}

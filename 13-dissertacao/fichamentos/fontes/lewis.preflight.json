@@ -1,0 +1,16 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "UNAVAILABLE",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/lewis.pdf",
+  "sha256": "720f67eb41aa49995d5fcf3d24ac7efe431fbe08ce109b14b5a9fa4d4ebe2f8b",
+  "declared_page_count": 16,
+  "enumerated_page_count": 16,
+  "reader_page_count": 16,
+  "warnings": [
+    "pypdf: Ignoring wrong pointing object 31 0 (offset 0)",
+    "pypdf: Ignoring wrong pointing object 32 0 (offset 0)",
+    "pypdf: Ignoring wrong pointing object 89 0 (offset 0)"
+  ],
+  "generated_at": "2026-09-07T13:52:14.952508+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

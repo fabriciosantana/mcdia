@@ -1,0 +1,28 @@
+\fichatitulo{04 · AVALIAÇÃO DE RAG}{Artigo de demonstração · 2024}{RAGAS}
+{\small ES, Shahul; JAMES, Jithin; ESPINOSA-ANKE, Luis; SCHOCKAERT, Steven. \textit{RAGAs: Automated Evaluation of Retrieval Augmented Generation}. EACL: System Demonstrations, 2024, p. 150--158. \href{https://aclanthology.org/2024.eacl-demo.16/}{Fonte e versão}.\par}
+
+\campo{Problema e objetivo}
+Como avaliar um pipeline quando não há respostas de referência disponíveis para cada pergunta? O trabalho busca medidas automáticas que distingam o contexto recuperado da resposta gerada.
+
+\campo{Principal contribuição · síntese interpretativa}
+Operacionaliza fidelidade ao contexto, relevância da resposta e relevância do contexto por decomposição em afirmações, geração reversa de perguntas e seleção de sentenças. As métricas dispensam respostas humanas de referência em sua aplicação (seção 3).
+
+\campo{Método}
+Constrói WikiEval a partir de 50 páginas da Wikipédia. Dois anotadores comparam pares; discordâncias são discutidas. A validação das métricas utiliza essa referência humana (seções 4--5).
+
+\campo{Resultado principal}
+Na tabela 4, a concordância com a preferência humana é 0,95 para fidelidade, 0,78 para relevância da resposta e 0,70 para relevância do contexto. São acurácias de comparação pareada, não correlações nem taxas universais de acerto de RAG.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{Fundamentação}{the answer should be grounded in the given context}{seção 3, p. 152.}
+\excerto{Dificuldade}{We found context relevance to be the hardest quality dimension to evaluate}{seção 5, p. 155.}
+\end{itemize}
+
+\campo{Limitações declaradas e análise crítica}
+Autores: dificuldade de selecionar sentenças em contextos longos e instabilidade entre execuções e APIs (seções 5--5.1). \textbf{Análise da ficha:} a validação em WikiEval não substitui uma amostra do Senado; dispensar referências durante o cálculo não dispensa validar o avaliador.
+
+\campo{Aproveitamento na dissertação · proposta}
+Referencial teórico, Trabalhos relacionados e Metodologia: definir métricas separadas e comparar o juiz com anotação humana em H3.
+
+\registro{Fonte consultada nesta preparação: PDF publicado de 2024; consulta focal das seções 1, 3--5.1 e ressalvas finais. A chave do projeto remete ao preprint de 2023; não houve comparação integral entre versões. Excertos em inglês. Chave: \texttt{esEtAl2023ragas}.}

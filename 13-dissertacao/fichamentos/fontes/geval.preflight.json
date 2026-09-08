@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/geval.pdf",
+  "sha256": "37e137b676440da918bd7a7daa36518899bf4618c34c332b56049c7b9e82f406",
+  "declared_page_count": 12,
+  "enumerated_page_count": 12,
+  "reader_page_count": 12,
+  "warnings": [],
+  "generated_at": "2026-09-07T13:52:13.650184+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "key": "bandeiraBernardes2016information",
+    "url": "https://revistas.ufpr.br/rsp/article/download/48709/29300",
+    "status": "obtido",
+    "sha256": "3ff7c6cfb3a3aca84ee5cc014663e2e4eb404462242eb21a7c6e19dbd9a8a24e"
+  },
+  {
+    "key": "geunis2023parliamentaryMonitoring",
+    "url": "https://www.idea.int/sites/default/files/2025-11/parliamentary-monitoring-organizations.pdf",
+    "status": "falha",
+    "error": "404 Client Error: Not Found for url: https://www.idea.int/sites/default/files/2025-11/parliamentary-monitoring-organizations.pdf"
+  },
+  {
+    "key": "blanco2025plenarioPalanqueEstudio",
+    "url": "https://www12.senado.leg.br/publicacoes/estudos-legislativos/tipos-de-estudos/textos-para-discussao/td355",
+    "status": "obtido",
+    "sha256": "f6832cee5bd471533c25f8dbadd50834c684a5f1cf04324e233ceeaf4d362b7f"
+  },
+  {
+    "key": "blanco2026letrasGraudas",
+    "url": "https://www12.senado.leg.br/publicacoes/estudos-legislativos/tipos-de-estudos/textos-para-discussao/td357",
+    "status": "obtido",
+    "sha256": "52f3eabbff909de98df46e6361f6459cfc36070dbdededb0752459a0bb09b31a"
+  },
+  {
+    "key": "wfd2023guidelinesAiParliaments",
+    "url": "https://www.wfd.org/sites/default/files/2024-07/wfd-ai-guidelines-for-parliaments-2024-english.pdf",
+    "status": "falha",
+    "error": "403 Client Error: Forbidden for url: https://www.wfd.org/sites/default/files/2024-07/wfd-ai-guidelines-for-parliaments-2024-english.pdf"
+  },
+  {
+    "key": "peffersEtAl2007dsrm",
+    "url": "https://zhang.ist.psu.edu/teaching/504/readings/Peffers.pdf",
+    "status": "falha",
+    "error": "HTTPSConnectionPool(host='zhang.ist.psu.edu', port=443): Max retries exceeded with url: /teaching/504/readings/Peffers.pdf (Caused by ConnectTimeoutError(<HTTPSConnection(host='zhang.ist.psu.edu', port=443) at 0x759ef16d34d0>, 'Connection to zhang.ist.psu.edu timed out. (connect timeout=45)'))"
+  },
+  {
+    "key": "thakurEtAl2021beir",
+    "url": "https://openreview.net/pdf?id=wCu6T5xFjeJ",
+    "status": "falha",
+    "error": "403 Client Error: Forbidden for url: https://openreview.net/pdf?id=wCu6T5xFjeJ"
+  }
+]

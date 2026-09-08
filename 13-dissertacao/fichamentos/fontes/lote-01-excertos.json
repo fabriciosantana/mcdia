@@ -1,0 +1,134 @@
+[
+  {
+    "id": "ragas",
+    "quote": "the answer should be grounded in the given context",
+    "locator": "seção 3, p. 152",
+    "literal_match": true
+  },
+  {
+    "id": "ragas",
+    "quote": "We found context relevance to be the hardest quality dimension to evaluate",
+    "locator": "seção 5, p. 155",
+    "literal_match": true
+  },
+  {
+    "id": "judge",
+    "quote": "hallucination, completeness, coherence, and semantic consistency",
+    "locator": "seção 3.1, p. 5790",
+    "literal_match": true
+  },
+  {
+    "id": "judge",
+    "quote": "the judgment results are often sensitive to the evaluation prompts",
+    "locator": "Limitation, p. 5796",
+    "literal_match": true
+  },
+  {
+    "id": "rageval",
+    "quote": "Completeness, Hallucination, and Irrelevance",
+    "locator": "Resumo, p. 8520",
+    "literal_match": true
+  },
+  {
+    "id": "rageval",
+    "quote": "no single configuration uniformly benefits all query types",
+    "locator": "seção 4.3.3, p. 8527",
+    "literal_match": true
+  },
+  {
+    "id": "legalbench",
+    "quote": "file path, the exact quote, and the precise character indices",
+    "locator": "seção 3.3, p. 5",
+    "literal_match": true
+  },
+  {
+    "id": "legalbench",
+    "quote": "the queries in this benchmark are always answered by exactly one document",
+    "locator": "seção 3.5, p. 5",
+    "literal_match": true
+  },
+  {
+    "id": "geval",
+    "quote": "a form-filling paradigm",
+    "locator": "Resumo, p. 2511",
+    "literal_match": true
+  },
+  {
+    "id": "geval",
+    "quote": "may have a bias towards the LLM-generated texts",
+    "locator": "Limitations, p. 2518",
+    "literal_match": true
+  },
+  {
+    "id": "lewis",
+    "quote": "parametric and non-parametric memory",
+    "locator": "Resumo",
+    "literal_match": true
+  },
+  {
+    "id": "lewis",
+    "quote": "will probably never be entirely factual and completely devoid of bias",
+    "locator": "Broader Impact",
+    "literal_match": true
+  },
+  {
+    "id": "lexdrafter",
+    "quote": "we use ground truth definitions",
+    "locator": "seção 5.2, p. 10454",
+    "literal_match": true
+  },
+  {
+    "id": "lexdrafter",
+    "quote": "fine-tuned BLEURT scores are not presented",
+    "locator": "seção 5.2, p. 10455",
+    "literal_match": true
+  },
+  {
+    "id": "ragar",
+    "quote": "Chain of RAG (CoRAG) and Tree of RAG (ToRAG)",
+    "locator": "Resumo, p. 280",
+    "literal_match": true
+  },
+  {
+    "id": "ragar",
+    "quote": "we purposefully discard the NEI",
+    "locator": "seção 3, p. 282",
+    "literal_match": true
+  },
+  {
+    "id": "ragar",
+    "quote": "unable to provide variance estimates",
+    "locator": "seção 7, p. 288",
+    "literal_match": true
+  },
+  {
+    "id": "skubic",
+    "quote": "24 relevant papers",
+    "locator": "seção 3.1, p. 2",
+    "literal_match": true
+  },
+  {
+    "id": "skubic",
+    "quote": "content analysis",
+    "locator": "seção 3.2, p. 2",
+    "literal_match": true
+  },
+  {
+    "id": "skubic",
+    "quote": "clearly and in detail document their compilation decisions",
+    "locator": "seção 5, p. 9",
+    "literal_match": true
+  },
+  {
+    "id": "ndaa",
+    "quote": "more context does not always improve performance",
+    "locator": "seção 1.A, Model Parameters",
+    "literal_match": true
+  },
+  {
+    "id": "ndaa",
+    "quote": "it is unclear why",
+    "locator": "seção 1.B, Response Evaluation",
+    "literal_match": true
+  }
+]

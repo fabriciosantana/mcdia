@@ -1,61 +1,34 @@
-# Fichamentos-piloto
+# Fichamentos da revisão da literatura
 
-Documento independente da dissertação, com cinco páginas A4: três fichas (uma por referência), matriz comparativa e síntese temática. Revisado em 7 de setembro de 2026 para revisão do pesquisador e ajuste do formato com o orientador. O conteúdo foi preparado com assistência de IA; O pesquisador declarou ter lido os fichamentos; não declarou leitura dos textos-fonte.
+Atualizado em 08/09/2026: **45 fichas de uma página**, nove páginas de matriz temática e duas de síntese (56 páginas). Das 52 entradas selecionadas em `texto-Latex/referencias.bib`, sete permanecem pendentes de acesso ou confirmação de versão. Consulte [o controle de cobertura](CONTROLE_COBERTURA.md).
 
-## Arquivos e compilação
+A coleção foi preparada com assistência de IA. Cada ficha distingue contribuição interpretativa, excertos literais, natureza da evidência, limitações e aproveitamento proposto. A leitura é frequentemente focal: livros, revisões e relatórios extensos não são apresentados como integralmente lidos. A leitura dos textos-fonte pelo pesquisador não foi registrada; ele declarou leitura dos três fichamentos-piloto.
 
-- `main.tex`: modelo visual e ordem das fichas.
-- `fichas/01-ares.tex`, `02-kamerraad.tex` e `03-ipu.tex`: conteúdo editável.
-- `fichas/modelo.tex`: ficha vazia para duplicar; não integra o PDF-piloto.
-- `sintese/01-matriz.tex`: comparação estruturada das três referências.
-- `sintese/02-sintese.tex`: síntese temática e questões para a continuidade da revisão.
-- `out/main.pdf`: PDF compilado.
-- `fontes/manifesto.json`: URLs, hashes, escopos de consulta e resultados da inspeção estrutural.
-- `fontes/*.preflight.json`: diagnósticos estruturais dos PDFs de origem.
+## Editar e compilar
 
-Execute a partir da pasta `fichamentos/`:
+O conteúdo final está nos arquivos **`fichas/*.tex`** e `sintese/*.tex`. Altere esses arquivos e recompile; o PDF é um produto da compilação. `main.tex` define o formato e a ordem. `fichas/modelo.tex` permanece como modelo vazio, fora da compilação.
+
+Execute dentro de `fichamentos/`:
 
 ```bash
 latexmk -pdf main.tex
 ```
 
-O `latexmkrc` local direciona auxiliares para `aux/` e o PDF para `out/`. Não compilar com `latexmk -cd` a partir da pasta superior sem carregar explicitamente esse arquivo de configuração. Dependências: TeX Live com os pacotes declarados em `main.tex`, especialmente `newtxtext`, `geometry`, `microtype`, `fancyhdr`, `lastpage` e `hyperref`. Os PDFs de origem não são necessários para compilar.
+O `latexmkrc` direciona auxiliares para `aux/` e o PDF para [out/main.pdf](out/main.pdf). Não é necessário ter os PDFs-fonte para compilar. O corpo das fichas usa 11 pontos, entrelinha 1,05 e margens laterais de 19 mm; a matriz usa 10 pontos.
 
-## Escolhas do piloto
+## Evidência e rastreabilidade
 
-Fonte de corpo de 11 pontos, entrelinha de 1,05, margens laterais de 19 mm, títulos discretos em azul escuro e links clicáveis. Cada ficha distingue a contribuição interpretada, fragmentos extrativos em inglês e a análise proposta para a dissertação. Não foram produzidas traduções que pudessem ser confundidas com transcrições literais.
+- `inventario.csv` e `inventario.json`: situação das 52 referências, recortes e arquivos.
+- `fontes/manifesto.json`: versões consultadas, URLs, hashes e escopos.
+- `fontes/*.preflight.json`: inspeção estrutural dos PDFs; não certifica conteúdo científico.
+- `fontes/lote-*-excertos.json`: cotejo literal, normalizando espaços, ligaturas e hifenização de linhas.
+- `fontes/obtencao-*.json`: tentativas de obtenção, inclusive falhas.
+- `lote-01-dados.json` e `lote-02-dados.json`: notas estruturadas da preparação, preservadas como histórico; **não são fonte de regeneração automática**. Ajustes editoriais finais podem existir apenas no `.tex`.
 
-As fichas contêm excertos curtos e seletivos, não um resumo extrativo extenso de todos os argumentos. As páginas e seções permitem retomar o contexto das passagens. A área inferior registra o escopo consultado nesta preparação e reserva espaço para observações. “Leitura do texto-fonte pelo pesquisador: não registrada” não significa que o pesquisador não tenha lido o texto; significa que não houve declaração de leitura desses textos-fonte nesta sessão.
+Excertos são curtos e seletivos, no idioma original; não constituem transcrição extensa de todos os argumentos. Localizadores permitem retomar o contexto. A síntese relaciona temas sem presumir equivalência entre experimentos, descrições institucionais e ensaios conceituais.
 
-## Fontes e versões consultadas
+NDAA e Viola et al. foram consultados por extração web do PDF oficial, sem PDF local. A nota local de Viola registra apenas o cotejo e a proveniência, não o texto integral. Para fontes com inspeção estrutural indisponível, usam-se âncoras textuais; o piloto IPU conserva páginas também conferidas visualmente.
 
-1. **ARES:** PDF publicado pela ACL. Consulta das seções 1–7, páginas impressas 338–346, incluindo método, resultados e limitações. Apêndices não fichados. Metadados: https://aclanthology.org/2024.naacl-long.20/.
-2. **KamerRaad:** conteúdo do preprint `arXiv:2404.17597v1`, páginas 1–4; referência da publicação conferida na Springer. Não houve comparação integral com o texto publicado. Os localizadores dos excertos são os do preprint, não os da edição Springer.
-3. **IPU:** edição de dezembro de 2024; consulta da introdução (p. 3) e do caso 024 (p. 150–151). O relatório tem 172 páginas de arquivo; a ficha é deliberadamente parcial. Texto conferido também na extração do portal da IPU. O download direto retornou HTTP 403; a cópia local foi obtida no portal oficial do Senado neerlandês, com URL registrada no manifesto.
+## Antes da redação final
 
-Os PDFs e suas extrações de trabalho estão disponíveis localmente em `fontes/`, mas são ignorados pelo Git. Os diagnósticos e o manifesto preservam a identificação dos arquivos.
-
-## Divergência bibliográfica identificada
-
-A entrada `rogiersEtAl2024kamerraad` em `../texto-Latex/referencias.bib` registra **Bram Kang** e **p. 503–519**. O preprint identifica **Bo Kang**, e a página editorial confirma **Bo Kang** e **p. 409–412**. O piloto usa os metadados conferidos. A bibliografia da dissertação não foi alterada.
-
-Fonte da conferência: https://link.springer.com/chapter/10.1007/978-3-031-70371-3_30.
-
-## Integridade e limites da conferência
-
-A inspeção estrutural ARS retornou `PASS` para ARES e KamerRaad. Para a cópia da IPU, retornou `UNAVAILABLE`, com avisos do parser sobre referências internas do PDF. Esse estado permanece registrado, sem conversão em aprovação estrutural. As páginas impressas 3 e 151 e seus excertos foram conferidos visualmente na renderização, além do confronto com a extração do portal da IPU. Isso verifica as passagens usadas, sem certificar a estrutura integral do arquivo.
-
-A verificação final abrange contagem de páginas, correspondência dos nove excertos com as passagens de origem, ausência de avisos de transbordamento na compilação e inspeção visual das três fichas. O piloto não constitui revisão sistemática nem certificação de completude da bibliografia.
-
-## Revisão de 7 de setembro de 2026
-
-Separados método, contribuição e resultado/orientação; distinguida a ressalva da fonte da análise crítica; explicitados destino e uso na dissertação. O bloco extrativo passou a se chamar “Excertos-chave”, pois contém fragmentos seletivos, não um resumo extenso. Mantidos o idioma original e os excertos já conferidos. Acrescentadas matriz comparativa e síntese temática com localizadores, sem inferir lacunas pela contagem de trabalhos ou pela leitura parcial. Nenhuma alteração nas hipóteses ou na bibliografia da dissertação.
-
-## Pontos para avaliar com o orientador
-
-- Os três fragmentos extrativos são suficientes ou é preferível reduzir outros campos para ampliar esse bloco?
-- O texto em inglês deve permanecer sozinho ou vir acompanhado de tradução identificada?
-- O aproveitamento específico de cada ficha e a síntese temática estão suficientemente distintos?
-- O corpo de 11 pontos e o espaço de anotações funcionam bem na leitura impressa?
-
-Para ampliar o documento, copie `fichas/modelo.tex`, preencha o conteúdo e inclua o arquivo em `main.tex` com uma quebra de página. A contagem total no rodapé é automática. Se uma ficha exceder uma página, revise a seleção e a concisão do conteúdo antes de reduzir a fonte.
+Confirmar versões bibliográficas, aprofundar as fontes centrais e revisar as interpretações. Não foram alteradas as entradas de `referencias.bib`. As sete pendências impedem declarar cobertura integral. A coleção não constitui revisão sistemática exaustiva, e seus argumentos não são resultados experimentais da dissertação.

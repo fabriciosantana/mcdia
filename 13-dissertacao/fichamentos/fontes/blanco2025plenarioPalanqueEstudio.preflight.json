@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "/workspaces/mcdia/13-dissertacao/fichamentos/fontes/blanco2025plenarioPalanqueEstudio.pdf",
+  "sha256": "f6832cee5bd471533c25f8dbadd50834c684a5f1cf04324e233ceeaf4d362b7f",
+  "declared_page_count": 45,
+  "enumerated_page_count": 45,
+  "reader_page_count": 45,
+  "warnings": [],
+  "generated_at": "2026-09-07T14:03:54.443640+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

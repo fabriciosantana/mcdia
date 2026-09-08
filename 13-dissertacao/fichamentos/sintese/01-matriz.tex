@@ -1,34 +1,215 @@
-\fichatitulo{04 · COMPARAÇÃO ENTRE FONTES}{Recorte de três referências}{Matriz comparativa}
-A matriz compara as versões e os recortes efetivamente consultados. As colunas representam funções distintas da literatura; não constituem uma classificação geral de qualidade.
+\fichatitulo{M1 · MATRIZ TEMÁTICA}{Coleção selecionada}{Avaliação de RAG}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
 
-\begingroup
-\small
-\renewcommand{\arraystretch}{1.35}
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{25mm}*{3}{>{\raggedright\arraybackslash}X}@{}}
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{Dimensão} & \textbf{ARES [A]} & \textbf{KamerRaad [K]} & \textbf{IPU [I]} \\
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
 \midrule
-Papel & Método de avaliação. & Aplicação parlamentar. & Planejamento institucional. \\
-Contexto e idioma & Avaliação principal em inglês; KILT, SuperGLUE e AIS. & Parlamento belga; artigo em inglês. Abrangência linguística do corpus não quantificada no preprint. & Coletânea em inglês; recorte do Senado italiano. \\
-Recuperação & Julga relevância do contexto. & Busca vetorial e resumos. & Propõe avaliar qualidade da busca. \\
-Geração & Julga fidelidade e relevância. & Respostas ligadas às fontes. & Caso 024 enfoca consulta ao portal. \\
-Participação humana & Referência anotada para avaliação e PPI. & Feedback binário previsto para melhorias. & Satisfação como métrica proposta. \\
-Juiz automatizado & Juízes ajustados ao domínio. & Não descrito no preprint. & Não descrito no recorte. \\
-Evidência & Experimentos de avaliação. & Descrição e demonstração. & Funcionamento esperado. \\
-Transferência para o Senado & Requer validação local. & Requer avaliação controlada. & Requer operacionalização. \\
+01 · ARES & Avaliação de relevância e fidelidade com juízes treinados e calibração estatística.\par\smallskip{\footnotesize Seções 3–5} & Amostra humana tem função própria; transferência de domínio precisa ser examinada.\\
+\addlinespace[5pt]
+04 · RAGAS & Operacionaliza fidelidade ao contexto, relevância da resposta e relevância do contexto por decomposição em afirmações, geração reversa de perguntas e seleção de sentenças.\par\smallskip{\footnotesize seção 3, p. 152} & A validação em WikiEval não substitui uma amostra do Senado; dispensar referências durante o cálculo não dispensa validar o avaliador.\\
+\addlinespace[5pt]
+05 · ConsJudge & Propõe ConsJudge: produzir julgamentos sob diferentes combinações de dimensões, estimar sua consistência por similaridade de embeddings e usar os julgamentos mais e menos consistentes como preferências no treinamento DPO (seção 3.2).\par\smallskip{\footnotesize seção 3.1, p. 5790} & Concordância com outro LLM e consistência entre prompts não equivalem a concordância humana; o procedimento não é livre de respostas de referência.\\
+\addlinespace[5pt]
+06 · RAGEval & Encadeia esquema, configurações, documentos sintéticos, perguntas, respostas, referências e pontos-chave.\par\smallskip{\footnotesize Resumo, p. 8520} & A aproximação temática ao domínio jurídico não demonstra representatividade de perguntas sobre discursos parlamentares em português.\\
+\addlinespace[5pt]
+07 · LegalBench-RAG & Reconstrói consultas e intervalos de caracteres de suporte a partir de quatro conjuntos associados ao LegalBench.\par\smallskip{\footnotesize seção 3.3, p. 5} & O resumo/tabela 1 registra 6.858 pares, mas a seção 3.3.1 informa 6.889.\\
+\addlinespace[5pt]
 \bottomrule
-\end{tabularx}
-\endgroup
+\end{tabularx}}
 
-\campo{Como interpretar ausências}
-“Não descrito” significa ausência de informação na versão ou no recorte consultado. Não equivale a afirmar que o procedimento nunca existiu. “Não quantificado” impede comparações numéricas, mas não elimina a utilidade conceitual da referência.
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M2 · MATRIZ TEMÁTICA}{Coleção selecionada}{Juízes e riscos}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
 
-\campo{Fontes e localizadores}
-{\small
-\textbf{[A]} Saad-Falcon et al. (2024), seções 3--5 e 7, p. 340--346. \href{https://aclanthology.org/2024.naacl-long.20.pdf}{PDF publicado}.\par
-\textbf{[K]} Rogiers et al. (2024), preprint v1, seções 1--4, p. 1--4. \href{https://arxiv.org/pdf/2404.17597v1}{Versão consultada}.\par
-\textbf{[I]} IPU (2024), Introdução e caso 024: Objective, Scenario e Success metrics. \href{https://www.ipu.org/file/20635/download}{Coletânea institucional}. Leitura parcial; localizadores por seção.}
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+08 · G-Eval & Combina critérios explícitos, etapas de avaliação geradas pelo modelo e preenchimento de um formulário de pontuação.\par\smallskip{\footnotesize Resumo, p. 2511} & A consistência factual de resumos não cobre, por si só, a recuperação nem a verificabilidade das citações em RAG.\\
+\addlinespace[5pt]
+38 · HELM & Propõe avaliação ampla e explícita de cenários, métricas e lacunas de cobertura.\par\smallskip{\footnotesize Resumo} & Autores: validade e confiabilidade dos conjuntos não possuem garantia uniforme; limitações de amostragem e sementes afetam significância.\\
+\addlinespace[5pt]
+39 · Alucinações: prompts e modelos & Propõe um quadro diagnóstico com sensibilidade a prompts e variabilidade entre modelos, articulado a uma revisão de alucinações.\par\smallskip{\footnotesize Seção 4.2} & Análise da ficha: variação observada não basta para identificar causa.\\
+\addlinespace[5pt]
+40 · Large Legal Fictions & Avalia alucinações jurídicas e a capacidade de reconhecer limites ou premissas incorretas.\par\smallskip{\footnotesize Resumo} & Análise da ficha: domínio, formulação das perguntas e versões dos modelos delimitam os resultados.\\
+\addlinespace[5pt]
+41 · Survey of Hallucination in NLG & Organiza o fenômeno em diferentes tarefas e distingue relações com a entrada e com o conhecimento factual.\par\smallskip{\footnotesize Palavras-chave} & Análise da ficha: conteúdo não sustentado pela entrada pode ser verdadeiro externamente.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
 
-\campo{Limite da comparação}
-A seleção foi feita para testar o fichamento em três tipos de texto. Não é amostra representativa da literatura e não demonstra ausência de outras abordagens. Nenhuma hipótese da dissertação é considerada corroborada por esta matriz.
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M3 · MATRIZ TEMÁTICA}{Coleção selecionada}{Aplicações legislativas}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
+
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+02 · KamerRaad & Aplicação para consulta de debates parlamentares, com apresentação de fontes.\par\smallskip{\footnotesize Seções 2–3} & Descrição funcional e retorno de usuários não equivalem a benchmark controlado.\\
+\addlinespace[5pt]
+10 · LexDrafter & Articula um corpus de documentos e um de definições.\par\smallskip{\footnotesize seção 5.2, p. 10454} & O texto afirma vantagem em três métricas, mas a tabela arredondada empata BERTScore e BLEURT.\\
+\addlinespace[5pt]
+11 · RAGAR & Propõe Chain of RAG e Tree of RAG: perguntas sucessivas usam evidências já obtidas; a versão em árvore seleciona evidências entre alternativas antes do veredito (seção 4).\par\smallskip{\footnotesize Resumo, p. 280} & As explicações avaliadas pertencem apenas a acertos; isso não estima sua qualidade em falhas.\\
+\addlinespace[5pt]
+13 · NDAA & Experimento exploratório com oito perguntas legislativas.\par\smallskip{\footnotesize Seções 1–2} & Amostra pequena e avaliação automática; ver ressalvas da ficha.\\
+\addlinespace[5pt]
+15 · LegisSearch & Integra grafo de propriedades, metadados legislativos, representações vetoriais e etapas com LLM para apoiar busca e navegação.\par\smallskip{\footnotesize Discussão das limitações} & Autores: o conjunto de referência não ordena as leis relevantes.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
+
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M4 · MATRIZ TEMÁTICA}{Coleção selecionada}{Contexto parlamentar}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
+
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+03 · IPU & Casos de uso e expectativas institucionais para IA parlamentar.\par\smallskip{\footnotesize Introdução; caso 024} & Resultados esperados e métricas propostas não comprovam impacto.\\
+\addlinespace[5pt]
+12 · Pesquisa sobre discurso parlamentar & Organiza trabalhos por abordagem metodológica e aproxima pesquisa política e linguística de corpus.\par\smallskip{\footnotesize seção 3.1, p. 2} & Esses filtros restringem a cobertura.\\
+\addlinespace[5pt]
+14 · Informação e engajamento parlamentar & Distingue acesso à informação institucional, informação sobre atividades e possibilidades de engajamento, comparando Brasil e Reino Unido.\par\smallskip{\footnotesize Resumo} & Análise da ficha: o estudo descreve instituições e tecnologias de seu período.\\
+\addlinespace[5pt]
+19 · Diretrizes de IA em parlamentos & Organiza 40 diretrizes em seis áreas, relacionando governança, direitos, desenho de sistemas e capacitação.\par\smallskip{\footnotesize Diretriz 5.7} & O próprio guia informa ausência de exemplos conhecidos para algumas recomendações.\\
+\addlinespace[5pt]
+45 · IA na organização do conhecimento parlamentar & Mapeia iniciativas e resultados esperados a partir de documentos institucionais.\par\smallskip{\footnotesize Seção 2} & Análise da ficha: descrição documental e resultados esperados não demonstram impacto causal nem desempenho comparativo de RAG.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
+
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M5 · MATRIZ TEMÁTICA}{Coleção selecionada}{Discursos, projeto e responsabilidade}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
+
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+16 · The World Avatar no parlamento & Combina busca vetorial sobre discursos e grafo de conhecimento para explorar conteúdo e metadados parlamentares.\par\smallskip{\footnotesize Discussão} & Análise da ficha: métricas que valorizam referências a discursos podem desfavorecer respostas agregadas corretas.\\
+\addlinespace[5pt]
+17 · Plenário, palanque e estúdio & Relaciona evolução dos pronunciamentos, dinâmica do plenário e comunicação audiovisual por meio de indicadores descritivos.\par\smallskip{\footnotesize Discussão} & Autor: as medidas são descritivas e correlação não implica causação.\\
+\addlinespace[5pt]
+18 · Letras graúdas & Produz uma descrição longitudinal de legibilidade e composição morfossintática, interpretando mudanças no registro discursivo.\par\smallskip{\footnotesize Procedimentos de seleção} & Análise da ficha: legibilidade calculada não mede diretamente compreensão cidadã.\\
+\addlinespace[5pt]
+43 · Design Science em Sistemas de Informação & Articula relevância do problema e rigor da pesquisa em sete diretrizes para Design Science.\par\smallskip{\footnotesize Tabela 1, diretriz 1} & Análise da ficha: construir um protótipo não basta para demonstrar contribuição científica.\\
+\addlinespace[5pt]
+44 · On the Dangers of Stochastic Parrots & Relaciona escala, custos ambientais e financeiros, documentação de dados e efeitos sociais do texto sintético.\par\smallskip{\footnotesize Introdução} & Análise da ficha: argumentos e recomendações não equivalem a estimativas experimentais de erro em todos os modelos.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
+
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M6 · MATRIZ TEMÁTICA}{Coleção selecionada}{Recuperação de evidências}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
+
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+20 · Avaliação em recuperação da informação & Sistematiza coleções de teste, necessidades de informação, julgamentos de relevância e medidas de recuperação, distinguindo-as da utilidade para o usuário.\par\smallskip{\footnotesize Seção 8.1} & Autores: julgar relevância tem custo, e coleções grandes usam avaliações parciais.\\
+\addlinespace[5pt]
+21 · BEIR & Propõe um benchmark heterogêneo para avaliar recuperação fora da distribuição de treinamento.\par\smallskip{\footnotesize Resumo} & Análise da ficha: médias entre coleções ocultam diferenças por domínio.\\
+\addlinespace[5pt]
+22 · Dense Passage Retrieval & Apresenta DPR, com codificadores separados para pergunta e passagem e treinamento supervisionado de suas representações.\par\smallskip{\footnotesize Resumo} & Análise da ficha: disponibilidade de pares supervisionados e distribuição dos dados condicionam os ganhos.\\
+\addlinespace[5pt]
+23 · ColBERT & Propõe interação tardia entre representações de tokens, permitindo pré-computar as representações dos documentos.\par\smallskip{\footnotesize Resumo} & Análise da ficha: múltiplos vetores por documento implicam custos de armazenamento e busca.\\
+\addlinespace[5pt]
+24 · Fusion-in-Decoder & Propõe processar passagens separadamente no codificador e fundir suas representações no decodificador para gerar respostas.\par\smallskip{\footnotesize Resumo} & Análise da ficha: ganhos dependem da arquitetura, treinamento e tarefa.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
+
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M7 · MATRIZ TEMÁTICA}{Coleção selecionada}{RAG e representações}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
+
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+09 · RAG: formulação original & Formaliza RAG-Sequence e RAG-Token, que marginalizam documentos recuperados na geração.\par\smallskip{\footnotesize Resumo, p. 1 do PDF} & A arquitetura treinada do artigo não é idêntica a um pipeline que apenas inclui trechos em prompts de um LLM; os ganhos não são transferíveis automaticamente.\\
+\addlinespace[5pt]
+26 · Panorama de RAG & Sistematiza os paradigmas Naive, Advanced e Modular RAG e as etapas de recuperação, geração e ampliação.\par\smallskip{\footnotesize Resumo} & Análise da ficha: o trecho sobre ARES nesta v1 contém descrição e comparação que precisam ser confrontadas com o artigo primário.\\
+\addlinespace[5pt]
+27 · Revisão abrangente de RAG & Reúne arquitetura, evolução, aplicações e desafios de sistemas que integram recuperação e geração.\par\smallskip{\footnotesize Resumo} & Análise da ficha: enumeração de aplicações e benefícios não demonstra eficácia em todos os domínios.\\
+\addlinespace[5pt]
+28 · Modular RAG & Decompõe sistemas em módulos e operadores, com mecanismos explícitos de roteamento, agendamento e fusão.\par\smallskip{\footnotesize Resumo} & Análise da ficha: a organização conceitual não comprova ganho automático ao adicionar módulos.\\
+\addlinespace[5pt]
+29 · Embeddings na era dos LLMs & Organiza o uso de LLMs para melhorar embeddings, produzir representações e interpretar informação codificada.\par\smallskip{\footnotesize Taxonomia} & Análise da ficha: qualidade depende de tarefa, domínio e idioma.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
+
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M8 · MATRIZ TEMÁTICA}{Coleção selecionada}{Modelos e transferência}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
+
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+25 · Panorama de grandes modelos de linguagem & Reúne características e limitações de famílias de modelos e organiza recursos para sua construção, utilização e ampliação.\par\smallskip{\footnotesize Resumo} & Análise da ficha: a cobertura reflete a versão de fevereiro de 2024 e não equivale a um inventário atualizado.\\
+\addlinespace[5pt]
+30 · A Survey of Large Language Models & Articula pré-treinamento, adaptação, utilização e avaliação de capacidades em um panorama técnico.\par\smallskip{\footnotesize Resumo} & Análise da ficha: conceitos e exemplos refletem a versão de março de 2023.\\
+\addlinespace[5pt]
+31 · Attention Is All You Need & Introduz o Transformer, baseado em atenção, dispensando recorrência e convoluções na arquitetura proposta.\par\smallskip{\footnotesize Resumo} & Análise da ficha: a evidência original é de tradução; não demonstra factualidade, compreensão parlamentar ou eficácia de RAG.\\
+\addlinespace[5pt]
+36 · BERT & Propõe pré-treinamento bidirecional profundo, seguido de adaptação para tarefas de linguagem.\par\smallskip{\footnotesize Resumo} & Análise da ficha: BERT não é um gerador autorregressivo completo nem um recuperador de passagens pronto.\\
+\addlinespace[5pt]
+37 · Exploring the Limits of Transfer Learning & Unifica problemas de linguagem no formato texto-para-texto e apresenta T5 e o corpus C4.\par\smallskip{\footnotesize Resumo} & Análise da ficha: esta leitura focal não reproduz todas as ablações.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
+
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
+\clearpage
+\fichatitulo{M9 · MATRIZ TEMÁTICA}{Coleção selecionada}{Escala, alinhamento e modelos de base}
+As referências são identificadas pelo número da ficha. As linhas aproximam temas; não representam testes equivalentes. O localizador orienta o retorno à fonte; detalhes e recortes estão nas fichas.
+
+{\small\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{29mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Ficha / fonte} & \textbf{Contribuição e localizador} & \textbf{Limite da comparação}\\
+\midrule
+32 · Language Models are Few-Shot Learners & Apresenta GPT-3 e avalia aprendizagem em contexto nas condições zero-shot, one-shot e few-shot.\par\smallskip{\footnotesize Resumo} & Análise da ficha: resultados em benchmarks não asseguram generalização ao domínio parlamentar.\\
+\addlinespace[5pt]
+33 · Scaling Laws for Neural Language Models & Descreve relações empíricas de escala para a perda de entropia cruzada de modelos de linguagem.\par\smallskip{\footnotesize Resumo} & Análise da ficha: tendências empíricas dependem do regime experimental.\\
+\addlinespace[5pt]
+34 · Training Compute-Optimal Large Language Models & Reavalia a alocação ótima de computação, enfatizando crescimento conjunto de modelo e dados.\par\smallskip{\footnotesize Resumo} & Análise da ficha: a comparação depende de dados, treinamento e orçamento.\\
+\addlinespace[5pt]
+35 · Training language models to follow instructions & Combina demonstrações supervisionadas, rankings humanos e aprendizagem por reforço para ajustar modelos de linguagem.\par\smallskip{\footnotesize Resumo} & Autores: persistem erros simples.\\
+\addlinespace[5pt]
+42 · Oportunidades e riscos dos modelos de base & Articula oportunidades e riscos da emergência de capacidades e da homogeneização de componentes tecnológicos.\par\smallskip{\footnotesize Introdução} & Análise da ficha: o relatório não constitui um experimento único que quantifique todos os riscos.\\
+\addlinespace[5pt]
+\bottomrule
+\end{tabularx}}
+
+\campo{Uso da matriz}
+Identificar a função de cada referência na argumentação e voltar ao método original antes de comparar resultados. A seleção contém leituras focais e sete pendências de acesso ou versão.
