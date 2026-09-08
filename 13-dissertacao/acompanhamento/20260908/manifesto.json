@@ -5,7 +5,8 @@
     "revisao_bibliografica_acompanhamento.ipynb",
     "sintese_executiva.md",
     "decisoes_orientador.md",
-    "revisao_bibliografica_acompanhamento.html"
+    "revisao_bibliografica_acompanhamento.html",
+    "comparacao_pre_projeto.md"
   ],
   "fontes_canonicas": [
     "../../fichamentos/dados/inventario.csv",
@@ -14,6 +15,8 @@
     "../../fichamentos/documentacao/AUDITORIA_REVISAO_BIBLIOGRAFICA-2026-09-08.md",
     "../../fichamentos/out/main.pdf",
     "../../texto-Latex/capitulos/02-referencial-teorico.tex",
-    "../../texto-Latex/capitulos/03-trabalhos-relacionados.tex"
+    "../../texto-Latex/capitulos/03-trabalhos-relacionados.tex",
+    "../../fichamentos/dados/inventario-adicional.csv",
+    "../../fichamentos/dados/inventario-completo.csv"
   ]
 }

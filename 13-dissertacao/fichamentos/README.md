@@ -18,7 +18,9 @@ O `latexmkrc` direciona auxiliares para `aux/` e o PDF para [out/main.pdf](out/m
 
 ## Evidência e rastreabilidade
 
-- `dados/inventario.csv` e `dados/inventario.json`: situação das 52 referências, recortes e arquivos.
+- `dados/inventario.csv` e `dados/inventario.json`: inventário original de 52 referências.
+- `dados/inventario-adicional.csv` e `dados/inventario-adicional.json`: oito fontes incorporadas após o pré-projeto.
+- `dados/inventario-completo.csv` e `dados/inventario-completo.json`: visão unificada de 60 registros, com `origem_selecao`.
 - `fontes/manifesto.json`: versões consultadas, URLs, hashes e escopos.
 - `fontes/*.preflight.json`: inspeção estrutural dos PDFs; não certifica conteúdo científico.
 - `fontes/lote-*-excertos.json`: cotejo literal, normalizando espaços, ligaturas e hifenização de linhas.
