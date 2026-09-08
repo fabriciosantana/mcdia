@@ -13,7 +13,7 @@ O documento contém nove seções principais, na ordem de inclusão em `main.tex
 | 1. Introdução | `01-introducao.tex` | Texto desenvolvido, com pergunta e seis objetivos específicos; alinhamento final e sustentação da lacuna pendentes. |
 | 2. Referencial teórico | `02-referencial-teorico.tex` | Texto desenvolvido e atualizado com oito fontes adicionais; revisão de coerência final pendente. |
 | 3. Trabalhos relacionados | `03-trabalhos-relacionados.tex` | Comparação crítica inicial redigida com as fontes prioritárias e três referências de apoio; quadro comparativo auditável e revisão final pendentes. |
-| 4. Hipóteses do estudo | `04-hipoteses-de-trabalho.tex` | H1, H2 e H3 formuladas; critérios operacionais de interpretação pendentes. |
+| 4. Hipóteses do estudo | `04-hipoteses-de-trabalho.tex` | H1, H2 e H3 formuladas e operacionalizadas; dimensionamento amostral e execução pendentes. |
 | 5. Metodologia | `04-procedimentos-metodologicos.tex` | Constituição e análise do corpus descritas como realizadas; etapas experimentais planejadas. |
 | 6. Artefato e caso empírico | `05-artefato-e-caso-empirico.tex` | Estrutura com `TODO`; já há evidências para redigir a caracterização do corpus. |
 | 7. Resultados | `06-resultados.tex` | Estrutura com `TODO`; depende da execução experimental final. |
@@ -44,14 +44,14 @@ A entrega bibliográfica é a prioridade imediata indicada pelo pesquisador. As 
 
 - [~] Conferir metadados institucionais. Título, subtítulo e orientador (Prof. Dr. Marcelo Rodrigo de Souza Pita) estão preenchidos em `config/dados.tex`, assim como o ano de 2027; área, linha de pesquisa, data de defesa e banca permanecem pendentes. Preenchimento não equivale à confirmação do calendário.
 - [~] Revisar alinhamento entre pergunta, objetivo geral, seis objetivos específicos, hipóteses e matriz metodológica. A metodologia distingue etapas realizadas e planejadas; o alinhamento final depende do protocolo e da avaliação humana.
-- [ ] Definir, para H1, H2 e H3, observações necessárias, medidas e regras de interpretação. Examinar a demonstração de condição necessária em H1 e operacionalizar “inferior de forma consistente”, “concordância parcial” e “divergências suficientes”. Qualquer reformulação das hipóteses depende de decisão editorial explícita.
+- [x] Definir, para H1, H2 e H3, observações necessárias, medidas e regras de interpretação. Foram operacionalizados os contrastes de recuperação/verificabilidade, complexidade e concordância humano--LLM, preservando a possibilidade de qualificação por categoria.
 - [ ] Explicitar como a construção e a avaliação do protocolo concretizam o enquadramento em Design Science Research, retomando a observação do orientador.
 - [ ] Explicitar os critérios de inclusão do corpus: há 14.438 registros com `Casa = Senado Federal` e 1.291 com `Casa = Congresso Nacional`; por tipo de autor, são 13.290 registros de senadores, 365 de deputados e 2.074 de autores externos. Não excluir registros nem alterar o recorte sem decisão documentada.
 - [ ] Distinguir período consultado (01/02/2019 a 31/01/2023) e intervalo observado dos registros (01/02/2019 a 10/01/2023).
 - [~] Definir a versão final do protocolo, os baselines e os critérios de sucesso. BM25, recuperação vetorial e híbrida já estão previstos; faltam configurações, quantidade e distribuição das perguntas, regras de relevância e tratamento das perguntas não respondíveis.
 - [ ] Definir uma referência de avaliação que permita comparação justa entre diferentes segmentações, preservando a ligação entre evidência, trecho e pronunciamento.
-- [ ] Definir rubrica, plano e dimensionamento da avaliação humana, piloto, independência dos julgamentos, tratamento de divergências e análise de concordância.
-- [~] Atualizar e documentar a revisão de literatura. Há 45 fichamentos, matriz temática e síntese de trabalho em documento independente; faltam sete fontes, aprofundamento dos estudos centrais, busca complementar documentada e incorporação da comparação ao capítulo para sustentar a lacuna.
+- [~] Definir rubrica, plano e dimensionamento da avaliação humana, piloto, independência dos julgamentos, tratamento de divergências e análise de concordância. A rubrica 0--2, as cinco dimensões e o piloto estão definidos; faltam dimensionar a amostra e recrutar os avaliadores.
+- [x] Atualizar e documentar a revisão de literatura. Há 53 fichamentos, matriz temática, síntese e quadro comparativo; permanecem pendentes a revisão com o pesquisador e o aprofundamento dos estudos centrais.
 
 ## Fase 2 — congelamento e execução
 
@@ -70,7 +70,7 @@ A entrega bibliográfica é a prioridade imediata indicada pelo pesquisador. As 
 
 ## Fase 3 — capítulos empíricos
 
-- [ ] Fechar a seção 3 (Trabalhos relacionados) com quadro comparativo por corpus, idioma, jurisdição, arquitetura, técnicas de avaliação, participação humana e disponibilidade dos artefatos.
+- [x] Fechar a seção 3 (Trabalhos relacionados) com quadro comparativo inicial por corpus/domínio, foco de avaliação e transferência para o Senado; revisar e ampliar os campos na versão final.
 - [~] Atualizar a seção 5 (Metodologia) conforme os procedimentos forem efetivamente realizados. Constituição e análise exploratória do corpus já foram incorporadas; conferir a reprodução do notebook e preservar o caráter prospectivo das etapas experimentais.
 - [ ] Redigir a caracterização do corpus na seção 6 (Artefato e caso empírico), sem duplicar a descrição dos procedimentos metodológicos.
 - [ ] Completar a seção 6 com arquitetura, preparação documental, configuração final e evolução em relação à prova de conceito, usando apenas configurações confirmadas.

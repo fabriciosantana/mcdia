@@ -2,6 +2,28 @@
 
 Este capítulo posiciona a dissertação diante de estudos que combinam recuperação, geração, avaliação de grounding e uso de acervos jurídicos ou parlamentares. A comparação considera corpus, tarefa, unidade de avaliação, participação humana e transferência para os discursos do Senado.
 
+\begin{table}[H]
+\centering
+\caption{Comparação de estudos diretamente relacionados ao protocolo}
+\label{tab:trabalhos-relacionados}
+\small
+\begin{tabular}{p{2.7cm}p{2.8cm}p{3.1cm}p{2.5cm}}
+\toprule
+Estudo & Corpus/domínio & Foco de avaliação & Transferência para o Senado \\
+\midrule
+ARES & QA em múltiplos domínios & Groundedness, correção e completude & Rubrica geral; requer calibração local \\
+LegalBench-RAG & Questões jurídicas em inglês & Recuperação e resposta fundamentada & Alta proximidade jurídica; baixa proximidade institucional \\
+Trautmann et al. & QA jurídico & Groundedness por similaridade, NLI e LLM & Base para fidelidade ao contexto \\
+RAGTruth & Respostas RAG em vários domínios & Alucinação em nível de caso e palavra & Taxonomia de erros; idioma não parlamentar \\
+Zhang et al. & Texto gerado com citações & Suporte completo, parcial ou ausente & Base para verificabilidade graduada \\
+GaRAGe & QA com passagens anotadas & Grounding relevante e deflexão & Base para perguntas não respondíveis \\
+Reuter et al. & Grandes bases jurídicas & Erro no nível do documento e chunking & Hipótese de erro documental a testar \\
+eRAG & Três conjuntos de QA & Utilidade downstream de cada documento & Liga recuperação ao desempenho da resposta \\
+GroUSE & QA fundamentado controlado & Meta-avaliação por testes unitários & Calibra o LLM-as-a-judge \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Sistemas RAG nos domínios jurídico, legislativo e parlamentar}
 
 Aplicações legislativas e parlamentares existentes cobrem tarefas distintas. KamerRaad e Talk to the NDAA exploram interfaces de consulta em debates e legislação; RAGAR trata verificação política; LexDrafter trata terminologia legislativa; e LegalBench-RAG organiza evidência jurídica. Essas fontes demonstram a variedade de tarefas, mas não formam um benchmark comum. LegisSearch e o sistema do World Avatar acrescentam grafos, metadados e consultas relacionais. A dissertação se diferencia por avaliar um acervo real de discursos do Senado brasileiro, com perguntas e critérios definidos para recuperação, geração e verificabilidade.
