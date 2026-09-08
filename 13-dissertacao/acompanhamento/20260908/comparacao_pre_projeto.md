@@ -16,4 +16,7 @@ A comparação também considerou o PDF revisado em `revisao-pre-projeto/`. Ele 
 
 ## Organização dos lotes
 
-O antigo lote 0 de pilotos não é uma categoria temática. ARES foi reclassificada em “avaliação e aplicações”; KamerRaad e IPU foram reclassificadas em “contexto e aplicações”. O uso dessas três fontes na etapa piloto permanece registrado nas observações do inventário.
+O antigo lote 0 de pilotos não é uma categoria temática. As oito fontes pós-pré-projeto foram classificadas no lote “avaliação de RAG e benchmarks”. ARES foi reclassificada em “avaliação de RAG e benchmarks”; KamerRaad e IPU foram reclassificadas em “contexto legislativo e aplicações parlamentares”. O uso dessas três fontes na etapa piloto permanece registrado nas observações do inventário.
+
+
+A antiga classe “recuperação e metodologia” foi dividida em “recuperação da informação e engenharia de busca” e “metodologia de pesquisa e desenho do estudo”, para separar fundamentos técnicos de referências de desenho metodológico.
