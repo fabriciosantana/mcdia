@@ -1,0 +1,361 @@
+                                         Evaluating Retrieval Quality in Retrieval-Augmented Generation
+                                                                           Alireza Salemi                                                                  Hamed Zamani
+                                                            University of Massachusetts Amherst                                                University of Massachusetts Amherst
+                                                                Amherst, MA, United States                                                         Amherst, MA, United States
+                                                                   asalemi@cs.umass.edu                                                               zamani@cs.umass.edu
+                                         ABSTRACT                                                                                    it ensures the effectiveness of integrating retrieval-based methods
+                                         Evaluating retrieval-augmented generation (RAG) presents chal-                              with generative models [10, 23]. Traditionally, RAG evaluation has
+                                         lenges, particularly for retrieval models within these systems. Tra-                        primarily relied on end-to-end assessment, which entails compar-
+                                         ditional end-to-end evaluation methods are computationally expen-                           ing the generated output with one or more ground truth references
+                                                                                                                                     [20]. While this is crucial, it presents several limitations, especially,
+arXiv:2404.13781v1 [cs.CL] 21 Apr 2024
+
+
+
+
+                                         sive. Furthermore, evaluation of the retrieval model’s performance
+                                         based on query-document relevance labels shows a small correla-                             for evaluating retrieval models in RAG systems.
+                                         tion with the RAG system’s downstream performance. We propose                                   First, end-to-end evaluation lacks transparency regarding which
+                                         a novel evaluation approach, eRAG, where each document in the                               retrieved document contributed to the generated output, hindering
+                                         retrieval list is individually utilized by the large language model                         interpretability of the system’s behavior. Secondly, it is resource-
+                                         within the RAG system. The output generated for each document is                            intensive, consuming significant time and computational power,
+                                         then evaluated based on the downstream task ground truth labels.                            particularly when dealing with a large set of retrieval results con-
+                                         In this manner, the downstream performance for each document                                sumed by the LLM. To process long input sequences resulting from
+                                         serves as its relevance label. We employ various downstream task                            the utilization of all retrieved documents by the LLM, GPUs with
+                                         metrics to obtain document-level annotations and aggregate them                             substantial memory capacities are essential for end-to-end evalu-
+                                         using set-based or ranking metrics. Extensive experiments on a                              ation. Moreover, many ranking systems rely on interleaving (i.e.,
+                                         wide range of datasets demonstrate that eRAG achieves a higher                              replacing one or more documents in the result list) for evaluation
+                                         correlation with downstream RAG performance compared to base-                               and optimization, which further complicates the evaluation, as
+                                         line methods, with improvements in Kendall’s 𝜏 correlation ranging                          slight variations in retrieval results necessitate re-computation of
+                                         from 0.168 to 0.494. Additionally, eRAG offers significant compu-                           the RAG pipeline. Finally, optimizing ranking models often requires
+                                         tational advantages, improving runtime and consuming up to 50                               document-level feedback, such as user clicks [3, 6]. However, end-
+                                         times less GPU memory than end-to-end evaluation.                                           to-end evaluation only provides list-level feedback for the retrieval
+                                                                                                                                     results. That said, this paper studies retrieval evaluation in RAG.
+                                         CCS CONCEPTS                                                                                    Human annotations can be a potential solution for evaluating
+                                                                                                                                     retrieval models in RAG, however, accurate annotations are often
+                                         • Computing methodologies → Natural language generation;
+                                                                                                                                     challenging and costly to obtain. More recently, with the emergence
+                                         • Information systems → Evaluation of retrieval results.
+                                                                                                                                     of large language models (LLMs) and their advanced capabilities
+                                                                                                                                     in reasoning and text comprehension, they have been utilized to
+                                         KEYWORDS
+                                                                                                                                     annotate documents for retrieval evaluation [10, 23]. Nevertheless,
+                                         Evaluation; Retrieval Quality; Retrieval-Augmented Generation                               these approaches predominantly evaluate the retriever in RAG sys-
+                                         ACM Reference Format:                                                                       tems based on human preferences, whereas the primary objective
+                                         Alireza Salemi and Hamed Zamani. 2024. Evaluating Retrieval Quality in                      of the retrieval model in RAG is to serve the LLM that leverages
+                                         Retrieval-Augmented Generation. In Proceedings of the 47th Int’l ACM SIGIR                  the retrieved results [35]. That said, our extensive investigation on
+                                         Conference on Research and Development in Information Retrieval (SIGIR ’24),                a diverse set of RAG systems for open-domain question answer-
+                                         July 14–18, 2024, Washington, DC, USA. ACM, New York, NY, USA, 6 pages.                     ing, fact verification, and dialogue systems reveals that employing
+                                         https://doi.org/10.1145/nnnnnnn.nnnnnnn
+                                                                                                                                     human annotations, such as the provenance labels in the KILT bench-
+                                                                                                                                     mark [20], for evaluating the retrieval models within a RAG system
+                                         1     INTRODUCTION                                                                          exhibits only a minor correlation with the downstream RAG per-
+                                         Retrieval-augmented generation (RAG) has emerged as a prominent                             formance. This indicates a lack of meaningful relationship between
+                                         approach in natural language processing, combining the strengths                            the evaluated metrics and the downstream performance of RAG.
+                                         of retrieval and generation models [35], with use cases in decreas-                             In this paper, we propose eRAG, a new approach for evaluating
+                                         ing hallucination [1, 29], knowledge-grounding [9, 16, 34], and                             retrievers in RAG systems, where we apply the LLM in RAG system
+                                         personalization [25, 26]. Evaluating RAG systems is important as                            on each document in the retrieval result list individually and use
+                                                                                                                                     the LLM’s output to provide document-level annotations. These
+                                         Permission to make digital or hard copies of part or all of this work for personal or
+                                         classroom use is granted without fee provided that copies are not made or distributed
+                                                                                                                                     annotations can be obtained using any arbitrary downstream task
+                                         for profit or commercial advantage and that copies bear this notice and the full citation   metric, such as accuracy, exact match, or ROUGE [17]. We can then
+                                         on the first page. Copyrights for third-party components of this work must be honored.      apply a set-based or ranking metric as an aggregation function to
+                                         For all other uses, contact the owner/author(s).
+                                         SIGIR ’24, July 14–18, 2024, Washington, DC, USA.
+                                                                                                                                     obtain a single evaluation score for each retrieval result list.
+                                         © 2024 Copyright held by the owner/author(s).                                                   We evaluate our proposed approach on question answering, fact-
+                                         ACM ISBN 978-x-xxxx-xxxx-x/YY/MM.                                                           checking, and dialogue generation from the knowledge-intensive
+                                         https://doi.org/10.1145/nnnnnnn.nnnnnnn
+SIGIR ’24, July 14–18, 2024, Washington, DC, USA.                                                                         Alireza Salemi and Hamed Zamani
+
+
+language tasks (KILT) benchmark [20]. Our results demonstrate that       where 𝑦 is the expected downstream output for the query. We can
+our proposed approach achieves the highest correlation with the          employ the created G𝑞 to utilize any ranking metric to evaluate R.
+downstream performance of the RAG system in comparison with                 Note that the runtime cost of a vanilla transformer [32] scales
+the baselines. Specifically, we observe an absolute improvement in       quadratically with its input length. Consequently, for end-to-end
+Kendall’s tau correlation ranging between 0.168 and 0.494 across the     evaluation, the cost of running a transformer on a ranked list with
+evaluated datasets. Furthermore, we investigate the impact of differ-    𝑘 documents, with an average length of 𝑑, to generate an output
+ent retrieval augmentation methods, the quantity of retrieved docu-      with length 𝑙 is 𝑂 (𝑙𝑘 2𝑑 2 ). Conversely, in our approach, as each
+ments, and the LLM size on correlation. Finally, we demonstrate that     document is individually fed to the LLM for k times, the cost is
+our approach offers significant computational advantages, consum-        𝑂 (𝑙𝑘𝑑 2 ), proving to be more efficient than end-to-end evaluation.
+ing up to 50 times less memory compared to end-to-end evaluation.
+                                                                         Retrieval Evaluation Metrics. For a ranked list R𝑘 , comprising
+To facilitate research in this domain, we make eRAG’s implementa-
+                                                                         𝑘 retrieved documents generated by a retrieval model R, an evalua-
+tion publicly available at: https://github.com/alirezasalemi7/eRAG.
+                                                                         tion metric E R assigns a score E R (R𝑘 , G𝑞 ) ∈ [0, 1], by comparing
+                                                                         the ranked list with the relevance scores G𝑞 , which is a function that
+2    EVALUATING RETRIEVERS IN RAG
+                                                                         maps each document to a scalar relevance score for the document
+Generally, two predominant methods are used for obtaining rele-          with respect to the query 𝑞 (i.e., G𝑞 (𝑑) = 𝑠𝑑 ). Various definitions ex-
+vance labels for retrieval evaluation. The first approach involves       ist for the evaluation metric E R ; in this paper, we examine Precision
+human judgment to assess the relevance of a query to documents           (P), Recall (R), Mean Average Precision (MAP), Mean Reciprocal
+within a corpus. The main issue with this approach is that human         Rank (MRR) [2], Normalized Discounted Cumulative Gain (NDCG)
+annotation can be costly and is often impractical for evaluating all     [11], and Hit Rate. Note that when dealing with non-binary rele-
+documents in a corpus [28]. Moreover, human annotation relies            vance labels, precision considers the average value of relevance
+on human preferences to judge the relevance of documents to a            labels, while Hit Ratio considers the maximum value among them.
+query. However, a document deemed relevant based on human
+preferences may not be useful for an LLM in fulfilling its task.         3 EXPERIMENTS
+   The second approach utilizes the downstream ground truth out-
+put associated with the query to provide weak relevance labels.          3.1 Setup
+In this method, a retrieved document containing the downstream           Datasets and Evaluation. We use Natural Questions (NQ) [15],
+ground truth is considered relevant [8, 14, 24, 27]. This method also    TriviaQA [13], HotpotQA [33], FEVER [31], and Wizard of Wikipedia
+presents its own challenges. This approach is impractical, partic-       (WoW) [4] datasets from the KILT [20] benchmark. Due to the un-
+ularly in scenarios where the task involves long-text generation         availability of ground truth labels for the test set, we utilize the
+or text classification, as downstream task labels might not exist        publicly accessible validation set. As the retrieval corpus, we employ
+within documents. Also, one document can be useful for an LLM            the Wikipedia dump of the KILT benchmark and adhere to the pre-
+in fulfilling its task without containing the ground truth labels.       processing outlined by Karpukhin et al. [14], where each document
+   Even though we are not aware any work that use LLMs for               is segmented into passages, each constrained to a maximum length
+evaluating retrieval models in RAG, LLMs can be leveraged to la-         of 100 words. The concatenation of the article title and passage
+bel documents based on their relevance to a query. Inspired by           is used as a document. The KILT benchmark furnishes document-
+Thomas et al. [30], the LLM functions as a binary classifier, indi-      level relevance labels (called Provenance) for its datasets, and these
+cating whether a document is relevant to the query or not. The           are employed for evaluating retrieval performance. In line with
+mentioned challenges persist even with the judgment of LLMs, espe-       our preprocessing method, we define all passages within a positive
+cially if the LLM responsible for labeling differs from the LLM in the   document as positive passages for our evaluation. For relevance
+RAG pipeline. Besides, employing LLMs as judges in this scenario         evaluation using an LLM, we employ Mistral1 [12] to annotate each
+can pose challenges due to the computational cost of running them        document within the retrieved list, determining whether it is rele-
+on a large set of retrieved documents and memory constraints.            vant to the query or not. We adopt the metrics recommended by
+   To mitigate these problems, we propose eRAG, a novel approach         the KILT benchmark, namely Exact Match (EM) for NQ, TriviaQA,
+that involves utilizing the LLM in RAG system itself as the arbiter      and HotpotQA, Accuracy for FEVER, and F1 for the WoW dataset.
+for generating labels to evaluate the retrieval model.
+                                                                         Experiments Configuration. In all experiments, unless explicitly
+Using Downstream Large Language Model in RAG as Doc-                     stated otherwise, we employ T5-small [21] with Fusion-in-Decoder
+ument Annotator. Consider a retrieval model R that produces              (FiD) [9] as the LLM. We employ AdamW [19] with a weight decay
+a ranked list R𝑘 with 𝑘 documents for the LLM M tasked with              of 10 −2 and a learning rate of 5 × 10 −5 for 10 epochs, incorporating
+performing a specific task, utilizing a downstream evaluation func-      linear warmup for the initial 5% of training steps. The effective
+tion E M . The LLM M takes a ranked list of documents as its input       batch size is set to 64. Each model is trained using an A100 Nvidia
+along with the query 𝑞, and generates an output represented as           GPU. For document retrieval during training, we utilize BM25 [22]
+𝑦¯ = M (𝑞, R𝑘 ). For the documents in R𝑘 , we feed each document in-     implemented in Pyserini [18] to retrieve 50 documents to augment
+dividually to the LLM M with the query and evaluate the generated        the input with them. For fast vector search in dense retrieval with
+answer to create the label for each document, expressed as:              Contriever2 [7], we use Faiss [5] flat index.
+                                                                         1 https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2
+
+              G𝑞 [𝑑] = E M (M (𝑞, {𝑑 }), 𝑦)         :   ∀𝑑 ∈ R𝑘   (1)    2 https://huggingface.co/facebook/contriever
+Evaluating Retrieval Quality in Retrieval-Augmented Generation                                                                           SIGIR ’24, July 14–18, 2024, Washington, DC, USA.
+
+
+Table 1: The correlation between each evaluation approach and the downstream performance of the LLM. T5-small with FiD
+with 50 retrieved documents is used. We do not report correlation for the Answers method for FEVER and WOW datasets
+because the answers to queries do not exist in the document since FEVER is a classification dataset and WoW is long-text
+generation. For the WoW dataset, we only report correlation on Precision and Hit Ratio because other metrics do not support
+non-integer relevance labels. Tau is Kendall’s tau and rho is Spearman’s rho.
+                                                                       BM25                                                                        Contriever
+  Relevance
+  Annotation       Metric          NQ             TriviaQA          HotpotQA            FEVER           WoW             NQ         TriviaQA        HotpotQA          FEVER           WoW
+                               tau    rho        tau     rho       tau    rho        tau    rho      tau   rho      tau    rho    tau     rho     tau     rho     tau    rho      tau   rho
+                   MAP        0.349 0.417       0.298 0.364       0.359 0.423         -       -       -      -     0.303 0.366   0.265 0.325     0.379 0.429       -       -       -      -
+                   MRR        0.361 0.417       0.313 0.340       0.398 0.449         -       -       -      -     0.301 0.353   0.257 0.292     0.384 0.430       -       -       -      -
+  Containing
+                  NDCG        0.357 0.427       0.298 0.365       0.370 0.435         -       -       -      -     0.313 0.378   0.270 0.331     0.385 0.437       -       -       -      -
+     the
+   Answer            P        0.353 0.411       0.276 0.333       0.396 0.454         -       -       -      -     0.346 0.403   0.283 0.340     0.406 0.449       -       -       -      -
+                     R        0.325 0.325       0.232 0.232       0.375 0.375         -       -       -      -     0.319 0.319   0.215 0.215     0.401 0.401       -       -       -      -
+                 Hit Ratio    0.325 0.325       0.232 0.232       0.375 0.375         -       -       -      -     0.319 0.319   0.215 0.215     0.401 0.401       -       -       -      -
+                   MAP        0.181 0.218       0.142 0.172       0.007 0.009       0.026 0.032     0.015 0.021    0.161 0.196   0.113 0.137     0.128 0.155     0.045 0.056     0.055 0.080
+                   MRR        0.177 0.205       0.151 0.175       0.074 0.080       0.036 0.040     0.013 0.017    0.152 0.173   0.120 0.136     0.151 0.169     0.045 0.049     0.059 0.081
+     KILT         NDCG        0.179 0.216       0.142 0.172       0.021 0.026       0.029 0.036     0.013 0.019    0.159 0.193   0.115 0.140     0.134 0.162     0.045 0.056     0.056 0.081
+  Provenance         P        0.163 0.192       0.140 0.165       0.139 0.164       0.043 0.051     0.011 0.015    0.131 0.157   0.108 0.130     0.181 0.215     0.033 0.040    0.045 0.064
+                     R        0.216 0.216       0.187 0.187       0.113 0.113       0.050 0.050     0.019 0.023    0.157 0.157   0.135 0.135     0.163 0.163     0.038 0.038    0.056 0.068
+                 Hit Ratio    0.216 0.216       0.187 0.187       0.113 0.113      0.050 0.050      0.019 0.023    0.157 0.157   0.135 0.135     0.163 0.163     0.038 0.038    0.056 0.068
+                   MAP        0.045 0.055       0.176 0.216       0.034 0.042      0.018 0.022     -0.005 -0.008   0.032 0.039   0.174 0.213     0.051 0.063     0.021 0.026    -0.002 -0.003
+  Relevance        MRR        0.060 0.062       0.189 0.196       0.001 0.001      -0.021 -0.022   -0.008 -0.011   0.048 0.050   0.143 0.151     0.034 0.038    -0.007 -0.007   0.004 0.005
+ Annotation       NDCG        0.049 0.060       0.178 0.218       0.032 0.039      0.018 0.022     -0.006 -0.009   0.036 0.044   0.175 0.214     0.049 0.060     0.022 0.028    0.000 0.000
+  with LLM           P        0.028 0.034       0.137 0.166      -0.004 -0.006     0.021 0.025     -0.005 -0.008   0.002 0.003   0.138 0.167     0.010 0.013     0.014 0.017    -0.006 -0.010
+ (Mistral 7B)        R        0.014 0.014       0.032 0.032      -0.016 -0.016     0.019 0.019     0.003 0.003     0.000 0.000   0.039 0.039    -0.042 -0.042   -0.017 -0.017   0.017 0.021
+                 Hit Ratio    0.014 0.014       0.032 0.032      -0.016 -0.016     0.019 0.019     0.003 0.003     0.000 0.000   0.039 0.039    -0.042 -0.042   -0.017 -0.017   0.017 0.021
+                   MAP        0.492 0.575       0.474 0.578      0.610 0.694       0.386 0.463        -      -     0.467 0.544   0.427 0.519    0.634 0.705      0.399 0.479       -      -
+                   MRR        0.503 0.577       0.486 0.553      0.629 0.695       0.592 0.611        -      -     0.466 0.537   0.424 0.495    0.639 0.698     0.481 0.504        -      -
+   eRAG           NDCG        0.505 0.590       0.486 0.592      0.612 0.697       0.404 0.484        -      -     0.481 0.560   0.440 0.536     0.635 0.705     0.403 0.484       -      -
+ Annotations         Pa       0.529 0.598       0.484 0.577      0.594 0.663       0.329 0.391     0.504 0.669     0.522 0.586   0.482 0.571    0.633 0.695      0.378 0.449    0.540 0.712
+                     R        0.519 0.519       0.426 0.426      0.619 0.619       0.301 0.301        -      -     0.488 0.488   0.408 0.408    0.631 0.631      0.299 0.299       -      -
+                 Hit Ratiob   0.519 0.519       0.426 0.426      0.619 0.619       0.301 0.301     0.390 0.532     0.488 0.488   0.408 0.408    0.631 0.631     0.299 0.299     0.414 0.561
+a For non-integer relevance labels, precision is equal to average of the relevance labels.
+b For non-integer relevance labels, hit ratio is equal to maximum of the relevance labels.
+
+
+
+3.2      Main Findings
+How do different retrieval evaluation methods correlate with
+the end-to-end downstream performance in RAG?. To com-
+pare the different evaluation strategies for evaluating retriever in
+RAG, we report the correlation between the scores generated for
+each method and the downstream performance of the LLM (i.e.,
+T5-small with FiD and 50 retrieved documents) in Table 1. The
+results indicate that eRAG attains the highest correlation compared                                     Figure 1: The correlation between evaluation approaches
+to other evaluation approaches. Furthermore, the results show that                                      and the LLM’s downstream performance varying number
+regardless of the retrieval model employed, eRAG consistently out-                                      of retrieved documents by BM25. T5-small with FiD is used.
+performs others in terms of correlation with the LLM’s downstream                                       The metric with the highest correlation in Table 1 is used.
+performance. Interestingly, the most common approaches, KILT
+Provenance and Annotation with LLMs, that are, document-level                                           our suggested evaluation strategy consistently exhibits a higher
+relevance labels and using LLMs to assign a relevance label to each                                     correlation with the downstream performance of the LLM. Further-
+retrieved document, have the lowest correlation with the down-                                          more, the results illustrate that augmenting the number of retrieved
+stream performance of the LLM. This finding confirms that the                                           documents leads to a decline in correlation—a intuitive observation,
+LLM as the consumer of the retrieved results in RAG is the best                                         as all metrics assess each document-relevance label independently
+judge for the performance of the retrieval model.                                                       for scoring a ranked list, while the LLM uses information from the
+                                                                                                        entirety of these documents to accomplish its task.
+How do different retrieval evaluation methods in RAG per-                                               How does our method correlate with the downstream RAG
+form as the size of retrieval results increases? To address this,                                       performance as the size of large language models increases?
+we varied the number of retrieved documents and computed the                                            In addressing this question, we computed the correlation between
+correlation between the metric with highest correlation for each                                        our retrieval evaluation strategy and the downstream performance
+method in Table 1 at each specified number of retrieved documents                                       of the LMs with two distinct sizes (i.e., T5-small with FiD consisting
+and the downstream performance of the LLM given that number                                             of 60M and T5-base with FiD consisting of 220M parameters). For
+of retrieved documents. For the sake of space, we limit our exper-                                      the sake of space, we limit our experiments to three datasets: NQ
+iments to three datasets: NQ for question answering, FEVER for                                          for question answering, FEVER for fact-checking, and WoW for
+fact-checking, and WoW for long-text generation. The results of                                         long-text generation. The results illustrated in Figure 2 indicate that,
+this experiment are shown in Figure 1. The outcomes of this experi-                                     for certain datasets, there is a higher correlation with the smaller
+ment reveal that irrespective of the quantity of retrieved documents,                                   LLM, while for others, a higher correlation is observed with the
+SIGIR ’24, July 14–18, 2024, Washington, DC, USA.                                                                    Alireza Salemi and Hamed Zamani
+
+
+                                                                          Table 2: The runtime and memory consumption of eRAG in
+                                                                          comparison with end-to-end evaluation. T5-small with FiD,
+                                                                          consuming 50 documents is used.
+                                                                                           Runtime (GPU)            Memory Consumption (GPU)
+                                                                               Dataset
+                                                                                           E2E       eRAG       E2E   eRAG-Query eRAG-Document
+                                                                                 NQ      918 sec    351 sec   75.0 GB   4.9 GB          1.5 GB
+                                                                              TriviaQA   1819 sec 686 sec     46.2 GB   5.4 GB          1.5 GB
+                                                                              HotpotQA   1844 sec 712 sec     52.4 GB   5.5 GB          1.5 GB
+                                                                               FEVER     3395 sec 1044 sec    66.5 GB   4.1 GB          1.5 GB
+Figure 2: The correlation between eRAG and the downstream                       WoW      912 sec    740 sec   47.9 GB   6.5 GB          1.5 GB
+performance of different LLM sizes. In this experiment, T5-
+small (60M parameters) and T5-base (220M parameters) with
+FiD are used. The documents are retrieved using BM25.                     utilization of the entire GPU memory. The results of this experiment
+                                                                          are reported in Table 2. The findings indicate that, on average, eRAG
+                                                                          is 2.468 times faster than end-to-end evaluation. Further elaborating,
+                                                                          the speedup for eRAG ranges from 1.232 to 3.252 times compared to
+                                                                          end-to-end evaluation across the datasets, where the least speedup
+                                                                          is for the long-text generation task (i.e., WoW).
+                                                                              To compare memory consumption between eRAG and end-to-
+                                                                          end evaluation, we conducted two experiments. First, we compared
+                                                                          the maximum memory required by end-to-end evaluation to assess
+Figure 3: The correlation between eRAG and the downstream                 a query with the maximum memory demanded by eRAG for the
+performance of FiD and IPA LLMs. T5-small with 10 docu-                   same evaluation. To carry out this comparison, we configured the
+ments retrieved by BM25 is used. The number of documents                  batch size for end-to-end evaluation to 1, while for eRAG, we set
+is chosen based on the limitations of the input size in IPA.              it to the same number of documents used for one query by end-
+                                                                          to-end evaluation (we call this query-level configuration). In the
+larger model. Nonetheless, in none of the cases is there a significant    subsequent experiments, we set both batch sizes to 1 to assess the
+difference between the correlations, suggesting that the proposed         extent to which eRAG demonstrates superior memory efficiency
+approach is effective regardless of the LLM size.                         compared to end-to-end evaluation under the most efficient con-
+                                                                          figuration (we call this document-level configuration). The results
+How does different retrieval-augmentation approaches af-                  of these experiments are reported in Table 2. The findings indi-
+fect the correlation between eRAG and the downstream RAG                  cate that in the query-level configuration, eRAG exhibits between
+performance? We applied eRAG to two LLMs. One LLM utilizes                7 to 15 times greater memory efficiency compared to end-to-end
+In-Prompt Augmentation (IPA), where the retrieved results are ap-         evaluation. Furthermore, in the document-level configuration, this
+pended to the input of the LLM. The other LLM employs Fusion-in-          efficiency gap widens, with eRAG demonstrating 30 to 48 times
+Decoder (FiD) [9], wherein each retrieved document is individually        more memory efficiency than end-to-end evaluation across differ-
+processed by the encoder, and subsequently, the representations           ent dataset. In summary, these experiments suggest that eRAG is
+for all documents are concatenated together and fed to the decoder.       more efficient than end-to-end evaluation of a vanilla transformer,
+For the sake of space, we limit our experiments to NQ for question        excelling in both inference time and memory utilization.
+answering, FEVER for fact-checking, and WoW for long-text gen-
+eration. The correlation between eRAG and the outputs of each
+LLM is illustrated in Figure 3. Interestingly, the results suggest that   4      CONCLUSION
+although there is no significant difference between the correlation       This paper explores various approaches for evaluating retrieval
+of eRAG with IPA and FiD LLMs, eRAG consistently exhibits a               models within a RAG pipeline. Additionally, it introduces eRAG, a
+higher correlation with the FiD. This observation can be elucidated       novel approach for evaluating retrieval models in the RAG pipeline.
+by considering the distinction between IPA and FiD methodologies.         eRAG leverages the per-document performance of the LLM on the
+In IPA, all documents are concatenated together and then presented        downstream task to generate relevance labels. The findings suggest
+as a single input to the LLM. In contrast, FiD processes each docu-       that the proposed approach exhibits significantly higher correlation
+ment individually by feeding them separately to the LLM’s encoder.        with the downstream performance of the LLM. Furthermore, eRAG
+Given that our approach aligns more closely with FiD, we believe          demonstrates greater efficiency than end-to-end evaluation in terms
+this alignment is a contributing factor to the higher correlation         of both memory consumption and inference time.
+between eRAG and the downstream performance of FiD.
+How much more efficient is eRAG compared to the end-to-                   ACKNOWLEDGMENT
+end evaluation? Here, we consider two factors: inference time             This work was supported in part by the Center for Intelligent In-
+and memory consumption. For inference time, we compare the total          formation Retrieval, in part by Lowe’s, and in part by an Amazon
+time required for end-to-end evaluation to generate scores with the       Research Award, Fall 2022 CFP. Any opinions, findings and conclu-
+total time used by eRAG. In this experiment, we opt for the batch         sions or recommendations expressed in this material are those of
+size of each approach to be as large as possible, maximizing the          the authors and do not necessarily reflect those of the sponsor.
+Evaluating Retrieval Quality in Retrieval-Augmented Generation                                                                 SIGIR ’24, July 14–18, 2024, Washington, DC, USA.
+
+
+REFERENCES                                                                                  [18] Jimmy Lin, Xueguang Ma, Sheng-Chieh Lin, Jheng-Hong Yang, Ronak Pradeep,
+ [1] Garima Agrawal, Tharindu Kumarage, Zeyad Alghami, and Huan Liu.                             and Rodrigo Nogueira. 2021. Pyserini: A Python Toolkit for Reproducible In-
+     2023. Can Knowledge Graphs Reduce Hallucinations in LLMs? : A Survey.                       formation Retrieval Research with Sparse and Dense Representations. In Pro-
+     arXiv:2311.07914 [cs.CL]                                                                    ceedings of the 44th International ACM SIGIR Conference on Research and De-
+ [2] Nick Craswell. 2009. Mean Reciprocal Rank. Springer US, Boston, MA, 1703–1703.              velopment in Information Retrieval (Virtual Event, Canada) (SIGIR ’21). Asso-
+     https://doi.org/10.1007/978-0-387-39940-9_488                                               ciation for Computing Machinery, New York, NY, USA, 2356–2362. https:
+ [3] Romain Deffayet, Philipp Hager, Jean-Michel Renders, and Maarten de Rijke. 2023.            //doi.org/10.1145/3404835.3463238
+     An Offline Metric for the Debiasedness of Click Models. In Proceedings of the 46th     [19] Ilya Loshchilov and Frank Hutter. 2019. Decoupled Weight Decay Regularization.
+     International ACM SIGIR Conference on Research and Development in Information               In International Conference on Learning Representations. https://openreview.net/
+     Retrieval (, Taipei, Taiwan,) (SIGIR ’23). Association for Computing Machinery,             forum?id=Bkg6RiCqY7
+     New York, NY, USA, 558–568. https://doi.org/10.1145/3539618.3591639                    [20] Fabio Petroni, Aleksandra Piktus, Angela Fan, Patrick Lewis, Majid Yazdani,
+ [4] Emily Dinan, Stephen Roller, Kurt Shuster, Angela Fan, Michael Auli, and Jason              Nicola De Cao, James Thorne, Yacine Jernite, Vladimir Karpukhin, Jean Mail-
+     Weston. 2019. Wizard of Wikipedia: Knowledge-Powered Conversational Agents.                 lard, Vassilis Plachouras, Tim Rocktäschel, and Sebastian Riedel. 2021. KILT: a
+     In International Conference on Learning Representations. https://openreview.net/            Benchmark for Knowledge Intensive Language Tasks. In Proceedings of the 2021
+     forum?id=r1l73iRqKm                                                                         Conference of the North American Chapter of the Association for Computational
+ [5] Matthijs Douze, Alexandr Guzhva, Chengqi Deng, Jeff Johnson, Gergely Szilvasy,              Linguistics: Human Language Technologies, Kristina Toutanova, Anna Rumshisky,
+     Pierre-Emmanuel Mazaré, Maria Lomeli, Lucas Hosseini, and Hervé Jégou. 2024.                Luke Zettlemoyer, Dilek Hakkani-Tur, Iz Beltagy, Steven Bethard, Ryan Cotterell,
+     The Faiss library. (2024). arXiv:2401.08281 [cs.LG]                                         Tanmoy Chakraborty, and Yichao Zhou (Eds.). Association for Computational
+ [6] Fan Guo, Chao Liu, and Yi Min Wang. 2009. Efficient multiple-click models                   Linguistics, Online, 2523–2544. https://doi.org/10.18653/v1/2021.naacl-main.200
+     in web search. In Proceedings of the Second ACM International Conference on            [21] Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang,
+     Web Search and Data Mining (Barcelona, Spain) (WSDM ’09). Association for                   Michael Matena, Yanqi Zhou, Wei Li, and Peter J. Liu. 2020. Exploring the
+     Computing Machinery, New York, NY, USA, 124–131. https://doi.org/10.1145/                   limits of transfer learning with a unified text-to-text transformer. J. Mach. Learn.
+     1498759.1498818                                                                             Res. 21, 1, Article 140 (jan 2020), 67 pages.
+ [7] Gautier Izacard, Mathilde Caron, Lucas Hosseini, Sebastian Riedel, Piotr Bo-           [22] Stephen E. Robertson, Steve Walker, Susan Jones, Micheline Hancock-Beaulieu,
+     janowski, Armand Joulin, and Edouard Grave. 2022. Unsupervised Dense Infor-                 and Mike Gatford. 1994. Okapi at TREC-3. In Text Retrieval Conference. https:
+     mation Retrieval with Contrastive Learning. Transactions on Machine Learning                //api.semanticscholar.org/CorpusID:3946054
+     Research (2022). https://openreview.net/forum?id=jKN1pXi7b0                            [23] Jon Saad-Falcon, Omar Khattab, Christopher Potts, and Matei Zaharia. 2023.
+ [8] Gautier Izacard and Edouard Grave. 2021. Distilling Knowledge from Reader                   ARES: An Automated Evaluation Framework for Retrieval-Augmented Genera-
+     to Retriever for Question Answering. In International Conference on Learning                tion Systems. arXiv:2311.09476 [cs.CL]
+     Representations. https://openreview.net/forum?id=NTEz-6wysdb                           [24] Alireza Salemi, Juan Altmayer Pizzorno, and Hamed Zamani. 2023. A Symmet-
+ [9] Gautier Izacard and Edouard Grave. 2021. Leveraging Passage Retrieval with                  ric Dual Encoding Dense Retrieval Framework for Knowledge-Intensive Visual
+     Generative Models for Open Domain Question Answering. In Proceedings of the                 Question Answering. In Proceedings of the 46th International ACM SIGIR Con-
+     16th Conference of the European Chapter of the Association for Computational                ference on Research and Development in Information Retrieval (Taipei, Taiwan)
+     Linguistics: Main Volume, Paola Merlo, Jorg Tiedemann, and Reut Tsarfaty (Eds.).            (SIGIR ’23). Association for Computing Machinery, New York, NY, USA, 110–120.
+     Association for Computational Linguistics, Online, 874–880. https://doi.org/10.             https://doi.org/10.1145/3539618.3591629
+     18653/v1/2021.eacl-main.74                                                             [25] Alireza Salemi, Surya Kallumadi, and Hamed Zamani. 2024. Optimization Meth-
+[10] Jithin James and Shahul Es. 2023. Ragas: Evaluation framework for your retrieval            ods for Personalizing Large Language Models through Retrieval Augmentation.
+     augmented generation (rag) pipelines. https://github.com/explodinggradients/                In Proceedings of the 47th Annual International ACM SIGIR Conference on Research
+     ragas.                                                                                      and Development in Information Retrieval (SIGIR ’24). (to appear).
+[11] Kalervo Järvelin and Jaana Kekäläinen. 2000. IR evaluation methods for retrieving      [26] Alireza Salemi, Sheshera Mysore, Michael Bendersky, and Hamed Za-
+     highly relevant documents. In Proceedings of the 23rd Annual International ACM              mani. 2023. LaMP: When Large Language Models Meet Personalization.
+     SIGIR Conference on Research and Development in Information Retrieval (Athens,              arXiv:2304.11406 [cs.CL]
+     Greece) (SIGIR ’00). Association for Computing Machinery, New York, NY, USA,           [27] Alireza Salemi, Mahta Rafiee, and Hamed Zamani. 2023. Pre-Training Multi-
+     41–48. https://doi.org/10.1145/345508.345545                                                Modal Dense Retrievers for Outside-Knowledge Visual Question Answering. In
+[12] Albert Q. Jiang, Alexandre Sablayrolles, Arthur Mensch, Chris Bamford, De-                  Proceedings of the 2023 ACM SIGIR International Conference on Theory of Informa-
+     vendra Singh Chaplot, Diego de las Casas, Florian Bressand, Gianna Lengyel,                 tion Retrieval (Taipei, Taiwan) (ICTIR ’23). Association for Computing Machinery,
+     Guillaume Lample, Lucile Saulnier, Lélio Renard Lavaud, Marie-Anne Lachaux,                 New York, NY, USA, 169–176. https://doi.org/10.1145/3578337.3605137
+     Pierre Stock, Teven Le Scao, Thibaut Lavril, Thomas Wang, Timothée Lacroix,            [28] Donia Scott, Rossano Barone, and Rob Koeling. 2012. Corpus Annotation as a
+     and William El Sayed. 2023. Mistral 7B. arXiv:2310.06825 [cs.CL]                            Scientific Task. In Proceedings of the Eighth International Conference on Language
+[13] Mandar Joshi, Eunsol Choi, Daniel Weld, and Luke Zettlemoyer. 2017. TriviaQA: A             Resources and Evaluation (LREC’12), Nicoletta Calzolari, Khalid Choukri, Thierry
+     Large Scale Distantly Supervised Challenge Dataset for Reading Comprehension.               Declerck, Mehmet Uğur Doğan, Bente Maegaard, Joseph Mariani, Asuncion
+     In Proceedings of the 55th Annual Meeting of the Association for Computational              Moreno, Jan Odijk, and Stelios Piperidis (Eds.). European Language Resources
+     Linguistics (Volume 1: Long Papers), Regina Barzilay and Min-Yen Kan (Eds.).                Association (ELRA), Istanbul, Turkey, 1481–1485. http://www.lrec-conf.org/
+     Association for Computational Linguistics, Vancouver, Canada, 1601–1611. https:             proceedings/lrec2012/pdf/569_Paper.pdf
+     //doi.org/10.18653/v1/P17-1147                                                         [29] Kurt Shuster, Spencer Poff, Moya Chen, Douwe Kiela, and Jason Weston. 2021.
+[14] Vladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey                Retrieval Augmentation Reduces Hallucination in Conversation. In Findings
+     Edunov, Danqi Chen, and Wen-tau Yih. 2020. Dense Passage Retrieval for Open-                of the Association for Computational Linguistics: EMNLP 2021. Association for
+     Domain Question Answering. In Proceedings of the 2020 Conference on Empirical               Computational Linguistics, Punta Cana, Dominican Republic, 3784–3803. https:
+     Methods in Natural Language Processing (EMNLP), Bonnie Webber, Trevor Cohn,                 //doi.org/10.18653/v1/2021.findings-emnlp.320
+     Yulan He, and Yang Liu (Eds.). Association for Computational Linguistics, Online,      [30] Paul Thomas, Seth Spielman, Nick Craswell, and Bhaskar Mitra. 2023.
+     6769–6781. https://doi.org/10.18653/v1/2020.emnlp-main.550                                  Large language models can accurately predict searcher preferences.
+[15] Tom Kwiatkowski, Jennimaria Palomaki, Olivia Redfield, Michael Collins, Ankur               arXiv:2309.10621 [cs.IR]
+     Parikh, Chris Alberti, Danielle Epstein, Illia Polosukhin, Jacob Devlin, Kenton Lee,   [31] James Thorne, Andreas Vlachos, Christos Christodoulopoulos, and Arpit Mittal.
+     Kristina Toutanova, Llion Jones, Matthew Kelcey, Ming-Wei Chang, Andrew M.                  2018. FEVER: a Large-scale Dataset for Fact Extraction and VERification. In
+     Dai, Jakob Uszkoreit, Quoc Le, and Slav Petrov. 2019. Natural Questions: A                  Proceedings of the 2018 Conference of the North American Chapter of the Association
+     Benchmark for Question Answering Research. Transactions of the Association for              for Computational Linguistics: Human Language Technologies, Volume 1 (Long
+     Computational Linguistics 7 (2019), 452–466. https://doi.org/10.1162/tacl_a_00276           Papers), Marilyn Walker, Heng Ji, and Amanda Stent (Eds.). Association for
+[16] Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin,           Computational Linguistics, New Orleans, Louisiana, 809–819. https://doi.org/10.
+     Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel,                    18653/v1/N18-1074
+     Sebastian Riedel, and Douwe Kiela. 2020. Retrieval-augmented generation for            [32] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+     knowledge-intensive NLP tasks. In Proceedings of the 34th International Conference          Aidan N Gomez, Ł ukasz Kaiser, and Illia Polosukhin. 2017. Attention is All
+     on Neural Information Processing Systems (Vancouver, BC, Canada) (NIPS’20).                 you Need. In Advances in Neural Information Processing Systems, I. Guyon, U. Von
+     Curran Associates Inc., Red Hook, NY, USA, Article 793, 16 pages.                           Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett (Eds.),
+[17] Chin-Yew Lin. 2004. ROUGE: A Package for Automatic Evaluation of Summaries.                 Vol. 30. Curran Associates, Inc. https://proceedings.neurips.cc/paper_files/paper/
+     In Text Summarization Branches Out. Association for Computational Linguistics,              2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf
+     Barcelona, Spain, 74–81. https://aclanthology.org/W04-1013                             [33] Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William Cohen, Ruslan
+                                                                                                 Salakhutdinov, and Christopher D. Manning. 2018. HotpotQA: A Dataset for
+                                                                                                 Diverse, Explainable Multi-hop Question Answering. In Proceedings of the 2018
+SIGIR ’24, July 14–18, 2024, Washington, DC, USA.                                                                                     Alireza Salemi and Hamed Zamani
+
+
+     Conference on Empirical Methods in Natural Language Processing, Ellen Riloff,        and Development in Information Retrieval (SIGIR ’24). (to appear).
+     David Chiang, Julia Hockenmaier, and Jun’ichi Tsujii (Eds.). Association for    [35] Hamed Zamani, Fernando Diaz, Mostafa Dehghani, Donald Metzler, and Michael
+     Computational Linguistics, Brussels, Belgium, 2369–2380. https://doi.org/10.         Bendersky. 2022. Retrieval-Enhanced Machine Learning. In Proceedings of the 45th
+     18653/v1/D18-1259                                                                    International ACM SIGIR Conference on Research and Development in Information
+[34] Hamed Zamani and Michael Bendersky. 2024. Stochastic RAG: End-to-End                 Retrieval (Madrid, Spain) (SIGIR ’22). Association for Computing Machinery, New
+     Retrieval-Augmented Generation through Expected Utility Maximization. In             York, NY, USA, 2875–2886. https://doi.org/10.1145/3477495.3531722
+     Proceedings of the 47th Annual International ACM SIGIR Conference on Research
+

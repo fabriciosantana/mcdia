@@ -1,0 +1,548 @@
+    Compiling and Exploring a Portuguese Parliamentary Corpus:
+                           ParlaMint-PT
+                   José Aires, Aida Cardoso, Rui Pereira, Amália Mendes
+                 University of Lisbon - School of Arts and Humanities / Center of Linguistics
+                            Alameda da Universidade, 1600-214 Lisboa, Portugal
+                               joseaires74@gmail.com, aidacard@gmail.com
+                  ruifilipedebarrospereira@gmail.com, amaliamendes@letras.ulisboa.pt
+
+                                                      Abstract
+As part of the project ParlaMint II, a new corpus of the sessions of the Portuguese Parliament from 2015 to 2022 has
+been compiled, encoded and annotated following the ParlaMint guidelines. We report on the contents of the corpus
+and on the specific nature of the political settings in Portugal during the time period covered. Two subcorpora were
+designed to enable comparisons of the political speeches between pre- and post-COVID-19 pandemic. We discuss
+the pipeline applied to download the original texts, ensure their preprocessing and encoding in XML, and the final
+step of annotation. This new resource covers a period of changes in the political system in Portugal and will be an
+important source of data for political and social studies. Finally, we have explored the political stance on immigration
+in the ParlaMint-PT corpus.
+
+Keywords: parliamentary corpus, Portuguese, political views
+
+                1.    Introduction                             different right-wing European parties in relation to
+                                                               immigration.
+Providing access to the sessions of the national                   We present the new ParlaMint-PT corpus and
+parliaments is an important tool for monitoring the            provide information about its content and the lev-
+democratic system. Session transcripts are fre-                els of annotation added, as well as details about
+quently available and can be consulted by the pop-             the political situation in Portugal during the period
+ulation, ensuring greater transparency in a repre-             covered by the corpus, that is, from 2015 to 2022.
+sentation system carried out through elections. To             The last legislature of the Portuguese parliament
+ensure access to this data, several initiatives have           included in the corpus already points to an ongo-
+sought to apply well-established NLP techniques,               ing change in the Portuguese party system. Until
+which use standards in metadata encoding and lin-              then, and unlike many European countries, the po-
+guistic annotation, to be carried out on the data.             litical parties traditionally represented in parliament
+The availability of sessions’ transcripts from differ-         maintained great influence. The tendency for new
+ent national parliaments on a single website adds a            parties to be represented in the Parliament starts
+new level of transparency and contributes to citizen           in 2019 (especially parties on the right of the politi-
+empowerment. With this objective, the ParlaMint I              cal spectrum) and increases in the next legislature,
+project (Erjavec et al., 2023) established a first set         in 2022. The corpus thus keeps track of the first
+of corpora with transcriptions of the sessions of 17           moments of an ongoing change in Portuguese pol-
+European national parliaments, uniformly encoded               itics. The ParlaMint corpora are openly available
+and with a rich set of metadata and annotated with             via the CLARIN.SI repository for download, as well
+Universal Dependencies (Erjavec et al., 2021). The             as through the NoSketch Engine and KonText con-
+first phase of the project was expanded to other               cordancers and the Parlameter interface for online
+European languages (ParlaMint II), including Por-              exploration and analysis. The detailed metadata in-
+tuguese. We report on the compilation, prepro-                 cluded in the corpora associated with the advanced
+cessing and annotation of the Portuguese corpus                searches enabled by the query programs allow for
+ParlaMint-PT. This new resource allows, on the                 intuitive and user-friendly data analysis. We intend
+one hand, to explore the political views of the par-           to show how the corpus can be useful by present-
+ties in relation to different topics and, on the other         ing preliminary results of work on political stances
+hand, to make contrastive analyses of the policies             regarding immigration issues in the parliament ses-
+followed in several European countries, taking ad-             sions.
+vantage of the English translation of the corpora.                 We discuss in section 2 other initiatives to collect
+As a result, it is possible to compare, for exam-              and explore the transcriptions of the sessions of the
+ple, how parties in southern European countries                Portuguese Parliament, and in section 3 we provide
+positioned themselves in relation to vaccination dur-          information on the political parties represented in
+ing the COVID-19 pandemic or the position of the               the Parliament during the time frame of our corpus.
+
+
+                                                          12
+  ParlaCLARIN IV Workshop on Creating, Analysing, and Increasing Accessibility of Parliamentary Corpora, pages 12–20
+                   May 20, 2024. © 2024 ELRA Language Resource Association: CC BY-NC 4.0
+Section 4 addresses the raw data of the ParlaMint-             expertise in debates (Fernandes et al., 2019). The
+PT corpus: we first provide some quantitative in-              authors gathered 50,000 speeches and 6,000 bills
+formation, then details on the set of metadata in              from the Portuguese Parliament Official Website.
+4.1, and finally information on the structure of the           A second initiative is the compilation of the corpus
+sessions in 4.2. The pipeline for preprocessing, en-           PTPARL-D, an annotated corpus of debates in the
+coding texts in XML and annotation are described               Portuguese Parliament, covering the years 1976 to
+in 5. We provide preliminary results of a case study           2019 (Almeida et al., 2021).
+on the parliamentary views about immigration in                   In spite of these initiatives, there was still no fully
+section 6, and we conclude in 7.                               accessible set of parliamentary speeches, making
+                                                               use of widely known query tools, providing struc-
+                                                               tured data, following standards established in the
+       2.   Related Work on Portuguese
+                                                               community working on parliamentary data, and pro-
+              Parliamentary Speeches                           viding a comparable corpus for Portuguese in line
+A growing number of initiatives have targeted the              with the growing efforts congregated in the Par-
+collection of Parliamentary data for a large set of            laMint project. We believe that the ParlaMint-PT
+languages. In this section, we will be concerned               corpus, by using comparable structure, encoding
+specifically with previous resources and projects              and annotation to the other corpora of the project,
+that have collected and processed data from the                will provide a crucial resource for studies on the
+Portuguese Parliament.                                         Portuguese Parliament and for contrastive studies
+   The first initiative to collect and explore the Por-        of the European political system.
+tuguese parliamentary speech sessions was un-
+dertaken in the framework of a general corpus of               3.   The Constitution of the Portuguese
+Portuguese, the Reference Corpus of Contempo-                            Parliament – 2015-2022
+rary Portuguese – CRPC (Généreux et al., 2012).
+The sessions of the Portuguese Parliament, as well             A single chamber of Members constitutes the Por-
+as some legislation, are included in a large section           tuguese Parliament (Assembleia da República –
+called "politics" that contains 163M words. The                AR). The Members of Parliament (MPs) are elected
+CRPC corpus can be queried online in the CQP-                  by universal, direct and secret suffrage in legislative
+web platform, and users can restrict their query to            elections that take place every four years. The Por-
+the subcorpus "politics"1 . Although the data cover            tuguese Parliament is constituted by the Plenary
+a large time frame of the XIX century, this corpus             (corresponding to the elected MPs’ seats) and the
+lacks detailed metadata that would enable queries              Bureau. At the start of the legislature, the Assembly
+regarding time period, political parties and speak-            elects its President and the remaining members of
+ers, and the internal sections of the speeches are             the Bureau (four vice presidents, four secretaries,
+not structured and properly encoded. A 1M words                and four vice secretaries). The Parliament has a
+subset of the section "politics", the PTPARL corpus,           total of 230 seats. Parliamentary proceedings in-
+is freely available for academic purposes on the               clude periods for plenary sittings, parliamentary
+PORTULAN CLARIN infrastructure2 , with POS an-                 committee and parliamentary group meetings, and
+notation. This subset also lacks detailed metadata             for MPs to spend time on constituency business.
+and the encoding of the internal structure of the              The ParlaMint-PT corpus focuses on the plenary sit-
+speeches.                                                      tings and the transcripts of these sessions, which
+   The website Demo.cratica was an effort to make              occur, typically, three times a week. Still, it also
+accessible the transcripts of the Parliament ses-              includes solemn sessions (e.g., commemorative
+sions (A. I Carvalho and R. Lafuente (2010)). An-              sessions of the 25 de Abril, or the inauguration
+other initiative is the Portuguese Observatory on              session of the President of Portugal).
+Parliamentary Dynamics (POPaD)(Giorgi and Dias,                   The ParlaMint-PT corpus was created to cover
+2019). The data has been explored in several anal-             the temporal period before, during and immediately
+yses of the political system in Portugal and in a              after the COVID-19 pandemic, which had such an
+contrastive perspective with the patterns found in             impact on the health and lives of European and
+Europe (De Georgi and Moury, 2015).                            global citizens. The data was intended to observe
+   More recently, a new compilation of Portuguese              how national parliaments had addressed public
+Parliamentary speeches, from 2000 to 2015, was                 health issues and the relationship between political
+used to explore how saliency, government dynam-                orientation and type of proposals (for example, on
+ics, and party size affect the use of members of               vaccination).
+the parliament who specialize in specific areas of                In the Portuguese case, in addition to the pan-
+                                                               demic period, the years covered by the corpus are
+   1
+       http://gamma.clul.ul.pt/CQPweb/crpc                     also a time of major changes in the configuration
+   2
+       https://portulanclarin.net                              of the party system. The corpus covers the last
+
+                                                          13
+10 months (January to October 2015) of the XII                      Party        XII Leg.    XIII Leg.    XIV Leg.
+Legislature, and the full XIII (2015-2019) and XIV                PCP (FL)          14          15           10
+(2019-2022) Legislatures. A Legislature (Term of                  PEV (FL)           2           2           2
+Office) covers the period between legislative elec-                BE (FL)           8          19           19
+tions.                                                             Livre (L)         0           1            1
+    In the 2015 legislative elections, despite the aus-            PS (CL)          74          86          108
+terity policy imposed by the government of the PSD                 PAN (C)           0           1           4
+party (center-right) in the XII Legislature, PSD was              PSD (CR)         108          79           77
+surprisingly the most voted party. Nevertheless,                   IL (CR)           -            -          1
+it did not succeed in establishing a stable major-                CDS (R)           24          18            5
+ity in the Parliament, and the PS (socialist party)              Chega (FR)          -            -          1
+took office, supported by governance agreements
+signed with the Left (PCP, PEV, BE). In the 2019               Table 1: Number of speakers per party in each
+elections, the PS was the party with the most votes,           Legislature
+although without an absolute majority. No coalition            XII=01.01.2015-22.10.2015;    XIII=23.10.2015-
+agreements were signed with parties to the left of             24.10.2019; XIV=01.11.2019-01.02.2022
+the PS, but there were specific agreements in the
+Parliament for passing bills.
+    Between 2015 and 2022, the Parliament’s con-
+figuration underwent major changes. Table 1
+presents the number of speakers per party in each              was not an isolated moment but rather pointed to
+Legislature. Parties are identified by their acronym           trends in the reconfiguration of the political party
+and are listed from Far-Left (FL), Left (L), Center-           system. In 2022, the PS has an absolute majority;
+Left (CL), Center (C), Center-Right (CR), Right (R)            PCP and BE suffer a drastic reduction to 6 and 5
+and Far-Right (FR). No numerical information is                speakers, respectively; the CDS party no longer
+provided in the Table when the party did not exist at          has parliamentary representation; on the contrary,
+the time. The ParlaMint-PT corpus covers the first             the two new parties on the right increase the num-
+three Legislatures, from 2015 to 2022. From 2019               ber of speakers from 1 to 8, in the case of Iniciativa
+to 2022, some of the parties saw their number of               Liberal, and from 1 to 12 in the case of CHEGA.
+speakers decrease. This is the case of the PCP,                Recently, a corruption investigation in which the
+perhaps reflecting a negative reaction from their              Prime Minister’s name was mentioned led him to
+electorate to the support given to the PS (De Giorgi           resign, and the President of the Republic dissolved
+and Russo, 2018), its traditional opponent since               the Parliament. In the elections of March 2024, the
+the revolution of April 25, 1974. Also, the CDS-PP             parliamentary group of the party CHEGA increased
+significantly reduces its electorate from 24 speak-            to 50 speakers, a process that is reminiscent of the
+ers in the XII Legislature to 5 speakers in the XIV            growth of Marine Le Pen’s party in France, and of
+Legislature. The BE has 19 speakers in this period,            the political situation in other countries in Europe.
+surpassing the communist party PCP. The Livre                     It would naturally be interesting to enlarge the
+party finally managed to elect a speaker during                corpus in the future to include the XV and XVI Legis-
+this period. And several new parties were created              latures, to study the evolution of the activities in the
+and quickly succeeded in electing Parliament mem-              Parliament, the topics discussed, and also the type
+bers. The PAN party, with environmental concerns,              and register of the interventions in the sessions.
+elected 1 speaker in 2015 and increased its repre-
+sentation to 4 speakers in 2019. On the right wing                    4.    Parliamentary Raw Data
+of the political spectrum, two new parties emerged,
+Iniciativa Liberal (IL) and Chega, which elected               The Portuguese Parliamentary Corpus’ raw data
+1 speaker each in 2019. With the election of a                 consists of transcripts of Portuguese Parliament
+speaker from the populist party Chega, Portugal                sessions. These transcripts were gathered from
+ceased to be the only country in Europe that did not           the official Portuguese Parliament website. On the
+have a populist far-right party with parliamentary             website, each transcript of the parliamentary ses-
+representation.                                                sions is available via the publication of the official
+    When the Left parties refused to approve the bud-          journal of the Parliament, the Journal of the As-
+get proposed by the PS in 2022, the President of               sembleia da República (Diário da Assembleia da
+the Republic dissolved the AR and called elections,            República). The transcripts are available for down-
+resulting in the XV Legislature. This Legislature              load in two file formats: TXT and PDF.
+is not included in the corpus (nor in Table 1). Still,            The Portuguese Parliamentary Corpus compre-
+it is worthwhile to provide some information about             hends transcripts of sessions in the time period
+its composition, as it shows how the 2019 vote                 from 1 January 2015 until 22 March 2022. The cor-
+
+                                                          14
+                 Reference corpus                             divided into utterances and paragraphs. However,
+           XII (01.01.2015-22.10.2015)                        the transcripts also contain the transcribers’ com-
+           XIV (01.11.2019-22.03.2022)                        mentary, which was retained and encoded. Each
+           XIII (23.10.2015-24.10.2019)                       speech turn (i.e. utterance) is accompanied by the
+                   COVID Corpus                               date, speaker ID, and role of the speaker (chair,
+           XIV (25.10.2019-31.10.2019)                        regular or guest).
+                                                                  As for the roles attributed to speakers, the chair
+Table 2: Time period of the Reference subcorpus               corresponds to the President of the Parliament, des-
+and the COVID subcorpus                                       ignated in Portuguese as Presidente da Assem-
+                                                              bleia da República; regular encompasses different
+                           Reference        COVID             situations: the prime minister, ministers and state
+    Session days               499            205             secretaries (members of the Government), regular
+ Number of utterances       121,317          49,620           MPs from each party elected in legislative elections
+  Number of words          11,570,662      5,882,413          for the Portuguese Parliament, and MPs that were
+                                                              elected by the Parliament members as vice pres-
+Table 3: Contents of the Reference and of the                 idents and secretaries of the Parliament and aid
+COVID subcorpora                                              the chair; the term guest identifies any visitor, of-
+                                                              ten a member of a foreign country’s Government,
+                                                              invited to speak in a Parliament session. The meta-
+                                                              data files contain a description of the different roles
+                                                              fulfilled in public office by each member of the Par-
+pus was divided into two subcorpora, according to             liament in different time periods and Legislatures.
+the period each one covers: (i) the reference sub-                The information compiled in the metadata was
+corpus covers sessions from 1st January 2015 until            gathered from the official Portuguese Parliament
+31st October 2019; (ii) the COVID subcorpus com-              website. This website provides webpages with po-
+prehends sessions between 1st November 2019                   litical and biographic information for each politician
+and 22nd March 2022. The time periods consid-                 who is or was an elected MP, secretary, vice pres-
+ered, as well as the division into two subcorpora             ident, or President of the Portuguese Parliament.
+taking into account the start of media coverage               In a few cases, the information available on the
+about COVID, follow Parla-CLARIN general guide-               Parliament website was complemented by further
+lines and proceedings for parliamentary corpora               research on newspaper articles or on Wikipedia
+(Erjavec and Pančur, 2019). The time period of                pages of Portuguese politicians.
+each subcorpus is provided in Table 2. Quantita-
+tive information about the number of session days,            4.2.   Structure of the Portuguese
+utterances and words in each subcorpus is given                      Parliament Plenary Sittings
+in Table 3.
+                                                              In building the corpus, we must consider the struc-
+4.1.   Metadata Collection                                    ture of each plenary session and the particularities
+                                                              of the transcripts published in the Journal of the
+Regarding metadata, the Portuguese Parliamen-                 Assembleia da República (Diário da Assembleia
+tary Corpus makes available information concern-              da República). As it will be made clear, identifying
+ing the corpus data, the speakers, the political par-         different and regular parts of the political debates
+ties, and the session files. More general informa-            and transcriptions was crucial to the production and
+tion is also included, such as the type of parliament         processing of the XML corpus.
+(unicameral) and the structure of the proceedings                The Portuguese Parliament plenary sittings tran-
+(taxonomy with types of meetings, types of speak-             scripts are structured in distinctive moments, each
+ers, legislative periods).                                    providing various types of information that need
+   The Portuguese corpus provides information re-             to be encoded accordingly. The first one is the
+garding the speaker’s ID, name and surname(s),                Preamble, which includes the identification of key
+birth date, death date, gender, political affiliation         features and figures in the session: (i) the date,
+(only for MPs, not for occasional speakers), and              series and number of the Journal of the Assem-
+the status of the speaker (role and role description).        bleia da República; (ii) the Legislature and session
+The information regarding political parties consists          number; (iii) the date; (iv) the chair, and (v) the sec-
+of the abbreviation of the party, the full name of the        retaries. After the Preamble, we find the Summary,
+party (in Portuguese), and the party ID (which is the         a brief description of the interventions and votings
+same as the abbreviation). Finally, the metadata              that took place during the session. Then, we have
+concerning the session files encompasses date-                the Beginning of the Session, which overlaps with
+stamped mandates, sessions and speeches. Each                 the chair’s first intervention and includes a time
+session contains the transcripts of the speeches
+
+                                                         15
+stamp. Next is the Debate, which corresponds to                 since a failure on a given stage might result from
+the core of the session, where we find the different            an error on an earlier stage. The several stages
+speeches and interventions of the MPs. After the                are described in the subsections below.
+Debate, the session usually proceeds to vote on
+bills, and, thus, we have a section that corresponds            5.1.   Preprocessing of Texts
+to Voting. The Closing section follows the chair’s
+last intervention, including a time stamp. Finally,             There was a significant number of issues found
+some transcriptions end with Written Voting Decla-              in the texts, and since we planned on using text
+rations, an appendix to the session. They are not               markers to identify and extract relevant information,
+part of the debate itself but correspond to written             we introduced a first stage in which we focused on
+declarations that the MPs may deliver to the Bu-                fixing those issues.
+reau in order to further justify or explain their voting           This way, we could rely more confidently on such
+during the session. We used the linguistic markers              markers by ensuring a more uniform structure of
+that we consistently found associated with each of              the texts and avoiding the introduction of exceptions
+these moments of the debate sessions to automat-                when looking for such markers. Many of the issues
+ically identify the moments in the transcription files,         found consisted of cases like the following:
+as shown below.
+                                                                  • missing (or extra) spaces, parentheses or
+   As mentioned, the transcriptions include com-
+                                                                    dashes;
+mentary by the transcribers, which were annotated
+by type in the XML files. These comments can oc-                  • mistaking the letter ’o’ with the digit ’0’, and
+cur at any moment of the debate. They pertain to                    vice-versa;
+pieces of information such as time, date, indication
+of sections such as summary, or of moments in the                 • Unicode characters which looked similar and
+debate such as voting, indications of pauses in the                 required uniformization.
+debate, and events (e.g., an MP shows a visual aid
+during their intervention; the chair is replaced by the           These corrections were accomplished using sim-
+vice-chair). They may also indicate non-vocalized               ple regular expression replacement. Then, we pro-
+communicative phenomena (e.g., clapping) or vo-                 ceeded to discard page headers and footers like
+calized, but not necessarily lexical, communicative             numbers, dates, or series, which sometimes ended
+phenomena (e.g., shouting, laughing, protests).                 up between paragraphs spanning more than one
+                                                                page, trying to reestablish text paragraphs. A given
+                                                                number of empty lines, some specific separator
+   5.   Production of the XML Corpus                            symbols, and an initial letter casing were also con-
+                                                                sidered.
+In this section, we will describe how the Portuguese              Once the paragraphs were identified, we moved
+Parliamentary corpus was prepared for the XML                   on to removing line breaks that did not correspond
+generation, which required information about the                to new sentences. This was accomplished by
+actual sessions, as well as all the entities involved           checking the end of a line and the start of the next
+in those sessions.                                              for composed words separated by a dash, letter
+   The information about the several entities in-               casing, specific symbols and exception cases.
+volved (people, governments, legislatures and so
+on) required some research so a few TSV files
+could be compiled and then used as a source for                 5.2.   Main Sections Identification
+the needed elements. On the other hand, the in-                 At this point, we opted to identify section limits like
+formation about the sessions was only available                 summaries, interventions, and interruptions, which
+in text format, which meant they had to be pro-                 was done by looking at expressions that would in-
+cessed in order to produce the corresponding XML                dicate such cases. In our case, we could identify
+files. However, the texts appeared to have been                 the following main sections:
+obtained from PDF files, which, in turn, seemed to
+have been obtained from OCR of the physical pa-                   • head: which in turn had date, session, perma-
+per documents, considering the many issues found                    nent, title, president and secretary sections;
+in them. Fortunately, after a brief inspection, we
+                                                                  • summary: which implicated the identification
+realized the texts had a fairly regular structure, with
+                                                                    of the time in which the session started;
+several text sections that could be used as anchors,
+contributing to simplifying the automation process.               • main: which implicated the identification of the
+   We divided the text processing into several                      time in which the session ended;
+stages, which had the advantage of allowing us
+to focus on specific issues and keeping them lo-                  • final: used for any voting information.
+calized. All the stages were carried out iteratively
+
+                                                           16
+   Once these main sections were identified, we                and Universal Dependency Relations (UDR) identi-
+were able to improve the paragraphs further by                 fication for the session interventions, which could
+eliminating additional line breaks that did not cor-           only be carried out after the basic XML files were
+respond to new sentences. At this stage, the XML               produced.
+document creation can be carried out in a much                    The POS tagging was established using the MBT
+simpler way.                                                   tagger (Daelemans et al., 1996) trained over the
+                                                               CINTIL corpus (Barreto et al., 2006). We adapted
+5.3.   Automatic XML Generation and                            the tagset to be conformant to the UD POS tags
+       Checking                                                used in ParlaMint. The CINTIL corpus includes
+                                                               NER annotation. We lemmatized the corpus with
+The preprocessing of the session files facilitated             MBLEM (van den Bosch and Daelemans, 1999),
+the implementation of the procedures to produce                which combines a dictionary lookup with a machine
+the XML files.                                                 learning algorithm to produce lemmas. As a ba-
+   This time, the information about the entities was           sis for the dictionary, we used a list of wordform –
+also considered to produce the final version. Even             POS-tag combinations mapped to lemmas. This
+though the text files complied with a fairly regular           list was produced in-house. The dictionary used
+structure, as mentioned above, we had to account               in MBLEM contains 102,196 word forms combined
+for the possibility of errors, which raised the need to        with 27,860 lemmas, leading to 120,768 wordform-
+check if things were fine. This is why, after creating         lemma combinations. The adaptation of the MBT
+the XML document, we carried out an additional                 tagger and MBLEM lemmatizer are described in
+checking stage that allowed us to identify several             (Généreux et al., 2012).
+situations in which there was missing or unexpected               The UD Relations were established using the
+information, which in turn enabled us to look further          LX-UD dependency parser3 , adapted to the set of
+into the problematic files and fix them.                       POS and relation types used in ParlaMint. The
+   During this checking stage, we found recurring              UDR tool took a very long time to run, particularly
+errors throughout the documents, which affected                considering the great number of session files, so
+the identification of utterances, paragraphs, and              it became really important to run tasks in parallel.
+different types of transcribers’ commentaries and              Such parallel processing was implemented within a
+events. A close reading of the texts allowed us to             single file, in which we were able to carry out more
+identify specific linguistic elements that were con-           than one process per sentence, as well as within
+sistently used to introduce those sections in the              a set of files, in which we were able to process
+transcriptions (e.g. specific adverbial expressions            several files at once. This approach allowed us to
+are used to indicate events or votings, such as En-            obtain results seven times faster.
+tretanto ’In the meanwhile’, Neste momento ’At this
+moment’ or De seguida ’Then’) and what specific
+textual elements were associated with processing
+                                                                    6.      Using ParlaMint-PT to Explore
+errors (e.g. punctuation marks were often associ-                           Political Views on Immigration
+ated with errors: every utterance was identified by
+                                                               The topic of immigration is controversial and is fre-
+a colon followed by a dash in the transcription, but
+                                                               quently addressed in the programs of the political
+these punctuation marks were not always correctly
+                                                               parties. As such, we expect the discussion of immi-
+identified as the beginning of an utterance; periods
+                                                               gration issues and legislation proposals to be identi-
+after abbreviations were, in some cases, misidenti-
+                                                               fied in the transcriptions of the Parliament sessions
+fied as an indicator of the end of paragraph). A set
+                                                               and to shed some light on the position of the govern-
+of expressions was compiled from these errors in
+                                                               ment and of the opposition regarding the topic. The
+order to allow an automatic search throughout the
+                                                               ParlaMint corpora enable us to test whether some
+XML files. To do so, we automatized the search
+                                                               variables are relevant to the political position of the
+task by recording a macro using Notepad++, which
+                                                               MPs, for instance, political orientation or gender.
+allowed us to perform searches simultaneously in
+                                                               In Europe, migration routes in the Mediterranean
+multiple files. The search results enabled us to
+                                                               have put pressure on South-East countries, such
+focus our attention on a reduced set of possible
+                                                               as Greece and Italy, but they also affect countries in
+problematic areas to correct any identified errors
+                                                               the North. Portugal has not been on the route of this
+manually.
+                                                               migration, but, according to official numbers in the
+                                                               PORDATA portal4 , the foreign population officially
+5.4.   Syntactic Annotation and Main XML                       residing in Portugal has been increasing, especially
+       Files
+                                                                    3
+Additional information about the session files                          https://portulanclarin.net/workbench/lx-udparser
+                                                                    4
+needed to be included, namely the POS tagging                           https://www.pordata.pt/subtema/portugal/migracoes-
+                                                               34
+
+                                                          17
+since 2016, and, in 2022, reached around 800,000                            date        freq.       rel. (%)
+people (with the total population of Portugal being                      16-03-2016        12    1,675.86%
+around 10 million). Of the nationalities that immi-                      02-03-2017        11    1,669.85%
+grate to Portugal, the most notable are immigrants                       22-06-2018        11    2,284.92%
+who originate from Portuguese-speaking countries,                        16-12-2020        25    2,841.95%
+especially Brazil with 240,000 residents, and more                       27-05-2021        37    6,653.24%
+recently, immigrants from the South-East, such as                        09-07-2021        44    8,152.84%
+India. The latter work in large agricultural produc-
+tions and, in some cases, they outnumber the local              Table 4: Sessions with the higher frequencies of
+population, creating some concerns and the need                 the word migrante(s) in ParlaMint-PT
+for the local authorities to prepare lines of action
+for better integration (see, for instance, the town                         gender     freq.     rel. (%)
+hall program for the integration of immigrants in                             F         243     180.57%
+Odemira (AAVV, 2015-2017)), in the South.                                     M         166      60.49%
+   The press and social media have been a frequent
+source of data related to the perception of migra-              Table 5: Distribution of the word migrante(s) per
+tion (Taylor, 2014), but parliamentary speeches are             gender of the speaker
+also an interesting source of data, as shown in the
+project "Who is the enemy now?" based on the UK
+and Italian ParlaMint corpora (Del Fante and Zorzi,
+2023). The project reports similarities between the
+discourse used in both countries in spite of differ-            members of the Parliament are in the minority, they
+ences in their political backgrounds, such as the               account for a higher number of occurrences: the
+fact that the UK government was of the Conserva-                relative density shows that the term is not typical of
+tive Party, while ministers in Italy were mostly from           masculine Parliamentary discourse (under 100%),
+the left wing.                                                  while it is typical of the feminine Parliamentary dis-
+   To query the corpus, we establish a list of key-             course (above 100%). Another variable is political
+words (and inflected variants) related to the foreign           orientation, as shown in Table 6. As the number of
+population living in Portugal, such as imigração                speakers from each party differs considerably (see
+(immigration), imigrante (immigrant), migrante (mi-             Table 1), Relative density is a better indicator than
+grant), and refugiado (refugee). We use the version             raw frequency. The values in Table 6 points to a
+of the corpus available on Sketch Engine (Kilgarriff            higher use of the word migrante by Left to Far-Left
+et al.) and extract concordances and frequencies.               and Center-Left parties. The Right to Far-Right ori-
+Here, we discuss the word migrante(s) that occurs               entation party "Chega" has a single speaker in the
+409 times in the corpus. The list of sessions where             Parliament and shows the highest relative density,
+the word was most used is presented in Table 4 with             with 179.43%).
+the frequency of the word and the relative density                 The concordances of the “Chega” party refer to
+(above 100% shows that the word is more frequent                the need to control an unbelievable flux of migrants
+in this text type (session) than in the corpus). It             and connect the reference to migrants to the traffic
+shows a significant increase in occurrences from                of human beings, as in example 1.
+2016 and 2021. This is in line with the rise of the for-
+                                                                (1) precisamos de controlar o fluxo inacreditável
+eign population in Portugal reported in PORDATA.
+                                                                    quer de migrantes, quer de tráfico de seres
+The results are also aligned with the frequencies
+                                                                    humanos ‘we need to control the unbelievable
+found in (Del Fante and Zorzi, 2023) for UK and
+                                                                    flow of migrants and of the human being
+Italian corpora: the word migrant in English and
+its equivalent in Italian show a strong increase in
+frequency in both corpora, independently of the
+political orientation of the government of both coun-
+tries. This increase is also found in the Portuguese
+data, where a Center-Left party was in government                 party orientation        frequency          rel (%)
+during the XIII and XIV Legislature, with support                  Left to Far-Left              147        142.08%
+from the Left parties.                                                   Left                     10         48.74%
+   Two other variables seem to be related to the                     Center-Left                 189        131.10%
+use of the word migrante ’migrant’. One of them                     Center-Right                  38         49.03%
+is the gender of the speaker, as reported in Ta-                 Center-Right to Right            18         33.58%
+ble 5. Speakers of the feminine gender use the                    Right to Far-Right               7        179.43%
+word more frequently than speakers of the mas-
+                                                                Table 6: Distribution of the word migrante(s) per
+culine gender (243 vs. 166). Although feminine
+                                                                the political orientation of the speaker
+
+                                                           18
+    traffic’                                                  P. Almeida, M. Marques-Pita, and J. Gonçalves-Sá.
+                                                                 2021. PTPARL-D: an annotated corpus of forty-
+   The reference to a flow uses a metaphorical rep-              four years of Portuguese parliamentary debates.
+resentation of migration as a liquid, also present in            Corpora, 16(3):337–348.
+the UK and IT corpora (Del Fante and Zorzi, 2023).
+Three other contexts of the party "Chega" refer to            F. Barreto, A. Branco, E. Ferreira, A. Mendes, M.F.P.
+the concern of the government and of the Left par-               Bacelar do Nascimento, F. Nunes, and J. Silva.
+ties with the life/work conditions of the migrants,              2006. Open resources and tools for the shal-
+in contrast with those that were "born in our land"              low processing of Portuguese. Proceedings of
+(quem nasceu na nossa terra). It would be interest-              the 5th International Conference on Language
+ing to analyse the XV Legislature when the party                 Resources and Evaluation (LREC2006). Genoa,
+"Chega" increased its number of speakers from 1                  Italy.
+to 12.
+   While political orientation is certainly important,        W. Daelemans, J. Zavrel, P. Berck, and S. Gillis.
+                                                               1996. MBT - a memory-based part of speech
+one also needs to take into consideration the politi-
+                                                               tagger generator.   Proceedings of the 4th
+cal parties. For instance, the two parties with a Left
+to Far-Left orientation, the Communist Party and               ACL/SIGDAT Workshop on Very Large Corpora.
+the Bloco de Esquerda, differ in the frequency of              pp. 14–27.
+use of the word 1. The relative density of 240.27%            E. De Georgi and C. Moury. 2015. Government-
+of the Bloco de Esquerda contrasts with the 37.86%              opposition dynamics in Southern European coun-
+in the case of the Communist party.                             tries during the economic crisis. great recession,
+                                                                great cooperation? Journal of Legislative Stud-
+               7.   Final Remarks                               ies, 21.
+
+The new open-access corpus ParlaMint-PT pro-                  E. De Giorgi and F. Russo. 2018. Portugal: The
+vides an opportunity to explore the interventions               unexpected path of far left parties, from per-
+of the speakers of the Portuguese Parliament, by                manent opposition to government support. In
+giving information on the topics that are addressed             E. De Giorgi and G. Ilonszky, editors, Opposition
+in the Parliament and on the views of individual                parties in European legislatures. Routledge.
+speakers or political parties, or general patterns            D. Del Fante and V. Zorzi. 2023.             Par-
+of use related to genre, time period and political              laMint - a resource for democracy.
+orientation.                                                    Https://www.clarin.eu/impact-stories/parlamint-
+   We reported on the contents of the corpus, the               resource-democracy.
+metadata, and the syntactic annotation. As a case
+study using this resource, we provided some data              T. Erjavec and A. Pančur. 2019. Parla-clarin: TEI
+on the political views on immigration in the Por-                guidelines for corpora of parliamentary proceed-
+tuguese Parliament. The automatic translation to                 ings. Technical report.
+English of the national corpora also enables com-
+parative studies on national views over topics that           T. Erjavec et al. 2023. The ParlaMint corpora of par-
+are of relevance to the social and political situation           liamentary proceedings. Language Resources
+of Europe today.                                                 and Evaluation, 57(1):415–448.
+                                                              J. M. Fernandes, M. Goplerud, and M. Won. 2019.
+          8.    Acknowledgements                                 Legislative bellwethers: The role of committee
+                                                                 membership in parliamentary debate. Legislative
+This work was partially supported by CLARIN ERIC,                Studies Quarterly, 44(2):307–343.
+ParlaMint: Towards Comparable Parliamentary Cor-
+pora, and by Fundação para a Ciência e a Tecnolo-             M. Généreux, I. Hendrickx, and A. Mendes. 2012.
+gia, under the grant UIDP/00214/2020. We wish                   Introducing the Reference Corpus of Contem-
+to thank the anonymous reviewers for their helpful              porary Portuguese On-Line. In LREC’2012 –
+comments.                                                       Eighth International Conference on Language
+                                                                Resources and Evaluation, pages 2237–2244,
+                                                                Istanbul, Turkey. European Language Resources
+     9.    Bibliographical References                          Association (ELRA).
+                                                              A. Kilgarriff, V. Baisa, J. Bušta, M. Jakubíček,
+                                                                V. Kovář, J. Michelfeit, P. Rychlỳ, and jour-
+AAVV. 2015-2017. Odemira integra - plano munici-                nal=Lexicography       volume=1     number=1
+  pal para a integração dos imigrantes.                         pages=7–36 year=2014 publisher=Springer
+                                                                Suchomel, V. The Sketch Engine: ten years on.
+
+                                                         19
+C. Taylor. 2014. Investigating the representation of
+  migrants in the UK and Italian press: A cross- lin-
+  guistic corpus-assisted discourse analysis. Inter-
+  national Journal of Corpus Linguistics, 19(3):368–
+  400.
+A. van den Bosch and W. Daelemans. 1999.
+  Memory-based morphological analysis. Proceed-
+  ings of the 37th Annual Meeting of the Associ-
+  ation for Computational Linguistics, ACL’99. pp.
+  285–292.
+
+
+10.    Language Resource References
+
+
+A. I Carvalho and R. Lafuente. 2010. Demo.cratica.
+  PID HTTP://demo.cratica.org/.
+
+T. Erjavec and others. 2021. Linguistically anno-
+   tated multilingual comparable corpora of par-
+   liamentary debates ParlaMint.ana 2.1. PID
+   HTTP://hdl.handle.net/11356/1431.
+E. D. Giorgi and A. Dias. 2019. Portuguese Ob-
+  servatory on Parliamentary Dynamics Database
+  (POPAD): information on legislative process,
+  scrutiny activity and speeches in the Portuguese
+  Parliament. PID HTTPS://popad.org/.
+
+
+
+
+                                                        20
+

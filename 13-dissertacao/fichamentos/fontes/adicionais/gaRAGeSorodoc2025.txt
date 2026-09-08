@@ -1,0 +1,1548 @@
+                   GaRAGe: A Benchmark with Grounding Annotations
+                                for RAG Evaluation
+                      Ionut-Teodor Sorodoc                                    Leonardo F. R. Ribeiro
+                          Amazon AGI                                              Amazon AGI
+                      csorionu@amazon.com                                     leonribe@amazon.com
+
+           Rexhina Blloshmi                       Christopher Davis                                         Adrià de Gispert
+             Amazon AGI                             Amazon AGI                                                Amazon AGI
+         blloshmi@amazon.com                   davisjnh@amazon.co.uk                                      agispert@amazon.com
+
+                          Abstract
+                                                                                       Web
+
+        We present GaRAGe, a large RAG benchmark                                  KB
+                                                                                                                                 Question fast-changing?
+
+
+        with human-curated long-form answers and an-
+                                                                                                      2                  Grounding relevant & up-to-date?
+                                                                                                          5
+                                                                                                              8
+                                                                                                                                   Ready for a good answer!
+        notations of each grounding passage, allowing                What strategic value does the
+
+        a fine-grained evaluation of whether LLMs can                introduction of Unrivaled, a
+                                                                     new 3x3 women's basketball
+                                                                     league, provide to WNBA
+        identify relevant grounding when generating                  players and the broader
+                                                                     landscape of women's sports?
+
+        RAG answers. Our benchmark contains 2366
+        questions of diverse complexity, dynamism,                            The introduction of Unrivaled, a new 3x3 women's basketball league
+
+        and topics, and includes over 35K annotated                           featuring 36 WNBA players, provides strategic value by capitalizing on the
+                                                                              rapidly growing interest and record-setting engagement in women's sports,
+                                                                              particularly the momentum seen in 2024.[2][8]
+        passages retrieved from both private document                         The league positions itself as a response to the thriving women's sports
+        sets and the Web, to reflect real-world RAG use                       industry, where increasing fan engagement is driving significant
+                                                                              sponsorship, athlete earnings, and investor interest.[8] By leveraging this
+
+        cases. This makes it an ideal test bed to evaluate                    growth, Unrivaled not only provides WNBA players additional opportunities
+                                                                              for visibility and income but also serves as a platform to expand the
+                                                                              influence and profile of women's basketball within the broader sports
+        an LLM’s ability to identify only the relevant                        landscape.[8]
+
+
+        information necessary to compose a response,
+        or provide a deflective response when there is
+                                                                 Figure 1: Example of GaRAGe Q&A datapoint with a
+        insufficient information. Evaluations of mul-
+                                                                 complex question and human curated long answers.
+        tiple state-of-the-art LLMs on GaRAGe show
+        that the models tend to over-summarise rather
+        than (a) ground their answers strictly on the
+        annotated relevant passages (reaching at most            and attributable sources. For RAG applications
+        a Relevance-Aware Factuality Score of 60%),              to be successful at satisfying these needs, LLMs
+        or (b) deflect when no relevant grounding is             must simultaneously exhibit strong performance at
+        available (reaching at most 31% true positive            two core competencies: query generation and an-
+        rate in deflections). The F1 in attribution to           swer generation. For query generation, LLMs must
+        relevant sources is at most 58.9%, and we show           be able to determine when to invoke the available
+        that performance is particularly reduced when
+                                                                 external sources and generate the right query, or
+        answering time-sensitive questions and when
+        having to draw knowledge from sparser private            queries, that will likely return good search results
+        grounding sources.1                                      (grounding information), conditioned on the avail-
+                                                                 able (conversational, situational, visual) context. In
+                                                                 answer generation, LLMs must be able to provide a
+1       Introduction
+                                                                 fluent, helpful and possibly long-form response to
+Large Language Models (LLMs) have shown con-                     the user question that is grounded on the available
+sistent improvements across many tasks requiring                 information. Crucially, this task is not fulfilled with
+natural language understanding, coding, mathemat-                a simple summarisation step, because in reality the
+ical or logical reasoning and have been widely in-               available grounding, obtained from either the user’s
+corporated in user applications, especially in the               private documents or the Web, will contain a mix-
+form of retrieval augmented generation (RAG) sys-                ture of relevant and irrelevant passages (Oh and
+tems (Lewis et al., 2020). RAG is crucial in real-               Thorne, 2023). Therefore, the LLM needs to anal-
+world applications, where users (a) have their own               yse the relevancy of each grounding snippet prior to
+private documents to search through, and (b) re-                 generating the answer, which will typically include
+quire responses to be grounded on relevant, timely               citation markers to the selected source documents
+    1
+    The dataset can be found at https://github.com/              for transparency and accountability. An example
+amazon-science/GaRAGe                                            that reflects this process is presented in Figure 1.
+                                                             17030
+                    Findings of the Association for Computational Linguistics: ACL 2025, pages 17030–17049
+                           July 27 - August 1, 2025 ©2025 Association for Computational Linguistics
+                                               Human Intervention                   Question                                 Answer                                  Grounding
+                                               Human        Human       Temporal   Complexity    Detailed                     Contain                    Public       Annotated   Contain
+                                                                                                             Comprehensive                Deflection
+                                              Validation   Annotation   Dynamism    Variation   Annotation                    Citations                and Private    Grounding   Metadata
+ MultiHop RAG (Tang and Yang, 2024)              ×             ×           ✓           ·            ✓             ×              ×           ✓             ×             ·           ✓
+ CRAG (Yang et al., 2024c)                       ✓             ·           ✓           ✓            ✓             ×              ×           ✓             ·             ×           ✓
+ ConcurrentQA (Arora et al., 2023)               ✓             ✓           ×           ✓            ×             ×              ×           ×             ✓             ·           ×
+ Summary of a Haystack (Laban et al., 2024)      ·             ·           ×           ·            ×             ✓              ✓           ×             ×             ×           ✓
+ RAG-QA Arena (Han et al., 2024)                 ✓             ✓           ·           ·            ·             ✓              ✓           ×             ×             ×           ✓
+ Facts Grounding (Jacovi et al., 2024)           ✓             ✓           ×           ·            ✓             ✓              ×           ×             ×             ×           ×
+ GaRAGe (ours)                                   ✓             ✓           ✓           ✓            ✓             ✓              ✓           ✓             ✓             ✓           ✓
+
+
+                       Table 1: Features of the GaRAGe benchmark relative to existing RAG benchmarks.
+
+
+   The process of generating an accurate final an-                                              the Web. Fully annotated and validated by profes-
+swer remains crucial, regardless of the specific                                                sional annotators, GaRAGe enables a fine-grained
+approach to query generation. Whether utilizing                                                 evaluation of LLMs answer generation capabilities,
+single or multiple queries, implementing one or                                                 for different question types (different dynamism,
+several passes, incorporating reasoning chains, or                                              complexity, etc.) and with controlled degrees of
+drawing from various information sources, the fun-                                              grounding noise. Apart from grounding relevancy
+damental challenge persists: the LLM must care-                                                 annotations for each snippet, the benchmark cate-
+fully distill relevant information from noise pas-                                              gorises questions along multiple dimensions: time-
+sages to provide precise, factual responses that ad-                                            sensitivity, topic popularity, complexity or domain,
+dress user needs while avoiding hallucinations.                                                 and provides manually-crafted long-form, compre-
+   Although there exist a large number of RAG                                                   hensive responses that contain attribution to the
+benchmarks in the literature, reliably evaluating                                               relevant grounding snippets and reflect the expec-
+each of these competencies remains a challenge, be-                                             tations of RAG users nowadays. Table 1 shows a
+cause query generation affects the available ground-                                            comparison of GaRAGe to other RAG benchmarks.
+ing and this process lacks human annotations. Pre-
+vious works resort to either: evaluating the final                                                 Thanks to the grounding annotations, GaRAGe
+response directly (Wei et al., 2024a), which con-                                               allows defining the Relevance-Aware Factuality
+flates query generation and answer generation; or                                               Score (RAF), which measures whether LLM re-
+using fixed grounding from one or more documents                                                sponses are grounded on strictly relevant pas-
+whose relevancy is either guaranteed (Tang and                                                  sages, as opposed to summarising grounding of
+Yang, 2024; Jacovi et al., 2024), unknown (Yang                                                 unknown value – extending factuality metrics from
+et al., 2024c) or synthetically mixed (Chen et al.,                                             Jacovi et al. (2024). Furthermore, a subset of
+2024b; Vodrahalli et al., 2024), missing the nuances                                            the dataset addresses the deflection capabilities of
+of real-life retrieval from user databases and the                                              LLMs, where the provided grounding is annotated
+Web. In addition to this, they come with at least                                               as insufficient to lead to a good answer, and the
+one of the following disadvantages, (1) unsuper-                                                LLM is expected to avoid hallucination. Addition-
+vised LLM-based dataset creation (Tang and Yang,                                                ally, we report attribution metrics, leveraging our
+2024; Niu et al., 2024; Laban et al., 2024) rais-                                               fine-grained annotations. Using our benchmark and
+ing concerns regarding question naturalness and                                                 proposed metrics, we evaluate a diverse selection
+answer reliability, (2) short or multi-choice exam-                                             of state-of-the-art proprietary and open-weights
+type answers (Tang and Yang, 2024; Yang et al.,                                                 LLMs and find that all models struggle at correctly
+2024b; Guinet et al., 2024) for simpler evaluation                                              detecting relevant grounding and overly summarise,
+at the cost of departing from real user expectations,                                           reaching only 60% in RAF, and in deflecting when
+(3) automatic evaluations of faithfulness to the un-                                            the grounding is irrelevant, reaching at most 31%
+annotated grounding which disregard whether the                                                 true positive rate. These problems become more
+grounding is correct (e.g. Jacovi et al., 2024), and                                            evident when retrieving documents from sparser
+(4) do not consider mixed grounding obtained from                                               private knowledge bases (KB), or when having to
+both user-specific document sets and the Web.                                                   process time-sensitive questions which require both
+   To overcome these limitations, we introduce                                                  relevancy and temporal reasoning. We release the
+GaRAGe, a benchmark with Grounding Annota-                                                      dataset and the prompts used for evaluation, in or-
+tions for RAG evaluation, comprising 2.4K ques-                                                 der to encourage the community to evaluate and
+tions with over 35K manually-annotated grounding                                                improve on the dimensions featured in the bench-
+passages retrieved from both private documents and                                              mark.
+                                                                                      17031
+       Question construction     Grounding collection        Human annotation
+                                                                                             Question with
+                                                                                               category
+                                                                                              annotation
+           Query generation              Question              Question filtering
+           Snippet retrieval          decomposition           Question annotation
+          Question generation        Passage retrieval       Grounding annotation
+           Question filtering       Passage reranking           Answer writing
+                                                               Answer validation
+
+                                                                                             Annotated
+                                     Complex                                                 Grounding
+                                     question
+                       Web                                                                Comprehensive,
+           Topics                                                                         grounded answer
+                                                                                           with attribution
+                        KB
+                                                                                              markers
+
+                                                             Grounding
+
+
+
+Figure 2: Pipeline for constructing GaRAGe contains mainly 3 steps: (i) complex question generation through a
+multi-stage framework, (ii) collection of diverse grounding snippets related to the query, and (iii) human curated
+long-form answer creation.
+
+
+2   Dataset construction                                    that can be used to compose a comprehensive an-
+                                                            swers (see §2.2).
+Our methodology for creating GaRAGe focuses
+on generating questions that challenge models with          Human Validation and Annotation. Each com-
+high complexity and reflect real-world RAG scenar-          ponent is annotated and validated by professional
+ios. The dataset features diverse grounding sources         annotators with the final goal of creating a com-
+and comprehensive human-curated long form an-               prehensive, grounded answer that addresses the
+swers. Figure 2 illustrates the process, which com-         question and contains attribution markers to signal
+prises the following main elements:                         the used information sources (see §2.3).
+Dynamic and Complex Questions. A diverse
+                                                            2.1   Question Construction
+set of questions with varied level of temporal dy-
+namism, complexity, and ranging both trending and           To generate complex questions, we employ an
+tail topics. For temporal dynamism we construct             LLM using multi-pass inference to develop the fol-
+fast-changing, slow-changing, and static type of            lowing four-step pipeline: (1) generate information-
+questions. These different categories require dis-          seeking Web search plan, (2) search for Web re-
+tinct interactions with the grounding information           sources, (3) generate questions through information
+and a variable leniency towards parametric knowl-           blending, and finally (4) filter and refine.
+edge. Additionally, a question becomes challeng-
+ing for RAG when a simple extract from a retrieved          Step 1: Generate Search Plan. Inspired by pre-
+document is not sufficient to answer it (Gabburo            vious work (Luo et al., 2025), we prompt the LLM
+et al., 2024). This complexity can arise from var-          to generate a strategic plan for Web exploration, fo-
+ious factors, such as when the answer demands               cusing on identifying relevant information sources.
+multiple logical steps, or requires combining infor-        This planning phase involves decomposing the
+mation from different retrieved snippets. Follow-           overall information-seeking task into specific, ac-
+ing literature (Pradeep et al., 2024), we generate          tionable goals, and then generating targeted search
+questions across dimensions such as comparisons,            queries for each goal to maximize the relevance and
+multi-hop and post-processing (see §2.1).                   diversity of retrieved information. We use seed top-
+                                                            ics to bootstrap the generation. We add the prompts
+Diverse Grounding Passages. A significant                   used for this step in Appendix B.5.
+amount of passages associated to each question.
+The grounding needs to reflect the topic of ques-           Step 2: Search the Web. Using the queries gen-
+tions (e.g. with passages from SEC filings if the           erated in previous step, we perform a Web search
+questions talks about a specific entity from this           for each of them. This retrieval process systemati-
+database), but also containing enough information           cally collects diverse information snippets, creating
+                                                         17032
+a comprehensive knowledge base that serves as the                 sources. These documents are then reranked us-
+foundation for question generation.                               ing a cross-encoder (Chen et al., 2024a) that com-
+                                                                  putes relevance scores between the original ques-
+Step 3: Generate Questions. By incorporating                      tion and each retrieved snippet. The final grounding
+exemplar questions of different types (Yang et al.,               consists of the top K documents ranked by their
+2024c) as in-context learning prompts and the col-                cross-encoder scores, ensuring that the most rel-
+lected information from the previous step, the sys-               evant information is prioritized in the benchmark
+tem learns to seamlessly blend information from                   evaluation. Finally, we include a subset without
+multiple sources, while maintaining coherence and                 reranking where the retrieved snippets are selected
+relevance, to generate diverse questions. This step               at random to include hard examples with an in-
+focuses on creating questions that require synthe-                creased level of noise.
+sizing information across different snippets, pro-
+moting more challenging and realistic information                 2.3    Human Annotation
+retrieval scenarios. The prompt for generating the                We conduct human annotation for each sample in
+questions is shown in Appendix B.6.                               the dataset to ensure quality. Professional annota-
+                                                                  tors6 annotated 2,366 questions across four dimen-
+Step 4: Filtering. The fourth stage implements a
+                                                                  sions, categorised each grounding passage accord-
+rigorous filtering framework to ensure the quality
+                                                                  ing to its question-relevancy, and composed a long-
+and utility of the generated questions. This in-
+                                                                  form, comprehensive, and grounded answers.7
+cludes a classifier to identify well-formed queries2 ,
+filtering questions without named entities3 , and                 Question annotation. We first filter out ques-
+deduplication employing SentenceTransformer4 .                    tions that are either invalid, a false premise, or not
+                                                                  information seeking. A question is considered valid
+2.2 Grounding Collection                                          if it is understandable, answerable, and not harm-
+For each of the generated questions, we collect                   ful. Each question is then annotated across four
+grounding information from multiple sources. In                   dimensions: Time-sensitivity, Complexity, Popular-
+particular, we utilize standalone Web search en-                  ity, and Category. Figure 3 shows the distribution
+gine5 or a hybrid approach that combines Web re-                  of question annotations.
+sults with information retrieved from private knowl-
+                                                                  Grounding relevancy. Each grounding contains
+edge bases. The private KBs that we include in
+                                                                  a piece of text, the source (Web or private KB) and,
+this work contain Enron employee emails (Klimt
+                                                                  if available, its age.8 In total, 4,752 passages re-
+and Yang, 2004), Arxiv abstracts, AWS DevOps
+                                                                  trieved from private knowledge bases and 30,599
+troubleshooting guides, and SEC filings (Guinet
+                                                                  from the Web are annotated. For each passage,
+et al., 2024). The retrieval pipeline operates in
+                                                                  the annotators first identify whether it is relevant
+two main steps. First, query decomposition breaks
+                                                                  to the topic of the question. If so, it is labeled
+down the complex query into focused sub-queries,
+                                                                  as one of: ANSWER - THE - QUESTION, RELATED -
+enabling focused retrieval of relevant information.
+                                                                  INFORMATION , OUTDATED , or UNKNOWN . Fig-
+This decomposition is performed using an LLM
+                                                                  ure 4 show the distribution of grounding sources
+with a crafted prompt that encourages detailed ex-
+                                                                  and relevancy.
+planations before generating the decomposition. To
+maintain quality and relevance, we employ a Se-                   Answer annotation. The annotator writes a long-
+mantic Textual Similarity (STS) classifier based                  form answer using only information from the
+on SentenceTransformer (Reimers and Gurevych,                     grounding passages that were labelled as relevant.9
+2019) to filter out sub-queries that deviate from the             Our guidelines provide some freedom for the an-
+original question’s intent.                                       notators to include OUTDATED or UNKNOWN in-
+   The second step involves document retrieval and                formation depending on the time-sensitivity of the
+reranking. Using the decomposed queries, we                          6
+                                                                       The annotation vendor is Centrific, who provided a quote
+retrieve initial document sets from the selected                 per sample of 9.65$.
+                                                                     7
+                                                                       Annotation guidelines and terms are presented in Ap-
+    2
+      https://huggingface.co/Ashishkr/query_wellformedness_score pendix A.
+    3                                                                8
+      We use S PACY library.                                           The age of a grounding is the difference between the dates
+    4
+      all-MiniLM-L6-v2                                           of the question and the grounding.
+    5                                                                9
+      To maintain anonymity, we do not disclose the name of            The average answer length is 192 words (σ = 73.5),
+the proprietary search engine.                                   excluding deflections.
+
+                                                            17033
+                      Time-sensitivity                               Complexity                                     Popularity                         Category
+                                 Static                                      Set                                                                    Law
+                                               Simple w. Condition                                                                                               Science
+                                                                                   Comparison                                       Tail
+                            33.0%                                    9.5%12.3%                                              55.1%
+                                                                                                                                                       15.0%16.5%
+                                                                             15.7%
+Fast-Changing 17.5%                                                                                     Head 17.8%
+                                                                                                                                           Business 25.6%       18.3% Internet
+                                                     Multihop 31.6%          30.8%
+                               49.6%                                                                                27.0%                                   24.6%
+                                                                                      Post-processing
+                                     Slow-Changing                                                               Torso                                        Arts
+
+Figure 3: Question statistics. We report the percentage of question types for time-sensitivity, complexity, popularity
+and category dimensions. In total our dataset contains 2366 examples.
+
+           Grounding Source                           Grounding Quality
+                                                     Irrelevant                                    factuality. We build on top of the factuality metric,
+    Private                                                                                        by defining metrics reflecting factuality to relevant
+                                                             26.6%             Unknown
+              13.4%
+                                                                     8.0%
+                                                                                                   passages. Then, we evaluate deflective behaviour as
+                                                                      7.8%          Outdated       opposed to hallucination when no relevant ground-
+                                                     31.2%
+                                          Answer                                                   ing is provided, and attribution ability to each of
+                       86.6%                                      26.4%
+                                                                                                   the provided relevant passages when generating
+                               Web                                        Related
+                                                                                                   the final response. We compute the metrics using
+                                                                                                   GPT-4o11 as a judge, unless otherwise specified.
+Figure 4: Grounding statistics. We report the percent-
+age of grounding sources and grounding quality.                                                    Eligibility score measures whether the model
+                                                                                                   sufficiently addresses the user request with respect
+                                                                                                   to the human-written answer as a baseline response.
+question, as long as they are annotated as relevant.                                               The LLM judge produces the labels: No Issues,
+Annotators extract claims from questions and add                                                   Minor Issue(s) or Major Issue(s) and the eligibility
+citation markers to ground each answer claim in                                                    score is calculated as the percentage of datapoints
+the supporting evidence.10 For questions lacking                                                   having no Major Issue(s). The prompt used for this
+sufficient information for generating a response,                                                  metric is reported in Appendix B.2.
+annotators write a deflection response, e.g. "There
+is not enough grounding for an answer.". A total                                                   Unadjusted Factuality score measures the per-
+of 427 questions are labelled as requiring a deflec-                                               centage of answers that are completely supported
+tive response, due to the irrelevant nature of the                                                 by the provided grounding, by first splitting the
+grounding. This pattern is more frequent on Fast-                                                  model response into sentences and then judging
+Changing questions where it is more likely for the                                                 whether each of those is supported, unsupported,
+grounding to be outdated, and on questions requir-                                                 contradictory, or not requiring factual attribution
+ing information from private sources – where the                                                   with respect to the provided grounding. Finally,
+increased topic specificity leads to a more difficult                                              a model answer is factual only if every sentence
+retrieval setting. Finally, to ensure high quality of                                              is supported or does not require attribution. The
+the answers in the benchmark, we conduct an inde-                                                  prompt used for this metric is reported in Appendix
+pendent human annotation workflow on a sample                                                      B.3. As GaRAGe provides relevancy annotations
+(N=300) which found every answer to be grounded                                                    for each grounding piece, we sharpen this metric to
+in at least one grounding passage. Results show                                                    calculate the model’s ability to ground its answers
+that the benchmark is truly grounded in the pro-                                                   only in the relevant passages provided as context,
+vided information (out of 2340 total claims, 97%                                                   hereinafter Unadjusted Relevance-Aware Factu-
+were grounded in at least 1 chunk).                                                                ality score (uRAF). Notice that this is a more con-
+                                                                                                   trolled metric that not only measures the factuality
+3         Evaluation framework                                                                     of the response, but also the relevancy of the infor-
+                                                                                                   mation used to produce the final response.
+Thanks to the fine-grained annotations of GaRAGe
+at the question, grounding, and answer level, we                                                   Factuality score combines the first two metrics,
+have the opportunity to evaluate several dimensions                                                and measures the percentage of answers that are
+of model performance. To this end, we follow Ja-                                                   both eligible and supported by the provided ground-
+covi et al. (2024) and report response eligibility and                                             ing. We similarly develop the Relevance-Aware
+     10                                                                                                 11
+          There are on average 5 unique cited sources per answer.                                            gpt-4o-2024-11-20 with a temperature of 0.2.
+
+                                                                                           17034
+             Model           Eligibility   Unadjusted Factuality     Factuality       uRAF          RAF
+                                                    API-based models
+             Claude Haiku      79.37              51.83                48.37          40.00         36.90
+             Claude Sonnet     86.07              68.48                64.67          51.75         48.91
+             Gemini 1.5        84.88              81.07                70.50          67.78         59.43
+             Gpt-4o            92.47              62.91                59.30          56.18         52.88
+             Nova Micro        90.97              48.83                45.02          39.94         37.16
+             Nova Lite         80.15              61.06                49.25          55.67         45.97
+             Nova Pro          87.77              74.47                66.63          68.29         60.67
+                                                  Open-weights models
+             Mistral           85.30              48.01                43.32          38.14         34.32
+             Mixtral           82.72              47.08                42.96          37.31         34.12
+             Qwen 14b          85.80              68.20                59.80          59.20         52.70
+             Qwen 32b          90.50              66.10                61.00          57.70         52.90
+
+Table 2: Performance of different open and closed models on GaRAGe measured using LLM-as-a-judge metrics.
+While Unadjusted Relevance-Aware Factuality Score (uRAF) measures the factuality of the response in relevant
+information, Relevance-Aware Factuality Score (RAF) measures the percentage of answers that are both eligible
+and supported by the relevant grounding.
+
+
+Factuality score (RAF) by combining uRAF with                 and 32b models (Yang et al., 2024a). We use greedy
+Eligibility to calculate the percentage of answers            decoding and the same input prompt across the
+that are both eligible and supported by the relevant          models as reported in Appendix B.1.
+passages.
+                                                              4.1   Main Results
+Deflection score measures the percentage of de-
+flective answers for the subset of the benchmark              In Table 2 we report the main results in terms of
+expecting a deflection, i.e., true positive, due to           answer eligibility and factuality. Firstly, GPT-4o
+insufficient grounding information. Additionally,             attains the highest eligibility score. Surprisingly,
+we report the portion of false positive deflective an-        the size of the model does not have a clear im-
+swers on the rest of the dataset which has sufficient         pact on this metric: both Nova Micro and Mistral
+relevant information for providing a non-deflective           outperform bigger models from the same family,
+response. The prompt used for this metric is re-              while Claude 3.5 Haiku lags behind Sonnet. Fur-
+ported in Appendix B.4.                                       thermore, Gemini 1.5 Flash achieves the highest
+                                                              factuality scores, followed by Nova Pro and then
+Attribution score measures the ability of the                 Claude 3.5 Sonnet and GPT-4o. The size of the
+model to produce correct attribution to grounding             model is an indicator of the model capacity in factu-
+passages from where the information was taken in              ality, suggesting that bigger models are constantly
+the form of citations. For this metric, we leverage           making better use of the provided information as
+the citations in the human-written responses and              context. Likely GPT-4o is generating information
+calculate Precision, Recall and F1 -score of the oc-          from parametric knowledge, which while useful as
+currence of citations in model response compared              reported by eligibility score, goes beyond the rele-
+to those in the human-written response.                       vant information provided in the grounding which
+                                                              might indicate a risk of hallucination. By combin-
+4        Results
+                                                              ing eligibility and unadjusted factuality scores, the
+We evaluate strong proprietary models and lead-               factuality score favors eligible answers that make
+ing open weights models of different sizes on the             full use of the provided grounding. In this metric,
+GaRAGe benchmark. In particular, we evaluate                  Gemini 1.5 Flash is leading, closely followed by
+GPT-4o12 (Hurst et al., 2024), Gemini 1.5 Flash               Nova Pro and Claude 3.5 Sonnet.
+(Team et al., 2023), Claude 3.5 Haiku13 and Son-                 Interestingly, when instead restricting the
+net14 (Anthropic, 2024), Amazon Nova Micro, Lite              grounding score to only the relevant grounding,
+and Pro (Intelligence, 2024), and open-weights                we notice an overall drop in performance for
+Mistral, Mixtral (Jiang et al., 2024), Qwen2.5 14b            most of the models. This demonstrates that
+    12
+       gpt-4o-2024-11-20
+                                                              most of the models are utilizing irrelevant or
+    13
+       anthropic.claude-3-5-haiku-20241022-v1:0               outdated grounding when generating the response,
+    14
+       anthropic.claude-3-5-sonnet-20241022-v2:0              i.e., acting as a summariser, rather than identi-
+                                                         17035
+      Model           True Positive   False Positive             Model           Precision Recall    F1
+      Claude Haiku        15.2             0.4                   Claude Haiku      49.9     71.9    58.9
+      Claude Sonnet       25.3             1.4
+                                                                 Claude Sonnet     51.8     67.5    58.6
+      Gemini 1.5          27.2             2.3
+                                                                 Gemini 1.5        54.7     56.3    55.5
+      GPT-4o              31.1             2.3
+      Nova Micro           7.0             0.3                   GPT-4o            57.9     59.0    58.4
+      Nova Lite            7.5             1.4                   Nova Micro        48.2     75.8    58.9
+      Nova Pro            18.0             0.8                   Nova Lite         50.0     46.4    48.1
+      Mistral              5.2             0.8                   Nova Pro          56.9     49.6    53.0
+      Mixtral              9.4             3.3                   Mistral           44.4     60.0    51.0
+      Qwen 14b            17.1             1.1                   Mixtral           46.3     56.3    51.0
+      Qwen 32b            21.5             1.2                   Qwen 14b          55.2     43.6    48.7
+                                                                 Qwen 32b          55.2     47.0    50.8
+Table 3: True positive and False Positive deflective re-
+sponses on the respective subsets of the benchmark.        Table 4: Performance of the models measured by Attri-
+                                                           bution Precision, Recall and F1 in GaRAGe.
+
+fying only the fresh and relevant information
+to include in the final response. The leading              4.2   Analysis
+models in terms of RAF score are Nova Pro and              Time-sensitivity. We analyze the performance
+Gemini 1.5 Flash, which achieve ∼60% in both eli-          on the fast-changing questions of the benchmark
+gible and relevant-information grounded responses.         with the assumption that (1) grounding passages
+                                                           are likely noisier and outdated, (2) LLMs struggle
+In Table 3 we report the average deflective                to reason about the relative recency of the ques-
+answers on the deflection subset as true positives,        tion and grounding information. In the first plot
+and false positives on the subset with sufficient          in Figure 5 we report RAF scores for the bigger
+information to provide a non-deflective response.          models. Results show a similar trend to the main
+Firstly, all the baseline models have a low false          results (§4.1), with Nova Pro achieving a score
+positive rate (less than 3.5%), meaning that when          of 51.7%, followed by Gemini (49.8%), Sonnet
+sufficient relevant information is provided in the         (46.7%), GPT-4o (45.7%) and Qwen 32b (43.8%).
+grounding passages, the models correctly provide           Interestingly, the performance on this set of ques-
+a non-deflective answer. On the other hand, the            tions is generally lower (∼10% across models) with
+models struggle at identifying the lack of sufficient      respect to the slow-changing or static questions,
+grounding for generating a good answer. While              demonstrating that LLMs struggle more when rea-
+larger models show a better deflective behaviour           soning over temporal facts.
+overall, the deflection coverage as measured by            Private questions performance. We further ana-
+true positive rate is rather low, with the best            lyze the quality of the grounding for questions built
+performing model being GPT-4o with 31.1%. This             from specific domains that simulate private knowl-
+is a significant gap for all models to improve on, to      edge bases in comparison with questions reflect-
+avoid hallucinations and misinforming RAG users.           ing general Web searches. The domain questions
+                                                           have less relevant grounding in comparison with
+In Table 4 we report the attribution score in terms of     the Web ones, likely making them more challeng-
+Precision, Recall and F1 -score. Results show that         ing for LLMs to extract only the relevant informa-
+larger models exhibit a more conservative approach         tion. For example, the questions covering Enron
+towards attribution, having lower values on recall,        topics have 47.8% relevant grounding on average
+but compensating through higher numbers for pre-           while questions with more broad topics reflecting
+cision. This indicates that smaller models might           Web usage have 85.6% relevant passages.
+be over-citing the provided sources rather than fo-           Results in Figure 5 show that there is a sig-
+cusing only on the relevant grounding. Overall,            nificant decrease in performance even across the
+we observe a similar performance across most of            strongest evaluated LLMs with a constant drop
+the models, ranging between 50-60% in F1 -score            of more than 10% for the questions addressing
+indicating a gap of the models to attribute the gen-       more specific topics. This confirms our intuition
+erated response to the corresponding grounding             and further suggests that LLMs struggle to create
+information.                                               grounded answers to the relevant information only.
+                                                       17036
+                                                                                                                                               .4
+                                            .3
+
+
+
+
+                                                                                                                                                                         .4
+                                                                                                                                             64
+                                          65
+
+
+
+
+                                                                                                                                                                       63
+                                                                                     .5
+                                                                                    .2
+                                    .5
+
+
+
+
+                                                                                  61
+                                                                                  61
+                                  60
+                                                                                                                                 60
+
+
+
+
+                                                                                                                                                                                       .8
+
+
+
+
+                                                                                                                                                                                                     .5
+                  60
+
+
+
+
+                                                                                                                                                                                     57
+
+
+
+
+                                                                                                                                                                                                   57
+                                                                                                                            .6
+                                                                                                        .5
+
+
+
+
+                                                                                                                         55
+
+
+
+
+                                                                                                                                                           .2
+                                                                                                       .2
+
+
+
+
+                                                                                                                         .1
+
+
+
+
+                                                                                                                                        .3
+                                                                                                     54
+                                                                                                     54
+
+
+
+
+                                                                                                                                                         53
+                                                                                                                       54
+
+
+
+
+                                                                                                                                      52
+                             .7
+
+
+
+
+                                                                                                                                                                  .4
+                                                             .2
+                           51
+
+
+
+
+                                                                                                                                                                50
+                                                           51
+
+
+
+
+                                                                               .8
+                                                                                                                                 50
+
+
+
+
+                                                                             49
+                  50
+
+
+
+
+                                                                   .6
+                                                    .4
+
+
+
+
+                                                                                                 .7
+                                                                 46
+                                                  46
+
+
+
+
+                                                                                               45
+
+
+
+
+                                                                                                                    .8
+
+
+
+
+                                                                                                                                                                                              .5
+                                                                                                                                                                                .8
+                                                                                                                  43
+
+
+
+
+                                                                                                                                                                                            42
+                                                                                                                                                                              41
+Percentage (%)
+
+
+
+
+                                                                                                                                                    .1
+                                                                                                                                 40
+
+
+
+
+                                                                                                                                                    39
+                  40
+
+                  30                                                                                                             30
+
+                  20                                                                                                             20
+
+                  10                 Fast-Changing                                                                               10
+                                     Slow-Changing                                                                                       Private
+                                     Static                                                                                              Web
+                      0                                                                                                          0
+                                Nova Pro                Sonnet                Gemini1.5             GPT-4o         Qwen32b             Nova Pro      Sonnet     Gemini1.5       GPT-4o       Qwen32b
+
+Figure 5: Performance of different models measured by RAF score on 1) different temporal question dynamism on
+the left and 2) private versus Web questions on the right.
+
+
+                 80
+                                                                                                                                 tions is 44.2% when we average across models.
+                                                                                    .1
+                                                                                    77
+                                      .3
+                                      75
+
+
+
+
+                 70                                                                                                              This is significantly lower to both Torso and Head
+                                                                                                      .6
+
+
+
+
+                                                                                                                         .9
+                                                                                                     68
+
+
+
+
+                                                                                                                       67
+                                 .4
+
+
+
+
+                                                             .7
+                                66
+
+
+
+
+                                                            65
+
+
+
+
+                                                                                                                                 questions which have an average RAF score of
+                                                                              .1
+                                                                             64
+
+
+
+
+                 60
+                                                                                                                  .2
+                                                                                                                  58
+                                                                                                .9
+
+
+
+
+                                                                                                                                 49.7% and 50.3%, respectively. These results ex-
+                                                                                               56
+                                                       .1
+                                                      53
+
+
+
+
+                 50
+                                                                                                                                 hibit similar patterns with the ones presented in the
+Percentage (%)
+
+
+                          .9
+
+
+
+
+                                                                        .2
+                          43
+
+
+
+
+                                                                        43
+
+
+
+
+                                                                                                                                 previous analysis, where Tail questions generally
+                                                                                          .7
+
+
+
+
+                 40
+                                                                                          38
+
+
+
+
+                                                                                                             .6
+                                                                                                             36
+                                                 .9
+                                                 33
+
+
+
+
+                 30                                                                                                              are more challenging due to the scarcity of relevant
+                 20
+                                                                                                                                 information on those topics and potentially noiser
+                                                                                                                                 grounding.
+                 10        Low
+                           Medium
+                 0
+                           High
+                               Nova Pro               Sonnet             Gemini1.5             GPT-4o         Qwen32b
+                                                                                                                                  5    Related Work
+                                                                                                                                 There have been an impressive number of bench-
+Figure 6: Performance of different models measured by
+RAF score relative to the grounding quality.
+                                                                                                                                 marks released in the last years in the domain of
+                                                                                                                                 Question Answering, due to both the impact of
+                                                                                                                                 the task and the complex and diverse reasoning re-
+Grounding quality. We investigate how the                                                                                        quired to have in order to solve it, spawning from
+grounding relevancy influences the answer qual-                                                                                  extractive benchmark probing for reading com-
+ity, in order to understand the model’s robustness                                                                               prehension like: Natural Questions (Kwiatkowski
+to irrelevant information. We divide the benchmark                                                                               et al., 2019), WikiQA (Yang et al., 2015) or Triv-
+into three different groups using the percentage of                                                                              iaQA (Joshi et al., 2017) to frameworks that are
+relevant passages (passr ) provided as gounding:                                                                                 easily customizable to new data and models such
+low (passr < 33%), medium (33% <= passr <                                                                                        as: Ragas (Es et al., 2024), Ragnarok (Pradeep
+66%) and high ( passr > 66%).                                                                                                    et al., 2024) or Ares (Saad-Falcon et al., 2024).
+   Figure 6 presents the RAF score of the bigger
+                                                                                                                                 Question complexity. A dimension which
+models we report in our benchmark. We observe
+                                                                                                                                 evolved lately for challenging LLM capabilites on
+a clear trend with the models performing signif-
+                                                                                                                                 RAG was to increase the complexity of the ques-
+icantly worse as the grounding quality degrades
+                                                                                                                                 tions asked. This was done either by requiring a
+with a 10% drop in performance from high to
+                                                                                                                                 more complex reasoning over multiple documents
+medium and with 20% drop from medium to low.
+                                                                                                                                 (Tang and Yang, 2024; Trivedi et al., 2022) or un-
+This pattern highlights the incapability of the mod-
+                                                                                                                                 derstanding extra-linguistic contextual information
+els to distinguish between relevant and irrelevant
+                                                                                                                                 like temporal information in order to construct the
+information when building an answer in the RAG
+                                                                                                                                 correct answer (Kasai et al., 2024; Zhang and Choi,
+setup.
+                                                                                                                                 2021). Gabburo et al. (2024) propose a metric
+Question popularity. When analyzing the per-                                                                                     for measuring question complexity based on the re-
+formance of the models according to question pop-                                                                                trieved evidences, capturing the difficulty of finding
+ularity, we find that the RAF scores for Tail ques-                                                                              accurate answers from multiple grounding sources.
+                                                                                                                              17037
+Grounding Coverage. Another component that               Limitations
+can be difficult for LLMs to deal with is the vari-
+                                                         We acknowledge that the benchmark contains only
+ety of the provided grounding to the model. This
+                                                         English datapoints. We plan to explore multilingual
+ranges from grounding with different levels of
+                                                         settings in the future.
+noise (Chen et al., 2024b; Liu et al., 2023), specific
+                                                            The dataset might be included in future LLM
+domains (Guinet et al., 2024; Han et al., 2023) or
+                                                         training which would invalidate the evaluation on
+combining grounding from both private and public
+                                                         the benchmark to some degree. Even though the
+sources (Arora et al., 2023).
+                                                         data might be included in the future (or some por-
+Answer Comprehesiveness. Most of the RAG                 tions are already included), the design of the dataset
+benchmarks focus on very short answers. This pat-        which measures the capability of the model to fol-
+tern is due to both the complexity of creating long,     low the provided grounding ensures the validity of
+comprehensive and grounded answers, but also due         the benchmark.
+to the difficulty to evaluate them. In the same time,       Some components of the annotations are some-
+LLMs generally have the default behaviour to be          what subjective, for example the popularity of a
+verbose with their answers, so there is a mismatch       topic can be different between annotators. While
+between the model behaviour and the evaluation           this can create some misaligned labels, we consider
+frameworks for RAG usecases. This is mitigated           the significant size of the dataset alleviates these
+lately through efforts of evaluating long-form Q&A       outliers.
+with benchmarks like: Rag-QA Arena(Han et al.,              Due to the fact that a significant part of the bench-
+2024), Facts (Jacovi et al., 2024), LongFact (Wei        mark reflects realistic internet questions, they might
+et al., 2024b) or ELI5 (Fan et al., 2019).               refer to individual people. In order to ensure the
+                                                         absence of offensive content, the first filter for the
+6   Conclusion                                           question annotation is that the question should not
+We introduce GaRAGe, a large RAG benchmark               request sensitive information; nor contain offen-
+with human-curated long-form answers and com-            sive, abusive, or harmful language. It should not be
+prehensive annotations of individual grounding pas-      discriminative based on gender or race.
+sages. Due to the detailed annotation of the dataset,       The LLMs might have different behaviour when
+we were able to develop a thorough set of experi-        we run them multiple times. Due to the costs for
+ments and a new metric: Reference-Aware Factu-           running the model inference, we report the perfor-
+ality (RAF) Score. This framework helped unveil          mance on one utterance and we acknowledge that
+multiple gaps in open and closed LLM’s abilities         there might be some fluctuations along multiple
+to deal with noisy grounding. Furthermore, we            runs.
+conduct in-depth analysis on model performance              We use only GPT-4o as a judge, so the results
+across different dataset dimensions, increasing our      might be biased towards GPT models during eval-
+understanding of model limitations.                      uation (Liu et al., 2024). This can be mitigated
+                                                         either through running multiple LLM judges and
+                                                         aggregate their judging for a more robust report, or
+                                                         through human evaluation.
+
+                                                         Ethics statement
+                                                         We utilize publicly available news data, which may
+                                                         contain viewpoints from different perspectives and
+                                                         private knoweldge bases that were previously used
+                                                         in publications. The output results in the paper do
+                                                         not represent the views of the authors.
+
+
+
+
+                                                    17038
+References                                                 Aaron Hurst, Adam Lerer, Adam P Goucher, Adam
+                                                             Perelman, Aditya Ramesh, Aidan Clark, AJ Os-
+AI Anthropic. 2024. Introducing the next generation of       trow, Akila Welihinda, Alan Hayes, Alec Radford,
+  claude.                                                    et al. 2024. Gpt-4o system card. arXiv preprint
+                                                             arXiv:2410.21276.
+Simran Arora, Patrick Lewis, Angela Fan, Jacob Kahn,
+  and Christopher Ré. 2023. Reasoning over public          Amazon Artificial General Intelligence. 2024. The ama-
+  and private data in retrieval-based systems. Transac-      zon nova family of models: Technical report and
+  tions of the Association for Computational Linguis-        model card.
+  tics, 11:902–921.
+                                                           Alon Jacovi, Andrew Wang, Chris Alberti, Connie Tao,
+Jianlv Chen, Shitao Xiao, Peitian Zhang, Kun Luo, Defu       Jon Lipovetz, Kate Olszewska, Lukas Haas, Michelle
+   Lian, and Zheng Liu. 2024a. Bge m3-embedding:             Liu, Nate Keating, Adam Bloniarz, Carl Saroufim,
+   Multi-lingual, multi-functionality, multi-granularity     Corey Fry, Dror Marcus, Doron Kukliansky, Gau-
+   text embeddings through self-knowledge distillation.      rav Singh Tomar, James Swirhun, Jinwei Xing, Lily
+   Preprint, arXiv:2402.03216.                               Wang, Madhu Gurumurthy, Michael Aaron, Moran
+                                                             Ambar, Rachana Fellinger, Rui Wang, Zizhao Zhang,
+Jiawei Chen, Hongyu Lin, Xianpei Han, and Le Sun.            Sasha Goldshtein, and Dipanjan Das. 2024. FACTS
+   2024b. Benchmarking large language models in              grounding: A new benchmark for evaluating the fac-
+   retrieval-augmented generation. In Proceedings of         tuality of large language models.
+   the AAAI Conference on Artificial Intelligence, vol-
+   ume 38, pages 17754–17762.                              Albert Q Jiang, Alexandre Sablayrolles, Antoine
+                                                             Roux, Arthur Mensch, Blanche Savary, Chris Bam-
+Shahul Es, Jithin James, Luis Espinosa Anke, and             ford, Devendra Singh Chaplot, Diego de las Casas,
+  Steven Schockaert. 2024. Ragas: Automated evalua-          Emma Bou Hanna, Florian Bressand, et al. 2024.
+  tion of retrieval augmented generation. In Proceed-        Mixtral of experts. arXiv preprint arXiv:2401.04088.
+  ings of the 18th Conference of the European Chap-
+  ter of the Association for Computational Linguistics:    Mandar Joshi, Eunsol Choi, Daniel S Weld, and Luke
+  System Demonstrations, pages 150–158.                     Zettlemoyer. 2017. Triviaqa: A large scale distantly
+                                                            supervised challenge dataset for reading comprehen-
+Angela Fan, Yacine Jernite, Ethan Perez, David Grang-       sion. arXiv preprint arXiv:1705.03551.
+  ier, Jason Weston, and Michael Auli. 2019. Eli5:
+  Long form question answering. In Proceedings of          Jungo Kasai, Keisuke Sakaguchi, Ronan Le Bras, Akari
+  the 57th Annual Meeting of the Association for Com-        Asai, Xinyan Yu, Dragomir Radev, Noah A Smith,
+  putational Linguistics, pages 3558–3567.                   Yejin Choi, Kentaro Inui, et al. 2024. Realtime qa:
+                                                             what’s the answer right now? Advances in Neural
+                                                             Information Processing Systems, 36.
+Matteo Gabburo, Nicolaas Paul Jedema, Siddhant Garg,
+  Leonardo F. R. Ribeiro, and Alessandro Moschitti.        Bryan Klimt and Yiming Yang. 2004. Introducing the
+  2024. Measuring retrieval complexity in question           enron corpus. In CEAS, volume 4, page 1.
+  answering systems. In Findings of the Association
+  for Computational Linguistics: ACL 2024, pages           Tom Kwiatkowski, Jennimaria Palomaki, Olivia Red-
+ 14636–14650, Bangkok, Thailand. Association for             field, Michael Collins, Ankur Parikh, Chris Alberti,
+  Computational Linguistics.                                 Danielle Epstein, Illia Polosukhin, Jacob Devlin, Ken-
+                                                             ton Lee, et al. 2019. Natural questions: a benchmark
+Gauthier Guinet, Behrooz Omidvar-Tehrani, Anoop              for question answering research. Transactions of the
+  Deoras, and Laurent Callot. 2024. Automated                Association for Computational Linguistics, 7:453–
+  evaluation of retrieval-augmented language models          466.
+  with task-specific exam generation. arXiv preprint
+  arXiv:2405.13622.                                        Philippe Laban, Alexander Fabbri, Caiming Xiong, and
+                                                             Chien-Sheng Wu. 2024. Summary of a haystack: A
+Rujun Han, Peng Qi, Yuhao Zhang, Lan Liu, Juliette           challenge to long-context LLMs and RAG systems.
+  Burger, William Yang Wang, Zhiheng Huang, Bing             In Proceedings of the 2024 Conference on Empiri-
+  Xiang, and Dan Roth. 2023. Robustqa: Benchmark-            cal Methods in Natural Language Processing, pages
+  ing the robustness of domain adaptation for open-          9885–9903, Miami, Florida, USA. Association for
+  domain question answering. In Findings of the As-          Computational Linguistics.
+  sociation for Computational Linguistics: ACL 2023,
+  pages 4294–4311.                                         Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio
+                                                             Petroni, Vladimir Karpukhin, Naman Goyal, Hein-
+Rujun Han, Yuhao Zhang, Peng Qi, Yumo Xu, Jenyuan            rich Küttler, Mike Lewis, Wen-tau Yih, Tim Rock-
+  Wang, Lan Liu, William Yang Wang, Bonan Min,               täschel, Sebastian Riedel, and Douwe Kiela. 2020.
+  and Vittorio Castelli. 2024. Rag-qa arena: Eval-           Retrieval-augmented generation for knowledge-
+  uating domain robustness for long-form retrieval           intensive nlp tasks. In Advances in Neural Infor-
+  augmented question answering. arXiv preprint               mation Processing Systems, volume 33, pages 9459–
+  arXiv:2407.13998.                                          9474. Curran Associates, Inc.
+                                                      17039
+Yi Liu, Lianzhe Huang, Shicheng Li, Sishuo Chen, Hao        highly capable multimodal models. arXiv preprint
+   Zhou, Fandong Meng, Jie Zhou, and Xu Sun. 2023.          arXiv:2312.11805.
+   Recall: A benchmark for llms robustness against
+   external counterfactual knowledge. arXiv preprint     Harsh Trivedi, Niranjan Balasubramanian, Tushar Khot,
+   arXiv:2311.08147.                                       and Ashish Sabharwal. 2022. MuSiQue: Multi-
+                                                           hop questions via single-hop question composition.
+Yiqi Liu, Nafise Moosavi, and Chenghua Lin. 2024.          Transactions of the Association for Computational
+  Llms as narcissistic evaluators: When ego inflates       Linguistics, 10:539–554.
+  evaluation scores. In The 62nd Annual Meeting of
+  the Association for Computational Linguistics.         Kiran Vodrahalli, Santiago Ontanon, Nilesh Tripuraneni,
+                                                           Kelvin Xu, Sanil Jain, Rakesh Shivanna, Jeffrey Hui,
+Haoran Luo, Haihong E, Yikai Guo, Qika Lin, Xiaobao        Nishanth Dikkala, Mehran Kazemi, Bahare Fatemi,
+  Wu, Xinyu Mu, Wenhao Liu, Meina Song, Yifan              et al. 2024. Michelangelo: Long context evaluations
+  Zhu, and Luu Anh Tuan. 2025. Kbqa-o1: Agentic            beyond haystacks via latent structure queries. arXiv
+  knowledge base question answering with monte carlo       preprint arXiv:2409.12640.
+  tree search. Preprint, arXiv:2501.18922.
+                                                         Jason Wei, Nguyen Karina, Hyung Won Chung,
+Cheng Niu, Yuanhao Wu, Juno Zhu, Siliang Xu,               Yunxin Joy Jiao, Spencer Papay, Amelia Glaese, John
+  KaShun Shum, Randy Zhong, Juntong Song, and               Schulman, and William Fedus. 2024a. Measuring
+  Tong Zhang. 2024. RAGTruth: A hallucination cor-          short-form factuality in large language models. arXiv
+  pus for developing trustworthy retrieval-augmented        preprint arXiv:2411.04368.
+  language models. In Proceedings of the 62nd An-
+  nual Meeting of the Association for Computational      Jerry Wei, Chengrun Yang, Xinying Song, Yifeng Lu,
+  Linguistics (Volume 1: Long Papers), pages 10862–         Nathan Hu, Dustin Tran, Daiyi Peng, Ruibo Liu,
+  10878, Bangkok, Thailand. Association for Compu-          Da Huang, Cosmo Du, et al. 2024b. Long-form
+  tational Linguistics.                                     factuality in large language models. arXiv preprint
+                                                            arXiv:2403.18802.
+Philhoon Oh and James Thorne. 2023. Detrimental con-
+  texts in open-domain question answering. In Find-      An Yang, Baosong Yang, Beichen Zhang, Binyuan Hui,
+  ings of the Association for Computational Linguis-       Bo Zheng, Bowen Yu, Chengyuan Li, Dayiheng Liu,
+  tics: EMNLP 2023, pages 11589–11605, Singapore.          Fei Huang, Haoran Wei, et al. 2024a. Qwen2. 5
+  Association for Computational Linguistics.               technical report. arXiv preprint arXiv:2412.15115.
+
+Ronak Pradeep, Nandan Thakur, Sahel Sharifymoghad-       Xiao Yang, Kai Sun, Hao Xin, Yushi Sun, Nikita Bhalla,
+  dam, Eric Zhang, Ryan Nguyen, Daniel Campos,             Xiangsen Chen, Sajal Choudhary, Rongze Daniel
+  Nick Craswell, and Jimmy Lin. 2024. Ragnar\" ok:         Gui, Ziran Will Jiang, Ziyu Jiang, Lingkun Kong,
+  A reusable rag framework and baselines for trec 2024     Brian Moran, Jiaqi Wang, Yifan Ethan Xu, An Yan,
+  retrieval-augmented generation track. arXiv preprint     Chenyu Yang, Eting Yuan, Hanwen Zha, Nan Tang,
+  arXiv:2406.16828.                                        Lei Chen, Nicolas Scheffer, Yue Liu, Nirav Shah,
+                                                           Rakesh Wanga, Anuj Kumar, Wen tau Yih, and
+Nils Reimers and Iryna Gurevych. 2019. Sentence-           Xin Luna Dong. 2024b. Crag – comprehensive rag
+  BERT: Sentence embeddings using Siamese BERT-            benchmark. Preprint, arXiv:2406.04744.
+  networks. In Proceedings of the 2019 Conference on
+  Empirical Methods in Natural Language Processing       Xiao Yang, Kai Sun, Hao Xin, Yushi Sun, Nikita Bhalla,
+  and the 9th International Joint Conference on Natu-      Xiangsen Chen, Sajal Choudhary, Rongze Daniel
+  ral Language Processing (EMNLP-IJCNLP), pages            Gui, Ziran Will Jiang, Ziyu Jiang, et al. 2024c.
+  3982–3992, Hong Kong, China. Association for Com-        Crag–comprehensive rag benchmark. arXiv preprint
+  putational Linguistics.                                  arXiv:2406.04744.
+Jon Saad-Falcon, Omar Khattab, Christopher Potts, and    Yi Yang, Wen-tau Yih, and Christopher Meek. 2015.
+  Matei Zaharia. 2024. Ares: An automated evalua-          Wikiqa: A challenge dataset for open-domain ques-
+  tion framework for retrieval-augmented generation        tion answering. In Proceedings of the 2015 con-
+  systems. In Proceedings of the 2024 Conference of        ference on empirical methods in natural language
+  the North American Chapter of the Association for        processing, pages 2013–2018.
+  Computational Linguistics: Human Language Tech-
+  nologies (Volume 1: Long Papers), pages 338–354.       Michael J.Q. Zhang and Eunsol Choi. 2021. Situat-
+                                                           edQA: Incorporating extra-linguistic contexts into
+Yixuan Tang and Yi Yang. 2024. Multihop-RAG:               QA. Proceedings of the Conference on Empirical
+  Benchmarking retrieval-augmented generation for          Methods in Natural Language Processing (EMNLP).
+  multi-hop queries. In First Conference on Language
+  Modeling.
+Gemini Team, Rohan Anil, Sebastian Borgeaud, Jean-
+  Baptiste Alayrac, Jiahui Yu, Radu Soricut, Johan
+  Schalkwyk, Andrew M Dai, Anja Hauth, Katie
+  Millican, et al. 2023.    Gemini: a family of
+                                                    17040
+A   Annotation definitions
+We present below the definitions used for the annotation guidelines for all the steps.
+
+A.1 Question dimensions
+A.1.1   Question filters
+    Question validity. A question is valid if it can be answered by seeking information in the Web, or using
+other sources of information or common knowledge. Also, it should not request sensitive information; nor
+contain offensive, abusive, or harmful language. It should not be discriminative based on gender or race.
+   False premise. False premise questions are questions that contain falsely assumed facts that are not
+directly stated but are likely to be believed by the asker.
+   Information Seeking. An Info-seeking question refers to a question posed with the aim of acquiring
+knowledge, clarity or insights on a particular topic, seeking factual information, or explanation on details.
+
+A.1.2   Temporal dynamism
+   Time sensitive questions. A time sensitive question refers to a question for which the answer changes
+with the time and it requires real-time content to be answered. If you are not familiar with the topic, you
+should search the Internet in order to make a decision whether it is time-sensitive.
+   Static questions. A static question refers to a question for which the answer doesn’t change with the
+time or a question that doesn’t require real-time content to be answered.
+   Slow-Changing questions. It is acceptable to have information be more than a week recency to answer
+the question. This includes more than one month, more than one year, and so on.Note that if there is
+trending-news about the same question, it should be considered as less than one week.
+   Fast-Changing questions. Required information needs to be within a seven day recency to answer the
+question.
+
+A.1.3   Question complexity
+   Simple. Questions asking for simple facts
+   Simple w. condition. Questions asking for simple facts with some given conditions, such as stock
+prices on a certain date and a director’s recent movies in a certain genre.
+   Set. Questions that expect a set of entities or objects as the answer.
+   Comparison. Questions that compare two entities.
+   Aggregation. Questions that require aggregation of retrieval results to answer.
+   Multi-hop. Questions that require chaining multiple pieces of information to compose the answer.
+   Post-processing heavy. Questions that need reasoning or processing of the retrieved information to
+obtain the answer.
+
+A.1.4   Question popularity
+   Head. Covers widely-known, frequently discussed subjects, which receive signficant media coverage.
+It resembles high-frequency search terms or trending topics.
+   Torso. Covers moderately popular topics, but not mainstream. It resembles medium-frequency search
+terms.
+   Tail. asks about niche or specialized topics and covers highly technical or specialized fields.
+
+A.1.5   Question category
+  We cover the following question categories: Arts & Entertainment, Computers & Electronics, Health,
+Jobs & Education, Home & Garden, Law & Government, Travel, Science, Business & Industrial, Hobbies
+& Leisure, Books & Literature, Sports, News, Beauty & Fitness, Finance, People & Society, Autos &
+Vehicles, Games, Time & Weather, Online Communities, Internet & Telecom, Local Information, Pets &
+Animals, Stock and Other.
+                                                   17041
+A.2 Grounding annotation
+   IRRELEVANT. The snippet does not contain information relevant to the question and, therefore,
+cannot be utilized to generate an answer. The content of the snippet fails to address the specific query,
+lacking any pertinent details or insights that could contribute to formulating a comprehensive response.
+   RELEVANT. The snippet is directly relevant to the query or topic at hand. It contains detailed and
+substantial information that can significantly contribute to the answer creation. This means that the content
+of the snippet should directly address the query, offering pertinent insights, data, or explanations that
+enhance the modelś ability to generate accurate and comprehensive responses.
+   ANSWER-THE-QUESTION. The information from the snippet is up to date and correctly answer the
+question. Make sure you check the date that the question was asked and date of the document (evidence
+date). When there are contradicting information on different snippets, execute a google search to decide
+the correct answer.
+   RELATED-INFORMATION. The snippet does not directly answer the question on its own. However,
+it contains information relevant to the query, which can be utilized to expand a detailed response. The
+content provides details and context that can be integrated into a more comprehensive and thorough
+answer.
+   OUTDATED. The snippet contains information that is outdated and no longer current. This means the
+data or details presented are from a previous time period and do not reflect the most recent developments
+or findings related to the topic. As a result, the information may not be accurate or relevant in the present
+context, potentially leading to misunderstandings or incorrect conclusions if relied upon.
+   UNKNOWN. The source age is unknown and the age cant́ be inferred from the snippet.
+
+A.3 Answer qualities
+   Correctness. A correct answer should be informative and provide valid information to the user that
+directly addresses the question being asked.
+   Naturalness. An answer should be natural, as in it is well formed, fluent, and grammatically correct
+according to standard English grammar/speaking rules. The response should be close to how humans
+respond to the question.
+   Usefulness. The answer should be useful and actionable that enables the customer to take an informed
+decision after reading the response.
+   Objectiveness. An answer should be objective, free from bias or personal opinion and based on
+verifiable facts that can be supported by evidence.
+   Helpfulness. The answer should be helpful, honest and cause no harm to the reader/human/customer.
+
+B      Prompts
+B.1       LLM prompt
+      Example Inference Prompt for Baseline Models
+    A chat between a curious User and an artificial intelligence Bot. The Bot gives helpful, detailed, and polite answers to the User’s questions.
+    In this session, the model has access to search results and a user’s question, your job is to answer the user’s question using only information from the search results.
+    Model Instructions:
+
+           • You should provide concise answer to simple questions when the answer is directly contained in search results, but when comes to yes/no question, provide some details.
+
+           • In case the question requires multi-hop reasoning, you should find relevant information from search results and summarise the answer based on relevant information with
+             logical reasoning.
+
+           • Be faithful to information provided in the searched passages and indicate that “The model cannot find sufficient information to answer the question” if the query cannot be
+             answered using information in the search results.
+
+           • Place citations as inline markers (e.g., %[1]%, %[2]%, etc.) directly within the relevant parts of the response text. Do not include a separate citation section after the
+             response.
+
+           • DO NOT USE INFORMATION THAT IS NOT IN SEARCH RESULTS!
+
+      Context: The current time is {query_time}.
+      User: {query} Bot:
+      Resource: Search Results: {search_results} Bot:
+
+
+
+                                                                                         17042
+B.2       Facts Eligibility Prompt
+
+
+
+
+      Example Eligibility Prompt for the LLM judge
+  Your mission is to judge the response from an AI model, the *test* response, calibrating your judgement using a *baseline* response. Please use the following rubric criteria to
+  judge the responses:
+
+  <START OF RUBRICS>
+  Your task is to analyze the test response based on the criterion of “Instruction Following”. Start your analysis with “Analysis”.
+
+  **Instruction Following**
+  Please first list the instructions in the user query.
+  In general, an instruction is VERY important if it is specifically asked for in the prompt and deviates from the norm. Please highlight such specific keywords.
+  You should also derive the task type from the user query and include the task-specific implied instructions.
+  Sometimes, no instruction is available in the user query.
+  It is your job to infer if the instruction is to autocomplete the user query or is asking the LLM for follow-ups.
+  After listing the instructions, you should rank them in order of importance.
+  After that, INDEPENDENTLY check if the test response and the baseline response meet each of the instructions.
+  You should itemize, for each instruction, whether the response meets, partially meets, or does not meet the requirement, using reasoning.
+  You should start reasoning first before reaching a conclusion about whether the response satisfies the requirement.
+  Citing examples while reasoning is preferred.
+
+      Reflect on your answer and consider the possibility that you are wrong.
+      If you are wrong, explain clearly what needs to be clarified, improved, or changed in the rubric criteria and guidelines.
+
+      In the end, express your final verdict as one of the following three json objects:
+
+  {{ “Instruction Following”: “No Issues” }}
+
+  {{ “Instruction Following”: “Minor Issue(s)” }}
+
+  {{ “Instruction Following”: “Major Issue(s)” }}
+
+  <END OF RUBRICS>
+
+  # Your task
+  ## User query
+  < |begin_of _query| >
+  {query}
+  < |end_of _query| >
+
+  ## Test Response:
+  < |begin_of _test_response| >
+  {answer}
+  < |end_of _test_response| >
+
+  ## Baseline Response:
+  < |begin_of _baseline_response| >
+  {expected_answer}
+  < |end_of _baseline_response| >
+
+      Please write your analysis and final verdict for the test response.
+
+
+
+                                                                                           17043
+B.3      Facts Factuality Prompt
+      Example Factuality Prompt for the LLM judge
+   You are a helpful and harmless AI assistant. You will be provided with a textual context and a model-generated response.Your task is to analyze the response sentence by sentence
+   and classify each sentence according to its relationship with the provided context.
+
+   **Instructions:**
+
+   1. **Decompose the response into individual sentences.**
+   2. **For each sentence, assign one of the following labels:**
+   * **‘supported‘**: The sentence is entailed by the given context. Provide a supporting excerpt from the context. The supporting except must *fully* entail the sentence. If you
+   need to cite multiple supporting excepts, simply concatenate them.
+   * **‘unsupported‘**: The sentence is not entailed by the given context. No excerpt is needed for this label.
+   * **‘contradictory‘**: The sentence is falsified by the given context. Provide a contradicting excerpt from the context.
+   * **‘no_rad‘**: The sentence does not require factual attribution (e.g., opinions, greetings, questions, disclaimers). No excerpt is needed for this label.
+   3. **For each label, provide a short rationale explaining your decision.** The rationale should be separate from the excerpt.
+   4. **Be very strict with your ‘supported‘ and ‘contradictory‘ decisions.** Unless you can find straightforward, indisputable evidence excerpts *in the context* that a sentence is
+   ‘supported‘ or ‘contradictory‘, consider it ‘unsupported‘. You should not employ world knowledge unless it is truly trivial.
+
+   **Input Format:**
+
+   The input will consist of two parts, clearly separated:
+
+   * **Context:** The textual context used to generate the response.
+   * **Response:** The model-generated response to be analyzed.
+
+   **Output Format:**
+
+   Your output should be in json format as follows:
+
+   The key should be ‘"grounding_quality"‘ and the value should be a list of json objects with an object for each sentence in the response, containing the following fields:
+
+   * ‘"sentence"‘: The sentence being analyzed.
+   * ‘"label"‘: One of ‘supported‘, ‘unsupported‘, ‘contradictory‘, or ‘no_rad‘.
+   * ‘"rationale"‘: A brief explanation for the assigned label.
+   * ‘"excerpt"‘: A relevant excerpt from the context. Only required for ‘supported‘ and ‘contradictory‘ labels.
+
+   **Example:**
+
+   **Input:**
+
+   “‘ Context: Apples are red fruits. Bananas are yellow fruits.
+   Response: Apples are red. Bananas are green. Bananas are cheaper than apples. Enjoy your fruit! “‘
+
+   **Output:**
+
+   {{"grounding_quality":
+   [{{"sentence": "Apples are red.", "label": "supported", "rationale": "The context explicitly states that apples are red.", "excerpt": "Apples are red fruits."}},
+   {{"sentence": "Bananas are green.", "label": "contradictory", "rationale": "The context states that bananas are yellow, not green.", "excerpt": "Bananas are yellow fruits."}},
+   {{"sentence": "Bananas are cheaper than apples.", "label": "unsupported", "rationale": "The context does not mention the price of bananas or apples.", "excerpt": null}},
+   {{"sentence": "Enjoy your fruit!", "label": "no_rad", "rationale": "This is a general expression and does not require factual attribution.", "excerpt": null}}]
+   }}
+
+   **Now, please analyze the following context and response:**
+
+   **User Query:** {query}
+
+   **Context:** {context_document}
+
+   **Response:** {answer}
+
+
+
+
+B.4      Deflection Judge Prompt
+      Example Deflection Prompt for the LLM judge
+   You are a human expert in analyzing responses to questions given by a model.
+
+   Your task to assign the response into exactly one of the following categories:
+
+   - missing: the response indicates that it is not sure, does not know the answer, or states that it cannot provide an answer.
+   - attempted: the response attempts to answer the question.
+
+      QUESTION: {query}
+
+      MODEL RESPONSE: {answer}
+
+      CATEGORY:
+
+   Your response should be in json format as follows:
+   {{
+   "justification": (Explain why the MODEL RESPONSE is missing or attempted. Use one or two sentences maximum. Keep the answer as concise as possible.)
+   "grade": (missing or attempted),
+   }}
+
+
+
+
+B.5      Search the Web
+The LLM is first prompt to generate research (Prompt Research Tasks) tasks that are then expanded to
+search queries (Prompt Creating Search Queries).
+                                                                                         17044
+Research Tasks
+You are an AI assistant tasked with breaking down a given question into a list of research tasks. Your goal is to help organize the research approach and ensure all necessary
+information is gathered to answer the question effectively.
+
+Here’s the question you need to analyze:
+
+<question>
+Create complex questions that require reasoning about {seed_topic}. Search the Web for recent news and documents about seed_topic to be used as input for this creation. Those
+queries you will generate must require an answer that needs reasoning over evidence from multiple documents.
+</question>
+
+Carefully analyze the question to identify the key components that require research. Consider the following:
+1. The main topic or subject of the question
+2. Any specific details, dates, or names mentioned
+3. The type of information needed (e.g., factual, comparative, historical)
+4. Any implicit sub-questions within the main question
+
+Based on your analysis, create a list of research tasks. Each task should:
+1. Be clear, specific, and concise
+2. Focus on one aspect of the research
+3. Be actionable and help in gathering relevant information
+4. Be ordered logically, if there’s a natural sequence to the research
+5. Not use pronouns to refer to something in the question. Use its actual name.
+
+The number of tasks can range from 1 to 3, depending on the complexity of the question.                 Simpler questions may only require one or two tasks, while more
+complex ones might need up to three.
+
+Present your list of research tasks in the following format:
+<research_tasks>
+1. [First research task]
+2. [Second research task]
+3. [Third research task]
+... </research_tasks>
+
+If a subsequent task specifically refers to an entity or other information that a preceding task can provide, mark that entity or item with a note in parentheses that
+indicates the task number that provides it. Format: (from task N)
+Make sure to place the parenthesis inline in the text after the entity. Example:
+1. Identify the name of ...
+2. Find the ... of that person (from task 1).
+It is important to use the correct format. If entity X was identified in task 1 and used in task 2, say X (from task 1).
+
+
+
+
+Creating Search Queries
+You are an AI research assistant tasked with understanding and researching a given task. Your goal is to analyze the task and generate appropriate Web search queries for further
+research.
+Here is the task you need to research:
+<task>
+{instruction}
+</task>
+
+Follow these steps to complete your assignment:
+
+1. Carefully read and analyze the given task and the results of related tasks.
+2. Think about the key aspects of the task that require further research. Consider what information you need to gather to fully address the task.
+3. Based on your analysis, generate three Web search queries that will help you research the task effectively. Each query should focus on a different aspect of the task or seek
+different types of information.
+4. Today’s date is date . You may use the current year in your Web search queries where appropriate.
+5. Format your output as follows: a. First, provide a brief explanation of your understanding of the task and how you’ve incorporated information from related tasks. Write this
+explanation inside <task_analysis> tags. b. Then, list your three Web search queries, each wrapped in <QUERY> tags.
+Here’s an example of how your output should be structured:
+
+<task_analysis> [Your analysis of the task] </task_analysis>
+
+<QUERY>[Your first Web search query]</QUERY>
+<QUERY>[Your second Web search query]</QUERY>
+<QUERY>[Your third Web search query]</QUERY>
+
+Remember, your queries should be specific and targeted to gather the most relevant information for the task at hand. Avoid overly broad or vague queries.
+
+
+
+
+                                                                                   17045
+B.6       Generate Questions
+      Generating Complex Questions
+    You are tasked generating questions, based on the results to several sub-questions. Your goal is to create detailed and focused queries that will require reasoning to be answered,
+    addressing the main instruction while incorporating key information from each sub-question.
+    Here is the main instruction you need to address: <main_instruction>
+    Create complex questions that require reasoning about {seed_topic}. Search the Web for recent news and documents about seed_topic to be used as input for this creation. Those
+    queries you will generate must require an answer that needs reasoning over evidence from multiple documents.
+    </main_instruction>
+
+
+    Below are the sub-questions and their corresponding answers:
+    <sub_questions_answers>
+    {% for task, result in prev_results.items() %}
+    <task>
+    - Task {task}: {result}
+    </task>
+    {% endfor %}
+    </sub_questions_answers>
+
+    To synthesize your response, follow these steps:
+    1. Look for common themes or connections between the sub-answers.
+    2. Based on the high level topics, generate complex questions which needs reasoning to obtain answers (e.g., "how many days did Thurgood Marshall serve as a Supreme Court
+    justice?", "how many Oscar awards did Meryl Streep win?").
+    3. Avoid to create simple questions that can be answered by just composing and summarizing the answers.
+    4. The questions must require chaining multiple pieces of information to compose the answer (e.g., "who acted in Ang Lee’s latest movie?")
+    5. Generate a list of elaborate questions using an unordered list.
+    6. The questions should NOT have more than 20 words, they must be succinct. Don’t make the generated questions too long!
+
+      Example of generated elaborate questions:
+
+    what age did ferdinand magelan discovered the philippines?
+    how many grammy awards were won by the song plan b until 62nd grammy?
+    how many feet is the place with the lowest elevation in vermont?
+    when did meta announce the release of the meta quest 4?
+    what christmas song is the most streamed, all i want for christmas is you or jingle bells?
+    who portrayed the younger character, gillian lynne in phantom of the opera: behind the mask or brian blessed in prisoner of honor?
+    was the lion king the highest-grossing film of all time when it was released?
+    how many american players ranked are in the top ten of the wta?
+    the 1984 maze game devil world has an amazing soundtrack. who composed it?
+    which movie has a higher budget, poor things or bob marley one love?
+    how many films are in the hunger games film series?
+    what was the pricing of the most recent ipo for a major social media company?
+    which feid album is the one that has "normal" on it?
+    what was the total value of all mergers and acquisitions in the healthcare sector?
+    what are the top 3 movies on hbo max?
+    how many regional confederations does fédération internationale de volleyball have?
+    how many american music awards has taylor swift won throughout her career?
+    what is the age difference between angelina jolie and billy bob thornton?
+    how much is the worst performing stock, amazon?
+    how many albums has the band radiohead released that have reached number one on the uk albums chart?
+    who was the first actress to play the role of wonder woman in a live-action movie?
+    the three countries with the highest oil production are...?
+    which artist has been performing for longer, shakira or machine gun kelly?
+    how many times has meryl streep been nominated for an academy award for best actress?
+    which female tennis players have won all four grand slam tournaments in a single calendar year?
+    which five dow jones companies have a debt-to-equity ratio of less than 0.1?
+    give at least 3 etf funds with over 1 billion total of assets
+    which movie did jennifer lawrence co-star in with bradley cooper where she played a character with a mental health condition?
+    what are the five highest-grossing movies at the box office directed by nancy meyers?
+
+
+
+
+C       Examples
+Below, we present either questions from different dataset features (e.g. datapoints requiring deflection) or
+we present detailed examples from the dataset with the associated annotations and a response from one of
+the evaluated models.
+
+C.1 Private (Domain-specific) questions
+Examples of questions covering different private KBs, in contrast with the more general Web questions:
+    • DevOps: “How do fractional derivatives enhance the NLS model in ocean engineering?”
+    • SEC: “What are the differences between the regulatory requirements for CE marking in the EU and
+      FDA approval in the U.S. for medical devices and nutritional products?”
+    • Enron: “What were the main concerns and objections raised by PG&E regarding the DWR’s power
+      purchase revenue requirement?”
+    • Arxiv: “How do performance metrics like Peak Signal-to-Noise Ratio (PSNR) and Structural
+      Similarity Index (SSIM) evaluate the effectiveness of image denoising algorithms, and what are their
+      limitations?”
+                                                                                        17046
+  • Web: “Considering the focus on experience-based events in 2025, how do the world’s largest
+    religious gatherings like the Maha Kumbh Mela compare in terms of scale and significance?”
+
+
+C.2 Questions with different levels of complexity
+
+  • Simple: What improvements does Amazon Bedrock’s new caching feature offer?
+
+
+  • Simple w. condition: What is the current age of Donald Trump, and how long did he serve as the
+    President of the United States?
+
+
+  • Comparison: How might Blue Origin’s successful New Glenn launch impact SpaceX’s dominance
+    in the private space sector?
+
+
+  • Post-processing heavy: What are the implications of the Gaza ceasefire negotiations for regional
+    stability, and how is BBC News reporting on the complexities of these talks?
+
+
+  • Multi-Hop: With Marina Satti’s absence from the Eurovision 2025 national final due to her strained
+    relations with ERT, what is the potential effect on Greece’s participation in the upcoming contest?
+
+
+  • Set: What strategies might be implemented to ensure the reliability and affordability of internet
+    services in the Far North, as outlined by the CRTC?
+
+
+  • Aggregation: How many albums has the band Radiohead released that have reached number one on
+    the UK Albums Chart?
+
+
+C.3 Question covering different levels of popularity
+
+  • Head: What impact has Biden’s decision to commute the sentences of nearly 2,500 inmates serving
+    long prison terms for nonviolent drug offenses had on the criminal justice system and public opinion?
+
+
+  • Torso: How do the latest Google algorithm updates reflect the company’s commitment to improving
+    search quality and providing valuable content?
+
+
+  • Tail: How might the new asset management joint venture between Natixis Investment Managers and
+    Generali impact the landscape of European finance, considering the competitive environment and
+    recent trends?
+
+
+C.4 Question with different degree of temporal dynamism
+
+  • Evergreen: How did Abbott Laboratories justify the acquisition cost of Visiogen, Inc. in 2009?
+
+
+  • Slow-Changing: How has the COVID-19 pandemic impacted Matson’s operations and financial
+    performance?
+
+
+  • Fast-Changing: Which two quarterbacks threw for more than 100 yards in the NFL playoffs?
+                                                 17047
+C.5 GaRAGe detailed examples
+
+
+
+
+  GaRAGe example 1
+
+  Question: What trends are shaping RSU compensation in 2024?
+     • temporal dynamism: Slow-Changing
+
+     • complexity: Set
+
+     • domain: Stock
+
+     • popularity: Tail
+
+  Grounding:
+     • Snippet 1:
+           – text: RSUs as a Component of a Competitive Compensation Package RSUs are often included as part of a
+             competitive compensation package, along with base salary, bonuses, and other benefits.RSUs can enhance
+             the overall attractiveness of a compen...
+           – age: 11 months and 8 days
+           – label: IRRELEVANT
+
+     • Snippet 2:
+           – text: Toggle Employee stock benefit schemes—such as Restricted Stock Units (RSUs), Employee Stock
+             Option Plans (ESOPs), and Employee Stock Purchase Plans (ESPPs) - are increasingly....
+           – age: 1 weeks and 2 days
+           – label: IRRELEVANT
+
+     • Snippet 10:
+           – text: As Artificial Intelligence (AI) continues to transform various aspects of business, its integration with
+             RSU compensation is becoming an emerging trend. In the 2024 fiscal year, companies are looking to
+             leverage AI-based applications in RSU plans in the following ways:
+           – age: 1 years, 1 months, and 12 days
+           – label: RELEVANT
+
+  Human answer: In 2024, several trends are shaping RSU compensation. Companies are increasingly integrating
+  Artificial Intelligence (AI) into RSU plans, using AI-based applications to improve the design, distribution, and
+  management of RSU programs [10]
+
+  Nova Pro answer: The integration of AI-based applications in RSU plans is an emerging trend shaping RSU
+  compensation in 2024 [10].
+
+
+                                                          17048
+GaRAGe example 2
+
+Question: How do the recent findings on malaria outbreaks in the DRC affect global health strategies?
+   • temporal dynamism: Slow-Changing
+
+   • complexity: Post-processing heavy
+
+   • domain: Health
+
+   • popularity: Torso
+
+Grounding:
+   • Snippet 1:
+         – text: In line with the group’s findings, WHO updated its recommendations for 3 key malaria prevention
+           strategies: seasonal malaria chemoprevention (SMC), ...
+         – age: 2 years, 0 months, and 13 days
+         – label: IRRELEVANT
+
+   • Snippet 2:
+         – text: In-depth exploration is required to inform the implementation of the RTS,S vaccine particularly in
+           countries with low or moderate EPI vaccine coverage...
+         – age: 6 months and 22 days
+         – label: IRRELEVANT
+
+Human answer: There is not enough grounding for an answer.
+
+Qwen 32b answer: The recent findings on malaria outbreaks in the Democratic Republic of the Congo (DRC) have
+influenced global health strategies by prompting the World Health Organization (WHO) to update its recommendations
+for malaria prevention strategies. These strategies include seasonal malaria chemoprevention (SMC), perennial malaria
+chemoprevention (PMC), and intermittent preventive treatment in pregnancy (IPTp). [1] The updates aim to broaden the
+use of chemoprevention among young children at high risk and to expand access to preventive chemotherapy during
+pregnancy. These recommendations reflect a more informed approach to when and where chemoprevention is most
+effective, encouraging tailored deployment in local contexts. [3] Additionally, the WHO is developing a Framework to
+guide decisions on the allocation of limited malaria vaccine supplies, ensuring that national malaria control programmes
+can make informed decisions about vaccine prioritization. [4] These adjustments in global health strategies are driven
+by the latest evidence and aim to enhance the effectiveness of malaria control measures, particularly in high-risk areas
+like the DRC. [1], [2], [3], [4]
+
+
+
+
+                                                        17049
+

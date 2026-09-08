@@ -1,0 +1,802 @@
+        Towards Fine-Grained Citation Evaluation in Generated Text:
+             A Comparative Analysis of Faithfulness Metrics
+
+         Weijia Zhang1    Mohammad Aliannejadi1 Yifei Yuan2 Jiahuan Pei3
+                        Jia-Hong Huang1 Evangelos Kanoulas1
+1
+  University of Amsterdam 2 University of Copenhagen 3 Centrum Wiskunde & Informatica
+                                 w.zhang2@uva.nl
+
+
+
+                     Abstract
+   Large language models (LLMs) often produce
+   unsupported or unverifiable content, known
+   as “hallucinations.” To mitigate this, retrieval-
+   augmented LLMs incorporate citations, ground-
+   ing the content in verifiable sources. Despite
+   such developments, manually assessing how
+   well a citation supports the associated state-
+   ment remains a major challenge. Previous stud-
+   ies use faithfulness metrics to estimate cita-
+   tion support automatically but are limited to
+   binary classification, overlooking fine-grained
+   citation support in practical scenarios. To inves-
+   tigate the effectiveness of faithfulness metrics
+                                                           Figure 1: An example of partial support in citation eval-
+   in fine-grained scenarios, we propose a com-
+                                                           uation. Inconsistent metric scores are observed when
+   parative evaluation framework that assesses the
+                                                           assessing the statement with three faithfulness metrics.
+   metric effectiveness in distinguishing citations
+   between three-category support levels: full, par-
+   tial, and no support. Our framework employs
+   correlation analysis, classification evaluation,        assessments (Gao et al., 2023b; Li et al., 2024b).
+   and retrieval evaluation to measure the align-          To this end, faithfulness evaluation metrics are em-
+   ment between metric scores and human judg-              ployed as proxies to automatically estimate the
+   ments comprehensively. Our results show no              citation support (Xia et al., 2024; Li et al., 2024a).
+   single metric consistently excels across all eval-
+                                                           These metrics measure the faithfulness between
+   uations, revealing the complexity of assessing
+   fine-grained support. Based on the findings, we         model-generated and sourced text, which aligns
+   provide practical recommendations for devel-            closely with the objectives of automated citation
+   oping more effective metrics.                           evaluation.
+                                                          Prior studies in faithfulness metrics have pri-
+                                                       marily limited this task to a binary classification
+1 Introduction
+                                                       problem (Tahaei et al., 2024; Huang et al., 2024d),
+Large language models (LLMs) often generate con- where faithfulness metrics are leveraged to deter-
+tent known as “hallucinations” (Li et al., 2022; Ji    mine whether a citation supports the associated
+et al., 2022; Zhang et al., 2023b), which contra- statement. However, this binary approach fails to
+dicts established knowledge or lacks verification      capture the fine-grained citation support encoun-
+from reliable sources. Mainstream studies (Bohnet      tered in real-world applications. For instance, in
+et al., 2022; Gao et al., 2023a) aim to mitigate       Figure 1, a retrieval-augmented LLM generates a
+this by using retrieval-augmented LLMs to gen- response with multiple citations given a query. A
+erate responses with in-line citations that provide    human assessor labels the first citation as “partial
+supporting evidence. One primary challenge is          support” since it only supports “the most humid
+to assess how well a citation supports its state- place in Australia is Macquarie Island” but not
+ment, as manual evaluation is labor-intensive and “which is located in the Southern Ocean off the
+time-consuming. Automated citation evaluation          coast of Tasmania.” This partial support scenario
+has been explored to reduce reliance on human          causes noticeable inconsistencies across three dif-
+                                                    427
+            Proceedings of the 17th International Natural Language Generation Conference, pages 427–439
+                     September 23–27, 2024. ©2024 Association for Computational Linguistics
+ferent faithfulness metrics. Therefore, there is a sig-   Our contributions can be summarized as follows:
+nificant research need to evaluate the effectiveness      • To the best of our knowledge, we are the first
+of faithfulness metrics in accurately distinguishing        to systematically investigate the effect of fine-
+citations in such fine-grained support scenarios.           grained support levels on faithfulness metrics in
+                                                            the task of automated citation evaluation.
+   To address this issue, we propose a comparative
+                                                          • We propose a comparative evaluation framework
+evaluation framework for assessing the metric ef-
+                                                            to assess the alignment between metric scores
+fectiveness in fine-grained support scenarios. In our
+                                                            and human judgments. This framework includes
+framework, we define “support levels” as the extent
+                                                            three evaluation protocols to comprehensively
+to which a citation supports the associated state-
+                                                            evaluate the metric performance.
+ment (Liu et al., 2023; Yue et al., 2023). Specif-
+                                                          • Our experimental results demonstrate the best-
+ically, we consider a three-category support level
+                                                            performing faithfulness metrics still struggle to
+scenario: full, partial, and no support. These cate-
+                                                            identify partially supporting citations, underscor-
+gories indicate whether a citation fully, partially or
+                                                            ing the inherent challenges of automated citation
+does not support the associated statement, respec-
+                                                            evaluation. Based on our findings, we offer prac-
+tively. To comprehensively assess the metric effec-
+                                                            tical recommendations for the development of
+tiveness, we measure the alignment between metric
+                                                            more effective metrics.
+scores and human judgments with three types of
+evaluation protocols: 1) Correlation analysis: we
+employ it to measure how well metric scores corre-        2   Related Work
+late with human judgments. 2) Classification eval-
+                                                         Faithfulness Evaluation Metrics Faithfulness
+uation: we conduct a classification evaluation to as-
+                                                         evaluation metrics are crucial for assessing the
+sess the metrics’ capability to distinguish citations
+                                                         factual consistency of text generated by models
+based on their support levels. 3) Retrieval evalua-
+                                                         relative to the source text. It receives great in-
+tion: we undertake a retrieval evaluation to assess
+                                                         terest within the field of natural language gener-
+the metric effectiveness in ranking citations accord-
+                                                         ation (NLG) (Huang et al., 2019, 2021b; Zhang
+ing to their support levels. This is motivated by the
+                                                         et al., 2021, 2023a; Huang et al., 2024b,c; Zhu
+observation that the previous two evaluation proto-
+                                                         et al., 2024), particularly in abstractive summa-
+cols assume citations are within statements, which
+                                                         rization (Maynez et al., 2020; Kryscinski et al.,
+is not always valid in practice (Asai et al., 2024).
+                                                         2020; Huang and Worring, 2020; Huang et al.,
+In such cases, faithfulness metrics are adapted to
+                                                         2021a; Zhang et al., 2024). In general, faith-
+perform post-hoc retrieval, aiming to retrieve po-
+                                                         fulness metrics are categorized into three types:
+tential citations from a candidate pool (Kang et al.,
+                                                         entailment-based, similarity-based, and QA-based
+2023; Gou et al., 2024). Thus, retrieval evaluation
+                                                         metrics. Entailment-based metrics employ natu-
+is crucial for determining the practical utility of
+                                                         ral language inference (NLI) models to determine
+these metric adaptations.
+                                                         if the source text entails the generated text (Falke
+   In our experiments, we assess various widely          et al., 2019; Laban et al., 2022; Honovich et al.,
+used faithfulness metrics, categorizing them into        2022; Zha et al., 2023). Similarity-based met-
+similarity-based, entailment-based, and LLM- rics, such as BERTScore (Zhang et al., 2020) and
+based metrics. We find that: 1) No single faithful- BARTScore (Yuan et al., 2021), quantify text simi-
+ness metric consistently outperforms others across       larity and have demonstrated robust performance
+three evaluation protocols, suggesting that these        in faithfulness evaluation (Pagnoni et al., 2021;
+protocols are complementary and should be inte- Honovich et al., 2022). QA-based metrics utilize
+grated for a comprehensive evaluation of metric          a combination of question generation and ques-
+performance; 2) The best-performing metrics show         tion answering to estimate faithfulness levels (Dur-
+promise in distinguishing some support scenarios         mus et al., 2020; Wang et al., 2020; Scialom et al.,
+but struggle with others. This highlights the inher- 2021; Fabbri et al., 2022). In this work, we exclude
+ent complexities of automated citation evaluation. QA-based metrics from our work, following re-
+3) Similarity-based metrics surpass best-perform- cent works suggesting the challenging limitations
+ing entailment-based metrics in retrieval evaluation. in these metrics (Kamoi et al., 2023). We focus
+This indicates that entailment-based metrics exhibit     on the extrinsic evaluation of faithfulness metrics
+higher sensitivity to noisy data, which is introduced    against human judgments in scenarios requiring
+by irrelevant documents in such scenarios.               fine-grained citation support.
+                                                      428
+ Statement: According to relative      Faithfulness           Metric Score:              Correlation Analysis
+ humidity, the most humid place
+ in Australia is Macquarie Island…
+                                          Metric            0.95 (full support)
+
+
+    Citation: ...In terms of RH, the                                                   Classification Evaluation
+    most "humid" place in Australia
+    is Macquarie Island, which also                   Human Judgment:
+    happens to be one of the world's                  1 (partial support)                Retrieval Evaluation
+    worst climates....
+
+
+
+Figure 2: The overview of the proposed comparative evaluation framework. A faithfulness metric assigns scores to
+given statements and their corresponding citations. Subsequently, our framework comprehensively assesses the
+alignment between these metric scores and human judgments by employing correlation analysis, classification, and
+retrieval evaluation.
+
+
+Citation Evaluation Citation evaluation seeks to                     ment. In this work, we assume access to a dataset
+enhance the trustworthiness of retrieval-augmented                   for automated citation evaluation, comprising pairs
+LLMs by verifying the support provided by cita-                      of statements and their corresponding citations, de-
+tions to the generated statements (Rashkin et al.,                   noted as (si , ci ). Each si is a statement from the set
+2023; Yue et al., 2023; Huang and Chang, 2023;                       S of all statements produced by an LLM and each
+Huang et al., 2024a). Given the labor-intensive                      ci is a citation from a set C of citations returned
+nature of manual citation evaluation, there has                      by the LLM. We categorize the citations into three
+been a shift towards automated approaches to re-                     distinct support levels: full, partial, and no support.
+duce dependence on human evaluation. Since the                       We adopt the definition of these support levels from
+goals of automated citation evaluation align closely                 Liu et al. (2023):
+with faithfulness evaluation in NLG, faithfulness                    • Full Support (FS): the citation fully supports
+metrics are employed to verify whether a citation                       every detail in the statement.
+supports the corresponding statement (Li et al.,                     • Partial Support (PS): the citation supports cer-
+2024c; Sun et al., 2023; Ye et al., 2024; Li et al.,                    tain aspects of the statement, while other details
+2024d; Shen et al., 2024; Huang et al., 2024d). De-                     remain unsupported or are contradicted.
+spite their widespread usage, the effectiveness of                   • No Support (NS): none of the content in the state-
+these metrics in more practical fine-grained citation                   ment is supported by the citation. For instance,
+support scenarios, such as those involving partial                      the citation is entirely irrelevant or contradicts
+support by citations, has not been adequately ad-                       the statement.
+dressed. Questions remain about the metrics’ capa-                   To this end, without loss of generality, we define a
+bility to differentiate citations in these fine-grained              faithfulness metric as a scoring function, denoted
+scenarios. This work addresses these gaps by ex-                     as F (si , ci ) → R+ . For any given statement si
+amining the effectiveness of faithfulness metrics                    and its associated citation ci , this scoring function
+across three distinct levels of citation support: full,              provides a numeric score that indicates the extent
+partial, and no support.                                             of support provided by the citation to the statement.
+
+3      Evaluation Framework                                          3.2      Evaluation Protocols
+In this section, we introduce the proposed com-                      The objective of evaluation protocols is to compre-
+parative evaluation framework. We begin by for-                      hensively assess the extent to which metric scores
+malizing the task of automated citation evaluation.                  align with human judgments. In this work, we
+Subsequently, we detail three distinct evaluation                    assess this alignment across three distinct dimen-
+protocols within this framework, ensuring a com-                     sions: correlation, classification performance,
+prehensive assessment in alignment between faith-                    and retrieval effectiveness.
+fulness metrics and human judgments. Our frame-
+work is demonstrated in Figure 2.                                    3.2.1        Correlation Analysis
+                                                        The correlation analysis measures the general trend
+3.1       Task Formulation                              in the relationship between metric scores and hu-
+The objective of automated citation evaluation is to    man judgments. Previous research (Kryscinski
+automatically quantify the support level of a cita- et al., 2020; Pagnoni et al., 2021) has employed
+tion based on the citation and its associated state- correlation analysis to meta-evaluate faithfulness
+                                                     429
+metrics in abstractive text summarization. They in-      Huang et al., 2024a). In post-hoc retrieval, can-
+volve measuring the extent to which metric scores        didate documents are retrieved to form a pool of
+align with binary levels of faithfulness, which are      potential citations using information retrieval tech-
+annotated by human assessors as either faithful          niques (Karpukhin et al., 2020). Faithfulness met-
+(1) or unfaithful (0). Inspired by them, we adapt        rics are then employed to rank citations based on
+correlation analysis to the task of automated ci-        their predicted metric scores, aiming to identify
+tation evaluation. Specifically, given the state-        the citation with the highest support level. Ideally,
+ments and their associated citations, we assess how      a faithfulness metric should rank fully supporting
+well predicted metric scores correlate with human-       citations at the top, followed by partially support-
+annotated support levels. To facilitate correlation      ing citations, and finally non-supporting citations.
+analysis, we assign support levels {FS, PS, NS}          Similar to correlation analysis, we assign support
+to values {0, 1, 2}. We then utilize standard corre-     levels {FS, PS, NS} to relevance labels {2, 1, 0}.
+lation metrics to assess metric performance. The         The metric effectiveness is assessed using standard
+details are shown in Section 5.2.                        information retrieval evaluation metrics. This eval-
+                                                         uation also provides a deeper understanding of met-
+3.2.2   Classification Evaluation                        ric performance in post-hoc citation retrieval sce-
+In addition to correlation analysis, we perform clas-    narios.
+sification evaluation to determine the metric effec-
+tiveness in discriminating citations based on their      4     Faithfulness Metrics
+support level. Specifically, the metrics need to cat-
+                                                         In our experiments, we evaluate diverse faith-
+egorize a citation into one of three support levels:
+                                                         fulness evaluation metrics, dividing them into
+FS, PS, NS. Notably, existing faithfulness metrics
+                                                         similarity-based, entailment-based, and LLM-
+do not apply to this three-way classification sce-
+                                                         based metrics. Similarity-based metrics assess
+nario, as they are unable to accurately determine
+                                                         the support levels mainly based on the degree of
+the extent to which a statement is partially sup-
+                                                         similarity between the citation and the associated
+ported by its corresponding citation (Laban et al.,
+                                                         statement. Entailment-based metrics leverage pre-
+2022). To address this issue, we adopt a one-
+                                                         trained NLI models to estimate the support levels.
+vs-one strategy, by effectively decomposing the
+                                                         LLM-based metrics directly prompt LLMs to mea-
+three-way classification into three binary classifica-
+                                                         sure the support levels.
+tion task settings: (i) Full Support vs. No Support
+(FS-vs-NS), (ii) Full Support vs. Partial Support        4.1    Similarity-Based Metrics
+(FS-vs-PS), and (iii) Partial Support vs. No Support
+(PS-vs-NS). For each binary classification task set-     BERTScore (Zhang et al., 2020) adopts BERT (De-
+ting, we construct a specialized dataset comprising      vlin et al., 2019) to measure semantic similar-
+only instances with the corresponding binary sup-        ity between a pair of text by aggregating cosine
+port levels derived from the original dataset. We        similarity among token-level BERT representation
+assess the performance of metrics on these tailored      without further fine-tuning. We report the pre-
+binary datasets using standard binary classification     cision version of BERTScore since it correlates
+evaluation metrics. The overall metric performance       more with human judgments in faithfulness evalua-
+is then computed by averaging the results across         tion (Pagnoni et al., 2021), We use recommended
+all binary tasks.                                        deberta-xlarge-mnli (He et al., 2021) as
+                                                         the backbone model.
+3.2.3   Retrieval Evaluation                             BARTScore (Yuan et al., 2021) adopts
+The objective of retrieval evaluation is to measure      BART (Lewis et al., 2020) to measure the
+the metric effectiveness in ranking citations ac- similarity between two texts based on conditional
+cording to their support levels. This evaluation         log-likelihood of generating target text from
+is motivated by the observation that previous cor- source text. In our experiments, we leverage the
+relation and classification evaluations presuppose       faithfulness version of BARTScore, in which
+the presence of citations within generated state- we treat the citation and the statement as the
+ments. However, real-world scenarios frequently          source and target text, respectively. We use the
+present instances where citations are absent or          BART model fine-tuned on the CNN/DailyMail
+irrelevant, highlighting the need for post-hoc re- dataset (Hermann et al., 2015) as the backbone
+trieval to enhance citation quality (Liu et al., 2023; model.
+                                                      430
+      Human Judgment     # Statement-Citation Pair        Metric                Pearson     Spearman       Kendall
+      Full Support                6,616
+      Partial Support             1,445                   LLM-based
+      No Support                  4,620                     GPT-3.5-CON          0.023         0.057         0.035
+      Total                       12,681                    GPT-3.5-DIS          0.101         0.181         0.128
+                                                          Entailment-based
+Table 1: Data statistics of the GenSearch dataset. Each     FactCC               0.121         0.199         0.140
+pair has been annotated by human assessors based on         SummaCZS             0.364         0.180         0.137
+three categories: full, partial, and no support.            SummaCConv           0.565         0.444         0.342
+                                                            AlignScore           0.585         0.488         0.393
+4.2    Entailment-Based Metrics                             AutoAIS              0.638         0.639         0.547
+                                                          Similarity-based
+FactCC (Kryscinski et al., 2020) is a BERT-based            BERTScore            0.542         0.227         0.170
+model to verify whether a generated text is faithful        BARTScore            0.598         0.235         0.176
+to a source text, which is fine-tuned on synthetic
+training data containing simulated examples with          Table 2: Correlation coefficients between human-
+different factual errors (Kryscinski et al., 2020).       annotated support levels and metric scores on the
+                                                          GenSearch dataset. The best and second-best corre-
+SummaC (Laban et al., 2022) is a RoBERTa-
+                                                          lations are marked in bold and underline, respectively.
+based model (Liu et al., 2019) fine-tuned on NLI
+datasets. This metric splits source and generated
+texts into sentences, computes entailment scores          the range [0, 1] for a given statement and its cita-
+for each pair, and aggregates these scores to ob-         tion. Here, 1 indicates full support, 0 indicates no
+tain the final faithfulness score. It has two variants:   support, and values between 0 and 1 indicate partial
+(i) SummaCZS is a zero-shot version that is only          support.
+pre-trained on NLI datasets; (ii) SummaCConv adds            In the experiments, we employ the latest ver-
+extra convolutional layers and is further fine-tuned      sion of GPT-3.5 (gpt-3.5-turbo-0125) as
+on synthetic training data proposed in Kryscinski         the base model. Moreover, we utilize the chain
+et al. (2020).                                            of thought (CoT) method (Wei et al., 2022; Kojima
+AutoAIS (Honovich et al., 2022) is a T5-11B (Raf-         et al., 2022) to enhance the reasoning capabilities
+fel et al., 2020) model trained on a collection of        of the LLM. We use GPT-3.5-DIS and GPT-3.5-
+NLI datasets, which is commonly used in recent            CON to denote GPT-3.5 using discrete and contin-
+automated citation evaluation. As the original out-       uous scoring methods, respectively. The detailed
+put of AutoAIS is a numeric, either “1” (faithful)        prompts are shown in Appendix A.
+or “0” (unfaithful), we utilize the generated token
+probability of “1” as the predicted metric score.         5     Experiments
+AlignScore (Zha et al., 2023) further fine-tunes a        In this section, we describe the dataset used in
+RoBERTa-based model (Liu et al., 2019) with a             the experiments. Subsequently, we discuss the
+unified alignment loss function. To this end, a uni-      evaluation metrics incorporated within our pro-
+fied dataset containing a variety of related natural      posed framework, which assess the performance
+language processing datasets has been collected.          of faithfulness metrics in alignment with human
+In this work, we adapt the large version as it            judgments.
+demonstrates the best performance.
+                                                          5.1    Datasets
+4.3    LLM-Based Metrics
+                                                         In our experiments, we utilize the GenSearch
+In addition to established faithfulness metrics, we
+                                                         dataset (Liu et al., 2023) as our evaluation bench-
+utilize LLMs as faithfulness evaluators for com-
+                                                         mark, which consists of data from generative
+parison. Specifically, we introduce two prompting
+                                                         search engines (GSE) like BingChat.1 These GSEs
+methods as follows: (i) Discrete scoring prompts
+                                                         represent commercial applications of retrieval-
+the LLM to assign discrete scores from the set
+                                                         augmented LLMs. As depicted in Figure 1, each
+0, 1, 2 for a given statement and its citation, where
+                                                         example includes a user query and a corresponding
+0, 1, and 2 indicate no support, partial support, and
+                                                         response generated by the GSE. The user queries
+full support, respectively; (ii) Continuous scoring
+                                                            1
+prompts the LLM to assign continuous scores in                https://www.bing.com/chat
+                                                      431
+           Category              Metric            FS-vs-NS      FS-vs-PS      PS-vs-NS     Overall
+                                 GPT-3.5-CON          54.80        54.13         51.60        53.51
+           LLM-based
+                                 GPT-3.5-DIS          57.84        52.79         55.48        55.37
+                                 FactCC               68.45        62.58         56.39        62.47
+                                 SummaCZS             78.60        72.96         58.67        70.08
+           Entailment-based      SummaCConv           85.01        78.74         61.84        75.20
+                                 AlignScore           90.79        81.41         69.78        80.66
+                                 AutoAIS              92.61        82.31         73.90        82.94
+                                 BARTScore            87.43        75.42         71.34        78.07
+           Similarity-based
+                                 BERTScore            91.55        75.94         78.72        82.07
+
+Table 3: Classification performance of faithfulness metrics regarding ROC-AUC score (%) on the GenSearch dataset.
+The overall performance is the macro-averaged performance of three binary classification settings. The best and
+second-best scores are marked in bold and underline, respectively.
+
+
+are sourced from various QA datasets (Fan et al.,         mine human judgments for the text chunks, we
+2019; Kwiatkowski et al., 2019). Each response            employ the Jaccard similarity index to identify text
+consists of multiple statements, each containing in-      chunks containing human-annotated evidence sen-
+line citations linking to web documents. Notably,         tences, classifying them as either fully or partially
+these statements are supported by one or more ci-         supporting text chunks.
+tations. For this benchmark, human assessors are
+enrolled to annotate each statement-citation pair         5.2    Evaluation Metrics
+based on the degree to which the citation supports        We report Pearson, Spearman, and Kendall coef-
+the associated statement.                                 ficients for correlation analysis, as recommended
+                                                          by previous research (Pagnoni et al., 2021). In
+Data Statistics The GenSearch dataset com-                terms of classification evaluation, following pre-
+prises a total of 12, 681 statement-citation pairs.       vious studies (Honovich et al., 2022; Ma et al.,
+For each pair, human assessors categorize the cita-       2023), we report the macro-averaged Receiver Op-
+tion into one of three categories of support levels:      erating Characteristic-Area Under Curve (ROC-
+full, partial, or no support. The details of data         AUC) score, as it obviates the need for manual
+statistics are shown in Table 1. Notably, for ci-         threshold setting for each binary classification task.
+tations classified under the full or partial support      For retrieval evaluation, we report standard nor-
+categories, human assessors additionally extract          malized discounted cumulative gain (NDCG@n)
+explicit evidence sentences from the citation that        scores where n ∈ {5, 10, 20}.
+support the associated statement.
+                                                          6     Results and Analyses
+Data Processing While the GenSearch dataset
+aligns well with our research objectives, we en- In this section, we discuss the performance of faith-
+counter a significant challenge: the extensive         fulness metrics across three distinct evaluation pro-
+length of most citations within the dataset. These     tocols. Subsequently, we conduct a qualitative anal-
+citations often comprise a web document with thou- ysis through case studies.
+sands of words, far exceeding the maximum input
+capacity of most faithfulness metrics, which is lim- 6.1 Correlation Results
+ited to 512 tokens. This limitation necessitates       The correlation results are demonstrated in Table 2.
+input truncation, potentially compromising the re- The following observations can be made: 1) The
+liability of faithfulness metrics. To mitigate this    best-performing metrics reveal moderate correla-
+issue, we adopt a strategy similar to previous stud- tions when analyzed using the Pearson coefficient.
+ies (Zha et al., 2023). Specifically, we segment       For instance, AutoAIS achieves the highest Pearson
+each cited document into shorter text chunks, with     coefficient, recording a value of 0.638, largely sur-
+a maximum length of 150 words per chunk. These         passing the second-best BARTScore, which posts
+text chunks, along with their corresponding state- a coefficient of 0.598. 2) There is notable variation
+ments, serve as the inputs for faithfulness metrics    in correlation trends among high-performing met-
+to predicted metric scores. Furthermore, to deter- rics. BARTScore shows the second-best Pearson
+                                                    432
+                     NDCG@5
+                     NDCG@10
+         0.8
+                     NDCG@20
+
+
+         0.6
+NDCG@n
+
+
+
+
+         0.4
+
+
+
+         0.2
+
+
+
+         0.0
+                GPT-3.5-DIS   GPT-3.5-CON   FactCC   SummacZS   SummacConv     AlignScore   AutoAIS   BERTScore   BARTScore
+                                                            Faithfulness Metrics
+
+Figure 3: Retrieval performance of faithfulness metrics regarding NDCG@n scores on the GenSearch dataset. Note
+that we assign relevance labels 2, 1, and 0 to full, partial, and no support, respectively (shown in the color).
+
+
+correlation but much lower Spearman and Kendall                      the performance decline across the other two set-
+correlations. This divergence likely arises from                     tings (i.e. FS-vs-PS and PS-vs-NS). For instance,
+the Pearson coefficient’s assumption of linear re-                   when comparing the FS-vs-NS and PS-vs-NS set-
+lationships between two variables, which is often                    tings, the ROC-AUC score of AutoAIS diminishes
+invalid in automated citation evaluation. 3) Similar-                from 92.61 to 73.90. This decline indicates that
+ity-based metrics generally show lower Spearman                      even the best-performing metric struggles with
+and Kendall correlations compared to Pearson. For                    granular sensitivity to varying levels of support.
+instance, BERTScore has a substantial Pearson cor-                   3) While entailment-based AutoAIS generally sur-
+relation of 0.542 but lower Spearman and Kendall                     passes other metrics, it is outperformed by similari-
+correlations of 0.227 and 0.170. This indicates that                 ty-based BERTScore in the PS-vs-NS setting. Inter-
+similarity-based metrics do not align well with hu-                  estingly, while most metrics perform worst in this
+man judgments, highlighting their limitations in                     setting, BERTScore shows its least effectiveness
+fine-grained support scenarios. 4) LLM-based met-                    in FS-vs-PS. This highlights the unique prediction
+rics show little correlation with human judgments                    behaviors of different metrics across binary classifi-
+among all correlation coefficients, with the corre-                  cation settings. 4) The performance of LLM-based
+lation of the GPT-3.5-CON metric being almost                        metrics significantly lags behind other metrics. For
+zero. This finding suggests a negligible relation-                   instance, GPT-3.5-DIS achieves only a ROC-AUC
+ship between LLM-based metric scores and human                       score of 57.84 in the FS-vs-NS setting, markedly
+judgments. Furthermore, the GPT-3.5-DIS metric                       lower than the best-performing AutoAIS, which
+significantly outperforms GPT-3.5-CON, highlight-                    achieves a ROC-AUC score of 92.61. Furthermore,
+ing that more fine-grained support levels present                    the overall performance of LLM-based metrics ap-
+greater challenges in correlation analysis.                          proaches random guessing. This underscores the
+                                                                     inefficacy of LLM-based metrics in distinguishing
+6.2            Classification Results                                fine-grained support levels.
+Table 3 presents the results of the classification
+evaluation. The observations can be summarized         6.3 Retrieval Results
+as follows: 1) Among all three binary classifica- Figure 3 presents the results of the retrieval eval-
+tion task settings, most faithfulness metrics demon- uation. The key findings are as follows: 1) Simi-
+strate superior performance in the FS-vs-NS setting. larity-based metrics, BARTScore and BERTScore,
+Notably, entailment-based AutoAIS achieves the         outperform other entailment-based metrics in all
+highest ROC-AUC score of 92.61, which shows            NDCG@n scores. For instance, entailment-based
+significant discriminability between full support      AutoAIS exhibits weaker NDCG@5 scores than
+and no support instances. This can be attributed       BARTScore. This is likely because entailmen-
+to its much more extensive parameters compared         t-based metrics are more sensitive to noisy in-
+to other entailment-based metrics. 2) We observe       formation than similarity-based metrics, as many
+                                                    433
+  Error Reason               Example
+
+  The citation does not      Statement: Others believe that performance-enhancing drugs should be allowed in sports.
+  explicitly mention         Citation: However, if children are allowed to train as professional athletes, then they should be allowed
+  coreference.
+                             to take the same drugs , provided that they are no more dangerous than their training is . . .
+                             Human Judgment: full support
+                             Metric Score: 0.055 (no support)
+  The complex statement      Statement: Love leads to growth while being in love is about ownership . . .
+  includes independent
+                             Citation: “ Growing to love the real person and accepting who they are, with both strengths and
+  claims.
+                             weaknesses, can make a wonderful difference in your relationship,” McCoy says . . .
+                             Human Judgment: partial support
+                             Metric Score: 0.0004 (no support)
+  The citation is            Statement: Carpal tunnel syndrome can be treated with various methods, including
+  semantically similar but    wrist splinting, anti-inflammatory medication , and surgery.
+  non-supporting.
+                             Citation: If diagnosed and treated early, the symptoms of carpal tunnel syndrome can often be relieved
+                              without surgery . If your diagnosis is uncertain or if your symptoms are mild, your doctor will
+                             recommend nonsurgical treatment first . . .
+                             Human Judgment: no support
+                             Metric Score: 0.52 (partial support)
+
+Table 4: Case study of the faithfulness metric AutoAIS. Green phrases indicate supported content in the statement
+and corresponding supporting evidence. Red phrases indicate unsupported content in the statement and corre-
+sponding misleading information in the citation.
+
+
+irrelevant documents exist in retrieval scenarios.                   offer sufficient evidence, resulting in an almost zero
+It suggests the need for the robustness improve-                     metric score. In the third example, where human
+ments of metrics in post-hoc retrieval scenarios.                    judgment indicates no support. The given citation
+2) The best-performing BERTScore achieves more                       is semantically similar to the statement, leading
+than twice the NDCG@n scores compared to                             to a metric score of partial support. Despite this
+LLM-based metrics. This result suggests that                         semantic similarity, specific treatments mentioned
+LLM-based metrics are ineffective in ranking docu-                   in the statement, such as wrist splinting, are not
+ments with higher support levels. A plausible expla-                 explicitly referenced in the citation.
+nation is that LLM-based metrics lack fine-grained
+sensitivity to variations in support levels. Interest-               7     Discussions
+ingly, our observations reveal that GPT-3.5-CON
+surpasses GPT-3.5-DIS, highlighting the advantage        Overall, our results across three evaluation pro-
+of fine-grained scoring methods in retrieval eval-       tocols indicate that the evaluation protocols are
+uation. 3) NDCG@n scores effectively capture             complementary and should be integrated for a com-
+the performance variations as the number of text         prehensive assessment of metrics. Based on the
+chunks increases. For instance, as the chunk count       evaluation results, we further propose the follow-
+increases, BARTScore shows a marginal perfor-            ing practical recommendations to develop more
+mance improvement, while FactCC exhibits a more          effective metrics for automated citation evaluation:
+pronounced enhancement.                                  1) Development of training resources: motivated
+                                                         by the observation that the best-performing metrics
+6.4 Case Study                                           still struggle with identifying partial support, we
+Table 4 presents three cases of AutoAIS. In the first    recommend the development of training resources
+example, where human judgment indicates full sup- that include fine-grained support level annotations.
+port. AutoAIS incorrectly assigns a very low score. These resources could significantly enhance the
+This may be due to the lack of explicit mention of       metrics’ fine-grained sensitivity to varying support
+drug coreference in the cited text chunk. This indi- levels; 2) Introduction of contrastive learning:
+cates coreference resolution remains a significant       to improve the robustness of metrics in post-hoc
+challenge in automated citation evaluation. In the       retrieval scenarios, we recommend fine-tuning met-
+second example, where human judgment indicates           rics using contrastive learning frameworks. This
+partial support. The complex statement implicitly        method has demonstrated effectiveness across vari-
+contains two independent claims that require ver- ous information retrieval tasks (Izacard et al., 2022).
+ification. However, the provided citation fails to       3) Development of more explainable metrics:
+                                                      434
+traditional faithfulness metrics often only provide       by LLMs may contain potentially harmful or mis-
+final scores without sufficient explainability (Xu        leading information. Our final goal is to mitigate
+et al., 2023). This limitation hinders a deeper un-       such hallucination issues, which should support the
+derstanding of the models’ behavior. Therefore, it        discussion around hallucinations of LLMs and all
+is crucial to develop more explainable faithfulness       ethical aspects around them.
+metrics, potentially using large language models
+(LLMs).                                                   Acknowledgments
+                                                          This research was supported by the China
+8   Conclusion                                            Scholarship Council (CSC) under grant number
+                                                          202008440470. The views expressed in the content
+We propose a comparative evaluation framework to
+                                                          belong solely to the authors and may not reflect the
+explore the efficacy of faithfulness metrics beyond
+                                                          perspectives or endorsements of their respective
+the binary scenario by examining three levels of
+                                                          employers or sponsors.
+citation support. Our framework employs correla-
+tion analysis, classification evaluation, and retrieval
+evaluation to measure the alignment between met-          References
+ric scores and human judgments. Experimental
+                                                          Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, and
+results reveal that no single metric consistently ex-       Hannaneh Hajishirzi. 2024. Self-rag: Learning to
+cels across all evaluation protocols, indicating the        retrieve, generate, and critique through self-reflection.
+complexity of automated citation evaluation and             In The Twelfth International Conference on Learning
+the limitations of existing faithfulness metrics. We        Representations, ICLR 2024, Vienna, Austria, May
+provide practical suggestions based on the findings.        7-11, 2024.
+                                                          Bernd Bohnet, Vinh Q Tran, Pat Verga, Roee Aha-
+Limitations                                                 roni, Daniel Andor, Livio Baldini Soares, Massimil-
+                                                            iano Ciaramita, Jacob Eisenstein, Kuzman Ganchev,
+In this work, we consider a citation that explic-           Jonathan Herzig, et al. 2022. Attributed question an-
+itly contains human-annotated evidence as the fully         swering: Evaluation and modeling for attributed large
+                                                            language models. arXiv preprint arXiv:2212.08037.
+supporting citation for each statement. However,
+for some complex statements, their evidence is dis-       Jacob Devlin, Ming-Wei Chang, Kenton Lee, and
+tributed among multiple citations. For instance,             Kristina Toutanova. 2019. BERT: Pre-training of
+                                                             deep bidirectional transformers for language under-
+about 2% statements on the GenSearch dataset                 standing. In Proceedings of the 2019 Conference of
+require multiple citations to be fully supported.            the North American Chapter of the Association for
+Also, we focus on statement-level citation eval-            Computational Linguistics: Human Language Tech-
+uation. Since answer-level citation evaluation is            nologies, NAACL-HLT 2019, Minneapolis, MN, USA,
+much more complicated and requires proper aggre-            June 2-7, 2019, Volume 1 (Long and Short Papers),
+                                                             pages 4171–4186.
+gation methods, we leave this exploration as future
+work. We do not evaluate QA-based faithfulness            Esin Durmus, He He, and Mona Diab. 2020. FEQA: A
+metrics as a recent study shows that such metrics           question answering evaluation framework for faith-
+                                                            fulness assessment in abstractive summarization. In
+have some fundamental issues, such as failing to            Proceedings of the 58th Annual Meeting of the Asso-
+localize errors (Kamoi et al., 2023). However dif-          ciation for Computational Linguistics, pages 5055–
+ferent findings could be explored with QA-based             5070.
+metrics.                                                  Alexander Fabbri, Chien-Sheng Wu, Wenhao Liu, and
+                                                            Caiming Xiong. 2022. QAFactEval: Improved QA-
+Ethical Considerations                                      Based factual consistency evaluation for summariza-
+                                                            tion. In Proceedings of the 2022 Conference of the
+We realized there are some risks in exploring ci-           North American Chapter of the Association for Com-
+tation evaluation for LLM-generated text. Since             putational Linguistics: Human Language Technolo-
+we have used publicly available datasets and open-          gies, pages 2587–2601.
+source implementation of faithfulness metrics, we         Tobias Falke, Leonardo F. R. Ribeiro, Prasetya Ajie
+carefully avoid potential ethical problems caused           Utama, Ido Dagan, and Iryna Gurevych. 2019. Rank-
+by datasets or open-source codes. As we address             ing generated summaries by correctness: An interest-
+                                                            ing but challenging application for natural language
+the issue of the effectiveness of faithfulness metrics      inference. In Proceedings of the 57th Annual Meet-
+for LLM-generated text, concerning hallucination.           ing of the Association for Computational Linguistics,
+We acknowledged the hallucinated text generated             pages 2214–2220.
+                                                       435
+Angela Fan, Yacine Jernite, Ethan Perez, David Grang-        Jia-Hong Huang, Luka Murn, Marta Mrak, and Marcel
+  ier, Jason Weston, and Michael Auli. 2019. ELI5:              Worring. 2021a. Gpt2mvs: Generative pre-trained
+  Long Form Question Answering. In Proceedings of               transformer-2 for multi-modal video summarization.
+  the 57th Conference of the Association for Compu-             In Proceedings of the International Conference on
+  tational Linguistics, ACL 2019, Florence, Italy, July         Multimedia Retrieval, pages 580–589.
+  28- August 2, 2019, Volume 1: Long Papers, pages
+  3558–3567.                                                 Jia-Hong Huang and Marcel Worring. 2020. Query-
+                                                                controllable video summarization. In Proceedings
+Luyu Gao, Zhuyun Dai, Panupong Pasupat, Anthony                 of the International Conference on Multimedia Re-
+  Chen, Arun Tejasvi Chaganty, Yicheng Fan, Vincent             trieval, pages 242–250.
+  Zhao, Ni Lao, Hongrae Lee, Da-Cheng Juan, and
+  Kelvin Guu. 2023a. RARR: Researching and revis-            Jia-Hong Huang, C-H Huck Yang, Fangyu Liu, Meng
+  ing what language models say, using language mod-             Tian, Yi-Chieh Liu, Ting-Wei Wu, I Lin, Kang Wang,
+  els. In Proceedings of the 61st Annual Meeting of the         Hiromasa Morikawa, Hernghua Chang, et al. 2021b.
+  Association for Computational Linguistics (Volume             Deepopht: medical report generation for retinal im-
+  1: Long Papers), pages 16477–16508.                           ages via deep models and visual explanation. In
+                                                                Proceedings of the IEEE/CVF winter conference on
+Tianyu Gao, Howard Yen, Jiatong Yu, and Danqi Chen.             applications of computer vision, pages 2442–2452.
+   2023b. Enabling large language models to generate
+   text with citations. In Proceedings of the 2023 Con-      Jia-Hong Huang, Chao-Chun Yang, Yixian Shen,
+   ference on Empirical Methods in Natural Language             Alessio M Pacces, and Evangelos Kanoulas. 2024b.
+  Processing, pages 6465–6488.                                  Optimizing numerical estimation and operational ef-
+                                                                ficiency in the legal domain through large language
+Zhibin Gou, Zhihong Shao, Yeyun Gong, Yelong Shen,              models. In ACM International Conference on Infor-
+  Yujiu Yang, Nan Duan, and Weizhu Chen. 2024.                  mation and Knowledge Management (CIKM).
+  CRITIC: large language models can self-correct with
+  tool-interactive critiquing. In The Twelfth Inter-         Jia-Hong Huang, Hongyi Zhu, Yixian Shen, Stevan Rud-
+  national Conference on Learning Representations,              inac, Alessio M. Pacces, and Evangelos Kanoulas.
+  ICLR 2024, Vienna, Austria, May 7-11, 2024.                   2024c. A novel evaluation framework for image2text
+                                                                generation. In International ACM SIGIR Confer-
+Pengcheng He, Xiaodong Liu, Jianfeng Gao, and                   ence on Research and Development in Information
+  Weizhu Chen. 2021. Deberta: Decoding-Enhanced                 Retrieval, LLM4Eval Workshop.
+  Bert with Disentangled Attention. In 9th Inter-
+  national Conference on Learning Representations,
+  ICLR 2021, Virtual Event, Austria, May 3-7, 2021.          Jie Huang and Kevin Chen-Chuan Chang. 2023. Cita-
+                                                                tion: A key to building responsible and accountable
+Karl Moritz Hermann, Tomás Kociský, Edward Grefen-              large language models. CoRR, abs/2307.02185.
+  stette, Lasse Espeholt, Will Kay, Mustafa Suleyman,
+  and Phil Blunsom. 2015. Teaching machines to read          Lei Huang, Xiaocheng Feng, Weitao Ma, Yuxuan Gu,
+  and comprehend. In Advances in Neural Information            Weihong Zhong, Xiachong Feng, Weijiang Yu, Wei-
+  Processing Systems 28: Annual Conference on Neu-             hua Peng, Duyu Tang, Dandan Tu, and Bing Qin.
+  ral Information Processing Systems 2015, December            2024d. Learning fine-grained grounded citations for
+  7-12, 2015, Montreal, Quebec, Canada, pages 1693–            attributed large language models. In Findings of the
+  1701.                                                        Association for Computational Linguistics ACL 2024,
+                                                               pages 14095–14113.
+Or Honovich, Roee Aharoni, Jonathan Herzig, Hagai
+  Taitelbaum, Doron Kukliansy, Vered Cohen, Thomas           Gautier Izacard, Mathilde Caron, Lucas Hosseini, Sebas-
+  Scialom, Idan Szpektor, Avinatan Hassidim, and               tian Riedel, Piotr Bojanowski, Armand Joulin, and
+  Yossi Matias. 2022. TRUE: Re-evaluating factual              Edouard Grave. 2022. Unsupervised dense informa-
+  consistency evaluation. In Proceedings of the 2022           tion retrieval with contrastive learning. Transactions
+  Conference of the North American Chapter of the              on Machine Learning Research, 2022.
+  Association for Computational Linguistics: Human
+  Language Technologies, pages 3905–3920.                    Ziwei Ji, Nayeon Lee, Rita Frieske, Tiezheng Yu,
+                                                               Dan Su, Yan Xu, Etsuko Ishii, Yejin Bang, Andrea
+Chengyu Huang, Zeqiu Wu, Yushi Hu, and Wenya                   Madotto, and Pascale Fung. 2022. Survey of halluci-
+  Wang. 2024a. Training language models to generate            nation in natural language generation. ACM Comput-
+  text with citations via fine-grained rewards. CoRR,          ing Surveys.
+  abs/2402.04315.
+                                                             Ryo Kamoi, Tanya Goyal, and Greg Durrett. 2023.
+Jia-Hong Huang, Cuong Duc Dao, Modar Alfadly, and              Shortcomings of question answering based factuality
+   Bernard Ghanem. 2019. A novel framework for ro-             frameworks for error localization. In Proceedings
+   bustness analysis of visual qa models. In Proceed-          of the 17th Conference of the European Chapter of
+   ings of the AAAI Conference on Artificial Intelligence,     the Association for Computational Linguistics, pages
+   volume 33, pages 8449–8456.                                 132–146.
+                                                         436
+Haoqiang Kang, Juntong Ni, and Huaxiu Yao. 2023.            Xinze Li, Yixin Cao, Liangming Pan, Yubo Ma, and
+  Ever: Mitigating hallucination in large language mod-       Aixin Sun. 2024c. Towards verifiable generation:
+  els through real-time verification and rectification.       A benchmark for knowledge-aware language model
+  CoRR, abs/2311.09114.                                       attribution. In Findings of the Association for Com-
+                                                              putational Linguistics ACL 2024, pages 493–516.
+Vladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick
+  Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, and          Yifei Li, Xiang Yue, Zeyi Liao, and Huan Sun. 2024d.
+  Wen-tau Yih. 2020. Dense passage retrieval for open-        AttributionBench: How hard is automatic attribu-
+  domain question answering. In Proceedings of the            tion evaluation? In Findings of the Association for
+  2020 Conference on Empirical Methods in Natural             Computational Linguistics ACL 2024, pages 14919–
+  Language Processing (EMNLP), pages 6769–6781.               14935.
+
+Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yu-         Nelson Liu, Tianyi Zhang, and Percy Liang. 2023. Eval-
+  taka Matsuo, and Yusuke Iwasawa. 2022. Large lan-           uating verifiability in generative search engines. In
+  guage models are zero-shot reasoners. In NeurIPS.           Findings of the Association for Computational Lin-
+                                                              guistics: EMNLP 2023, pages 7001–7025.
+Wojciech Kryscinski, Bryan McCann, Caiming Xiong,           Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Man-
+ and Richard Socher. 2020. Evaluating the factual             dar Joshi, Danqi Chen, Omer Levy, Mike Lewis,
+ consistency of abstractive text summarization. In            Luke Zettlemoyer, and Veselin Stoyanov. 2019.
+ Proceedings of the 2020 Conference on Empirical              Roberta: A robustly optimized bert pretraining ap-
+ Methods in Natural Language Processing (EMNLP),              proach. arXiv preprint arXiv:1907.11692.
+ pages 9332–9346.
+                                                            Liang Ma, Shuyang Cao, Robert L Logan IV, Di Lu,
+Tom Kwiatkowski, Jennimaria Palomaki, and et al. 2019.        Shihao Ran, Ke Zhang, Joel Tetreault, and Alejandro
+  Natural questions: A benchmark for question answer-         Jaimes. 2023. BUMP: A benchmark of unfaithful
+  ing research. Transactions of the Association for           minimal pairs for meta-evaluation of faithfulness met-
+  Computational Linguistics, 7:452–466.                       rics. In Proceedings of the 61st Annual Meeting of
+                                                              the Association for Computational Linguistics (Vol-
+Philippe Laban, Tobias Schnabel, Paul N. Bennett, and         ume 1: Long Papers), pages 12788–12812.
+  Marti A. Hearst. 2022. SummaC: Re-visiting NLI-
+  based models for inconsistency detection in summa-        Joshua Maynez, Shashi Narayan, Bernd Bohnet, and
+  rization. Transactions of the Association for Compu-        Ryan McDonald. 2020. On faithfulness and factu-
+  tational Linguistics, 10:163–177.                           ality in abstractive summarization. In Proceedings
+                                                              of the 58th Annual Meeting of the Association for
+Mike Lewis, Yinhan Liu, Naman Goyal, Marjan                   Computational Linguistics, pages 1906–1919.
+  Ghazvininejad, Abdelrahman Mohamed, Omer Levy,
+  Veselin Stoyanov, and Luke Zettlemoyer. 2020.             Artidoro Pagnoni, Vidhisha Balachandran, and Yulia
+  BART: Denoising sequence-to-sequence pre-training           Tsvetkov. 2021. Understanding factuality in abstrac-
+  for natural language generation, translation, and com-      tive summarization with FRANK: A benchmark for
+  prehension. In Proceedings of the 58th Annual Meet-         factuality metrics. In Proceedings of the 2021 Con-
+  ing of the Association for Computational Linguis-           ference of the North American Chapter of the Asso-
+  tics, ACL 2020, Online, July 5-10, 2020, pages 7871–        ciation for Computational Linguistics: Human Lan-
+  7880.                                                       guage Technologies, pages 4812–4829.
+
+Dongfang Li, Zetian Sun, Baotian Hu, Zhenyu Liu,            Colin Raffel, Noam Shazeer, Adam Roberts, and et al.
+  Xinshuo Hu, Xuebo Liu, and Min Zhang. 2024a. Im-            2020. Exploring the limits of transfer learning with a
+  proving attributed text generation of large language        unified text-to-text transformer. Journal of Machine
+  models via preference learning. In Findings of the          Learning Research, 21:140:1–140:67.
+  Association for Computational Linguistics ACL 2024,       Hannah Rashkin, Vitaly Nikolaev, Matthew Lamm,
+  pages 5079–5101.                                            Lora Aroyo, Michael Collins, Dipanjan Das, Slav
+                                                              Petrov, Gaurav Singh Tomar, Iulia Turc, and David
+Wei Li, Wenhao Wu, Moye Chen, Jiachen Liu, Xinyan             Reitter. 2023. Measuring attribution in natural lan-
+ Xiao, and Hua Wu. 2022. Faithfulness in natural              guage generation models. Computational Linguistics,
+  language generation: A systematic survey of analysis,       49(4):777–840.
+  evaluation and optimization methods. arXiv preprint
+  arXiv:2203.05227.                                         Thomas Scialom, Paul-Alexis Dray, Sylvain Lamprier,
+                                                              Benjamin Piwowarski, Jacopo Staiano, Alex Wang,
+Xiaonan Li, Changtai Zhu, Linyang Li, Zhangyue Yin,           and Patrick Gallinari. 2021. QuestEval: Summariza-
+  Tianxiang Sun, and Xipeng Qiu. 2024b. LLatrieval:           tion asks for fact-based evaluation. In Proceedings
+  LLM-verified retrieval for verifiable generation. In        of the 2021 Conference on Empirical Methods in
+  Proceedings of the 2024 Conference of the North             Natural Language Processing, pages 6594–6604.
+  American Chapter of the Association for Computa-
+  tional Linguistics: Human Language Technologies           Jiajun Shen, Tong Zhou, Suifeng Zhao, Yubo Chen, and
+  (Volume 1: Long Papers), pages 5453–5471.                    Kang Liu. 2024. Citekit: A modular toolkit for large
+                                                          437
+  language model citation generation. arXiv preprint          with A unified alignment function. In Proceedings
+  arXiv:2408.04662.                                           of the 61st Annual Meeting of the Association for
+                                                              Computational Linguistics (Volume 1: Long Papers),
+Hao Sun, Hengyi Cai, Bo Wang, Yingyan Hou, Xi-                pages 11328–11348.
+  aochi Wei, Shuaiqiang Wang, Yan Zhang, and
+  Dawei Yin. 2023. Towards verifiable text generation     Tianyi Zhang, Varsha Kishore, Felix Wu, Kilian Q Wein-
+  with evolving memory and self-reflection. CoRR,            berger, and Yoav Artzi. 2020. BERTScore: Evaluat-
+  abs/2312.09075.                                            ing Text Generation with BERT. In 8th International
+                                                             Conference on Learning Representations, ICLR 2020,
+Marzieh Tahaei, Aref Jafari, Ahmad Rashid, David            Addis Ababa, Ethiopia, April 26-30, 2020.
+ Alfonso-Hermelo, Khalil Bibi, Yimeng Wu, Ali Gh-
+ odsi, Boxing Chen, and Mehdi Rezagholizadeh. 2024.       Weijia Zhang, Vaishali Pal, Jia-Hong Huang, Evangelos
+ Efficient citer: Tuning large language models for          Kanoulas, and Maarten de Rijke. 2024. QFMTS:
+ enhanced answer quality and verification. In Find-         Generating query-focused summaries over multi-
+ ings of the Association for Computational Linguistics:     table inputs. In Proceedings of the 27th European
+ NAACL 2024, pages 4443–4450.                              Conference on Artificial Intelligence (ECAI).
+Alex Wang, Kyunghyun Cho, and Mike Lewis. 2020.           Weijia Zhang, Svitlana Vakulenko, Thilina Rajapakse,
+  Asking and answering questions to evaluate the fac-      and Evangelos Kanoulas. 2021. Scaling up query-
+  tual consistency of summaries. In Proceedings of the     focused summarization to meet open-domain ques-
+  58th Annual Meeting of the Association for Compu-        tion answering. ArXiv preprint, abs/2112.07536.
+  tational Linguistics, pages 5008–5020.
+                                                          Weijia Zhang, Svitlana Vakulenko, Thilina Rajapakse,
+Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten           Yumo Xu, and Evangelos Kanoulas. 2023a. Tack-
+   Bosma, Brian Ichter, Fei Xia, Ed H. Chi, Quoc V. Le,    ling query-focused summarization as a knowledge-
+   and Denny Zhou. 2022. Chain-of-thought prompt-          intensive task: A pilot study. The First Workshop on
+   ing elicits reasoning in large language models. In      Generative Information Retrieval (Gen-IR) at SIGIR.
+   NeurIPS.
+                                                          Yue Zhang, Yafu Li, Leyang Cui, Deng Cai, Lemao Liu,
+Sirui Xia, Xintao Wang, Jiaqing Liang, Yifei Zhang,         Tingchen Fu, Xinting Huang, Enbo Zhao, Yu Zhang,
+   Weikang Zhou, Jiaji Deng, Fei Yu, and Yanghua Xiao.      Yulong Chen, Longyue Wang, Anh Tuan Luu, Wei
+   2024. Ground every sentence: Improving retrieval-        Bi, Freda Shi, and Shuming Shi. 2023b. Siren’s song
+   augmented llms with interleaved reference-claim gen-     in the AI ocean: A survey on hallucination in large
+   eration. arXiv preprint arXiv:2407.01796.                language models. CoRR, abs/2309.01219.
+Wenda Xu, Danqing Wang, Liangming Pan, Zhenqiao           Hongyi Zhu, Jia-Hong Huang, Stevan Rudinac, and
+ Song, Markus Freitag, William Wang, and Lei Li.            Evangelos Kanoulas. 2024. Enhancing interactive
+ 2023. INSTRUCTSCORE: Towards explainable                   image retrieval with query rewriting using large lan-
+ text generation evaluation with automatic feedback.        guage models and vision language models. In Pro-
+ In Proceedings of the 2023 Conference on Empiri-           ceedings of the 2024 International Conference on
+ cal Methods in Natural Language Processing, pages          Multimedia Retrieval, pages 978–987.
+ 5967–5994.
+                                                          A     Details of Prompts
+Xi Ye, Ruoxi Sun, Sercan Arik, and Tomas Pfister. 2024.
+   Effective large language model adaptation for im-      Details of prompts used in the paper are shown in
+   proved grounding and citation generation. In Pro-
+   ceedings of the 2024 Conference of the North Amer-
+                                                          Table 5.
+   ican Chapter of the Association for Computational
+  Linguistics: Human Language Technologies (Volume
+  1: Long Papers), pages 6237–6251.
+Weizhe Yuan, Graham Neubig, and Pengfei Liu. 2021.
+ BARTScore: Evaluating Generated Text as Text Gen-
+ eration. In Advances in Neural Information Pro-
+ cessing Systems 34: Annual Conference on Neural
+ Information Processing Systems 2021, NeurIPS 2021,
+ December 6-14, 2021, Virtual, pages 27263–27277.
+Xiang Yue, Boshi Wang, Ziru Chen, Kai Zhang, Yu Su,
+  and Huan Sun. 2023. Automatic evaluation of attri-
+  bution by large language models. In Findings of the
+  Association for Computational Linguistics: EMNLP
+  2023, pages 4615–4635.
+Yuheng Zha, Yichi Yang, Ruichen Li, and Zhiting Hu.
+  2023. AlignScore: Evaluating factual consistency
+                                                       438
+Prompt Name                Prompt Content
+Discrete Scoring           Instruction:
+                           Your task is to quantify how well a provided citation supports a given statement. You should
+                           predict a discrete score from the set {0, 1, 2}, where 0, 1, 2 represent that the statement is not
+                           supported, partially supported, and fully supported, respectively. Let’s think step by step.
+
+                           Statement: {statement}
+                           Citation: {cited text chunk}
+
+                           Prediction:
+Continuous Scoring         Instruction:
+                           Your task is to quantify how well a provided citation supports a given statement. You should
+                           predict a continuous score between 0 and 1 (inclusive), where 0 is not supported, 1 is fully
+                           supported, and a float value between 0 and 1 is partially supported. Let’s think step by step.
+
+                           Statement: {statement}
+                           Citation: {cited text chunk}
+
+                           Prediction:
+
+                     Table 5: Detailed prompts for discrete and continuous scoring methods.
+
+
+
+
+                                                           439
+

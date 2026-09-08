@@ -1,0 +1,715 @@
+    Measuring the Groundedness of Legal Question-Answering Systems
+
+Dietrich Trautmann, Natalia Ostapuk, Quentin Grail, Adrian Alan Pol, Guglielmo Bonifazi,
+                             Shang Gao and Martin Gajek
+                        Thomson Reuters Labs, Zug, Switzerland
+                                {first.last}@tr.com
+
+
+
+                       Abstract                                        Query
+                                                                When does the duty to preserve documents end? Focus on SDNY
+                                                                case law.
+    In high-stakes domains like legal question-
+    answering, the accuracy and trustworthiness                      Response A
+    of generative AI systems are of paramount im-               The duty to preserve evidence arises when a party reasonably
+                                                                anticipates litigation. This duty generally requires the party to
+    portance. This work presents a comprehen-                   suspend its routine document retention/destruction policy and put in
+    sive benchmark of various methods to assess                 place a 'litigation hold' to ensure the preservation of relevant
+    the groundedness of AI-generated responses,                 documents. The duty to preserve evidence ends when the litigation
+                                                                is resolved or when the party no longer reasonably anticipates
+    aiming to significantly enhance their reliability.          litigation.
+    Our experiments include similarity-based met-
+                                                                    Response B
+    rics and natural language inference models to               The duty to preserve evidence arises when a party reasonably
+    evaluate whether responses are well-founded                 anticipates litigation. This duty generally requires the party to
+    in the given contexts. We also explore different            suspend its routine document retention/destruction policy and put in
+                                                                place a 'litigation hold' to ensure the preservation of relevant
+    prompting strategies for large language mod-                documents. The duty to preserve evidence ends when the litigation
+    els to improve the detection of ungrounded                  is resolved or when the party files a motion to dismiss.
+    responses. We validated the effectiveness of
+    these methods using a newly created ground-             Figure 1: Example query and corresponding LLM re-
+    ing classification corpus, designed specifically        sponses with grounded and erroneous spans (Procedu-
+    for legal queries and corresponding responses           ral Errors). The retrieved context used for grounding the
+    from retrieval-augmented prompting, focusing            responses was omitted due to its length. The remaining
+    on their alignment with source material. Our            sentences in both responses are identical and grounded,
+    results indicate potential in groundedness clas-        but not highlighted to emphasize the differences.
+    sification of generated responses, with the best
+    method achieving a macro-F1 score of 0.8. Ad-
+    ditionally, we evaluated the methods in terms           Rawte et al., 2023). This work addresses this chal-
+    of their latency to determine their suitability for     lenge by conducting a comprehensive benchmark-
+    real-world applications, as this step typically         ing to assess the groundedness of AI-generated
+    follows the generation process. This capabil-           legal responses, thereby enhancing their reliability.
+    ity is essential for processes that may trigger            Our methodology investigates diverse ap-
+    additional manual verification or automated re-         proaches to classify responses based on their foun-
+    sponse regeneration. In summary, this study
+                                                            dation in the provided source material (cf. Fig. 1).
+    demonstrates the potential of various detection
+    methods to improve the trustworthiness of gen-
+                                                            We utilize:
+    erative AI in legal settings.                                1. Similarity-based techniques, employing var-
+                                                                    ious text similarity metrics to quantify the
+1   Introduction                                                    alignment between the generated text and the
+Generative AI systems are increasingly employed                     input data at the sentence-level.
+in high-stakes domains such as legal question-
+                                                                 2. Natural language inference models to deter-
+answering, where accuracy and trust are paramount
+                                                                    mine if the generated response sentences are
+(Monroy et al., 2009; Vold and Conrad, 2021; Khaz-
+                                                                    entailed by or contradict the sentences in the
+aeli et al., 2021; Martinez-Gil, 2023). A significant
+                                                                    source material.
+challenge in these applications is the detection of
+outputs that are not grounded in the input data (con-            3. Diverse prompting strategies for large lan-
+text), which can compromise user trust and dimin-                   guage models (LLMs) to detect ungrounded
+ish the application’s value (Maynez et al., 2020;                   responses. (Bubeck et al., 2023).
+                                                          176
+                  Proceedings of the Natural Legal Language Processing Workshop 2024, pages 176–186
+                          November 16, 2024 ©2024 Association for Computational Linguistics
+   We evaluate these approaches on a new corpus         of AI-generated legal responses.
+of legal queries and responses, annotated for their        The Chain-of-Knowledge (CoK) framework (Li
+degree of groundedness.                                 et al., 2023) marks a major advance in reducing hal-
+   Experimental results demonstrate the effective-      lucinations. By dynamically incorporating ground-
+ness of many methods in the detection of poten-         ing information from various sources, CoK en-
+tially ungrounded answers. We also discuss the          hances factual accuracy in knowledge-intensive
+trade-offs between task performance and compu-          tasks.
+tational efficiency, highlighting the capabilities         In essence, grounding of LLM-generated re-
+of particular approaches to operate with minimal        sponses aims to ensure that outputs are factually
+added latency in real-world applications.               consistent with input data, thereby enhancing reli-
+   Furthermore, we investigated the types of errors     ability and reducing ungrounded LLM-generated
+present in the responses, categorizing them into six    content.
+distinct classes: Factual Inaccuracies, Contextual
+Misinterpretations, Procedural Errors, Reasoning
+                                                        2.2   Hallucination Detection
+Errors, Misattributions, and Terminological Errors.
+Our analysis reveals that factual inaccuracies are      Advancements in hallucination detection have been
+the most prevalent type of errors. Importantly, we      pivotal in developing more reliable and grounded
+found that the misclassification rates in the over-     LLMs, particularly for question-answering (QA)
+all groundedness assessment task are not uniform        systems.
+across these error categories, providing valuable          The HaluEval-Wild benchmark (Zhu et al., 2024)
+insights for targeted improvements in AI-generated      offers a novel approach to evaluating LLM hallu-
+legal responses.                                        cinations in real-world settings. By categorizing
+   Our findings underscore the potential of auto-       challenging user queries into five distinct types,
+mated groundedness assessment tools to improve          this tool provides essential insights for enhancing
+the reliability and utility of generative AI in legal   LLM reliability in scenarios that mirror real-world
+settings, ensuring that the generated responses are     interactions, which is crucial for QA systems.
+consistently accurate and trustworthy. The error           Wang et al. (2024) contribute with MIGRES, a
+analysis further contributes to a nuanced under-        method that uses LLMs’ ability to identify missing
+standing of the challenges in this domain, paving       information for targeted knowledge retrieval and
+the way for more refined and effective AI systems       extraction. This approach promises to improve the
+in legal applications.                                  groundedness of responses by ensuring comprehen-
+                                                        sive information gathering.
+2   Related Work
+                                                           In long-form question answering, Rosenthal
+2.1 Grounding of Generated Responses                    et al. (2024) introduced ClapNQ, a benchmark de-
+Grounding and factual consistency in language           signed for retrieval-augmented generation (RAG)
+model outputs, especially for summarization and         systems. Its emphasis on concise, cohesive answers
+question-answering tasks, have been a focal point       grounded in source passages makes it particularly
+of recent research. Kryściński et al. (2020) intro-   relevant for evaluating QA systems that require
+duced a weakly-supervised, model-based approach         detailed, well-supported responses.
+to verify factual consistency between source doc-          An empirical evaluation of AI-driven legal re-
+uments and generated summaries. This method             search tools (Magesh et al., 2024) challenges
+uniquely combines consistency checks with the ex-       claims of "hallucination-free" systems, underscor-
+traction of supporting and contradictory spans.         ing the necessity for rigorous evaluation in assess-
+   Building on this, Maynez et al. (2020) performed     ing the groundedness of legal QA systems.
+an extensive human evaluation of neural abstrac-           Additionally, Hong et al. (2024) have launched
+tive summarization systems. Their results showed a      the Hallucinations Leaderboard, an open initiative
+significant amount of ungrounded content in model-      for measuring and comparing hallucinations across
+generated summaries and found that textual entail-      various LLMs and tasks. This resource offers a
+ment measures correlate more strongly with faith-       valuable opportunity for benchmarking the ground-
+fulness than standard metrics. This finding closely     edness of QA systems against a diverse range of
+relates to our interest in assessing the groundedness   models and applications.
+                                                    177
+3   Grounding Definition                                   4.1    Data Source
+
+Grounding in legal question-answering systems              The dataset originates from proprietary data in the
+refers to the extent to which an AI-generated re-          Casetext Legal Research Skill1 . We limited the
+sponse is firmly rooted in, supported by, and di-          data selection to the internal users only, primarily
+rectly attributable to the provided legal source ma-       consisting of diverse sales demonstrations as well
+terial. It ensures the model’s output aligns with          as domain experts and engineering-related testing
+and accurately represents the information in the           sessions. All queries, however, are realistic repre-
+input data, avoiding fabrication, extraneous details,      sentations of everyday research in the legal domain.
+or misleading content. A well-grounded response            Additionally, we performed a deduplication pro-
+should adhere closely to the facts, legal principles,      cess on the input queries.
+and reasoning presented in the source material,               The dataset comprises input queries (e.g., ques-
+without introducing unsupported claims or misrep-          tions about particular legal use cases) accompanied
+resenting the legal context (Chandu et al., 2021).         by LLM-generated responses and retrieved context
+   Several key aspects ensure the reliability of AI-       data. During development, legal professionals veri-
+generated legal responses. Factual alignment and           fied these responses to ensure they were grounded
+relevance are crucial, ensuring the content reflects       in the context provided to the LLM (as part of the
+the source documents and addresses the legal query         prompt). The context data is derived from a re-
+accurately. Source attribution allows tracing in-          trieval system with access to the Casetext database
+formation back to specific input texts, while legal        for legal research, which includes case law, statutes,
+interpretation fidelity ensures conclusions are sub-       regulations, and legal texts authored by internal le-
+stantiated by the provided materials. This involves        gal experts and lawyers.
+not only accurately conveying factual information             The ground truth responses (LLM-based an-
+but also maintaining the integrity of legal proce-         swers) were generated using custom instructions
+dures, correctly interpreting the context, and using       in a prompt to GPT-4 in the current production
+appropriate legal terminology. The generated re-           environment. At this stage of the dataset creation
+sponses must adhere to the given context, avoiding         process, we had compiled a selection of legal user
+unsupported claims or extrapolations, and preserv-         queries, gold responses, and their corresponding
+ing the nuances and complexities of legal language         contexts.
+and concepts (Magesh et al., 2024).
+   The assessment of grounding in legal AI re-             4.2    Synthetic Adaptation
+sponses involves a comprehensive evaluation of             The next step in our dataset creation process in-
+how faithfully the generated content aligns with           volved generating evoked ungrounded responses to
+the retrieved legal context. This evaluation consid-       evaluate both grounded and ungrounded outputs.
+ers various aspects of the response, including its         We instructed GPT-4o to make subtle and unintru-
+factual accuracy, the appropriateness of legal inter-      sive variations to the original grounded responses,
+pretations, the coherence of legal reasoning, and          preserving most of the meaning while introducing
+the proper use of legal terminology. Grounding is          minor deviations from the provided context. In the
+vital in legal applications to maintain the integrity      prompt, we included the original query and context
+of legal advice, ensure compliance with laws and           alongside the gold response and these instructions.
+precedents, and prevent misinformation. By en-
+                                                              These adapted responses, which we consider par-
+suring strong grounding, legal question-answering
+                                                           tially ungrounded2 , complement our final dataset.
+systems can provide more reliable, trustworthy,
+                                                           The inclusion of both grounded and ungrounded
+and legally sound responses, which is crucial in
+                                                           responses allows for a more comprehensive evalua-
+the high-stakes environment of legal practice and
+                                                           tion of response quality and adherence to provided
+decision-making.
+                                                           context. An example of this subtle deviation from
+                                                           the source material in the generated response was
+4   Dataset Creation                                       depicted in the leading example in Fig. 1.
+In this section, we will describe and list all the steps      1
+                                                               https://casetext.com/cocounsel/
+involved in creating the Groundedness Classifica-             2
+                                                               Only some sentences ended up with slight modifications,
+tion dataset used in our benchmarking.                     while most were kept as the original sentences.
+
+                                                       178
+                    Split            #Queries     #Responses        #Response Sentences
+                    Training             400            1080                       5671
+                    Development           58             162                        797
+                    Testing              115             316                       1516
+                    Total                573            1558                       7984
+
+                                         Table 1: Data Set Statistics
+
+
+4.3 Data Splits                                          Quoted Information Precision Adapting the
+                                                         QuIP-score (Weller et al., 2024), we examined char-
+We divided the dataset into training, development,
+                                                         acter n-gram overlap between LLM responses and
+and test sets using a ratio of 70 : 10 : 20, respec-
+                                                         context sentences. We optimized both the n-gram
+tively. This split ensures a representative distribu-
+                                                         size (21 in our setup) and similarity threshold on
+tion across all subsets while maintaining a suffi-
+                                                         the development set for grounding determination
+ciently large test set for robust evaluation.
+                                                         in the final evaluation.
+   The resulting counts for each split are presented
+in Table 1. It is noteworthy that the number             5.2     Natural Language Inference
+of responses is not exactly twice the number of
+queries. This discrepancy arises from our dataset        FactKB Evaluating factual consistency in natural
+creation process, where we retained multiple signif-     language generation is crucial, especially for com-
+icant variations of generated responses for certain      plex domains. We employed FactKB3 , an approach
+queries to enhance the diversity and coverage of         leveraging pre-training with facts from external
+our dataset.                                             knowledge bases, to address challenges in entity
+                                                         and relation errors (Feng et al., 2023).
+   To maintain the integrity of our evaluation, we
+ensured that all responses corresponding to a par-          FactKB has shown state-of-the-art performance
+ticular query were assigned to the same split. This      in factual consistency evaluation across various do-
+approach prevents potential leakage between the          mains. We used it to compute factuality scores of
+training and evaluation sets, thereby providing a        generated response sentences against source con-
+more accurate assessment of model performance            text sentences.
+on unseen data.                                             Our grounding determination process involved
+                                                         identifying the highest-scoring source sentence for
+5   Benchmarking Methodologies                           each target sentence based on FactKB scores, then
+                                                         applying an optimized threshold to classify ground-
+This section overviews the diverse methodologies         ing sufficiency. This threshold, determined using
+employed in our benchmark study for quantify-            our development set, balanced precision and recall
+ing response grounding, systematically evaluating        in grounding classification, adapting FactKB to our
+approaches that assess adherence of generated re-        specific task of response grounding quantification.
+sponses to provided context.
+                                                         Hallucination Evaluation Models The Hallu-
+5.1 Similarity-based Approaches                          cination Evaluation Model (HEM), developed by
+                                                         Vectara (Hughes et al., 2023), is designed to detect
+Similarity-based approaches compare each re-             hallucinations in LLM-generated responses. HEM
+sponse sentence against all context sentences, al-       is available in two versions: V1, a fine-tuned model
+lowing for detailed grounding assessment. We ag-         based on cross-encoder/nli-deberta-v3-base, and
+gregate these sentence-level estimations for the fi-     V2, an improved version using flan-t5-base.
+nal response-level prediction.                              Built on research in factual consistency for sum-
+                                                         marization, HEM classifies whether a summary is
+Semantic Similarity We embedded sentences                factually consistent with its source. The model was
+using the nlpaueb/legal-bert-base-uncased model          fine-tuned on diverse documents to ensure robust-
+with the Sentence-Transformers library. Matching         ness across content types and is publicly available
+pairs were identified using cosine similarity, with      on Hugging Face under the Apache 2 license.
+an optimized threshold determined on the develop-
+ment set for final grounding prediction.                    3
+                                                                https://hf.co/bunsenfeng/FactKB
+
+                                                     179
+   HEM evaluates LLM responses by comparing               SelfCheckGPT We adapt the approach of Man-
+them to source documents, classifying summaries           akul et al. (2023), which assesses hallucination like-
+as consistent or inconsistent. For our study, we im-      lihood in LLM-generated sentences by evaluating
+plemented a fine-grained approach, scoring individ-       their consistency with multiple answers from the
+ual sentences against corresponding contexts. This        same query. SelfCheckGPT assumes that grounded
+granular analysis provides a nuanced assessment of        sentences should be consistent with other sampled
+hallucinations at the sentence level, offering deeper     answers.
+insights into model performance.                             The method generates new responses using the
+                                                          initial prompt with increased temperature. It then
+5.3 Prompting Approaches                                  calculates a hallucination score for each sentence
+                                                          as the average of contradiction probabilities with
+Direct Prompting One straight-forward ap-
+                                                          these new samples. The response-level score is
+proach for groundedness classification via prompt-
+                                                          the maximum of sentence-level scores, with the
+ing is asking either the same or another LLM
+                                                          threshold optimized on the training set.
+whether a particular response for a query is
+                                                             We enhance this approach with a novel
+grounded in a context or not (Trautmann et al.,
+                                                          context-based evaluation (ContextNLI) using the
+2022). Therefore, we utilized several LLMs with
+                                                          potsawee/deberta-v3-large-mnli model. This com-
+a custom prompt and collected the binary classi-
+                                                          pares each answer sentence against context sen-
+fication as the prompt-based baselines. We used
+                                                          tences, identifying the minimum contradiction
+the specialized open access model Lynx-v1.1 (Ravi
+                                                          score as the hallucination probability. The max-
+et al., 2024) and the general purpose public LLMs
+                                                          imum score across all sentences represents the an-
+GPT-4o and Claude Sonnet 3.5. All three LLMs
+                                                          swer’s overall hallucination likelihood.
+were evaluated with the same prompt from Ravi
+                                                             We implement two variants of this approach:
+et al. (2024).
+                                                          Multi-Gen, which follows the original consistency
+   In principle, this approach has similarities with      checks, and our novel ContextNLI, which incorpo-
+Reflexion by Shinn et al. (2024), where a Self-           rates the context-based evaluation, thus providing
+Reflection LLM should reflect on a previous an-           complementary methods for assessing the ground-
+swer and if necessary to update its prediction. The       edness of LLM-generated content.
+authors showed that this was helpful, especially for
+more complex tasks.                                       DeepEval: Claims Extraction and Verification
+                                                          We adapt the Faithfulness metrics from Ip (2023)
+Amazon RefChecker RefChecker (Hu et al.,                  to detect contradictions between source documents
+2024) introduces a framework for hallucination            and generated answers. This approach divides the
+detection using knowledge triplets to capture fine-       task into two subtasks: claims extraction and claim
+grained assertions. The process involves three            verification (prompt chains, Trautmann (2023)).
+steps: claim extraction, hallucination checking, and         First, we use an LLM to extract claims indepen-
+aggregation. This decoupled process is also known         dently from both source documents and generated
+as prompt chaining (Trautmann, 2023).                     answers using a custom prompt. Then, a second
+   An LLM identifies knowledge triplets from the          LLM call with another custom prompt identifies
+response to the original query. Zero-shot checkers        claims from the generated answer not factually sup-
+then predict hallucination labels for each triplet (en-   ported by the source document claims. If any gener-
+tailment, contradiction, or neutral). Finally, these      ated claim contradicts a source claim, we consider
+labels are integrated to compute an overall halluci-      the answer inaccurate.
+nation score for the response.                               This method requires three LLM calls in total:
+   RefChecker’s computational demands are no-             two for claims extraction and one for comparison.
+table: for n triplets extracted, the LLM is prompted      We utilize Claude Sonnet 3.5 for all these calls,
+with the entire original context n times, signifi-        balancing task complexity reduction with compre-
+cantly impacting processing time and resource con-        hensive analysis.
+sumption. This approach balances granular analy-
+sis with computational intensity, offering a detailed     5.4   Fine-Tuning
+but resource-intensive method for hallucination de-       In addition to our primary methods, we fine-tuned a
+tection.                                                  Cross-Encoder classifier (DeBERTa v3 as the base
+                                                      180
+model) specifically tailored to our dataset. To en-     6       Experimental Set-Up
+sure the integrity of our evaluation, we meticu-
+                                                        Our benchmarking study aimed to evaluate var-
+lously prepared a specialized training and evalua-
+                                                        ious methods for classifying LLM responses as
+tion corpus based on the initial data splits, thereby
+                                                        grounded or ungrounded relative to a given context
+avoiding any potential contamination between sets.
+                                                        and query.
+   Our fine-tuning approach focused on the nu-
+anced differences between grounded and un-              Methodology Despite the varied granularity of
+grounded responses. For each pair of such re-           approaches (response-level vs. sentence-level), we
+sponses, we isolated the sentences that differed        standardized outputs to binary classifications for
+between them. This selective process allowed us to      consistent comparison. We developed each method
+concentrate on the most informative elements for        on the training set, optimized parameters on the
+distinguishing between grounded and ungrounded          development set, and conducted final evaluations
+content.                                                on the test set.
+   To establish ground truth for the grounded re-
+                                                        Performance Metrics We assessed classification
+sponses, we employed a semantic similarity mea-
+                                                        accuracy (including macro-averaged f1, precision,
+sure (as described in Section 5.1). For each sen-
+                                                        and recall) and computational efficiency through la-
+tence in the grounded response, we identified the
+                                                        tency measurements. Latency was computed as the
+most semantically similar sentence from the con-
+                                                        average processing time across all samples in the
+text and assigned it the corresponding cosine simi-
+                                                        development set. These metrics provide insights
+larity score. These scores typically ranged from 0.8
+                                                        into each approach’s practical applicability.
+to 0.99, indicating high levels of semantic align-
+ment.                                                   Computational Resources Local approaches
+   Conversely, for the ungrounded responses, we         utilized Amazon EC2 G5 Instances (8xlarge)4 .
+paired each sentence with the same context sen-         Prompting-based methods were executed via Azure
+tence used for its grounded counterpart. However,       OpenAI Services5 , AWS Bedrock (Anthropic’s
+we assigned these pairs a score of 1 minus the          Claude)6 , and Anthropic’s API directly, ensuring
+cosine similarity, effectively inverting the ground-    diverse and robust evaluation environments.
+ing measure. This approach provided a balanced
+representation of both grounded and ungrounded          7       Groundedness Classification Results
+examples in our training data.                          Our benchmark evaluation of groundedness classifi-
+   Through this methodology, we compiled a bal-         cation approaches revealed insightful performance
+anced dataset comprising 558 samples for train-         trade-offs, as shown in Tab. 3. The metrics include
+ing and 75 for development. This carefully cu-          classification precision, recall, F1-score, and ac-
+rated dataset served as the foundation for our fine-    curacy, providing a comprehensive view of each
+tuning process, enabling the Cross-Encoder to learn     method’s applicability.
+the subtle distinctions between grounded and un-           The multi-stage prompt chaining approach,
+grounded content within our specific corpus.            DeepEval Claims Verify, achieved top classifica-
+   The outcomes of our fine-tuning efforts (af-         tion metrics, but with high latency (26.1 seconds
+ter hyper-parameter optimization), are comprehen-       per request). In contrast, direct prompting with
+sively presented (macro averaged) in Tab. 2.            GPT-4o achieved the second-highest scores with
+                                                        significantly lower latency (2.2 seconds), as illus-
+ Model Name         M-Prec   M-Rec   M-F1     Acc       trated in Fig. 2.
+ deberta-v3-base    0.459    0.466    0.450   0.493        A clear speed-performance trade-off emerged
+ deberta-v3-large   0.736    0.739    0.733   0.733
+                                                        across methods. Similarity-based approaches
+                                                        (COS_SIM and QUIP) were fastest but struggled
+   Table 2: DEV set metrics for DeBERTa models
+                                                        with ungrounded response identification. NLI
+                                                        methods showed improved performance at the cost
+   Following the fine-tuning stage, we integrated
+                                                            4
+this grounding classification (GC) model into our               https://aws.amazon.com/ec2/instance-types/
+                                                        g5/
+benchmark, employing a methodology analogous                5
+                                                             https://azure.microsoft.com/en-us/products/
+to that used for the NLI approaches described in        ai-services/openai-service
+Section 5.2.                                               6
+                                                             https://aws.amazon.com/bedrock/claude/
+
+                                                      181
+                                                            Development Set                                           Test Set
+     #   Model Name
+                                             Precision     Recall Macro-F1           Accuracy      Precision     Recall Macro-F1      Accuracy
+     1   COS_SIM                               0.525       0.520    0.494             0.520          0.497       0.497      0.493      0.497
+     2   QUIP                                  0.648       0.533    0.421             0.533          0.560       0.509      0.379      0.509
+     3   HEM V1                                0.640       0.640    0.640             0.640          0.598       0.595      0.592      0.595
+     4   HEM V2                                0.580       0.580    0.580             0.580          0.564       0.563      0.562      0.563
+     5   FACT_KB                               0.527       0.527    0.526             0.527          0.510       0.510      0.508      0.510
+     6   GC-large                              0.694       0.667    0.655             0.667          0.628       0.620      0.615      0.620
+     7   LYNX v1.1                             0.764       0.460    0.571             0.460          0.792       0.503      0.597      0.503
+     8   Sonnet 3.5                            0.728       0.727    0.726             0.727          0.724       0.715      0.712      0.715
+     9   GPT-4o                                0.783       0.773    0.771             0.773          0.802       0.763      0.755      0.763
+    10   RefChecker (Haiku)                    0.511       0.506    0.450             0.506          0.514       0.507      0.435      0.508
+    11   RefChecker (Sonnet 3)                 0.500       0.500    0.366             0.500          0.500       0.500      0.386      0.500
+    12   DeepEval Claims Verify                0.801       0.800    0.800             0.800          0.779       0.774      0.774      0.775
+    13   SCGPT (Multi-Gen)                     0.627       0.627    0.627             0.627          0.679       0.667      0.661      0.667
+    14   SCGPT (ContextNLI)                    0.620       0.620    0.620             0.620          0.610       0.604      0.600      0.604
+
+               Table 3: Performance comparison of different models on Development and Test sets
+
+
+                           1.0
+                                                         Scatter Plot of F1 Score vs. Latency
+
+                                                                                                      .800 | 26.1
+                           0.8                       .771 | 2.2         .726 | 5.2
+                                                            .640 | 3.0       .655 | 6.2
+                                                                                                        .627 | 20.0
+                           0.6                                        .580 | 4.6             .620 | 19.6           .571 | 32.8
+                                                                                    .526 | 8.3
+                                       .494 | 1.2
+                F1 Score
+
+
+
+
+                                                                                                             .450 | 25.5
+                                            .421 | 1.5
+                           0.4                                                                                          .366 | 61.9
+                                                                             COS_SIM *             GPT-4o
+                                                                             HEM V1 *              RefChecker (Haiku)
+                           0.2                                               HEM V2 *              RefChecker (Sonnet 3)
+                                                                             GC-large *            DeepEval Claims Verification
+                                                                             FACT_KB *             SelfCheckGPT (Multi-Gen) *
+                                                                             QUIP *                SelfCheckGPT (ContextNLI) *
+                           0.0                                               LYNX v1.1 *           Max F1 Score: 0.800
+                                                                             Sonnet 3.5
+                                 100                                                 101
+                                                                    Latency (s/response)
+Figure 2: Development set results for our benchmark. We report the F1-scores (y-axis) for each method and the
+corresponding latency (x-axis) in seconds per response. Approach names denoted with * were run on an AWS
+ml.8xlarge instance.
+
+
+of increased latency. Within NLI, HEM V1 out-                                    8     Error Analysis
+performed HEM V2, and fine-tuning on our corpus
+further improving results.                                                       We conducted a detailed investigation into the types
+   Unexpectedly, complex prompt chaining ap-                                     of response errors present in our benchmark dataset
+proaches like RefChecker and SelfCheckGPT un-                                    to gain deeper insights into ungrounded content.
+derperformed, highlighting challenges in develop-                                   Through examination of error spans in the train-
+ing universally effective methods across diverse                                 ing set, we identified six distinct error types. The
+contexts.                                                                        models were instructed to select from our prede-
+   These findings emphasize the importance of bal-                               fined error types (Tab. 5, App. A.2).
+ancing task performance and computational effi-                                     Focusing on the development set, our analysis
+ciency when selecting a groundedness classifica-                                 revealed interesting patterns. The LLMs achieved
+tion approach, with optimal choices depending on                                 exact agreement on the hallucination type in 29%
+specific application requirements and resource con-                              of cases, with at least one overlapping error type
+straints.                                                                        for each response. GPT-4o typically predicted a
+                                                                            182
+                                                                 Frequency of (unique) Response Error Types
+                                Factual Inaccuracies                                                            59 (78.67%)
+Response Error Types
+
+                                   Reasoning Errors                                                       15 (20.00%)
+                       Contextual Misinterpretations                                               9 (12.00%)
+                                   Procedural Errors                                       5 (6.67%)
+                               Terminological Errors                                3 (4.00%)
+                                     Misattributions               1 (1.33%)
+                                                                 100                               101
+                                                                                Frequency (log scale)
+Figure 3: Counts of unique error types in the development set. Some responses contained up to three different error
+types. The frequency axis is in log-scale.
+
+                                        Error Type                      Misclassified    Total   Percentage
+                                        Terminological Errors                       2        3       66.7%
+                                        Factual Inaccuracies                       12      59        20.3%
+                                        Procedural Errors                           1        5       20.0%
+                                        Reasoning Errors                            2      15        13.3%
+                                        Contextual Misinterpretations               1        9       11.1%
+                                        Misattributions                             0        1        0.0%
+
+                               Table 4: Development set misclassification of the best performing model by error types.
+
+
+single error type, while Claude-3.5-Sonnet often                            9    Conclusion
+suggested multiple types per response.
+                                                                            Our comprehensive benchmark study on ground-
+   We aggregated predictions where both LLMs
+                                                                            edness classification of legal question-answering
+agreed. The distribution of unique error types is
+                                                                            systems has revealed significant insights into per-
+visualized in Fig. 3, with per-response occurrences
+                                                                            formance and efficiency trade-offs. The multi-stage
+in Fig. 4 (App. A.1). Factual Inaccuracies were
+                                                                            prompt chaining approach, DeepEval Claims Ver-
+most common, followed by Reasoning Errors. All
+                                                                            ify, emerged as the top performer with an F1 score
+initially defined error types were represented, vali-
+                                                                            of 0.80, closely followed by direct prompting using
+dating our classification scheme.
+                                                                            GPT-4o at 0.77, which demonstrated lower latency.
+   This analysis provides valuable insights into re-
+                                                                            These results highlight the potential of advanced
+sponse error types and ungrounded content in lan-
+                                                                            prompting techniques in achieving high accuracy.
+guage model outputs, crucial for developing tar-
+                                                                               Similarity-based and natural language inference
+geted strategies to improve response generation.
+                                                                            methods, while less accurate, offered fast process-
+Misclassification Analysis We conducted a mis-                              ing times. Our response error type classification
+classification analysis on our best-performing                              identified Factual Inaccuracies and Reasoning Er-
+model, DeepEval Claims Verify, to gain deeper                               rors as the most prevalent types of ungrounded con-
+insights into its performance across different error                        tent, providing direction for future improvements.
+types. As summarized in Tab. 4, Terminological                                 The study underscores the critical balance
+Errors showed the highest misclassification rate                            between task performance, computational effi-
+(67%), despite their low frequency, followed by                             ciency, and ease of implementation when selecting
+Factual Inaccuracies (20%) and Procedural Er-                               groundedness classification methods. With top-
+rors (20%). These findings reveal the varying chal-                         performing methods achieving F1 scores of 0.80,
+lenges posed by different error categories and high-                        this benchmark represents a significant advance-
+light areas for potential improvement in grounded-                          ment in the reliable assessment of AI-generated
+ness classification models, particularly in handling                        content across diverse applications.
+less common but difficult-to-classify error types.
+                                                                        183
+Limitations                                             would also be beneficial. Furthermore, exploring
+                                                        scalable methods that can be applied in real-time
+While our study offers valuable insights into the       or resource-constrained environments, as well as
+performance of various groundedness classification      continuously updating the evaluation framework to
+approaches, it is essential to acknowledge several      reflect the latest advancements in language model
+limitations inherent in our experimental setup and      technology, will be crucial for the ongoing rele-
+the methods we evaluated.                               vance of this research.
+   Firstly, our dataset, though carefully curated, is
+limited in size and domain scope. The responses         Ethics Statement
+were generated using specific language models and
+may not fully represent the diverse range of hallu-     This study on groundedness classification methods
+cinations or ungrounded content that could occur        aims to improve the reliability and trustworthiness
+across different models or domains. This limita-        of AI-generated content, which has significant eth-
+tion potentially affects the generalizability of our    ical implications. By developing more accurate
+findings to broader contexts or more specialized        methods to detect ungrounded or hallucinated in-
+applications.                                           formation, we contribute to the broader goal of mit-
+   Secondly, the binary classification of responses     igating the spread of misinformation and enhancing
+as either grounded or ungrounded may oversim-           the integrity of AI-assisted communication. Our
+plify the nuanced nature of language model out-         work aligns with the principles of beneficence and
+puts. In reality, responses often contain a mix of      non-maleficence, as it seeks to maximize the bene-
+grounded and ungrounded elements, and a more            fits of language models while minimizing potential
+granular assessment might provide deeper insights       harms associated with inaccurate or misleading in-
+into model behavior.                                    formation.
+                                                           We acknowledge that the development and de-
+   Our evaluation metrics, while standard in the
+                                                        ployment of these classification methods may have
+field, may not capture all aspects of response qual-
+                                                        broader societal impacts. We emphasize the impor-
+ity or usefulness. For instance, a response that is
+                                                        tance of transparent and responsible use of these
+technically grounded but irrelevant or poorly struc-
+                                                        methods, respecting principles of fairness and pri-
+tured might still receive a high rating within our
+                                                        vacy. Furthermore, we encourage ongoing dialogue
+current framework.
+                                                        and collaboration within the NLP community to
+   The computational resources required for some
+                                                        address the ethical challenges associated with AI-
+of the more complex approaches, particularly those
+                                                        generated content and its evaluation.
+involving multiple API calls or large language mod-
+els, pose scalability challenges. This limitation may
+restrict the practical applicability of these methods   References
+in real-time or resource-constrained environments.
+                                                        Sébastien Bubeck, Varun Chandrasekaran, Ronen El-
+   Additionally, our error type classification, while     dan, Johannes Gehrke, Eric Horvitz, Ece Kamar, Pe-
+informative, relies on the agreement between two          ter Lee, Yin Tat Lee, Yuanzhi Li, Scott Lundberg,
+specific language models. This approach may in-           et al. 2023. Sparks of artificial general intelligence:
+troduce biases or limitations based on the particular     Early experiments with gpt-4. arxiv. arXiv preprint
+                                                          arXiv:2303.12712.
+characteristics of these models.
+   Lastly, the rapid pace of development in lan-        Khyathi Raghavi Chandu, Yonatan Bisk, and Alan W
+guage model technology means that our findings            Black. 2021. Grounding ‘grounding’ in NLP. In
+                                                          Findings of the Association for Computational Lin-
+may quickly become outdated as new models and
+                                                          guistics: ACL-IJCNLP 2021, pages 4283–4305, On-
+techniques emerge. The performance gaps we ob-            line. Association for Computational Linguistics.
+served between different approaches may shift with
+the introduction of more advanced models or re-         Shangbin Feng, Vidhisha Balachandran, Yuyang Bai,
+                                                          and Yulia Tsvetkov. 2023. Factkb: Generalizable fac-
+fined methodologies.                                      tuality evaluation using language models enhanced
+   Future work should address these limitations by        with factual knowledge. In Proceedings of the 2023
+expanding the dataset to include a broader range          Conference on Empirical Methods in Natural Lan-
+of domains and increasing its size. Developing            guage Processing, pages 933–952.
+more nuanced classification frameworks that can         Giwon Hong, Aryo Pradipta Gema, Rohit Saxena,
+capture the complexity of language model outputs          Xiaotang Du, Ping Nie, Yu Zhao, Laura Perez-
+
+                                                    184
+  Beltrachini, Max Ryabinin, Xuanli He, and Pasquale         documents using graphs. In International Confer-
+  Minervini. 2024. The hallucinations leaderboard–an         ence on Intelligent Text Processing and Computa-
+  open effort to measure hallucinations in large lan-        tional Linguistics, pages 498–508. Springer.
+  guage models. arXiv preprint arXiv:2404.05904.
+                                                         Selvan Sunitha Ravi, Bartosz Mielczarek, Anand Kan-
+Xiangkun Hu, Dongyu Ru, Lin Qiu, Qipeng Guo,               nappan, Douwe Kiela, and Rebecca Qian. 2024.
+  Tianhang Zhang, Yang Xu, Yun Luo, Pengfei Liu,           Lynx: An open source hallucination evaluation
+  Yue Zhang, and Zheng Zhang. 2024. Refchecker:            model. arXiv preprint arXiv:2407.08488.
+  Reference-based fine-grained hallucination checker
+                                                         Vipula Rawte, Amit Sheth, and Amitava Das. 2023. A
+  and benchmark for large language models. arXiv
+                                                           survey of hallucination in large foundation models.
+  preprint arXiv:2405.14486.
+                                                           arXiv preprint arXiv:2309.05922.
+Simon Hughes, Minseok Bae, and Miaoran Li. 2023.         Sara Rosenthal, Avirup Sil, Radu Florian, and Salim
+  Vectara Hallucination Leaderboard.                       Roukos. 2024. Clapnq: Cohesive long-form answers
+                                                           from passages in natural questions for rag systems.
+Jeffrey Ip. 2023. Deepeval: A tool for deep learning       arXiv preprint arXiv:2404.02103.
+   model evaluation. GitHub repository.
+                                                         Noah Shinn, Federico Cassano, Ashwin Gopinath,
+Soha Khazaeli, Janardhana Punuru, Chad Morris, San-        Karthik Narasimhan, and Shunyu Yao. 2024. Re-
+  jay Sharma, Bert Staub, Michael Cole, Sunny Chiu-        flexion: Language agents with verbal reinforcement
+  Webster, and Dhruv Sakalley. 2021. A free format         learning. Advances in Neural Information Process-
+  legal question answering system. In Proceedings of       ing Systems, 36.
+  the Natural Legal Language Processing Workshop
+  2021, pages 107–113.                                   Dietrich Trautmann. 2023. Large language model
+                                                           prompt chaining for long legal document classifi-
+Wojciech Kryściński, Bryan McCann, Caiming Xiong,        cation. arXiv preprint arXiv:2308.04138.
+ and Richard Socher. 2020. Evaluating the factual
+ consistency of abstractive text summarization. In       Dietrich Trautmann, Alina Petrova, and Frank Schilder.
+ Proceedings of the 2020 Conference on Empirical           2022. Legal prompt engineering for multilin-
+ Methods in Natural Language Processing (EMNLP),           gual legal judgement prediction. arXiv preprint
+ pages 9332–9346.                                          arXiv:2212.02199.
+                                                         Andrew Vold and Jack G Conrad. 2021. Using trans-
+Xingxuan Li, Ruochen Zhao, Yew Ken Chia, Bosheng           formers to improve answer retrieval for legal ques-
+  Ding, Shafiq Joty, Soujanya Poria, and Lidong Bing.      tions. In Proceedings of the Eighteenth International
+  2023. Chain-of-knowledge: Grounding large lan-           Conference on Artificial Intelligence and Law, pages
+  guage models via dynamic knowledge adapting over         245–249.
+  heterogeneous sources. In The Twelfth International
+  Conference on Learning Representations.                Keheng Wang, Feiyu Duan, Peiguang Li, Sirui Wang,
+                                                           and Xunliang Cai. 2024. Llms know what they need:
+Varun Magesh, Faiz Surani, Matthew Dahl, Mirac Suz-        Leveraging a missing information guided framework
+  gun, Christopher D Manning, and Daniel E Ho.             to empower retrieval-augmented generation. arXiv
+  2024. Hallucination-free? assessing the reliability      preprint arXiv:2404.14043.
+  of leading ai legal research tools. arXiv preprint
+  arXiv:2405.20362.                                      Orion Weller, Marc Marone, Nathaniel Weir, Dawn
+                                                           Lawrie, Daniel Khashabi, and Benjamin Van Durme.
+Potsawee Manakul, Adian Liusie, and Mark Gales. 2023.      2024. “according to . . . ”: Prompting language
+  Selfcheckgpt: Zero-resource black-box hallucina-         models improves quoting from pre-training data. In
+  tion detection for generative large language models.     Proceedings of the 18th Conference of the European
+  In Proceedings of the 2023 Conference on Empiri-         Chapter of the Association for Computational Lin-
+  cal Methods in Natural Language Processing, pages        guistics (Volume 1: Long Papers), pages 2288–2301,
+  9004–9017.                                               St. Julian’s, Malta. Association for Computational
+                                                           Linguistics.
+Jorge Martinez-Gil. 2023. A survey on legal question–
+   answering systems. Computer Science Review,           Zhiying Zhu, Zhiqing Sun, and Yiming Yang. 2024.
+   48:100552.                                              Halueval-wild: Evaluating hallucinations of lan-
+                                                           guage models in the wild.        arXiv preprint
+Joshua Maynez, Shashi Narayan, Bernd Bohnet, and           arXiv:2403.04307.
+  Ryan McDonald. 2020. On faithfulness and factu-
+  ality in abstractive summarization. In Proceedings     A     Response Error Types
+  of the 58th Annual Meeting of the Association for
+                                                         A.1    Dev Set Error Types
+  Computational Linguistics, pages 1906–1919, On-
+  line. Association for Computational Linguistics.       A.2    Description and Examples
+Alfredo Monroy, Hiram Calvo, and Alexander Gelbukh.      See the table 5 for our six response error types with
+  2009. Nlp for shallow question answering of legal      their descriptions and examples.
+                                                       185
+                                                                                                                          Frequency of Response Error Types
+                                                                         Factual Inaccuracies                                                                   47 (62.67%)
+                                                      Factual Inaccuracies, Reasoning Errors                                             6 (8.00%)
+                                                                            Reasoning Errors                                      5 (6.67%)
+                                         Contextual Misinterpretations, Factual Inaccuracies                               4 (5.33%)
+Response Error Types
+
+
+
+
+                                                                            Procedural Errors                              4 (5.33%)
+                                                                        Terminological Errors                 2 (2.67%)
+                                                               Contextual Misinterpretations                  2 (2.67%)
+                       Contextual Misinterpretations, Factual Inaccuracies, Reasoning Errors      1 (1.33%)
+                                            Contextual Misinterpretations, Procedural Errors      1 (1.33%)
+                                            Contextual Misinterpretations, Reasoning Errors       1 (1.33%)
+                                                  Factual Inaccuracies, Terminological Errors     1 (1.33%)
+                                                                              Misattributions     1 (1.33%)
+                                                                                                100                                                       101
+                                                                                                                                  Frequency (log scale)
+
+
+                                 Figure 4: Counts of response error types in the development set. The frequency axis is in log-scale.
+
+
+
+
+                        Error Type           Short Description               Examples
+                        Factual Inaccuracies Misrepresentation of estab- 1. Brown v. Board of Education was de-
+                                             lished facts, dates, or details cided in 1964.
+                                                                             2. The First Amendment protects only
+                                                                             written speech.
+                        Contextual Misinter- Misapplication of legal princi- 1. Applying Miranda rights to a civil tax
+                        pretations           ples or inappropriate analogies dispute.
+                                                                             2. Using Roe v. Wade precedent in a Sec-
+                                                                             ond Amendment case.
+                        Procedural Errors    Mistakes in describing legal 1. A case goes directly from district court
+                                             procedures or processes         to the Supreme Court, skipping the appel-
+                                                                             late court.
+                                                                             2. Claiming that jury selection occurs after
+                                                                             opening statements in a trial.
+                        Reasoning Errors     Flawed arguments or unsup- 1. Since the Fourth Amendment protects
+                                             ported legal conclusions        against unreasonable searches, all warrant-
+                                                                             less searches are unconstitutional.
+                                                                             2. Because the Supreme Court ruled on
+                                                                             abortion in Roe v. Wade, states cannot
+                                                                             pass any abortion laws.
+                        Misattributions      Incorrect assignment of opin- 1. Justice Scalia wrote the majority opin-
+                                             ions, quotes, or actions        ion in Obergefell v. Hodges.
+                                                                             2. The phrase "separate but equal" origi-
+                                                                             nated from Brown v. Board of Education.
+                        Terminological       Misuse or misinterpretation of 1. "Habeas corpus" refers to the right to a
+                        Errors               legal terms or concepts         speedy trial.
+                                                                             2. "Strict scrutiny" means that a law is
+                                                                             automatically unconstitutional.
+
+                                                                      Table 5: Response error types with a description and examples
+
+
+
+
+                                                                                                                 186
+

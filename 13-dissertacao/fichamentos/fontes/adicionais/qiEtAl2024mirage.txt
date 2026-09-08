@@ -1,0 +1,1108 @@
+                         Model Internals-based Answer Attribution for
+                         Trustworthy Retrieval-Augmented Generation
+
+                Jirui Qi1 * Gabriele Sarti1∗ Raquel Fernández2 Arianna Bisazza1
+                  1
+                    Center for Language and Cognition (CLCG), University of Groningen
+           2
+             Institute for Logic, Language and Computation (ILLC), University of Amsterdam
+                  {j.qi, g.sarti, a.bisazza}@rug.nl, raquel.fernandez@uva.nl
+
+
+
+                            Abstract
+        Ensuring the verifiability of model answers is a
+        fundamental challenge for retrieval-augmented
+        generation (RAG) in the question answering
+        (QA) domain. Recently, self-citation prompt-
+        ing was proposed to make large language mod-
+        els (LLMs) generate citations to supporting
+        documents along with their answers. However,
+        self-citing LLMs often struggle to match the
+        required format, refer to non-existent sources,
+        and fail to faithfully reflect LLMs’ context us-
+        age throughout the generation. In this work,
+        we present MIRAGE – Model Internals-based
+        RAG Explanations – a plug-and-play approach
+        using model internals for faithful answer attri-
+        bution in RAG applications. MIRAGE detects
+        context-sensitive answer tokens and pairs them
+        with retrieved documents contributing to their
+        prediction via saliency methods. We evaluate
+        our proposed approach on a multilingual ex-
+        tractive QA dataset, finding high agreement
+        with human answer attribution. On open-ended
+        QA, MIRAGE achieves citation quality and effi-
+        ciency comparable to self-citation while also al-
+        lowing for a finer-grained control of attribution
+        parameters. Our qualitative evaluation high-
+        lights the faithfulness of MIRAGE’s attributions
+        and underscores the promising application of           Figure 1: MIRAGE is a model internals-based answer at-
+        model internals for RAG answer attribution.1           tribution framework for RAG settings. Context-sensitive
+                                                               answer spans (in color) are detected and matched with
+1       Introduction                                           contextual cues in retrieved sources to evaluate the trust-
+                                                               worthiness of models’ answers.
+Retrieval-augmented generation (RAG) with large
+language models (LLMs) has become the de-facto                 Ren et al., 2023). However, verifying whether
+standard methodology for Question Answering                    the model answer is faithfully supported by the
+(QA) in both academic (Lewis et al., 2020b; Izac-              retrieved sources is often non-trivial due to the
+ard et al., 2022) and industrial settings (Dao and Le,         large context size and the variety of potentially cor-
+2023; Ma et al., 2024). This approach was shown                rect answers (Krishna et al., 2021; Xu et al., 2023).
+to be effective at mitigating hallucinations and pro-          In light of this issue, several answer attribution2
+ducing factually accurate answers (Petroni et al.,             approaches were recently proposed to ensure the
+2020; Lewis et al., 2020a; Borgeaud et al., 2022;              trustworthiness of RAG outputs (Rashkin et al.,
+    * Equal contribution.                                          2
+                                                                     We use the term answer attribution (AA) when referring
+    1
+    Code and data released at https://github.com/              to the task of citing relevant sources to distinguish it from the
+Betswish/MIRAGE.                                               feature attribution methods used in MIRAGE.
+
+                                                            6037
+          Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing, pages 6037–6053
+                            November 12-16, 2024 ©2024 Association for Computational Linguistics
+2021; Bohnet et al., 2022; Muller et al., 2023). Ini-              mized for RAG applications.
+tial efforts in this area employed models trained
+on Natural Language Inference (NLI) to automate                  • We quantify the plausibility of MIRAGE attri-
+the identification of supporting documents (Bohnet                 butions on two datasets, showing improve-
+et al., 2022; Yue et al., 2023). However, being                    ments over NLI and self-citation methods
+based on an external validator, this approach does                 while ensuring better controllability and ef-
+not faithfully explain the answer generation process               ficiency.
+but simply identifies plausible sources supporting
+                                                                 • We analyze challenging attribution settings,
+model answers in a post-hoc fashion. Following
+                                                                   highlighting MIRAGE’s faithfulness to LLMs’
+recent progress in the instruction-following abili-
+                                                                   reasoning process.
+ties of LLMs, self-citation (i.e. prompting LLMs
+to generate inline citations alongside their answers)        2     Background and Related Work
+has been proposed to mitigate the training and in-
+ference costs of external validator modules (Gao             In RAG settings, a set of documents relevant to a
+et al., 2023a). However, self-citation performance           user query is retrieved from an external dataset and
+is hindered by the imperfect instruction-following           infilled into an LLM prompt to improve the gen-
+capacity of modern LLMs (Mu et al., 2023; Liu                eration process (Petroni et al., 2020; Lewis et al.,
+et al., 2023), and resulting attributions are still pre-     2020a). Answer attribution (Rashkin et al., 2021;
+dicted in an unintelligible, post-hoc fashion. This is       Bohnet et al., 2022; Muller et al., 2023) aims to
+an important limitation for these approaches, since          identify which retrieved documents support the
+the primary goal of answer attribution should be             generated answer (answer faithfulness, Gao et al.,
+to ensure that the LLM is not ‘right for the wrong           2023b), e.g., by exploiting the similarity between
+reasons’ (McCoy et al., 2019).                               model outputs and references.3 Simplifying access
+   In light of these considerations, in this work we         to relevant sources via answer attribution is a funda-
+introduce MIRAGE, an extension of the context-               mental step towards ensuring RAG trustworthiness
+reliance evaluation PEC O R E framework (Sarti               in customer-facing scenarios (Liu et al., 2023).
+et al., 2024) that employs model internals for ef-
+ficient and faithful answer attributions. MIRAGE             2.1    Answer Attribution Methods
+first identifies context-sensitive tokens in a gener-        Entailment-based Answer Attribution Bohnet
+ated sentence by measuring the shift in LM predic-           et al. (2022) and Muller et al. (2023) propose to
+tive distribution caused by the added input context.         approximate human AA annotations with NLI sys-
+Then, it attributes this shift to specific influential to-   tems such as TRUE (Honovich et al., 2022), us-
+kens in the context using gradient-based saliency or         ing a source document as premise and an LLM-
+other feature attribution techniques (Madsen et al.,         generated sentence as entailment hypothesis. AAs
+2022). We adapt this approach to the RAG setup by            produced by these systems were shown to corre-
+matching context-dependent generated sentences to            late strongly with human annotations, prompting
+retrieved documents that contribute to their predic-         their adoption in AA studies (Muller et al., 2023;
+tion and converting the resulting pairs to citations         Gao et al., 2023a). Despite their effectiveness,
+using the standard answer attribution (AA) format.           entailment-based methods can be computationally
+We begin our assessment of MIRAGE on the short-              expensive when several answer sentence-document
+form XOR-AttriQA dataset (Muller et al., 2023),              pairs are present. Moreover, this setup assumes the
+showing high agreement between MIRAGE results                NLI model ability to robustly detect entailment re-
+and human annotations across several languages.              lations across all domains and languages for which
+We then test our method on the open-ended ELI5               the LLM generator is used. In practice, however,
+dataset (Fan et al., 2019), achieving AA quality             NLI systems were shown to be brittle in challeng-
+comparable to or better than self-citation while en-         ing scenarios, exploiting shallow heuristics (Mc-
+suring a higher degree of control over attribution           Coy et al., 2019; Nie et al., 2020; Sinha et al., 2021;
+parameters. In summary, we make the following                Luo et al., 2022), and require dedicated efforts
+contributions:                                               for less-resourced settings (Conneau et al., 2018).
+                                                                 3
+                                                                   Popular frameworks such as LangChain (Chase, 2022)
+   • We introduce MIRAGE, a model internals-                 and LlamaIndex (Liu, 2022) support similarity-based cita-
+     based answer attribution framework opti-                tions using vector databases.
+
+                                                         6038
+                                                                                            Missing citation (%)
+                                                                            Model
+                                                                                            Sentence      Answer
+                                                                        Zephyr 7B β              54.5        95.7
+                                                                      LLaMA 2 7B Chat            62.4        99.3
+
+                                                            Table 1: % of unattributed sentences and answers with
+                                                            ≥ 1 unattributed sentences on ELI5.
+
+                                                            2.2      Attribution Faithfulness
+                                                            Answer Attribution can be Unfaithful The
+                                                            aforementioned approaches do not account for at-
+                                                            tributions’ faithfulness, i.e. whether the selected
+                                                            documents influence the LLM during the genera-
+                                                            tion. Indeed, the presence of an entailment relation
+                                                            or high semantic similarity does not imply that the
+                                                            retrieved document had an influence on the answer
+                                                            generation process. This can be true in cases where
+                                                            LLMs may rely on memorized knowledge while
+                                                            ignoring relevant, albeit unnecessary, contextual
+Figure 2: Instruction-following errors in a self-citation   information. Even in the case of self-citation, re-
+example, using the setup of Gao et al. (2023a).             cent work showed that, while the justifications of
+                                                            self-explaining LLMs appear plausible, they gener-
+                                                            ally do not align with their internal reasoning pro-
+For example, NLI may fail to correctly attribute            cess (Atanasova et al., 2023; Madsen et al., 2024;
+answers in multi-hop QA settings when consider-             Agarwal et al., 2024; Randl et al., 2024), with little
+ing individual documents as premises (Yang et al.,          to no predictive efficacy (Huang et al., 2023). By
+2018; Welbl et al., 2018).                                  contrast, approaches based on model internals are
+                                                            designed to faithfully reflect input importance in
+                                                            motivating model predictions. For instance, Al-
+                                                            ghisi et al. (2024) explore the use of gradients-
+Self-citation Gao et al. (2023a) is a recent AA
+                                                            based attribution to locate salient history segments
+approach exploiting the ability of recent LLMs to
+                                                            for various dialogical tasks.
+follow instructions in natural language (Raffel et al.,
+                                                               Concurrent to our work, Phukan et al. (2024)
+2020; Chung et al., 2022; Sanh et al., 2022; Brown
+                                                            and Cohen-Wang et al. (2024) have proposed other
+et al., 2020), thereby avoiding the need for an ex-
+                                                            internals-based methods for granular AA of LLM
+ternal validator. Nakano et al. (2021) and Menick
+                                                            generations. While the two-step approaches pro-
+et al. (2022) propose citation fine-tuning for LLMs,
+                                                            posed in both works are similar to MIRAGE, they
+while Gao et al. (2023a) instruct general-purpose
+                                                            also differ in substantial ways. Notably, Phukan
+LLMs to produce inline citations in a few-shot set-
+                                                            et al. (2024) derive attributions from embedding
+ting. Self-citation answers are generally more rel-
+                                                            similarity, which does not capture the functional in-
+evant to the provided sources’ contents, but can
+                                                            fluence of context usage during the generation pro-
+still contain unsupported statements and inaccu-
+                                                            cess. C ONTEXT C ITE (Cohen-Wang et al., 2024)
+rate citations (Liu et al., 2023). In our preliminary
+                                                            instead fits a linear surrogate model to estimate the
+analysis, we find that self-citation often misses rel-
+                                                            impact of ablating context segments over down-
+evant citations, uses wrong formats, or refers to
+                                                            stream answer probabilities. While this procedure
+non-existing documents (Figure 2). For the ELI5
+                                                            approximates causal context influence, it still re-
+dataset (Fan et al., 2019), we find that LLaMA 2 7B
+                                                            quires a sufficiently large context and many LLM
+Chat (Touvron et al., 2023) and Zephyr β 7B (Tun-
+                                                            forward passes to learn the surrogate model4 , ulti-
+stall et al., 2023) fail to produce AAs matching
+                                                            mately providing a coarser attribution for the full
+the prompt instructions for the majority of gener-
+                                                            generated output. On the contrary, MIRAGE effi-
+ated sentences, with almost all answers having at
+                                                            ciently estimates generated tokens requiring attribu-
+least one unattributed sentence when the Gao et al.
+(2023a) self-citation setup is used (Table 1).                 4
+                                                                   Authors suggest a minimum of 32 different ablations.
+
+                                                        6039
+Figure 3: Illustration of MIRAGE’s two-step approach adapted from PEC O R E for RAG answer attribution. Step
+1: CTI detects context-sensitive tokens in the generation (e.g. smaller). Step 2: CCI attributes the generation of
+detected tokens back to context tokens (e.g. few in Doc[1] promotes the generation of smaller instead of PC) using
+contrastive feature attribution. Token pairs are then aggregated into sentence-document citations for practical usage.
+
+tion via contrastive metrics to produce granular at-              3     Method
+tributions at the token level, limiting computations
+to estimate how context impacts LLM predictions.                  Identifying which generated spans were most in-
+                                                                  fluenced by preceding information is a key chal-
+Feature Attribution in Interpretability The                       lenge for LM attribution. The Model Internals-
+task of faithfully identifying salient context infor-             based RAG Explanations (MIRAGE) method we
+mation has been studied extensively in the NLP in-                propose is an extension of the Plausibility Eval-
+terpretability field (Ferrando et al., 2024). In partic-          uation for Context Reliance (PEC O R E) frame-
+ular, post-hoc feature attribution approaches (Mad-               work (Sarti et al., 2024) for context-aware machine
+sen et al., 2022) exploit information sourced from                translation. Importantly, this framework requires
+model internals, e.g., attention weights or gradients             open-weights access to the LLM generator, which
+of next-word probabilities, to identify input tokens              is a strict but necessary requirement to provide an
+playing an important role towards the model’s pre-                accurate overview of the actual context usage dur-
+diction. While feature attribution studies in NLP                 ing generation (Casper et al., 2024). This section
+typically focused on classification tasks (Atanasova              provides an overview of PEC O R E’s two-step pro-
+et al., 2020; Wallace et al., 2020; Chrysostomou                  cedure (illustrated in Figure 3) and clarifies how
+and Aletras, 2022), recent work applies these meth-               MIRAGE adapts it for RAG answer attribution.
+ods to evaluate context usage in language genera-
+tion (Yin and Neubig, 2022; Ferrando et al., 2023;                3.1     Step 1: Context-sensitive Token
+Sarti et al., 2023, 2024). Importantly, feature at-                       Identification (CTI)
+tribution techniques are designed to maximize the                 For every token in an answer sentence y =
+faithfulness of selected context tokens by accessing              ⟨y1 , . . . , yn ⟩ generated by a LM prompted with
+models’ intermediate computations, as opposed to                  a query q and a context c = ⟨c1 , . . . , c|c| ⟩, a con-
+the AA methods of Section 2.1. While the faithful-                trastive metric m such as KL divergence (Kullback
+ness of such approaches can still vary depending on               and Leibler, 1951) is used to quantify the shift in
+models and tasks, the development of robust and                   the LM predictive distribution at the i-th genera-
+faithful methods is an active area of research (Ja-               tion step when the context is present or absent (Pctx i
+covi and Goldberg, 2020; Chan et al., 2022; Bast-                 or Pno-ctx ). Resulting scores m = ⟨m1 , . . . , mn ⟩
+                                                                         i
+ings et al., 2022; Lyu et al., 2024).5                            reflect the context sensitivity of every generated
+   5                                                              token and can be converted into binary labels using
+     A maximally faithful AA approach would ablate all pos-
+sible combinations of context elements to counterfactually        a selector function sCTI :
+estimate their importance towards model predictions. Given
+the long-form answers and contexts in RAG settings, this              CTI(q, c, y) = { yi | sCTI (mi ) = 1 ∀yi ∈ y}
+is practically unfeasible. Even if based on approximations,                                                           (1)
+internals-based approaches such as MIRAGE are intrinsically                                        i      i
+                                                                                     with mi = KL(Pctx ∥ Pno-ctx )
+more faithful than external validators like NLI, since they
+aim to exploit information functional to the predictive process   rather than only relying on the generated output.
+
+                                                              6040
+3.2 Step 2: Contextual Cues Imputation                          a single span and mapped from subword to word
+    (CCI)                                                       level to facilitate interpretation.
+For every context-sensitive token yi identified by              Sentence-level Aggregation Following standard
+                                    \c
+CTI, a contrastive alternative yi is produced by                sentence-level AA practices, we aggregate token-
+excluding c from the prompt, but using the origi-               level citations as the union over all cited documents
+nal generated prefix y<i . Then, contrastive feature            docid(·) across context-sensitive tokens in y:
+attribution (Yin and Neubig, 2022) is used to ob-                                    [
+tain attribution scores ai = ⟨ai1 , . . . , ai|c| ⟩ for every    MIRAGE (y) =              docid(cj ) ∀cj ∈ CCI(yi )
+context token cj ∈ c:                                                              yi ∈CTI(y)
+                            \c                                       with sCTI = mi ≥ m∗ , sCCI = aij ≥ ai∗
+    aij = ∇j p(yi ) − p(yi ) , ∀cj ∈ c }                  (2)
+                                                                                                                 (5)
+where ∇j is the L2 norm of the gradient vector over             In the following sections, we use MIRAGE CAL and
+the input embedding of context token cj , and both              MIRAGE EX to refer to sentence-level answer attribu-
+probabilities are computed from the same contex-                tion using m∗CAL and m∗EX thresholds, respectively.
+tual inputs (q, c, y<i ). Intuitively, this procedure
+identifies which tokens in c influence the prediction           4     Agreement with Human Answer
+of yi while accounting for the non-contextual op-                     Attribution Annotations
+      \c
+tion yi . Resulting scores are once again binarized             We begin our evaluation by comparing MIRAGE
+with a selector sCCI :                                          predictions to human-produced answer attributions.
+   CCI(yi ) = { cj | sCCI (aij ) = 1, ∀cj ∈ c}           (3)    Importantly, our aim is not to compare several AA
+                                                                approaches to claim optimal faithfulness, but rather
+This results in pairs of context-sensitive generated            evaluate how our proposed framework fares against
+tokens and the respective input-context tokens in-              existing approaches at the task of producing answer
+fluencing their prediction:                                     attributions from model internals. We employ the
+                                                               XOR-AttriQA dataset (Muller et al., 2023), which,
+  P = ⟨ yi , cj ⟩, ∀yi ∈ CTI, ∀cj ∈ CCI(yi ) (4)
+                                                                to our knowledge, is the only open dataset with hu-
+3.3 From Granular Attributions to                               man annotations over RAG outputs produced by a
+    Document-level Citations                                    publicly accessible LM.6 We limit our assessment
+CTI Filtering To obtain discrete labels from the                to open-weights LLMs to ensure that MIRAGE an-
+CTI step, we set sCTI (mi ) = mi ≥ m∗ , where m∗                swer attribution can faithfully reflect the model’s
+is a threshold value for selecting context-sensitive            inner processing towards the natural production of
+generated tokens. In this work, we experiment                   the annotated answer used for evaluation.7 More-
+with two variants of m∗ : a calibrated threshold                over, while cross-linguality is not the focus of our
+m∗CAL obtained by maximizing agreement between                  work, XOR-AttriQA allows us to assess the robust-
+the contrastive metric and human annotations on a               ness of MIRAGE across several languages and its
+calibration set with human AA annotations, and an               agreement with human annotations compared to an
+example-level threshold m∗EX using only within-                 entailment-based system.
+example scores to avoid the need of calibration data.           4.1    Experimental Setup
+Following Sarti et al. (2024), we set m∗EX = m +
+                                                                XOR-AttriQA consists of 500/4720 validation/test
+σm , where m and σm are the average and standard
+                                                                tuples, each containing a concise factual query q, a
+deviation of m scores for generated tokens.
+                                                                set of retrieved documents that we use as context
+CCI Filtering To extract granular document cita-                c = ⟨doc1 , . . . , dock ⟩, and a single-sentence an-
+tions (i.e., colored spans with document indices in             swer y produced by an mT5-base model (Xue et al.,
+Figure 1), we set sCCI = aij ≥ ai∗ , where ai∗ is ei-           2021) fine-tuned on cross-lingual QA in a RAG
+ther the Top-K or Top-% highest attribution value in               6
+                                                                     E.g., the human-annotated answers in Bohnet et al. (2022)
+ai , to filter attributed context tokens cj ∈ CCI(yi ).         were generated by PALM 540B (Chowdhery et al., 2023),
+Then, we use the identifier docid(cj ) of the docu-             whose internals are inaccessible.
+                                                                   7
+ments they belong to as citation indices for context-                While these answers could be force-decoded from an
+                                                                open-source model to enable MIRAGE usage, such procedure
+sensitive token yi . Highlights for consecutive to-             would likely impact the validity of AA since the selected
+kens citing the same documents are collated into                model would not naturally generate the forced answers.
+
+                                                            6041
+  Method                           Extra Requirements              CCI Filter       BN     FI     JA     RU     TE     Avg. / Std
+  NLI ORIG (Honovich et al.)        11B NLI model                                   33.8   83.7   86.5   85.8   50.0   68.0 / 21.9
+                                                                       –
+  NLI MT (Honovich et al.)     11B NLI model + MT engine                            82.6   83.7   90.5   81.7   82.5    84.2 / 3.2
+                                                                     Top 3          81.7   84.2   87.8   83.3   87.0   84.8 / 2.3
+  MIRAGE CAL (Ours)             142 annotated AA examples
+                                                                    Top 5%          84.4   83.0   91.4   85.8   88.9   86.7 / 3.1
+                                                                     Top 3          80.2   78.5   83.8   77.2   75.2   79.0 / 2.9
+  MIRAGE EX (Ours)                           –
+                                                                    Top 5%          81.7   80.1   89.2   84.4   81.8   83.4 / 3.2
+
+Table 2: Agreement % of MIRAGE and entailment-based baselines with human AA on XOR-AttriQAmatch using
+CORA for RAG. Extra Requirements: data/models needed for AA in addition to the RAG model and the current
+example. Filter: sCCI filtering for saliency scores. Best overall and best uncalibrated scores are highlighted.
+
+setup (CORA; Asai et al., 2021).8 Queries and doc-                    of the method in less-resourced settings. Instead,
+uments span five languages (Bengali (BN), Finnish                     in NLIMT , all queries and documents are machine
+(FI), Japanese (JA), Russian (RU), and Telugu                         translated to English using the Google Translate
+(TE)), with no constraint on documents to match                       API.12 While this simplifies the task by ensuring
+the language of the query.9 Although the RAG gen-                     all TRUE inputs are in English, it can lead to infor-
+erator employs a set of retrieved documents during                    mation loss caused by imprecise translation.
+generation, human annotators were asked to label
+tuples (q, doci , y) to indicate whether the informa-                 4.3        Results and Analysis
+tion in doci supports the generation of y. Impor-                     MIRAGE agrees with human answer attribution
+tantly, MIRAGE requires extracting model internals                    Table 2 presents our results. MIRAGE is found to
+in the naturalistic setting that leads to the genera-                 largely agree with human annotations on XOR-
+tion of the desired answer, i.e., the one assessed                    AttriQAmatch , with scores on par or slightly better
+by human annotators. Hence, we perform a selec-                       than those of the ad-hoc NLIMT system augmented
+tion procedure to identify XOR-AttriQA examples                       with automatic translation. Although calibration
+where the answer produced by filling in the con-                      appears to generally improve MIRAGE’s agreement
+catenated documents c in the LM prompt matches                        with human annotators, we note that the uncali-
+the one provided. The resulting subset, which we                      brated MIRAGE EX achieves strong performances
+dub XOR-AttriQAmatch , contains 142/1144 calibra-                     despite having no access to external modules or
+tion/test examples and is used for our evaluation.10                  tuning data. These findings confirm that the inner
+                                                                      workings of LMs can be used to perform answer
+4.2 Entailment-based Baselines                                        attribution, resulting in performances on par with
+Muller et al. (2023) use an mT5 XXL model fine-                       supervised answer attribution approaches even in
+tuned on NLI for performing answer attribution                        the absence of annotations for calibration.
+on XOR-AttriQA. Since neither the tuned model
+nor the tuning data are released, we opt to use                       MIRAGE is robust across languages and filter-
+TRUE11 (Honovich et al., 2022), a fine-tuned T5                       ing procedures Table 2 shows that NLI ORIG an-
+11B model (Raffel et al., 2020), which was shown                      swer attribution performances are largely language-
+to highly overlap with human annotation on En-                        dependent due to the unbalanced multilingual abil-
+glish answer attribution tasks (Muller et al., 2023;                  ities of the TRUE NLI model. This highlights
+Gao et al., 2023a). We evaluate TRUE agreement                        the brittleness of entailment-based approaches in
+with human annotation in two setups. In NLI ORIG ,                    OOD settings, as discussed in Section 2.1. Instead,
+we evaluate the model directly on all examples,                       MIRAGE variants perform similarly across all lan-
+including non-English data. While this leads the                      guages by exploiting the internals of the multilin-
+English-centric TRUE model out-of-distribution,                       gual RAG model. MIRAGE’s performance across
+it accounts for real-world scenarios with noisy                       languages is comparable to that of NLI MT , which
+data, and can be used to assess the robustness                        requires an extra translation step to operate on En-
+   8
+                                                                      glish inputs.
+     https://hf.co/gsarti/cora_mgen
+   9                                                                     We further validate the robustness of the CCI fil-
+     In practice, Muller et al., 2023 report that most retrieved
+documents are in the same language as the query or in English.        tering process by testing percentile values between
+  10
+     See Appendix A for more details on this selection. Ap-           Top 3-100% for the MIRAGE EX setting. Figure 4
+pendix B presents experiments on the full XOR-AttriQA.
+  11                                                                       12
+     https://hf.co/google/t5_xxl_true_nli_mixture                               https://cloud.google.com/translate
+
+                                                               6042
+    Agreement (%)                                           Models and Answer Attribution Procedure We
+                                                            select LLaMA 2 7B Chat (Touvron et al., 2023)
+                                                            and Zephyr β 7B (Tunstall et al., 2023) for our ex-
+                                                            periments since they are high-quality open-source
+                                                            LLMs of manageable size. To enable a fair com-
+                                                            parison between the tested attribution methods, we
+                                                            first generate answers with inline citations using
+                                                            the self-citation prompt by Gao et al. (2023b).14
+                                                            Then, we remove citation tags and use MIRAGE to
+Figure 4: Robustness of MIRAGE EX agreement with hu-        attribute the resulting answers to retrieved docu-
+man annotations across Top-% CCI filtering thresholds.
+                                                            ments. This process ensures that citation quality
+                                                            is compared over the same set of answers, control-
+shows that Top % values between 3 and 20% lead              ling for the variability that could be produced by
+to a comparably high agreement with human an-               a different prompt.15 For more robust results, we
+notation, suggesting this filtering threshold can be        perform generation three times using different sam-
+selected without ad-hoc parameter tuning.                   pling seeds, and report the averaged scores. Since
+                                                            human-annotated data is not available, we only as-
+5        Answer Attribution for Long-form QA                sess the calibration-free MIRAGE EX .
+XOR-AttriQA can only provide limited insights for           Entailment-based Evaluation Differently from
+real-world answer attribution evaluation since its          the XOR-AttriQA dataset used in Section 4, ELI5
+examples are sourced from Wikipedia articles, and           does not contain human annotations of AA. For this
+its answers are very concise. In this section, we           reason, and to ensure consistency with Gao et al.
+extend our evaluation to ELI5 (Fan et al., 2019),           (2023a)’s self-citation assessment, we adopt the
+a challenging long-form QA dataset that was re-             TRUE model as a high-quality approximation of
+cently employed to evaluate LLM self-citation ca-           expected annotation behavior. Despite the potential
+pabilities (Gao et al., 2023a). Different from XOR-         OOD issues of entailment-based AA highlighted
+AttriQA, ELI5 answers are expected to contain               in Section 4, we expect TRUE to perform well on
+multiple sentences of variable length, making it es-        ELI5 since it closely matches the general/scientific
+pecially fitting to assess MIRAGE context-sensitive         knowledge queries in TRUE’s fine-tuning corpora
+token identification capabilities before document           and contains only English sentences. To overcome
+attribution. Alongside our quantitative assessment          the multi-hop issue when using single documents
+of MIRAGE in relation to self-citation baselines, we        for entailment-based answer attribution, we follow
+conduct a qualitative evaluation of the disagree-           the ALCE evaluation (Gao et al., 2023a)16 to mea-
+ment between the two methods.                               sure citation quality as NLI precision and recall
+                                                            (summarized by F1 scores) over the concatenation
+5.1 Experimental Setup                                      of retrieved documents.
+Dataset The ELI5 dataset contains open-ended                5.2     Results
+why/how/what queries q from the “Explain Like
+                                                            Results in Table 3 show that MIRAGE provides a
+I’m Five” subreddit13 eliciting long-form multi-
+                                                            significant boost in answer attribution precision
+sentence answers. For our evaluation, we use
+                                                            and recall for the Zephyr β model, while it greatly
+the RAG-adapted ELI5 version by Gao et al.
+                                                            improves citation recall at the expense of precision
+(2023a), containing top-5 matching documents
+                                                            for LLaMA 2, resulting in an overall higher F1
+c = ⟨doc1 , . . . , doc5 ⟩ retrieved from a filtered ver-
+                                                            score for the MIRAGE EX Top 5% setting. These
+sion of the Common Crawl (Sphere; Piktus et al.,
+                                                            results confirm that MIRAGE can produce effective
+2021) for every query. The answer attribution task
+                                                            answer attributions in longer and more complex
+is performed by generating a multi-sentence answer
+ans = ⟨y1 , . . . , ym ⟩ with an LLM using (q, c) as           14
+                                                                  The full prompt is provided in Appendix D (Table 9).
+                                                               15
+inputs, and identifying documents in c supporting                 For completeness, we also report MIRAGE results without
+                                                            self-citation prompting in Appendix D.
+the generation of answer sentence yi , ∀yi ∈ ans.              16
+                                                                  ALCE is an evaluation framework for RAG, evaluating
+                                                            LLM responses in terms of citation quality, correctness, and
+    13
+         https://reddit.com/r/explainlikeimfive             fluency. More details can be found in Appendix C
+
+                                                        6043
+                                                                                                    Percentage (%)
+                                                                   Citation ↑
+ Model                  Answer Attrib.
+                                                              Prec. Rec.      F1                                                                  100%
+
+                        Self-citation                          41.4         24.3         30.6
+ Zephyr β               MIRAGE EX Top 3                        38.3         46.2         41.9
+                        MIRAGE EX Top 5%                       44.7         46.5         45.6
+                        Self-citation                          37.9         19.8         26.0
+ LLaMA 2                MIRAGE EX Top 3                        21.8         29.6         25.1
+                        MIRAGE EX Top 5%                       26.2         29.1         27.6
+                                                                                                                                                   79%
+
+Table 3: Answer attribution quality estimated by TRUE
+for self-citation and MIRAGE on ELI5.
+ Generation: Firms like Snapchat, Uber, and Xiaomi, valued at $19 billion [...]
+ Contextual-sensitive token: 9
+                                                                                                                     Sentence length (#Tokens)
+
+ Doc 1: [...] $16 billion to $19 billion, making it the third most highly valued tech [...]
+                                                                                                    Figure 6: MIRAGE EX (top) and self-citation (bottom)
+ CCI Scores     Max: 38.3 Min: 0.2                                        Range Top (#Tokens)       average performance on ELI5 answer sentences binned
+ 40
+                                                                                          5%
+                                                                                          (1)
+                                                                                                    by length. red: % of sentences with ≥ 1 citation.
+ 35
+
+ 30                                                                                       20%
+
+ 25
+                                                                                           (2)
+                                                                                                    a similar trend is observed for self-citation, which
+ 20                                                                                       50%       is outperformed by MIRAGE for all but the short-
+                                                                                           (6)
+ 15                                                                                                 est length bin (≤ 10 tokens). The proportion of
+ 10
+                                                                                                    non-attributed sentences (red line) suggests that the
+  5
+
+  0                                                                                      100%
+                                                                                                    lower quality could be a byproduct of the ALCE
+           Doc1             Doc2         Doc3         Doc4                 Doc5
+                                                                                         (849)
+                                                                                                    evaluation protocol, where non-attributed sentences
+                                    Contextual tokens
+                                                                                                    receive 0 precision/recall. Future availability of
+Figure 5: Attribution scores over retrieved documents’                                              human-annotated RAG datasets may shed more
+tokens for the prediction of context-sensitive token ‘9’.                                           light on this effect.
+
+settings while employing no external resources like                                                 5.3    Qualitative Analysis of Disagreements
+the self-citation approach.                                                                         To better understand MIRAGE’s performance, we
+   From the comparison between Top 3 and Top 5%                                                     examine some ELI5 examples where MIRAGE dis-
+CCI filtering strategies, we note that the latter gen-                                              agrees with self-citation on Zephyr β’s generations.
+erally results in better performance. This intuitively                                              Table 4 and 5 illustrate two cases in which the
+supports the idea that an adaptive selection strategy                                               entailment-based TRUE model results agree with
+is more fitting to accommodate the large variabil-                                                  either MIRAGE or self-citation. In Table 4, the an-
+ity of attribution scores across different examples.                                                swer provided by the model is directly supported
+Figure 5 visualizes the distributions of attribution                                                by Document [1], as also identified by TRUE. How-
+scores aij for an answer produced by Zephyr β,                                                      ever, self-citation fails to cite the related document
+showing that most context tokens in retrieved doc-                                                  at the end of the two sentences. By contrast, MI -
+uments receive low attribution scores, with only a                                                  RAGE attributes several spans to Document [1],
+handful of them contributing to the prediction of                                                   resulting in the correct answer attribution for both
+the context-sensitive token ‘9’ in the generation.                                                  sentences.
+This example also provides an intuitive explanation                                                    While TRUE achieves high consistency with hu-
+of the robustness of Top-% selection thresholds                                                     man judgment (e.g., for the example in Table 4),
+discussed in Section 4.3. Ultimately, the Top 5%                                                    NLI-based AA can still prove unreliable in cases of
+threshold is sufficient to select the document con-                                                 high lexical overlap between the answer and sup-
+taining the direct mention of the generated token.                                                  porting documents. Table 5 illustrates one such
+   Since the m∗EX threshold used to select context-                                                 case, where both self-citation and TRUE attribute
+sensitive tokens by MIRAGE EX depends on the                                                        the answer to Document [3], whereas MIRAGE
+mean and standard deviation of generated answer’s                                                   does not label any context document as salient
+scores, we expect that the length of the generated                                                  for the answer. Here, the answer wrongly states
+answer might play a role in citation quality. As                                                    that the bar code can used to prevent the alarm,
+shown in Figure 6, MIRAGE citation quality is in-                                                   while Document [3] mentions that the code can
+deed lower for shorter answer sentences. However,                                                   be used to cancel the alarm after an accidental
+                                                                                                 6044
+    I NPUT: P ROMPT + R ETRIEVED DOCS (N=5) + Q UERY                        I NPUT: P ROMPT + R ETRIEVED DOCS (N=5) + Q UERY
+    Document [1] [...] Q. What does it mean for books to be                 Document [2] [...]
+    Sensitized or Desensitized? A security strip is embedded                Document [3] [...] What will happen if you accidentally
+    into each library book. When a book is checked out, it                  set off your security system? The siren will sound and it
+    must be "desensitized" so that it will not set off the alarm            will be loud, but you should be able to stop the siren by
+    when it leaves or enters the library. When the book is                  entering your code into your keypad. [...]
+    returned, it is “sensitized” so that the alarm will be set off          Document [4] [...]
+    should someone attempt to take the book from the library
+    without going through the proper borrowing procedure.                   Query: How does a small paper library bar code set off
+    Document [2] [...]                                                      the security alarm when you haven’t checked a book out?
+
+    Query: How does a small paper library bar code set off                  A NSWER ATTRIBUTION RESULTS
+    the security alarm when you haven’t checked a book out?                 Self-citation: [...] False alarms can be prevented by enter-
+    A NSWER ATTRIBUTION RESULTS                                             ing the code on the keypad, as documented in [3]. [...]
+                                                                            MIRAGE : [...] False alarms can be prevented by entering
+    Self-citation: [...] When a book is checked out, it is
+    "desensitized" to prevent the alarm from going off. [∅]                 the code on the keypad [∅] [...]
+    When the book is returned, it is "sensitized" so the alarm              NLI (TRUE model): [3] entails the answer sentence.
+    will sound if the item is taken without authorization. [∅]
+    [...]
+                                                                        Table 5: Example showcasing the brittleness of
+    MIRAGE: [...]     When a book is checked (1 ) out, it (1 ) is       entailment-based AA. MIRAGE correctly finds that the
+     "desensitized" (1 ) to prevent the alarm from going off.           answer cannot be attributed ([∅]), while NLI and self-
+    [1] When the book (1 ) is returned, it is "sensitized" (1 )         citation attribute the lexically similar Document [3].
+    so the alarm will sound if the item is taken without autho-
+    rization. [1] [...]
+    NLI (TRUE model): [1] entails both answer sentences.                usage during generation, reducing the risk of false
+                                                                        positives motivated by surface-level similarity.
+Table 4: Example of self-citation failure using Zephyr β                   In conclusion, MIRAGE represents a promising
+on ELI5. NLI and MIRAGE produce the correct citation,                   first step in exploiting interpretability insights to
+while self-citation does not cite any document ([∅]).                   develop faithful answer attribution methods, paving
+                                                                        the way for the usage of LLM-powered question-
+activation. Thus, despite the high lexical and se-                      answering systems in mission-critical applications.
+mantic relatedness, the answer is not supported by
+                                                                        Limitations
+Document [3]. The failure of TRUE in this set-
+ting highlights the sensitivity of entailment-based                     LLMs Optimized for Self-citation In this study,
+systems to surface-level similarity, making them                        we focus our analysis on models that are not explic-
+brittle in cases where the model’s context usage is                     itly trained to perform self-citation and can provide
+not straightforward. Using another sampling seed                        citations only when prompted to do so. While re-
+for the same query produces the answer “[...] the                       cent systems include self-citation in their optimiza-
+individual can cancel the alarm by providing their                      tion scheme for RAG applications18 , we believe
+password at the keypad”, which MIRAGE correctly                         incorporating model internals in the attribution pro-
+attributes to Document [3].17                                           cess will remain a valuable and inexpensive method
+                                                                        to ensure faithful answer attributions.
+6        Conclusion
+                                                                        Brittleness of NLI-based Evaluation Follow-
+In this study, we introduced MIRAGE, a novel ap-                        ing Gao et al. (2023a), the evaluation of Section 5
+proach to enhance the faithfulness of answer at-                        employs the NLI-based system TRUE due to the
+tribution in RAG systems. By leveraging model                           lack of AA-annotated answers produced by open-
+internals, MIRAGE effectively addresses the limita-                     source LLMs. However, using the predictions of
+tions of previous methods based on prompting or                         NLI models as AA references is far from ideal in
+external NLI validators. Our experiments demon-                         light of their brittleness in challenging scenarios
+strate that MIRAGE produces outputs that strongly                       and their tendency to exploit shallow heuristics.
+agree with human annotations while being more                           While the ELI5 dataset is reasonably in-domain for
+efficient and controllable than its counterparts. Our                   the TRUE model, this factor might still undermine
+qualitative analysis shows that MIRAGE can pro-                         the reliability of some of our quantitative evalua-
+duce faithful attributions that reflect actual context                      18
+                                                                            For example, the Command-R models: https://
+    17
+         This and other examples are provided in Appendix E.            huggingface.co/CohereForAI/c4ai-command-r-plus
+
+                                                                     6045
+tion results. Future work should produce a wider        generate attribution scores in the CCI step can sig-
+variety of annotated datasets for reproducible an-      nificantly impact the faithfulness of the resulting
+swer attribution using open-source LLMs, enabling       answer attributions. Although we used a relatively
+us to extend our analysis to a broader set of lan-      simple gradient-based approach in this study, our
+guages and model sizes and ultimately enhance the       proposed framework is method-agnostic. We leave
+robustness of our findings.                             the evaluation of modern feature attribution tech-
+                                                        niques, such as the ones mentioned in the previous
+Applicability to Other Domains and Models               paragraph, to future work to further improve MI -
+Our evaluation is conducted on relatively homoge-       RAGE applicability in real-world settings.
+neous QA datasets and does not include language
+models with >7B parameters. This limits the gen-        Acknowledgments
+eralizability of our findings to other domains and
+larger models. Future work should extend our anal-      The authors have received funding from the
+ysis to a broader range of domains and model sizes      Dutch Research Council (NWO): JQ is sup-
+to further validate the robustness and applicability    ported by NWA-ORC project LESSEN (grant nr.
+of MIRAGE. This said, we expect MIRAGE to be less       NWA.1389.20.183), GS is supported by NWA-
+vulnerable to language and quality shifts compared      ORC project InDeep (NWA.1292.19.399), AB
+to existing AA methods that depend on external          is supported by the above as well as NWO Tal-
+validators or on the model’s instruction-following      ent Programme (VI.Vidi.221C.009). RF is sup-
+abilities.                                              ported by the European Research Council (ERC)
+                                                        under European Union’s Horizon 2020 programme
+Scalability of MIRAGE on Longer Context The             (No. 819455).
+computational cost for the simple gradient-based
+version of MIRAGE proposed in this work is
+2O(F ) + |CTI(y)| · O(B), where O(F ), O(B) are         References
+respectively the costs of a forward and a backward      Samira Abnar and Willem Zuidema. 2020. Quantify-
+pass with the LLM, and |CTI(y)| is the number of          ing attention flow in transformers. In Proceedings
+                                                          of the 58th Annual Meeting of the Association for
+tokens selected by the CTI step. While CTI effec-         Computational Linguistics, pages 4190–4197, On-
+tively limits the expensive backward component            line. Association for Computational Linguistics.
+in the MIRAGE computation, its cost is bound to
+increase significantly for larger models and context    Chirag Agarwal, Sree Harsha Tanneru, and Himabindu
+                                                          Lakkaraju. 2024. Faithfulness vs. plausibility: On the
+sizes. When applying MIRAGE to LLMs with <10B             (un)reliability of explanations from large language
+parameters, we note that its cost can be comparable       models. Preprint, arXiv:2402.04614.
+or lower to supervised models like TRUE, requir-
+                                                        Simone Alghisi, Massimo Rizzoli, Gabriel Roccabruna,
+ing several forward passes using a large 11B LLM.         Seyed Mahed Mousavi, and Giuseppe Riccardi. 2024.
+Importantly, MIRAGE is a flexible framework that          Should we fine-tune or rag? evaluating different tech-
+can be implemented using different feature attribu-       niques to adapt llms for dialogue. arXiv e-prints,
+tion methods in the CCI step, including lightweight       pages arXiv–2406.
+techniques requiring only forward passes (e.g., At-     Rohan Anil, Andrew M Dai, Orhan Firat, Melvin John-
+tention Rollout (Abnar and Zuidema, 2020), Value          son, Dmitry Lepikhin, Alexandre Passos, Siamak
+Zeroing (Mohebbi et al., 2023), or ALTI-Logit (Fer-       Shakeri, Emanuel Taropa, Paige Bailey, Zhifeng
+rando et al., 2023). Finally, a promising perspec-        Chen, et al. 2023. Palm 2 technical report. arXiv
+                                                          preprint arXiv:2305.10403.
+tive for scaling to larger LLMs could be to assess
+whether MIRAGE-produced AAs remain accurate             Akari Asai, Xinyan Yu, Jungo Kasai, and Hanna Ha-
+when force-decoding the original model’s answer           jishirzi. 2021. One question answering model for
+                                                          many languages with cross-lingual dense passage re-
+from a different LLM with fewer parameters.               trieval. Advances in Neural Information Processing
+                                                          Systems, 34:7547–7560.
+MIRAGE ’s Parametrization and Choice of At-
+tribution Method While Section 4.1 highlights           Pepa Atanasova, Oana-Maria Camburu, Christina Li-
+the robustness of MIRAGE to various CCI filter-           oma, Thomas Lukasiewicz, Jakob Grue Simonsen,
+                                                          and Isabelle Augenstein. 2023. Faithfulness tests
+ing thresholds, the method still requires non-trivial     for natural language explanations. In Proceedings
+parametrization. In particular, we emphasize that         of the 61st Annual Meeting of the Association for
+the choice of the attribution method employed to          Computational Linguistics (Volume 2: Short Papers),
+                                                    6046
+  pages 283–294, Toronto, Canada. Association for            Hobbhahn, Lee Sharkey, Satyapriya Krishna, Mar-
+  Computational Linguistics.                                 vin Von Hagen, Silas Alberti, Alan Chan, Qinyi Sun,
+                                                             Michael Gerovitch, David Bau, Max Tegmark, David
+Pepa Atanasova, Jakob Grue Simonsen, Christina Li-           Krueger, and Dylan Hadfield-Menell. 2024. Black-
+  oma, and Isabelle Augenstein. 2020. A diagnostic           box access is insufficient for rigorous ai audits. In
+  study of explainability techniques for text classifi-      Proceedings of the 2024 ACM Conference on Fair-
+  cation. In Proceedings of the 2020 Conference on           ness, Accountability, and Transparency, FAccT ’24,
+  Empirical Methods in Natural Language Processing           page 2254–2272, New York, NY, USA. Association
+  (EMNLP), pages 3256–3274, Online. Association for          for Computing Machinery.
+  Computational Linguistics.
+                                                          Chun Sik Chan, Huanqi Kong, and Liang Guanqing.
+Jasmijn Bastings, Sebastian Ebert, Polina Zablotskaia,      2022. A comparative study of faithfulness metrics
+   Anders Sandholm, and Katja Filippova. 2022. “will        for model interpretability methods. In Proceedings
+   you find these shortcuts?” a protocol for evaluating     of the 60th Annual Meeting of the Association for
+   the faithfulness of input salience methods for text      Computational Linguistics (Volume 1: Long Papers),
+   classification. In Proceedings of the 2022 Confer-       pages 5029–5038, Dublin, Ireland. Association for
+   ence on Empirical Methods in Natural Language            Computational Linguistics.
+   Processing, pages 976–991, Abu Dhabi, United Arab
+   Emirates. Association for Computational Linguistics.   Harrison Chase. 2022. LangChain.
+
+Bernd Bohnet, Vinh Q. Tran, Pat Verga, Roee Aharoni,      Aakanksha Chowdhery, Sharan Narang, Jacob Devlin,
+  Daniel Andor, Livio Baldini Soares, Jacob Eisen-          Maarten Bosma, Gaurav Mishra, Adam Roberts,
+  stein, Kuzman Ganchev, Jonathan Herzig, Kai Hui,          Paul Barham, Hyung Won Chung, Charles Sutton,
+  Tom Kwiatkowski, Ji Ma, Jianmo Ni, Tal Schuster,          Sebastian Gehrmann, Parker Schuh, Kensen Shi,
+  William W. Cohen, Michael Collins, Dipanjan Das,          Sasha Tsvyashchenko, Joshua Maynez, Abhishek
+  Donald Metzler, Slav Petrov, and Kellie Webster.          Rao, Parker Barnes, Yi Tay, Noam Shazeer, Vin-
+  2022. Attributed question answering: Evaluation           odkumar Prabhakaran, Emily Reif, Nan Du, Ben
+  and modeling for attributed large language models.        Hutchinson, Reiner Pope, James Bradbury, Jacob
+  ArXiv, abs/2212.08037.                                    Austin, Michael Isard, Guy Gur-Ari, Pengcheng Yin,
+                                                            Toju Duke, Anselm Levskaya, Sanjay Ghemawat,
+Sebastian Borgeaud, Arthur Mensch, Jordan Hoff-             Sunipa Dev, Henryk Michalewski, Xavier Garcia,
+  mann, Trevor Cai, Eliza Rutherford, Katie Milli-          Vedant Misra, Kevin Robinson, Liam Fedus, Denny
+  can, George Bm Van Den Driessche, Jean-Baptiste           Zhou, Daphne Ippolito, David Luan, Hyeontaek Lim,
+  Lespiau, Bogdan Damoc, Aidan Clark, Diego                 Barret Zoph, Alexander Spiridonov, Ryan Sepassi,
+  De Las Casas, Aurelia Guy, Jacob Menick, Roman            David Dohan, Shivani Agrawal, Mark Omernick, An-
+  Ring, Tom Hennigan, Saffron Huang, Loren Mag-             drew M. Dai, Thanumalayan Sankaranarayana Pil-
+  giore, Chris Jones, Albin Cassirer, Andy Brock,           lai, Marie Pellat, Aitor Lewkowycz, Erica Moreira,
+  Michela Paganini, Geoffrey Irving, Oriol Vinyals,         Rewon Child, Oleksandr Polozov, Katherine Lee,
+  Simon Osindero, Karen Simonyan, Jack Rae, Erich           Zongwei Zhou, Xuezhi Wang, Brennan Saeta, Mark
+  Elsen, and Laurent Sifre. 2022. Improving language        Diaz, Orhan Firat, Michele Catasta, Jason Wei, Kathy
+  models by retrieving from trillions of tokens. In         Meier-Hellstern, Douglas Eck, Jeff Dean, Slav Petrov,
+  Proceedings of the 39th International Conference          and Noah Fiedel. 2023. Palm: Scaling language mod-
+  on Machine Learning, volume 162 of Proceedings            eling with pathways. Journal of Machine Learning
+  of Machine Learning Research, pages 2206–2240.            Research, 24(240):1–113.
+  PMLR.
+                                                          George Chrysostomou and Nikolaos Aletras. 2022. An
+Tom Brown, Benjamin Mann, Nick Ryder, Melanie               empirical study on explanations in out-of-domain
+  Subbiah, Jared D Kaplan, Prafulla Dhariwal, Arvind        settings. In Proceedings of the 60th Annual Meet-
+  Neelakantan, Pranav Shyam, Girish Sastry, Amanda          ing of the Association for Computational Linguistics
+  Askell, Sandhini Agarwal, Ariel Herbert-Voss,             (Volume 1: Long Papers), pages 6920–6938, Dublin,
+  Gretchen Krueger, Tom Henighan, Rewon Child,              Ireland. Association for Computational Linguistics.
+  Aditya Ramesh, Daniel Ziegler, Jeffrey Wu, Clemens
+  Winter, Chris Hesse, Mark Chen, Eric Sigler, Ma-        Hyung Won Chung, Le Hou, Shayne Longpre, Barret
+  teusz Litwin, Scott Gray, Benjamin Chess, Jack            Zoph, Yi Tay, William Fedus, Yunxuan Li, Xuezhi
+  Clark, Christopher Berner, Sam McCandlish, Alec           Wang, Mostafa Dehghani, Siddhartha Brahma, Al-
+  Radford, Ilya Sutskever, and Dario Amodei. 2020.          bert Webson, Shixiang Shane Gu, Zhuyun Dai,
+  Language models are few-shot learners. In Ad-             Mirac Suzgun, Xinyun Chen, Aakanksha Chowdh-
+  vances in Neural Information Processing Systems,          ery, Alex Castro-Ros, Marie Pellat, Kevin Robinson,
+  volume 33, pages 1877–1901. Curran Associates,            Dasha Valter, Sharan Narang, Gaurav Mishra, Adams
+  Inc.                                                      Yu, Vincent Zhao, Yanping Huang, Andrew Dai,
+                                                            Hongkun Yu, Slav Petrov, Ed H. Chi, Jeff Dean, Ja-
+Stephen Casper, Carson Ezell, Charlotte Siegmann,           cob Devlin, Adam Roberts, Denny Zhou, Quoc V. Le,
+   Noam Kolt, Taylor Lynn Curtis, Benjamin Bucknall,        and Jason Wei. 2022. Scaling instruction-finetuned
+  Andreas Haupt, Kevin Wei, Jérémy Scheurer, Marius         language models. Preprint, arXiv:2210.11416.
+                                                      6047
+Benjamin Cohen-Wang, Harshay Shah, Kristian                  Workshop: Analyzing and Interpreting Neural Net-
+  Georgiev, and Aleksander Madry. 2024. Contextcite:         works for NLP, pages 317–331, Singapore. Associa-
+  Attributing model generation to context. In ICML           tion for Computational Linguistics.
+  2024 Workshop on Foundation Models in the Wild.
+                                                          Gautier Izacard, Patrick Lewis, Maria Lomeli, Lucas
+Alexis Conneau, Ruty Rinott, Guillaume Lample, Adina        Hosseini, Fabio Petroni, Timo Schick, Jane Dwivedi-
+  Williams, Samuel Bowman, Holger Schwenk, and              Yu, Armand Joulin, Sebastian Riedel, and Edouard
+  Veselin Stoyanov. 2018. XNLI: Evaluating cross-           Grave. 2022. Atlas: Few-shot learning with re-
+  lingual sentence representations. In Proceedings of       trieval augmented language models. arXiv preprint
+  the 2018 Conference on Empirical Methods in Nat-          arXiv:2208.03299.
+  ural Language Processing, pages 2475–2485, Brus-
+  sels, Belgium. Association for Computational Lin-       Alon Jacovi and Yoav Goldberg. 2020. Towards faith-
+  guistics.                                                 fully interpretable NLP systems: How should we
+                                                            define and evaluate faithfulness? In Proceedings
+Xuan-Quy Dao and Ngoc-Bich Le. 2023. Chatgpt is             of the 58th Annual Meeting of the Association for
+  good but bing chat is better for vietnamese students.     Computational Linguistics, pages 4198–4205, On-
+  arXiv preprint arXiv:2307.08272.                          line. Association for Computational Linguistics.
+
+Angela Fan, Yacine Jernite, Ethan Perez, David Grang-     Kalpesh Krishna, Aurko Roy, and Mohit Iyyer. 2021.
+  ier, Jason Weston, and Michael Auli. 2019. ELI5:          Hurdles to progress in long-form question answering.
+  Long form question answering. In Proceedings of           In Proceedings of the 2021 Conference of the North
+  the 57th Annual Meeting of the Association for Com-       American Chapter of the Association for Computa-
+  putational Linguistics, pages 3558–3567, Florence,        tional Linguistics: Human Language Technologies,
+  Italy. Association for Computational Linguistics.         pages 4940–4957, Online. Association for Computa-
+                                                            tional Linguistics.
+Javier Ferrando, Gerard I. Gállego, Ioannis Tsiamas,
+   and Marta R. Costa-jussà. 2023. Explaining how         Solomon Kullback and R. A. Leibler. 1951. On in-
+   transformers use context to build predictions. In        formation and sufficiency. Annals of Mathematical
+  Proceedings of the 61st Annual Meeting of the As-         Statistics, 22:79–86.
+   sociation for Computational Linguistics (Volume 1:     Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio
+  Long Papers), pages 5486–5513, Toronto, Canada.           Petroni, Vladimir Karpukhin, Naman Goyal, Hein-
+  Association for Computational Linguistics.                rich Küttler, Mike Lewis, Wen-tau Yih, Tim Rock-
+Javier Ferrando, Gabriele Sarti, Arianna Bisazza, and       täschel, Sebastian Riedel, and Douwe Kiela. 2020a.
+   Marta R. Costa-jussà. 2024. A primer on the in-          Retrieval-augmented generation for knowledge-
+   ner workings of transformer-based language models.       intensive nlp tasks. In Proceedings of the 34th Inter-
+  Preprint, arXiv:2405.00208.                               national Conference on Neural Information Process-
+                                                            ing Systems, NIPS’20, Red Hook, NY, USA. Curran
+Tianyu Gao, Howard Yen, Jiatong Yu, and Danqi Chen.         Associates Inc.
+   2023a. Enabling large language models to generate
+                                                          Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio
+   text with citations. In Proceedings of the 2023 Con-
+                                                            Petroni, Vladimir Karpukhin, Naman Goyal, Hein-
+   ference on Empirical Methods in Natural Language
+                                                            rich Küttler, Mike Lewis, Wen-tau Yih, Tim Rock-
+  Processing, pages 6465–6488, Singapore. Associa-
+                                                            täschel, et al. 2020b. Retrieval-augmented generation
+   tion for Computational Linguistics.
+                                                            for knowledge-intensive nlp tasks. Advances in Neu-
+Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang Jia,            ral Information Processing Systems, 33:9459–9474.
+  Jinliu Pan, Yuxi Bi, Yi Dai, Jiawei Sun, and Haofen     Jerry Liu. 2022. LlamaIndex.
+  Wang. 2023b. Retrieval-augmented generation for
+  large language models: A survey. arXiv preprint         Nelson Liu, Tianyi Zhang, and Percy Liang. 2023. Eval-
+  arXiv:2312.10997.                                         uating verifiability in generative search engines. In
+                                                            Findings of the Association for Computational Lin-
+Or Honovich, Roee Aharoni, Jonathan Herzig, Hagai           guistics: EMNLP 2023, pages 7001–7025, Singapore.
+  Taitelbaum, Doron Kukliansy, Vered Cohen, Thomas          Association for Computational Linguistics.
+  Scialom, Idan Szpektor, Avinatan Hassidim, and
+  Yossi Matias. 2022. TRUE: Re-evaluating factual         Cheng Luo, Wei Liu, Jieyu Lin, Jiajie Zou, Ming Xiang,
+  consistency evaluation. In Proceedings of the 2022        and Nai Ding. 2022. Simple but challenging: Natural
+  Conference of the North American Chapter of the           language inference models fail on simple sentences.
+  Association for Computational Linguistics: Human          In Findings of the Association for Computational
+  Language Technologies, pages 3905–3920, Seattle,          Linguistics: EMNLP 2022, pages 3449–3462, Abu
+  United States. Association for Computational Lin-         Dhabi, United Arab Emirates. Association for Com-
+  guistics.                                                 putational Linguistics.
+Jing Huang, Atticus Geiger, Karel D’Oosterlinck,          Qing Lyu, Marianna Apidianaki, and Chris Callison-
+   Zhengxuan Wu, and Christopher Potts. 2023. Rig-          Burch. 2024. Towards Faithful Model Explanation
+   orously assessing natural language explanations of       in NLP: A Survey. Computational Linguistics, pages
+   neurons. In Proceedings of the 6th BlackboxNLP           1–67.
+                                                      6048
+Lijia Ma, Xingchen Xu, and Yong Tan. 2024. Craft-            Sebastian Riedel. 2020. How context affects lan-
+   ing knowledge: Exploring the creative mecha-              guage models’ factual predictions. In Automated
+   nisms of chat-based search engines. arXiv preprint        Knowledge Base Construction.
+   arXiv:2402.19421.
+                                                          Anirudh Phukan, Shwetha Somasundaram, Apoorv Sax-
+Andreas Madsen, Sarath Chandar, and Siva Reddy. 2024.       ena, Koustava Goswami, and Balaji Vasan Srinivasan.
+  Are self-explanations from large language models          2024. Peering into the mind of language models:
+  faithful? ArXiv, abs/2401.07927.                          An approach for attribution in contextual question
+                                                            answering. Preprint, arXiv:2405.17980.
+Andreas Madsen, Siva Reddy, and Sarath Chandar. 2022.
+  Post-hoc interpretability for neural nlp: A survey.     Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin,
+  ACM Computing Surveys, 55(8).                             Dmytro Okhonko, Samuel Broscheit, Gautier Izacard,
+                                                            Patrick Lewis, Barlas Oğuz, Edouard Grave, Wen-tau
+Tom McCoy, Ellie Pavlick, and Tal Linzen. 2019. Right       Yih, et al. 2021. The web is your oyster-knowledge-
+  for the wrong reasons: Diagnosing syntactic heuris-       intensive nlp against a very large web corpus. arXiv
+  tics in natural language inference. In Proceedings of     preprint arXiv:2112.09924.
+  the 57th Annual Meeting of the Association for Com-
+  putational Linguistics, pages 3428–3448, Florence,      Krishna Pillutla, Swabha Swayamdipta, Rowan Zellers,
+  Italy. Association for Computational Linguistics.         John Thickstun, Sean Welleck, Yejin Choi, and Zaid
+                                                            Harchaoui. 2021. Mauve: Measuring the gap be-
+Jacob Menick, Maja Trebacz, Vladimir Mikulik,               tween neural text and human text using divergence
+  John Aslanides, Francis Song, Martin Chadwick,            frontiers. Advances in Neural Information Process-
+   Mia Glaese, Susannah Young, Lucy Campbell-               ing Systems, 34:4816–4828.
+   Gillingham, Geoffrey Irving, et al. 2022. Teaching
+   language models to support answers with verified       Colin Raffel, Noam Shazeer, Adam Roberts, Katherine
+   quotes. arXiv preprint arXiv:2203.11147.                 Lee, Sharan Narang, Michael Matena, Yanqi Zhou,
+                                                            Wei Li, and Peter J Liu. 2020. Exploring the lim-
+Hosein Mohebbi, Willem Zuidema, Grzegorz Chrupała,
+                                                            its of transfer learning with a unified text-to-text
+  and Afra Alishahi. 2023. Quantifying context mixing
+                                                            transformer. Journal of machine learning research,
+  in transformers. In Proceedings of the 17th Confer-
+                                                            21(140):1–67.
+  ence of the European Chapter of the Association
+  for Computational Linguistics, pages 3378–3400,         Korbinian Randl, John Pavlopoulos, Aron Henriksson,
+  Dubrovnik, Croatia. Association for Computational         and Tony Lindgren. 2024. Evaluating the reliability
+  Linguistics.                                              of self-explanations in large language models. arXiv
+Norman Mu, Sarah Chen, Zifan Wang, Sizhe                    preprint arXiv:2407.14487.
+  Chen, David Karamardian, Lulwa Aljeraisy, Dan
+                                                          Hannah Rashkin, Vitaly Nikolaev, Matthew Lamm,
+  Hendrycks, and David Wagner. 2023. Can llms fol-
+                                                            Michael Collins, Dipanjan Das, Slav Petrov, Gau-
+  low simple rules? arXiv preprint arXiv:2311.04235.
+                                                            rav Singh Tomar, Iulia Turc, and D. Reitter. 2021.
+Benjamin Muller, John Wieting, Jonathan Clark, Tom          Measuring attribution in natural language generation
+  Kwiatkowski, Sebastian Ruder, Livio Soares, Roee          models. Computational Linguistics, 49:777–840.
+  Aharoni, Jonathan Herzig, and Xinyi Wang. 2023.
+                                                          Ruiyang Ren, Yuhao Wang, Yingqi Qu, Wayne Xin
+  Evaluating and modeling attribution for cross-lingual
+                                                            Zhao, Jing Liu, Hao Tian, Hua Wu, Ji-Rong Wen,
+  question answering. In Proceedings of the 2023 Con-
+                                                            and Haifeng Wang. 2023. Investigating the fac-
+  ference on Empirical Methods in Natural Language
+                                                            tual knowledge boundary of large language mod-
+  Processing, pages 144–157, Singapore. Association
+                                                            els with retrieval augmentation. arXiv preprint
+  for Computational Linguistics.
+                                                            arXiv:2307.11019.
+Reiichiro Nakano, Jacob Hilton, Suchir Balaji, Jeff Wu,
+  Long Ouyang, Christina Kim, Christopher Hesse,          Victor Sanh, Albert Webson, Colin Raffel, Stephen
+  Shantanu Jain, Vineet Kosaraju, William Saunders,         Bach, Lintang Sutawika, Zaid Alyafeai, Antoine
+  et al. 2021. Webgpt: Browser-assisted question-           Chaffin, Arnaud Stiegler, Arun Raja, Manan Dey,
+  answering with human feedback. arXiv preprint             M Saiful Bari, Canwen Xu, Urmish Thakker,
+  arXiv:2112.09332.                                         Shanya Sharma Sharma, Eliza Szczechla, Taewoon
+                                                            Kim, Gunjan Chhablani, Nihal Nayak, Debajyoti
+Yixin Nie, Adina Williams, Emily Dinan, Mohit Bansal,       Datta, Jonathan Chang, Mike Tian-Jian Jiang, Han
+  Jason Weston, and Douwe Kiela. 2020. Adversarial          Wang, Matteo Manica, Sheng Shen, Zheng Xin Yong,
+  NLI: A new benchmark for natural language under-          Harshit Pandey, Rachel Bawden, Thomas Wang, Tr-
+  standing. In Proceedings of the 58th Annual Meet-         ishala Neeraj, Jos Rozen, Abheesht Sharma, An-
+  ing of the Association for Computational Linguistics,     drea Santilli, Thibault Fevry, Jason Alan Fries, Ryan
+  pages 4885–4901, Online. Association for Computa-         Teehan, Teven Le Scao, Stella Biderman, Leo Gao,
+  tional Linguistics.                                       Thomas Wolf, and Alexander M Rush. 2022. Multi-
+                                                            task prompted training enables zero-shot task gener-
+Fabio Petroni, Patrick Lewis, Aleksandra Piktus, Tim        alization. In International Conference on Learning
+  Rocktäschel, Yuxiang Wu, Alexander H. Miller, and         Representations.
+                                                      6049
+Gabriele Sarti, Grzegorz Chrupała, Malvina Nissim, and        comprehension across documents. Transactions of
+  Arianna Bisazza. 2024. Quantifying the plausibility         the Association for Computational Linguistics, 6:287–
+  of context reliance in neural machine translation. In       302.
+  The Twelfth International Conference on Learning
+  Representations (ICLR 2024), Vienna, Austria. Open-     Fangyuan Xu, Yixiao Song, Mohit Iyyer, and Eunsol
+  Review.                                                   Choi. 2023. A critical evaluation of evaluations for
+                                                            long-form question answering. In Proceedings of the
+Gabriele Sarti, Nils Feldhus, Ludwig Sickert, Oskar         61st Annual Meeting of the Association for Compu-
+  van der Wal, Malvina Nissim, and Arianna Bisazza.         tational Linguistics (Volume 1: Long Papers), pages
+  2023. Inseq: An interpretability toolkit for se-          3225–3245, Toronto, Canada. Association for Com-
+  quence generation models. In Proceedings of the           putational Linguistics.
+  61st Annual Meeting of the Association for Compu-
+  tational Linguistics (Volume 3: System Demonstra-       Linting Xue, Noah Constant, Adam Roberts, Mihir Kale,
+  tions), pages 421–435, Toronto, Canada. Association       Rami Al-Rfou, Aditya Siddhant, Aditya Barua, and
+  for Computational Linguistics.                            Colin Raffel. 2021. mT5: A massively multilingual
+                                                            pre-trained text-to-text transformer. In Proceedings
+Koustuv Sinha, Prasanna Parthasarathi, Joelle Pineau,       of the 2021 Conference of the North American Chap-
+  and Adina Williams. 2021. UnNatural Language              ter of the Association for Computational Linguistics:
+  Inference. In Proceedings of the 59th Annual Meet-        Human Language Technologies, pages 483–498, On-
+  ing of the Association for Computational Linguistics      line. Association for Computational Linguistics.
+  and the 11th International Joint Conference on Natu-
+  ral Language Processing (Volume 1: Long Papers),        Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio,
+  pages 7329–7346, Online. Association for Computa-         William Cohen, Ruslan Salakhutdinov, and Christo-
+  tional Linguistics.                                       pher D. Manning. 2018. HotpotQA: A dataset for
+                                                            diverse, explainable multi-hop question answering.
+Hugo Touvron, Louis Martin, Kevin R. Stone, Peter           In Proceedings of the 2018 Conference on Empiri-
+  Albert, Amjad Almahairi, Yasmine Babaei, Niko-            cal Methods in Natural Language Processing, pages
+  lay Bashlykov, Soumya Batra, Prajjwal Bhargava,           2369–2380, Brussels, Belgium. Association for Com-
+  Shruti Bhosale, Daniel M. Bikel, Lukas Blecher, Cris-     putational Linguistics.
+  tian Cantón Ferrer, Moya Chen, Guillem Cucurull,
+  David Esiobu, Jude Fernandes, Jeremy Fu, Wenyin         Kayo Yin and Graham Neubig. 2022. Interpreting lan-
+  Fu, Brian Fuller, Cynthia Gao, Vedanuj Goswami,           guage models with contrastive explanations. In Pro-
+  Naman Goyal, Anthony S. Hartshorn, Saghar Hos-            ceedings of the 2022 Conference on Empirical Meth-
+  seini, Rui Hou, Hakan Inan, Marcin Kardas, Viktor         ods in Natural Language Processing, pages 184–198,
+  Kerkez, Madian Khabsa, Isabel M. Kloumann, A. V.          Abu Dhabi, United Arab Emirates. Association for
+  Korenev, Punit Singh Koura, Marie-Anne Lachaux,           Computational Linguistics.
+  Thibaut Lavril, Jenya Lee, Diana Liskovich, Yinghai     Xiang Yue, Boshi Wang, Ziru Chen, Kai Zhang, Yu Su,
+  Lu, Yuning Mao, Xavier Martinet, Todor Mihaylov,          and Huan Sun. 2023. Automatic evaluation of attri-
+  Pushkar Mishra, Igor Molybog, Yixin Nie, Andrew           bution by large language models. In Findings of the
+  Poulton, Jeremy Reizenstein, Rashi Rungta, Kalyan         Association for Computational Linguistics: EMNLP
+  Saladi, Alan Schelten, Ruan Silva, Eric Michael           2023, pages 4615–4635, Singapore. Association for
+  Smith, R. Subramanian, Xia Tan, Binh Tang, Ross           Computational Linguistics.
+  Taylor, Adina Williams, Jian Xiang Kuan, Puxin
+  Xu, Zhengxu Yan, Iliyan Zarov, Yuchen Zhang, An-
+  gela Fan, Melanie Kambadur, Sharan Narang, Aure-        A        Construction of XOR-AttriQAmatch
+  lien Rodriguez, Robert Stojnic, Sergey Edunov, and
+  Thomas Scialom. 2023. Llama 2: Open foundation          XOR-AttriQAmatch is a subset of the original XOR-
+  and fine-tuned chat models. ArXiv, abs/2307.09288.      AttriQA containing only examples for which our
+Lewis Tunstall, Edward Beeching, Nathan Lambert,          LLM generation matches exactly the answer anno-
+  Nazneen Rajani, Kashif Rasul, Younes Belkada,           tated in the dataset. Replicating the original answer
+  Shengyi Huang, Leandro von Werra, Clémentine            generation process is challenging since the origi-
+  Fourrier, Nathan Habib, et al. 2023. Zephyr: Di-
+                                                          nal ordering of the documents doci in c unavail-
+  rect distillation of lm alignment. arXiv preprint
+  arXiv:2310.16944.                                       able.19 To maximize the chances of replication, we
+                                                          attempt to restore the original document sequence
+Eric Wallace, Matt Gardner, and Sameer Singh. 2020.       by randomly shuffling the order of doci s until LLM
+  Interpreting predictions of NLP models. In Proceed-
+  ings of the 2020 Conference on Empirical Methods        can naturally predict the answer y (otherwise, at
+  in Natural Language Processing: Tutorial Abstracts,     most 200 iterations), as shown in Algorithm 1. The
+  pages 20–23, Online. Association for Computational      statistics of the original XOR-AttriQA and XOR-
+  Linguistics.                                            AttriQAmatch are shown in Table 7.
+Johannes Welbl, Pontus Stenetorp, and Sebastian Riedel.       19
+                                                               Muller et al. 2023 only provide the split documents with-
+  2018. Constructing datasets for multi-hop reading       out the original ordering.
+
+                                                      6050
+    Method                               Extra Requirements           BN      FI    JA     RU     TE     Avg. / Std
+                                    11B NLI model (250 FT ex.)        81.9   80.9   94.5   87.1   88.7   86.6 / 4.9
+    mT5 XXL NLI (Honovich et al.)   11B NLI model (100k FT ex.)       89.4   88.3   91.5   91.0   92.4   90.5 / 1.5
+                                     11B NLI model (1M FT ex.)        91.1   90.4   93.0   92.9   93.8   92.2 / 1.3
+    PALM2LORA (Anil et al.)            540B LLM (250 FT ex.)          91.5   88.3   94.7   93.7   93.7   92.4 / 2.3
+    PALM2 (Anil et al.)                540B LLM (250 FT ex.)          92.3   92.6   96.4   94.5   94.8   94.1 / 1.5
+    PALM2 (Anil et al.)             540B LLM (4-shot prompting)       91.5   87.4   92.0   90.5   90.6   90.4 / 1.6
+    PALM2CoT (Anil et al.)          540B LLM (4-shot prompting)       83.7   78.8   71.7   81.9   84.7   80.2 / 4.7
+    MIRAGE CAL (Ours)                  500 AA calibration ex.         82.2   82.5   92.0   87.7   90.2   86.9 / 4.0
+    MIRAGE EX (Ours)                            –                     79.0   74.1   90.8   82.6   86.9   82.7 / 5.8
+
+Table 6: Agreement % of MIRAGE and entailment-based baselines with human AA on the full XOR-AttriQA
+using CORA for RAG (annotated answers not matching the LM’s natural generation are force-decoded). Extra
+Requirements: data/models needed for AA in addition to the RAG model itself. Best overall and best validator-free
+scores are highlighted. PALM and mT5 results are taken from Muller et al. (2023).
+
+
+Algorithm 1 Restore original document sequence                  employing ad-hoc validators trained with as many
+Input: {Doc1 , ..., Docn }, query, answer, M                    as 540B parameters.
+ 1: iter ← 0, f ound = F alse
+ 2: while iter < 200 do                                         C    ALCE Evaluation Benchmark
+ 3:    pred ← M({Doc1 , ..., Docn }, query)                     Gao et al. (2023a) propose ALCE, an evaluation
+ 4:    if pred == answer then                                   framework for RAG QA tasks. ALCE assesses
+ 5:       f ound = T rue break                                  the LLMs’ response from three diverse aspects:
+ 6:    else                                                     citation quality, correctness, and fluency. Cita-
+ 7:       Shuffle({Doc1 , ..., Docn })                          tion quality evaluates the answer attribution perfor-
+ 8:    end if                                                   mance with recall and precision scores. The recall
+ 9:    iter += 1                                                score calculates if the concatenation of the cited
+10: end while
+                                                                documents entails the generated sentence. The
+11: if f ound then
+                                                                precision measures if each document is cited pre-
+12:    return {Doc1 , ..., Docn }                               cisely by verifying if the concatenated text still
+13: end if
+                                                                entails the generation whenever one of the docu-
+                                                                ments is removed. We further calculate F1 scores
+ Dataset      BN        FI    JA    RU     TE Total             to summarize the overall performance. Correct-
+                                                                ness checks whether the generated answer entails
+    Orig.    1407 659 1066 954 634 4720
+                                                                the golden reference answer according to the NLI
+    Match    274 214 232 254 170 1144
+                                                                model TRUE. Gold-reference answers are provided
+Table 7: Statistic for test sets of the original (Orig.)        in the original dataset, and some were summarized
+XOR-AttriQA and XOR-AttriQAmatch .                              by Gao et al. (2023b) by using GPT-4 in case they
+                                                                were too long. Fluency reflects the coherence
+                                                                and fluency of the generated response according to
+B    Answer Attribution on the Full                             MAUVE (Pillutla et al., 2021), a popular NLG met-
+     XOR-AttriQA                                                ric. We report the average score for all instances
+                                                                for each evaluation metric.
+Differently from the concatenation setup in Sec-
+tion 4.1, we also test MIRAGE on the full XOR-                  D    ELI5 Evaluation with Standard
+AttriQA dataset by constraining CORA generation                      Prompt
+to match the annotated answer y. We adopt a proce-
+dure similar to Muller et al. (2023) by considering             In the main experiments, we use self-citation
+a single document-answer pair (doci , y) at a time,             prompts by Gao et al. (2023a) for MIRAGE an-
+and using MIRAGE’s CTI step to detect whether y                 swer attribution to control for the effect of different
+is sensitive to the context doci . Results in Table 6           prompts on model responses, enabling a direct com-
+show that MIRAGE achieves performances in line                  parison with self-citation. In Table 8, we provide
+with other AA methods despite these approaches                  additional results where a standard prompt without
+                                                        6051
+                                        Answer                            Citation↑
+            Model        Prompt                        Filter                                Correctness↑          Fluency↑
+                                       Attribution                Prec.      Rec.   F1
+                                       Self-citation      -       41.4       24.3     30.6
+                       Self-citation                                                               9.9               28.6
+            Zephyr                                      Top 3     38.3       46.2     41.9
+                                           MIRAGE EX
+                                                       Top 5%     44.7       46.5     45.6
+                                                        Top 3     29.8       34.5     32.0
+                         Standard          MIRAGE EX                                              11.3               34.3
+                                                       Top 5%     34.1       34.2     34.1
+                                       Self-citation      -       37.9       19.8     26.0
+                       Self-citation                                                              11.8               24.8
+           LLaMA                                        Top 3     21.8       29.6     25.1
+                                           MIRAGE EX
+                                                       Top 5%     26.2       29.1     27.6
+                                                        Top 3     17.8       20.9     19.2
+                         Standard          MIRAGE EX                                              13.0               26.4
+                                                       Top 5%     21.1       20.1     20.6
+
+
+Table 8: Citation quality (F1, Recall, Precision), correctness, and fluency of self-citation and MIRAGE on ELI5 when
+using self-citation instruction and standard prompts of Table 9.
+
+
+    S ELF - CITATION (Gao et al., 2023a)                               I NPUT: P ROMPT + R ETRIEVED DOCS (N=5) + Q UERY
+    Instruction: Write an accurate, engaging, and concise              Document [2] [...]
+    answer for the given question using only the provided              Document [3] [...] What will happen if you accidentally
+    search results (some of which might be irrelevant) and             set off your security system? The siren will sound and it
+    cite them properly. Use an unbiased and journalistic               will be loud, but you should be able to stop the siren by
+    tone. Always cite for any factual claim. When citing               entering your code into your keypad. [...]
+    several search results, use [1][2][3]. Cite at least one           Document [4] [...]
+    document and at most three documents in each sentence.
+    If multiple documents support the sentence, only cite a            Query: How does a small paper library bar code set off
+    minimum sufficient subset of the documents.                        the security alarm when you haven’t checked a book out.
+
+    S TANDARD                                                          A NSWER ATTRIBUTION RESULTS
+
+    Instruction: Write an accurate, engaging, and concise              Self-citation: [...] The response center may contact the in-
+    answer for the given question using only the provided              dividual to confirm if it’s a false alarm, and the individual
+    search results (some of which might be irrelevant). Use            can cancel the alarm by providing their password at the
+    an unbiased and journalistic tone.                                 keypad. [∅] [...]
+                                                                       MIRAGE : ...    The response center (3) may (3) contact
+Table 9: Self-citation prompt, taken from Gao et al.,                  the individual to confirm if it (3) ’s a false alarm, and the
+2023a, and standard prompt with no citation instruction.                individual (3) can cancel (3) the alarm by providing (3)
+                                                                       their password at the keypad (3) .[3] ...
+citation instructions is used ("Standard" prompt in                    NLI (TRUE model): [3] entails the answer sentence.
+Table 9). We observe the overall citation quality
+of MIRAGE drops when a standard prompt is used                     Table 10: Example described in Section 5.3: MIRAGE
+instead of self-citation instructions. We conjecture               attributes the generation to Document [3] when cancel
+this might be due to answers that are, in general,                 is used instead of prevent (Table 5).
+less attributable to the provided context due to a
+lack of explicit instructions to do so. We also ob-
+serve higher correctness and fluency in the standard               the generated answer becomes the consistent de-
+prompt setting, suggesting a trade-off between an-                 scription ‘cancel the alarm’ as mentioned in Doc-
+swer and citation quality.                                         ument [3]. In this case, MIRAGE attributes this
+                                                                   sentence to the corresponding Document [3] while
+E     More Examples of Disagreement                                NLI maintains its attribution of Document [3] due
+                                                                   to lexical overlap, as suggested in Section 5.3.
+Table 10 to 12 show three cases where MIRAGE
+answer attributions disagree with self-citation at-                   On several occasions, we observe that MIRAGE
+tributions of the same generation20 . We adopt the                 attributes all occurrences of lexically similar tokens
+Top-5% threshold for CCI Filtering. In Table 10,                   in the context when the LLM is generating the same
+   20
+                                                                   word. For example, in Table 11 the named entity
+      Note that we remove citation tags in self-citation gen-
+erated answers and use MIRAGE to attribute the resulting           “Science ABC” is mentioned in both Document [1]
+answers, as introduced in Section 5                                and [4], and MIRAGE finds both occurrences as
+                                                                6052
+  I NPUT: P ROMPT + R ETRIEVED DOCS (N=5) + Q UERY                        I NPUT: P ROMPT + R ETRIEVED DOCS (N=5) + Q UERY
+ Document [1](Title: Why Do Airlines Sell More Tickets                    Document [1](Title: Why Do Airlines Sell More Tickets
+ Than The Aircraft’s Capacity? » Science ABC): [...] They                 Than The Aircraft’s Capacity? » Science ABC): board the
+ know that some people simply won’t show up for their                     aircraft. They know that some people simply won’t show
+ appointments [...] To account for this discrepancy, where                up for their appointments (just like at hospitals, hotels,
+ the flight would have to fly with some very expensive seats              restaurants etc.). To account for this discrepancy, where
+ empty, they decide to opt for a more profitable strategy.                the flight would have to fly with some very expensive seats
+ Assuming that out of the maximum capacity of 200 seats                   empty, they decide to opt for a more profitable strategy.
+ only 185 show up for the flight, this leaves 15 seats avail-             Assuming that out of the maximum capacity of 200 seats
+ able. The airline could try to sell these seats quickly to               only 185 show up for the flight, this leaves 15 seats avail-
+ avoid losses, but this rarely happens. What the airline does             able. The airline could try to sell these seats quickly to
+ instead is try to sell 220 seats in advance.                             avoid losses, but this rarely happens. What the airline does
+ Document [2] [...] Document [3] [...]                                    instead is try to sell 220 seats in advance.
+ Document [4](Title: Why Do Airlines Sell More Tickets                    Document [2] [...]
+ Than The Aircraft’s Capacity? » Science ABC): your                       Document [3] [...]
+ own interests, as the airlines have clearly looked after                 Document [4](Title: Why Do Airlines Sell More Tickets
+ theirs. First of all, if the airline is offering you a seat on           Than The Aircraft’s Capacity? » Science ABC): your
+ a different flight, check if that seat is definitely available.          own interests, as the airlines have clearly looked after
+ If it is also full and it looks like you might be bumped                 theirs. First of all, if the airline is offering you a seat on
+ yet again, you might as well be stranded! If the airline                 a different flight, check if that seat is definitely available.
+ is offering compensation, such as free meals, hotel costs,               If it is also full and it looks like you might be bumped
+ and transportation between the airport and the hotel, look               yet again, you might as well be stranded! If the airline
+ for the most profitable outcome. The airline might offer                 is offering compensation, such as free meals, hotel costs,
+ you vouchers for future flights, but since airline employees             and transportation between the airport and the hotel, look
+ are given guidelines for negotiation, you might                          for the most profitable outcome. The airline might offer
+ Document [5] [...]                                                       you vouchers for future flights, but since airline employees
+                                                                          are given guidelines for negotiation, you might
+  Query: Why are airlines able to sell more seats than are                Document [5] [...]
+  available on a flight?
+                                                                          Query: Why are airlines able to sell more seats than are
+ A NSWER ATTRIBUTION RESULTS                                              available on a flight?
+ Self-citation: [...] According to a report from Science                  A NSWER ATTRIBUTION RESULTS
+ ABC [1], airlines assume that out of the maximum capac-
+ ity of 200 seats, only 185 will actually board the aircraft.             Self-citation: [...] According to a source in Document [1],
+ To avoid empty seats and potential losses, airlines opt to               airlines assume that not all passengers will show up for
+ sell up to 220 seats in advance [1]. [...]                               their flights, leaving some seats empty. [...]
+  MIRAGE :      [...]    According to a report from                       MIRAGE : [...] According to a source in      Document (4) ,
+  Science ABC (1)(4) , airlines assume that out (1) of                    airlines assume that not (1) all passengers will show up
+  the maximum capacity (1) of 200 seats (1) , only 185 (1)                for their flights, leaving some seats empty. [1][4] [...]
+ will actually board the aircraft. [1][4] [...]                           NLI (TRUE model): Only [1] entails the answer sentence.
+  NLI (TRUE model): Only [1] entails the answer sentence.
+                                                                      Table 12: Example of counterintuitive MIRAGE attribu-
+Table 11: Example of counterintuitive MIRAGE attri-                   tion: Document [4] is attributed by MIRAGE due to the
+bution: the generation is grounded to Document [4]                    repetition of the keyword ‘Document’.
+because the named entity ‘Science ABC’ is made more
+probable by the occurrence of the same named entity
+‘Science ABC’. However, Document [4] does not logi-                   aggregate granular information at sentence level
+cally entail the answer.                                              while preserving faithfulness to context usage.
+
+
+salient towards the prediction of the same entity
+in the output. Similarly, in Table 12, the gener-
+ated word ‘Document’ is attributed to the previous
+mentions of the same word in the context. In both
+cases, when moving from token-level to sentence-
+level AA, this dependence would result in wrong
+AA according to NLI, since the documents are not
+entailing the answer, but rather making a specific
+token more likely. These cases reflect the possible
+discrepancy between AA intended as logical entail-
+ment and actual context usage during generation.
+Future work could explore more elaborate ways to
+                                                                   6053
+

@@ -1,0 +1,799 @@
+Grounded Answers from Multi-Passage Regulations: Learning-to-Rank for
+                        Regulatory RAG
+
+                               Tuba Gokhan, Ted Briscoe
+               Mohamed Bin Zayed University of Artificial Intelligence (MBZUAI)
+                                   Correspondence: tuba.gokhan@mbzuai.ac.ae
+
+
+
+
+                     Abstract                              documents. This poses challenges for retrieval
+                                                           augmented generative question answering systems:
+    Regulatory compliance questions often require
+                                                           they must identify not only directly answer-bearing
+    aggregating evidence from multiple, interre-
+    lated sections of long, complex documents.             text but also supporting context scattered across
+    To support question-answering (QA) in this             long complex documents. To support progress in
+    setting, we introduce ObliQA-MP, a dataset             this domain, the Regulatory Information Retrieval
+    for multi-passage regulatory QA, extending             and Answer Generation (RIRAG) task (Gokhan
+    the earlier ObliQA benchmark (Gokhan et al.,           et al., 2025) was introduced, along with the ObliQA
+    2024), and improve evidence quality with an            dataset (Gokhan et al., 2024), which provides syn-
+    LLM–based validation step that filters out             thetic QA pairs grounded in real regulatory obliga-
+    ∼20% of passages missed by prior natural lan-
+                                                           tions. However, the initial formulation of ObliQA
+    guage inference (NLI) based filtering. Our
+    benchmarks show a notable performance drop             primarily focused on single-passage retrieval and
+    from single- to multi-passage retrieval, un-           relied on limited validation procedures, reducing
+    derscoring the challenges of semantic overlap          its applicability to more realistic multi-passage sce-
+    and structural complexity in regulatory texts.         narios.
+    To address this, we propose a feature-based                We address these limitations by introducing
+    learning-to-rank (LTR) framework that in-              ObliQA-MP, a multi-passage extension of ObliQA
+    tegrates lexical, semantic, and graph-derived
+                                                           requiring evidence from multiple documents, and
+    information, achieving consistent gains over
+    dense and hybrid baselines. We further add             by refining the validation pipeline. We incorporate
+    a lightweight score-based filter to trim noisy         a large language model (LLM)–based validation
+    tails and an obligation-centric prompting tech-        step that significantly improves evidence quality by
+    nique. On ObliQA-MP, LTR improves retrieval            filtering out approximately 20% of passages incor-
+    (Recall@10/MAP@10/nDCG@10) over dense,                 rectly retained by earlier NLI-based checks. Build-
+    hybrid, and fusion baselines. Our genera-              ing on this dataset, we conduct a systematic study
+    tion approach, based on domain-specific fil-
+                                                           of retrieval methods tailored for regulatory texts.
+    tering plus prompting, achieves strong scores
+    using the RePAS metric (Gokhan et al., 2025)           Specifically, we explore a feature-based learning-
+    on ObliQA-MP, producing faithful, citation-            to-rank (LTR) framework that integrates lexical,
+    grounded answers. Together, ObliQA-MP                  semantic, and graph-based signals, and evaluate its
+    and our validation and RAG systems offer a             effectiveness against strong baselines. Our main
+    stronger benchmark and a practical recipe for          contributions are:
+    grounded, citation-controlled QA in regulatory
+    domains.                                                   • ObliQA-MP1 : a multi-passage regulatory QA
+                                                                 dataset with LLM-validated question–passage
+1   Introduction
+                                                                 alignment.
+Regulatory documents are long, complex, and
+                                                               • Feature-based LTR for regulatory re-
+highly structured, often requiring professionals
+                                                                 trieval2 a framework that combines lexical,
+to synthesize information from multiple sections
+                                                                 semantic, and graph-derived signals, improv-
+across documents to answer questions. Unlike
+                                                                 ing over dense and hybrid baselines.
+typical information retrieval tasks, relevant evi-
+dence is frequently distributed across semantically           1
+                                                                  https://github.com/RegNLP/ObliQA-ML/
+related but non-contiguous passages in multiple               2
+                                                                  https://github.com/RegNLP/RegulatoryRAG-ML
+
+                                                       135
+                 Proceedings of the Natural Legal Language Processing Workshop 2025, pages 135–146
+                         November 8, 2025 ©2025 Association for Computational Linguistics
+    • Post-retrieval filtering & grounded gener-       for grounded answers in a multi-passage multi-
+      ation: a lightweight score-based filter plus     document setting.
+      an obligation-aware prompting strategy that
+      enforces [P#] citations and provides fallback    3   ObliQA-MP: Multi-Passage Dataset for
+      answers when evidence is insufficient.               Regulatory QA
+                                                       We construct ObliQA-MP, a multi-passage ex-
+2    Related Work
+                                                       tension of the ObliQA dataset (Gokhan et al.,
+Regulatory and Legal QA Datasets Several               2024), starting from the original generation
+datasets support regulatory and legal QA, in-          pipeline—which includes structured regulatory
+cluding EU2UK and UK2EU (Chalkidis et al.,             documents, topic-based rule clustering, and LLM-
+2021b) for legislative alignment, and GDPR-            based question generation. We merge newly gener-
+based QA datasets (Abualhaija et al., 2022b,a) for     ated multi-passage questions and their associated
+compliance-focused passage retrieval. Broader le-      passages with the original ObliQA dataset, and re-
+gal benchmarks like EURLEX (Chalkidis et al.,          tain only those questions that are linked to multiple
+2021a), LexGLUE (Chalkidis et al., 2022), and          passages, resulting in 13,191 candidate examples.
+ContractNLI (Koreeda and Manning, 2021) fo-               To ensure the quality and relevance of the
+cus on classification or entailment tasks. ObliQA      supporting evidence, we validate each question-
+(Gokhan et al., 2024) addresses regulatory QA with     passage pair using the gpt-4.1-2025-04-14
+synthetic question-passage pairs sourced from the      model. The model receives the following prompt:
+financial regulations of a UAE authority. While
+these resources advance regulatory QA, they pri-           You are validating if a Passage answers
+                                                            a Question.
+marily focus on single-passage settings and lack            Reply with:
+fine-grained validation of answer relevance — mo-          - "Directly Connected": Passage directly
+                                                            answers.
+tivating our work on multi-passage QA with strict          - "Indirectly Connected":        Passage
+evidence alignment in ObliQA-MP.                            provides related context.
+Retrieval: Sparse, Dense, Fusion, and LTR                  -    "Not   Connected":     Passage   is
+                                                            irrelevant.
+Classical sparse retrieval (e.g., BM25) remains             Respond ONLY with JSON: {"Connection":
+competitive on legal/regulatory corpora, yet fusion         "...", "ShortReason": "..." }
+and learning-to-rank (LTR) often yield stronger top-
+                                                          Each passage is labeled according to this schema.
+k quality. Reciprocal Rank Fusion (RRF) provides
+                                                       Across 13,191 questions and 31,037 passage pairs,
+a simple, effective ensemble over heterogeneous
+                                                       4,212 passages (13.57%) are labeled as Directly
+runs (Cormack et al., 2009). In-domain dense
+                                                       Connected, 20,474 (65.97%) as Indirectly Con-
+retrievers (e.g., E5 (Wang et al., 2022)) comple-
+                                                       nected, and 6,351 (20.46%) as Not Connected.
+ment lexical signals, and hybrids (BM25+dense)
+frequently outperform either alone. Feature-based      Table 1: Distribution of questions in the ObliQA-MP
+LTR with LambdaMART (Wu et al., 2010) and              dataset by number of associated passages across train,
+LightGBM (Ke et al., 2017) exploits lexical over-      validation, and test splits.
+lap, run scores/ranks, and corpus signals; we adopt
+a two-stage setup that gathers BM25/dense/RRF                 # Passages   Train   Validation   Test
+candidates and re-ranks with LTR tailored to regu-            2 Passages   1,559       322      326
+                                                              3 Passages    382         93       88
+lation.                                                       4 Passages    90          16       21
+Legal RAG Systems and Benchmarks Legal                        5 Passages    34          9        11
+RAG is emerging, with benchmarks and systems                  6 Passages    18          6        1
+emphasizing evidence-grounded answers (e.g.,                  Total        2,083       446      447
+LegalBench-RAG (Pipitone and Alami, 2024); in-
+terpretable statute QA (Louis et al., 2024); case-        To ensure that each retained question is sup-
+based and adaptive pipelines (Wiratunga et al.,        ported by reliable and relevant evidence, we apply
+2024); KG-augmented RAG (Barron et al., 2025)).        two filtering criteria: each question must be asso-
+These works are steps towards practical legal assis-   ciated with at least two passages labeled as either
+tants but largely target case law or statutes rather   Directly Connected or Indirectly Connected, and at
+than regulatory obligations. Our focus is comple-      least one of these passages must be labeled as Di-
+mentary: ranking and selecting regulatory passages     rectly Connected. Applying these criteria removes
+                                                   136
+3,872 questions that contain fewer than two con-            The LLM-based validation step introduced
+nected passages and 6,343 questions that lack any        in ObliQA-MP is intended to increase the
+Directly Connected passage.                              precision of supervision by addressing a sys-
+   The final ObliQA-MP dataset consists of 2,976         tematic failure mode of NLI-only validation.
+multi-passage QA pairs. We randomly split this           In the original ObliQA pipeline, passages
+dataset into training, validation, and test sets using   were treated as premises and questions as
+a 70/15/15 ratio. Table 1 shows the distribution of      hypotheses under a lightweight NLI model
+questions across splits and the number of associated     (nli-deberta-v3-xsmall) (He et al., 2021).
+passages per question. A representative example          However, NLI-only screening can admit false posi-
+of a multi-passage QA pair is shown in listing 1.        tives: a passage may linguistically entail the ques-
+                                                         tion yet fail to provide extractable, citation-backed
+Listing 1: Example QA pair from ObliQA-MP showing        answer spans (e.g., generic or templated compli-
+multi-passage evidence across documents.                 ance statements)—a problem amplified in multi-
+{" QuestionID ": "739921 c1 -385 a -4735 - a052 -        passage settings where evidence is distributed. In
+      dee9fba73602 " ,
+   " Question ": " What are the key                      ObliQA-MP we therefore prompt GPT-4 with ci-
+        compliance indicators that a Fund                tation control to label each candidate passage as
+        Manager should monitor to confirm
+        that a Passported Fund is being
+                                                         Directly Connected (contains answer spans), In-
+        managed and operated within its                  directly Connected (supportive context), or Not
+        constitutional framework and                     Connected. This finer-grained validation reveals
+        applicable ADGM legislation ?" ,
+   " Passages ": [
+                                                         that 20.46% of the 31,037 evaluated passages are
+      { " DocumentID ": 16 ,                             Not Connected despite having previously passed
+        " PassageID ": " Part 3.6.(2) " ,                NLI filtering. Moreover, only 2,976 out of 13,191
+        " Passage ": " Each Reporting UAE
+             Financial Institution shall                 candidate multi-passage questions contain at least
+             establish and implement                     one Directly Connected passage and at least one
+             appropriate systems and                     additional supporting passage, underscoring the ne-
+             internal procedures to enable
+             its compliance with the                     cessity of stricter validation for dispersed-evidence
+             Cabinet Resolution and these                queries.
+             Regulations ." ,
+        " Connection ": " Indirectly
+                                                            As a result, the retained QA pairs are grounded
+             Connected " ,                               in semantically related passages that also provide
+        " ShortReason ": " The passage                   explicit, citation-backed evidence sufficient to sup-
+             discusses general
+             institutional compliance                    port answer generation; we nonetheless treat the
+             procedures but does not                     LLM check as a precision-oriented filter rather than
+             directly mention Fund Managers              expert adjudication and acknowledge that a tar-
+              or Passported Funds ."} ,
+      { " DocumentID ": 5 ,                              geted expert audit remains future work.
+        " PassageID ": "6.1.2" ,
+        " Passage ": " The Fund Manager of a             4     Feature-Based Learning-to-Rank for
+             Passported Fund must :\ n ( a )
+             ensure that the Passported                        Regulatory RAG
+             Fund is at all times managed
+             and operated in compliance                  Our method builds on the standard RAG
+             with its constitution , in                  pipeline—retrieve, re-rank, and generate (Fig. 1).
+             accordance with applicable
+             ADGM legislation , and with
+                                                         The key novelty lies in a feature-based learning-to-
+             these Rules ; and \ n ( b ) maintain        rank retriever, combined with a lightweight score-
+             , or cause to be maintained , a             based filter to prune noisy candidates before answer
+              Unitholder register for the
+             Passported Fund ." ,                        generation.
+        " Connection ": " Directly Connected
+             ",                                          4.1     Retrieval and Ranking Framework
+        " ShortReason ": " The passage
+             directly outlines the Fund                  4.1.1    Baseline Retrieval
+             Manager ' s responsibilities
+             regarding compliance with the               As baselines, we employ sparse and dense retriev-
+             constitution and ADGM                       ers. For sparse retrieval, we use BM25 (Robertson
+             legislation ."}                             and Jones, 1976), retrieving the top-k passages
+   ]
+}                                                        (k ∈ {100, 200}) per query. While BM25 is ro-
+                                                         bust in capturing keyword overlap, it struggles with
+                                                     137
+Figure 1: Overview of our retrieval–and–ranking pipeline. Stage 1: candidate retrieval (BM25, fine-tuned dense,
+and RRF). Stage 2: feature extraction (lexical, retrieval/fusion, graph, and neighbor-semantic features). Stage 3:
+LTR re-ranking. Stage 3.5: score-based filtering (min–max; thresholds τmin and τ∆ ). Stage 4: obligation-centric
+answer generation with citation control.
+
+
+paraphrased obligations and multi-passage depen-
+dencies. For dense retrieval, we fine-tuned four
+pretrained encoders on the ObliQA-MP training
+split: intfloat/e5-base-v2, BAAI/bge-base-en-v1.5,
+all-MiniLM-L6-v2, and msmarco-MiniLM-L-12-v3.
+4.1.2 Graph Construction
+We represent the corpus as a heterogeneous, di-
+rected passage-level graph to encode both the doc-
+ument structure and cross-document references.
+Nodes. We create four node types: (1) Docu-
+ment nodes for each regulatory document; (2) Pas-
+sage nodes for atomic sections/clauses identified
+by stable IDs (e.g., “6.1.2”); (3) NamedEntity
+(NE) nodes for globally shared entities extracted
+from the source JSON (NamedEntities); and (4)
+DefinedTerm (DT) nodes for globally shared glos-
+sary/definition items (DefinedTerms). Each pas-
+sage node stores the raw text and its document
+identifier.
+Edges. We add typed, directed edges to cap-
+ture structure and references: (1) CONTAINS
+(Document → Passage) for document member-
+                                                          Figure 2: Illustration of the regulatory graph. Docu-
+ship; (2) PARENT_OF (Passage → Passage) for               ments contain passages; passages cite, mention, and use
+intra-document hierarchy, induced by trimming             terms or entities.
+dot-delimited IDs (e.g., 4.7.14 → 4.7); (3) MEN-
+TIONS (Passage → NE) and USES_TERM (Pas-
+                                                       138
+                      Table 2: Feature groups and definitions used in the learning-to-rank model.
+
+ Group                  Feature                    Description
+                        unigram_hits               Count of overlapping unigrams
+                        bigram_hits                Count of overlapping bigrams
+                        q_coverage                 Proportion of unique query terms matched in the passage
+ Lexical                idf_overlap_sum            IDF-weighted sum over overlapping terms, idf(w) = log dfN +1
+                                                                                                           (w)+1
+                                                                                                                 +1
+                        q_len, d_len               Query and passage length (tokens)
+                        len_diff                   Absolute length difference
+                        len_ratio_q_over_d         Query length divided by passage length
+                        pr                         PageRank of the passage node (Brin and Page, 1998)
+ Graph                  hits_auth                  HITS authority score (Kleinberg, 1999)
+                        deg                        Degree centrality
+                        bm25_score, bm25_rank      Score and per-query rank from a BM25 run
+                        ft_e5_score, ft_e5_rank    Score and per-query rank from a fine-tuned E5 dense run (base:
+                                                   intfloat/e5-base-v2) (Wang et al., 2022)
+                        rrf_score, rrf_rank        Score and per-query rank from precomputed reciprocal rank fusion
+ Retrieval / Fusion
+                                                   (Cormack et al., 2009)
+                        bm25xft_e5_w0.3_score      Linear blend of BM25 and dense scores (0.3 / 0.7)
+                        ft_e5xrrf_score_prod       Product of dense and RRF scores (if both present)
+                        rank_diff_bm25_ft          Signed rank difference (BM25 – dense)
+                        rank_diff_abs              Absolute rank difference
+                        rank_min, rank_max         Min/Max rank across (BM25, dense)
+                        q_to_nbrcentroid_cos       Cosine between query embedding and centroid of up to K neighbors
+ Neighbor-Semantic
+                        q_to_nbrmean_cos           Mean cosine between query embedding and each neighbor embedding
+
+
+
+sage → DT); and (4) CITES/CITED_BY edges                     base-v2 encoder (Wang et al., 2022). We then com-
+between passages based on curated cross-reference            pute cosine similarity to the centroid of neighbor
+tables.                                                      embeddings and the mean over all query–neighbor
+                                                             pairs.
+4.1.3 Feature Extraction
+For each query–passage pair, we build features that
+                                                             4.1.4      Learning-to-Rank Model
+cover lexical overlap, run-based retrieval signals,
+graph structure, and (optionally) neighbor-aware             We treat multi-passage selection as a ranking prob-
+semantics. Table 2 lists all features.                       lem and employ a gradient-boosted decision tree
+Lexical and Graph. Lexical overlap features (un-             framework. We use LightGBM (Ke et al., 2017)
+igrams, bigrams, IDF-weighted coverage, length               with the lambdarank objective (Wu et al., 2010),
+statistics) ground the model in surface similarity,          which optimizes Normalized Discounted Cumula-
+while graph centralities (PageRank (Brin and Page,           tive Gain (NDCG) by assigning higher penalties to
+1998), HITS (Kleinberg, 1999), degree) identify              misordered relevant documents.
+structurally salient passages in the regulatory cita-
+                                                                Each training instance corresponds to a query–
+tion network.
+                                                             passage pair, represented by the features in Ta-
+Retrieval / Fusion. We consume scores and ranks              ble 2. Candidate sets are formed from the union of
+from three candidate runs: BM25, a dense retriever           BM25, dense, and fused runs, ensuring broad recall.
+fine-tuned from intfloat/e5-base-v2 on the ObliQA-           Queries form natural ranking groups, and relevance
+MP training split, and their Reciprocal Rank Fusion          labels are binary, derived from ObliQA-MP. Dur-
+(RRF, k = 60) (Cormack et al., 2009). For each               ing training, the model learns feature interactions
+run we add {score, rank} per query. Interaction              that discriminate relevant passages from distrac-
+features include a 0.3/0.7 linear blend (BM25 +              tors within each query group. At inference time,
+dense), a dense×RRF score product, and signed/ab-            the trained ranker re-scores the candidate set and
+solute/min/max rank differences between BM25                 outputs a refined ranking. We release all training
+and dense.                                                   scripts in our public repository3 .
+Neighbor-Semantic. To model local semantic co-
+herence, we embed queries and up to K graph
+neighbors (K=10) using the pretrained intfloat/e5-               3
+                                                                     https://github.com/RegNLP/RegulatoryRAG-ML
+
+                                                         139
+    Table 3: Results of applying the Gokhan et al. (2024) BM25 + GPT baseline from ObliQA to ObliQA-MP.
+
+        Dataset     Method                               Recall@10        MAP@10      Es      Cs     OCs     RePASs
+        ObliQA      Baseline - BM25(passage)+GPT4           0.761          0.624     0.308   0.123   0.214   0.466
+                    Baseline - BM25 (fusion)+GPT4           0.764          0.625     0.320   0.131   0.222   0.470
+        ObliQA-MP   Baseline - BM25(passage)+GPT4           0.561          0.454     0.293   0.129   0.159   0.441
+                    Baseline - BM25 (fusion)+GPT4           0.561          0.457     0.299   0.145   0.157   0.437
+
+
+
+4.2 Post-Retrieval and Answer Generation                        nDCG@10. For answer generation, we adopt the
+Score-Based Filtering. Given a per-query                        RePASs metric7 (Gokhan et al., 2024), a domain-
+ranked list (d1 , . . . , dK ) with scores (s1 , . . . , sK )   oriented evaluation designed for regulatory QA.
+from any run or re-ranker, we apply per-query                   Unlike general-purpose metrics such as ROUGE
+                                        s −minj sj
+min–max normalization s̃i = maxij sj −min                ; if   or BLEU, RePASs directly assesses factual ground-
+                                                    j sj
+maxj sj = minj sj , we set s̃i = 1 for all i. We                ing and obligation coverage: it combines (i) the
+then keep a prefix by two rules applied for i ≥ 2:              average entailment score (Es ), (ii) the average con-
+(i) minimum score: s̃i ≥ τmin ; (ii) drop rule:                 tradiction score (Cs , lower is better), and (iii) the
+stop if s̃i−1 − s̃i ≥ τ∆ . We use τmin =0.7, τ∆ =0.2,           obligation coverage score (OCs ). The final com-
+and always keep d1 . This step removes low-utility              posite captures both semantic faithfulness and do-
+tail passages while retaining high-confidence                   main adequacy.
+evidence for generation (Gokhan et al., 2024).                  5.2      Results
+Answer Generation. We use a deterministic                       Comparative Evaluation with Prior Work To
+LLM (temperature = 0.0, max output = 600 to-                    contextualize our results, we reproduce the pipeline
+kens) with instructions to (i) use only retrieved               of Gokhan et al. (2024), which was originally de-
+passages, (ii) extract all obligations relevant to              signed for the ObliQA dataset. Their system com-
+the question, (iii) cite evidence as [P#], and (iv)             bines BM25-based retrieval with GPT-4 for answer
+output Insufficient evidence in retrieved passages.             generation. For comparability, we re-run their re-
+if sources are incomplete or contradictory. Con-                trieval component on the ObliQA-MP test set and,
+cretely, we use gpt-4.1-mini with a short, fixed                in the answer generation stage, replace GPT-4 with
+system message and a user prompt that enumerates                the more recent gpt-4.1-2025-04-14.
+the filtered passages as [P1..Pn]. See Appendix A                  As shown in Table 3, BM25 achieves strong re-
+for the full prompts and Appendix B for a worked                sults on the original ObliQA dataset (Recall@10 =
+Question/Passages/Answer example.                               0.761) but drops substantially on ObliQA-MP (Re-
+                                                                call@10 = 0.561). This degradation illustrates the
+5       Experiments and Results                                 increased difficulty of multi-passage retrieval and
+                                                                underscores the need for more effective retrieval
+5.1 Experimental Setup
+                                                                models in such settings.
+We implement all sparse retrieval runs with the
+Pyserini toolkit4 , which provides a standard-                  Retrieval Results. Table 4 reports retrieval ef-
+ized interface to Anserini’s BM25 implementa-                   fectiveness across different methods, grouped into
+tion. Dense retrievers and cross-encoders are taken             baselines, dense retrievers, hybrid combinations,
+from HuggingFace Transformers, and training of                  and our proposed LTR models. Among first-stage
+the LTR model is carried out with LightGBM’s                    retrievers, BM25 provides a strong sparse base-
+lambdarank objective. All feature extraction, train-            line (Recall@10 = 0.549), while dense encoders
+ing, and evaluation scripts are released in our public          such as FT-BGE (Recall@10 = 0.573) and FT-
+repository.5                                                    E5 (Recall@10 = 0.561) yield modest improve-
+   To evaluate retrieval performance, we use the                ments. Hybrid methods that combine BM25 with
+pytrec_eval library6 (Van Gysel and de Ri-                      dense retrievers consistently outperform individ-
+jke, 2018), reporting Recall@10, MAP@10, and                    ual components, with the best hybrid performance
+                                                                achieved by BM25+FT-BGE at α = 0.5 (Re-
+    4
+      https://pypi.org/project/pyserini/                        call@10 = 0.617, MAP@10 = 0.480, nDCG@10
+    5
+      https://github.com/RegNLP/RegulatoryRAG-ML
+    6                                                               7
+      https://pypi.org/project/pytrec-eval/                             https://github.com/RegNLP/RePASs
+
+                                                            140
+Table 4: Retrieval performance across different baselines, fusion methods, hybrid approaches, and our Learning-to-
+Rank (LTR) model on ObliQA-MP test set.
+
+              Method                                         Recall@10     MAP@10         nDCG@10
+              Baselines
+              BM25                                             0.5493         0.4056       0.5209
+              Dense (FT_E5)                                    0.5608         0.3976       0.5096
+              Dense (FT_BGE)                                   0.5730         0.4009       0.5143
+              Dense (FT_MiniLM)                                0.5258         0.3698       0.4783
+              Dense (FT_MSMARCO)                               0.5213         0.3582       0.4641
+              Fusion (RRF)
+              RRF(BM25 + FT_E5)                                0.6105         0.4714       0.5898
+              RRF(BM25 + FT_BGE)                               0.6173         0.4667       0.5883
+              RRF(BM25 + FT_MiniLM)                            0.5956         0.4474       0.5672
+              RRF(BM25 + FT_MSMARCO)                           0.6066         0.4567       0.5760
+              Hybrid (BM25 + Dense, α-weighted)
+              BM25 + FT_E5 (α = 0.3)                           0.5977         0.4634       0.5819
+              BM25 + FT_E5 (α = 0.5)                           0.6153         0.4888       0.6061
+              BM25 + FT_E5 (α = 0.7)                           0.6114         0.4746       0.5910
+              BM25 + FT_BGE (α = 0.3)                          0.6000         0.4586       0.5792
+              BM25 + FT_BGE (α = 0.5)                          0.6171         0.4795       0.5993
+              BM25 + FT_BGE (α = 0.7)                          0.6158         0.4714       0.5894
+              BM25 + FT_MiniLM (α = 0.3)                       0.5880         0.4526       0.5719
+              BM25 + FT_MiniLM (α = 0.5)                       0.6034         0.4642       0.5841
+              BM25 + FT_MiniLM (α = 0.7)                       0.5878         0.4485       0.5655
+              BM25 + FT_MSMARCO (α = 0.3)                      0.5917         0.4567       0.5746
+              BM25 + FT_MSMARCO (α = 0.5)                      0.6021         0.4701       0.5859
+              BM25 + FT_MSMARCO (α = 0.7)                      0.5917         0.4540       0.5671
+              Hybrid + Secondary Signals (SR)
+              BM25 + FT_BGE (α = 0.5) + SR(BGE)                0.5174         0.3684       0.4792
+              BM25 + FT_E5 (α = 0.5) + SR(BGE)                 0.5245         0.3741       0.4859
+              BM25 + FT_MiniLM (α = 0.5) + SR(BGE)             0.5256         0.3713       0.4838
+              BM25 + FT_MSMARCO (α = 0.5) + SR(BGE)            0.5409         0.3761       0.4920
+              Learning-to-Rank (Ours)
+              LTR                                              0.6403         0.5116       0.6298
+
+Table 5: Answer generation performance across the best baselines, fusion methods, hybrid approaches, and our
+Learning-to-Rank (LTR) model on the ObliQA-MP test set.
+
+               Method                                           Es       Cs       OCs      RePASs
+               Gokhan et al. (2024)                           0.2990    0.1450   0.1570     0.4370
+               BM25                                           0.3916    0.2171   0.1791     0.4512
+               Dense (FT_BGE)                                 0.4134    0.1918   0.2324     0.4847
+               RRF(BM25 + FT_BGE)                             0.4083    0.2007   0.2164     0.4747
+               BM25 + FT_E5 (α = 0.5)                         0.4320    0.1542   0.1960     0.4913
+               BM25 + FT_MSMARCO (α = 0.5) + SR(BGE)          0.4101    0.1785   0.2255     0.4857
+               LTR                                            0.4624    0.1340   0.1984     0.5090
+
+
+
+= 0.599). RRF also delivers competitive gains, al-        grates lexical, retrieval, graph-based, and neighbor-
+though slightly lower than weighted hybrid fusion.        semantic signals.
+  Our LTR models achieve the strongest per-
+formance. In particular, LightGBM trained on              Answer Generation Results Our LTR is best
+the full feature set (ltr_lgbm_allfeat) reaches           overall, reaching RePASs 0.50 with the highest Es
+Recall@10 = 0.640, MAP@10 = 0.512, and                    (0.46) and lowest Cs (0.13), yielding more faithful
+nDCG@10 = 0.630, outperforming all hybrid and             and less contradictory answers than all baselines.
+dense-only baselines. This demonstrates the ad-           Relative to the Gokhan et al. (2024) BM25+GPT
+vantage of feature-enriched reranking that inte-          baseline on ObliQA-MP (RePASs 0.43), this is a
+                                                       141
++0.072 absolute gain (+16.5%).                          prompt discipline yields the best answer quality on
+  We attribute this lift primarily to prompt align-     RePASs—raising entailment and lowering contra-
+ment: the obligation-centric instructions with          dictions relative to prior BM25 + GPT baselines on
+mandatory [P#] citations (under deterministic de-       ObliQA-MP.
+coding) steer the model to extract only supported          Future work will focus on exploring hybrid re-
+content, directly improving Es .                        trievers that combine symbolic and neural rep-
+                                                        resentations, developing more robust generation
+Discussion. Overall, our results demonstrate that
+                                                        pipelines, and designing evaluation metrics that
+LTR models leveraging heterogeneous features pro-
+                                                        align more closely with expert-level legal reason-
+vide consistent improvements over both sparse and
+                                                        ing and compliance practices.
+dense baselines. In particular, the feature-rich
+LightGBM models outperform fusion strategies            Limitations
+such as RRF or linear interpolation, indicating that
+the model successfully learns how to combine com-       ObliQA-MP is a synthetic dataset generated and
+plementary signals.                                     validated using LLMs, which may introduce lin-
+   The comparison with prior work further high-         guistic biases and lack the nuance of real-world
+lights the limitations of relying solely on BM25 for    regulatory queries. While our LLM-based valida-
+multi-passage retrieval. While BM25 remains com-        tion improves semantic precision, it cannot fully
+petitive in single-passage ObliQA, its performance      guarantee legal correctness or reasoning complete-
+degrades sharply in the ObliQA-MP setting. By           ness; a targeted expert audit and an error taxonomy
+contrast, our LTR approach maintains strong per-        remain future work.
+formance under the more challenging conditions,            The dataset is based solely on regulations from
+suggesting better robustness to contextual fragmen-     a single regulatory authority, limiting its generaliz-
+tation across passages.                                 ability to other jurisdictions. Additionally, although
+   These findings confirm that multi-passage reg-       each question includes at least one directly con-
+ulatory retrieval requires models that integrate        nected passage, we do not assess whether all nec-
+structural and semantic cues beyond simple lex-         essary information is present for generating fully
+ical overlap. The integration of graph-derived and      comprehensive answers.
+neighborhood features is particularly promising, as        Our proposed learning-to-rank framework relies
+they allow the retriever to exploit inherent cross-     on feature engineering that incorporates lexical, re-
+references and local semantic coherence within reg-     trieval, graph-based, and neighbor-semantic signals.
+ulatory corpora. This aligns with our central claim:    While this combination provides strong empirical
+robust retrieval for complex regulatory tasks de-       gains, it also increases system complexity and may
+mands multi-faceted ranking strategies rather than      reduce portability to other domains. The approach
+reliance on single retrieval approaches.                requires access to structured cross-references to
+                                                        construct the regulatory graph, which may not be
+6   Conclusion                                          available in less formalized corpora. Moreover,
+                                                        the reliance on pretrained encoders (e.g., e5-base-
+We introduced ObliQA-MP, a multi-passage reg-
+                                                        v2) fine-tuned on regulatory QA introduces domain
+ulatory QA dataset, and a stricter LLM-based val-
+                                                        adaptation challenges; performance may vary when
+idation that removes incomplete or off-target evi-
+                                                        applied to corpora with different legal or linguistic
+dence more effectively than prior NLI filters. Build-
+                                                        characteristics.
+ing on this resource, we presented a retrieve–re-
+rank–generate pipeline that couples a feature-based     Ethics Statement
+LTR retriever with lightweight score-based filtering
+and an obligation-centric prompt with mandatory         This work focuses on question answering over pub-
+[P#] citation control.                                  licly available regulatory documents. No personal,
+   Our experiments show that multi-passage re-          sensitive, or proprietary data is used in the con-
+trieval is markedly harder than single-passage          struction of the ObliQA-MP dataset. All content
+ObliQA, yet LTR consistently outperforms strong         is derived from legal and regulatory sources meant
+sparse, dense, and fusion baselines on retrieval met-   for public dissemination. We ensure that all syn-
+rics. More importantly, under a common, deter-          thetic questions and annotations are automatically
+ministic generation setup, LTR plus filtering and       generated and validated using LLMs.
+                                                    142
+References                                                   York, NY, USA. Association for Computing Machin-
+                                                             ery.
+Sallam Abualhaija, Chetan Arora, and Lionel C. Briand.
+  2022a. COREQQA: a compliance requirements un-            Tuba Gokhan, Kexin Wang, Iryna Gurevych, and
+  derstanding using question answering tool. In Pro-         Ted Briscoe. 2024. RIRAG: Regulatory informa-
+  ceedings of the 30th ACM Joint European Software           tion retrieval and answer generation. Preprint,
+  Engineering Conference and Symposium on the Foun-          arXiv:2409.05677.
+  dations of Software Engineering, ESEC/FSE 2022,
+  page 1682–1686, New York, NY, USA. Association           Tuba Gokhan, Kexin Wang, Iryna Gurevych, and Ted
+  for Computing Machinery.                                   Briscoe. 2025. Shared task RIRAG-2025: Regula-
+                                                             tory information retrieval and answer generation. In
+Sallam Abualhaija, Chetan Arora, Amin Sleimi, and            Proceedings of the 1st Regulatory NLP Workshop
+  Lionel C. Briand. 2022b. Automated question an-            (RegNLP 2025), pages 1–4, Abu Dhabi, UAE. Asso-
+  swering for improved understanding of compliance           ciation for Computational Linguistics.
+  requirements: A multi-document study. In 2022
+  IEEE 30th International Requirements Engineering         Pengcheng He, Jianfeng Gao, and Weizhu Chen. 2021.
+  Conference (RE), pages 39–50.                              Debertav3: Improving deberta using electra-style pre-
+                                                             training with gradient-disentangled embedding shar-
+Ryan C Barron, Maksim E Eren, Olga M Serafi-
+                                                             ing. Preprint, arXiv:2111.09543.
+  mova, Cynthia Matuszek, and Boian S Alexandrov.
+  2025. Bridging legal knowledge and ai: Retrieval-
+                                                           Guolin Ke, Qi Meng, Thomas Finley, Taifeng Wang,
+  augmented generation with vector stores, knowledge
+                                                             Wei Chen, Weidong Ma, Qiwei Ye, and Tie-Yan Liu.
+  graphs, and hierarchical non-negative matrix factor-
+                                                             2017. Lightgbm: a highly efficient gradient boosting
+  ization. arXiv preprint arXiv:2502.20364.
+                                                             decision tree. In Proceedings of the 31st Interna-
+Sergey Brin and Lawrence Page. 1998. The anatomy of          tional Conference on Neural Information Processing
+  a large-scale hypertextual web search engine. Com-         Systems, NIPS’17, page 3149–3157, Red Hook, NY,
+  puter Networks and ISDN Systems, 30(1):107–117.            USA. Curran Associates Inc.
+  Proceedings of the Seventh International World Wide
+  Web Conference.                                          Jon M. Kleinberg. 1999. Authoritative sources in a
+                                                             hyperlinked environment. J. ACM, 46(5):604–632.
+Ilias Chalkidis, Manos Fergadiotis, and Ion Androut-
+   sopoulos. 2021a. MultiEURLEX - a multi-lingual          Yuta Koreeda and Christopher Manning. 2021. Con-
+   and multi-label legal document classification dataset     tractNLI: A dataset for document-level natural lan-
+   for zero-shot cross-lingual transfer. In Proceedings      guage inference for contracts. In Findings of the
+   of the 2021 Conference on Empirical Methods in Nat-       Association for Computational Linguistics: EMNLP
+   ural Language Processing, pages 6974–6996, Online         2021, pages 1907–1919, Punta Cana, Dominican Re-
+   and Punta Cana, Dominican Republic. Association           public. Association for Computational Linguistics.
+   for Computational Linguistics.
+                                                           Antoine Louis, Gijs van Dijck, and Gerasimos Spanakis.
+Ilias Chalkidis, Manos Fergadiotis, Nikolaos Manginas,       2024. Interpretable long-form legal question an-
+   Eva Katakalou, and Prodromos Malakasiotis. 2021b.         swering with retrieval-augmented large language
+   Regulatory compliance through Doc2Doc informa-            models. In Proceedings of the Thirty-Eighth AAAI
+   tion retrieval: A case study in EU/UK legislation         Conference on Artificial Intelligence and Thirty-
+   where text similarity has limitations. In Proceedings     Sixth Conference on Innovative Applications of
+   of the 16th Conference of the European Chapter of         Artificial Intelligence and Fourteenth Symposium
+   the Association for Computational Linguistics: Main       on Educational Advances in Artificial Intelligence,
+   Volume, pages 3498–3511, Online. Association for          AAAI’24/IAAI’24/EAAI’24. AAAI Press.
+   Computational Linguistics.
+                                                           Nicholas Pipitone and Ghita Houir Alami. 2024.
+Ilias Chalkidis, Abhik Jana, Dirk Hartung, Michael           Legalbench-rag:     A benchmark for retrieval-
+   Bommarito, Ion Androutsopoulos, Daniel Katz, and          augmented generation in the legal domain. arXiv
+   Nikolaos Aletras. 2022. LexGLUE: A benchmark              preprint arXiv:2408.10343.
+   dataset for legal language understanding in English.
+   In Proceedings of the 60th Annual Meeting of the        Stephen E Robertson and K Sparck Jones. 1976. Rel-
+   Association for Computational Linguistics (Volume          evance weighting of search terms. Journal of the
+   1: Long Papers), pages 4310–4330, Dublin, Ireland.        American Society for Information science, 27(3):129–
+   Association for Computational Linguistics.                146.
+
+Gordon V. Cormack, Charles L A Clarke, and Stefan          Christophe Van Gysel and Maarten de Rijke. 2018.
+  Buettcher. 2009. Reciprocal rank fusion outperforms        Pytrec_eval: An extremely fast python interface to
+  condorcet and individual rank learning methods. In         trec_eval. In The 41st International ACM SIGIR Con-
+  Proceedings of the 32nd International ACM SIGIR            ference on Research & Development in Information
+  Conference on Research and Development in Infor-           Retrieval, SIGIR ’18, page 873–876, New York, NY,
+  mation Retrieval, SIGIR ’09, page 758–759, New             USA. Association for Computing Machinery.
+                                                       143
+Liang Wang, Nan Yang, Xiaolong Huang, Binxing               Question : What specific actions does the FSRA expect
+  Jiao, Linjun Yang, Daxin Jiang, Rangan Majumder,                an Authorised Person to take to resolve any
+                                                                 identified breach of Sanctions in a ' timely
+  and Furu Wei. 2022. Text embeddings by weakly-                 fashion ' as mentioned in AML Rule 11.2.1(1) ?
+  supervised contrastive pre-training. arXiv preprint       Answer :
+                                                            - An Authorised Person must have powers to resolve
+  arXiv:2212.03533.                                              any breach of sanctions in a timely fashion ,
+                                                                 including taking emergency action itself or
+Nirmalie Wiratunga, Ramitha Abeyratne, Lasal Jayawar-            compelling the delivery and / or storage facility
+                                                                  to take appropriate action .
+  dena, Kyle Martin, Stewart Massie, Ikechukwu Nkisi-       - The Authorised Person must have the ability to
+  Orji, Ruvan Weerasinghe, Anne Liret, and Bruno                 sanction a Member , market participant , or the
+                                                                 delivery and / or storage facility for acts or
+  Fleisch. 2024. CBR-RAG: Case-based reasoning for               omissions that compromise compliance with
+  retrieval augmented generation in llms for legal ques-         applicable sanctions .
+  tion answering. In Case-Based Reasoning Research          - The Authorised Person must notify the Regulator as
+                                                                  soon as practicable of any breaches or
+  and Development, pages 445–460, Cham. Springer                 potential breaches of applicable sanctions and
+  Nature Switzerland.                                            the actions taken to correct them . [ P1 , P2 ]
+
+                                                            P1 : REGULATORY REQUIREMENTS - SPOT COMMODITY
+Qiang Wu, Christopher J. C. Burges, Krysta M. Svore,              ACTIVITIES \ nSanctions \ nPursuant to AML Rule
+  and Jianfeng Gao. 2010. Adapting boosting for infor-            11.2.1(1) , an Authorised Person must have
+                                                                  arrangements in place to ensure that only Spot
+  mation retrieval measures. Inf. Retr., 13(3):254–270.           Commodities that are not subject to sanctions
+                                                                  or associated with an entity in the supply
+                                                                  chain that is itself subject to a sanction , are
+Appendix                                                            used as part of its Regulated Activities , or
+                                                                  utilised as part of a delivery and / or storage
+                                                                  facility operated by itself ( or by any third
+A    Answer Generation Prompt                                     parties it uses ). In demonstrating compliance
+                                                                  with the Rule , an Authorised Person must have
+                                                                  powers to resolve any breach in a timely
+A.1 System Instructions                                           fashion , such as taking emergency action itself
+                                                                    or by compelling the delivery and / or storage
+You are a careful compliance QA assistant . Your job              facility to take appropriate action . The FSRA
+     is to extract and present ALL obligations that               expects this to include the Authorised Person
+     are directly supported by the retrieved                      having the ability to sanction a Member , market
+     passages for the given question .                              participant or the delivery and / or storage
+                                                                  facility for acts or omissions that compromise
+Rules :                                                           compliance with applicable sanctions .
+1) Use ONLY the provided passages , no outside              P2 : REGULATORY REQUIREMENTS - SPOT COMMODITY
+     knowledge or speculation .                                   ACTIVITIES \ nSanctions \ nPursuant to AML Rule
+2) Include every obligation explicitly supported and              11.1.1(2) , an Authorised Person must have
+       relevant to the question .                                 arrangements in place to notify the Regulator ,
+3) Each obligation MUST cite its evidence as [P #] (              as soon as practicable , of any breaches , or
+     one or more ) , using only valid passage indices .           potential breaches of applicable sanctions , as
+4) If the passages are incomplete , ambiguous , or                well as the actions it has taken to correct .
+     contain contradictory obligations relevant to                Authorised Persons using Accepted Spot
+     the question , reply exactly with : Insufficient             Commodities will also need to comply with all
+     evidence in retrieved passages .                             other applicable FSRA notification requirements
+5) Keep it concise and factual . Use a short bullet               .
+     list ; avoid repetition .
+6) Preserve modality ( must / shall / should ); do not
+                                                            Question : Could you provide further guidance on the
+     change meanings .
+                                                                 expectations for an Authorised Person in terms
+7) Do not include obligations that are outside the
+                                                                 of establishing a risk management system that
+     scope of the question , even if present in the
+                                                                 addresses the specific risks listed ,
+     passages .
+                                                                 particularly in relation to reinsurance risk ?
+                                                            Answer :
+                                                            - An Authorised Person must develop , implement , and
+A.2 User Message Template                                        maintain a risk management system to identify ,
+                                                                 assess , monitor , mitigate , and control
+                                                                 reinsurance risk , which relates to risks from
+Question :                                                       the Insurer 's use of reinsurance arrangements
+{ < question text >}                                             as cedant [ P2 ].
+                                                            - The risk management system must address all
+Retrieved Passages :                                             material risks , including reinsurance risk
+[ P1 ] { < passage 1 text >}                                     specifically [ P3 ].
+[ P2 ] { < passage 2 text >}                                - The system must include a written reinsurance
+...                                                              management strategy appropriate to the size and
+[ PN ] { < passage N text >}                                      complexity of the Insurer 's operations ,
+                                                                 defining and documenting the Insurer ' s
+Task : Based ONLY on the passages above , list ALL               objectives and strategy regarding reinsurance
+      obligations that answer the question . Each                arrangements [ P4 ].
+      bullet MUST end with supporting [P #] cites . If      - The reinsurance management strategy must include
+      evidence is insufficient or contradictory ,                systems for selecting reinsurance brokers and
+      reply exactly : ' Insufficient evidence in                 advisers , selecting and monitoring reinsurance
+      retrieved passages . '                                     programmes , clearly defined managerial
+                                                                 responsibilities and controls , and clear
+                                                                 methodologies for determining all aspects of
+                                                                 the reinsurance programme , including :
+B    End-to-End Example with Cited                              - identification and management of aggregations
+                                                                      of risk exposure ;
+     Evidence ([P#]): Retrieval → Filtering                     - selection of maximum probable loss factors ;
+     → Answering                                                - selection of realistic disaster scenarios ,
+                                                                      return periods , and geographical
+                                                                      aggregation areas ;
+
+                                                          144
+    - identification and management of vertical and             Results. Table 6 (and the full grid in Ta-
+         horizontal coverage of the reinsurance
+         programme [ P1 ].                                      ble 7) summarizes outcomes. The LTR base-
+- The strategy must also include selection of
+     participants on reinsurance contracts
+                                                                line attains 0.6298 nDCG@10 (MAP@10=0.5116,
+     considering diversification and                            R@10=0.6403). Within our grid, the best configu-
+     creditworthiness , and systems for identifying
+     credit exposures to individual reinsurers or               ration uses K=200, num_leaves= 63, lr= 0.05,
+     groups of connected reinsurers on existing
+     programmes [ P1 ].
+                                                                and min_leaf= 50, yielding 0.6121 nDCG@10
+                                                                (MAP@10=0.4968, R@10=0.6151)—only 0.0177
+P1 : An Insurer 's reinsurance management strategy
+      should , at a minimum , include the following             below the legacy best—indicating the simplified
+      elements :\ na .\ tsystems for the selection of
+      reinsurance brokers and other reinsurance                 setting remains competitive.
+      advisers ;\ nb .\ tsystems for selecting and
+      monitoring reinsurance programmes ;\ nc .\ tclearly       Observations. (1) Larger candidate pools
+       defined managerial responsibilities and
+      controls ;\ nd .\ tclear methodologies for                (K=200) consistently help. (2) Slightly smaller
+      determining all aspects of a reinsurance
+      programme , including :\ ni .\ tidentification and        trees (num_leaves= 63) are marginally preferable
+      management of aggregations of risk exposure ;\
+      nii .\ tselection of maximum probable loss
+                                                                to wider ones. (3) A moderate learning rate (0.05)
+      factors ;\ niii .\ tselection of realistic disaster       edges out 0.07. (4) Varying min_data_in_leaf
+       scenarios , return periods and geographical
+      aggregation areas ; and \ niv .\ tidentification and      has a small effect at the top. (5) A lightweight
+       management of vertical and horizontal coverage
+       of the reinsurance programme ;\ ne .\ tselection
+                                                                cross-encoder second pass (MiniLM-L-6-v2,
+      of participants on reinsurance contracts ,                w=0.2) did not improve nDCG@10 and is omitted
+      including consideration of diversification and
+      credit worthiness ; and \ nf .\ tsystems for              from subsequent results for clarity.
+      identifying credit exposures ( actual and
+      potential ) to individual reinsurers or Groups
+      of connected reinsurers on programmes that are            C.2     Feature ablation
+      already in place .
+P2 : An Insurer must develop , implement and maintain           We perform a drop-one-group study over the
+      a risk management system to identify , assess ,
+      monitor , mitigate and control reinsurance risk .
+                                                                feature groups in Table 2. For each group,
+       Reinsurance risk refers to risks associated              we remove its columns from the training/vali-
+      with the Insurer 's use of reinsurance
+      arrangements as cedant .                                  dation feature CSVs, retrain the LTR with the
+P3 : While the risk management systems of an Insurer
+      must address all material risks , Rule 2.3 lays           tuned hyperparameters (K=200, num_leaves=
+      down specific requirements for an Insurer to
+      maintain risk management systems in respect of
+                                                                63, lr= 0.05, min_leaf= 50), and evaluate on
+      the following areas :\ na .\ tbalance sheet risk ;\       the same test candidates. Table 8 reports test
+      nb .\ tcredit quality risk ;\ nc .\ tnon financial or
+       operational risk ;\ nd .\ treinsurance risk ; and \      metrics and absolute deltas w.r.t. the tuned LTR
+      ne .\ tGroup risk .
+P4 : Without limiting the generality of Rule 2.3.4 ,
+                                                                baseline (nDCG@10=0.6121, MAP@10=0.4968,
+      an Insurer ' s risk management system in respect          R@10=0.6151).
+      of its use of reinsurance arrangements must
+      include the development , implementation and
+      maintenance of a written reinsurance management           Results. Dropping Lexical features causes
+       strategy , appropriate to the size and
+      complexity of the operations of the Insurer ,
+                                                                the largest degradation (nDCG@10=0.0844,
+      defining and documenting the Insurer 's                   ∆−0.5277;    MAP@10=0.0511, ∆−0.4457;
+      objectives and strategy in respect of
+      reinsurance arrangements .                                R@10=0.1251, ∆−0.4900).            Removing
+                                                                Graph signals yields nDCG@10=0.5260
+                                                                (∆−0.0861), while removing Neighbor-Semantic
+C    Ablation on Learning-to-Rank (LTR)                         yields nDCG@10=0.5429 (∆−0.0692).       Re-
+                                                                moving Retrieval/Fusion signals results in
+C.1 Model hyperparameter ablation
+                                                                nDCG@10=0.5717 (∆−0.0404).8
+We ablate core LTR hyperparameters while hold-
+                                                                Observations. Lexical matching remains indis-
+ing the feature set in Table 2 and the training
+                                                                pensable for this task, with graph-based centrality
+protocol fixed. We sweep: (i) candidate-union
+                                                                (PageRank/HITS/degree) and neighbor-semantic
+size K ∈ {100, 200}, (ii) LightGBM tree width
+                                                                cues providing meaningful complementary gains.
+(num_leaves ∈ {63, 127}), (iii) learning rate
+                                                                Fusion signals contribute consistent but smaller im-
+∈ {0.05, 0.07}, and (iv) min_data_in_leaf ∈
+                                                                provements than the other groups, suggesting that
+{50, 100}. At test time we re-apply each trained
+                                                                most of the discriminative power is captured by
+model using the per-model feature order saved at
+                                                                lexical and graph structure, with fusion providing
+training and the same IDF definition to ensure
+                                                                a pragmatic boost.
+train/test feature parity. We report nDCG@10,
+MAP@10, and Recall@10 with pytrec_eval on                           8
+                                                                    In our feature CSVs, Retrieval/Fusion corresponds to the
+the ObliQA MultiPassage test set.                               precomputed RRF score/rank.
+
+                                                              145
+Table 6: LTR baselines on ObliQA MultiPassage (test). We report nDCG@10, MAP@10, and Recall@10 (macro-
+averaged).
+
+                         Run (label)                    nDCG@10          MAP@10        Recall@10
+                         LTR (all features)                  0.6298        0.5116        0.6403
+                         LTR (allfeat, min_leaf=100)         0.6143        0.4959        0.6219
+                         LTR + CE (MiniLM, w=0.2)            0.0504        0.0246        0.0895
+
+
+
+
+Table 7: LTR ablation on ObliQA MultiPassage (test). We vary K, num_leaves, learning rate (lr), and
+min_data_in_leaf. Neighbor-semantic features are off for all rows. Metrics are nDCG@10, MAP@10, Re-
+call@10 (macro-averaged).
+
+                 K    ns     num_leaves      lr    min_leaf      nDCG@10        MAP@10        Recall@10
+                200   off        63        0.05        50             0.6121        0.4968        0.6151
+                200   off         63       0.07        100            0.6106        0.4955        0.6153
+                200   off         63       0.05        100            0.6093        0.4935        0.6164
+                200   off        127       0.07        100            0.6075        0.4920        0.6104
+                100   off         63       0.07         50            0.6075        0.4905        0.6102
+                200   off         63       0.07         50            0.6069        0.4920        0.6101
+                100   off         63       0.07        100            0.6069        0.4915        0.6105
+                100   off         63       0.05        100            0.6066        0.4915        0.6065
+                100   off        127       0.05        100            0.6063        0.4914        0.6104
+                100   off         63       0.05         50            0.6063        0.4889        0.6147
+                200   off        127       0.05         50            0.6060        0.4901        0.6122
+                100   off        127       0.05         50            0.6053        0.4898        0.6136
+                200   off        127       0.07         50            0.6040        0.4870        0.6104
+                100   off        127       0.07         50            0.6037        0.4877        0.6079
+                100   off        127       0.07        100            0.6028        0.4871        0.6094
+                200   off        127       0.05        100            0.5981        0.4824        0.6038
+
+
+
+
+Table 8: Feature ablation on the test split. Each row drops one group from the tuned LTR baseline (K=200, ns=off,
+num_leaves=63, lr=0.05, min_leaf=50). ∆ is the absolute difference vs the baseline.
+
+     Group                  nDCG@10     MAP@10         Recall@10       ∆ nDCG@10        ∆ MAP@10       ∆ Recall@10
+     Retrieval/Fusion        0.5717       0.4503        0.5900           −0.0404         −0.0465           −0.0251
+     Lexical                 0.0844       0.0511        0.1251           −0.5277         −0.4457           −0.4900
+     Graph                   0.5260       0.4107        0.5257           −0.0861         −0.0861           −0.0894
+     Neighbor-Semantic       0.5429       0.4250        0.5547           −0.0692         −0.0719           −0.0604
+
+
+
+
+                                                          146
+

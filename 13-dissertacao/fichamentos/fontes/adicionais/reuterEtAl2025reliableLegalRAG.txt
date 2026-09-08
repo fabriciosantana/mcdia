@@ -1,0 +1,914 @@
+    Towards Reliable Retrieval in RAG Systems for Large Legal Datasets
+                                  † ‡                              †
+         Markus Reuter1,* , , , Tobias Lingenberg1,* , , Rūta Liepin, a2 , Francesca Lagioia3,5 ,
+              Marco Lippi2 , Giovanni Sartor3,5 , Andrea Passerini4 , Burcu Sayin4
+                   1
+                  Department of Computer Science, Technical University of Darmstadt
+        2
+            Department of Computer Science, University of Florence, name.surname@unifi.it
+              3
+                ALMA-AI, Faculty of Law, University of Bologna, name.surname@unibo.it
+                         4
+                           DISI, University of Trento, name.surname@unitn.it
+                           5
+                             Department of Law, European University Institute
+
+                            Abstract                               of hallucination: incorrect outputs that are fabri-
+                                                                   cated or deviate from the provided source material,
+        Retrieval-Augmented Generation (RAG) is a                  posing severe risks in legal applications (Huang
+        promising approach to mitigate hallucinations              et al., 2025; Li, 2023; Qin and Sun, 2024). Recent
+        in Large Language Models (LLMs) for legal
+                                                                   studies report hallucination rates between 58–80%
+        applications, but its reliability is critically de-
+        pendent on the accuracy of the retrieval step.             for general-purpose LLMs on legal tasks (Dahl
+        This is particularly challenging in the legal do-          et al., 2024), highlighting how factual reliability is
+        main, where large databases of structurally sim-           not just desirable but essential for deploying LLMs
+        ilar documents often cause retrieval systems to            in the legal domain.
+        fail. In this paper, we address this challenge by             This challenge is amplified by forward-looking
+        first identifying and quantifying a critical fail-         proposals for how legal documentation itself may
+        ure mode we term Document-Level Retrieval
+                                                                   evolve. For instance, Pałka et al. (2025) suggest
+        Mismatch (DRM), where the retriever selects
+        information from entirely incorrect source doc-            that privacy policies may intentionally become
+        uments. To mitigate DRM, we investigate a                  longer and more comprehensive to ensure they are
+        simple and computationally efficient technique             legally complete. In such a future, LLMs are ex-
+        which we refer to as Summary-Augmented                     pected to serve as the designated “readers” of these
+        Chunking (SAC). This method enhances each                  texts, extracting and summarizing information for
+        text chunk with a document-level synthetic                 human users. This vision, however, can only be
+        summary, thereby injecting crucial global con-             realized if the systems are highly reliable.
+        text that would otherwise be lost during a stan-
+                                                                      Retrieval-Augmented Generation (RAG) (Lewis
+        dard chunking process. Our experiments on a
+        diverse set of legal information retrieval tasks           et al., 2020) has emerged as one of the lead-
+        show that SAC greatly reduces DRM and, con-                ing approaches to improving reliability. Using
+        sequently, also improves text-level retrieval pre-         a trusted text corpus to provide factual evidence,
+        cision and recall. Interestingly, we find that a           RAG guides the LLM’s output, reducing hallucina-
+        generic summarization strategy outperforms an              tions and ensuring closer alignment with the source
+        approach that incorporates legal expert domain             material (Tonmoy et al., 2024). In the context of
+        knowledge to target specific legal elements.
+                                                                   long, structurally similar legal documents, identi-
+        Our work provides evidence that this practi-
+        cal, scalable, and easily integrable technique             fying the relevant text passage as “needle in the
+        enhances the reliability of RAG systems when               haystack” becomes a top priority that we aim to
+        applied to large-scale legal document datasets.1           address.
+                                                                      On a technical level, we quantify the retrieval
+1       Introduction                                               quality with our Document-Level Retrieval Mis-
+                                                                   match (DRM) metric and the character-level pre-
+Large Language Models (LLMs) are increasingly                      cision and recall. Then, we investigate a simple
+adopted in high-stakes domains such as law. Yet,                   yet effective technique to improve retrieval qual-
+they remain critically limited by the phenomenon                   ity, Summary-Augmented Chunking (SAC). We
+    * Equal contribution.                                          enrich text chunks in the trusted text corpus with
+    †
+     Work was performed at University of Trento.                   document-level summaries. This preserves global
+    ‡
+     Correspondence: markus.reuter@stud.tu-darmstadt.de            context, lost in standard chunking, guiding the re-
+   1
+     Code is available at https://github.com/
+DevelopedByMarkus/summary-augmented-chunking.                      triever toward the correct document without alter-
+git.                                                               ing the underlying retrieval pipeline. This method
+                                                              17
+                       Proceedings of the Natural Legal Language Processing Workshop 2025, pages 17–30
+                              November 8, 2025 ©2025 Association for Computational Linguistics
+is applied to question-answering tasks across a di-           or complete, the generator may produce factually
+verse set of legal documents, including privacy poli-         unsupported responses. Accordingly, prior studies
+cies, non-disclosure agreements, and merger-and-              demonstrate that RAG is not a guaranteed solution,
+acquisition contracts.                                        as legal RAG systems continue to generate a consid-
+   Key contributions: (i) First, we define and quan-          erable amount of hallucinated content, particularly
+tify Document-Level Retrieval Mismatch (DRM),                 when the retrieval mechanism is ineffective (Dahl
+a key failure mode we observe in standard RAG                 et al., 2024; Magesh et al., 2025; Ariai and Demar-
+pipelines where the retrieved information origi-              tini, 2024). Our work addresses this challenge by
+nates from the entirely wrong source document. (ii)           focusing on the pre-retrieval stage, the engineering
+We propose Summary-Augmented Chunking (SAC)                   of the knowledge base, which forms the foundation
+as a lightweight and modular solution that strongly           of any reliable RAG system.
+reduces DRM by injecting global context directly
+into each chunk. We experimentally validate SAC               2.2 Unique Challenges of Legal Text for RAG
+on Legalbench-RAG (Pipitone and Alami, 2024),                 Legal documents present a major challenge for au-
+showing substantial improvements over standard                tomated text processing systems due to their spe-
+chunking. (iii) Additionally, we explore how to uti-          cific linguistic and structural characteristics (Ash-
+lize legal domain knowledge by evaluating both a              ley, 2018; Ferraris et al., 2024; Liepina et al., 2019;
+generic and an expert-guided summarization strat-             Martinelli, 2023). These challenges make retrieval
+egy. Interestingly, we find that simple, general-             particularly prone to errors.
+purpose summarization yield the best retrieval per-              (i) Lexical Redundancy: Legal language is
+formance.                                                     highly standardized, featuring boilerplate clauses,
+                                                              formally defined phrases, and specialized termi-
+2   Background and Related Work                               nology that are often repeated across thousands
+                                                              of documents (Akter et al., 2025). For example,
+2.1 Retrieval-Augmented Generation
+                                                              Non-Disclosure Agreements within a database may
+RAG (Lewis et al., 2020) is a powerful paradigm               be structurally almost identical, differing only in a
+that enhances the reliability of LLMs by ground-              few critical variables such as party names or dates.
+ing their outputs in external knowledge sources.              This high degree of similarity can easily confuse
+This approach is particularly crucial in high-stakes          retrieval models that rely on surface-level keyword
+domains like law, where factual accuracy is not               matching or vector similarity (Joshua et al., 2025).
+just desirable but mandatory. The standard RAG                   (ii) Hierarchical Structure: Legal texts are or-
+pipeline consists of two main stages: a retriever             ganized in complex layouts with nested sections,
+that searches a large document corpus to find text            subsections, and dense cross-references. Stan-
+snippets or “chunks” that are relevant to a user’s            dard chunking strategies ignore document hierar-
+query and a generator model that synthesizes a final          chy (Ferraris et al., 2024; Zilli et al., 2025), which
+answer based on these retrieved chunks.                       cuts off these logical connections. As a result, re-
+   RAG has been adapted for a wide array of legal             trieved chunks may appear relevant but lose their
+tasks (Hindi et al., 2025), including case reasoning          intended meaning when disconnected from their
+(Yang, 2024), legal judgment prediction (Peng and             structural context.
+Chen, 2024), and legal question-answering (Cheru-                (iii) Fragmented Information: Answering a
+bini et al., 2024; Visciarelli et al., 2024). Recent          legal question often requires synthesizing infor-
+approaches have focused on improving reliabil-                mation scattered across multiple sections or even
+ity by imposing more structure on the knowledge               different documents (Hindi et al., 2025). For exam-
+source, for instance, through knowledge graphs                ple, interpreting an exception clause in a privacy
+(Kalra et al., 2024) or structured case databases             policy may depend on definitions or stipulations
+(Wiratunga et al., 2024; Jayawardena et al., 2024).           introduced much earlier in the document. Retrieval
+   Despite its demonstrated ability to improve fac-           systems must therefore go beyond finding locally
+tual accuracy in context-sensitive tasks (Gupta               relevant chunks and instead capture distributed fac-
+et al., 2024), the effectiveness of RAG is critically         tual dependencies that contribute to a legally mean-
+dependent on the quality of the initial retrieval step        ingful answer (Bendahman et al., 2025).
+(Huang et al., 2025; Hou et al., 2024a,b). If the                (iv) Provenance and Traceability: In legal ap-
+retriever fails to select information that is relevant        plications, the provenance of information is of high
+                                                         18
+importance. Answering a question correctly is in-                ticularly problematic in legal databases with numer-
+sufficient if the supporting text is retrieved from              ous structurally similar documents. While context
+the wrong source document (Uke et al., 2025). For                loss is a known issue (Ferraris et al., 2024; Günther
+instance, pulling a clause from a similar but dis-               et al., 2024), DRM has not been formally quantified
+tinct contract would undermine the legal validity of             in the legal NLP literature.
+the generated output and erode user trust (Joshua                   To combat this context loss, various general con-
+et al., 2025; Hindi et al., 2025). Consequently, legal           text enrichment strategies have been developed.
+professionals require a transparent and verifiable               A straightforward local approach is to expand re-
+“reasoning trail” from the generated answer back to              trieved chunks to include surrounding sentences,
+the specific clauses in the original source document             a technique referred to as “Small2Big”. A more
+(Richmond et al., 2024). This need for an auditable              global approach involves adding metadata, which
+path, where every piece of information can be vali-              can be either standard (timestamps, authors, ti-
+dated against its source, makes document-faithful                tles) or artificially generated. Examples of arti-
+retrieval a fundamental measure of a system’s reli-              ficial metadata include chunk-specific explanatory
+ability.                                                         context, such as in Contextual Retrieval by An-
+2.3 Focus on the Pre-Retrieval Stage:                            thropic3 , or synthetic questions that a chunk could
+    Chunking and Context Enrichment                              answer, as seen in methods like Reverse HyDE
+                                                                 and QuIM-RAG (Gao et al., 2023a; Saha et al.,
+The performance of a RAG system is heavily influ-                2024). Our Summary-Augmented Chunking falls
+enced by the pre-retrieval phase, where the knowl-               into this last category, focusing on a lightweight,
+edge base documents are processed and indexed.                   scalable approach where a single document-level
+The dominant practice is chunking, that breaks                   summary provides global context to every chunk
+down large documents into smaller pieces for effi-               derived from it.
+cient indexing in a vector database. This process
+must balance efficiency (smaller chunks), relevance                 While our work focuses on this practical tech-
+(precise chunks), and context preservation (seman-               nique, other research has explored more architec-
+tically complete chunks) (Barnett et al., 2024; Gao              turally complex solutions. These include methods
+et al., 2023b). Naive chunking methods like fixed-               that rethink the indexing structure, such as the hier-
+size splitting can fragment logical units, leading to            archical approach in RAPTOR (Sarthi et al., 2024),
+incomplete text snippets. More advanced strategies               or knowledge graphs that model legal relationships
+aim to preserve meaning. Recursive character split-              (Kalra et al., 2024). The recent Late Chunking
+ting, for instance, divides text along natural bound-            method (Günther et al., 2024) preserves more se-
+aries like paragraphs and punctuation2 . Semantic                mantic context information by first embedding a
+chunking uses language models to identify natu-                  document’s full content and then performing chunk-
+ral breakpoints, ensuring each chunk encapsulates                ing at the embedded level. Finally, the emergence
+a complete idea. Yet, even these methods strug-                  of long-context models that can process hundreds
+gle with legal text, as they may miss provisions                 of thousands of tokens presents a potential alter-
+spanning multiple sections or fail to handle nested              native to the chunking paradigm altogether, a use
+clauses effectively (Ferraris et al., 2024; Kalra et al.,        case specifically highlighted by OpenAI for lengthy
+2024; Qu et al., 2024).                                          legal documents (OpenAI, 2024).
+   This can be explained due to a fundamental limi-                 However, these advanced methods often intro-
+tation of chunking: the inevitable loss of global con-           duce significant computational overhead or imple-
+text. Each chunk is embedded as an isolated vector,              mentation complexity. Our research, in contrast,
+disconnected from the broader document it belongs                deliberately focuses on a practical, modular, and
+to. This isolation is a primary cause of what we                 resource-efficient technique. Furthermore, we in-
+identify and later formally define as Document-                  vestigate a novel aspect of context enrichment by
+Level Retrieval Mismatch (DRM), a critical failure               examining how domain expertise from legal pro-
+where the retriever selects chunks from entirely                 fessionals can be used to create more powerful,
+incorrect source documents that happen to share                  legally-informed summaries.
+superficial similarities with the query. This is par-
+   2                                                                3
+    https://python.langchain.com/docs/how_to/                        https://www.anthropic.com/engineering/
+recursive_text_splitter/                                         contextual-retrieval
+
+                                                            19
+ a) LegalBench-RAG Metrics:                                                                    Retrieved Text Chunk (Success):
+                                                                    The retriever searches     "5.4 Emeralds’ Right to Terminate this Agreement without
+    User Query:                                                    through the knowledge       Cause. The Company may terminate this Agreement and
+    Consider the Consulting Agreement between Emerald Health       base containing chunks      the engagement of the Contractor without Cause"
+    Naturals, Inc. and Dr. Gaetano Morello; Can this contract be     from all documents        origin document: consulting_agreement_emerald.txt
+    terminated for convenience, and under what conditions?
+
+                                                                              Ground Truth Document:
+ b) Summary Augmented                                                         consulting_agreement_emerald.txt                   Document-Level
+ Chunking:                             Document Summary:                                                                         Retrieval Metric:
+                                                                              Ground Truth Reference in Document:                      DRM
+                                       Consulting agreement:                  [...] 5.4 Emeralds’ Right Start
+                                                                                                        to Terminate this
+                                      Emerald Health hires Dr.                Agreement without Cause. The Company may
+                     Summarize        Gaetano Morello Inc. [...]              terminate this Agreement and the engagement
+                     Document                                                                                                    Character-Level
+                                           Text Chunk:                        of the Contractor without Cause at any time on
+                                      "5.4 Emeralds’ Right to   Chunk         30 days prior written notice. The date of          Retrieval Metric:
+                                         Terminate [...] the  Embedding       termination will be [...] End                       Precision/Recall
+    Document                            Contractor without     Database
+                                                                              Ground Truth Snippet Span:
+    Database        Recursive                Cause"
+                                                                              Start to End [6090, 6226]
+                    Chunking        Summary Augmented Chunk
+
+
+Figure 1: Part a) illustrates how our retrieval quality metrics, Document-Level Retrieval Mismatch (DRM) and
+text-level precision/recall, are computed in the LegalBench-RAG (Pipitone and Alami, 2024) information retrieval
+task. Part b) shows the process of setting up the knowledge base using Summary Augmented Chunks (SAC).
+
+
+3      Methodology                                                              truth text snippets (see Figure 1a), offering a holis-
+                                                                                tic measure of retrieval quality. While our current
+3.1 Task Definition and Dataset                                                 work focuses exclusively on this retrieval analysis,
+To evaluate improvements in a RAG pipeline, a                                   we are currently working on adapting a benchmark
+benchmark must be able to isolate the performance                               such as the Australian Legal QA dataset4 for end-
+of the retrieval stage from the final generative out-                           to-end performance evaluation in future work.
+put. Widely adopted benchmarks like LegalBench
+                                                                                3.2     Problem of Document-Level Retrieval
+(Guha et al., 2023) and LexGLUE (Chalkidis et al.,
+                                                                                        Mismatch (DRM)
+2021) are designed to test the intrinsic reasoning ca-
+pabilities of LLMs. Consequently, when these are                                We started by conducting diagnostic experiments
+used to evaluate RAG systems, any performance                                   with a standard RAG approach in LegalBench-
+changes are difficult to attribute specifically to the                          RAG (Pipitone and Alami, 2024) to establish a
+retrieval component, as its contribution is blended                             baseline performance and understand the behavior
+with the model’s internal knowledge. For this rea-                              of standard RAG systems on this task. We began
+son, our study uses LegalBench-RAG (Pipitone and                                by evaluating a range of retrieval architectures and
+Alami, 2024), a recently developed benchmark                                    embedding models to determine the typical per-
+specifically designed to isolate and evaluate the                               formance ceiling and identify any systemic weak-
+retrieval component of RAG systems in the legal                                 nesses. Across different configurations and models,
+domain. It is constructed from the well-established                             overall retrieval scores remained consistently low
+LegalBench corpus.                                                              (see Appendix C).
+   The LegalBench-RAG benchmark comprises                                          We identified a major bottleneck: across differ-
+multiple datasets that target distinct types of legal                           ent architectures and embedding models, retrievers
+documents: (i) CUAD (Contract Understanding                                     frequently select chunks from entirely incorrect
+Atticus Dataset, (Hendrycks et al., 2021)), which                               source documents. We define Document-Level
+contains general contracts; (ii) MAUD (Merger                                   Retrieval Mismatch (DRM) as the proportion of
+Agreement Understanding Dataset, (Wang et al.,                                  top-k retrieved chunks that do not originate from
+2023)), consisting of merger agreements; (iii) Con-                             the document containing the ground-truth text.
+tractNLI (Koreeda and Manning, 2021), a dataset                                    While DRM is a general challenge for retrieval
+of non-disclosure agreements; and (iv) PrivacyQA                                systems and increases the probability of hallucina-
+(Ravichander et al., 2019), which includes privacy                              tions in the subsequent generation of RAG systems
+policies from mobile applications.                                              (Hou et al., 2024a), its impact is particularly severe
+   We measure the performance on LegalBench-                                    in the legal domain due to the high degree of lexical
+RAG via document-level DRM and character-level                                      4
+                                                                                    https://huggingface.co/datasets/isaacus/
+precision/recall between the retrieved and ground-                              open-australian-legal-qa
+
+                                                                           20
+and structural similarity across documents (Ferraris         additional LLM call per document and can be
+et al., 2024). For instance, when we tested a stan-          smoothly integrated into existing RAG pipelines
+dard RAG pipeline on ContractNLI data (Koreeda               with minimal computational overhead. The generic
+and Manning, 2021), we observed DRM rates over               prompt used for summarization is the following:
+95% (Fig. 2a) in a pool of 362 documents. Our
+legal experts hypothesize that this may be due to                  Generic Summarization Prompt
+the highly standardized, boilerplate nature of non-                System: You are an expert legal document summa-
+disclosure agreements, which are largely uniform                   rizer.
+apart from a few key variables. This linguistic ho-                User: Summarize the following legal document text.
+                                                                   Focus on extracting the most important entities, core
+mogeneity confuses retrieval models that rely on                   purpose, and key legal topics. The summary must
+semantic similarity (or keyword matching), leading                 be concise, maximum {char_length} characters long,
+them to prioritize chunks that are textually similar               and optimized for providing context to smaller text
+                                                                   chunks. Output only the summary text.
+to the query but from the wrong agreement. A con-                  Document: {document_content}
+crete example of how the retriever fails on similar
+contracts can be found in Section 5.2.                          Because LLMs often deviate from the specified
+   This problem of lexical and structural similar-           length, we allowed a tolerance of 20 characters.
+ity is not limited to contracts: in any legal task,          Outputs exceeding this limit were regenerated with
+users need assurance that retrieved context truly            a reduced char_length value.
+comes from the intended document. For example,
+when answering a question about a privacy pol-               3.4     Expert-Guided Summarization
+icy, pulling text from a different but similar policy
+                                                             While generic summaries provide a significant
+undermines both factual accuracy and trust in the
+                                                             improvement, we hypothesize that tailoring sum-
+system. Even if the generated answer happens to
+                                                             maries to the nuances of specific legal document
+be correct, legal professionals expect document-
+                                                             types could further enhance retrieval performance.
+faithful reasoning, making DRM a key measure of
+                                                             The especially high residual mismatch in datasets
+whether retrieval respects source boundaries.
+                                                             containing non-disclosure agreements and privacy
+3.3 A Simple Solution: Summary Augmented                     policies (Fig. 2b) suggests that certain contractual
+    Chunking (SAC)                                           language requires more sophisticated contextual
+                                                             cues, motivating our Expert-Guided summarization
+To combat DRM, we experimented with a simple
+                                                             approach.
+methodology that we named Summary-Augmented
+Chunking (SAC). SAC works as follows (see Fig-                  In collaboration with two legal experts5 , we en-
+ure 1b):                                                     gineered a more sophisticated “meta-prompt” that
+   (i) Summarization: For each document in the               instructs the LLM to generate summaries as dis-
+corpus, we use an LLM to generate a single, con-             tinct as possible within a document type. It directs
+cise summary as “document fingerprint”, approxi-             the model to identify and prioritize key differen-
+mately 150 characters long. A detailed analysis of           tiating legal variables. To test this, we focused
+length and its impact is provided in Appendix A. (ii)        on non-disclosure agreements and privacy policies,
+Chunking: We employ a recursive character split-             defining each type’s key characteristics from legally
+ting strategy to partition the document’s content            required elements and highlighting distinguishing
+into smaller, manageable chunks. This established            features such as party names, definitions of data
+method performs well on our dataset, as supported            categories and their processing (for privacy poli-
+by prior work (Kalra et al., 2024) and our own em-           cies), and definitions of confidential information
+pirical results. (iii) Augmentation: We prepend              (for NDAs). Our resulting expert-guided summa-
+the document-level summary to each chunk derived             rization prompt can be found in Appendix D.
+from that document. (iv) Indexing: The summary-                 This idea is supported by recent findings in legal
+augmented chunks are then embedded and indexed               NLP. For instance, research on summarizing Italian
+in a vector database for retrieval.                          tax law decisions has demonstrated that a modular,
+   This approach injects crucial global context into         expert-validated approach provides a solid basis for
+each chunk, specifically to mitigate DRM by guid-            downstream semantic search, a task analogous to
+ing the retriever to the correct source document.               5
+                                                                  An associate professor and a postdoctoral researcher in
+The method is highly practical, requiring only one           law, with expertise in data protection and private law.
+
+                                                        21
+         100                                                         100        Weighted Average (Overall)
+                                                                                contractnli
+                                                                                cuad
+          80                                                          80        maud
+                                                                                privacy_qa
+          60                                                          60
+DRM(%)
+
+
+
+
+                                                            DRM(%)
+          40                                                          40
+
+          20                                                          20
+
+           0 1   2      4      8      16      32     64                0 1         2        4        8       16   32   64
+                             Top-K                                                                 Top-K
+                 (a) DRM for Standard RAG                                         (b) DRM for RAG using SAC
+
+Figure 2: Document-Level Retrieval Mismatch (DRM) of a standard RAG approach (left) and using our Summary
+Augmented Chunking (right), applied to the 4 datasets in the LegalBench-RAG benchmark. Retrieval using SAC
+selects fewer wrong documents across all top-k retrieved snippets and seeds.
+
+
+our retrieval application (Pisano et al., 2025). Ac-             with thenlper/gte-large6 (Li et al., 2023) (see
+cording to their findings, moving beyond generic                 Appendix C) and indexed in a FAISS (Johnson
+summarization could be vital for complex legal                   et al., 2019) vector database with cosine similarity
+texts. Their two-step method combines separate                   as retrieval metric.
+summary parts, whereas our “meta-prompt” uses                       Dense semantic search excels at capturing con-
+conditional logic to integrate document type classi-             ceptual similarity but may overlook exact lexi-
+fication and summarization implicitly.                           cal matches. In contrast, BM25 (Robertson and
+                                                                 Zaragoza, 2009) is well established for keyword-
+4        Experimental Setup                                      based retrieval and can be effective for queries with
+                                                                 unique identifiers or technical terminology. We
+We evaluate the performance of our methods cov-                  therefore experimented with a hybrid dense+sparse
+ering a broad picture of retrieval quality:                      retrieval. However, results showed that BM25
+   (i) Document-Level Retrieval Mismatch                         (sparse) improved DRM but decreased precision/re-
+(DRM): As our primary metric, DRM directly mea-                  call while introducing additional computational
+sures the retriever’s ability to identify the correct            overhead (see the Appendix B), so we decided to
+source document. A lower DRM indicates higher                    only use dense retrieval in the main experiments.
+precision at the document level.                                    For all systems, we report performance across a
+   (ii) Text-Level Precision: It measures the frac-              range of top-k retrieved chunks. This reflects real-
+tion of all the retrieved text that is part of the ground        world deployment scenarios, where practitioners
+truth text span. High precision means that the re-               must balance precision and recall depending on
+trieved context is concise and contains minimal                  application needs. Reporting the full curve enables
+irrelevant “noise”.                                              a more informative assessment of trade-offs across
+   (iii) Text-Level Recall: It evaluates what frac-              retrieval strategies.
+tion of the ground truth text was found by the re-
+trieval system. High recall indicates that the system            5         Results
+found all the necessary information.                             5.1        Automatic Evaluation
+   As our baseline, we implemented a standard
+                                                                 We demonstrate that SAC significantly reduces
+RAG pipeline using a recursive character splitting
+                                                                 DRM compared to the baseline, showcasing its
+strategy with a chunk size of 500 characters and
+                                                                 effectiveness in providing necessary global context.
+without overlap. The document summaries were
+                                                                 The results, reported in Figure 2b, show a dramatic
+generated using gpt-4o-mini (Hurst et al., 2024)
+                                                                 reduction in DRM across a wide range of hyper-
+and we instructed and processed the summaries to
+                                                                 parameters, effectively halving the mismatch rate.
+be about 150 characters long (details in the Ap-
+pendix A). The concatenated texts were embedded                        6
+                                                                           https://huggingface.co/thenlper/gte-large
+
+                                                            22
+            0.40                                                                     0.8
+                                                        Baseline                                                                    Baseline
+            0.35                                        SAC (ours)                   0.7                                            SAC (ours)
+                                                        Expert-SAC (ours)                                                           Expert-SAC (ours)
+            0.30                                                                     0.6
+
+            0.25                                                                     0.5
+Precision
+
+
+
+
+                                                                            Recall
+            0.20                                                                     0.4
+
+            0.15                                                                     0.3
+
+            0.10                                                                     0.2
+
+            0.05                                                                     0.1
+
+            0.00   1     2        4       8       16       32         64             0.0    1       2        4        8       16       32         64
+                                         Top-K                                                                      Top-K
+                             (a) Text-Level Precision                                                    (b) Text-Level Recall
+
+Figure 3: Text-level precision (left) and recall (right) of the standard RAG approach and SAC with general or
+expert-guided summarization strategy. The metrics are averaged over all datasets and seeds.
+
+
+Crucially, this improvement in document-level ac-                                          dential Information.”
+curacy translates directly to improved text-level
+                                                                                           A. Baseline Retrieval - No Summary
+retrieval quality. By guiding the retriever to the                                         Retrieved document: NDA-ROI-Corporation.txt ✗
+correct document, RAG systems using SAC sig-                                               Retrieved snippet: “NON-DISCLOSURE AGREE-
+nificantly outperform the standard RAG baseline                                            MENT FOR PROSPECTIVE PURCHASERS”
+                                                                                           Comment: Complete failure, distracted by structural
+on character-level precision and recall as well (Fig-                                      similarity of an other irrelevant NDA header.
+ure 3). Unexpectedly, Expert-Guided Summariza-                                             B. Using a 150-character summary generated with
+tion did not yield improvements over the general                                           the generic meta-prompt
+prompt (Figure 3). It resulted only in slightly better                                     Retrieved document: NDA-Evelozcity.txt ✔
+                                                                                           Summary: “Non-Disclosure Agreement between
+retrieval metrics in a few specific settings, such as                                      Evelozcity and Recipient to protect confidential in-
+with larger chunk sizes.                                                                   formation shared during a meeting.”
+                                                                                           Retrieved snippet: “; or (d) is independently devel-
+                                                                                           oped by or for the Recipient by persons who have
+5.2 Qualitative Evaluation of Legal Experts                                                had no access to or been informed of the existence or
+Beyond quantitative metrics, a qualitative analy-                                          substance of the Confidential Information.”
+                                                                                           Comment: Successful document-level retrieval (97%
+sis offers critical insights into how different sum-                                       precision, 50% recall). The generic summary effec-
+marization strategies impact retrieval, especially                                         tively guided to the correct document and relevant
+                                                                                           clause.
+where the baseline struggles. We illustrate these
+observations with a representative example from                                            C. Using a 150-character summary generated with
+                                                                                           the expert meta-prompt
+the ContractNLI dataset, focusing on a query about                                         Retrieved document: NDA-Evelozcity.txt ✔
+Non-Disclosure Agreements (NDAs), highlight-                                               Summary: “NDA between Evelozcity and Recipient;
+ing baseline failure and contrasting generic versus                                        covers vehicle prototypes, confidentiality obligations,
+                                                                                           exclusions, 5-yr term, CA governing law.”
+expert-guided SAC.                                                                         Retrieved snippet: “NON-DISCLOSURE AGREE-
+                                                                                           MENT
+            Example 1: NDA (contractnli)                                                   This NON-DISCLOSURE AGREEMENT (this
+                                                                                           “Agreement”) is made as of this ___ day of __ 2019,
+            Query: “Consider Evelozcity’s Non-Disclosure                                   by and between Evelozcity with offices at *address*
+            Agreement; Does the document allow the Receiv-                                 (the “Disclosing Party”), and __ (the “Recipient”).”
+            ing Party to independently develop information that                            Comment: While the correct document was found,
+            is similar to the Confidential Information?”                                   the snippet is the introductory boilerplate, completely
+                                                                                           useless for the query.
+            Ground Truth:
+            Relevant document: NDA-Evelozcity.txt                                          D. Using a 300-character summary generated with
+            Relevant snippets: “The obligations of the Recipient                           the expert meta-prompt
+            specified in Section 2 above shall not apply with                              Retrieved document: NDA-Evelozcity.txt ✔
+            respect to Confidential Information to the extent that                         Summary: “**Definition of Confidential Informa-
+            such Confidential Information:”                                                tion**: Non-public vehicle prototypes and company
+            “(d) is independently developed by or for the Recip-                           plans. **Parties**: Disclosing Party: Evelozcity,
+            ient by persons who have had no access to or been                              CA; Recipient: [Name Not Provided]. **Obliga-
+            informed of the existence or substance of the Confi-                           tions**: Keep confidential, limit access to affiliates,
+
+
+                                                                            23
+   use only for evaluation. **Exclusions**: Public
+                                                               DRM. This is particularly valuable in legal corpora,
+   knowledge, prior possession, independent develop-           where high structural similarity and standardized
+   ment.”                                                      language make cross-document confusion a dom-
+   Retrieved snippet: The same snippet as in case C.
+   Comment: Similar to C, correct document, but irrele-        inant failure mode. The success of this simple
+   vant boilerplate snippet despite richer summary.            intervention underscores the importance of preserv-
+                                                               ing document-level semantics in a domain where
+   The ground truth in Example 1 consists of two               the overarching context dictates the meaning of in-
+related snippets addressing the independent devel-             dividual clauses, a critical aspect for reliable legal
+opment of information similar to confidential ma-              NLP applications.
+terial. It demonstrates the baseline’s (A) complete               Interestingly, our experiments revealed that
+failure to identify the correct document, highlight-           generic summaries consistently outperformed
+ing the high Document-Level Retrieval Mismatch                 expert-guided ones, a counter-intuitive result given
+(DRM) caused by lexical redundancy and struc-                  the legal precision of the latter. As highlighted in
+tural similarities in legal corpora. Both generic (B)          Section 5.2, from a legal perspective, expert-guided
+and expert-guided (C, D) SAC approaches, how-                  summaries successfully capture the distinctive ele-
+ever, successfully guided the retriever to the correct         ments required to differentiate between contracts
+source document, clearly showing SAC’s effective-              of the same type. However, for the purpose of
+ness in mitigating DRM by injecting global con-                retrieval, we hypothesize two potential technical
+text.                                                          explanations for this observed performance gap.
+   Crucially, while document-level retrieval im-                  First, generic summaries may strike a better bal-
+proved, a key difference emerged in snippet quality.           ance between distinctiveness and broad semantic
+The top-ranked chunk with the generic summary                  alignment with a wider variety of potential queries.
+(B) was one of the correct snippets, directly engag-           While legally more precise, highly specific, expert-
+ing with the query. Conversely, both expert-guided             driven cues in the summaries might inadvertently
+summaries (C and D), despite retrieving the cor-               overfit to narrow features. This would improve
+rect document, yielded an irrelevant introductory              retrieval only in very specific cases and reduce ro-
+boilerplate snippet.                                           bustness across a broader range of user intents.
+   From a legal expert perspective, the expert-                   Second, the informationally dense and structured
+guided summaries (especially D) are richer, more               language of expert-guided summaries may pose
+structured and contain highly discriminative infor-            challenges for smaller embedding models, which
+mation for differentiating between NDAs (e.g., par-            must compress both the summary and chunk into
+ties, subject matter, duration, exclusions). Yet, this         a single vector. To investigate this potential bot-
+legal assessment contrasts with observed retrieval             tleneck, future experiments with stronger, more
+performance. Expert summaries, while legally                   capacious embedding models are needed.
+more informative and superior for differentiating                 In general, the interaction between summaries
+documents, did not translate to better text-level              added to a chunk within the embedding space is
+snippet retrieval. This counter-intuitive result re-           complex. A strong global signal from the summary
+quires a more technical explanation (we explore in             could overshadow the local relevance of a chunk.
+the next Section 5.3) and suggests a complex inter-            Understanding this dynamic is critical to improve
+action within the embedding space, where highly                our approach. Interesting insights from a machine
+specific, dense legal information may not be opti-             learning perspective could be gained when analyz-
+mally processed for general query alignment.                   ing the embedding space directly. We plan to use
+                                                               clustering and dimensionality reduction techniques
+5.3 Discussion                                                 to visualize how the concatenation of summaries
+Our findings demonstrate that summary-based con-               and chunks behaves in the embedding space.
+text enrichment provides a robust and scalable so-                From a practical perspective, our results high-
+lution to a fundamental weakness of RAG in the                 light the value of simple, modular interventions in
+legal domain: the loss of global context during                the pre-retrieval stage. Unlike more complex ar-
+chunking. By prepending document-level sum-                    chitectural solutions (e.g., knowledge graphs, late
+maries to each text chunk, our method helps in                 chunking, or long-context models), SAC is inexpen-
+guiding the retriever toward the correct source doc-           sive, requiring only a single additional summary
+ument, as evidenced by the drastic reduction in                per document, and integrates seamlessly into ex-
+                                                          24
+isting RAG pipelines. This makes it scalable even               Finally, this study focuses exclusively on the
+to large and dynamically changing legal databases.           retrieval stage of the RAG framework. Future work
+For practitioners, generic SAC provides an easily            will investigate how the DRM metric and SAC
+adoptable technique that delivers tangible improve-          impact downstream generation through end-to-end
+ments without the need for domain-specific fine-             benchmarking.
+tuning or significant infrastructure changes.
+   Finally, our findings contribute to the broader           6   Conclusion
+vision of “LLMs as legal readers” (Pałka et al.,
+2025). If future legal documents become longer               We addressed the critical challenge of retrieval re-
+and more comprehensive, retrieval reliability will           liability in RAG systems operating on large, struc-
+be even more critical. Our approach represents               turally similar legal document databases. We identi-
+a practical step toward building systems that can            fied and quantified Document-Level Retrieval Mis-
+process such documents with greater reliability,             match (DRM) as a dominant failure mode, where
+making AI a more trustworthy partner in navigating           retrievers are often easily confused by legal boil-
+the complexity of legal texts.                               erplate language and select text from entirely in-
+5.4 Limitations and Future Work                              correct documents. Targeting this issue, we in-
+                                                             vestigate Summary-Augmented Chunking (SAC),
+While promising, our work has several limitations.           a simple and computationally efficient technique
+First, our experiments were restricted to particular         that prepends document-level summaries to each
+categories of legal documents and conducted exclu-           text chunk. By injecting global context, SAC dras-
+sively in English. These documents, while diverse,           tically reduces DRM and consequently improves
+do not cover the full spectrum of legal text types,          text-level retrieval precision and recall.
+such as legislation, case law, or other types of con-
+                                                                A key finding is that generic summaries out-
+tracts, which differ substantially in structure and
+                                                             perform expert-guided ones focusing on key legal
+interpretation. Moreover, legal meaning is highly
+                                                             variables. For the purpose of guiding retrievers,
+jurisdiction-specific, and our datasets were largely
+                                                             broad semantic cues appear more robust and gen-
+restricted to common-law contexts.
+                                                             eralizable than dense, structured, legally precise
+   Second, our analysis focused on an isolated inter-
+                                                             summaries. This demonstrates that meaningful re-
+vention within a standard RAG pipeline to clearly
+                                                             trieval performance gains are achievable without
+measure its impact. While effective, the residual
+                                                             heavy domain-specific engineering.
+retrieval mismatch rates remain significant, indi-
+cating that SAC is a valuable component for reli-               While SAC is not a full solution on its own, it
+able RAG but not a complete solution on its own.             offers a practical, scalable intervention for more
+We believe that combining SAC with other well-               reliable legal RAG systems. By improving the
+researched modules is the most promising path                crucial retrieval step for legal information, our work
+toward achieving the reliability required for legal          brings us closer to a future where AI can truly serve
+applications, with the next promising steps being:           as a trusted partner in the legal profession.
+   (i) Extending the presented principle of summa-
+rization hierarchically, with summaries at the para-         Acknowledgments
+graph, section, and document level to provide con-
+text at multiple granularities. (ii) Applying query          This work is funded by the European Union. Views
+optimization methods (e.g., transformation, expan-           and opinions expressed are, however, those of the
+sion, or routing) to bridge the semantic gap between         author(s) only and do not necessarily reflect those
+user questions and the formal language of legal text         of the European Union or the European Health and
+chunks. (iii) Adding a reranking step where a more           Digital Executive Agency (HaDEA). Neither the
+powerful model re-evaluates and re-orders the top-           European Union nor the granting authority can be
+k retrieved chunks to improve the final selection            held responsible for them. Grant Agreement no.
+before generation. It would also be valuable to              101120763 - TANGO. This work was also partially
+benchmark SAC against other context-preserving               supported by the CompuLaw – Computable Law –
+chunking strategies, such as Late Chunking (Gün-             funded by the ERC under the Horizon 2020 (Grant
+ther et al., 2024) and RAPTOR (Sarthi et al., 2024),         Agreement N. 833647).
+to better understand its relative strengths.
+                                                        25
+References                                                      Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang
+                                                                  Jia, Jinliu Pan, Yuxi Bi, Yixin Dai, Jiawei Sun,
+Mousumi Akter, Erion Çano, Erik Weber, Dennis                     Haofen Wang, and Haofen Wang. 2023b. Retrieval-
+ Dobler, and Ivan Habernal. 2025. A comprehen-                    augmented generation for large language models: A
+ sive survey on legal summarization: Challenges and               survey. arXiv preprint arXiv:2312.10997, 2(1).
+ future directions. arXiv preprint arXiv:2501.17830.
+                                                                Neel Guha, Julian Nyarko, Daniel Ho, Christopher Ré,
+Farid Ariai and Gianluca Demartini. 2024. Natural Lan-            Adam Chilton, Alex Chohlas-Wood, Austin Peters,
+  guage Processing for the Legal Domain: A Survey                 Brandon Waldon, Daniel Rockmore, and Diego Zam-
+  of Tasks, Datasets, Models, and Challenges. arXiv               brano. 2023. Legalbench: A collaboratively built
+  preprint arXiv:2410.21306.                                      benchmark for measuring legal reasoning in large
+                                                                  language models. Advances in Neural Information
+Kevin D Ashley. 2018. Automatically extracting mean-              Processing Systems, 36:44123–44279.
+  ing from legal texts: opportunities and challenges.
+  Ga. St. UL Rev., 35:1117.                                     Michael Günther, Isabelle Mohr, Daniel James Williams,
+                                                                  Bo Wang, and Han Xiao. 2024. Late chunking: con-
+Scott Barnett, Stefanus Kurniawan, Srikanth Thudumu,              textual chunk embeddings using long-context embed-
+  Zach Brannelly, and Mohamed Abdelrazek. 2024.                   ding models. arXiv preprint arXiv:2409.04701.
+  Seven failure points when engineering a retrieval
+  augmented generation system. In Proceedings of                Shailja Gupta, Rajesh Ranjan, and Surya Narayan
+  the IEEE/ACM 3rd International Conference on AI                 Singh. 2024. A comprehensive survey of retrieval-
+  Engineering-Software Engineering for AI, pages 194–             augmented generation (RAG): Evolution, current
+  199.                                                            landscape and future directions. arXiv preprint
+                                                                  arXiv:2410.12837.
+Nihed Bendahman, Karen Pinel-Sauvagnat, and Gilles              Dan Hendrycks, Collin Burns, Anya Chen, and
+  Hubert. 2025. EUR-Lex-Triples: A Legal Relation                 Spencer Ball. 2021. CUAD: an expert-annotated
+  Extraction Dataset from European Legislation. In                nlp dataset for legal contract review. arXiv preprint
+  Linking Theory and Practice of Digital Libraries:               arXiv:2103.06268.
+  29th International Conference on Theory and Prac-
+  tice of Digital Libraries, TPDL 2025, Tampere, Fin-           Mahd Hindi, Linda Mohammed, Ommama Maaz, and
+  land, September 23–26, 2025, Proceedings, page 433.            Abdulmalik Alwarafy. 2025. Enhancing the preci-
+  Springer Nature.                                               sion and interpretability of retrieval-augmented gen-
+                                                                 eration (RAG) in legal technology: A survey. IEEE
+Alec Berntson. 2023. Azure ai search: Outperforming              Access.
+  vector search with hybrid retrieval and reranking. Mi-
+  crosoft Community Hub. Accessed on August 19,                 Abe Hou, William Jurayj, Nils Holzenberger, An-
+  2025.                                                           drew Blair-Stanek, and Benjamin Van Durme. 2024a.
+                                                                  Gaps or hallucinations? scrutinizing machine-
+Ilias Chalkidis, Abhik Jana, Dirk Hartung, Michael                generated legal analysis for fine-grained text evalua-
+   Bommarito, Ion Androutsopoulos, Daniel Martin                  tions. In Proceedings of the Natural Legal Language
+   Katz, and Nikolaos Aletras. 2021. LexGLUE: A                   Processing Workshop 2024, pages 280–302.
+   benchmark dataset for legal language understanding
+   in english. arXiv preprint arXiv:2110.00976.                 Abe Bohan Hou, Orion Weller, Guanghui Qin, Eu-
+                                                                  gene Yang, Dawn Lawrie, Nils Holzenberger, An-
+Manola Cherubini, Francesco Romano, Andrea Bolioli,               drew Blair-Stanek, and Benjamin Van Durme. 2024b.
+ and Lorenzo De. 2024. Improving the accessibility                CLERC: A dataset for legal case retrieval and
+ of EU laws: the Chat-EUR-Lex project.                            retrieval-augmented analysis generation. arXiv
+                                                                  preprint arXiv:2406.17186.
+Matthew Dahl, Varun Magesh, Mirac Suzgun, and                   Lei Huang, Weijiang Yu, Weitao Ma, Weihong Zhong,
+ Daniel E Ho. 2024. Large legal fictions: Profiling le-           Zhangyin Feng, Haotian Wang, Qianglong Chen,
+ gal hallucinations in large language models. Journal             Weihua Peng, Xiaocheng Feng, Bing Qin, and et al.
+ of Legal Analysis, 16(1):64–93.                                  2025. A survey on hallucination in large language
+                                                                  models: Principles, taxonomy, challenges, and open
+Andrea Filippo Ferraris, Davide Audrito, Giovanni Sira-           questions. ACM Transactions on Information Sys-
+  gusa, and Alessandro Piovano. 2024. Legal chunking:             tems, 43(2):1–55.
+  Evaluating methods for effective legal text retrieval.
+  In Legal Knowledge and Information Systems, pages             Aaron Hurst, Adam Lerer, Adam P Goucher, Adam
+  275–281. IOS Press.                                             Perelman, Aditya Ramesh, Aidan Clark, AJ Os-
+                                                                  trow, Akila Welihinda, Alan Hayes, Alec Radford,
+Luyu Gao, Xueguang Ma, Jimmy Lin, and Jamie Callan.               and 1 others. 2024. GPT-4o System Card. arXiv,
+  2023a. Precise zero-shot dense retrieval without rel-           abs/2410.21276.
+  evance labels. In Proceedings of the 61st Annual
+  Meeting of the Association for Computational Lin-             Lasal Jayawardena, Nirmalie Wiratunga, Ramitha
+  guistics (Volume 1: Long Papers), pages 1762–1777.              Abeyratne, Kyle Martin, Ikechukwu Nkisi-Orji, and
+                                                           26
+  Ruvan Weerasinghe. 2024. SCaLe-QA: Sri Lankan                  Przemysław Pałka, Francesca Lagioia, Rūta Liepina,
+  case law embeddings for legal QA.                                Marco Lippi, and Giovanni Sartor. 2025. Make pri-
+                                                                   vacy policies longer and appoint LLM readers. Artifi-
+J. Johnson, M. Douze, and H. Jégou. 2019. Billion-scale            cial Intelligence and Law, pages 1–33.
+    similarity search with GPUs. IEEE Transactions on
+    Big Data, 7(3):535–547.                                      Xiao Peng and Liang Chen. 2024. Athena: Retrieval-
+                                                                   augmented legal judgment prediction with large lan-
+C. Joshua, S. Karkala, S. Hossain, M. Krishnapatnam,               guage models. arXiv preprint arXiv:2410.11195.
+  A. Aggarwal, Z. Zahir, V. Pandhare, and V. Shah.               Nicholas Pipitone and Ghita Houir Alami. 2024.
+   2025. Domain adaptation for legal document summa-               LegalBench-RAG: A benchmark for retrieval-
+   rization with pre-trained language models. Artificial           augmented generation in the legal domain. arXiv
+   Intelligence and Law.                                           preprint arXiv:2408.10343.
+Rishi Kalra, Zekun Wu, Ayesha Gulley, Airlie Hilliard,           Giuseppe Pisano, Alessia Fidelangeli, Federico Galli,
+  Xin Guan, Adriano Koshiyama, and Philip Tre-                     Andrea Loreggia, Riccardo Rovatti, Piera Santin, and
+  leaven. 2024. HyPA-RAG: A hybrid parameter                       Giovanni Sartor. 2025. The Summarization of Italian
+  adaptive retrieval-augmented generation system for               Tax-Law Decisions: The Case of the PRODIGIT
+  AI legal and policy applications. arXiv preprint                 Project. IEEE Access.
+  arXiv:2409.09046.
+                                                                 Weicong Qin and Zhongxiang Sun. 2024. Exploring the
+Yuta Koreeda and Christopher D Manning. 2021.                      Nexus of Large Language Models and Legal Systems:
+  ContractNLI: A dataset for document-level natural               A Short Survey. arXiv preprint arXiv:2404.00990.
+  language inference for contracts. arXiv preprint               Renyi Qu, Ruixuan Tu, and Forrest Bao. 2024. Is seman-
+  arXiv:2110.01799.                                                tic chunking worth the computational cost? arXiv
+                                                                   preprint arXiv:2410.13070.
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio
+  Petroni, Vladimir Karpukhin, Naman Goyal, Hein-                Abhilasha Ravichander, Alan W Black, Shomir Wilson,
+  rich Küttler, Mike Lewis, Wen-tau Yih, and Tim                   Thomas Norton, and Norman Sadeh. 2019. Ques-
+  Rocktäschel. 2020. Retrieval-augmented generation                tion answering for privacy policies: Combining com-
+  for knowledge-intensive NLP tasks. Advances in neu-              putational and legal perspectives. arXiv preprint
+  ral information processing systems, 33:9459–9474.                arXiv:1911.00841.
+
+Zehan Li, Xin Zhang, Yanzhao Zhang, Dingkun Long,                Karen McGregor Richmond, Satya M Muddamsetty,
+  Pengjun Xie, and Meishan Zhang. 2023. Towards                    Thomas Gammeltoft-Hansen, Henrik Palmer Olsen,
+  general text embeddings with multi-stage contrastive             and Thomas B Moeslund. 2024. Explainable AI and
+  learning. arXiv preprint arXiv:2308.03281.                       law: An evidential survey. Digital Society, 3(1):1.
+                                                                 Stephen Robertson and Hugo Zaragoza. 2009. The prob-
+Zihao Li. 2023. The dark side of ChatGPT: Legal and                 abilistic relevance framework: BM25 and beyond.
+  ethical challenges from stochastic parrots and hallu-            Foundations and Trends® in Information Retrieval,
+  cination. arXiv preprint arXiv:2304.14347.                        3(4):333–389.
+Ruta Liepina, Giuseppe Contissa, Kasper Drazewski,               Binita Saha, Utsha Saha, and Muhammad Zubair Malik.
+  Francesca Lagioia, Marco Lippi, Hans-Wolfgang                    2024. Advancing retrieval-augmented generation
+  Micklitz, Przemysław Pałka, Giovanni Sartor, and                 with inverted question matching for enhanced QA
+  Paolo Torroni. 2019. GDPR privacy policies in                    performance. IEEE Access.
+  CLAUDETTE: Challenges of omission, context and
+  multilingualism. In CEUR Workshop Proceedings,                 Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh
+  volume 2385, pages 1–7.                                          Khanna, Anna Goldie, and Christopher D Manning.
+                                                                   2024. Raptor: Recursive abstractive processing for
+Varun Magesh, Faiz Surani, Matthew Dahl, Mirac Suz-                tree-organized retrieval. In The Twelfth International
+  gun, Christopher D Manning, and Daniel E Ho. 2025.               Conference on Learning Representations.
+  Hallucination-free? assessing the reliability of lead-         SMTI Tonmoy, SM Zaman, Vinija Jain, Anku Rani, Vip-
+  ing ai legal research tools. Journal of Empirical                ula Rawte, Aman Chadha, and Amitava Das. 2024.
+  Legal Studies, 22(2):216–242.                                    A comprehensive survey of hallucination mitigation
+                                                                   techniques in large language models. arXiv preprint
+Silvia Martinelli. 2023. AI as a tool to manage contracts          arXiv:2401.01313, 6.
+   consequences and challenges in applying legal tech to
+   contracts management. European Review of Private              Shailaja Uke, Ayush Laddha, Shreya Bambal, Atharva
+   Law, 31(2/3).                                                   Bonde, and Prasanna Atram. 2025. Generative ai-
+                                                                   powered conversational assistant for document, web,
+OpenAI. 2024. Model Selection Guide: Use Case:                     and repository interaction and retrieval. In 2025 Inter-
+  Long-Context RAG for Legal QA. Web Page. Ac-                     national Conference on Computing Technologies &
+  cessed on August 12, 2025.                                       Data Communication (ICCTDC), pages 1–5. IEEE.
+                                                            27
+Michele Visciarelli, Giovanni Guidi, Laura Morselli,            Chunk          200              500              800
+  Domitilla Brandoni, Giuseppe Fiameni, Luisa Monti,
+  Stefano Bianchini, and Cosimo Tommasi. 2024.                  Sum.        150     300     150     300     150      300
+  SAVIA: Artificial Intelligence in support of the law-
+  making process.                                               Prec.(%) 10.64 8.05 11.03 8.45 7.76 6.79
+                                                                Rec.(%) 23.43 22.91 41.80 37.77 42.93 43.90
+Steven H Wang, Antoine Scardigli, Leonard Tang,                 DRM(%) 20.70 23.49 19.29 20.61 34.96 29.68
+  Wei Chen, Dimitry Levkin, Anya Chen, Spencer
+   Ball, Thomas Woodside, Oliver Zhang, and Dan
+   Hendrycks. 2023. MAUD: An expert-annotated le-               Table 1: Average Document-Level Retrieval Mismatch
+   gal nlp dataset for merger agreement understanding.          (DRM), precision, and recall across different chunk
+   arXiv preprint arXiv:2301.00876.                             sizes (Chunk) and summary lengths (Sum.), both mea-
+                                                                sured in characters. Reported values are averaged over
+Nirmalie Wiratunga, Ramitha Abeyratne, Lasal Jayawar-           seven top-k retrieval settings (k ∈ 1, 2, 4, 8, 15, 32, 64).
+  dena, Kyle Martin, Stewart Massie, Ikechukwu Nkisi-           Lower values indicate better performance for DRM,
+  Orji, Ruvan Weerasinghe, Anne Liret, and Bruno
+                                                                while higher values are better for precision and recall.
+  Fleisch. 2024. CBR-RAG: case-based reasoning for
+  retrieval augmented generation in llms for legal ques-
+  tion answering. In International Conference on Case-
+  Based Reasoning, pages 445–460. Springer.                        As expected, adding sparse retrieval improved
+                                                                document selection, reducing our document-level
+Rui Yang. 2024. CaseGPT: a case reasoning framework
+  based on language models and retrieval-augmented              mismatch (DRM). However, it lowered text-level
+  generation. arXiv preprint arXiv:2407.07913.                  precision and recall. A closer inspection suggests a
+                                                                likely explanation: The summaries are highly struc-
+Leonardo Zilli, Michele Corazza, Monica Palmirani,
+  and Salvatore Sapienza. 2025. An agentic approach             tured and rich in identifiers, where sparse keyword
+  to retrieving and drafting legislative definitions. In        matching excels, whereas the chunked document
+  International Conference on Electronic Government             bodies contain more natural language and nearly
+  and the Information Systems Perspective, pages 190–           no direct keywords to match. For pinpointing the
+  204. Springer.
+                                                                relevant passage, semantic similarity between the
+A    Hyperparameter Chunk Size and                              query and text is more informative than keyword
+     Summary Size                                               overlap, explaining the higher text-level precision
+                                                                and recall without the BM25 component.
+We experimented with chunk sizes of 200, 500,                      In conclusion, adding BM25 search only con-
+and 800 characters, combined with prepended sum-                tributed slightly to finding the correct document
+maries of either 150 or 300 characters. The pre-                (improved DRM), but tended to result in poorer
+cision and recall results for all six configurations            search results within a document (reduced preci-
+are reported in Table 1. For our final pipeline, we             sion and recall). Also considering the computa-
+selected a chunk size of 500 characters, consis-                tional overhead of the BM25 algorithm, we decided
+tent with Pipitone and Alami (2024), and a 150-                 to rely exclusively on semantic search.
+character summary, as this configuration yielded
+the most balanced trade-off between precision and
+recall.                                                         wsemantic         100%       75%        50%        25%
+                                                                wkeyword           0%        25%        50%        75%
+B    Dense Semantic Search or Sparse                            Prec.(↑%)         11.03     10.57       9.54       8.23
+     Keyword Search?                                            Rec.(↑%)          41.80     42.54      41.47      36.56
+BM25 (Robertson and Zaragoza, 2009) is a                        DRM(↓%)           19.29     19.11      18.45      18.18
+well-established keyword-based (sparse) retrieval
+method. A common assumption in RAG research                     Table 2: Average Document-Level Retrieval Mismatch
+                                                                (DRM), precision, and recall for different weightings of
+is that hybrid approaches, combining dense vector
+                                                                semantic similarity (wsemantic ) and lexical similarity
+similarity with keyword matching, often yield the               (wkeyword , BM25). Metrics are averaged over seven
+best results (Berntson, 2023). Following this in-               top-k values (k ∈ {1, 2, 4, 8, 15, 32, 64}). Lower DRM
+tuition, we augmented our dense retriever with a                and higher precision/recall indicate better performance.
+BM25 component, allowing the system to explic-                  Results are based on the optimal chunk size of 500 char-
+itly match salient terms (e.g., party names) from               acters and summary length of 150 characters identified
+the prepended summaries with the same terms in                  in Section A.
+the user query. Results are reported in Table 2.
+                                                           28
+C       Embedding Model Ablation                                      NDA), e.g. such as: Full legal names, Affiliates or
+                                                                      representatives covered, Roles of each party
+The choice of embedding model plays a cru-                           - Obligations of the receiving party outlining what
+cial role in retrieval performance, as embed-                         the receiving party is required to do, e.g. such as:
+dings determine how effectively the system iden-                      Keeping the information secret, Limiting disclosure
+                                                                      to authorized personnel, Using the information only
+tifies text snippets semantically similar to a given                  for specified purposes
+query. To assess this impact, we conducted a                         - Exclusions from confidentiality describing informa-
+brief model ablation study, with results shown                        tion that is not protected under the NDA, such as:
+                                                                      Information already known to the receiving party,
+in Figure 4. Among the tested models, Ope-                            Publicly available information, Information disclosed
+nAI’s text-embedding-3-large7 achieved the                            by third parties lawfully, Independently developed
+                                                                      information
+strongest results overall. However, due to concerns                  - Specifying any exceptions where disclosure is al-
+about API rate limits and the importance of repro-                    lowed, such as: To employees or advisors under simi-
+ducibility, we opted for an open-source alternative.                  lar obligations, If required by law or court order (with
+                                                                      notice to the disclosing party)
+Within this category, the best-performing model                      - Term and Duration, defining how long the confiden-
+was thenlper/gte-large8 , which we therefore                          tiality obligation lasts: Often includes both the dura-
+selected for all subsequent experiments.                              tion of the agreement and the period during which
+                                                                      information remains protected (e.g., “3 years after
+                                                                      termination”)
+D       Expert-Guided Prompt Template                                - Purpose of Disclosure (Use Limitation), stating
+                                                                      the specific reason the information is being shared
+Together with legal experts, we developed an                         (e.g., for evaluating a partnership, conducting due
+expert-informed prompt template aimed at gener-                       diligence, etc.) and prohibits other uses.
+ating more distinctive legal text summaries. We                      - Remedies for Breach, detailing the consequences of
+                                                                     violating the NDA, which may include: Injunctive re-
+focused on two document types: Non-Disclosure                         lief (court orders to stop disclosure), Damages, Legal
+Agreements and privacy policies, that posed partic-                   fees
+                                                                     - Governing Law and Jurisdiction, identifying which
+ular challenges for the generic prompt. The LLM                       country/state’s laws apply and where disputes will be
+was instructed to first identify the document type                    settled.
+and then apply the corresponding template for sum-                   - Miscellaneous Clauses (Boilerplate), may include:
+                                                                      No license granted, Entire agreement clause, Amend-
+marization. The full prompt used in our experi-                       ment process, Counterparts and signatures
+ments is provided below.
+                                                                     Document type Privacy Policy: A privacy policy is
+                                                                     issued by a private or public entity to inform users
+    Expert-Guided Prompt Template                                    how their personal data is processed (e.g., collected,
+                                                                     used, shared, stored). If the document is a privacy
+     System: You are a legal summarization expert.                   policy, your summary should align with the following
+     User: Your task is to generate a highly distinct, struc-        template:
+     tured summary of the provided legal document. The               - Personal Data Collected and Processed, specifying
+     primary goal is to extract the unique identifiers that          what categories of personal data are collected and
+     differentiate this document from others of the same             how. This may include: Name and surname, Contact
+     type. This summary will be used as context to smaller           information, Financial details, Device and browser
+     text chunks for a retrieval system.                             data, Location information, Inferred preferences or
+     Follow this two-step process:                                   behaviors
+    - First, internally identify the document type from              - Identity and Contact Details of the Controller, iden-
+     the following options: Non-Disclosure Agreement                 tifying the organisation responsible for the process-
+    (NDA), Privacy Policy, or Other.                                 ing. May include: Full legal name of the controller,
+    - Second, generate the summary based on the specific             Contact email or phone number, Details of any repre-
+     template corresponding to the identified document               sentative (if applicable)
+     type.                                                           - Purposes of Processing, outlining why the personal
+    Document type Non-Disclosure Agreement (NDA):                    data is collected and how it will be used. Examples
+    An NDA is a legally binding contract between spe-                include: Service provision and operation, Personalisa-
+    cific parties that outlines confidential information to          tion of content or features, Marketing and advertising,
+    be kept secret. If the document is an NDA, your                  Analytics and performance monitoring, Payment pro-
+    summary should align with the following template:                cessing
+    - Definition of Confidential Information, specifying             - Legal Basis for Processing, specifying the lawful
+    what types of information are considered confiden-               grounds relied upon. These are: Consent of the data
+    tial, e.g. such as: Technical data, Business plans,              subject, Performance of a contract, Compliance with
+    Customer lists, Trade secrets, Financial information             a legal obligation, Protection of vital interests, Task
+    - Parties to the Agreement identifying the disclos-              carried out in the public interest, Legitimate interests
+    ing party and the receiving party (or both, if mutual            of the controller or third party
+                                                                     - Recipients of the Data, listing who may receive the
+                                                                     data, including: Service providers and processors,
+    7
+        https://openai.com                                           Business partners, Public authorities (where legally
+    8
+        https://huggingface.co/thenlper/gte-large
+
+                                                                29
+            0.200                                                                             0.8
+                                                   BAAI/bge-base-en-v1.5                                BAAI/bge-base-en-v1.5
+            0.175                                  thenlper/gte-large                         0.7       thenlper/gte-large
+                                                   nlpaueb/legal-bert-base-uncased                      nlpaueb/legal-bert-base-uncased
+            0.150                                  openai/text-embedding-3-large              0.6       openai/text-embedding-3-large
+
+            0.125                                                                             0.5
+Precision
+
+
+
+
+                                                                                     Recall
+            0.100                                                                             0.4
+
+            0.075                                                                             0.3
+
+            0.050                                                                             0.2
+
+            0.025                                                                             0.1
+
+            0.000   1      2         4       8           16         32         64             0.0   1         2           4          8     16   32   64
+                                           Top-K                                                                                   Top-K
+                               (a) Text-Level Precision                                                              (b) Text-Level Recall
+
+Figure 4: Relative performance comparison of four embedding models in the baseline case on the LegalBench-RAG
+dataset (Pipitone and Alami, 2024).
+
+
+             required), Affiliates and subsidiaries
+            - International Data Transfers, describing whether per-
+             sonal data is transferred outside the jurisdiction and,
+             if so: Destination countries, Safeguards applied (e.g.,
+             Standard Contractual Clauses, adequacy decisions)
+            - Data Retention, defining how long the personal data
+            will be stored, or the criteria for determining the pe-
+             riod. May include: Fixed retention periods, Purpose-
+             based retention (e.g., “as long as necessary to provide
+             the service”), Archiving or deletion policies
+            - Data Subject Rights, explaining individuals’ rights
+             under data protection law, including: Right to access
+             personal data, Right to rectify inaccuracies, Right to
+             erasure (“right to be forgotten”), Right to restrict or
+             object to processing, Right to data portability
+            - Right to Lodge a Complaint, providing information
+             on: The data subject’s right to contact a supervisory
+             authority, Name or link to the competent authority
+            - Automated Decision-Making, disclosing whether
+             such processing occurs and, if so: The logic involved,
+             Potential significance of the decisions, Expected con-
+             sequences for the data subject
+            Other document type: If the document does not
+            match the types above, summarize the following gen-
+            eral legal document in a structured, concise way. Iden-
+            tify for your summary the important entities, core pur-
+            pose, and other unique identifiers that differentiate
+            this document from others of the same type.
+             General Rules:
+            - The summary must be concise and under
+            {char_length} characters.
+            - Ignore every field in the template where the infor-
+             mation is not present in the document.
+            - Prioritize extracting the most critical identifiers, such
+             as parties, dates, and the specific subject matter.
+            - Output ONLY the final summary text!
+             Here is the document you should summarize: {docu-
+             ment_content}
+
+
+
+
+                                                                                     30
+

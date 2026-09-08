@@ -1,0 +1,13 @@
+[
+  {"key":"trautmannEtAl2024groundednessLegalQA","priority":"alta","evidence_level":"I — artigo de workshop com benchmark e validação","decision":"adicionar","reason":"groundedness em QA jurídica, corpus de classificação, macro-F1 e latência; diretamente útil à rubrica de fidelidade"},
+  {"key":"niuEtAl2024ragtruth","priority":"alta","evidence_level":"I — artigo ACL com corpus anotado","decision":"adicionar","reason":"quase 18 mil respostas RAG com anotações de caso e palavra; útil à taxonomia e análise de erros"},
+  {"key":"zhangEtAl2024citationEvaluation","priority":"alta","evidence_level":"I — artigo de conferência com comparação de métricas","decision":"adicionar","reason":"suporte de citação em três níveis e comparação com julgamentos humanos"},
+  {"key":"gaRAGeSorodoc2025","priority":"alta","evidence_level":"I — artigo Findings ACL com benchmark anotado","decision":"adicionar","reason":"grounding por passagem e deflexão quando a evidência é insuficiente"},
+  {"key":"reuterEtAl2025reliableLegalRAG","priority":"alta","evidence_level":"I — artigo de workshop jurídico com experimentos","decision":"adicionar","reason":"falha Document-Level Retrieval Mismatch e implicações para chunking em grandes acervos legais"},
+  {"key":"groUSEMuller2025","priority":"média","evidence_level":"I — artigo COLING com meta-avaliação","decision":"adicionar se LLM-as-a-judge permanecer no protocolo","reason":"144 testes unitários e alerta contra usar correlação com GPT-4 como proxy suficiente"},
+  {"key":"salemiZamani2024erag","priority":"média","evidence_level":"II — preprint com experimento","decision":"adicionar se houver avaliação de recuperação downstream","reason":"atribui relevância documental pelo efeito de cada passagem na tarefa final"},
+  {"key":"yuEtAl2024ragEvaluationSurvey","priority":"média","evidence_level":"III — survey","decision":"apoio","reason":"mapa de métricas e benchmarks; não substituir fontes primárias"},
+  {"key":"airesEtAl2024parlamintPT","priority":"baixa","evidence_level":"I — artigo de corpus","decision":"contextual","reason":"referência para corpus parlamentar em português, sem evidência de desempenho RAG"},
+  {"key":"gokhanBriscoe2025regulatoryRAG","priority":"baixa","evidence_level":"I — artigo de workshop jurídico","decision":"contextual","reason":"multi-passage regulatory QA sintético; analogia metodológica, não evidência parlamentar"},
+  {"key":"qiEtAl2024mirage","priority":"baixa","evidence_level":"I — artigo EMNLP","decision":"deixar em reserva","reason":"atribuição por sinais internos é tecnicamente relevante, mas excede o protocolo atual"}
+]

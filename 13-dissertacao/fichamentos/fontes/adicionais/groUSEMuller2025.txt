@@ -1,0 +1,2014 @@
+    GroUSE: A Benchmark to Evaluate Evaluators in Grounded Question
+                             Answering
+
+                  Sacha Muller           António Loison* Bilel Omrani                  Gautier Viaud*
+                                                 Illuin Technology
+                  { sacha.muller, antonio.loison, bilel.omrani, gautier.viaud }@illuin.tech.fr
+
+
+
+
+                          Abstract                               model and used to generate an answer. To enable
+                                                                 interpretability and fact-checking, the model is typ-
+        Retrieval-Augmented Generation (RAG) has                 ically required to only use the provided contextual
+        emerged as a common paradigm to use Large
+        Language Models (LLMs) alongside private
+                                                                 information and thus asked to ground its answer in
+        and up-to-date knowledge bases. In this work,            the provided documents. In the following, we will
+        we address the challenges of using LLM-as-a-             denote this task as grounded question answering.
+        Judge when evaluating grounded answers gen-                  Manually evaluating the quality of an answer
+        erated by RAG systems. To assess the calibra-            grounded in multiple documents is a tedious and
+        tion and discrimination capabilities of judge            expensive task. LLM-as-a-Judge (Wang et al.,
+        models, we identify 7 generator failure modes            2023b; Zhu et al., 2023; Kim et al., 2023) uses
+        and introduce GroUSE (Grounded QA Uni-
+                                                                 a strong LLM to automatically assess the quality of
+        tary Scoring of Evaluators), a meta-evaluation
+        benchmark of 144 unit tests. This benchmark              a candidate model’s open-ended generation. Prior
+        reveals that existing automated RAG evaluation           works show that LLM judges like GPT-4 align well
+        frameworks often overlook important failure              with human preferences for various tasks (Faysse
+        modes, even when using GPT-4 as a judge.                 et al., 2023; Zheng et al., 2024). However, us-
+        To improve on the current design of automated            ing proprietary models is often impractical due to
+        RAG evaluation frameworks, we propose a                  privacy concerns. Kim et al. (2023, 2024) pro-
+        novel pipeline and find that while closed mod-           pose Prometheus, an open-source evaluator dis-
+        els perform well on GroUSE, state-of-the-art             tilled from GPT-4’s outputs. While Prometheus
+        open-source judges do not generalize to our pro-         performs well on in-domain tasks, Huang et al.
+        posed criteria, despite strong correlation with
+                                                                 (2024) show it overfits to its training distribution
+        GPT-4’s judgement. Our findings suggest that
+        correlation with GPT-4 is an incomplete proxy
+                                                                 and fails to generalize on out-of-domain test sets.
+        for the practical performance of judge models                There is currently no consensus around the eval-
+        and should be supplemented with evaluations              uation criteria to use when evaluating a grounded
+        on unit tests for precise failure mode detection.        answer. RAGAS (Es et al., 2023) proposes to eval-
+        We further show that finetuning Llama-3 on               uate the answer quality using two criteria, faithful-
+        GPT-4’s reasoning traces significantly boosts            ness and answer relevancy. However, we find that
+        its evaluation capabilities, improving upon both         grounded question answering can in practice fea-
+        correlation with GPT-4’s evaluations and cali-           ture a wide range of failure modes and edge-cases
+        bration on reference situations. 1                       that are not well-captured by this pair of metrics.
+                                                                     In this paper, we thoroughly examine the vari-
+1       Introduction                                             ous failure modes of grounded question answering
+                                                                 and investigate the evaluation capabilities of cur-
+Retrieval-Augmented Generation (RAG) (Lewis                      rent judge models and automated RAG evaluation
+et al., 2020) is increasingly used to build user-                frameworks. Our contributions are the following:
+facing applications. A RAG system first matches                  Contribution 1: We systematically review the var-
+a user’s question with a subset of relevant docu-                ious failure modes of grounded question answering
+ments using an information retrieval system. This                and propose an automated evaluation pipeline us-
+contextual knowledge is then fed to a language                   ing GPT-4-as-a-Judge to assess the quality of a
+    * For inquiries, please contact these authors.               grounded answer, encompassing all failure modes.
+    1
+        https://github.com/illuin-tech/grouse
+                                                            4510
+                Proceedings of the 31st International Conference on Computational Linguistics, pages 4510–4534
+                            January 19–24, 2025. ©2025 Association for Computational Linguistics
+                                                                             Question : What is the relationship between Pluto and Neptune?
+
+                                TEST TYPE 1                                                 TEST TYPE 2                                                 TEST TYPE 8                                                 TEST TYPE 9
+                          A perfect answer should                                    Related information are not                                  A superfluous fact should                             Answering in an adversarial situation
+                            get the highest notes                                   mandatory to get highest notes                                   lower the relevancy                                should result in low negative rejection
+
+                  The 3:2 orbital resonance relationship                       No document seems to precisely answer                        The 3:2 orbital resonance relationship                       No document seems to precisely answer
+     GROUND
+                  between Pluto and Neptune means that                         your question. However, the documents                        between Pluto and Neptune means that                         your question.
+      TRUTH       for every 3 revolutions of Neptune around                    indicate that : Pluto’s axis of rotation is                  for every 3 revolutions of Neptune around
+     ANSWER       the Sun, Pluto completes 2 [1].                              tilted at 57.5 degrees [1].                                  the Sun, Pluto completes 2 [1].
+
+
+                  The 3:2 orbital resonance relationship                       No document seems to answer your                             The 3:2 orbital resonance relationship                       The systolo-diastolic oscillating flow is
+                  between Pluto and Neptune means that                         question.                                                    between Pluto and Neptune means that                         characteristic of cerebral circulatory
+     ANSWER
+                  for every 3 revolutions of Neptune around                                                                                 for every 3 revolutions of Neptune around                    arrest [1][2]. This oscillating flow is
+       TO
+                  the Sun, Pluto completes 2 [1].                                                                                           the Sun, Pluto completes 2 [1].                              anterograde during systole and
+    EVALUATE                                                                                                                                Pluto’s axis of rotation is tilted at 57.5                   retrograde during diastole [1].
+                                                                                                                                            degrees [2].
+
+
+                  [1] More than 200 objects in 2:3                                                                                          [1] More than 200 objects in 2:3                             [1] Two aspects are therefore
+                  resonance are known (meaning they                                                                                         resonance are known (meaning they                            characteristic of cerebral circulatory
+                  complete exactly 2 revolutions around                                                                                     complete exactly 2 revolutions around                        arrest: an oscillating flow, anterograde in
+                  the Sun when Neptune completes 3),                                                                                        the Sun when Neptune completes 3),                           systole, retrograde in diastole, low
+                  among which are Pluto and its moons.                                                                                      among which are Pluto and its moons.                         amplitude protosystolic peaks.
+   REFERENCES
+                  [2] Pluto’s axis of rotation is tilted at 57.5               [1] Pluto’s axis of rotation is tilted at 57.5               [2] Pluto’s axis of rotation is tilted at 57.5               [2] On the left: view of a cardiac cycle, of
+                  degrees relative to its orbital plane,                       degrees relative to its orbital plane,                       degrees relative to its orbital plane,                       a systolic-diastolic oscillating flow,
+                  which is quite high and unusual in the                       which is quite high and unusual in the                       which is quite high and unusual in the                       characteristic of circulatory arrest.
+                  Solar System                                                 Solar System                                                 Solar System
+
+
+    EXPECTED       5       5         /          1          /         /          /        /        /          /          1        1          <4        5         /         1           /        /          1        /         /         1           /        0
+      NOTES      Answer Complet.   Useful.   Faithful.   Positive Negative    Answer Complet.   Useful.   Faithful.   Positive Negative    Answer Complet.   Useful.   Faithful.   Positive Negative    Answer Complet.   Useful.   Faithful.   Positive Negative
+                Relevancy                                Accept. Rejection   Relevancy                                Accept. Rejection   Relevancy                                Accept. Rejection   Relevancy                                Accept. Rejection
+
+
+
+
+Figure 1: Simplified extract of four unit tests, all sharing the same question but testing different failure modes thanks
+to slight variations in the answer and references. The typology of all 16 test types are detailed in Annex A.
+
+
+Contribution 2: We publicly release GroUSE          model responses, with higher correlation to human
+(Grounded QA Unitary Scoring of Evaluators), a      evaluations than rule-based or model-based meth-
+challenging and granular suite of 144 manually cu-  ods. Zheng et al. (2024) coined the term “LLM-
+rated unit tests designed to assess whether a judge as-a-Judge” and systematically study GPT-4, high-
+model is well-calibrated and capable of detecting   lighting its biases and showing that GPT-4 matches
+and discriminating between different answer fail-   human evaluation. While encouraging, using pro-
+ure modes across 16 various situations. Using this  prietary models for evaluation is often impracti-
+new meta-evaluation benchmark, we compare our       cal if not impossible for privacy reasons. Wang
+proposed pipeline with current automated evalua-    et al. (2023b) introduced Shepherd, a 7B model
+tion frameworks and demonstrate that our approach   specifically trained to critique model responses,
+achieves higher error detection accuracy.           reaching performance on par with GPT-3.5-Turbo.
+Contribution 3: We assess the evaluation capa-      Zhu et al. (2023) presented JudgeLM, a family
+bilities of state-of-the-art closed-source and open-of judges trained on a variety of evaluation tasks,
+source judges and show that despite strong corre-   achieving a high agreement with human prefer-
+lation with GPT-4’s judgement, open-source judge    ence. Kim et al. (2023) proposed Prometheus, an
+models fail to detect some failure modes, despite   open-source fine-grained evaluator shown to gener-
+being instructed with detailed guidelines. This re- alize to diverse evaluation criteria and outperform-
+sult suggests that relying on GPT-4 correlation as  ing GPT-3.5 Turbo in terms of correlation with
+a proxy for measuring the performance of judge      GPT-4 preference. The authors demonstrate that
+models is insufficient, as it does not imply good   integrating reference materials such as a reference
+calibration on reference cases.                     answer and fine-grained score rubrics helps induc-
+Contribution 4: We show that finetuning Llama-3     ing better evaluation capabilities. Kim et al. (2024)
+on GPT-4’s evaluation traces significantly enhances later improve Prometheus by unifying direct assess-
+its evaluation capabilities. The resulting model    ment and pairwise preference ranking into a single
+closely aligns with GPT-4 and surpasses state-of-   model and demonstrate superior performance on
+the-art open-source evaluators on our test suite.   both of these evaluation paradigms. Huang et al.
+                                                    (2024) conducted an empirical study of the evalua-
+2 Related work                                      tion capabilities of judge models and showed that
+LLM-as-a-Judge. Liu et al. (2023); Faysse et al. finetuned evaluators indeed perform well on their
+(2023); Wang et al. (2023a) show that strong com- training distributions but tend to overfit to their
+mercial models can effectively critique candidate   in-domain evaluation schemes.
+                                                 4511
+RAG evaluation. Several prior works have ex-           uate the ability of LLMs to correctly provide ci-
+plored methods for evaluating the generator mod-       tations for any statement. The authors use a NLI
+ule in RAG systems. Various sets of metrics have       model to measure citation precision and citation
+been proposed to measure different failure modes,      recall and show that this automated evaluation cor-
+but there is no consensus on a common set of cri-      relates well with human judgement.
+teria for evaluating grounded question answering.
+Chen et al. (2024) propose and evaluate 4 abilities    3     Problem statement
+required for RAG: noise robustness, negative re-       In this section, we introduce more precisely the
+jection, information integration and counterfactual    problem of grounded question answering3 studied
+robustness. Es et al. (2023) propose two other cri-    in this work. Given a question, RAG systems use
+teria: faithfulness and answer relevancy. Faithful-    information retrieval to match the question with a
+ness evaluates the factual consistency of the answer   subset of documents from a knowledge base and
+given the grounding contexts by decomposing the        then use an LLM to generate an answer grounded in
+answer into several statements and calculating the     the provided documents. LLMs have been shown to
+proportion of facts that are supported by the con-     learn and store factual knowledge from data during
+texts. Answer relevancy measures how well the pro-     their unsupervised pretraining (Petroni et al., 2019),
+vided answer addresses the original question. An       but this knowledge is static and can get outdated.
+LLM is used to generate several questions from the     Contrary to Chen et al. (2024), we thus require
+answer, the answer relevancy score is then given by    the LLM to stay faithful to the sources even if
+the average cosine similarity between dense embed-     the documents contain information contradicting
+dings of the generated questions and the original      the LLM intrinsic knowledge. As interpretability
+question. In Deepeval2 , answer relevancy is com-      and fact-checking are crucial in many domains for
+puted by using a judge LLM to divide the answer        both the system developers and users, the LLM is
+into several atomic facts and computed as the pro-     also instructed to explicitly cite the reference for
+portion of facts that are relevant to the question.    each affirmation in its answer as illustrated in the
+Yu et al. (2024) survey several prior works and        answers of Figure 1.
+propose to add correctness to this pair of metrics,       The information from the retrieved documents
+which measures the accuracy of the generated re-       that helps answer the question is termed relevant
+sponse against a ground truth response. Magesh         information. When the documents are insufficient
+et al. (2024) focus on the legal domain and propose    to provide an answer, these situations are referred
+a more fine-grained measure of faithfulness, by        to as adversarial. In such instances, the LLM
+distinguishing between the factual accuracy of the     should explicitly state that the question cannot be
+response and the validity of the accompanying cita-    answered with the provided material. To avoid
+tions. Thakur et al. (2023) introduce NoMIRACL,        frustrating the user and to keep them engaged, it
+a human-labeled dataset of multilingual queries        is common to include information related to the
+and both relevant and non-relevant subsets to eval-    question, even if it does not directly answer it, as
+uate if the generator correctly refrains from an-      can be shown in type 2 ground truth answer in Fig-
+swering with non-relevant passages and correctly       ure 1. This will be referred as related information.
+recognizes the relevant passage otherwise.             Adversarial cases are evaluated using negative re-
+   Given the significant amount of tuning neces-       jection in Chen et al. (2024) but receive no special
+sary, several prior works have studied automating      treatment in existing RAG automated evaluation
+the evaluation of such systems. RAGAS (Es et al.,      frameworks.
+2023) is a popular framework to automate the eval-
+uation of an entire RAG system and show that the       4     Rethinking Grounded QA Evaluation
+proposed automated metrics correlate well with         4.1    Grounded QA failure modes
+their human-labeled counterparts. DeepEval pro-
+poses to evaluate RAG outputs using a unit-testing     Various failure modes in grounded question answer-
+paradigm, and provides readily-available faithful-     ing have been studied. Building on this prior re-
+                                                           3
+ness and answer relevancy prompt chains. Gao                 Prior works often use the term RAG to denote the ques-
+et al. (2023) propose ALCE, a benchmark to eval-       tion answering task but this term is commonly used to refer to
+                                                       the broader pattern of combining retrieval and generation. To
+                                                       avoid confusion, we coin the term grounded question answer-
+   2
+       https://github.com/confident-ai/deepeval        ing to denote the last step in RAG.
+                                                   4512
+search, we expand the scope of these studies based      4.2 Meta-evaluation with unit-testing
+on our problem formulation. Given a set of re- Our goal is to propose a benchmark to verify
+trieved documents, we introduce 7 failure modes:        whether the evaluator’s assessments align with the
+FM1 The question is answerable but the answer           defined metrics. We propose a typology of 16 test
+contains irrelevant information.                        types designed to assess whether an evaluator ap-
+FM2 The question is not answerable but the lan- propriately penalizes all failure modes and rewards
+guage model fails to refrain from answering.            accurate answers across a diverse range of scenar-
+FM3 The answer misses relevant information pro- ios (Figure 4). Each test type specifies the expected
+vided by the documents.                                 characteristics for both references and answers, and
+FM4 The language model wrongly claims that the          defines an acceptable range of scores for each met-
+question cannot be answered.                            ric to be deemed valid. The tests focus primarily
+FM5 The language model correctly claims that            on edge cases or the detection of subtle errors.
+the question cannot be answered but then includes          We introduce GroUSE (Grounded QA Unitary
+unrelated additional information.                       Scoring    of Evaluators), a benchmark consisting of
+                                                        144 tests divided into 9 sets of 16 tests (Figure 1).
+FM6 The language model correctly reports a fact
+                                                        All tests within a given set share the same question,
+from a document but the corresponding citation is
+                                                        with the references and answers slightly modified
+missing or incorrect.
+                                                        to fit each of the 16 test types. An additional set
+FM7 The language model distorts a fact from a           of 16 tests is available as a “training set” to assist
+document or presents a claim that is not supported      in engineering the prompt for the judge model be-
+by the provided documents.                              ing tested. The references are primarily excerpts
+Table 1 relates the failure modes presented in our      from Wikipedia, while the themes of the sets span
+work with existing failure modes presented and          various domains, including history, science, zool-
+reported by prior works. To quantify these seven        ogy, cinematography, and the medical field. See
+failure modes, we introduce specific evaluation cri- Appendix A and B for details.
+teria for grounded question answering. Answer
+relevancy assesses the relevance of the informa- 4.3 Evaluating existing Answer Relevancy
+tion provided in the answer regarding the question,            and Faithfulness implementations
+using a Likert scale (1 to 5), which helps to mea- This subsection highlights the limitations of current
+sure FM1. Completeness also uses a Likert scale         automatic implementations, specifically RAGAS
+to evaluate whether all relevant information from       and DeepEval. Therefore, in this subsection only,
+the documents is present in the answer, thus mea- we will refer to answer relevancy and faithful-
+suring FM3. Faithfulness is a binary score that         ness using the RAGAS definitions (see section 2).
+checks if all facts in the answer are accurate and         Since our definitions of answer relevancy and
+correctly attributed to the corresponding document, faithfulness differ, we propose a method to evaluate
+addressing FM6 and FM7. In adversarial cases and        RAGAS’ and DeepEval’s performance on GroUSE.
+when additional information is provided, Useful- Each test sample in GroUSE was annotated by
+ness is a binary score that determines if the pro- three human annotators, who assessed the expected
+vided additional information is indeed useful and       answer relevancy and faithfulness according to the
+relevant to the question, measuring FM5. Useful- following definitions: annotators were asked to rate
+ness can be considered a form of soft relevancy         the proportion of relevant facts as a proxy for an-
+in adversarial cases. Lastly, Positive Acceptance       swer relevancy, and the proportion of faithful facts
+and Negative Rejection are binary scores indicat- as a proxy for faithfulness. We then compared the
+ing a true positive and a true negative respectively    average human-reported metrics with the automatic
+in identifying whether the question is answerable, scores computed by RAGAS and DeepEval with
+thereby measuring FM4 and FM2. Not all failure          GPT-4. A test is a success if the difference between
+modes can occur in all situations: Figure 2 clarifies   the human and automatic scores is less than 0.24 .
+the conditions under which each metric is defined,         While Es et al. (2023) showed that RAGAS met-
+depending on whether the references contain an          rics correlate with human judgment, our evaluation
+answer, if the answer provides a response, or if it        4
+                                                             This threshold is conservative; the largest difference be-
+adds related information when it does not provide       tween annotations from two different annotators on the same
+a direct response.                                      sample is 0.125 and on average around 0.05
+                                                     4513
+                                                                                     RAGAS                             RGB                               NoMIRACL                                ALCE                      GroUSE
+                                                                                 (Es et al., 2023)              (Chen et al., 2024)                    (Thakur et al., 2023)                (Gao et al., 2023)              (this work)
+
+  FM1 – Lack of relevancy                                                               !                                 !                                                                          !                           !
+  FM2 – Failure to refrain from answering
+  in adversarial cases                                                                                                    !                                         !                                                            !
+
+  FM3 – Some relevant information is
+  missing from the answer                                                                                                 !                                                                          !                           !
+
+  FM4 – Wrongly refrain from answering                                                                                                                              !                                                            !
+  FM5 – In adversarial cases, unrelated
+  additional information is included                                                                                                                                                                                             !
+
+  FM6 – Missing or incorrect citation                                                                                                                                                                !                           !
+  FM7 – Distorted or unsupported claim                                                  !                                                                                                            !                           !
+
+Table 1: Equivalent failure modes studied and reported in prior works. Existing studies focus on detecting and
+evaluating a subset of failure modes. For instance FM1 is related to answer relevancy in Es et al. (2023), FM2 is
+related to negative rejection in Chen et al. (2024) FM6 and FM7 are related to faithfulness and more specifically to
+correctness and groundedness respectively in Magesh et al. (2024), FM6 is related to citation recall in Gao et al.
+(2023).
+
+                                                                                                                                                                                                      Positive
+   Metric must be evaluated                                                           Answer relevancy             Completeness                       Usefulness            Faithfulness             acceptance            Negative rejection
+                                                                                       Are all information in        Are all relevant            In adversarial cases,     Are all information    Did the model refrain    Did the model respond
+   Metric’s value is False                                                            the answer relevant to       information in the           are related information     supported by the     from responding when          when it wasn't
+   Metric’s value is True                                                                   the query ?                 answer ?                   connected to the       references and well     it wasn't supposed to?        supposed to?
+                                                                                                                                                       question ?                 cited ?
+
+                                                                               Yes
+
+                                Answer gives a                                 Yes
+                 Yes
+                             response to the query ?
+                                                       Answer adds connected
+                                              No                               No
+  References contain                                       information ?
+       answer ?
+                                                                               Yes
+
+                                Answer gives a                                 Yes
+                 No
+                             response to the query ?
+                                                       Answer adds connected
+                                              No                               No
+                                                           information ?
+
+
+
+
+Figure 2: Metrics and their applicable situations. Answer relevancy is defined only when the answer includes
+a response. Completeness is evaluated only when the references actually contain an answer to the question.
+Faithfulness is assessed whenever the answer includes any information (direct response or related information).
+
+
+of their implementations on GroUSE reveals that                                                                                                  1
+                                                                                                                                                      Answer Relevancy
+                                                                                                                                                                                        1
+                                                                                                                                                                                                 Faithfulness
+                                                                                                                                                 2                                      2
+they do not perform well on many individual tests,                                                                                               3                                      3
+                                                                                                                                                 4                                      4
+as illustrated in Table 2 and Figure 3. This obser-                                                                                              5                                      5
+                                                                                                                                                 6                                      6
+vation suggests that correlation on judgement does                                                                                               7                                      7
+                                                                                                                                    Test type
+
+
+
+
+                                                                                                                                                 8                                      8
+                                                                                                                          RAGAS
+not necessarily implies good calibration of grades                                                                                               9
+                                                                                                                                                10
+                                                                                                                                                                                        9
+                                                                                                                                                                                       10
+                                                                                                                                                11                                     11
+on edge cases and thus good error detection. This                                                                                               12                                     12
+                                                                                                                                                13                                     13
+hypothesis will be further explored in section 5.1.                                                                                             14                                     14
+                                                                                                                                                15                                     15
+The proposed automatic metrics rely on several                                                                                                  16                                     16                                      Test passed
+                                                                                                                                                     1 2 3 4 5 6 7 8 9                      1 2 3 4 5 6 7 8 9                  Test failed
+sequential LLM calls, which can increase the like-                                                                                               1                                      1                                      Not applicable
+                                                                                                                                                 2                                      2
+                                                                                                                                                 3                                      3
+lihood of errors and reduce the robustness of the                                                                                                4                                      4
+                                                                                                                                                 5                                      5
+evaluation across samples. Interestingly, different                                                                                              6                                      6
+                                                                                                                                                 7                                      7
+                                                                                                                                    Test type
+
+
+
+
+implementations of the same metrics can yield very                                                                      DeepEval                 8
+                                                                                                                                                 9
+                                                                                                                                                                                        8
+                                                                                                                                                                                        9
+                                                                                                                                                10                                     10
+different results. For instance, although faithful-                                                                                             11                                     11
+                                                                                                                                                12                                     12
+ness is defined similarly in RAGAS and DeepEval,                                                                                                13                                     13
+                                                                                                                                                14                                     14
+the unit test results differ significantly due to dif-                                                                                          15
+                                                                                                                                                16
+                                                                                                                                                                                       15
+                                                                                                                                                                                       16
+ferences in the prompts used in their respective                                                                                                     1 2 3 4 5 6 7 8 9
+                                                                                                                                                          Test sample
+                                                                                                                                                                                            1 2 3 4 5 6 7 8 9
+                                                                                                                                                                                                 Test sample
+implementations, showcasing the judge’ sensitivity
+to prompt details (Sclar et al., 2023).                                                                                Figure 3: GroUSE unit-testing of existing solutions for
+                                                                                                                       automatic grounded question answering evaluation
+
+                                                                                                                4514
+                                                      Description of the 16 types of tests
+                               GOAL                   FAILURE                                             ANSWER                                     EXPECTED NOTES
+                                                                     REFERENCES                                                      Answer                                    Positive Negative
+                            OF THE TEST                MODES                                            TO EVALUATE                 Relevancy Complet.   Useful.   Faithful.   Accept. Rejection
+
+
+   TEST TYPE 1     A correct answer should receive              References contain a
+                                                                                             Answer contains correct response.         5         5         /          1          /         /
+ Highest marks 1   good grades.                                 precise response.
+
+
+   TEST TYPE 2     A correct adversarial answer                 References contain no
+                                                                                             Answer claims there is no response
+     Highest       with no related information                  response but related                                                   /         /         /          /          1         1
+                                                                                             in the references.
+     marks 2       should receive good grades.                  information.
+
+
+   TEST TYPE 3     A correct adversarial answer                 References contain no        Answer claims there is no response
+     Highest       providing related information                response but related         in the references and completes with      /         /         1          1          1         1
+     marks 3       should receive good grades.                  information.                 related information.
+
+
+   TEST TYPE 4     An answer that covers all key                                             Answer gives a correct response,
+                                                                References contain lots of
+     Highest       information concisely should                                              providing less details than the           5         5         /          1          /         /
+                                                                precise information.
+     marks 4       receive good grades.                                                      ground truth.
+
+
+   TEST TYPE 5     Same as Highest mark 2 but the
+                                                                References are               Answer claims there is no response
+     Highest       references contain no related                                                                                       /         /         /          /          1         1
+                                                                completely off-topic.        in the references.
+     marks 5       information.
+
+
+                   Checks that a model does not
+   TEST TYPE 6                                                  The references contain
+                   use its internal knowledge to                                             Answer contains correct response,
+     Highest                                                    absurd information which                                               5         5         /          1          /         /
+                   evaluate the plausibility of the                                          quoting absurd information.
+     marks 6                                                    answers the question.
+                   answer.
+
+
+                                                                The references contain no
+   TEST TYPE 7                                                                               Answer claims there is no response
+                   Same as Highest mark 6, but for              answer, but some absurd
+     Highest                                                                                 in the references and completes with      /         /         1          1          1         1
+                   related information.                         information related to the
+     marks 7                                                                                 absurd related information.
+                                                                question.
+
+
+   TEST TYPE 8     Answer relevancy should be low
+                                                                References contain a         Answer contains correct response,
+       Low         when the answer contains             FM1                                                                           <5         5         /          1          /         /
+                                                                precise response.            but also irrelevant information.
+   relevancy 1     irrelevant information.
+
+
+                   Answer relevancy should be
+   TEST TYPE 9                                                                               Answer contains only irrelevant
+                   minimal when the answer              FM1     References are
+       Low                                                                                   information, quoting the off- topic       1         /         /          1          /         0
+                   contains no relevant                 FM2     completely off-topic.
+   relevancy 2                                                                               references.
+                   information.
+
+
+  TEST TYPE 10     Completeness should be low
+                                                                References contain a         Answer contains most of the relevant
+      Low          when the answer lacks relevant       FM3                                                                            5        <5         /          1          /         /
+                                                                precise response.            information, but some is missing.
+  completeness 1   information.
+
+
+                   Completeness should be
+  TEST TYPE 11
+                   minimal when the answer              FM3     References contain a         Answer claims there is no response
+      Low                                                                                                                              /         1         /          /          0         /
+                   wrongly claims there is no           FM4     precise response.            in the references.
+  completeness 2
+                   answer.
+
+
+  TEST TYPE 12     Same as above, even if the an-                                            Answer claims there is no response
+                                                        FM3     References contain a
+      Low          swer provides related informa-                                            in the references and completes with      /         1         1          1          0         /
+                                                        FM4     precise response.
+  completeness 3   tion.                                                                     related information.
+
+
+  TEST TYPE 13     Usefulness should be low when                                             Answer claims there is no response
+                                                                References are
+       Low         an answer provides unrelated         FM5                                  in the references and completes with      /         /         0          1          1         1
+                                                                completely off-topic.
+   usefulness 1    information.                                                              off-topic information.
+
+
+  TEST TYPE 14     Faithfulness should be low                                                Answer contains correct response,
+                                                                References contain a
+       Low         when the answer contains an          FM6                                  but contains a mistake in the             5         5         /          0          /         /
+                                                                precise response.
+  faithfulness 1   incorrect citation.                                                       citations.
+
+
+  TEST TYPE 15     Faithfulness should be low
+                                                                References contain a         Answer contains correct response,
+       Low         when the answer misses a             FM6                                                                            5         5         /          0          /         /
+                                                                precise response.            but forgets one of the citations.
+  faithfulness 2   citation.
+
+
+  TEST TYPE 16     Faithfulness should be low                                                Answer contains correct response,
+                                                                References contain a
+       Low         when the response distorts the       FM7                                  but distorts the content of the           5         5         /          0          /         /
+                                                                precise response.
+  faithfulness 3   content of the references.                                                references.
+
+
+
+
+Figure 4: Characteristics of the 16 test types. Types 1 to 7 don’t correspond to any failure mode as they test in
+various situations the ability of the model to correctly evaluate answers that deserve the highest notes.
+
+
+
+
+                                                                                   4515
+                                  RAGAS Faithfulness is influenced by                                      RAGAS Answer Relevancy gets submerged by
+Issues
+                                   additional irrelevant information                                          many relevant predicted statements
+Question                What is the relationship between Pluto and Neptune?                             How can we explain the solidity of the Pantheon’s dome?
+Answer                  Pluto and Neptune have a 3:2 orbital resonance rela-                            To ensure resistance to all stresses, Roman builders opted
+                        tionship, which means that Pluto completes 2 revo-                              for a meticulous selection of materials and precise man-
+                        lutions around the Sun while Neptune completes 3                                agement of the orientation of thrusts [1]. Regarding ma-
+                        [5][8]. Their orbits never intersect due to the high                            terials, the abundant use of concrete ensures robustness
+                        inclination of Pluto’s orbit relative to the plane of                           against deformation forces [2], especially since the mor-
+                        the ecliptic [5]. In 1936, British mathematician Ray-                           tar of Roman concrete tends to calcify as it ages, thus
+                        mond Lyttleton suggested that Pluto previously or-                              guaranteeing its durability through the ages [6]. As for
+                        bited around Neptune, and that a gravitational distur-                          the thrusts, they are diverted towards the pillars of the
+                        bance had ejected Pluto from the planetary orbit [6].                           rotunda through large relieving arches [3]. A series of
+                        It was during its migration period that Neptune might                           seven concrete rings arranged in a staircase at the base of
+                        have captured one of the largest objects in the Kuiper                          the dome helps to redirect the lateral centrifugal thrusts
+                        Belt, the current moon Triton [10].                                             through a vertical push [4]. Finally, the outer wall extends
+                                                                                                        8.40 m beyond the base of the dome, serving as a buttress
+                                                                                                        to stabilize the dome [5].
+Answer
+Relevancy               Predicted: 0.673 Expected: 0.802                                                Predicted: 0.723 Expected: 1.0
+Faithfulness Predicted: 0.75 Expected: 1                                                                Predicted: 1.0 Expected: 1.0
+
+Table 2: Example limitations of RAGAS on GroUSE unit tests. Left: While the answer contain extra irrelevant but
+faithful statements, RAGAS wrongly penalizes the answer’s faithfulness . Right: While all the provided information
+is relevant, RAGAS wrongly penalizes the answer relevancy.
+
+
+                                 START
+                                                                                                     first identifying which of the situations presented
+        Completeness
+          evaluation
+                                          Answer relevancy
+                                             evaluation
+                                                                                                     in Figure 2 corresponds to the sample to evaluate.
+                             Negative
+                             rejection
+                                                                                                     Identifying this scenario would allow to get the
+         Adversarial                        Adversarial                             Usefulness
+         references ?                        answer ?
+                                                                    Yes
+                                                              Relevancy = null      evaluation       list of defined metrics and launch their evaluations
+                              Positive
+      Yes                    acceptance         No                                                   consequently. However, to save on LLM calls, we
+Completness ≠ null                        Relevancy ≠ null
+                   No
+           Completeness = null
+                                                                                                     decided to directly include instructions to set the
+                                            Faithfulness                             Related
+                                             evaluation
+                                                                    Yes
+                                                             Usefulness ≠ null    information ?      score at null if we are in a situation in which the
+                                                                                        No
+                                                                                 Usefulness = null
+                                                                                                     metric is undefined in the evaluation prompts of
+                                               STOP                                                  the Answer relevancy and Completeness. Based
+                                                                                                     on whether these metrics values are null, it is easy
+Figure 5: Evaluation pipeline. Each green square repre-
+                                                                                                     to deduct the situation in which we are, and infer
+sents a call to an LLM, while the blue dotted square de-
+notes a straightforward computation based on the call’s                                              the value of Positive Acceptance and Negative
+results. The Usefulness and Faithfulness evaluations                                                 Rejection at the same time. A similar strategy is
+may be omitted if preceding calls suggest these metrics                                              also applied to detect the presence or absence of re-
+are not applicable.                                                                                  lated information when evaluating the Usefulness.
+                                                                                                     Ultimately, this optimized pipeline requires at most
+                                                                                                     four LLM calls, with some calls being skipped
+4.4       Enhancing existing frameworks
+                                                                                                     when the situation is not appropriate (Figure 5).
+We demonstrated that both RAGAS and DeepEval
+fail to cover all the presented cases, even when                                                     Prompts. Each prompt was engineered to fit the
+they purport to. In this section, we propose a new                                                   specific metric being evaluated, but for all metrics
+pipeline to automatically evaluate grounded ques-                                                    we ask the model to rate two answers, the first
+tion answering across all situations and all six met-                                                one being a reference answer. The model’s reason-
+rics previously defined. We then test the perfor-                                                    ing is also guided by the expected format of the
+mances of this pipeline on GroUSE, for a various                                                     JSON output. Following best practices recommen-
+set of closed and open-source models.                                                                dations from Biderman et al. (2024), details about
+                                                                                                     the prompts format and the prompt engineering
+Pipeline strategy. The metrics’ applicability be-                                                    process are available in Appendix D.
+ing highly dependent on whether we are in an adver-
+sarial situation, and whether the answer provides a   Evaluators benchmark. Table 3 shows the per-
+response, a straightforward strategy could involve    formances of various models on GroUSE. GPT-4 is
+                                                   4516
+the best automatic evaluator, with an overall score      8b judge model. Finetuning significantly enhances
+of 95% (very close to human performance), while          the evaluation capabilities of Llama-3, as evidenced
+the best open-source evaluator is Llama-3 70b with       by the substantial improvement in pass rates. De-
+a score of 79%. The gap between closed and open-         spite extensive prompt engineering and interme-
+source models thus remains wide, with a 15.85            diate CoT reasoning (see Appendix D), the non-
+p.p. difference on the tests results. Interestingly,     finetuned Llama-3 8b passes only 40% of the unit
+Prometheus 2 8x7b does not outperform Mixtral            tests. However, after finetuning, its pass rate in-
+8x7b, despite Prometheus 2 being specialized in          creases to 83%, surpassing all other open-source
+evaluation tasks. It’s worth noting however that         judges, including Prometheus 2 8x7b (except in the
+Prometheus 2 was trained to predict Likert scores        category of faithfulness), despite its smaller size.
+ranging from 1 to 5, whereas our evaluation met-
+rics include boolean and nullable scores, which is       Strong correlation with GPT-4 does not imply
+outside its intended scope.                              good pass rate on unit tests. Interestingly, our
+                                                         results reveal a disconnect between the pass rate on
+5 Improving Grounded QA Evaluation                       GroUSE and the correlation with GPT-4’s grades.
+     via distilling evaluation traces of GPT-4 As shown in Table 4, Prometheus 2 7b and the
+                                                         finetuned Llama-3 8b exhibit similar correlations
+Inspired by prior works (Xu et al., 2024; Mukherjee
+                                                         with GPT-4’s judgments across all metrics. How-
+et al., 2023; Mitra et al., 2023), we demonstrate that
+                                                         ever, when evaluated on GroUSE, the two models
+the gap in evaluation skills between open-source
+                                                         show very different pass rates, with the finetuned
+and closed-source models can be narrowed via fine-
+                                                         Llama-3 consistently and significantly outperform-
+tuning on traces of evaluations made by GPT-4.
+                                                         ing Prometheus 2 7b. Similarly, we observe higher
+5.1 Experimental setup                                   correlation with GPT-4 in answer relevancy and
+                                                         completeness with Prometheus 2 8x7b than with its
+Dataset. Aiming to develop a model capable of
+                                                         base model, Mixtral 8x7b, in accordance to what
+solving the task in a single call, we concatenated
+                                                         has been observed in (Kim et al., 2024). How-
+the four responses from GPT-4 into a single output.
+                                                         ever, this does not translate to better pass rates on
+The input of the model is also a combination of the
+                                                         the associated metrics on GroUSE: for answer rel-
+four prompts used for GPT-4, detailing each met-
+                                                         evancy, Mixtral 8x7b solves 81.25% of the tests
+rics’ characteristics. We used extracts of Wikipedia
+                                                         versus 61.81% for Prometheus 2 8x7b, despite its
+articles, as well as other open data sources as ref-
+                                                         intended use on evaluating Likert scores. For com-
+erence material. Queries were synthetically gener-
+                                                         pleteness, Mixtral 8x7b solves 61.11% of the tests
+ated from the references, creating a dataset of 1200
+                                                         versus 25% for Prometheus 2 8x7b.
+grounded QA statements.
+                                                             This finding suggests that a high correlation with
+Finetuning. We finetuned a Llama-3 8b on 1k              GPT-4’s judgments does not necessarily translate to
+samples of this dataset, and used the rest as a test     a high unit test pass rate. A judge model can share
+set. We refer to Appendix H for details on the           the same relative preferences as GPT-4 (indicated
+finetuning configuration. To measure the model’s         by strong rank correlation) while lacking the same
+progress, we tested its performances on GroUSE. calibration on precise reference cases (very good
+Following Kim et al. (2023), we also report the cor- answers, subtle mistakes, etc.), resulting in poor
+relation between GPT-4’s grades and the finetuned        performance on judgement unit tests. Figure 6
+model’s grades on the test set. For metrics using        illustrates this difference with Prometheus 2 7b
+a Likert scale, alignment is measured using the          and the finetuned Llama-3 8b: while Prometheus 2
+Spearman correlation. Other metrics are measured         confusion matrix entries are closer to the diagonal,
+using nullable boolean values, their alignment is        it features more confusions on extreme cases (1, 5
+evaluated using a three-class macro F1-score.            and NaN cases) when compared to the finetuned
+                                                         Llama-3. On the contrary, the finetuned Llama-3
+5.2 Experimental results                                 has better exact agreement with GPT-4 on extreme
+Finetuning on GPT-4 judgement boosts evalua- case, but lacks correlation on intermediate cases.
+tion capabilities. Table 3 presents the pass rate            Overall, these measures are complementary: cor-
+of various judge models on GroUSE, including             relation with GPT-4 indicates agreement in relative
+Llama-3 8b (zero-shot) and our finetuned Llama-3         preference, while GroUSE pass rate measures pre-
+                                                      4517
+                                                                                 Agreement rate of metrics                                                                        Total
+                                                    Answer                                                                          Positive            Negative                test pass
+                                                                Completeness         Usefulness                 Faithfulness
+                                                   relevancy                                                                       acceptance           rejection                  rate
+                          GPT-4                     91.67             88.89            100.0                       92.36               98.61              98.61                  95.02
+                          GPT-4o                    79.17             77.08            97.92                       92.36               83.33              83.33                  85.53
+                          GPT-4-turbo               90.28             85.42            97.22                       93.75               94.44              94.44                  92.59
+                          GPT-3.5-turbo             88.89             50.00            80.56                       68.06               77.78              61.81                  71.18
+     Evaluated            Gemini 1.0 Pro            78.47             75.69            97.22                       78.47               84.72              84.72                  83.22
+    with Figure 5
+      pipeline            Mixtral 8x7b Instruct     81.25             61.11            81.25                       72.22               76.39              75.69                  74.65
+                          Mixtral 8x22b Instruct    80.56             68.75            81.94                       83.33               76.39              72.22                  77.20
+                          Prometheus 2 7b           72.22             41.67            16.67                       38.19               73.61              74.31                  52.78
+                          Prometheus 2 8x7b         61.81             25.00            34.03                       72.22               67.36              69.44                  54.98
+                          Llama-3 70b Instruct      90.28             63.89            76.39                       73.61               85.42              85.42                  79.17
+                          Llama-3 8b Instruct       85.42             49.31            80.56                       59.72               72.92              68.06                  69.33
+       All metrics        Llama-3 8b Instruct       31.25             18.06            34.03                       56.94               52.78              46.53                  39.93
+    with one prompt       Finetuned Llama 3 8b      88.89             81.94            81.25                       52.78               91.67              91.67                  81.37
+    Appendix C protocol   Human annotators          98.26             92.36            97.92                       95.49               96.53              96.88                  96.24
+
+
+ Table 3: Percentage of tests passed for various models. The highest score in each column is highlighted in bold.
+
+                                                        Spearman correlation                                                       F1-score
+                                                                                                                                             Positive             Negative
+                                                   Answer relevancy      Completeness              Usefulness          Faithfulness
+                                                                                                                                            acceptance            rejection
+                          GPT-3.5-turbo                  0.55                 0.68                         0.76            0.48                    0.63                 0.47
+                          Gemini 1.0 Pro                 0.63                 0.68                         0.48            0.67                    0.78                 0.74
+                          Mixtral 8x7b Instruct          0.59                 0.43                         0.70            0.61                    0.63                 0.57
+         Evaluated
+                          Mixtral 8x22b Instruct         0.70                 0.66                         0.61            0.79                    0.83                 0.70
+        with Figure 5
+                          Prometheus 2 (7b)              0.60                 0.51                         0.29            0.55                    0.55                 0.49
+          pipeline
+                          Prometheus 2 (8x7b)            0.64                 0.62                         0.30            0.75                    0.69                 0.50
+                          Llama-3 70b Instruct           0.74                 0.74                         0.93            0.78                    0.75                 0.79
+                          Llama-3 8b Instruct            0.63                 0.71                         0.42            0.72                    0.54                 0.44
+          All metrics     Llama-3 8b Instruct            0.46                 0.23                         0.18            0.47                    0.40                 0.46
+        with one prompt   Finetuned Llama-3 8b           0.62                 0.57                         0.41            0.57                    0.79                 0.74
+
+
+              Table 4: Alignment with the ground truth (GPT-4) evaluations on the test set of 200 samples.
+
+
+cise calibration on practical reference cases. Un-                                                        NaN                  24 2     0      0    0     0
+like Prometheus 2, Llama-3 70b demonstrates both                                                            1                  1 22 3          1    0     0
+                                                                                         Predicted mark
+
+
+
+
+                                                                                                                                                              Llama 3 8b
+                                                                                                                                                              Fine-tuned
+good correlation with GPT-4’s judgments and a                                                               2                  0   6    3      2    1     2
+                                                                                                            3                  0   0    4      4    2     0
+strong pass rate on GroUSE, suggesting that corre-
+                                                                                                            4                  1   1    7 14 17 13
+lation and unit test pass rates are indeed orthogonal                                                                          2   0    4 15 20 22
+                                                                                                            5
+measures of a judge model’s quality.
+                                                                                                          NaN                  19 12 4         3    0     0
+                                                                                                                                                              Prometheus 2 7b
+
+
+
+                                                                                                          1.0                  3 19 13 14 6               3
+                                                                                         Predicted mark
+
+
+
+
+6     Conclusion
+                                                                                                          2.0                  3   1    5      9    5     6
+In this work, we addressed the challenges of eval-                                               5        3.0                  3   0    1      2    9
+uating grounded answers in Retrieval-Augmented                      4.0        0  0   2   3   13 8
+                                                                    5.0        0 0 1 5 8 15
+Generation systems using LLM-as-a-Judge frame-
+works. We systematically reviewed various failure
+modes in grounded question answering and pro-
+posed a complete set of automated metrics to holis-                           NaN 1 2 3 4 5
+                                                                                    GPT-4 mark
+tically evaluate a grounded answer. We introduced
+GroUSE, a comprehensive meta-evaluation bench-           Figure 6: Confusion matrices for Answer relevancy.
+mark, and demonstrated that existing automated
+evaluation methods, including those using GPT-4,
+often overlook critical failure modes.                  judge model effectively detects failures, even in
+   Our findings reveal that relying solely on correla- subtle situations.
+tion with GPT-4’s judgments as a performance mea-          By finetuning Llama-3 on GPT-4’s reasoning
+sure for judge models is insufficient, as it doesn’t    traces, we significantly enhanced its evaluation ca-
+ensure proper calibration on reference cases. By        pabilities, achieving closer alignment with GPT-4’s
+supplementing the evaluation with unit tests across     judgments, improved detection of errors and better
+a wide range of scenarios, we can ensure that the       calibration on reference scenarios.
+                                                     4518
+7   Limitations                                             While our unit tests and evaluation criteria are
+                                                         designed to identify edge cases, we acknowledge
+While our work advances the evaluation of
+                                                         the need for continuous improvement to cover a
+grounded answers in RAG systems, several lim-
+                                                         broader range of scenarios and hope that our work
+itations remain. Firstly, our unit tests are designed
+                                                         will inspire further research and development in
+to identify edge cases but do not account for inter-
+                                                         this area, leading to more robust, accurate, and
+mediate performance levels. This focus on extreme
+                                                         sound evaluation practices.
+scenarios might overlook nuances in model perfor-
+mance that are critical for a comprehensive evalua-      Acknowledgments
+tion. Secondly, when finetuning, we opted to per-
+form a single evaluation call to assess the generated    This research work is supported by Illuin Tech-
+answers. While this approach simplifies the evalu-       nology. We would like to express our gratitude
+ation process, it would be valuable to decompose         to Stanislas Dozias for the insightful discussions
+the evaluation into multiple steps to gain a more        and exchange of ideas that contributed to the de-
+detailed understanding of the model’s capabilities.      velopment of this paper. Special thanks to Quentin
+Thirdly, our experiments were conducted within           Lutz and Manuel Faysse for their valuable feedback
+a single domain, specifically using Wikipedia as         and support throughout the research process. Addi-
+the knowledge base. Consequently, our findings           tionally, we would like to thank Noa Grollimund,
+may not generalize to out-of-domain scenarios. Fu-       Florian Muller, Benoît Muller, Yosr Jelassi, Max
+ture work should include diverse domains to test         Conti, and Paul Boulenger for their assistance in
+the robustness and adaptability of our evaluation        evaluating the human performance on GroUSE.
+framework. Lastly, we finetuned a smaller open-
+source language model. Although this approach
+demonstrated significant improvements, it would          References
+be beneficial to explore the effects of finetuning       Josh Achiam, Steven Adler, Sandhini Agarwal, Lama
+larger models, which could potentially yield even          Ahmad, Ilge Akkaya, Florencia Leoni Aleman,
+better performance. Addressing these limitations           Diogo Almeida, Janko Altenschmidt, Sam Altman,
+                                                           Shyamal Anadkat, et al. 2023. Gpt-4 technical report.
+in future research will further enhance the effective-     arXiv preprint arXiv:2303.08774.
+ness and generalizability of automated evaluation
+frameworks for RAG systems.                              Stella Biderman, Hailey Schoelkopf, Lintang Sutawika,
+                                                            Leo Gao, Jonathan Tow, Baber Abbasi, Alham Fikri
+8   Ethical considerations                                  Aji, Pawan Sasanka Ammanamanchi, Sidney Black,
+                                                            Jordan Clive, et al. 2024. Lessons from the trenches
+Our work focuses on evaluating language mod-                on reproducible evaluation of language models.
+                                                            arXiv preprint arXiv:2405.14782.
+els within the practical context of Retrieval-
+Augmented Generation systems. This is significant     Jiawei Chen, Hongyu Lin, Xianpei Han, and Le Sun.
+as RAG systems are increasingly used in real-world       2024. Benchmarking large language models in
+applications, where the accuracy and reliability of      retrieval-augmented generation. In Proceedings of
+                                                         the AAAI Conference on Artificial Intelligence, vol-
+generated answers are important. Ensuring that           ume 38, pages 17754–17762.
+these systems produce trustworthy and factually
+correct responses is critical for their safe deploy- I-Chun Chern, Steffi Chern, Shiqi Chen, Weizhe Yuan,
+ment on real use cases.                                  Kehua Feng, Chunting Zhou, Junxian He, Graham
+                                                         Neubig, and Pengfei Liu. 2023. Factool: Factual-
+   One of the main ethical concerns in using lan-        ity detection in generative ai – a tool augmented
+guage models for information-seeking tasks is the        framework for multi-task and multi-domain scenar-
+risk of hallucinations, irrelevant answers, missing      ios. Preprint, arXiv:2307.13528.
+attributions, and incomplete responses. These is-
+                                                      Shahul Es, Jithin James, Luis Espinosa-Anke, and
+sues can lead to important information being over-       Steven Schockaert. 2023. Ragas: Automated eval-
+looked or misused and potentially bias the user.         uation of retrieval augmented generation. arXiv
+By developing meta-evaluation benchmarks like            preprint arXiv:2309.15217.
+GroUSE, our work aims to mitigate these risks
+                                                      Manuel Faysse, Gautier Viaud, Céline Hudelot, and
+by improving existing automated evaluation frame-        Pierre Colombo. 2023. Revisiting instruction fine-
+works and making sure they are better calibrated to      tuned model evaluation to guide industrial applica-
+detect this wide range of failure modes.                 tions. arXiv preprint arXiv:2310.14103.
+                                                   4519
+Tianyu Gao, Howard Yen, Jiatong Yu, and Danqi Chen.           precision in long form text generation. arXiv preprint
+   2023. Enabling large language models to generate           arXiv:2305.14251.
+   text with citations. arXiv preprint arXiv:2305.14627.
+                                                           Arindam Mitra, Luciano Del Corro, Shweti Mahajan,
+Edward J Hu, yelong shen, Phillip Wallis, Zeyuan Allen-      Andres Codas, Clarisse Simoes, Sahaj Agarwal, Xuxi
+  Zhu, Yuanzhi Li, Shean Wang, Lu Wang, and Weizhu           Chen, Anastasia Razdaibiedina, Erik Jones, Kriti
+  Chen. 2022. LoRA: Low-rank adaptation of large             Aggarwal, et al. 2023. Orca 2: Teaching small
+  language models. In International Conference on            language models how to reason. arXiv preprint
+  Learning Representations.                                  arXiv:2311.11045.
+Hui Huang, Yingqi Qu, Jing Liu, Muyun Yang, and            Subhabrata Mukherjee, Arindam Mitra, Ganesh Jawa-
+  Tiejun Zhao. 2024. An empirical study of llm-              har, Sahaj Agarwal, Hamid Palangi, and Ahmed
+  as-a-judge for llm evaluation: Fine-tuned judge            Awadallah. 2023. Orca: Progressive learning from
+  models are task-specific classifiers. arXiv preprint       complex explanation traces of gpt-4. arXiv preprint
+  arXiv:2403.02839.                                          arXiv:2306.02707.
+Albert Q Jiang, Alexandre Sablayrolles, Antoine            Fabio Petroni, Tim Rocktäschel, Patrick Lewis, An-
+  Roux, Arthur Mensch, Blanche Savary, Chris Bam-            ton Bakhtin, Yuxiang Wu, Alexander H Miller, and
+  ford, Devendra Singh Chaplot, Diego de las Casas,          Sebastian Riedel. 2019. Language models as knowl-
+  Emma Bou Hanna, Florian Bressand, et al. 2024.             edge bases? arXiv preprint arXiv:1909.01066.
+  Mixtral of experts. arXiv preprint arXiv:2401.04088.
+                                                           Melanie Sclar, Yejin Choi, Yulia Tsvetkov, and Alane
+Seungone Kim, Jamin Shin, Yejin Cho, Joel Jang,             Suhr. 2023. Quantifying language models’ sensitiv-
+  Shayne Longpre, Hwaran Lee, Sangdoo Yun,                  ity to spurious features in prompt design or: How i
+  Seongjin Shin, Sungdong Kim, James Thorne, et al.         learned to start worrying about prompt formatting.
+  2023. Prometheus: Inducing fine-grained evalua-           arXiv preprint arXiv:2310.11324.
+  tion capability in language models. arXiv preprint
+  arXiv:2310.08491.                                        Gemini Team, Rohan Anil, Sebastian Borgeaud,
+                                                             Yonghui Wu, Jean-Baptiste Alayrac, Jiahui Yu,
+Seungone Kim, Juyoung Suk, Shayne Longpre,                   Radu Soricut, Johan Schalkwyk, Andrew M Dai,
+  Bill Yuchen Lin, Jamin Shin, Sean Welleck, Graham          Anja Hauth, et al. 2023. Gemini: a family of
+  Neubig, Moontae Lee, Kyungjae Lee, and Minjoon             highly capable multimodal models. arXiv preprint
+  Seo. 2024. Prometheus 2: An open source language           arXiv:2312.11805.
+  model specialized in evaluating other language mod-
+  els. arXiv preprint arXiv:2405.01535.                    Mistral AI Team. 2024. Mistral 8x22b. https://
+                                                             mistral.ai/news/mixtral-8x22b/.
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio
+  Petroni, Vladimir Karpukhin, Naman Goyal, Hein-          Nandan Thakur, Luiz Bonifacio, Xinyu Zhang,
+  rich Küttler, Mike Lewis, Wen-tau Yih, Tim Rock-           Odunayo Ogundepo, Ehsan Kamalloo, David
+  täschel, et al. 2020. Retrieval-augmented generation       Alfonso-Hermelo, Xiaoguang Li, Qun Liu, Boxing
+  for knowledge-intensive nlp tasks. Advances in Neu-        Chen, Mehdi Rezagholizadeh, et al. 2023. Nomiracl:
+  ral Information Processing Systems, 33:9459–9474.          Knowing when you don’t know for robust multilin-
+Yang Liu, Dan Iter, Yichong Xu, Shuohang Wang,               gual retrieval-augmented generation. arXiv preprint
+  Ruochen Xu, and Chenguang Zhu. 2023. Gpteval:              arXiv:2312.11361.
+  Nlg evaluation using gpt-4 with better human align-
+                                                           Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier
+  ment. arXiv preprint arXiv:2303.16634.
+                                                             Martinet, Marie-Anne Lachaux, Timothée Lacroix,
+Ilya Loshchilov and Frank Hutter. 2019. Decoupled            Baptiste Rozière, Naman Goyal, Eric Hambro, Faisal
+   weight decay regularization. In International Confer-     Azhar, Aurelien Rodriguez, Armand Joulin, Edouard
+   ence on Learning Representations.                         Grave, and Guillaume Lample. 2023. Llama: Open
+                                                             and efficient foundation language models. Preprint,
+Varun Magesh, Faiz Surani, Matthew Dahl, Mirac Suz-          arXiv:2302.13971.
+  gun, Christopher D Manning, and Daniel E Ho.
+  2024. Hallucination-free? assessing the reliability      Jiaan Wang, Yunlong Liang, Fandong Meng, Zengkui
+  of leading ai legal research tools. arXiv preprint          Sun, Haoxiang Shi, Zhixu Li, Jinan Xu, Jianfeng
+  arXiv:2405.20362.                                           Qu, and Jie Zhou. 2023a. Is chatgpt a good nlg
+                                                              evaluator? a preliminary study. arXiv preprint
+MetaAI. 2024. Introducing meta llama 3: The most              arXiv:2303.04048.
+ capable openly available llm to date. https://ai.
+ meta.com/blog/meta-llama-3/.                              Tianlu Wang, Ping Yu, Xiaoqing Ellen Tan, Sean
+                                                             O’Brien, Ramakanth Pasunuru, Jane Dwivedi-Yu,
+Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike                  Olga Golovneva, Luke Zettlemoyer, Maryam Fazel-
+  Lewis, Wen-tau Yih, Pang Wei Koh, Mohit Iyyer,             Zarandi, and Asli Celikyilmaz. 2023b. Shepherd: A
+  Luke Zettlemoyer, and Hannaneh Hajishirzi. 2023.           critic for language model generation. arXiv preprint
+  Factscore: Fine-grained atomic evaluation of factual       arXiv:2308.04592.
+                                                       4520
+BigScience Workshop, :, Teven Le Scao, Angela Fan,            Patrick von Platen, Pierre Cornette, Pierre François
+  Christopher Akiki, Ellie Pavlick, Suzana Ilić, Daniel      Lavallée, Rémi Lacroix, Samyam Rajbhandari, San-
+  Hesslow, Roman Castagné, Alexandra Sasha Luc-               chit Gandhi, Shaden Smith, Stéphane Requena, Suraj
+  cioni, François Yvon, Matthias Gallé, Jonathan              Patil, Tim Dettmers, Ahmed Baruwa, Amanpreet
+  Tow, Alexander M. Rush, Stella Biderman, Albert             Singh, Anastasia Cheveleva, Anne-Laure Ligozat,
+  Webson, Pawan Sasanka Ammanamanchi, Thomas                  Arjun Subramonian, Aurélie Névéol, Charles Lover-
+  Wang, Benoît Sagot, Niklas Muennighoff, Albert Vil-         ing, Dan Garrette, Deepak Tunuguntla, Ehud Reiter,
+  lanova del Moral, Olatunji Ruwase, Rachel Bawden,           Ekaterina Taktasheva, Ekaterina Voloshina, Eli Bog-
+  Stas Bekman, Angelina McMillan-Major, Iz Belt-              danov, Genta Indra Winata, Hailey Schoelkopf, Jan-
+  agy, Huu Nguyen, Lucile Saulnier, Samson Tan, Pe-           Christoph Kalo, Jekaterina Novikova, Jessica Zosa
+  dro Ortiz Suarez, Victor Sanh, Hugo Laurençon,              Forde, Jordan Clive, Jungo Kasai, Ken Kawamura,
+  Yacine Jernite, Julien Launay, Margaret Mitchell,           Liam Hazan, Marine Carpuat, Miruna Clinciu, Na-
+  Colin Raffel, Aaron Gokaslan, Adi Simhi, Aitor              joung Kim, Newton Cheng, Oleg Serikov, Omer
+  Soroa, Alham Fikri Aji, Amit Alfassy, Anna Rogers,          Antverg, Oskar van der Wal, Rui Zhang, Ruochen
+  Ariel Kreisberg Nitzav, Canwen Xu, Chenghao Mou,            Zhang, Sebastian Gehrmann, Shachar Mirkin, Shani
+  Chris Emezue, Christopher Klamm, Colin Leong,               Pais, Tatiana Shavrina, Thomas Scialom, Tian Yun,
+  Daniel van Strien, David Ifeoluwa Adelani, Dragomir         Tomasz Limisiewicz, Verena Rieser, Vitaly Protasov,
+  Radev, Eduardo González Ponferrada, Efrat Lev-              Vladislav Mikhailov, Yada Pruksachatkun, Yonatan
+  kovizh, Ethan Kim, Eyal Bar Natan, Francesco De             Belinkov, Zachary Bamberger, Zdeněk Kasner, Al-
+  Toni, Gérard Dupont, Germán Kruszewski, Giada               ice Rueda, Amanda Pestana, Amir Feizpour, Ammar
+  Pistilli, Hady Elsahar, Hamza Benyamina, Hieu Tran,         Khan, Amy Faranak, Ana Santos, Anthony Hevia,
+  Ian Yu, Idris Abdulmumin, Isaac Johnson, Itziar             Antigona Unldreaj, Arash Aghagol, Arezoo Abdol-
+  Gonzalez-Dios, Javier de la Rosa, Jenny Chim, Jesse         lahi, Aycha Tammour, Azadeh HajiHosseini, Bahareh
+  Dodge, Jian Zhu, Jonathan Chang, Jörg Frohberg,             Behroozi, Benjamin Ajibade, Bharat Saxena, Car-
+  Joseph Tobing, Joydeep Bhattacharjee, Khalid Al-            los Muñoz Ferrandis, Daniel McDuff, Danish Con-
+  mubarak, Kimbo Chen, Kyle Lo, Leandro Von Werra,            tractor, David Lansky, Davis David, Douwe Kiela,
+  Leon Weber, Long Phan, Loubna Ben allal, Lu-                Duong A. Nguyen, Edward Tan, Emi Baylor, Ez-
+  dovic Tanguy, Manan Dey, Manuel Romero Muñoz,               inwanne Ozoani, Fatima Mirza, Frankline Onon-
+  Maraim Masoud, María Grandury, Mario Šaško,                 iwu, Habib Rezanejad, Hessie Jones, Indrani Bhat-
+  Max Huang, Maximin Coavoux, Mayank Singh,                   tacharya, Irene Solaiman, Irina Sedenko, Isar Ne-
+  Mike Tian-Jian Jiang, Minh Chien Vu, Moham-                 jadgholi, Jesse Passmore, Josh Seltzer, Julio Bonis
+  mad A. Jauhar, Mustafa Ghaleb, Nishant Subramani,           Sanz, Livia Dutra, Mairon Samagaio, Maraim El-
+  Nora Kassner, Nurulaqilla Khamis, Olivier Nguyen,           badri, Margot Mieskes, Marissa Gerchick, Martha
+  Omar Espejel, Ona de Gibert, Paulo Villegas, Pe-            Akinlolu, Michael McKenna, Mike Qiu, Muhammed
+  ter Henderson, Pierre Colombo, Priscilla Amuok,             Ghauri, Mykola Burynok, Nafis Abrar, Nazneen Ra-
+  Quentin Lhoest, Rheza Harliman, Rishi Bommasani,            jani, Nour Elkott, Nour Fahmy, Olanrewaju Samuel,
+  Roberto Luis López, Rui Ribeiro, Salomey Osei,              Ran An, Rasmus Kromann, Ryan Hao, Samira Al-
+  Sampo Pyysalo, Sebastian Nagel, Shamik Bose,                izadeh, Sarmad Shubber, Silas Wang, Sourav Roy,
+  Shamsuddeen Hassan Muhammad, Shanya Sharma,                 Sylvain Viguier, Thanh Le, Tobi Oyebade, Trieu Le,
+  Shayne Longpre, Somaieh Nikpoor, Stanislav Silber-          Yoyo Yang, Zach Nguyen, Abhinav Ramesh Kashyap,
+  berg, Suhas Pai, Sydney Zink, Tiago Timponi Tor-            Alfredo Palasciano, Alison Callahan, Anima Shukla,
+  rent, Timo Schick, Tristan Thrush, Valentin Danchev,        Antonio Miranda-Escalada, Ayush Singh, Benjamin
+  Vassilina Nikoulina, Veronika Laippala, Violette            Beilharz, Bo Wang, Caio Brito, Chenxi Zhou, Chirag
+  Lepercq, Vrinda Prabhu, Zaid Alyafeai, Zeerak Ta-           Jain, Chuxin Xu, Clémentine Fourrier, Daniel León
+  lat, Arun Raja, Benjamin Heinzerling, Chenglei Si,          Periñán, Daniel Molano, Dian Yu, Enrique Manjava-
+  Davut Emre Taşar, Elizabeth Salesky, Sabrina J.            cas, Fabio Barth, Florian Fuhrimann, Gabriel Altay,
+  Mielke, Wilson Y. Lee, Abheesht Sharma, Andrea              Giyaseddin Bayrak, Gully Burns, Helena U. Vrabec,
+  Santilli, Antoine Chaffin, Arnaud Stiegler, Debajy-         Imane Bello, Ishani Dash, Jihyun Kang, John Giorgi,
+  oti Datta, Eliza Szczechla, Gunjan Chhablani, Han           Jonas Golde, Jose David Posada, Karthik Ranga-
+  Wang, Harshit Pandey, Hendrik Strobelt, Jason Alan          sai Sivaraman, Lokesh Bulchandani, Lu Liu, Luisa
+  Fries, Jos Rozen, Leo Gao, Lintang Sutawika, M Sai-         Shinzato, Madeleine Hahn de Bykhovetz, Maiko
+  ful Bari, Maged S. Al-shaibani, Matteo Manica, Ni-          Takeuchi, Marc Pàmies, Maria A Castillo, Mari-
+  hal Nayak, Ryan Teehan, Samuel Albanie, Sheng               anna Nezhurina, Mario Sänger, Matthias Samwald,
+  Shen, Srulik Ben-David, Stephen H. Bach, Taewoon            Michael Cullan, Michael Weinberg, Michiel De
+  Kim, Tali Bers, Thibault Fevry, Trishala Neeraj, Ur-        Wolf, Mina Mihaljcic, Minna Liu, Moritz Freidank,
+  mish Thakker, Vikas Raunak, Xiangru Tang, Zheng-            Myungsun Kang, Natasha Seelam, Nathan Dahlberg,
+  Xin Yong, Zhiqing Sun, Shaked Brody, Yallow Uri,            Nicholas Michio Broad, Nikolaus Muellner, Pascale
+  Hadar Tojarieh, Adam Roberts, Hyung Won Chung,              Fung, Patrick Haller, Ramya Chandrasekhar, Renata
+  Jaesung Tae, Jason Phang, Ofir Press, Conglong Li,          Eisenberg, Robert Martin, Rodrigo Canalli, Rosaline
+  Deepak Narayanan, Hatim Bourfoune, Jared Casper,            Su, Ruisi Su, Samuel Cahyawijaya, Samuele Garda,
+  Jeff Rasley, Max Ryabinin, Mayank Mishra, Minjia            Shlok S Deshmukh, Shubhanshu Mishra, Sid Ki-
+  Zhang, Mohammad Shoeybi, Myriam Peyrounette,                blawi, Simon Ott, Sinee Sang-aroonsiri, Srishti Ku-
+  Nicolas Patry, Nouamane Tazi, Omar Sanseviero,              mar, Stefan Schweter, Sushil Bharati, Tanmay Laud,
+                                                              Théo Gigant, Tomoya Kainuma, Wojciech Kusa, Ya-
+                                                       4521
+  nis Labrak, Yash Shailesh Bajaj, Yash Venkatraman,
+  Yifan Xu, Yingxin Xu, Yu Xu, Zhe Tan, Zhongli
+  Xie, Zifan Ye, Mathilde Bras, Younes Belkada, and
+  Thomas Wolf. 2023. Bloom: A 176b-parameter
+  open-access multilingual language model. Preprint,
+  arXiv:2211.05100.
+Xiaohan Xu, Ming Li, Chongyang Tao, Tao Shen,
+  Reynold Cheng, Jinyang Li, Can Xu, Dacheng Tao,
+  and Tianyi Zhou. 2024. A survey on knowledge dis-
+  tillation of large language models. arXiv preprint
+  arXiv:2402.13116.
+Hao Yu, Aoran Gan, Kai Zhang, Shiwei Tong, Qi Liu,
+  and Zhaofeng Liu. 2024. Evaluation of retrieval-
+  augmented generation: A survey. arXiv preprint
+  arXiv:2405.07437.
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan
+  Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin,
+  Zhuohan Li, Dacheng Li, Eric Xing, et al. 2024.
+  Judging llm-as-a-judge with mt-bench and chatbot
+  arena. Advances in Neural Information Processing
+  Systems, 36.
+
+Lianghui Zhu, Xinggang Wang, and Xinlong Wang.
+  2023.    Judgelm: Fine-tuned large language
+  models are scalable judges.    arXiv preprint
+  arXiv:2310.17631.
+
+
+
+
+                                                   4522
+A     Unit test characteristics                          Off topic or poorly parsed documents from the auto-
+                                                         matic scraping process were kept in the grounding
+The queries of the sets are:
+                                                         documents. For test types 6 and 7, GPT-4 was
+    1. How can we explain the solidity of the Pan-       employed to generate documents containing inten-
+       theon’s dome?                                     tionally absurd facts to ensure the evaluator does
+                                                         not rely on its internal knowledge to judge the plau-
+    2. What is the relationship between Pluto and
+                                                         sibility of the information in the answer.
+       Neptune?
+    3. Slow-motion effects and inspiration from          Answers creation and modification. Gold-
+       Peckinpah?                                        standard answers for test types 1 and 2 were man-
+                                                         ually written, using GPT-4-generated answers as
+    4. What are the differences and similarities be-
+                                                         initial drafts. Variations of these answers were then
+       tween the Bay Cat and the Temminck’s Cat?
+                                                         created with GPT-4 assistance to align with other
+    5. When should a blood gas test be performed         test types. For example, a simple prompt was used
+       during an apnea test?                             to add superfluous information in the answer for
+    6. Physical characteristics of the Pyrenean goat     test type 8. All generated content was systemat-
+                                                         ically reviewed and corrected to ensure accuracy
+    7. Why did Audrey Dana direct the film "French
+                                                         and quality.
+       Women"?
+    8. What is the influence of Jackie Robinson on         The GroUSE dataset was constructed by a single
+       American society?                                 annotator who speaks fluent English.
+    9. How was cuneiform deciphered?                     C   Annotation procedures
+The query of the additional “training set” is: “Im-      RAGAS and DeepEval. To reannotate the
+pacts of Sumbawa pony breeding on the environ-           GroUSE unit tests for RAGAS and DeepEval, three
+ment?”                                                   labelers computed the answer relevancy and faith-
+                                                         fulness. The three labelers speak English fluently,
+B     GroUSE Dataset creation
+                                                         but their primary language is French. A detailed an-
+Initial corpus creation. We randomly selected            notation methodology was given to the annotators.
+50 Wikipedia pages from the 200 000 most popular         This methodology details the definition of answer
+entries and scraped their content. Each page was         relevancy and faithfulness so that they can accu-
+divided into text chunks, which were subsequently        rately compute the metrics by hand. Annotators
+clustered based on topic similarity. For each cluster,   were asked to rate the proportion of relevant facts
+GPT-3.5 was used to generate a question that could       as a proxy for answer relevancy, and the proportion
+be answered using the cluster’s content. GPT-4 was       of faithful facts as a proxy for faithfulness.
+then employed to create grounded QA answers to
+                                                      Human performance on GroUSE. Seven an-
+these questions. From these generated grounded
+                                                      notators were asked to assess the relevancy, com-
+QA samples, we selected 10 examples where an-
+                                                      pleteness, usefulness, and faithfulness of answers.
+swering the question required synthesizing infor-
+                                                      Each annotator was tasked with evaluating all 16
+mation from multiple sources rather than extracting
+                                                      answers for one or more questions, depending on
+simple facts.
+                                                      their availability. If they annotated several sets, the
+Manual enhancement. Questions were occa- samples of the sets annotated subsequent to the
+sionally refined to encourage more complex and an- first were shuffled. They were provided with defini-
+alytical responses. The grounding documents were      tions of each metric adapted from GPT-4 prompts,
+also enriched by manually collecting additional       along with the question, the references, a refer-
+relevant sources through web searches. These in- ence answer, and the answer to be evaluated. Each
+cluded excerpts from newspapers, interviews, popu- sample was annotated two times by different an-
+lar science articles, and medical papers, encompass- notators and the performance was computed on
+ing both directly relevant and tangentially related   the average of the pass rate of the two annotators.
+materials. To simulate retrieval system noise, the    Table 5 shows the inter-agreement rate for each
+manually collected documents were deliberately        metric between the two annotators of each sample.
+altered by sometimes truncating the last sentence. The agreement rate is over 90%, which augments
+                                                   4523
+confidence about the human evaluation. All anno-                   step by step explanation of the reasoning
+tators are fluent English speakers, one of them is                 to follow.
+familiar with the evaluated task, three have general             – Presentation of the architecture of the
+knowledge of RAG, while the remaining three had                    JSON expected as an answer: The JSON
+no prior knowledge of the subject.                                 keys include chain-of-thought keys spe-
+                                                                   cific to the metric being evaluated (to
+    All labelers consented to share their annotations.
+                                                                   compel the model to adhere to the reason-
+D     Prompt templates used for evaluating a                       ing steps), a free-form justification field,
+      grounded answer                                              and the assignment of the score. The
+                                                                   chain-of-thought keys include a boolean
+Prompt engineering. We measured the perfor-                        indicating whether the situation is adver-
+mances of eleven models on GroUSE, half of                         sarial or not in the Answer relevancy
+them closed-source, the other half open-source.                    and Usefulness prompts, while the Faith-
+For GPT-4 (Achiam et al., 2023), Gemini 1.0 Pro                    fulness prompts asks for a sentence by
+(Team et al., 2023), Mixtral 8x7b (Jiang et al.,                   sentence analysis, building on Chern
+2024), Prometheus 2 7b and Prometheus 2 8x7b                       et al. (2023); Min et al. (2023); Es et al.
+(Kim et al., 2024), we iterated on the prompts,                    (2023). All these fields are repeated
+making our best effort to achieve the best possi-                  twice, once for each answer to evaluate.
+ble results on the training set of GroUSE. These                   This step is absent in the P ROMETHEUS
+engineered prompts are then used to test the other                 2 prompts as the output of the model is
+models: the GPT-4 prompt is used for the whole                     imposed.
+GPT family and the Mixtral 8x7b prompt is used
+for Mixtral 8x22b (Team, 2024) and the Llama 3               • Sample: The query and references.
+models (MetaAI, 2024). To engineer a prompt, we              • The two answers to evaluate: The first one
+begin with a basic instruction and evaluate how                is always the ground truth, even though we
+many tests in the training set it passes. We then              never specify it in the prompt. The second one
+qualitatively analyze the errors and craft a new               is the real answer we want to evaluate, and in
+prompt aimed at eliminating those errors. This                 practice we only look at the evaluation score
+iterative process continues until all tests pass or            of the second answer.
+further progress becomes challenging. The amount
+of prompt tested for each model is visible Figure 7.     The prompts used for GPT-4 are available on Fig-
+                                                         ures 8 to 11.
+Prompt template. Each metric is evaluated with
+a separate prompt specifying its definition, however     Ablation. We conduct an ablation experiment by
+all prompts share the same template. We always           measuring GPT-4’s performance on GroUSE with
+ask the model to rate two answers, the first one         different prompts: removing the ground truth and
+being the ground truth and the second one being          having the model rate only one answer, removing
+the answer we truly seek to evaluate: even without       the justification field, and removing the chain-of-
+specifying that the first answer is the ground truth,    thought field. The results are shown in Table 6: the
+this gives the evaluator model a point of compari-       best agreement rates are obtained for the prompt
+son. The prompt format is as follow:                     without the justification, nonetheless removing the
+                                                         ground truth or the chain-of-thought lowers the
+    • Task introduction: Brief explanation of the        performances.
+      grounded question answering task, and the
+      expected citation format
+
+    • Evaluation instructions:
+         – Context explanation: The model is re-
+           quired to assign a score to two answers.
+         – Description of the metric: criteria to take
+           into account to evaluate it, a rating scale
+           detailing what each note entails, and a
+                                                      4524
+                                                                                              Inter-Agreement Rate per Metric                                                                 Total
+                    Answer                                                                                                                      Positive                   Negative     Inter-Agreement
+                                                                   Completeness                    Usefulness              Faithfulness
+                   relevancy                                                                                                                   Acceptance                  Rejection           rate
+                            91.67                                               88.19                96.52                        90.97          93.06                      93.75               92.36
+
+                     Table 5: Percentage of agreements between annotators when evaluating human performance.
+
+
+
+                                                                                                                             Agreement rate of metrics                                                             Total
+                                                                                  Answer                                                                                      Positive     Negative              test pass
+                                                                                                   Completeness                   Usefulness    Faithfulness
+                                                                                 relevancy                                                                                   acceptance    rejection                rate
+   GPT-4                                                                             92.36             84.72                          100.0           93.75                     92.36           92.36                92.59
+    w/o ground truth                                                                 93.75             84.72                          98.61           90.97                     31.25           31.25                71.76
+    w/o justification                                                                91.67             88.89                          100.0           92.36                     98.61           98.61                95.02
+    w/o chain of thought                                                             90.28            84.72∗                          98.61           91.67                     92.36           92.36                91.67
+
+Table 6: Percentage of tests passed for different prompts. The highest score in each column is highlighted in bold.
+The completeness base prompt did not involve any chain of thought, so the reported result is the same as with the
+base prompt for this ablation, as marked by an asterisk.
+
+
+
+                                                                        Answer relevancy                             Completeness                          Usefulness                           Faithfulness
+                                                          Highest marks 1
+                                                          Highest marks 2
+                                                          Highest marks 3
+                                                          Highest marks 4
+                                                          Highest marks 5
+                                                          Highest marks 6
+                                                          Highest marks 7
+                                          Unit Test
+
+
+
+
+      GPT-4                                               Low relevancy 1
+                                                          Low relevancy 2
+                                                      Low completeness 1
+                                                      Low completeness 2
+                                                      Low completeness 3
+                                                         Low usefulness 1
+                                                        Low faithfulness 1
+                                                        Low faithfulness 2
+                                                        Low faithfulness 3
+                                                                               1 3 5                                   1 3 5                                 1 3                                 1 3 5
+                                                                             Prompt attempt                          Prompt attempt                       Prompt attempt                        Prompt attempt
+                                                                        Answer relevancy                             Completeness                          Usefulness                           Faithfulness
+                                     Highest marks 1
+                                     Highest marks 2
+                                     Highest marks 3
+                                     Highest marks 4
+                                     Highest marks 5
+                                     Highest marks 6
+                                     Highest marks 7
+                     Unit Test
+
+
+
+
+   Mixtral 8x7b                      Low relevancy 1
+                                     Low relevancy 2
+                                 Low completeness 1
+                                 Low completeness 2
+                                 Low completeness 3
+                                    Low usefulness 1
+                                   Low faithfulness 1
+                                   Low faithfulness 2
+                                   Low faithfulness 3
+                                                               1    3    5      7 9 11 13 15            1   3    5    7 9 11 13 15 17             1   3    5 7 9 11 13                          1 3 5 7
+                                                                             Prompt attempt                          Prompt attempt                       Prompt attempt                        Prompt attempt
+                                                                        Answer relevancy                             Completeness                          Usefulness                           Faithfulness
+                                                          Highest marks 1
+                                                          Highest marks 2
+                                                          Highest marks 3
+                                                          Highest marks 4
+                                                          Highest marks 5
+                                                          Highest marks 6                                                                                                                                        Test passed
+                                                          Highest marks 7
+                                          Unit Test
+
+
+
+
+                                                          Low relevancy 1                                                                                                                                        Test failed
+  Gemini 1.0 Pro                                          Low relevancy 2                                                                                                                                        Output wrong format
+                                                      Low completeness 1                                                                                                                                         Theoretically won't happen
+                                                      Low completeness 2
+                                                      Low completeness 3
+                                                         Low usefulness 1
+                                                        Low faithfulness 1
+                                                        Low faithfulness 2
+                                                        Low faithfulness 3
+                                                                               1 3 5                    1    3   5     7 9 11 13 15 17                      1 3 5                           1     3 5 7 9
+                                                                             Prompt attempt                          Prompt attempt                       Prompt attempt                        Prompt attempt
+                                                                        Answer relevancy                             Completeness                          Usefulness                           Faithfulness
+                                                            Highest marks 1
+                                                            Highest marks 2
+                                                            Highest marks 3
+                                                            Highest marks 4
+                                                            Highest marks 5
+                                                            Highest marks 6
+                                                            Highest marks 7
+                                            Unit Test
+
+
+
+
+                                                            Low relevancy 1
+ Prometheus 2 (7b)                                          Low relevancy 2
+                                                        Low completeness 1
+                                                        Low completeness 2
+                                                        Low completeness 3
+                                                           Low usefulness 1
+                                                          Low faithfulness 1
+                                                          Low faithfulness 2
+                                                          Low faithfulness 3
+                                                                                1 3                                     1 3                                  1 3                                     1
+                                                                             Prompt attempt                          Prompt attempt                       Prompt attempt                        Prompt attempt
+                                                                        Answer relevancy                             Completeness                          Usefulness                           Faithfulness
+                                                            Highest marks 1
+                                                            Highest marks 2
+                                                            Highest marks 3
+                                                            Highest marks 4
+                                                            Highest marks 5
+                                                            Highest marks 6
+                                                            Highest marks 7
+                                            Unit Test
+
+
+
+
+                                                            Low relevancy 1
+Prometheus 2 (8x7b)                                         Low relevancy 2
+                                                        Low completeness 1
+                                                        Low completeness 2
+                                                        Low completeness 3
+                                                           Low usefulness 1
+                                                          Low faithfulness 1
+                                                          Low faithfulness 2
+                                                          Low faithfulness 3
+                                                                                1 3                          1   3     5 7 9 11 13                         1 3 5                                    1 3
+                                                                             Prompt attempt                          Prompt attempt                       Prompt attempt                        Prompt attempt
+
+
+
+Figure 7: Matrixes representing the amount of prompt engineering, for each metric and each model. Each column in
+a matrix represents the results of one prompt on the training set of GroUSE, the number of column thus represents
+the number of prompts tested for a given model and metric.
+
+                                                                                                                                      4525
+[TASK]
+Task: Grounded Question Answering
+Based solely on the content of the references, the objective is to generate a response to the user's query. Each statement must be followed by
+the reference of the source passage, in the format [i] where i is the number of the reference. If no passage seems relevant, the answer should
+begin with "No document seems to precisely answer your question" and may be supplemented with related sourced information.
+[/TASK]
+[EVALUATION INSTRUCTIONS]
+I will provide you with two answers, numbered 1 and 2, each containing a response to the user request.
+I want you to assign to each answer a relevancy grade between 1 and 5:
+- Answer relevancy evaluates if the content of the answer accurately responds to the user's question.
+- The truthfulness of the information in the answer does not impact relevancy: even if information that appears false is contained in the
+answer, as long as this information is related to the request, then relevancy should not decrease. Remember that this information could come
+from references mentioning imaginary content that you are unaware of: the only thing to evaluate to assign the relevancy grade is therefore
+the adequacy between the information in the answer and the request, NOT their truthfulness.
+- The absence of information in the answer does not impact relevancy, only the information contained in the answer is evaluated.
+- Answer relevancy cannot be evaluated if the answer mentions that no document responds to the user request, it is then `null`, regardless of
+whether it contains other information or not.
+
+Rating scale:
+null - The answer asserts that no document precisely responds to the user request. Even if it provides additional \
+information, whether appropriate or not, the relevancy remains `null`.
+5 - The answer has excellent relevancy. All information provided in the answer is in line with the question \
+and precisely answers the user request.
+4 - The answer achieves good relevancy by providing relevant information to answer the user \
+question. Some information indicated does not exactly answer the question, but remains in line with the request.
+3 - The answer has average relevancy, it contains information that allows responding to the user request, \
+but it also contains superfluous information, which was not necessary to answer the request.
+2 - The answer shows low relevancy, with some elements related to the request, but the majority of \
+the content is not in line with the question asked.
+1 - The answer has very low relevancy, not answering the user's question at all. The \
+content is largely inappropriate or off-topic, delivering no useful information for the request.
+
+Before assigning each grade, you will check that the answer does not contain "No document responds...", if this is the case you must put a
+grade of `null`. If this is not the case, you will then analyze the adequacy between the request and the information contained in the answer.
+Your response should be in JSON format, respecting the following format:
+{
+   "answer_1": {
+      "answer_affirms_no_document_answers": X,
+      "answer_relevancy_justification": "...",
+      "answer_relevancy": Y
+   },
+   "answer_2": {
+      "answer_affirms_no_document_answers": X,
+      "answer_relevancy_justification": "...",
+      "answer_relevancy": Y
+   }
+}
+Where "..." is a string, X is a boolean, and Y is an integer between 1 and 5 or `null`.
+[/EVALUATION INSTRUCTIONS]
+[SAMPLE]
+User request: [question]
+[/SAMPLE]
+[TO EVALUATE]
+Answer 1: [ground_truth]
+Answer 2: [prediction]
+[/TO EVALUATE]
+
+                            Figure 8: Prompt used for Answer relevancy metric with GPT models.
+
+
+
+
+                                                                        4526
+[TASK]
+Task: Grounded Question Answering
+Based solely on the content of the references, the objective is to generate a response to the user's query. Each statement must be followed by
+the reference of the source passage, in the format [i] where i is the number of the reference. If no passage seems relevant, the answer should
+begin with "No document seems to precisely answer your question" and may be supplemented with related sourced information.
+[/TASK]
+[EVALUATION INSTRUCTIONS]
+I will provide you with two answers, numbered 1 and 2, each containing a response to the user request.
+I want you to assign to each answer a completeness grade between 1 and 5:
+- The only condition for an answer to be complete is the presence in it of at least all the information from the references that are relevant to
+the question asked.
+- The presence of unrelated information in the answer does not impact completeness.
+- The presence of information in the answer not from the references does not impact completeness.
+- Possible errors in the sources citing the references do not impact completeness.
+- Completeness cannot be evaluated if the references contain no information that can precisely answer the user request, in which case the
+grade takes the value `null`.
+
+Rating scale:
+null - The references contained no relevant information to precisely answer the user's question. In this case, there is no need to read the
+content of the answer to know that the grade is `null`.
+5 - The answer is very complete, it contains all the relevant information from the references. No essential information is omitted, ensuring
+complete coverage of the question asked.
+4 - The answer covers most of the relevant information in depth. It integrates the references satisfactorily, covering the majority of key points.
+Some details may be missing, but overall, the answer is substantial.
+3 - The answer reasonably addresses a number of relevant aspects. It integrates part of the necessary information from the references.
+However, gaps remain, impacting the overall completeness.
+2 - The answer only covers a minimal part of the relevant information. It misses several important information from the references.
+1 - The answer covers none of the relevant information, all relevant information from the references has been omitted in the answer.
+
+Before assigning each grade, you will always start by analyzing the information found in the references that are relevant to the user request. If
+there is no relevant information in the references, completeness must be `null`. If there are relevant information in the references, you will
+analyze which portion of this information is present or absent in the answers to evaluate the completeness grade. Your response should be in
+JSON format, respecting the following format:
+{
+   "answer_1": {
+       "completeness_justification": "...",
+       "completeness": X
+   },
+   "answer_2": {
+       "completeness_justification": "...",
+       "completeness": X
+   }
+}
+Where "..." is a string, and X is an integer between 1 and 5 or `null`.
+[/EVALUATION INSTRUCTIONS]
+[SAMPLE]
+List of references :
+Reference 1: [reference 1]
+Reference 2: [reference 2]
+Reference 3: [reference 3]
+User request: [question]
+[/SAMPLE]
+[TO EVALUATE]
+Answer 1: [ground_truth]
+Answer 2: [prediction]
+[/TO EVALUATE]
+
+                               Figure 9: Prompt used for Completeness metric with GPT models.
+
+
+
+
+                                                                         4527
+[TASK]
+Task: Grounded Question Answering
+Based solely on the content of the references, the objective is to generate a response to the user's query. Each statement must be followed by
+the reference of the source passage, in the format [i] where i is the number of the reference. If no passage seems relevant, the answer should
+begin with "No document seems to precisely answer your question" and may be supplemented with related sourced information.
+[/TASK]
+[EVALUATION INSTRUCTIONS]
+I will provide you with two answers, numbered 1 and 2, each containing a response to the user request.
+I want you to assign to each answer a usefulness grade of 0 or 1:
+- Usefulness is only evaluated when the answer says that no document precisely answers the user's question, but it still provides information
+related to the question.
+- Usefulness measures how interesting the related information is to know for the user, given that there is no answer in the references.
+- If the answer responds to the user request, usefulness must be `null`.
+- If the answer indicates that no document responds to the user request, without adding other information, usefulness must be `null`.
+
+Rating scale:
+null - (The answer responds to the user request) OR (the answer does not answer the user's question AND does not provide any related
+information).
+1 - The related information is generally related to the question and adds value to the general understanding of the topic.
+0 - The related information is completely off-topic with respect to the question asked.
+
+Before assigning each grade, you will start by verifying that the answer indeed asserts "No document responds...", then you will check that
+the answer contains related information in addition to this assertion. If one of these two conditions is `false` then usefulness must be `null`.
+If both conditions are indeed true, then you will analyze the usefulness of having added this related information to evaluate the usefulness
+grade. Your response should be in JSON format, respecting the following format:
+{
+    "answer_1": {
+       "answer_affirms_no_document_answers": X,
+       "answer_contains_related_information": X,
+       "usefulness_justification": "...",
+       "usefulness": Y
+    },
+    "answer_2": {
+       "answer_affirms_no_document_answers": X,
+       "answer_contains_related_information": X,
+       "usefulness_justification": "...",
+       "usefulness": Y
+    }
+}
+Where "..." is a string, X is a boolean, and Y is an integer that is 0 or 1 or `null`.
+[/EVALUATION INSTRUCTIONS]
+[SAMPLE]
+User request: [question]
+[/SAMPLE]
+[TO EVALUATE]
+Answer 1: [ground_truth]
+Answer 2: [prediction]
+[/TO EVALUATE]
+
+                                Figure 10: Prompt used for Usefulness metric with GPT models.
+
+
+
+
+                                                                         4528
+[TASK]
+Task: Grounded Question Answering
+Based solely on the content of the references, the objective is to generate a response to the user's query. Each statement must be followed by
+the reference of the source passage, in the format [i] where i is the number of the reference. If no passage seems relevant, the answer should
+begin with "No document seems to precisely answer your question" and may be supplemented with related sourced information.
+[/TASK]
+[EVALUATION INSTRUCTIONS]
+I will provide you with two answers, numbered 1 and 2, each containing a response to the user request.
+I want you to assign to each answer a boolean faithfulness grade. An answer is faithful if:
+- Each statement made by the answer is followed by a source indicating the reference from which it is drawn.
+- The information preceding the source is indeed from the corresponding reference.
+- The information preceding the source is in agreement with the corresponding reference, and does not assert facts different from those
+indicated in the reference.
+In all other cases, the response is considered non-faithful.
+Faithfulness is also considered non-measurable if the answer asserts that no document responds to the question, and it does not provide any
+related information, it is then `null`.
+
+Rating scale:
+null - The answer asserts that no document responds to the question, and does not provide any related information.
+1 - All sentences in the answer cite their sources, and are in agreement with the cited sources.
+0 - At least one sentence in the response does not cite its sources, or cites a wrong source, or modifies the content from the references, or
+asserts something that is not supported by the cited references.
+
+Before assigning each grade, you will start by verifying that the answer does not only assert "No document responds...", without any other
+information. If this is the case, then faithfulness must be `null`. Otherwise, I want you to analyze by explaining for each sentence, one after
+the other, if 1) a reference follows the sentence, 2) the reference following the sentence is correct, and 3) if the sentence does not distort or
+modify the content of the references. Your response should be in JSON format, respecting the following format:
+{
+    "answer_1": {
+       "answer_only_asserts_no_document_answers": X,
+       "content_analysis_sentence_by_sentence": [
+           {
+               "sentence": "...",
+               "criterion_1": "...",
+               "criterion_2": "...",
+               "criterion_3": "..."
+           },
+           ...
+       ],
+       "faithfulness_justification": "...",
+       "faithfulness": Y
+    },
+    "answer_2": {
+       "answer_only_asserts_no_document_answers": X,
+       "content_analysis_sentence_by_sentence": [
+           {
+               "sentence": "...",
+               "criterion_1": "...",
+               "criterion_2": "...",
+               "criterion_3": "..."
+           },
+           ...
+       ],
+       "faithfulness_justification": "...",
+       "faithfulness": Y
+    }
+}
+Where "..." is a string, X is a boolean, and Y is either a boolean or `null`.
+[/EVALUATION INSTRUCTIONS]
+[SAMPLE]
+List of references :
+Reference 1: [reference 1]
+Reference 2: [reference 2]
+Reference 3: [reference 3]
+[/SAMPLE]
+[TO EVALUATE]
+Answer 1: [ground_truth]
+Answer 2: [prediction]
+[/TO EVALUATE]
+
+                                Figure 11: Prompt used for Faithfulness metric with GPT models.
+
+
+
+
+                                                                          4529
+E       Detailed unit test results                       traces if they include explanations of its reasoning.
+                                                         Second, the justification enhances the interpretabil-
+Detailed performances of models on GroUSE are
+                                                         ity of the model’s responses.
+available on Figure 14 for closed models, and Fig-
+ure 15 for open-source models. In these Figures,         Models used for inference. Given the 1200
+each square represents the result of one test.           grounded QA statements, we used the following
+   These results were obtained through the Ope-          list of models to generate the predictions :
+nAI5 and VertexAI6 API for the GPT and Gemini
+models respectively. For Mixtral and Llama-3 mod-
+                                                            1. 412 answers were generated using a Llama
+els, the Fireworks AI7 API was used. Prometheus
+                                                               7b (Touvron et al., 2023) finetuned on a
+2 7b was deployed using TGI8 , and the inferences
+                                                               Grounded QA answering task.
+for Prometheus 2 8x7b were made using a model
+quantized with llama.cpp9 (Q4_K_M quantization),
+                                                            2. 333 answers were generated using a Bloom
+and deployed with the same library. For all models,
+                                                               1b1 (Workshop et al., 2023) finetuned on a
+greedy decoding was used when available, else the
+                                                               Grounded QA answering task.
+smallest temperature allowed.
+
+F       French GroUSE Evaluation                            3. 319 answers were generated using a Llama
+                                                               13b (Touvron et al., 2023) finetuned on a
+Following a reviewer’s advice, we translated                   Grounded QA answering task.
+GroUSE to French to study how the performance
+of Judge LLMs varies when the language of the
+                                                            4. 136 answers were generated using a OpenHer-
+question, contexts and answers is changed, while
+                                                               mes 2.5 Mistral-7B10 .
+maintaining the evaluation instructions in English.
+Some prompts were slightly changed to adapt to
+                                                         H        Training and inference
+the new dataset and achieve a satisfactory score
+on the training set of French unit tests. As shown
+                                                                  hyperparameters
+in Table 7, the results are generally slightly lower     The finetuning of the language model was con-
+compared to those presented in Table 3. This perfor-     ducted using the Meta-Llama-3-8B base model,
+mance degradation may be attributed to the predom-       employing an 8-bit quantization scheme to opti-
+inant English data seen during the training of these     mize memory efficiency. The model was trained
+models and/or the linguistic mismatch between the        to accommodate a sequence length of 7104 tokens,
+instruction language and the context language. De-       with sample packing enabled to maximize the uti-
+spite this variation, OpenAI models continue to          lization of input data. We utilized the LoRA (Low-
+demonstrate superior performance, with GPT-4-            Rank Adaptation) (Hu et al., 2022) technique using
+turbo emerging as the top performer in terms of          an adapter with parameters set to r = 32, α = 16,
+total pass rate. Among open-source alternatives,         and a dropout rate of 0.05.
+Mixtral 8x22b Instruct shows promising capabili-
+                                                            Training was performed with a batch size of
+ties.
+                                                         64 over the course of three epochs, which took 2
+G       Finetuning dataset constitution                  hours on one A100 PCIe with 80GB of VRAM.
+                                                         The optimization process employed the AdamW
+Finetuning prompt format. Although Table 6               (Loshchilov and Hutter, 2019) algorithm with an
+indicates that the best results are achieved without a   8-bit implementation. A cosine learning rate sched-
+justification, we opted to build the dataset of GPT-4    uler was used, with a learning rate of 2.10−4 and
+traces with one. This decision is supported by two       10 warmup steps. Two other trainings were con-
+main reasons: first, Mukherjee et al. (2023) show        ducted with learning rates 2.10−3 and 2.10−5 , but
+that a smaller model benefit more from GPT-4’s           the results on GroUSE and alignment measures
+    5
+     https://openai.com/index/openai-api/                were less promising.
+    6
+     https://cloud.google.com/vertex-ai/docs/               The inferences of the trained model were then
+reference
+   7
+     https://fireworks.ai/                               conducted using greedy decoding.
+   8
+     https://huggingface.co/docs/
+text-generation-inference/                                   10
+                                                            https://huggingface.co/teknium/OpenHermes-2.
+   9
+     https://github.com/ggerganov/llama.cpp              5-Mistral-7B
+                                                     4530
+                                                                           Agreement rate of metrics                                          Total
+                                                                                                                Positive      Negative      test pass
+                                             Answer relevancy   Completeness       Usefulness   Faithfulness
+                                                                                                               acceptance     rejection        rate
+                    GPT-4                         93.06            83.33              100          91.67         92.36          92.36        92.12
+                    GPT-4o                        89.58            85.42             99.31         93.75         90.97          90.97        91.67
+    Closed-source   GPT-4-turbo                   90.28            88.19             99.31         89.58         95.14          95.14        92.94
+                    GPT-3.5-turbo                 85.42            50.69             80.56         66.67         70.83          64.58        69.79
+                    Gemini 1.0 Pro                72.22            55.55             84.73         47.22         79.17          80.56        69.91
+                    Mixtral 8x7b Instruct         77.08            52.78             83.33         68.75         78.47          74.31        72.45
+                    Mixtral 8x22b Instruct        88.89            73.61             99.31         86.11         86.81          83.33        86.34
+    Open-source
+                    Llama-3.1 70b Instruct        88.19            61.11             97.92         75.00         84.03          81.94        81.37
+                    Llama-3.1 8b Instruct         62.50            29.17             86.11         68.06         63.89          65.28        62.62
+
+
+Table 7: Percentage of tests passed for various models on French samples. They were evaluated with English
+instruction prompts following the Figure 5 pipeline. The highest score in each column is highlighted in bold.
+
+
+I     Finetuning results                                                             Unbalanced dataset                  Balanced dataset
+                                                                                        Answer relevancy                    Answer relevancy
+Figure 13 shows a detailed comparison of the re-
+                                                                           300                                  300
+sults between the Llama-3 8b before and after fine-
+tuning.                                                                    200                                  200
+
+                                                                           100                                  100
+J      Ablation: balancing the training
+       dataset to reduce judgement biases                                      0                                  0
+                                                                                   NaN 1.0 2.0 3.0 4.0 5.0            NaN 1.0 2.0 3.0 4.0 5.0
+                                                                                         Completeness                        Completeness
+Dataset balance. To ensure the dataset encom-
+passed a wide range of answer qualities, we utilized                       300                                  300
+a diverse set of models to generate answers to the                         200                                  200
+grounded QA statements. However, upon evaluat-
+                                                                           100                                  100
+ing these answers, we observed certain GPT-4 bi-
+ases in the distribution of marks: notably, a scarcity                         0                                  0
+                                                                                   NaN 1.0 2.0 3.0 4.0 5.0            NaN 1.0 2.0 3.0 4.0 5.0
+of score 2 for Answer Relevancy, and an over-
+                                                                                                                            Perfectly balanced dataset
+abundance of scores 1 and 5 for Completeness, as
+illustrated in the first row of Figure 12. To avoid
+                                                                           Figure 12: Comparison of the first and last dataset ob-
+propagating these biases in the finetuned model, we                        tained during the iterative process of debiasing.
+kept on predicting answers until the dataset seemed
+balanced enough, trying to select models with in-
+termediate performances to produce answers of av-                          measured alignments are also close, with the unbal-
+erage quality and fill the gaps. The final balanced                        anced model showing a slightly higher correlation
+dataset was built choosing the 1400 answers which                          with GPT-4, while the balanced model performed
+best harmonized the metrics among 4k evaluated                             marginally better on unit tests. Qualitative analysis
+grounded QA answers, resulting in the distribution                         of the balanced model’s predicted marks reveals
+shown in the second row of Figure 12.                                      a persistent lack of intermediate scores. Overall,
+                                                                           the debiasing process did not yield the anticipated
+Impact of training dataset imbalance. To as-                               improvements.
+sess the impact of dataset debiasing, we trained
+a model on the balanced dataset: this model will
+hereafter be referred to as the balanced model, as
+opposed to the model trained on the naive dataset,
+named the unbalanced model.
+   The evaluations of the balanced model closely
+mirror those of the unbalanced model. The grades
+of both models on the test set have an exact match
+of 58% for Answer relevancy and 63% for Com-
+pleteness. Additionally, the Spearman correlation
+between the models for these metrics are 76% and
+82%, respectively. The results on GroUSE and
+                                                  4531
+                                               Answer relevancy                 Completeness                    Usefulness                      Faithfulness
+                                  Highest marks 1
+                                  Highest marks 2
+                                  Highest marks 3
+                                  Highest marks 4
+                                  Highest marks 5
+                                  Highest marks 6
+                                  Highest marks 7
+Llama-3 8b        Test type       Low relevancy 1
+                                  Low relevancy 2
+                              Low completeness 1
+                              Low completeness 2
+                              Low completeness 3
+                                 Low usefulness 1
+                                Low faithfulness 1
+                                Low faithfulness 2
+                                Low faithfulness 3
+                                  Highest marks 1
+                                  Highest marks 2
+                                  Highest marks 3
+                                  Highest marks 4
+                                  Highest marks 5
+                                  Highest marks 6
+Fine-tuned                        Highest marks 7
+                  Test type
+
+
+
+
+                                  Low relevancy 1
+Llama-3 8b                        Low relevancy 2
+                              Low completeness 1
+                              Low completeness 2
+                              Low completeness 3
+                                 Low usefulness 1
+                                Low faithfulness 1
+                                Low faithfulness 2
+                                Low faithfulness 3
+                                                      1 2 3 4 5 6 7 8 9          1 2 3 4 5 6 7 8 9              1 2 3 4 5 6 7 8 9               1 2 3 4 5 6 7 8 9
+
+
+                                                     Test questions
+        1   How can we explain the solidity of the Pantheon's dome?
+        2   What is the relationship between Pluto and Neptune?                                                                 Test results
+        3   Slow-motion effects and inspiration from Peckinpah?                                                           Test passed
+        4   What are the differences and similarities between the Bay Cat and the Temminck's Cat?                         Test failed
+        5   When should a blood gas test be performed during an apnea test?                                               Output wrong format
+        6   Physical characteristics of the Pyrenean goat                                                                 Theoretically won't happen
+        7   Why did Audrey Dana direct the film "French Women"?
+        8   What is the influence of Jackie Robinson on American society?
+        9   How was cuneiform deciphered?
+
+Figure 13: Comparison of unit tests results before and after finetuning of the Llama 3 8b model. Each matrix
+represents the performance of one model on a specific metric. Orange squares represent instances where the model’s
+output did not adhere to the expected format, preventing score retrieval. Hatched squares denote LLM calls that the
+pipeline would skip if previous calls had returned the expected value (Figure 5).
+Note that in this situation the four metrics were evaluated in a single prompt by the models, which explains the
+difference of results between the non finetuned Llama-3 8b depicted here and the Llama-3 8b results depicted in
+Figure 15.
+
+
+
+
+                                                                              Agreement rate of metrics                                                       Total
+                                         Answer                                                                         Positive          Negative          test pass
+                                                            Completeness        Usefulness           Faithfulness
+                                        relevancy                                                                      acceptance         rejection            rate
+  Finetuned Llama 3 8b
+                                           88.89                  81.94              81.25              52.78              91.67               91.67          81.37
+   (Unbalanced dataset)
+  Finetuned Llama 3 8b
+                                           87.50                  83.33              81.94              61.81              90.97               92.36          82.99
+    (Balanced dataset)
+
+Table 8: Percentage of tests passed for balanced and unbalanced model. The highest score in each column is
+highlighted in bold.
+
+
+
+
+                                                     Spearman correlation                                                 F1-score
+                                                                                                                                      Positive           Negative
+                                          Answer relevancy                Completeness       Usefulness         Faithfulness
+                                                                                                                                     acceptance          rejection
+   Finetuned Llama-3 8b
+                                                      0.62                    0.52                   0.32            0.57                0.65               0.73
+    (Unbalanced dataset)
+   Finetuned Llama-3 8b
+                                                      0.62                    0.57                   0.41            0.57                0.79               0.74
+     (Balanced dataset)
+
+                              Table 9: Alignment with the ground truth (GPT-4) evaluations on the test set.
+
+
+                                                                                 4532
+                                                    Answer relevancy           Completeness              Usefulness                    Faithfulness
+                                       Highest marks 1
+                                       Highest marks 2
+                                       Highest marks 3
+                                       Highest marks 4
+                                       Highest marks 5
+                                       Highest marks 6
+                                       Highest marks 7
+                       Test type
+
+
+    GPT-4                              Low relevancy 1
+                                       Low relevancy 2
+                                   Low completeness 1
+                                   Low completeness 2
+                                   Low completeness 3
+                                      Low usefulness 1
+                                     Low faithfulness 1
+                                     Low faithfulness 2
+                                     Low faithfulness 3
+                                       Highest marks 1
+                                       Highest marks 2
+                                       Highest marks 3
+                                       Highest marks 4
+                                       Highest marks 5
+                                       Highest marks 6
+                                       Highest marks 7
+                       Test type
+
+
+
+
+    GPT-4o                             Low relevancy 1
+                                       Low relevancy 2
+                                   Low completeness 1
+                                   Low completeness 2
+                                   Low completeness 3
+                                      Low usefulness 1
+                                     Low faithfulness 1
+                                     Low faithfulness 2
+                                     Low faithfulness 3
+                                       Highest marks 1
+                                       Highest marks 2
+                                       Highest marks 3
+                                       Highest marks 4
+                                       Highest marks 5
+                                       Highest marks 6
+                                       Highest marks 7
+                       Test type
+
+
+
+
+  GPT-4-turbo                          Low relevancy 1
+                                       Low relevancy 2
+                                   Low completeness 1
+                                   Low completeness 2
+                                   Low completeness 3
+                                      Low usefulness 1
+                                     Low faithfulness 1
+                                     Low faithfulness 2
+                                     Low faithfulness 3
+                                       Highest marks 1
+                                       Highest marks 2
+                                       Highest marks 3
+                                       Highest marks 4
+                                       Highest marks 5
+                                       Highest marks 6
+                                       Highest marks 7
+                       Test type
+
+
+
+
+ GPT-3.5-turbo                         Low relevancy 1
+                                       Low relevancy 2
+                                   Low completeness 1
+                                   Low completeness 2
+                                   Low completeness 3
+                                      Low usefulness 1
+                                     Low faithfulness 1
+                                     Low faithfulness 2
+                                     Low faithfulness 3
+                                       Highest marks 1
+                                       Highest marks 2
+                                       Highest marks 3
+                                       Highest marks 4
+                                       Highest marks 5
+                                       Highest marks 6
+                                       Highest marks 7
+                       Test type
+
+
+
+
+Gemini 1.0 Pro                         Low relevancy 1
+                                       Low relevancy 2
+                                   Low completeness 1
+                                   Low completeness 2
+                                   Low completeness 3
+                                      Low usefulness 1
+                                     Low faithfulness 1
+                                     Low faithfulness 2
+                                     Low faithfulness 3
+                                                           1 2 3 4 5 6 7 8 9     1 2 3 4 5 6 7 8 9       1 2 3 4 5 6 7 8 9             1 2 3 4 5 6 7 8 9
+
+
+                                                          Test questions
+             1   How can we explain the solidity of the Pantheon's dome?
+             2   What is the relationship between Pluto and Neptune?                                                    Test results
+             3   Slow-motion effects and inspiration from Peckinpah?                                               Test passed
+             4   What are the differences and similarities between the Bay Cat and the Temminck's Cat?             Test failed
+             5   When should a blood gas test be performed during an apnea test?                                   Output wrong format
+             6   Physical characteristics of the Pyrenean goat                                                     Theoretically won't happen
+             7   Why did Audrey Dana direct the film "French Women"?
+             8   What is the influence of Jackie Robinson on American society?
+             9   How was cuneiform deciphered?
+
+
+Figure 14: Detailed unit tests results for closed-source models. Each matrix represents the performance of one
+model on a specific metric. Orange squares represent instances where the model’s output did not adhere to the
+expected format, preventing score retrieval. Hatched squares denote LLM calls that the pipeline would skip if
+previous calls had returned the expected value (Figure 5).
+
+
+
+
+                                                                               4533
+                                                       Answer relevancy            Completeness             Usefulness                    Faithfulness
+                                          Highest marks 1
+                                          Highest marks 2
+                                          Highest marks 3
+                                          Highest marks 4
+                                          Highest marks 5
+                                          Highest marks 6
+                                          Highest marks 7
+
+
+                          Test type
+    Mixtral 8x7b                          Low relevancy 1
+                                          Low relevancy 2
+                                      Low completeness 1
+                                      Low completeness 2
+                                      Low completeness 3
+                                         Low usefulness 1
+                                        Low faithfulness 1
+                                        Low faithfulness 2
+                                        Low faithfulness 3
+                                          Highest marks 1
+                                          Highest marks 2
+                                          Highest marks 3
+                                          Highest marks 4
+                                          Highest marks 5
+                                          Highest marks 6
+                                          Highest marks 7
+                          Test type
+
+
+
+
+    Mixtral 8x22b                         Low relevancy 1
+                                          Low relevancy 2
+                                      Low completeness 1
+                                      Low completeness 2
+                                      Low completeness 3
+                                         Low usefulness 1
+                                        Low faithfulness 1
+                                        Low faithfulness 2
+                                        Low faithfulness 3
+                                          Highest marks 1
+                                          Highest marks 2
+                                          Highest marks 3
+                                          Highest marks 4
+                                          Highest marks 5
+                                          Highest marks 6
+                                          Highest marks 7
+                          Test type
+
+
+
+
+ Prometheus 2 (7b)                        Low relevancy 1
+                                          Low relevancy 2
+                                      Low completeness 1
+                                      Low completeness 2
+                                      Low completeness 3
+                                         Low usefulness 1
+                                        Low faithfulness 1
+                                        Low faithfulness 2
+                                        Low faithfulness 3
+                                          Highest marks 1
+                                          Highest marks 2
+                                          Highest marks 3
+                                          Highest marks 4
+                                          Highest marks 5
+                                          Highest marks 6
+                                          Highest marks 7
+                          Test type
+
+
+
+
+Prometheus 2 (8x7b)                       Low relevancy 1
+                                          Low relevancy 2
+                                      Low completeness 1
+                                      Low completeness 2
+                                      Low completeness 3
+                                         Low usefulness 1
+                                        Low faithfulness 1
+                                        Low faithfulness 2
+                                        Low faithfulness 3
+                                          Highest marks 1
+                                          Highest marks 2
+                                          Highest marks 3
+                                          Highest marks 4
+                                          Highest marks 5
+                                          Highest marks 6
+                                          Highest marks 7
+                          Test type
+
+
+
+
+    Llama-3 70b                           Low relevancy 1
+                                          Low relevancy 2
+                                      Low completeness 1
+                                      Low completeness 2
+                                      Low completeness 3
+                                         Low usefulness 1
+                                        Low faithfulness 1
+                                        Low faithfulness 2
+                                        Low faithfulness 3
+                                          Highest marks 1
+                                          Highest marks 2
+                                          Highest marks 3
+                                          Highest marks 4
+                                          Highest marks 5
+                                          Highest marks 6
+                                          Highest marks 7
+                          Test type
+
+
+
+
+     Llama-3 8b                           Low relevancy 1
+                                          Low relevancy 2
+                                      Low completeness 1
+                                      Low completeness 2
+                                      Low completeness 3
+                                         Low usefulness 1
+                                        Low faithfulness 1
+                                        Low faithfulness 2
+                                        Low faithfulness 3
+                                                              1 2 3 4 5 6 7 8 9     1 2 3 4 5 6 7 8 9       1 2 3 4 5 6 7 8 9             1 2 3 4 5 6 7 8 9
+
+
+
+
+                                                             Test questions
+              1     How can we explain the solidity of the Pantheon's dome?
+              2     What is the relationship between Pluto and Neptune?                                                    Test results
+              3     Slow-motion effects and inspiration from Peckinpah?                                               Test passed
+              4     What are the differences and similarities between the Bay Cat and the Temminck's Cat?             Test failed
+              5     When should a blood gas test be performed during an apnea test?                                   Output wrong format
+              6     Physical characteristics of the Pyrenean goat                                                     Theoretically won't happen
+              7     Why did Audrey Dana direct the film "French Women"?
+              8     What is the influence of Jackie Robinson on American society?
+              9     How was cuneiform deciphered?
+
+
+Figure 15: Detailed unit tests results for open-source models. Each matrix represents the performance of one model
+on a specific metric. Orange squares represent instances where the model’s output did not adhere to the expected
+format, preventing score retrieval. Hatched squares denote LLM calls that the pipeline would skip if previous calls
+had returned the expected value (Figure 5).
+
+                                                                                  4534
+

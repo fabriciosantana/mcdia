@@ -1,0 +1,952 @@
+            RAGTruth: A Hallucination Corpus for Developing Trustworthy
+                      Retrieval-Augmented Language Models
+                   Cheng Niu1 , Yuanhao Wu1 , Juno Zhu1 , Siliang Xu1 , Kashun Shum1 ,
+                           Randy Zhong1 , Juntong Song1 , and Tong Zhang2
+                                                         1
+                                                         NewsBreak
+                                      2
+                                          University of Illinois Urbana-Champaign
+                                                cheng.niu@newsbreak.com
+
+                            Abstract                                 Q UESTION : how to prepare to get an ultrasound?
+                                                                     R EFERENCE : Passage 1: 1 If you are just interested in
+         Retrieval-augmented generation (RAG) has be-                checking the gender, you can go as early as 17 weeks. 2
+         come a main technique for alleviating halluci-              Any earlier, and the results may not be accurate, leading
+         nations in large language models (LLMs). De-                to an extra coat of paint for your bedroom. 3 To get good
+         spite the integration of RAG, LLMs may still                pictures, 3D ultrasounds are best performed between 20
+                                                                     and 32 weeks, and the best pictures are between 24 and
+         present unsupported or contradictory claims
+                                                                     30 weeks.
+         to the retrieved contents. In order to develop
+                                                                     ...
+         effective hallucination prevention strategies un-
+                                                                     R ESPONSE : Based on the given passages, here’s how to
+         der RAG, it is important to create benchmark                prepare for an ultrasound:
+         datasets that can measure the extent of halluci-            * For a gender reveal ultrasound, wait until at least 17
+         nation. This paper presents RAGTruth, a cor-                weeks of pregnancy to ensure accurate results.
+         pus tailored for analyzing word-level hallucina-            * For 3D ultrasounds, schedule the appointment between
+         tions in various domains and tasks within the               20 and 32 weeks of pregnancy for the best pictures ...
+         standard RAG frameworks for LLM applica-
+                                                                     A NNOTATION
+         tions. RAGTruth comprises nearly 18,000 nat-
+                                                                     Span: between 20 and 32 weeks of pregnancy for the best
+         urally generated responses from diverse LLMs                pictures
+         using RAG. These responses have undergone                   Type: Evident Conflict
+         meticulous manual annotations at both the indi-             Reason: Original: "the best pictures are between 24 and
+         vidual case and word levels, incorporating eval-            30 weeks", Generative: "between 20 and 32 weeks of
+         uations of hallucination intensity. We not only             pregnancy for the best pictures"
+         benchmark hallucination frequencies across dif-
+         ferent LLMs, but also critically assess the ef-           Table 1: An example of RAGTruth data from the ques-
+         fectiveness of several existing hallucination de-         tion answering task. It contains context, response gener-
+         tection methodologies. We show that using a               ated by LLM with and span-level annotation.
+         high-quality dataset such as RAGTruth, it is
+         possible to finetune a relatively small LLM and
+         achieve a competitive hallucination detection
+         performance when compared to the existing
+                                                                   of LLMs usually refers to a situation where the
+         prompt-based approaches using state-of-the-art            model generates content that is not based on fac-
+         LLMs such as GPT-4. Furthermore, the fine-                tual or accurate information (Rawte et al., 2023).
+         tuned model can effectively mitigate hallucina-           The occasional generation of outputs that appear
+         tion in LLM responses. 1                                  plausible but are factually incorrect significantly
+                                                                   undermine the reliability of LLMs in real-world
+     1   Introduction                                              scenarios, such as medical diagnoses (Pal et al.,
+     Large language models (LLMs) have achieved re-                2023) and news summarization (Shen et al., 2023).
+     markable success in a variety of tasks, including                To reduce hallucination, various methods have
+     text generation (Li et al., 2024), machine transla-           been developed that can be applied at differ-
+     tion (Kocmi and Federmann, 2023), and question                ent stages of LLM lifecycle, including pre-
+     answering (Zhao et al., 2023). However, one of the            training (Brown et al., 2020), supervised fine-
+     key challenges in deploying LLMs in real-world                tuning (Zhou et al., 2023; Zhang et al., 2024),
+     applications is their tendency to hallucinate (Kad-           RLHF (Ouyang et al., 2022; Lin et al., 2022),
+     dour et al., 2023). Hallucination in the context              and inference (Dhuliawala et al., 2023; Gao et al.,
+        1
+          The RAGTruth dataset is available at https://github.     2023). In terms of detection, methods are devel-
+     com/ParticleMedia/RAGTruth                                    oped by examining the model’s intrinsic state (Guo
+                                                             10862
+Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 10862–10878
+                               August 11-16, 2024 ©2024 Association for Computational Linguistics
+et al., 2017), comparing it with external data                    major open-source and closed-source LLMs.
+and tools (Chern et al., 2023), or leveraging the
+LLM’s inherent powerful capabilities for self-           (ii) We perform a comprehensive comparison of
+checking (Agrawal et al., 2024; Manakul et al.,               different hallucination detection methods at
+2023). Retrieval-augmented generation (RAG) is                both the passage and word levels.
+extensively used to supply LLMs with updated,            (iii) We present a baseline method of fine-tuning
+relevant knowledge, significantly mitigating hal-              LLM for hallucination detection. It is shown
+lucination (Varshney et al., 2023; Mishra et al.,              that by fine-tuning the Llama-2-13B model on
+2024). Nevertheless, even with RAG and other                   the RAGTruth training data, we can achieve
+enhancements, LLMs still produce statements that               results competitive to the existing prompt-
+are either unfounded or contradict the information             based approaches using GPT-4. This shows
+provided in the retrieved references (Shuster et al.,          the potential of developing better hallucina-
+2021).                                                         tion detection methods using RAGTruth.
+   Despite the growing awareness of the hallucina-
+tion phenomenon, the understanding of hallucina-         (iv) We show that by using our finetuned hallucina-
+tion in LLMs is still in its early stages. One key            tion detector, it is possible to significantly re-
+challenge is the lack of high-quality, large-scale            duce the occurrence of hallucinations in the re-
+datasets specifically designed for hallucination de-          sponses from LLMs. The improvement holds
+tection. This issue is particularly acute in RAG              even for models with inherently low halluci-
+settings. Due to the relatively low hallucination             nation rates, such as GPT-4.
+ratio, a substantial increase in annotation resources
+is needed. Existing datasets for LLM hallucina-          2       Related Work
+tion detection are predominantly synthesized (Li         2.1      Hallucination of Large Language Models
+et al., 2023). For instance, in Liu and Liu (2023);
+Longpre et al. (2021), prompts conflicting with          Though hallucination in traditional natural lan-
+conventional knowledge are purposely generated           guage generation (NLG) contexts has been widely
+to trigger hallucinations. While these approaches        studied (Ji et al., 2023), comprehending and tack-
+are efficient at generating hallucinations, the re-      ling this problem in the context of LLMs presents
+sulting artificial hallucinations can substantially      distinct challenges (Zhang et al., 2023). Existing
+differ from those that naturally occur. In Chen et al.   research has demonstrated that incorporating up-
+(2023); Hu et al. (2023), hallucination datasets are     to-date, relevant knowledge in the prompt can ef-
+developed by manual annotations of naturally pro-        fectively reduce fact-conflicting hallucination (Vu
+duced LLM responses. However, these datasets are         et al., 2023; Lewis et al., 2020). This approach,
+of limited size and are not specifically focused on      referred to as Retrieval-Augmented Generation
+the RAG scenario.                                        (RAG), is widely used in real-world LLM applica-
+                                                         tions. For instance, Google Bard 2 and Microsoft
+   In this paper, we introduce a large-scale high-
+                                                         BingChat 3 have implemented this technique.
+quality dataset specifically designed for word-level
+hallucination detection for RAG applications. Us-        2.2      Hallucination Evaluation Datasets
+ing this dataset, we have conducted an extensive
+                                                         Extensive research has focused on hallucination
+benchmarking of mainstream LLMs to assess their
+                                                         benchmarks within conventional Natural Language
+tendency to generate hallucinations, as well as
+                                                         Generation settings (Dziri et al., 2022; Zhong et al.,
+evaluate current methods for hallucination detec-
+                                                         2021; Durmus et al., 2020; Lin et al., 2022). With
+tion. Additionally, we have demonstrated supe-
+                                                         the rise of LLMs, the detection of hallucinations
+rior performance in identifying hallucinations by
+                                                         has become increasingly challenging, necessitating
+fine-tuning LLM with RAGTruth dataset. Our key
+                                                         the development of high-quality datasets for LLM
+contributions are:
+                                                         evaluation (Chen and Shu, 2024). Contributions
+ (i) We propose RAGTruth, a large-scale word-            in this domain include HaluEval (Li et al., 2023),
+     level hallucination evaluation dataset specifi-     which introduced datasets encompassing both syn-
+     cally for the RAG scenario across several com-      thetically and naturally generated LLM responses,
+     mon tasks. It consists of nearly 18,000 fully           2
+                                                                 https://bard.google.com
+     annotated natural responses generated from              3
+                                                                 https://www.bing.com
+
+                                                    10863
+and FELM (Chen et al., 2023), which concentrated          Appendix A.
+on naturally generated LLM responses across mul-
+                                                          Evident Conflict: for when generative content
+tiple domain tasks. RefChecker (Hu et al., 2023), a
+                                                          presents direct contraction or opposition to the pro-
+distinctive approach, breaks down claims in LLM
+                                                          vided information. These conflicts are easily ver-
+responses into triples and utilizes human annota-
+                                                          ifiable without extensive context, often involving
+tion to assess the truthfulness of facts. Notably,
+                                                          clear factual errors, misspelled names, incorrect
+these works primarily focus on annotating factual
+                                                          numbers, etc.
+hallucinations in LLM responses. Distinguishing
+from previous research, our work centers on the           Subtle Conflict: for when generative content
+evaluation of LLMs within RAG settings.                   presents a departure or divergence from the pro-
+                                                          vided information, altering the intended contextual
+2.3 Hallucination Detection Methods                       meaning. These conflicts often involve substitu-
+Researchers have been exploring various methods           tion of terms that carry different implications or
+to enhance the reliability of LLMs by detecting hal-      severity, requiring a deeper understanding of their
+lucinations. In Azaria and Mitchell (2023); Xiao          contextual applications.
+and Wang (2021); Malinin and Gales (2021), intrin-        Evident Introduction of Baseless Information:
+sic model uncertainty metrics such as token-level         for when generated content includes information
+probability and entropy are used to detect halluci-       not substantiated in the provided information. It
+nations. When direct access to output uncertainty         involves the creation of hypothetical, fabricated, or
+is not feasible, as in the case with limited APIs like    hallucinatory details lacking evidence or support.
+GPT-4, an alternative approach involves employing
+a fully accessible LLM as a proxy (Manakul et al.,        Subtle Introduction of Baseless Information:
+2023). In Falke et al. (2019); Barrantes et al. (2020),   is when generated content extends beyond the pro-
+natural language inference modules are adapted to         vided information by incorporating inferred details,
+check the information consistency between the ar-         insights, or sentiments. This additional informa-
+ticles and their summaries, and it has been shown         tion lacks verifiability and might include subjective
+that external knowledge is helpful for detecting fac-     assumptions or commonly observed norms rather
+tual hallucinations. (Guo et al., 2022; Mallen et al.,    than explicit facts.
+2023). Additionally, methods that leverage the in-
+                                                          3.2   Response Generation
+herent capabilities of LLMs have been proposed
+for self-checking, such as verbalization-based and        Tasks and Data Sources We selected three
+consistency-based methods (Xiong et al., 2024;            widely recognized generation tasks with RAG set-
+Manakul et al., 2023). These techniques aim to            tings for response generation: Question Answering,
+detect hallucinations without relying on internal         Data-to-text Writing, and News Summarization.
+states or external data and tools.                           For the task of question answering, we con-
+                                                          ducted a random sampling from the training set
+3   Construction Process of RAGTruth                      of MS MARCO (Nguyen et al., 2016). To reduce
+                                                          the difficulty of annotation, we selected only those
+We established a data generation and annotation           questions related to daily life, and preserved only
+pipeline as shown in Figure 1.                            three retrieved passages for each question. Then
+                                                          we prompted LLMs to generate answers for each
+3.1 Hallucination Taxonomy
+                                                          question solely based on the retrieved passages.
+Different from open-end generation, under RAG                For the data-to-text writing task, we prompted
+setting, the prompt contains rich context informa-        LLMs to generate an objective overview for
+tion, and the model is generally required to gen-         a randomly sampled business in the restaurant
+erate text based on the provided context. The de-         and nightlife categories from the Yelp Open
+tection and mitigation of inconsistencies between         Dataset (Yelp, 2021). In this dataset, information
+retrieved information and responses emerge as sig-        pertaining to a business is represented using struc-
+nificant sources of hallucination.                        tured data. To streamline the annotation process,
+   As outlined below, we categorize the halluci-          we focused only on the following business informa-
+nation in the RAG setting into four types. For            tion fields: BusinessParking, RestaurantsReserva-
+concrete examples of each type, please refer to           tions, OutdoorSeating, WiFi, RestaurantsTakeOut,
+                                                     10864
+Figure 1: Data gathering pipeline. Taking a data-to-text writing task as an example, our data gathering pipeline
+includes 2 steps: 1) response generation. We generated responses with multiple LLMs and natural prompts. 2)
+human annotation. Human labeler annotated hallucinated spans in LLM responses.
+
+
+RestaurantsGoodForGroups, Music, and Ambience.           the subjects discussed in news-related sample data.
+In addition to the structured data, we have also in-     Therefore, we chose annotators who are proficient
+cluded up to three business-related user reviews         in English and possess a bachelor’s degree in En-
+to enrich the context information. In the prompt,        glish, Communications, or relevant fields to ensure
+these information is represented in JSON format.         the accuracy and reliability of the annotation re-
+   For the news summarization task, we randomly          sults. We recruited annotators from a professional
+selected documents from the training set of the          vendor and paid them at a rate of $25 per hour per
+well-known CNN/Daily Mail dataset (See et al.,           individual.
+2017) as well as recent news articles from a pres-          The annotators are invited to perform annotation
+tigious news platform. LLMs were prompted to             tasks using Label Studio (Tkachenko et al., 2020-
+generate a summary for each of the source news.          2022). Each labeling task is presented within one
+                                                         page, comprising the following components: 1) the
+Models The following six models with strong              context provided to the AI models; 2) a set of 6
+instruction-following ability are used for response      responses, generated by different AI models. Our
+generation: GPT-3.5-turbo-0613 and GPT-4-0613            annotation interface is available in Appendix C.
+from OpenAI (OpenAI et al., 2024); Mistral-7b-              Their task was to annotate the specific spans of
+Instruct from Mistral AI (Jiang et al., 2023); Llama-    the generated text that contains hallucinated infor-
+2-7B-chat, Llama-2-13B-chat and Llama-2-70B-             mation and categorize them into the four types. To
+chat (4bit quantized)4 from Meta (Touvron et al.,        ensure the quality of the annotations, each response
+2023). To ensure a fair comparison, the prompts          is independently labeled by two annotators. The
+used for response generation are kept straightfor-       consistency rate of two annotators was 91.8% at the
+ward with subtle differences among various models        response level and 78.8% at the span level. In cases
+to optimize their performance. We provide detailed       where there is a considerable difference between
+prompts in the Appendix B.                               the two annotations, a third review is undertaken.
+   For each sample, we collected one response from
+each model. As a result, we got a total of 6 re-          3.4   Annotations for Adaptive Evaluation
+sponses for each input sample.                            In different contexts, the definition and criteria for
+                                                          hallucination vary, and the annotation of hallucina-
+3.3 Human Annotation                                      tion is not always straightforward. In contentious
+Identifying AI-generated hallucinations is a chal-        cases, additional annotations are provided to accu-
+lenging task. It requires a strong capacity for criti-    rately reflect these situations. This approach en-
+cal thinking to understand the logical flow of vari-      ables users to adopt various evaluation strategies
+ous texts, along with meticulous attention to detail      tailored to their specific application circumstances.
+for spotting subtle inaccuracies and inconsisten-         Please refer to Appendix C for more statistical in-
+cies. Moreover, a certain level of media literacy         formation about these annotations.
+and knowledge of current affairs is crucial to grasp      Implicit Truth The extensive world knowledge
+   4
+     https://huggingface.co/TheBloke/                     and ability of LLMs is a significant advantage in
+Llama-2-70B-Chat-AWQ                                      open-ended generation scenarios. But in the con-
+                                                    10865
+                Subtle baseless info         Subtle conflict
+                Evident baseless info        Evident conflict          writing, and 943 instances for news summarization.
+                                                                       Each instance comprises responses from 6 differ-
+        QA                                                             ent models. As shown in Table 2, the RAGTruth
+                                                                       dataset also features longer prompt and response
+Data-to-text                                                           lengths than existing datasets for hallucination de-
+    Writing
+                                                                       tection (Wang et al., 2020).
+      Sum.
+                                                                       4.2   Hallucination Statistics
+           0%       25%                50%      75%             100%   Hallucination Types As shown in Figure 2, the
+Figure 2: Frequency of different types of hallucination                generation of information baseless in the context
+by task.                                                               was significantly more prevalent than the gener-
+                                                                       ation of information conflicting with the context,
+                                                                       especially for the question answering tasks. Within
+text of this paper, which focuses on the relatively                    the two major categories of baseless info and con-
+strict RAG scenarios, we have labeled information                      flict, the more severe hallucinations, namely Evi-
+that is not mentioned in the reference but may be                      dent baseless info and Evident conflict, respectively,
+truthful as hallucinations. For instance, mentioning                   account for a significant portion. This observation
+a local officer’s name not present in the reference                    highlights the importance and challenges of LLMs
+or claiming that a restaurant accepts credit card                      hallucination mitigation, even in RAG settings.
+payments without any basis.
+   The decision is based on the observation that                       Hallucination vs Tasks As shown in Table 2,
+LLMs have a relatively high chance of making er-                       across the three tasks, the date-to-text writing task
+rors when generating detailed facts, partly because                    exhibited the highest frequency of hallucinations in
+their embedded knowledge can be outdated. There-                       its responses. Inconsistent handling of JSON for-
+fore, RAG applications usually instruct LLMs not                       mat data, especially time and attributes, contributed
+to generate factual content without the support of                     to a significant number of hallucinations in this task.
+references. Besides, we provided an additional                         Interestingly, the models did not show a higher rate
+span-level annotation named implicit_true for these                    of hallucinations for recent news compared to out-
+spans to accommodate different application needs.                      dated news. This could be attributed to the shorter
+                                                                       context length in the recent news subtask compared
+Differences in Handling Null Value In the data-                        to the CNN/DM subtask.
+to-text writing task, certain fields sometimes are
+with null values. We observed that in the generated                    Hallucination vs Models Table 3 illustrates that
+results, null is often interpreted as false by some                    among the data we collected, OpenAI’s two mod-
+models. Since the more common expressions for                          els demonstrated notably lower hallucination rates
+negation in our dataset are the boolean value False                    compared to others. Specifically, GPT-4-0613 ex-
+or the text No, we labeled these instances as hal-                     hibited the lowest hallucination frequency.
+lucinations (evident introduction of baseless info)                       To more clearly compare the hallucination rate
+and provided a special span-level annotation named                     of different models, we calculated the hallucination
+due_to_null for these spans. In the subsequent hal-                    density for each model across three tasks. Hallu-
+lucination detection experiments, our prompts will                     cination density is defined as the average number
+be aligned with this standard.                                         of hallucination spans per hundred words in the
+                                                                       responses. In the Llama2 series, a clear negative
+4     Hallucination Benchmark Analysis                                 correlation was observed between the model scale
+4.1 Basic Statistics                                                   and hallucination density, aside from the data-to-
+                                                                       text writing tasks. Despite its strong performance
+We presented detailed statistics of RAGTruth in                        in various benchmarks and leaderboards (Zheng
+Table 2. Compared to existing datasets for hallu-                      et al., 2023), the Mistral-7B-Instruct model gener-
+cination detection (Cao et al., 2023; Kamoi et al.,                    ated the highest number of responses containing
+2023), the RAGTruth dataset is considerably large                      hallucinations.
+in scale. The corpus contains a total of 2,965 in-
+stances of data, which include 989 instances for                       Hallucination vs Length After removing the top
+question answering, 1,033 instances for date-to-text                   and bottom 5% of outliers, we partitioned the data
+                                                                   10866
+                                                                            C ONTEXT L ENGTH             R ESP. L ENGTH                   H ALLUCINATION
+         Task                               # Instance        # Resp.
+                                                                            Mean           Max           Mean         Max       # Resp.       % Resp.        # Span
+         Question Answering                     989            5934         243             509           119         381          1724           29.1%          2927
+         Data-to-text Writing                   1033           6198         354            1253           159         369          4254           68.6%          9290
+         Summarization(CNN/DM)                  628            3768         648            1749           124         632          1165           30.9%          1474
+         Summarization(Recent News)             315            1890         369             481            89         240           521           27.6%           598
+         Overall                                2965          17790         381            1749           131         632          7664           43.1%          14289
+
+
+                    Table 2: The basic statistics of RAGTruth. Here "Resp." stands for "Response".
+
+                               Q UESTION A NSWERING                   DATA - TO - TEXT W RITING                       S UMMARIZATION                        OVERALL
+    Model
+                             # Resp.    # Span      Density       # Resp.         # Span     Density        # Resp.         # Span        Density     # Resp.        # Span
+    GPT-3.5-turbo-0613        75          89           0.12           272          384            0.18          54           60            0.05           401            533
+    GPT-4-0613                48          51           0.06           290          354            0.27          74           80            0.08           406            485
+    Llama-2-7B-chat           510        1010          0.59           888          1775           1.27          434          517           0.58           1832           3302
+    Llama-2-13B-chat          399         654          0.48           983          2803           1.53          295          342           0.41           1677           3799
+    Llama-2-70B-chat†         320         529          0.40           863          1834           1.15          212          245           0.26           1395           2608
+    Mistral-7B-Instruct       378         594          0.59           958          2140           1.51          617          828           0.86           1953           3562
+
+
+ Table 3: Hallucination counts and density of models. †: We used 4-bit quantized version of Llama-2-70B-chat.
+
+
+   CLB      S UMMARIZATION          D2T W RITING               QA
+                                                                                                     QA
+     1      0.29(176,368]           1.51(178,273]       0.50(131,187]
+     2      0.36(368,587]           1.48(273,378]       0.51(187,288]                      Data-to-text
+     3      0.44(587,1422]          1.49(378,731]       0.49(288,400]                          Writing
+   RLB      S UMMARIZATION          D2T W RITING               QA                                  Sum.
+     1        0.34(44,87]           1.20(93,131]         0.21(19,93]                                  0%                 25%             50%           75%                      100%
+     2       0.32(87,119]           1.59(131,175]       0.37(93,138]                                                               Normalized position
+     3       0.44(119,245]          1.69(175,258]       0.87(138,257]
+
+
+Table 4: Average number of hallucinations per response                                Figure 3: Heatmaps of normalized hallucination oc-
+in different context length buckets (CLB) and response                                currence positions. The probability of hallucinations
+length buckets (RLB) for the three types of tasks. The                                occurring is higher in brighter areas.
+subscript denotes the minimum and maximum length of
+this bucket.
+                                                                                      nations in the first half. In that bright area, hallu-
+                                                                                      cinations concerning business attributes frequently
+for each task type into three equal-sized groups                                      occur.
+according to the length of the context/response. We
+then computed the average number of hallucinated                                      5       Experimental Setup
+spans per response within each group. As shown
+                                                                                      5.1          Hallucination Detection Algorithms
+in Table 4, there is a clear overall trend of an in-
+crease in the average number of hallucinations as                                     Using RAGTruth, we conducted experiments with
+the response length grows. Only the average num-                                      the following four distinct algorithms for halluci-
+ber of hallucinations in news summarization tasks                                     nation detection:
+significantly increases with the length of the con-                                   Hallucination Detection Prompt: Hallucination
+text. This may be because the contexts in the other                                   detection prompts are manually crafted to instruct
+two tasks are more structured, and an increase in                                     LLMs (GPT-4-turbo and GPT-3.5-turbo) in assess-
+length does not significantly raise the difficulty of                                 ing whether a given reference-response pair con-
+understanding the content.                                                            tains hallucinated content and to identify the corre-
+                                                                                      sponding hallucinated spans in the response. For
+Location of Hallucinations In Figure 3, we                                            detailed information about these prompts, please
+present the heatmap of the hallucination occurrence                                   refer to Appendix D.
+positions. Hallucinations are significantly more                                      SelfCheckGPT (Manakul et al., 2023): Self-
+likely to occur towards the end of responses in                                       CheckGPT employs a zero-resource, sampling-
+question-answering and news summarization tasks.                                      based method to fact-check the responses of black-
+Compared to other tasks, the data-to-text writing                                     box models. When processing each response in
+task has a relatively higher occurrence of halluci-                                   RAGTruth, 3 extra responses from the same model
+                                                                              10867
+                                 Q UESTION A NSWERING       DATA - TO - TEXT W RITING          S UMMARIZATION                    OVERALL
+  Methods
+                                Precision   Recall   F1     Precision   Recall     F1     Precision    Recall   F1     Precision     Recall    F1
+  Promptgpt-3.5-turbo             18.8      84.4     30.8     65.1        95.5     77.4     23.4       89.2     37.1     37.1         92.3     52.9
+  Promptgpt-4-turbo               33.2      90.6     45.6     64.3       100.0     78.3     31.5       97.6     47.6     46.9         97.9     63.4
+  SelfCheckGPTgpt-3.5-turbo       35.0      58.0     43.7     68.2        82.8     74.8     31.1       56.5     40.1     49.7         71.9     58.8
+  LMvLMgpt-4-turbo                18.7      76.9     30.1     68.0        76.7     72.1     23.3       81.9     36.2     36.2         77.8     49.4
+  Finetuned Llama-2-13B           61.6      76.3     68.2     85.4       91.0      88.1     64.0       54.9     59.1     76.9         80.7     78.7
+
+
+Table 5: The response-level hallucination detection performance for each baseline method across different tasks and
+different models.
+
+                                  Q UESTION A NSWERING       DATA - TO - TEXT W RITING         S UMMARIZATION                      OVERALL
+ Methods
+                                Precision   Recall    F1    Precision    Recall     F1     Precision   Recall    F1    Precision      Recall    F1
+ Prompt Baselinegpt-3.5-turbo      7.9       25.1    12.1      8.7        45.1     14.6       6.1       33.7    10.3      7.8         35.3     12.8
+ Prompt Baselinegpt-4-turbo        23.7      52.0    32.6      17.9       66.4     28.2      14.7       65.4    24.1      18.4        60.9     28.3
+ Finetuned Llama-2-13B             55.8      60.8    58.2      56.5       50.7     53.5      52.4       30.8    38.8      55.6        50.2     52.7
+
+
+Table 6: The span-level detection performance for each baseline method across different tasks and different models.
+
+
+were sampled and served as references, and GPT-                              Span-level Detection We calculate the overlap
+3.5-turbo was used to verify consistency. We de-                             between the detected span and human-labeled span
+tected hallucinations sentence-by-sentence within                            and report the precision, recall, and f1 score at the
+a response, and then aggregated these results to                             char-level.
+provide a response-level detection outcome.
+LMvLM (Cohen et al., 2023): LMvLM is an ap-                                  6      Experimental Results
+proach that employs a multi-turn interaction be-                             6.1        Response-level Detection
+tween two Language Models that aim to discover
+inconsistencies through cross-examination.                                   The results in Table 5 reveal that hallucination
+LLM Finetuning: Llama-2-13B has been fine-                                   detection remains a significant challenge in the
+tuned using the training set from RAGTruth. The                              context of RAG for all existing detection methods.
+model takes the context-response pair with proper                            Even when reference information is available, the
+instructions as the input and treats the hallucinate                         responses generated may still include hallucina-
+span as the targeted generation output. We em-                               tions, which current LLMs cannot reliably identify.
+ployed full training with an initial learning rate                           The most advanced LLM, GPT-4-turbo, achieves
+of 2e-5, and limiting the training to 1 epochs, all                          only an average F1 score of 63.4%. For another
+conducted on 4 A100 GPUs.                                                    notable baseline, SelfCheckGPT also shows unsat-
+                                                                             isfactory performance in this regard, achieving an
+5.2 Data Split                                                               average F1 score of 58.8% with GPT-3.5-turbo.
+All detection algorithms are tested on the same                                 By utilizing our high-quality training set, a fine-
+RAGTruth test set, which consists of 450 instances                           tuned Llama-2-13B can achieve the best perfor-
+in total, derived by randomly selecting 150 in-                              mance with an average 78.7% f1 score. This
+stances from each task type. The rest of the data                            shows the effectiveness of our data in improving
+is used to fine-tune the LLama-2-13B model, as                               the model’s hallucination detection ability.
+previously mentioned.                                                        6.2        Span-level Detection
+5.3 Evaluation Metrics                                                       RAGTruth, as a hallucination corpus with fine-
+It is a more challenging and significant task to iden-                       grained span labels, enables us to present exper-
+tify the locations of hallucinations within the re-                          imental results for span-level detection, serving as
+sponse than only determining whether a response                              a baseline for future research. As shown in Ta-
+contains hallucinations. We assess hallucination                             ble 6, the overall performance of the current detec-
+detection at both the response and span levels.                              tion method is sub-optimal, highlighting the chal-
+                                                                             lenges in span-level detection. Even the advanced
+Response-level Detection We report precision,                                GPT-4-turbo tends to incorrectly classify many
+recall, and F1 score for each detection algorithm                            non-hallucinated contents with a low precision of
+and its variants across different tasks.                                     18.4%. While our fine-tuned model shows im-
+                                                                        10868
+                            G ROUP                                         S ELECTION S TRATEGY                     VALID R ESPONSE N UM   H ALLUCINATION R ATE
+                                                                              Random                                        450                    52.4(-)
+               Llama-2-7B-chat (51.8)
+                                                    Select the response with fewer detected hallucination spans             450                41.1(↓21.6%)
+              Mistral-7B-Instruct (57.6)
+                                                     Select the response with no detected hallucination spans              328†                19.3(↓63.2%)
+
+                                                                              Random                                        450                    9.8(-)
+             GPT-3.5-Turbo-0613 (10.9)
+                                                    Select the response with fewer detected hallucination spans             450                5.6(↓42.9%)
+                 GPT-4-0613 (9.3)
+                                                     Select the response with no detected hallucination spans              448†                4.8(↓51.0%)
+
+
+Table 7: Utilizing the finetuned hallucination detector to sample from two responses can significantly reduce the
+rate of hallucinations. The numbers within the brackets in the group column represent the model’s hallucination rate.
+†: Some instances did not have responses that met the required criteria.
+
+
+                                                                                                        all instances have a response that conforms to the
+             70
+                                                 63.4 66.3
+                         Subtle Conflict
+                         Evident Conflict                           60.4                                second strategy. In practical scenarios, this issue
+             60
+                                                                                         52.9 55.8
+                         Subtle Baseless Info
+                         Evident Baseless Info               49.8                                       can be addressed by increasing the number of can-
+             50
+                                                                                                        didate responses. We employed random selection
+ Recall(%)
+
+
+
+
+             40                           36.2                                    38.3
+                            35.3
+                                                                                                        as a simple baseline for comparison.
+             30                    25.4                                                                    The results shown in Table 7 indicate that with
+             20
+                     11.5                                                                               the help of the hallucination detector, both strate-
+             10                                                                                         gies can significantly reduce the hallucination
+                                                                            2.5
+             0                                                                                          rate. For the relatively small Llama-2-7B-chat
+                  Prompt(GPT-3.5-turbo) Prompt(GPT-4-turbo) Finetuned Llama-2-13B
+                                                                                                        and Mistral-7B-Instruct models, compared to ran-
+Figure 4: The span-level recalls of different models on                                                 dom selection, the first strategy reduced the hallu-
+four types of hallucinations.                                                                           cination rate by 21.6%, while the second strategy
+                                                                                                        achieved a reduction of 63.2%. Even for models
+                                                                                                        with a low hallucination rate, specifically GPT-3.5-
+proved capability in identifying hallucinated spans                                                     Turbo and GPT-4, employing the finetuned hallu-
+by achieving an averaged f1 score of 52.7%, it still                                                    cination detector for sampling can still further re-
+falls short of perfect detection, emphasizing the                                                       duce the rate of hallucinations. The two strategies
+inherent difficulties of this task.                                                                     yielded a reduction in hallucination rates of 42.9%
+   We also report the detection performance across                                                      and 51.0%, respectively. These results demonstrate
+four different types of hallucination spans. In the                                                     the potential of an efficient hallucination detection
+current stage, as we have not differentiated the                                                        model in developing trustworthy RAG LLMs.
+types of detected hallucinations, we only report the
+char-level recall for different types of hallucina-                                                     7    Conclusion
+tions. As indicated in Figure 5, the detection of                                                       In this paper, we introduce RAGTruth, a large-scale
+evident hallucinations proves more effective com-                                                       corpus of naturally generated hallucinations, fea-
+pared to that of subtle hallucinations.                                                                 turing detailed word-level annotations tailored for
+                                                                                                        RAG scenarios. Our work includes an in-depth
+6.3 Hallucination Suppression
+                                                                                                        analysis of the interplay between hallucinations
+We tested the effectiveness of hallucination sup-                                                       and various factors, such as task types, models be-
+pression using our finetuned hallucination detec-                                                       ing used, and contextual settings.
+tion model. For the 450 instances in the test set,                                                         Additionally, we conduct empirical benchmarks
+we employed two strategies to select a final output                                                     of several hallucination detection approaches using
+from two responses generated by two different mod-                                                      our corpus. We show that fine-tuning Llama with
+els with similar hallucination densities. The first                                                     RAGTruth leads to competitive performance. This
+strategy involved selecting the response with fewer                                                     implies that by using a high-quality dataset such
+predicted hallucination spans. The second strategy,                                                     as RAGTruth, it is possible to develop specialized
+more stringent, mandated that the selected response                                                     hallucination detection models that are highly ef-
+have no detected hallucination spans. When the                                                          fective when compared to prompt-based methods
+number of hallucination spans detected in both can-                                                     using general models such as GPT-4.
+didate responses is the same, one will be chosen at                                                        Simultaneously, our findings reveal that identi-
+random. Due to limited response candidates, not                                                         fying hallucinations in RAG contexts, particularly
+                                                                                                     10869
+at the span level, remains a formidable challenge,        Tom Brown, Benjamin Mann, Nick Ryder, Melanie
+with current methods still falling short of reliable        Subbiah, Jared D Kaplan, Prafulla Dhariwal, Arvind
+                                                            Neelakantan, Pranav Shyam, Girish Sastry, Amanda
+detection. We hope that RAGTruth, can assist the
+                                                            Askell, Sandhini Agarwal, Ariel Herbert-Voss,
+development of hallucination detection techniques           Gretchen Krueger, Tom Henighan, Rewon Child,
+for retrieval augmented generation.                         Aditya Ramesh, Daniel Ziegler, Jeffrey Wu, Clemens
+                                                            Winter, Chris Hesse, Mark Chen, Eric Sigler, Ma-
+8   Limitations                                             teusz Litwin, Scott Gray, Benjamin Chess, Jack
+                                                            Clark, Christopher Berner, Sam McCandlish, Alec
+The study of hallucination in large language mod-           Radford, Ilya Sutskever, and Dario Amodei. 2020.
+els is a rapidly advancing field, characterized by          Language models are few-shot learners. In Ad-
+                                                            vances in Neural Information Processing Systems,
+the continuous evolution of application scenarios,          volume 33, pages 1877–1901.
+sources of hallucination, and detection and preven-
+tion techniques. Our work represents the first at-        Zouying Cao, Yifei Yang, and Hai Zhao. 2023. Auto-
+                                                            hall: Automated hallucination dataset generation for
+tempt to benchmark hallucination within the RAG             large language models.
+setting, revealing several areas that require further
+investigation. It is important to carefully bench-        Canyu Chen and Kai Shu. 2024. Can LLM-generated
+                                                            misinformation be detected? In The Twelfth Interna-
+mark the generality capability of the detection             tional Conference on Learning Representations.
+model trained on our data, assessing how well it
+performs across different datasets and contexts. Ad-      Shiqi Chen, Yiran Zhao, Jinghan Zhang, I-Chun Chern,
+                                                            Siyang Gao, Pengfei Liu, and Junxian He. 2023.
+ditionally, we aim to evaluate the effectiveness of         Felm: Benchmarking factuality evaluation of large
+using manual annotations versus synthetic data, as          language models. In Advances in Neural Information
+well as explore the potential benefits of combining         Processing Systems, volume 36, pages 44502–44523.
+both approaches to optimize the return on invest-
+                                                          I-Chun Chern, Steffi Chern, Shiqi Chen, Weizhe Yuan,
+ment.                                                        Kehua Feng, Chunting Zhou, Junxian He, Graham
+                                                             Neubig, and Pengfei Liu. 2023. Factool: Factuality
+9   Ethical considerations                                   detection in generative ai – a tool augmented frame-
+                                                             work for multi-task and multi-domain scenarios.
+This work is in full compliance with the Ethics Pol-
+icy of the ACL. We acknowledge that responses             Roi Cohen, May Hamri, Mor Geva, and Amir Glober-
+                                                            son. 2023. LM vs LM: Detecting factual errors via
+generated by LLMs in this study may contain in-             cross examination. In Proceedings of the 2023 Con-
+accuracies. Aside from this, to the best of our             ference on Empirical Methods in Natural Language
+knowledge, there are no additional ethical issues           Processing, pages 12621–12640.
+associated with this paper.                               Shehzaad Dhuliawala, Mojtaba Komeili, Jing Xu,
+                                                            Roberta Raileanu, Xian Li, Asli Celikyilmaz, and
+Acknowledgement                                             Jason Weston. 2023. Chain-of-verification reduces
+                                                            hallucination in large language models.
+We appreciate the valuable feedback and assistance
+from Shizhe Diao. We thank Doris Li for her sup-          Esin Durmus, He He, and Mona Diab. 2020. FEQA: A
+                                                            question answering evaluation framework for faith-
+port in creating the illustrations for this research.       fulness assessment in abstractive summarization. In
+                                                            Proceedings of the 58th Annual Meeting of the Asso-
+                                                            ciation for Computational Linguistics, pages 5055–
+References                                                  5070, Online. Association for Computational Lin-
+                                                            guistics.
+Ayush Agrawal, Mirac Suzgun, Lester Mackey, and
+  Adam Kalai. 2024. Do language models know when          Nouha Dziri, Hannah Rashkin, Tal Linzen, and David
+  they’re hallucinating references? In Findings of the      Reitter. 2022. Evaluating attribution in dialogue sys-
+  Association for Computational Linguistics: EACL           tems: The begin benchmark. Transactions of the
+  2024, pages 912–928.                                      Association for Computational Linguistics, 10:1066–
+                                                            1083.
+Amos Azaria and Tom Mitchell. 2023. The internal
+ state of an LLM knows when it’s lying. In Find-          Tobias Falke, Leonardo F. R. Ribeiro, Prasetya Ajie
+ ings of the Association for Computational Linguis-         Utama, Ido Dagan, and Iryna Gurevych. 2019. Rank-
+ tics: EMNLP 2023, pages 967–976.                           ing generated summaries by correctness: An interest-
+                                                            ing but challenging application for natural language
+Mario Barrantes, Benedikt Herudek, and Richard Wang.        inference. In Proceedings of the 57th Annual Meet-
+  2020. Adversarial nli for factual correctness in text     ing of the Association for Computational Linguistics,
+  summarisation models.                                     pages 2214–2220.
+
+                                                     10870
+Luyu Gao, Zhuyun Dai, Panupong Pasupat, Anthony            Junyi Li, Xiaoxue Cheng, Xin Zhao, Jian-Yun Nie, and
+  Chen, Arun Tejasvi Chaganty, Yicheng Fan, Vincent          Ji-Rong Wen. 2023. HaluEval: A large-scale hal-
+  Zhao, Ni Lao, Hongrae Lee, Da-Cheng Juan, and              lucination evaluation benchmark for large language
+  Kelvin Guu. 2023. RARR: Researching and revising           models. In Proceedings of the 2023 Conference on
+  what language models say, using language models.           Empirical Methods in Natural Language Processing,
+  In Proceedings of the 61st Annual Meeting of the           pages 6449–6464.
+  Association for Computational Linguistics (Volume
+  1: Long Papers), pages 16477–16508.                      Junyi Li, Tianyi Tang, Wayne Xin Zhao, Jian-Yun Nie,
+                                                             and Ji-Rong Wen. 2024. Pre-trained language models
+Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Wein-         for text generation: A survey. ACM Comput. Surv.,
+  berger. 2017. On calibration of modern neural net-         56(9).
+  works. In Proceedings of the 34th International Con-
+  ference on Machine Learning, volume 70 of Pro-           Stephanie Lin, Jacob Hilton, and Owain Evans. 2022.
+  ceedings of Machine Learning Research, pages 1321–         TruthfulQA: Measuring how models mimic human
+  1330.                                                       falsehoods. In Proceedings of the 60th Annual Meet-
+                                                              ing of the Association for Computational Linguistics
+Zhijiang Guo, Michael Schlichtkrull, and Andreas Vla-        (Volume 1: Long Papers), pages 3214–3252, Dublin,
+  chos. 2022. A survey on automated fact-checking.            Ireland. Association for Computational Linguistics.
+  Transactions of the Association for Computational
+  Linguistics, 10:178–206.                                 Alisa Liu and Jiacheng Liu. 2023. The memo-
+                                                             trap dataset. https://github.com/liujch1998/
+Xiangkun Hu, Dongyu Ru, Qipeng Guo, Lin Qiu, and             memo-trap.
+  Zheng Zhang. 2023. Refchecker for fine-grained
+  hallucination detection.                                 Shayne Longpre, Kartik Perisetla, Anthony Chen,
+                                                             Nikhil Ramesh, Chris DuBois, and Sameer Singh.
+Ziwei Ji, Nayeon Lee, Rita Frieske, Tiezheng Yu, Dan         2021. Entity-based knowledge conflicts in question
+  Su, Yan Xu, Etsuko Ishii, Ye Jin Bang, Andrea              answering. In Proceedings of the 2021 Conference
+  Madotto, and Pascale Fung. 2023. Survey of halluci-        on Empirical Methods in Natural Language Process-
+  nation in natural language generation. ACM Comput.         ing, pages 7052–7063.
+  Surv., 55(12).
+                                                           Andrey Malinin and Mark Gales. 2021. Uncertainty
+                                                             estimation in autoregressive structured prediction. In
+Albert Q. Jiang, Alexandre Sablayrolles, Arthur Men-
+                                                             International Conference on Learning Representa-
+  sch, Chris Bamford, Devendra Singh Chaplot, Diego
+                                                             tions.
+  de las Casas, Florian Bressand, Gianna Lengyel, Guil-
+  laume Lample, Lucile Saulnier, Lélio Renard Lavaud,      Alex Mallen, Akari Asai, Victor Zhong, Rajarshi Das,
+  Marie-Anne Lachaux, Pierre Stock, Teven Le Scao,           Daniel Khashabi, and Hannaneh Hajishirzi. 2023.
+  Thibaut Lavril, Thomas Wang, Timothée Lacroix,             When not to trust language models: Investigating
+  and William El Sayed. 2023. Mistral 7b.                    effectiveness of parametric and non-parametric mem-
+                                                             ories. In Proceedings of the 61st Annual Meeting of
+Jean Kaddour, Joshua Harris, Maximilian Mozes, Her-          the Association for Computational Linguistics (Vol-
+   bie Bradley, Roberta Raileanu, and Robert McHardy.        ume 1: Long Papers), pages 9802–9822.
+   2023. Challenges and applications of large language
+   models.                                                 Potsawee Manakul, Adian Liusie, and Mark Gales. 2023.
+                                                             SelfCheckGPT: Zero-resource black-box hallucina-
+Ryo Kamoi, Tanya Goyal, Juan Diego Rodriguez, and            tion detection for generative large language models.
+  Greg Durrett. 2023. WiCE: Real-world entailment            In Proceedings of the 2023 Conference on Empiri-
+  for claims in Wikipedia. In Proceedings of the 2023        cal Methods in Natural Language Processing, pages
+  Conference on Empirical Methods in Natural Lan-            9004–9017.
+  guage Processing, pages 7561–7583.
+                                                           Abhika Mishra, Akari Asai, Vidhisha Balachandran,
+Tom Kocmi and Christian Federmann. 2023. Large lan-          Yizhong Wang, Graham Neubig, Yulia Tsvetkov, and
+  guage models are state-of-the-art evaluators of trans-     Hannaneh Hajishirzi. 2024. Fine-grained hallucina-
+  lation quality. In Proceedings of the 24th Annual          tion detection and editing for language models.
+  Conference of the European Association for Machine
+  Translation, pages 193–203.                              Tri Nguyen, Mir Rosenberg, Xia Song, Jianfeng
+                                                              Gao, Saurabh Tiwary, Rangan Majumder, and
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio          Li Deng. 2016. MS MARCO: A human gener-
+  Petroni, Vladimir Karpukhin, Naman Goyal, Hein-             ated machine reading comprehension dataset. CoRR,
+  rich Küttler, Mike Lewis, Wen-tau Yih, Tim Rock-            abs/1611.09268.
+  täschel, Sebastian Riedel, and Douwe Kiela. 2020.
+  Retrieval-augmented generation for knowledge-            OpenAI, Josh Achiam, Steven Adler, Sandhini Agarwal,
+  intensive nlp tasks. In Advances in Neural Infor-          Lama Ahmad, Ilge Akkaya, Florencia Leoni Ale-
+  mation Processing Systems, volume 33, pages 9459–          man, Diogo Almeida, Janko Altenschmidt, Sam Alt-
+  9474.                                                      man, Shyamal Anadkat, Red Avila, Igor Babuschkin,
+
+                                                      10871
+Suchir Balaji, Valerie Balcom, Paul Baltescu, Haim-         Sherbakov, Jessica Shieh, Sarah Shoker, Pranav
+ing Bao, Mohammad Bavarian, Jeff Belgum, Ir-                Shyam, Szymon Sidor, Eric Sigler, Maddie Simens,
+wan Bello, Jake Berdine, Gabriel Bernadett-Shapiro,         Jordan Sitkin, Katarina Slama, Ian Sohl, Benjamin
+Christopher Berner, Lenny Bogdonoff, Oleg Boiko,            Sokolowsky, Yang Song, Natalie Staudacher, Fe-
+Madelaine Boyd, Anna-Luisa Brakman, Greg Brock-             lipe Petroski Such, Natalie Summers, Ilya Sutskever,
+man, Tim Brooks, Miles Brundage, Kevin Button,              Jie Tang, Nikolas Tezak, Madeleine B. Thompson,
+Trevor Cai, Rosie Campbell, Andrew Cann, Brittany           Phil Tillet, Amin Tootoonchian, Elizabeth Tseng,
+Carey, Chelsea Carlson, Rory Carmichael, Brooke             Preston Tuggle, Nick Turley, Jerry Tworek, Juan Fe-
+Chan, Che Chang, Fotis Chantzis, Derek Chen, Sully          lipe Cerón Uribe, Andrea Vallone, Arun Vijayvergiya,
+Chen, Ruby Chen, Jason Chen, Mark Chen, Ben                 Chelsea Voss, Carroll Wainwright, Justin Jay Wang,
+Chess, Chester Cho, Casey Chu, Hyung Won Chung,             Alvin Wang, Ben Wang, Jonathan Ward, Jason Wei,
+Dave Cummings, Jeremiah Currier, Yunxing Dai,               CJ Weinmann, Akila Welihinda, Peter Welinder, Ji-
+Cory Decareaux, Thomas Degry, Noah Deutsch,                 ayi Weng, Lilian Weng, Matt Wiethoff, Dave Willner,
+Damien Deville, Arka Dhar, David Dohan, Steve               Clemens Winter, Samuel Wolrich, Hannah Wong,
+Dowling, Sheila Dunning, Adrien Ecoffet, Atty Eleti,        Lauren Workman, Sherwin Wu, Jeff Wu, Michael
+Tyna Eloundou, David Farhi, Liam Fedus, Niko Felix,         Wu, Kai Xiao, Tao Xu, Sarah Yoo, Kevin Yu, Qim-
+Simón Posada Fishman, Juston Forte, Isabella Ful-           ing Yuan, Wojciech Zaremba, Rowan Zellers, Chong
+ford, Leo Gao, Elie Georges, Christian Gibson, Vik          Zhang, Marvin Zhang, Shengjia Zhao, Tianhao
+Goel, Tarun Gogineni, Gabriel Goh, Rapha Gontijo-           Zheng, Juntang Zhuang, William Zhuk, and Barret
+Lopes, Jonathan Gordon, Morgan Grafstein, Scott             Zoph. 2024. Gpt-4 technical report.
+Gray, Ryan Greene, Joshua Gross, Shixiang Shane
+Gu, Yufei Guo, Chris Hallacy, Jesse Han, Jeff Harris,    Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida,
+Yuchen He, Mike Heaton, Johannes Heidecke, Chris           Carroll Wainwright, Pamela Mishkin, Chong Zhang,
+Hesse, Alan Hickey, Wade Hickey, Peter Hoeschele,          Sandhini Agarwal, Katarina Slama, Alex Ray, John
+Brandon Houghton, Kenny Hsu, Shengli Hu, Xin               Schulman, Jacob Hilton, Fraser Kelton, Luke Miller,
+Hu, Joost Huizinga, Shantanu Jain, Shawn Jain,             Maddie Simens, Amanda Askell, Peter Welinder,
+Joanne Jang, Angela Jiang, Roger Jiang, Haozhun            Paul F Christiano, Jan Leike, and Ryan Lowe. 2022.
+Jin, Denny Jin, Shino Jomoto, Billie Jonn, Hee-            Training language models to follow instructions with
+woo Jun, Tomer Kaftan, Łukasz Kaiser, Ali Ka-              human feedback. In Advances in Neural Information
+mali, Ingmar Kanitscheider, Nitish Shirish Keskar,         Processing Systems, volume 35, pages 27730–27744.
+Tabarak Khan, Logan Kilpatrick, Jong Wook Kim,
+Christina Kim, Yongjik Kim, Jan Hendrik Kirch-           Ankit Pal, Logesh Kumar Umapathi, and Malaikannan
+ner, Jamie Kiros, Matt Knight, Daniel Kokotajlo,           Sankarasubbu. 2023. Med-HALT: Medical domain
+Łukasz Kondraciuk, Andrew Kondrich, Aris Kon-              hallucination test for large language models. In Pro-
+stantinidis, Kyle Kosic, Gretchen Krueger, Vishal          ceedings of the 27th Conference on Computational
+Kuo, Michael Lampe, Ikai Lan, Teddy Lee, Jan               Natural Language Learning (CoNLL), pages 314–
+Leike, Jade Leung, Daniel Levy, Chak Ming Li,              334.
+Rachel Lim, Molly Lin, Stephanie Lin, Mateusz
+                                                         Vipula Rawte, Amit Sheth, and Amitava Das. 2023. A
+Litwin, Theresa Lopez, Ryan Lowe, Patricia Lue,
+                                                           Survey of Hallucination in Large Foundation Models.
+Anna Makanju, Kim Malfacini, Sam Manning, Todor
+Markov, Yaniv Markovski, Bianca Martin, Katie            Abigail See, Peter J. Liu, and Christopher D. Manning.
+Mayer, Andrew Mayne, Bob McGrew, Scott Mayer               2017. Get to the point: Summarization with pointer-
+McKinney, Christine McLeavey, Paul McMillan,               generator networks. In Proceedings of the 55th An-
+Jake McNeil, David Medina, Aalok Mehta, Jacob              nual Meeting of the Association for Computational
+Menick, Luke Metz, Andrey Mishchenko, Pamela               Linguistics (Volume 1: Long Papers), pages 1073–
+Mishkin, Vinnie Monaco, Evan Morikawa, Daniel              1083.
+Mossing, Tong Mu, Mira Murati, Oleg Murk, David
+Mély, Ashvin Nair, Reiichiro Nakano, Rajeev Nayak,       Jiaming Shen, Jialu Liu, Dan Finnie, Negar Rahmati,
+Arvind Neelakantan, Richard Ngo, Hyeonwoo Noh,              Mike Bendersky, and Marc Najork. 2023. “why is
+Long Ouyang, Cullen O’Keefe, Jakub Pachocki, Alex           this misleading?”: Detecting news headline hallucina-
+Paino, Joe Palermo, Ashley Pantuliano, Giambat-             tions with explanations. In Proceedings of the ACM
+tista Parascandolo, Joel Parish, Emy Parparita, Alex        Web Conference 2023, WWW ’23, page 1662–1672.
+Passos, Mikhail Pavlov, Andrew Peng, Adam Perel-
+man, Filipe de Avila Belbute Peres, Michael Petrov,      Kurt Shuster, Spencer Poff, Moya Chen, Douwe Kiela,
+Henrique Ponde de Oliveira Pinto, Michael, Poko-           and Jason Weston. 2021. Retrieval augmentation
+rny, Michelle Pokrass, Vitchyr H. Pong, Tolly Pow-         reduces hallucination in conversation. In Findings
+ell, Alethea Power, Boris Power, Elizabeth Proehl,         of the Association for Computational Linguistics:
+Raul Puri, Alec Radford, Jack Rae, Aditya Ramesh,          EMNLP 2021, pages 3784–3803.
+Cameron Raymond, Francis Real, Kendra Rimbach,
+Carl Ross, Bob Rotsted, Henri Roussez, Nick Ry-          Maxim Tkachenko, Mikhail Malyuk, Andrey
+der, Mario Saltarelli, Ted Sanders, Shibani Santurkar,    Holmanyuk, and Nikolai Liubimov. 2020-
+Girish Sastry, Heather Schmidt, David Schnurr, John       2022.       Label Studio:     Data labeling soft-
+Schulman, Daniel Selsam, Kyla Sheppard, Toki              ware.      Open source software available from
+                                                          https://github.com/heartexlabs/label-studio.
+
+                                                    10872
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Al-           Bi, Freda Shi, Shuming Shi, and Tencent AI Lab.
+  bert, Amjad Almahairi, Yasmine Babaei, Nikolay             2023. Siren’s Song in the AI Ocean: A Survey on
+  Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti         Hallucination in Large Language Models.
+  Bhosale, Dan Bikel, Lukas Blecher, Cristian Canton
+  Ferrer, Moya Chen, Guillem Cucurull, David Esiobu,      Wayne Xin Zhao, Kun Zhou, Junyi Li, Tianyi Tang,
+  Jude Fernandes, Jeremy Fu, Wenyin Fu, Brian Fuller,      Xiaolei Wang, Yupeng Hou, Yingqian Min, Beichen
+  Cynthia Gao, Vedanuj Goswami, Naman Goyal, An-           Zhang, Junjie Zhang, Zican Dong, Yifan Du, Chen
+  thony Hartshorn, Saghar Hosseini, Rui Hou, Hakan         Yang, Yushuo Chen, Zhipeng Chen, Jinhao Jiang,
+  Inan, Marcin Kardas, Viktor Kerkez, Madian Khabsa,       Ruiyang Ren, Yifan Li, Xinyu Tang, Zikang Liu,
+  Isabel Kloumann, Artem Korenev, Punit Singh Koura,       Peiyu Liu, Jian-Yun Nie, and Ji-Rong Wen. 2023. A
+  Marie-Anne Lachaux, Thibaut Lavril, Jenya Lee, Di-       survey of large language models.
+  ana Liskovich, Yinghai Lu, Yuning Mao, Xavier Mar-
+  tinet, Todor Mihaylov, Pushkar Mishra, Igor Moly-       Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan
+  bog, Yixin Nie, Andrew Poulton, Jeremy Reizen-            Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin,
+  stein, Rashi Rungta, Kalyan Saladi, Alan Schelten,        Zhuohan Li, Dacheng Li, Eric Xing, Hao Zhang,
+  Ruan Silva, Eric Michael Smith, Ranjan Subrama-           Joseph E Gonzalez, and Ion Stoica. 2023. Judging
+  nian, Xiaoqing Ellen Tan, Binh Tang, Ross Tay-            LLM-as-a-Judge with MT-Bench and Chatbot Arena.
+  lor, Adina Williams, Jian Xiang Kuan, Puxin Xu,           In Advances in Neural Information Processing Sys-
+  Zheng Yan, Iliyan Zarov, Yuchen Zhang, Angela Fan,        tems, volume 36, pages 46595–46623.
+  Melanie Kambadur, Sharan Narang, Aurelien Ro-
+                                                          Ming Zhong, Da Yin, Tao Yu, Ahmad Zaidi, Mutethia
+  driguez, Robert Stojnic, Sergey Edunov, and Thomas
+                                                            Mutuma, Rahul Jha, Ahmed Hassan Awadallah, Asli
+  Scialom. 2023. Llama 2: Open foundation and fine-
+                                                            Celikyilmaz, Yang Liu, Xipeng Qiu, and Dragomir
+  tuned chat models.                                        Radev. 2021. QMSum: A new benchmark for query-
+Neeraj Varshney, Wenlin Yao, Hongming Zhang, Jian-          based multi-domain meeting summarization. In Pro-
+  shu Chen, and Dong Yu. 2023. A stitch in time saves       ceedings of the 2021 Conference of the North Amer-
+  nine: Detecting and mitigating hallucinations of llms     ican Chapter of the Association for Computational
+  by validating low-confidence generation.                  Linguistics: Human Language Technologies, pages
+                                                            5905–5921, Online. Association for Computational
+Tu Vu, Mohit Iyyer, Xuezhi Wang, Noah Constant, Jerry       Linguistics.
+  Wei, Jason Wei, Chris Tar, Yun-Hsuan Sung, Denny
+  Zhou, Quoc Le, and Thang Luong. 2023. Freshllms:        Chunting Zhou, Pengfei Liu, Puxin Xu, Srinivasan Iyer,
+  Refreshing large language models with search engine       Jiao Sun, Yuning Mao, Xuezhe Ma, Avia Efrat, Ping
+  augmentation.                                             Yu, LILI YU, Susan Zhang, Gargi Ghosh, Mike
+                                                            Lewis, Luke Zettlemoyer, and Omer Levy. 2023.
+Alex Wang, Kyunghyun Cho, and Mike Lewis. 2020.             LIMA: Less Is More for Alignment. In Advances in
+  Asking and answering questions to evaluate the fac-       Neural Information Processing Systems, volume 36,
+  tual consistency of summaries. In Proceedings of the      pages 55006–55021.
+  58th Annual Meeting of the Association for Compu-
+  tational Linguistics, pages 5008–5020.
+
+Yijun Xiao and William Yang Wang. 2021. On hal-
+  lucination and predictive uncertainty in conditional
+  language generation. In Proceedings of the 16th Con-
+  ference of the European Chapter of the Association
+  for Computational Linguistics: Main Volume, pages
+  2734–2744.
+
+Miao Xiong, Zhiyuan Hu, Xinyang Lu, YIFEI LI, Jie
+  Fu, Junxian He, and Bryan Hooi. 2024. Can LLMs
+  express their uncertainty? an empirical evaluation of
+  confidence elicitation in LLMs. In The Twelfth Inter-
+  national Conference on Learning Representations.
+
+Yelp. 2021. Yelp open dataset. https://www.yelp.
+  com/dataset. Accessed: 2023-11-03.
+
+Hanning Zhang, Shizhe Diao, Yong Lin, Yi R. Fung,
+  Qing Lian, Xingyao Wang, Yangyi Chen, Heng Ji,
+  and Tong Zhang. 2024. R-tuning: Instructing large
+  language models to say ‘i don’t know’.
+
+Yue Zhang, Yafu Li, Leyang Cui, Deng Cai, Lemao Liu,
+  Tingchen Fu, Xinting Huang, Enbo Zhao, Yu Zhang,
+  Yulong Chen, Longyue Wang, Anh Tuan Luu, Wei
+
+                                                     10873
+A   Hallucination Examples
+
+E VIDENT C ONFLICT
+Example 1
+Original content: They’ve sent about 500 of the most seriously injured people for treatment in Kathmandu already – the majority
+by road.
+Generative content: The team airlifted 500 injured people. . . to Kathmandu for medical treatment.
+
+Example 2
+Original content: "RestaurantsReservations": false
+Generative content: The restaurant offers outdoor seating and takes reservations
+S UBTLE C ONFLICT
+Example 1
+Original content: This is the section that lets the government deny trademark protection to a mark that is "immoral," "scandalous"
+or "disparaging."
+Generative content: . . . violates Section 2(a) of the trademark act, which prohibits marks that are "immoral, scandalous, or
+disqualified."
+
+Example 2
+Original content: It was quite a hassle to find a table since this place is crowded all the time, but well, nothing can stand between
+me and that absolutely delightful lobster roll
+Generative content: The restaurant is located in a crowded area, but the delicious lobster rolls make it worth the hassle to find a
+table.
+E VIDENT I NTRODUCTION OF BASELESS I NFORMATION
+Example 1
+Original content: The couple divorced in 1968. . . She had no contact with the surviving members of the band until meeting up at
+the 2006 Las Vegas premiere of "The Beatles Love."
+Generative content: The couple divorced in 1968, but later reconciled and attended the 2006 Las Vegas premiere of "The Beatles
+Love."
+
+Example 2
+Original content: “RestaurantsTakeOut”: true
+Generative content: Customers can also enjoy takeout and delivery options.
+S UBTLE I NTRODUCTION OF BASELESS I NFORMATION
+Example 1
+Original content: Amazing happy hour and great people.
+Generative content: One of the standout features of Killer Shrimp is their happy hour, which is available daily from 4 pm to 7 pm.
+
+Example 2
+Original content: Place mashed potatoes in a medium bowl. Stir in onions, cheese, salt, pepper, and bacon.
+Generative content: Place your mashed potatoes in a medium bowl. Stir in cooked onions, cheese, salt, pepper, and bacon.
+
+                                 Table 8: Examples of the four types of hallucinations.
+
+
+
+
+                                                             10874
+B   Response Generation Prompts
+
+ Q UESTION ANSWERING
+ Answer the following question:
+ {question}
+ Bear in mind that your response should be strictly based on the following 3 passages:
+ {passages}
+ In case the passages do not contain the necessary information to answer the question, please reply with: "Unable to answer based
+ on given passages."
+ DATA - TO - TEXT W RITING
+ Instruction:
+ Write an objective overview about the following local business based only on the provided structured data in the JSON format.
+ You should include details and cover the information mentioned in the customers’ review. The overview should be 100 - 200
+ words. Don’t make up information.
+ Structured data:
+ {json_data}
+ Overview:
+ S UMMARIZATION
+ Summarize the following news within {word_num} words:
+ {news}
+ output:
+
+Table 9: Prompts for generating responses for the three types of tasks.        word_num is min(200,
+word_num_of_news//4). The word count requirement is only to control the length of the generated summa-
+rization, it will not serve as the basis for hallucination annotation.
+
+
+
+
+                                                           10875
+C   Annotation Details
+
+
+
+
+Figure 5: Annotation interface. For privacy reasons, we have masked the full names of the annotators in the
+screenshot.
+
+
+
+
+                                                  10876
+                                                                            implicit_true      due_to_null
+             Task                  Model           # Hallucination Span
+                                                                          # Span % Span     # Span % Span
+                             GPT-3.5-turbo-0613            89               33     0.371
+                                 GPT-4-0613                51               15     0.294
+                              Llama-2-7B-chat             1010             251     0.249
+      Question Answering
+                              Llama-2-13B-chat            654              215     0.329
+                              Llama-2-70B-chat            529              168     0.318
+                             Mistral-7B-Instruct           594             164     0.276
+                             GPT-3.5-turbo-0613            384              52     0.135      69    0.180
+                                 GPT-4-0613               354               24     0.068     209    0.590
+                              Llama-2-7B-chat             1775             195     0.110     230    0.130
+      Data-to-text Writing
+                              Llama-2-13B-chat            2803             260      0.09     439    0.157
+                              Llama-2-70B-chat            1834             274     0.149     272    0.148
+                             Mistral-7B-Instruct          2140             102     0.048     423    0.198
+                             GPT-3.5-turbo-0613             60             14      0.233
+                                 GPT-4-0613                80              10      0.125
+                              Llama-2-7B-chat              517             44      0.085
+         Summarization
+                              Llama-2-13B-chat             342             28      0.082
+                              Llama-2-70B-chat             245             27      0.110
+                             Mistral-7B-Instruct           828             52      0.063
+            Overall                                       14289           1928     0.135    1642    0.115
+
+Table 10: Detailed statistical information for the labels implicit_true and due_to_null. The majority of implicit
+truths appear in two types of tasks: question answering and data-to-text writing. About 17.7% hallucination spans
+in the data-to-text writing tasks are related to null values in the JSON data.
+
+
+
+
+                                                       10877
+D    Hallucination Detection Prompts
+
+ S UMMARIZATION
+ Below is the original news:
+ {article}
+ Below is a summary of the news:
+ {summary}
+ Your task is to determine whether the summary contains either or both of the following two types of hallucinations:
+ 1. conflict: instances where the summary presents direct contraction or opposition to the original news;
+ 2. baseless info: instances where the generated summary includes information which is not substantiated by or inferred from the
+ original news.
+ Then, compile the labeled hallucinated spans into a JSON dict, with a key "hallucination list" and its value is a list of
+ hallucinated spans. If there exist potential hallucinations, the output should be in the following JSON format: {"hallucination
+ list": [hallucination span1, hallucination span2, ...]}. Otherwise, leave the value as a empty list as following: {"hallucination
+ list": []}.
+ Output:
+ Q UESTION ANSWERING
+ Below is a question:
+ {question}
+ Below are related passages:
+ {passages}
+ Below is an answer:
+ {answer}
+ Your task is to determine whether the answer contains either or both of the following two types of hallucinations:
+ 1. conflict: instances where the answer presents direct contraction or opposition to the passages;
+ 2. baseless info: instances where the answer includes information which is not substantiated by or inferred from the passages.
+ Then, compile the labeled hallucinated spans into a JSON dict, with a key "hallucination list" and its value is a list of
+ hallucinated spans. If there exist potential hallucinations, the output should be in the following JSON format: {"hallucination
+ list": [hallucination span1, hallucination span2, ...]}. Otherwise, leave the value as a empty list as following: {"hallucination
+ list": []}.
+ Output:
+ DATA - TO - TEXT W RITING
+ Below is a structured data in the JSON format:
+ {business info}
+ Below is an overview article written in accordance with the structured data:
+ {overview}
+ Your task is to determine whether the overview contains either or both of the following two types of hallucinations:
+ 1. conflict: instances where the overview presents direct contraction or opposition to the structured data;
+ 2. baseless info: instances where the generated overview includes information which is not substantiated by or inferred from the
+ structured data.
+ In JSON, "null" or "None" represents an unknown value rather than a negation.
+ Then, compile the labeled hallucinated spans into a JSON dict, with a key "hallucination list" and its value is a list of
+ hallucinated spans. If there exist potential hallucinations, the output should be in the following JSON format: {"hallucination
+ list": [hallucination span1, hallucination span2, ...]}. Otherwise, leave the value as a empty list as following: {"hallucination
+ list": []}.
+ Output:
+
+Table 11: Prompts for detecting hallucination for the three types of tasks. In the prompt for data-to-text writing, we
+clarified that null or None in JSON should be treated as unknown rather than a negation.
+
+
+
+
+                                                            10878
+

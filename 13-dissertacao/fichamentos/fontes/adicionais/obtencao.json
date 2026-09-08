@@ -1,0 +1,68 @@
+[
+  {
+    "key": "yuEtAl2024ragEvaluationSurvey",
+    "url": "https://arxiv.org/pdf/2405.07437",
+    "status": "obtido",
+    "sha256": "9ec643765eb079660cad9cf2bf7dcd3371e9ab9e05b1f94573cc101fb4a25374"
+  },
+  {
+    "key": "zhangEtAl2024citationEvaluation",
+    "url": "https://aclanthology.org/2024.inlg-main.35.pdf",
+    "status": "obtido",
+    "sha256": "f53cdc349d0cf8cd4189104b1060ee33cb6ca986077ebb4e0ec4388aedfd4d96"
+  },
+  {
+    "key": "niuEtAl2024ragtruth",
+    "url": "https://aclanthology.org/2024.acl-long.585.pdf",
+    "status": "obtido",
+    "sha256": "17afb377ca5ea8cf672efa9a95fca5889713e94c6fd0355f89f8e01651ddfd4d"
+  },
+  {
+    "key": "gaRAGeSorodoc2025",
+    "url": "https://aclanthology.org/2025.findings-acl.875.pdf",
+    "status": "obtido",
+    "sha256": "81243b139962d5bd311b00807056f6ab5ab7774f6acbb2c2e477408d612d6a16"
+  },
+  {
+    "key": "trautmannEtAl2024groundednessLegalQA",
+    "url": "https://aclanthology.org/2024.nllp-1.14.pdf",
+    "status": "obtido",
+    "sha256": "218344bebb2d5c1152e56f7904cd40d025ab35b320f18a14cb9e567ee69233df"
+  },
+  {
+    "key": "reuterEtAl2025reliableLegalRAG",
+    "url": "https://aclanthology.org/2025.nllp-1.3.pdf",
+    "status": "obtido",
+    "sha256": "13a3f205c4d07ea44a9fdefd0bb3ef01985602c78d513c039f58a6e1dfc82d46"
+  },
+  {
+    "key": "gokhanBriscoe2025regulatoryRAG",
+    "url": "https://aclanthology.org/2025.nllp-1.10.pdf",
+    "status": "obtido",
+    "sha256": "098128f251f06ecff70811a2dd08840cd66c0f03277831d3063bbfc9acd3fa10"
+  },
+  {
+    "key": "groUSEMuller2025",
+    "url": "https://aclanthology.org/2025.coling-main.304.pdf",
+    "status": "obtido",
+    "sha256": "9ff1f263f60d3ad3565c39df351faf477b53511839ac4f9fd03462d8b7c7a56b"
+  },
+  {
+    "key": "airesEtAl2024parlamintPt",
+    "url": "https://aclanthology.org/2024.parlaclarin-1.2.pdf",
+    "status": "obtido",
+    "sha256": "36b9578ab7a58066cd6b18f556a3dbfd93e70c5b0ad25e0c6f9606e201b2b864"
+  },
+  {
+    "key": "qiEtAl2024mirage",
+    "url": "https://aclanthology.org/2024.emnlp-main.347.pdf",
+    "status": "obtido",
+    "sha256": "441a57279588efcfd94a887dbf1c9f9318805da587d8d9a1968162651d8e15e9"
+  },
+  {
+    "key": "eRAG2024",
+    "url": "https://arxiv.org/pdf/2404.13781",
+    "status": "obtido",
+    "sha256": "61038714c72045524d4168940f07096766139bbe5962cdc6a88d75747a15bc6d"
+  }
+]
