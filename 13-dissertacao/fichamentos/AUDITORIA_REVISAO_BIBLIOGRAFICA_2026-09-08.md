@@ -11,7 +11,7 @@ A revisão de conteúdo foi focal e não substitui a leitura integral pelo pesqu
 ## 2. Fontes centrais aprofundadas
 
 | Fonte | Verificação | Ajuste interpretativo
-|---|---|
+|---|---| --- 
 | ARES | método, dimensões, PPI, comparação com RAGAS e limitações | manter como referência para separar relevância de contexto, fidelidade e relevância da resposta; não transferir ganhos diretamente
 | RAGAS | versão publicada e ressalvas da ficha | citar como conjunto de métricas, registrando a divergência entre a publicação de 2024 e a chave baseada no preprint
 | ConsJudge | introdução, método, tabela de resultados e limitações | usar para justificar calibração do juiz, não como substituto de avaliação humana
@@ -31,7 +31,7 @@ Pontos que devem permanecer sob controle editorial: (a) números de versões de 
 ## 4. Destino das sete referências pendentes
 
 | Chave | Decisão | Justificativa
-|---|---|
+|---|---| ---
 | `peffersEtAl2007dsrm` | manter como referência metodológica; recuperar PDF antes da versão final | fundamenta DSR, mas a ficha e a conferência textual continuam pendentes
 | `geunis2023parliamentaryMonitoring` | não incorporar por ora; retirar citação do capítulo 2 | identidade/versão da página não coincide com a entrada de 2023
 | `deAlmeidaSantos2025aiGovernance` | não incorporar por ora; retirar citação do capítulo 2 | metadados disponíveis, texto integral não verificado e argumento já coberto por IPU/WFD
