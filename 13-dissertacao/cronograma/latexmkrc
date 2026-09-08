@@ -1,0 +1,3 @@
+# Mantém os arquivos auxiliares separados do PDF final.
+$aux_dir = 'aux';
+$out_dir = 'out';
