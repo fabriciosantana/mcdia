@@ -7811,7 +7811,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -7829,7 +7829,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">csv_path</span> <span class="o">=</span> <span class="n">BASE</span> <span class="o">/</span> <span class="s1">'fichamentos/dados/inventario-completo.csv'</span>
@@ -7880,7 +7880,7 @@ Fichas LaTeX (excluindo modelo): 53
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">status</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'status'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="s1">'status'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'quantidade'</span><span class="p">)</span>
@@ -7957,7 +7957,7 @@ Fichas LaTeX (excluindo modelo): 53
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'lote'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'status'</span><span class="p">]))</span>
@@ -8005,33 +8005,33 @@ Fichas LaTeX (excluindo modelo): 53
 </thead>
 <tbody>
 <tr>
-<th>1 — avaliação e aplicações</th>
+<th>1 — avaliação de RAG e benchmarks</th>
 <td>11</td>
-<td>0</td>
+<td>8</td>
 <td>0</td>
 </tr>
 <tr>
-<th>2 — contexto e aplicações</th>
+<th>2 — contexto legislativo e aplicações parlamentares</th>
 <td>9</td>
 <td>0</td>
 <td>3</td>
 </tr>
 <tr>
-<th>3 — recuperação e metodologia</th>
-<td>6</td>
+<th>3 — recuperação da informação e engenharia de busca</th>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>4 — metodologia de pesquisa e desenho do estudo</th>
+<td>1</td>
 <td>0</td>
 <td>4</td>
 </tr>
 <tr>
-<th>4 — fundamentos, revisões e riscos</th>
+<th>5 — fundamentos, revisões e riscos</th>
 <td>19</td>
 <td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<th>busca complementar — 2026-09-08</th>
-<td>0</td>
-<td>8</td>
 <td>0</td>
 </tr>
 </tbody>
@@ -8325,18 +8325,296 @@ Fichas LaTeX (excluindo modelo): 53
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=subcats02">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=subcats02">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">sub</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'subcategoria_tematica'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="s1">'subcategoria'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'quantidade'</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'lote'</span><span class="p">]</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="s1">'5 — fundamentos, revisões e riscos'</span><span class="p">)][[</span><span class="s1">'titulo'</span><span class="p">,</span><span class="s1">'subcategoria_tematica'</span><span class="p">]])</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>subcategoria</th>
+<th>quantidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>surveys e revisões</td>
+<td>9</td>
+</tr>
+<tr>
+<th>1</th>
+<td>métricas e avaliação automatizada</td>
+<td>5</td>
+</tr>
+<tr>
+<th>2</th>
+<td>arquiteturas e modelos</td>
+<td>5</td>
+</tr>
+<tr>
+<th>3</th>
+<td>governança e diretrizes institucionais</td>
+<td>4</td>
+</tr>
+<tr>
+<th>4</th>
+<td>aplicações RAG jurídico-políticas</td>
+<td>4</td>
+</tr>
+<tr>
+<th>5</th>
+<td>benchmarks de grounding e alucinação</td>
+<td>4</td>
+</tr>
+<tr>
+<th>6</th>
+<td>corpus e discurso parlamentar</td>
+<td>3</td>
+</tr>
+<tr>
+<th>7</th>
+<td>aplicações parlamentares e legislativas</td>
+<td>3</td>
+</tr>
+<tr>
+<th>8</th>
+<td>recuperação neural</td>
+<td>3</td>
+</tr>
+<tr>
+<th>9</th>
+<td>Design Science Research</td>
+<td>2</td>
+</tr>
+<tr>
+<th>10</th>
+<td>alucinação e avaliação geral</td>
+<td>2</td>
+</tr>
+<tr>
+<th>11</th>
+<td>benchmarks e baterias de perguntas</td>
+<td>2</td>
+</tr>
+<tr>
+<th>12</th>
+<td>metodologia científica</td>
+<td>2</td>
+</tr>
+<tr>
+<th>13</th>
+<td>escala e dimensionamento</td>
+<td>2</td>
+</tr>
+<tr>
+<th>14</th>
+<td>modelos fundacionais e riscos sociotécnicos</td>
+<td>2</td>
+</tr>
+<tr>
+<th>15</th>
+<td>informação e engajamento parlamentar</td>
+<td>1</td>
+</tr>
+<tr>
+<th>16</th>
+<td>organização do conhecimento legislativo</td>
+<td>1</td>
+</tr>
+<tr>
+<th>17</th>
+<td>arquiteturas RAG</td>
+<td>1</td>
+</tr>
+<tr>
+<th>18</th>
+<td>LLM-as-a-judge</td>
+<td>1</td>
+</tr>
+<tr>
+<th>19</th>
+<td>recuperação clássica e métricas</td>
+<td>1</td>
+</tr>
+<tr>
+<th>20</th>
+<td>benchmarks de recuperação</td>
+<td>1</td>
+</tr>
+<tr>
+<th>21</th>
+<td>métodos mistos</td>
+<td>1</td>
+</tr>
+<tr>
+<th>22</th>
+<td>meta-avaliação de avaliadores</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>titulo</th>
+<th>subcategoria_tematica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>7</th>
+<td>Large Language Models: A Survey</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>8</th>
+<td>Survey and Analysis of Hallucinations in Large...</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>9</th>
+<td>Large Legal Fictions: Profiling Legal Hallucin...</td>
+<td>alucinação e avaliação geral</td>
+</tr>
+<tr>
+<th>13</th>
+<td>Retrieval-Augmented Generation for Large Langu...</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>14</th>
+<td>A Comprehensive Survey of Retrieval-Augmented ...</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>31</th>
+<td>Attention Is All You Need</td>
+<td>arquiteturas e modelos</td>
+</tr>
+<tr>
+<th>32</th>
+<td>Modular RAG: Transforming RAG Systems into LEG...</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>33</th>
+<td>When Text Embedding Meets Large Language Model...</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>38</th>
+<td>Language Models are Few-Shot Learners</td>
+<td>arquiteturas e modelos</td>
+</tr>
+<tr>
+<th>39</th>
+<td>A Survey of Large Language Models</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>40</th>
+<td>Scaling Laws for Neural Language Models</td>
+<td>escala e dimensionamento</td>
+</tr>
+<tr>
+<th>41</th>
+<td>Training Compute-Optimal Large Language Models</td>
+<td>escala e dimensionamento</td>
+</tr>
+<tr>
+<th>42</th>
+<td>Training Language Models to Follow Instruction...</td>
+<td>arquiteturas e modelos</td>
+</tr>
+<tr>
+<th>43</th>
+<td>{BERT}: Pre-training of Deep Bidirectional Tra...</td>
+<td>arquiteturas e modelos</td>
+</tr>
+<tr>
+<th>44</th>
+<td>Exploring the Limits of Transfer Learning with...</td>
+<td>arquiteturas e modelos</td>
+</tr>
+<tr>
+<th>45</th>
+<td>On the Opportunities and Risks of Foundation M...</td>
+<td>modelos fundacionais e riscos sociotécnicos</td>
+</tr>
+<tr>
+<th>46</th>
+<td>On the Dangers of Stochastic Parrots: Can Lang...</td>
+<td>modelos fundacionais e riscos sociotécnicos</td>
+</tr>
+<tr>
+<th>47</th>
+<td>Survey of Hallucination in Natural Language Ge...</td>
+<td>surveys e revisões</td>
+</tr>
+<tr>
+<th>48</th>
+<td>Holistic Evaluation of Language Models</td>
+<td>alucinação e avaliação geral</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -8357,7 +8635,7 @@ Fichas LaTeX (excluindo modelo): 53
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">adicionais</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
@@ -8461,8 +8739,8 @@ Fichas LaTeX (excluindo modelo): 53
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Decis%C3%B5es-propostas-para-a-reuni%C3%A3o">Decisões propostas para a reunião<a class="anchor-link" href="#Decis%C3%B5es-propostas-para-a-reuni%C3%A3o">¶</a></h2><ol>
-<li>Validar a lacuna como integração de recuperação, geração, verificabilidade, insuficiência documental e avaliação humana em discursos parlamentares brasileiros.</li>
-<li>Validar a rubrica 0–2 e as cinco dimensões avaliativas.</li>
+<li>Confirmar com o orientador que a contribuição da dissertação está em integrar, em um único protocolo aplicado a discursos parlamentares brasileiros, a avaliação da recuperação, da geração, da verificabilidade das fontes, do reconhecimento de insuficiência documental e da validação humana.</li>
+<li>Confirmar com o orientador se a rubrica de pontuação de 0 a 2 e as cinco dimensões — correção factual, aderência ao contexto recuperado, suporte e precisão das citações, completude proporcional e reconhecimento de insuficiência documental — são adequadas ao protocolo.</li>
 <li>Definir o tamanho da bateria de perguntas e da amostra humana.</li>
 <li>Decidir se Peffers, Gil, Lakatos e Creswell serão recuperados ou substituídos.</li>
 <li>Autorizar o início do piloto.</li>

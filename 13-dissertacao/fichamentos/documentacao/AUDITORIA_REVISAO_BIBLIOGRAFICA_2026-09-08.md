@@ -22,6 +22,8 @@ A revisão de conteúdo foi focal e não substitui a leitura integral pelo pesqu
 | Sorodoc et al. / GaRAGe | relevância das passagens, atribuição e deflexão | usar para perguntas não respondíveis e insuficiência documental; resultados são específicos do benchmark
 | Reuter et al. | DRM, documentos semelhantes e Summary-Augmented Chunking | medir erro de documento separado de erro de trecho; tratar SAC como hipótese, não como ganho garantido
 
+A rubrica de cinco dimensões foi mantida como síntese operacional da literatura, e não como padrão único já consagrado. A dimensão de insuficiência documental é uma adaptação explícita ao contexto parlamentar, apoiada nas noções de deflexão, abstinência, recusa e prevenção de alucinação presentes nos benchmarks consultados.
+
 ## 3. Auditoria de citações dos capítulos 2 e 3
 
 As chaves citadas foram conferidas contra `referencias.bib`; não há chave ausente. As afirmações técnicas principais estão apoiadas por fontes primárias ou sínteses explicitamente qualificadas. Foram removidas três citações pendentes que não tinham texto integral verificável: `geunis2023parliamentaryMonitoring`, `deAlmeidaSantos2025aiGovernance` e `matoshiEtAl2025parliamentRag`. As passagens permanecem sustentadas por fontes acessíveis próximas ou foram redigidas como delimitação da dissertação.
