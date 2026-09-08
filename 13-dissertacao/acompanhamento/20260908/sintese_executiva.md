@@ -6,7 +6,7 @@
 ## O que foi realizado
 
 - Organização de um inventário com 52 referências selecionadas.
-- Preparação de 53 fichamentos de uma página, matriz temática e síntese.
+- Preparação de 53 fichamentos de uma página: 45 referências do pré-projeto e 8 referências incorporadas posteriormente, além da matriz temática e da síntese.
 - Incorporação de oito fontes adicionais diretamente relacionadas ao protocolo.
 - Revisão e comparação dos trabalhos nos capítulos 2 e 3.
 - Auditoria das citações dos capítulos 2 e 3.
@@ -14,7 +14,7 @@
 
 ## Estado da cobertura
 
-Das 52 referências originais, 45 estão fichadas e sete permanecem pendentes de acesso ou confirmação de versão. As oito fontes adicionais incorporadas ao manuscrito possuem fichamentos próprios.
+Das 52 referências originais, 45 estão fichadas e sete permanecem pendentes de acesso ou confirmação de versão. As oito fontes adicionais incorporadas ao manuscrito possuem fichamentos próprios e estão identificadas como `busca complementar pós-pré-projeto`.
 
 A revisão substantiva está pronta para sustentar o piloto. As pendências restantes são principalmente editoriais ou metodológicas e não impedem a execução experimental.
 

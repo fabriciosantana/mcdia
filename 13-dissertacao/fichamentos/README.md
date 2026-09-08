@@ -35,4 +35,4 @@ NDAA e Viola et al. foram consultados por extração web do PDF oficial, sem PDF
 
 ## Antes da redação final
 
-Confirmar versões bibliográficas, aprofundar as fontes centrais e revisar as interpretações. As cinco fontes prioritárias da busca adicional foram incorporadas a `texto-Latex/referencias.bib`; nove candidatas permanecem em `fontes/bibliografia-adicional-candidata.bib` para decisão posterior. As sete pendências impedem declarar cobertura integral. A coleção não constitui revisão sistemática exaustiva, e seus argumentos não são resultados experimentais da dissertação.
+Confirmar versões bibliográficas, aprofundar as fontes centrais e revisar as interpretações. As oito fontes selecionadas na busca complementar foram incorporadas a `texto-Latex/referencias.bib`; três candidatas contextuais permanecem em `fontes/bibliografia-adicional-candidata.bib` para decisão posterior. As sete pendências impedem declarar cobertura integral. A coleção não constitui revisão sistemática exaustiva, e seus argumentos não são resultados experimentais da dissertação.

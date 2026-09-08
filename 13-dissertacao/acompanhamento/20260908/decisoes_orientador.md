@@ -3,6 +3,7 @@
 | Decisão | Proposta para discussão | Deliberação |
 |---|---|---|
 | Escopo da revisão | Encerrar a busca temática para iniciar o piloto | |
+| Origem das referências | Validar a distinção entre 52 referências do pré-projeto e 8 incorporadas depois | |
 | Lacuna | Protocolo integrado para acervo parlamentar brasileiro | |
 | Rubrica | Cinco dimensões, escala 0–2 | |
 | H1 | Separar recuperação pertinente de verificabilidade | |
