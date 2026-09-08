@@ -60,13 +60,13 @@
     "titulo": "Use Cases for AI in Parliaments",
     "tipo": "report",
     "ano": "2024",
-    "lote": "0 — pilotos",
+    "lote": "2 — contexto e aplicações",
     "status": "Fichado — consulta focal/parcial",
     "arquivo": "03-ipu.tex",
     "fonte_consultada": "https://www.ipu.org/file/20635/download",
     "texto_local": "PDF e extração",
     "leitura_pesquisador": "Não registrada",
-    "observacao": "",
+    "observacao": "Usada também no piloto do modelo de fichamento.",
     "origem_selecao": "pré-projeto"
   },
   {
@@ -214,13 +214,13 @@
     "titulo": "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems",
     "tipo": "inproceedings",
     "ano": "2024",
-    "lote": "0 — pilotos",
+    "lote": "1 — avaliação e aplicações",
     "status": "Fichado — consulta focal/parcial",
     "arquivo": "01-ares.tex",
     "fonte_consultada": "https://aclanthology.org/2024.naacl-long.20/",
     "texto_local": "PDF e extração",
     "leitura_pesquisador": "Não registrada",
-    "observacao": "",
+    "observacao": "Usada também no piloto do modelo de fichamento.",
     "origem_selecao": "pré-projeto"
   },
   {
@@ -298,13 +298,13 @@
     "titulo": "KamerRaad: Enhancing Information Retrieval in Belgian National Politics Through Hierarchical Summarization and Conversational Interfaces",
     "tipo": "inproceedings",
     "ano": "2024",
-    "lote": "0 — pilotos",
+    "lote": "2 — contexto e aplicações",
     "status": "Fichado — consulta focal/parcial",
     "arquivo": "02-kamerraad.tex",
     "fonte_consultada": "https://arxiv.org/abs/2404.17597",
     "texto_local": "PDF e extração",
     "leitura_pesquisador": "Não registrada",
-    "observacao": "Bibliografia original: Bram Kang/p.503–519; ficha: Bo Kang/p.409–412, conforme conferência do piloto.",
+    "observacao": "Bibliografia original: Bram Kang/p.503–519; ficha: Bo Kang/p.409–412, conforme conferência do piloto. Usada também no piloto do modelo de fichamento.",
     "origem_selecao": "pré-projeto"
   },
   {

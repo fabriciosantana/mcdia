@@ -13,3 +13,7 @@ As oito chaves ausentes no pré-projeto são as fontes da busca complementar de 
 Não foi criada uma data de inclusão: a distinção temporal é expressa apenas pelo campo `origem_selecao`.
 
 A comparação também considerou o PDF revisado em `revisao-pre-projeto/`. Ele confirma o estado textual do pré-projeto, mas a comparação de seleção bibliográfica foi feita pelas chaves do arquivo `references.bib`, que permite verificação exata.
+
+## Organização dos lotes
+
+O antigo lote 0 de pilotos não é uma categoria temática. ARES foi reclassificada em “avaliação e aplicações”; KamerRaad e IPU foram reclassificadas em “contexto e aplicações”. O uso dessas três fontes na etapa piloto permanece registrado nas observações do inventário.

@@ -2,7 +2,7 @@
 
 Atualizado em 08/09/2026: **53 fichas de uma página**, nove páginas de matriz temática e duas de síntese (64 páginas). Das 52 entradas selecionadas em `texto-Latex/referencias.bib`, sete permanecem pendentes de acesso ou confirmação de versão. Consulte [o controle de cobertura](documentacao/CONTROLE_COBERTURA.md).
 
-A coleção foi preparada com assistência de IA. Cada ficha distingue contribuição interpretativa, excertos literais, natureza da evidência, limitações e aproveitamento proposto. A leitura é frequentemente focal: livros, revisões e relatórios extensos não são apresentados como integralmente lidos. A leitura dos textos-fonte pelo pesquisador não foi registrada; ele declarou leitura dos três fichamentos-piloto.
+A coleção foi preparada com assistência de IA. Os lotes do inventário são temáticos; a condição de piloto é registrada nas observações das fichas 01--03 e não constitui lote temático. Cada ficha distingue contribuição interpretativa, excertos literais, natureza da evidência, limitações e aproveitamento proposto. A leitura é frequentemente focal: livros, revisões e relatórios extensos não são apresentados como integralmente lidos. A leitura dos textos-fonte pelo pesquisador não foi registrada; ele declarou leitura dos três fichamentos-piloto.
 
 ## Editar e compilar
 
