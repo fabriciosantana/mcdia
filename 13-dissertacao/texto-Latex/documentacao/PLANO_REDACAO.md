@@ -25,7 +25,7 @@ O documento contém nove seções principais, na ordem de inclusão em `main.tex
 - [x] Preparar fichamentos das 45 fontes acessíveis/consultadas, com uma página por referência, recorte de leitura, excertos localizados e análise crítica. Coleção em `../../fichamentos/out/main.pdf`; conteúdo editável em `../../fichamentos/fichas/`.
 - [x] Expandir matriz temática e síntese de trabalho para a coleção; manter inventário das 52 entradas e proveniência das fontes.
 - [~] Completar a cobertura: sete referências dependem de acesso ou confirmação de versão, descritas em `../../fichamentos/CONTROLE_COBERTURA.md`. Fichamento focal não atesta leitura integral nem leitura do pesquisador.
-- [ ] Revisar as fichas com o pesquisador e aprofundar métodos/resultados das fontes centrais.
+- [~] Revisar as fichas com o pesquisador e aprofundar métodos/resultados das fontes centrais. Auditoria editorial concluída; falta a conferência substantiva final pelo pesquisador.
 - [~] Resolver divergências de versões e metadados antes de atualizar `referencias.bib`; as cinco fontes prioritárias já foram verificadas e incorporadas, mas as demais divergências permanecem.
 - [x] Incorporar as cinco fontes prioritárias aos capítulos 2 e 3 e registrar a busca complementar; não inferir lacuna apenas da seleção existente.
 - [x] Incorporar GroUSE, eRAG e o survey de Yu et al. como referências de apoio; mantidas como condicionais apenas as fontes contextuais ou fora do protocolo atual (ParlaMint-PT, ObliQA-MP e MIRAGE).
@@ -83,7 +83,7 @@ A entrega bibliográfica é a prioridade imediata indicada pelo pesquisador. As 
 
 - [~] Redigir resumo e abstract depois de concluir os capítulos. O resumo atual é provisório e não apresenta resultados; o abstract permanece como marcador de redação.
 - [x] Conferir as chaves bibliográficas da versão inspecionada: 52 entradas, 44 chaves citadas, nenhuma chave citada ausente e nenhuma chave duplicada. As oito entradas não citadas permanecem como material bibliográfico disponível.
-- [ ] Verificar externamente metadados bibliográficos e suporte das citações às afirmações. A conferência de chaves não valida existência, conteúdo ou atualidade das fontes.
+- [~] Verificar externamente metadados bibliográficos e suporte das citações às afirmações. Auditoria dos capítulos 2 e 3 concluída; permanecem confirmações editoriais das referências metodológicas pendentes. A conferência de chaves não valida existência, conteúdo ou atualidade das fontes.
 - [ ] Preencher ficha catalográfica e dados de banca.
 - [~] Conferir o atendimento às anotações do orientador. Já existem diagrama de componentes, data na fonte da figura, lista de siglas e distinção entre `top-k` e `top-p`; permanece pendente a conferência integral das intervenções e de sua justificativa.
 - [ ] Revisar figuras, tabelas, quadros, fontes e chamadas no texto; incluir o parágrafo introdutório da seção 1 antes da primeira subseção, conforme a regra editorial local.

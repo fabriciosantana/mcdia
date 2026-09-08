@@ -88,4 +88,4 @@ Os metadados originais em `referencias.bib` não foram alterados. Cada ficha ide
 
 ## Antes de usar na redação final
 
-Conferir as versões que serão efetivamente citadas; aprofundar métodos e resultados das fontes centrais; validar interpretações e anotações com o pesquisador. A síntese cobre esta seleção, sem reivindicar busca sistemática exaustiva.
+Conferir as versões que serão efetivamente citadas; aprofundar métodos e resultados das fontes centrais; validar interpretações e anotações com o pesquisador. A síntese cobre esta seleção, sem reivindicar busca sistemática exaustiva. A auditoria de 08/09/2026 retirou do texto principal as citações de Geunis, de Almeida Santos e Matoshi enquanto não houver versão integral verificável; as três permanecem registradas como candidatas.
