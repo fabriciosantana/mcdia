@@ -44,9 +44,9 @@ Com isso, a lacuna pode ser formulada de modo mais preciso: ainda há pouca evid
 
 ## Decisão sugerida para a bibliografia
 
-Os nove registros recomendados estão em `bibliografia-adicional-candidata.bib`, separados do arquivo principal para revisão editorial. Sugiro adicionar primeiro Trautmann, Niu, Zhang, Sorodoc e Reuter às referências da dissertação e citá-los nos capítulos 2 (referencial teórico), 3 (trabalhos relacionados) e 4 (procedimentos metodológicos), após conferência das versões. Os demais podem permanecer como referências de apoio ou entrar quando o protocolo efetivamente utilizar suas ideias.
+Os registros candidatos foram mantidos inicialmente em `bibliografia-adicional-candidata.bib`. Trautmann, Niu, Zhang, Sorodoc e Reuter foram incorporados primeiro; em seguida, GroUSE, eRAG e o survey de Yu et al. foram incorporados como referências de apoio nos capítulos 2 e 3. ParlaMint-PT, ObliQA-MP e MIRAGE permanecem fora da bibliografia principal até que o protocolo utilize explicitamente suas ideias.
 
-Não alterei `texto-Latex/referencias.bib` nem inseri citações no manuscrito, porque a decisão de incorporar uma fonte na argumentação deve seguir a revisão do pesquisador e a confirmação da versão bibliográfica escolhida.
+As oito fontes selecionadas foram incorporadas a `texto-Latex/referencias.bib`, receberam fichas 46–53 e foram citadas nos capítulos 2 e 3. As demais candidatas continuam no `.bib` separado, sem alteração automática do manuscrito.
 
 ## Limitações da busca
 

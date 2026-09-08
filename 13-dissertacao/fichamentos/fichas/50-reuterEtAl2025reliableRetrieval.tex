@@ -1,0 +1,27 @@
+\fichatitulo{50 · RECUPERAÇÃO JURÍDICA}{Workshop NLLP · 2025}{Document-Level Retrieval Mismatch}
+{\small Reuter et al.. \textit{Document-Level Retrieval Mismatch}. Workshop NLLP · 2025. \href{https://aclanthology.org/2025.nllp-1.3/}{Fonte consultada}.\par}
+
+\campo{Problema e objetivo}
+Que tipo de falha ocorre quando o recuperador seleciona o documento errado em bases legais semelhantes?
+
+\campo{Principal contribuição · síntese interpretativa}
+Define e quantifica DRM e testa Summary-Augmented Chunking para preservar contexto global no chunk.
+
+\campo{Método / natureza da evidência}
+Experimentos em tarefas jurídicas de recuperação, comparando baselines e a técnica SAC.
+
+\campo{Resultado ou argumento principal}
+SAC reduz DRM e melhora precisão e recall no nível textual nas condições estudadas; evidencia que recuperação correta do trecho depende da identificação do documento.
+
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{1}{the retriever selects information from entirely incorrect source documents}{Resumo.}
+\end{itemize}
+
+\campo{Limitações e análise crítica}
+A técnica foi testada em dados jurídicos; não se deve presumir ganho no Senado sem ablação e validação no corpus parlamentar. Resumos sintéticos também introduzem uma transformação que precisa ser documentada.
+
+\campo{Aproveitamento na dissertação · proposta}
+Metodologia: medir erro de documento separadamente do erro de trecho e registrar efeitos do chunking.
+
+\registro{Fonte consultada nesta preparação: PDF publicado; consulta focal do resumo, método, resultados e conclusão. Chave: \texttt{reuterEtAl2025reliableRetrieval}.}

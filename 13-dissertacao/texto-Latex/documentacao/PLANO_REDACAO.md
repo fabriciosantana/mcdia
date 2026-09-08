@@ -11,8 +11,8 @@ O documento contém nove seções principais, na ordem de inclusão em `main.tex
 | Seção | Arquivo em `capitulos/` | Estado identificado |
 |---|---|---|
 | 1. Introdução | `01-introducao.tex` | Texto desenvolvido, com pergunta e seis objetivos específicos; alinhamento final e sustentação da lacuna pendentes. |
-| 2. Referencial teórico | `02-referencial-teorico.tex` | Texto desenvolvido; aprofundamento e articulação com a comparação bibliográfica pendentes. |
-| 3. Trabalhos relacionados | `03-trabalhos-relacionados.tex` | Estrutura com `TODO`; falta quadro comparativo auditável. |
+| 2. Referencial teórico | `02-referencial-teorico.tex` | Texto desenvolvido e atualizado com oito fontes adicionais; revisão de coerência final pendente. |
+| 3. Trabalhos relacionados | `03-trabalhos-relacionados.tex` | Comparação crítica inicial redigida com as fontes prioritárias e três referências de apoio; quadro comparativo auditável e revisão final pendentes. |
 | 4. Hipóteses do estudo | `04-hipoteses-de-trabalho.tex` | H1, H2 e H3 formuladas; critérios operacionais de interpretação pendentes. |
 | 5. Metodologia | `04-procedimentos-metodologicos.tex` | Constituição e análise do corpus descritas como realizadas; etapas experimentais planejadas. |
 | 6. Artefato e caso empírico | `05-artefato-e-caso-empirico.tex` | Estrutura com `TODO`; já há evidências para redigir a caracterização do corpus. |
@@ -26,8 +26,9 @@ O documento contém nove seções principais, na ordem de inclusão em `main.tex
 - [x] Expandir matriz temática e síntese de trabalho para a coleção; manter inventário das 52 entradas e proveniência das fontes.
 - [~] Completar a cobertura: sete referências dependem de acesso ou confirmação de versão, descritas em `../../fichamentos/CONTROLE_COBERTURA.md`. Fichamento focal não atesta leitura integral nem leitura do pesquisador.
 - [ ] Revisar as fichas com o pesquisador e aprofundar métodos/resultados das fontes centrais.
-- [ ] Resolver divergências de versões e metadados antes de atualizar `referencias.bib`.
-- [ ] Incorporar a comparação crítica aos capítulos 2 e 3 e documentar eventual busca complementar; não inferir lacuna apenas da seleção existente.
+- [~] Resolver divergências de versões e metadados antes de atualizar `referencias.bib`; as cinco fontes prioritárias já foram verificadas e incorporadas, mas as demais divergências permanecem.
+- [x] Incorporar as cinco fontes prioritárias aos capítulos 2 e 3 e registrar a busca complementar; não inferir lacuna apenas da seleção existente.
+- [x] Incorporar GroUSE, eRAG e o survey de Yu et al. como referências de apoio; mantidas como condicionais apenas as fontes contextuais ou fora do protocolo atual (ParlaMint-PT, ObliQA-MP e MIRAGE).
 
 A entrega bibliográfica é a prioridade imediata indicada pelo pesquisador. As etapas do corpus e do experimento abaixo permanecem necessárias.
 

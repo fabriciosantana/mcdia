@@ -1,17 +1,23 @@
 \section{Trabalhos relacionados}
 
-Este capítulo será desenvolvido a partir da revisão já iniciada no pré-projeto e no artigo-base. Sua função é posicionar a contribuição da dissertação diante dos estudos mais próximos, comparando explicitamente corpus, idioma, jurisdição, arquitetura, técnicas de avaliação, participação humana e disponibilidade dos artefatos.
+Este capítulo posiciona a dissertação diante de estudos que combinam recuperação, geração, avaliação de grounding e uso de acervos jurídicos ou parlamentares. A comparação considera corpus, tarefa, unidade de avaliação, participação humana e transferência para os discursos do Senado.
 
 \subsection{Sistemas RAG nos domínios jurídico, legislativo e parlamentar}
 
-% TODO: transformar a síntese existente no referencial teórico em comparação
-% crítica apoiada pela tabela de literatura do artigo-base.
+Aplicações legislativas e parlamentares existentes cobrem tarefas distintas. KamerRaad e Talk to the NDAA exploram interfaces de consulta em debates e legislação; RAGAR trata verificação política; LexDrafter trata terminologia legislativa; e LegalBench-RAG organiza evidência jurídica. Essas fontes demonstram a variedade de tarefas, mas não formam um benchmark comum. LegisSearch e o sistema do World Avatar acrescentam grafos, metadados e consultas relacionais. A dissertação se diferencia por avaliar um acervo real de discursos do Senado brasileiro, com perguntas e critérios definidos para recuperação, geração e verificabilidade.
+
+Reuter et al. identificam o *Document-Level Retrieval Mismatch* em grandes bases legais e mostram que a recuperação pode apontar para o documento errado mesmo quando o trecho parece semanticamente próximo \parencite{reuterEtAl2025reliableRetrieval}. A observação é diretamente relevante para discursos parlamentares, nos quais autoria, sessão, data e proposição podem distinguir documentos linguisticamente semelhantes. O resultado deve ser tratado como hipótese de erro a testar no corpus do Senado, não como ganho transferível do *Summary-Augmented Chunking*.
 
 \subsection{Protocolos, métricas e benchmarks de avaliação de RAG}
 
-% TODO: comparar RAGAS, ARES, LegalBench-RAG, RAGEval e estudos de LLM-as-a-judge.
+ARES, RAGAS, G-Eval, ConsJudge e RAGEval cobrem dimensões complementares, mas usam tarefas, modelos e formas de validação diferentes. Trautmann et al. oferecem uma referência mais próxima para a dimensão de groundedness: comparam similaridade, NLI e LLMs em perguntas jurídicas e reportam macro-F1 de 0,80 para o melhor método no corpus estudado \parencite{trautmannEtAl2024groundedness}. O resultado apoia a inclusão de uma rubrica de aderência ao contexto, preservando a necessidade de validação local.
+
+Salemi e Zamani propõem o eRAG, que estima a utilidade de cada documento recuperado pelo efeito que produz quando usado individualmente pelo gerador; essa perspectiva aproxima a métrica de recuperação do desempenho downstream \parencite{salemiZamani2024erag}. Niu et al. criam o RAGTruth, com anotações em nível de caso e palavra, permitindo observar afirmações contraditórias ou sem suporte \parencite{niuEtAl2024ragtruth}. Zhang et al. mostram que o suporte de uma citação pode ser completo, parcial ou inexistente, e que nenhuma métrica é superior em todas as tarefas de correlação, classificação e recuperação \parencite{zhangEtAl2024fineGrainedCitation}. GaRAGe amplia esse problema para perguntas que exigem grounding por passagem e deflexão quando o contexto não basta; seus resultados indicam dificuldades de atribuição e recusa mesmo em modelos recentes \parencite{sorodocEtAl2025garage}.
+
+A avaliação do avaliador também é objeto de estudo. ConsJudge mostra que a consistência do juiz deve ser examinada em diferentes combinações de dimensões e prompts \parencite{liuEtAl2025judgeRag}. Essa evidência reforça o desenho multimétodo da dissertação: métricas automáticas devem ser comparadas com julgamentos humanos e análise de erros.
 
 \subsection{Síntese comparativa e posicionamento da dissertação}
 
-% TODO: inserir quadro comparativo por corpus, língua, pipeline, recuperação,
-% geração, avaliação humana, juiz automatizado e abertura dos artefatos.
+A literatura converge em três pontos: recuperação e geração devem ser separadas analiticamente; suporte documental precisa ser verificado em unidade menor que a resposta inteira; e a avaliação automática requer calibração e limites explícitos. Ela diverge quanto à unidade ideal de avaliação, à definição de relevância e ao equilíbrio entre conhecimento paramétrico e contexto recuperado. Os estudos selecionados também se concentram em inglês, legislação ou domínios gerais.
+
+A contribuição proposta ocupa a interseção ainda pouco coberta entre corpus parlamentar brasileiro, recuperação documental, respostas geradas, citações verificáveis, insuficiência documental e validação humana independente. O quadro comparativo a ser consolidado deve registrar: corpus e idioma; jurisdição; tipo de pergunta; arquitetura; métricas de recuperação; critérios de grounding; tratamento de respostas não respondíveis; participação humana; e disponibilidade de dados e código. A lacuna é, portanto, uma lacuna de integração e adaptação contextual, não a ausência de técnicas isoladas.

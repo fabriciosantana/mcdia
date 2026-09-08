@@ -1,0 +1,20 @@
+\fichatitulo{52 · AVALIAÇÃO DA RECUPERAÇÃO}{arXiv · 2024}{eRAG}
+{\small Salemi e Zamani. \textit{Evaluating Retrieval Quality in Retrieval-Augmented Generation}. arXiv · 2024. \href{https://arxiv.org/abs/2404.13781}{Fonte consultada}.\par}
+\campo{Problema e objetivo}
+Como avaliar a qualidade de cada documento recuperado considerando seu efeito na resposta produzida?
+\campo{Principal contribuição · síntese interpretativa}
+O eRAG avalia documentos individualmente dentro do fluxo RAG, aproximando relevância documental e utilidade downstream.
+\campo{Método / natureza da evidência}
+Cada documento da lista de recuperação é usado separadamente pelo gerador; a contribuição é estimada pelo desempenho resultante.
+\campo{Resultado ou argumento principal}
+Métricas tradicionais de recuperação podem divergir da utilidade efetiva para a geração; a avaliação deve preservar a ligação entre recuperação e tarefa final.
+\campo{Excertos-chave · seleção literal}
+\begin{itemize}
+\excerto{1}{each document in the retrieval list is individually utilized by the large language model}{Resumo.}
+\end{itemize}
+\campo{Limitações e análise crítica}
+É preprint e foi avaliado em três conjuntos; o custo de executar o gerador por documento pode ser alto no corpus parlamentar.
+\campo{Aproveitamento na dissertação · proposta}
+Apoiar uma análise de utilidade downstream dos trechos, como complemento às métricas de recall e precisão.
+\registro{Fonte consultada nesta preparação: preprint; consulta focal do resumo, método e resultados. Chave: \texttt{salemiZamani2024erag}.}
+\clearpage
