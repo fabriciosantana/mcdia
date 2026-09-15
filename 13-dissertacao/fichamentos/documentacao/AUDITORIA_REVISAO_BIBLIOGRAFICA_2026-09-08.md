@@ -43,3 +43,12 @@ Pontos que devem permanecer sob controle editorial: (a) números de versões de 
 | `creswellPlanoClark2018mixedMethods` | manter apenas como apoio metodológico, pendente de confirmação da 3ª edição | mesma condição; substituir se a edição não puder ser conferida
 
 A revisão bibliográfica substantiva pode ser considerada encerrada para o piloto. As quatro referências metodológicas pendentes exigem apenas decisão editorial e confirmação de edição, não nova busca temática.
+
+
+## 5. Atualização de 15/09/2026
+
+Em execução do fluxo `ars-lit-review`, foram aprofundadas as nove fontes centrais (ARES, RAGAS, ConsJudge, LegalBench-RAG, Trautmann, RAGTruth, Zhang, GaRAGe e Reuter). Cada ficha recebeu um campo de controle de uso na redação, delimitando a contribuição sustentada e os resultados que não podem ser transferidos diretamente para o corpus parlamentar.
+
+Os capítulos 2 e 3 foram revisados para: (a) apresentar as cinco dimensões avaliativas como síntese operacional da literatura, e não como rubrica canônica; (b) explicitar a adaptação da insuficiência documental ao contexto parlamentar; e (c) separar erro de documento, erro de trecho e erro de afirmação. A dissertação foi recompilada sem erros de LaTeX ou citações indefinidas; permanecem apenas avisos tipográficos preexistentes.
+
+O item das sete referências pendentes foi deliberadamente deixado em aberto, conforme decisão editorial.
