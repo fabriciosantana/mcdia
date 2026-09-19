@@ -1,0 +1,128 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=black}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.25em}
+
+\begin{document}
+
+\begin{center}
+{\large \textbf{Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa}}\\[0.15cm]
+{\large Programa de Pós-Graduação em Administração Pública --- Mestrado Profissional}\\[0.35cm]
+{\normalsize \textbf{Disciplina:} Avaliação de Políticas Públicas com Dados}\\[0.45cm]
+{\Large \textbf{O efeito do Bolsa Família sobre a evasão escolar}}\\[0.25cm]
+{\normalsize Analécia Borato \quad Fabricio Santana \quad Giovanni Brígido \quad Paulo Ceser}
+\end{center}
+
+\begin{abstract}
+Este trabalho estima o efeito do Bolsa Família sobre a evasão escolar utilizando duas estratégias de inferência causal: um ATT observacional ajustado por escore de propensão e diferenças em diferenças em um painel domiciliar. A análise observacional compara crianças e adolescentes beneficiários a indivíduos de domicílios cadastrados no Cadastro Único, usando pareamento e ponderação IPW. A análise longitudinal compara a evolução da evasão média entre domicílios beneficiários e um grupo de controle cadastrado entre 2005 e 2009. Os resultados apontam na direção de menor evasão entre beneficiários: aproximadamente -1,11 ponto percentual no IPW-ATT e -0,56 ponto percentual no DiD. Contudo, os intervalos de confiança incluem zero. A evidência é compatível com um efeito favorável modesto, mas não é conclusiva devido às hipóteses de ignorabilidade, tendências paralelas, mensuração e seleção amostral.
+\end{abstract}
+
+\noindent\textbf{Palavras-chave:} Bolsa Família; evasão escolar; inferência causal; escore de propensão; diferenças em diferenças.
+
+\section{Introdução}
+
+O Bolsa Família combina transferência de renda e condicionalidades, entre elas a frequência escolar. O mecanismo esperado é que a transferência reduza restrições econômicas e que as condicionalidades incentivem a permanência na escola. A pergunta deste trabalho é: \textbf{entre crianças e adolescentes elegíveis, o recebimento do Bolsa Família reduziu a evasão escolar?}
+
+Uma comparação simples entre beneficiários e não beneficiários pode ser enviesada porque as famílias beneficiárias são selecionadas por pobreza, composição familiar, localização e outras características também relacionadas à evasão. O estudo aplica duas estratégias complementares para construir um contrafactual: seleção nos observáveis com ATT e diferenças em diferenças.
+
+\section{Política, dados e estimando}
+
+O tratamento é definido no nível domiciliar: $D=1$ quando há pelo menos um titular do cartão do Bolsa Família no domicílio. No ATT, a unidade de análise é uma pessoa de 6 a 17 anos com evasão observada. O grupo de comparação é formado por pessoas de domicílios pertencentes ao grupo cadastrado C1.
+
+O desfecho individual é \texttt{dropout}, indicador igual a 1 quando houve evasão. O ATT é:
+
+\begin{equation}
+ATT = E[Y(1)-Y(0)\mid D=1].
+\end{equation}
+
+Na análise DiD, a unidade é o domicílio observado em 2005 e 2009, e o desfecho é a evasão média das crianças do domicílio (\texttt{dropout\_med}). O grupo tratado é T1, beneficiário em 2009; o controle principal é C1, cadastrado, mas não beneficiário.
+
+As covariáveis do ATT são idade, sexo, escolaridade do chefe, número de moradores, cômodos, dormitórios e água canalizada. Elas são usadas como medidas pré-tratamento disponíveis no banco. A base individual original possui 56.367 pessoas e 11.372 domicílios; a amostra analítica é restringida a pessoas de 6 a 17 anos, com desfecho observado e casos completos.
+
+\section{Hipóteses causais e DAG}
+
+O DAG substantivo organiza a seguinte hipótese causal:
+
+\begin{center}
+\begin{tabular}{c}
+Pobreza, composição familiar e território $\longrightarrow$ Bolsa Família $\longrightarrow$ renda/condicionalidades $\longrightarrow$ frequência $\longrightarrow$ evasão \\
+\hspace{1.2cm}$\searrow$ \hspace{3.4cm}$\searrow$ \hspace{4.8cm}$\nearrow$ \\
+\hspace{2.0cm} evasão \hspace{2.8cm} evasão
+\end{tabular}
+\end{center}
+
+Para o ATT, a identificação depende de ignorabilidade condicional: depois do ajuste, não devem permanecer confundidores relevantes não observados. Também são necessárias consistência, positividade e ausência de interferência.
+
+Para o DiD, a hipótese central é de tendências paralelas: na ausência do Bolsa Família, T1 e C1 teriam apresentado a mesma mudança média entre 2005 e 2009. Como há apenas um período pré, essa hipótese não pode ser avaliada por pré-tendências.
+
+\section{Método 1 --- ATT com escore de propensão}
+
+Estimamos escores por regressão logística e por random forest calibrado, com predições fora da amostra. O pareamento 1:1 associa cada tratado ao controle com escore mais próximo, com reposição. O IPW-Hajek atribui peso 1 aos tratados e peso $e(X)/(1-e(X))$ aos controles.
+
+O suporte comum é aplicado antes da estimação. O equilíbrio é avaliado por diferenças padronizadas, com referência de $|SMD|<0{,}1$. Os erros-padrão são agrupados por domicílio, reconhecendo que crianças do mesmo domicílio não são independentes.
+
+\section{Método 2 --- Diferenças em diferenças}
+
+O estimador manual é:
+
+\begin{equation}
+\widehat{DiD} = (\bar Y_{T,2009}-\bar Y_{T,2005}) - (\bar Y_{C,2009}-\bar Y_{C,2005}).
+\end{equation}
+
+O mesmo efeito é estimado por uma regressão com a interação tratamento $\times$ pós e por efeitos fixos de domicílio e ano. Os erros-padrão são agrupados por domicílio. O contraste C1 $\times$ C2 funciona como placebo: C1 é artificialmente tratado e comparado a C2.
+
+\section{Resultados}
+
+\begin{table}[ht]
+\centering
+\caption{Estimativas do efeito sobre a evasão escolar}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrr>{\raggedright\arraybackslash}X}
+\toprule
+Estratégia & Estimativa (p.p.) & IC95\% & Unidade e interpretação \\
+\midrule
+Diferença bruta & -0,97 & --- & Pessoa; associação não ajustada \\
+IPW-ATT, logística & -1,11 & [-2,62; 0,41] & Pessoa; redução compatível, imprecisa \\
+Pareamento, logística & -1,55 & [-3,53; 0,43] & Pessoa; resultado semelhante em direção \\
+DiD T1 $\times$ C1 & -0,56 & [-2,52; 1,39] & Domicílio; aumento menor em T1 \\
+Placebo C1 $\times$ C2 & -0,43 & [-2,32; 1,45] & Domicílio; diagnóstico auxiliar \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Os resultados têm sinais consistentes com uma redução da evasão, mas são estatisticamente imprecisos. A proximidade entre a estimativa IPW e o DiD é informativa, mas não elimina as diferenças entre populações, unidades e hipóteses de identificação.
+
+\section{Ameaças à validade}
+
+Primeiro, o ATT não elimina confundidores não observados. Pobreza, expectativas familiares, qualidade da escola e características locais podem permanecer associados ao tratamento e ao desfecho. Segundo, a medida de tratamento é uma fotografia domiciliar e não registra duração, valor ou regularidade do benefício.
+
+Terceiro, o desfecho do ATT é condicionado a pessoas que estudavam anteriormente e possuem informação observada. Essa restrição pode gerar seleção. Quarto, o DiD possui apenas um período anterior e um posterior, impossibilitando verificar tendências paralelas empiricamente. Mudanças específicas em T1 ou C1 entre as rodadas poderiam ser confundidas com o efeito do programa.
+
+Também pode haver transbordamentos, mudanças de composição, atrito seletivo e outros programas simultâneos. Os intervalos não devem ser lidos como prova de efeito nulo: refletem, em parte, baixa precisão.
+
+\section{Conclusão}
+
+As duas estratégias apresentam estimativas na direção de menor evasão escolar entre beneficiários do Bolsa Família. O resultado principal, IPW-ATT com escore logístico, é de aproximadamente -1,11 ponto percentual; o DiD estima -0,56 ponto percentual. Entretanto, ambos os intervalos de confiança incluem zero.
+
+Assim, os dados fornecem \textbf{evidência sugestiva, mas não conclusiva}, de redução modesta da evasão. A política pode ter efeito educacional favorável, mas uma afirmação causal forte exigiria melhor medida temporal do tratamento, mais períodos pré-intervenção, controles mais ricos ou desenho experimental/quase-experimental mais convincente.
+
+\begin{thebibliography}{9}
+\bibitem{bertrand2004} BERTRAND, M.; DUFLO, E.; MULLAINATHAN, S. How Much Should We Trust Differences-in-Differences Estimates? \textit{Quarterly Journal of Economics}, 2004.
+\bibitem{brauw2015} DE BRAUW, A. et al. The Impact of Bolsa Família on Schooling. \textit{World Development}, 2015.
+\bibitem{hernan} HERNÁN, M. A.; ROBINS, J. M. \textit{Causal Inference: What If}. Boca Raton: Chapman \& Hall/CRC.
+\bibitem{roth2023} ROTH, J. et al. What's Trending in Difference-in-Differences? \textit{Journal of Econometrics}, 2023.
+\end{thebibliography}
+
+\end{document}
