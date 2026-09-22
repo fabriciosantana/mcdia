@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/garrisonEtAl2024talkNdaa.pdf",
+  "sha256": "e04c086cec125fb963b0f8a635ba6d4237b170c0752afdfdea9e6bfa84c7a309",
+  "declared_page_count": 26,
+  "enumerated_page_count": 26,
+  "reader_page_count": 26,
+  "warnings": [],
+  "generated_at": "2026-09-22T15:09:04.304189+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

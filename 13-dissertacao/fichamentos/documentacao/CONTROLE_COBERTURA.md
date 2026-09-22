@@ -84,7 +84,7 @@ Os metadados originais em `referencias.bib` não foram alterados. Cada ficha ide
 - LegalBench-RAG: divergência interna no número de pares; LexDrafter: empates na tabela arredondada não sustentam superioridade em todas as métricas.
 - Gao (2023), v1: conferir afirmações sobre ARES diretamente na fonte primária.
 - Anh-Hoang: relação entre exemplos da seção 4 e experimentos da seção 5 requer esclarecimento antes de reutilizar números.
-- NDAA e Viola et al.: consulta por extração web oficial; não há PDF local.
+- NDAA: PDF local oficial recebido em 22/09/2026, com preflight estrutural PASS; a extração web anterior permanece preservada em `fontes/ndaa-web.txt`. Viola et al. continua consultado por extração web, sem PDF local.
 
 ## Antes de usar na redação final
 

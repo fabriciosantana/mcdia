@@ -31,7 +31,7 @@ O `latexmkrc` direciona auxiliares para `aux/` e o PDF para [out/main.pdf](out/m
 
 Excertos são curtos e seletivos, no idioma original; não constituem transcrição extensa de todos os argumentos. Localizadores permitem retomar o contexto. A síntese relaciona temas sem presumir equivalência entre experimentos, descrições institucionais e ensaios conceituais.
 
-NDAA e Viola et al. foram consultados por extração web do PDF oficial, sem PDF local. A nota local de Viola registra apenas o cotejo e a proveniência, não o texto integral. Para fontes com inspeção estrutural indisponível, usam-se âncoras textuais; o piloto IPU conserva páginas também conferidas visualmente.
+NDAA foi posteriormente incorporado como PDF local oficial, com preflight estrutural aprovado; a extração web anterior permanece preservada em `fontes/ndaa-web.txt`. Viola et al. continua consultado por extração web do PDF oficial, sem PDF local. A nota local de Viola registra apenas o cotejo e a proveniência, não o texto integral. Para fontes com inspeção estrutural indisponível, usam-se âncoras textuais; o piloto IPU conserva páginas também conferidas visualmente.
 
 ## Antes da redação final
 

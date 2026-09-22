@@ -169,16 +169,13 @@
       "canonical_url": "https://www.ida.org/-/media/feature/publications/t/ta/talk-to-the-ndaa/3001199.ashx",
       "download_url": "https://www.ida.org/-/media/feature/publications/t/ta/talk-to-the-ndaa/3001199.ashx",
       "access_date": "2026-09-07",
-      "consulted_scope": "Extração web do PDF oficial; consulta focal das seções 1 e 2. Downloads diretos falharam (HTTP 404); sem PDF local, localizadores por seção, não por página.",
+      "consulted_scope": "PDF local de 26 páginas; consulta focal das seções 1 e 2, com possibilidade de conferência por página.",
       "human_read_status": "não registrada",
-      "verification_note": "Extração web consultada; sem PDF local. Localizadores por seção. Dois downloads oficiais retornaram HTTP 404.",
-      "local_file": "fontes/ndaa-web.txt",
-      "sha256": "da25647921e3f09ba64559bf9c1c22986672a1f3b8ba7618d8c5a4f2a5a865e7",
-      "structural_preflight": "UNAVAILABLE",
-      "download_attempts": [
-        "https://www.ida.org/-/media/feature/publications/t/ta/talk-to-the-ndaa/3001199.ashx",
-        "https://www.ida.org/-/media/d5696369a45f41268015ffdfe21c2646.ashx"
-      ]
+      "verification_note": "PDF local recebido do pesquisador e aprovado no preflight estrutural; a extração web anterior foi preservada em fontes/ndaa-web.txt como histórico.",
+      "local_file": "fontes/garrisonEtAl2024talkNdaa.pdf",
+      "sha256": "e04c086cec125fb963b0f8a635ba6d4237b170c0752afdfdea9e6bfa84c7a309",
+      "structural_preflight": "PASS",
+      "preflight_file": "fontes/garrisonEtAl2024talkNdaa.preflight.json"
     },
     {
       "id": "bandeiraBernardes2016information",
