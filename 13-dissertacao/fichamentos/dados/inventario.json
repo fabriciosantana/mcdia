@@ -330,21 +330,6 @@
     "subcategoria_tematica": "aplicações RAG jurídico-políticas"
   },
   {
-    "chave": "matoshiEtAl2025parliamentRag",
-    "titulo": "Transforming Digital Access in Parliament: Topic Modeling Meets Retrieval Augmented Generation",
-    "tipo": "inproceedings",
-    "ano": "2025",
-    "lote": "2 — contexto legislativo e aplicações parlamentares",
-    "status": "Não incorporado — acesso não obtido",
-    "arquivo": "",
-    "fonte_consultada": "https://doi.org/10.1109/ICEDEG65568.2025.11081627",
-    "texto_local": "Não obtido",
-    "leitura_pesquisador": "Não registrada",
-    "observacao": "Texto integral não obtido; referência registrada formalmente como não incorporada nesta versão.",
-    "origem_selecao": "pré-projeto",
-    "subcategoria_tematica": "aplicações parlamentares e legislativas"
-  },
-  {
     "chave": "colomboEtAl2025legisSearch",
     "titulo": "LegisSearch: navigating legislation with graphs and large language models",
     "tipo": "article",
@@ -553,21 +538,6 @@
     "observacao": "PDF local verificado como 8. ed., Atlas, 2017; a bibliografia original indicava 9. ed., 2021. Ficha usa pesquisa bibliográfica, métodos de abordagem e procedimentos.",
     "origem_selecao": "pré-projeto",
     "subcategoria_tematica": "metodologia científica"
-  },
-  {
-    "chave": "creswellPlanoClark2018mixedMethods",
-    "titulo": "Designing and Conducting Mixed Methods Research",
-    "tipo": "book",
-    "ano": "2018",
-    "lote": "4 — metodologia de pesquisa e desenho do estudo",
-    "status": "Não incorporado — acesso não obtido",
-    "arquivo": "",
-    "fonte_consultada": "",
-    "texto_local": "Não obtido",
-    "leitura_pesquisador": "Não registrada",
-    "observacao": "Texto integral não obtido; referência registrada formalmente como não incorporada nesta versão.",
-    "origem_selecao": "pré-projeto",
-    "subcategoria_tematica": "métodos mistos"
   },
   {
     "chave": "brownEtAl2020fewShotLearners",

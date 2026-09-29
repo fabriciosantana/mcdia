@@ -1,6 +1,6 @@
 # Fichamentos da revisão da literatura
 
-Atualizado em 29/09/2026: **58 fichas de uma página**, dez páginas de matriz temática e duas de síntese. Das 60 referências do inventário completo, 58 estão fichadas e duas foram formalmente não incorporadas por falta de acesso. Consulte [o controle de cobertura](documentacao/CONTROLE_COBERTURA.md).
+Atualizado em 29/09/2026: **58 fichas de uma página**, dez páginas de matriz temática e duas de síntese. As 58 referências do inventário ativo estão fichadas. Consulte [o controle de cobertura](documentacao/CONTROLE_COBERTURA.md).
 
 A coleção foi preparada com assistência de IA. Os lotes do inventário são temáticos: avaliação de RAG e benchmarks; contexto legislativo e aplicações parlamentares; recuperação da informação e engenharia de busca; metodologia de pesquisa e desenho do estudo; fundamentos, revisões e riscos; a condição de piloto é registrada nas observações das fichas 01--03 e não constitui lote temático. Cada ficha distingue contribuição interpretativa, excertos literais, natureza da evidência, limitações e aproveitamento proposto. A leitura é frequentemente focal: livros, revisões e relatórios extensos não são apresentados como integralmente lidos. A leitura dos textos-fonte pelo pesquisador não foi registrada; ele declarou leitura dos três fichamentos-piloto.
 
@@ -20,7 +20,7 @@ O `latexmkrc` direciona auxiliares para `aux/` e o PDF para [out/main.pdf](out/m
 
 - `dados/inventario.csv` e `dados/inventario.json`: inventário original de 52 referências.
 - `dados/inventario-adicional.csv` e `dados/inventario-adicional.json`: oito fontes incorporadas após o pré-projeto, classificadas tematicamente no lote de avaliação de RAG e benchmarks.
-- `dados/inventario-completo.csv` e `dados/inventario-completo.json`: visão unificada de 60 registros, com `origem_selecao` e `subcategoria_tematica`.
+- `dados/inventario-completo.csv` e `dados/inventario-completo.json`: visão unificada de 58 registros, com `origem_selecao` e `subcategoria_tematica`.
 - `fontes/manifesto.json`: versões consultadas, URLs, hashes e escopos.
 - `fontes/*.preflight.json`: inspeção estrutural dos PDFs; não certifica conteúdo científico.
 - `fontes/lote-*-excertos.json`: cotejo literal, normalizando espaços, ligaturas e hifenização de linhas.
@@ -35,4 +35,4 @@ NDAA foi posteriormente incorporado como PDF local oficial, com preflight estrut
 
 ## Antes da redação final
 
-Confirmar versões bibliográficas, aprofundar as fontes centrais e revisar as interpretações. As oito fontes selecionadas na busca complementar foram incorporadas a `texto-Latex/referencias.bib`; três candidatas contextuais permanecem em `fontes/bibliografia-adicional-candidata.bib` para decisão posterior. As duas referências não incorporadas permanecem registradas no controle de cobertura; as versões divergentes de Gil, Lakatos/Marconi e Geunis estão explicitadas nas fichas. A coleção não constitui revisão sistemática exaustiva, e seus argumentos não são resultados experimentais da dissertação.
+Confirmar versões bibliográficas, aprofundar as fontes centrais e revisar as interpretações. As oito fontes selecionadas na busca complementar foram incorporadas a `texto-Latex/referencias.bib`; três candidatas contextuais permanecem em `fontes/bibliografia-adicional-candidata.bib` para decisão posterior. as versões divergentes de Gil, Lakatos/Marconi e Geunis estão explicitadas nas fichas. A coleção não constitui revisão sistemática exaustiva, e seus argumentos não são resultados experimentais da dissertação.

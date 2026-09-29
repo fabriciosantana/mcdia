@@ -66,11 +66,6 @@
     "sha256": "0e0ea3430c2cba9a8f5dd06e17581e7cdaa42184130b69ff733a5ff9fc6a37db"
   },
   {
-    "key": "matoshiEtAl2025parliamentRag",
-    "status": "sem URL direta identificada",
-    "original_url": "https://doi.org/10.1109/ICEDEG65568.2025.11081627"
-  },
-  {
     "key": "colomboEtAl2025legisSearch",
     "status": "obtido",
     "url": "https://link.springer.com/content/pdf/10.1007/s10506-025-09482-6.pdf",
@@ -129,11 +124,6 @@
   },
   {
     "key": "lakatosMarconi2021metodologia",
-    "status": "sem URL direta identificada",
-    "original_url": ""
-  },
-  {
-    "key": "creswellPlanoClark2018mixedMethods",
     "status": "sem URL direta identificada",
     "original_url": ""
   },

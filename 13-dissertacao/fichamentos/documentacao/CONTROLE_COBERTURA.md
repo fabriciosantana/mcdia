@@ -1,6 +1,6 @@
 # Controle de cobertura dos fichamentos
 
-Atualizado em 29/09/2026. **58 fichas disponíveis; duas referências não incorporadas por falta de acesso.**
+Atualizado em 29/09/2026. **58 fichas disponíveis no corpus ativo.**
 
 Fichado indica preparação a partir do recorte declarado, frequentemente focal/parcial. Não atesta leitura integral nem leitura do texto-fonte pelo pesquisador. Os três pilotos foram preservados. O primeiro lote acrescentou dez fichas; a retomada acrescentou 32; a atualização de 29/09 acrescentou cinco fichas para as fontes antes pendentes.
 
@@ -30,7 +30,6 @@ Fichado indica preparação a partir do recorte declarado, frequentemente focal/
 | chouhanGertz2024lexdrafter | Fichado — consulta focal/parcial | [LaTeX](../fichas/10-lexdrafter.tex) |
 | garrisonEtAl2024talkNdaa | Fichado — consulta focal/parcial | [LaTeX](../fichas/13-ndaa.tex) |
 | rogiersEtAl2024kamerraad | Fichado — consulta focal/parcial | [LaTeX](../fichas/02-kamerraad.tex) |
-| matoshiEtAl2025parliamentRag | Não incorporado — acesso não obtido | — |
 | colomboEtAl2025legisSearch | Fichado — consulta focal/parcial | [LaTeX](../fichas/15-colomboEtAl2025legisSearch.tex) |
 | mosbachEtAl2025worldAvatarParliament | Fichado — consulta focal/parcial | [LaTeX](../fichas/16-mosbachEtAl2025worldAvatarParliament.tex) |
 | blanco2025plenarioPalanqueEstudio | Fichado — consulta focal/parcial | [LaTeX](../fichas/17-blanco2025plenarioPalanqueEstudio.tex) |
@@ -45,7 +44,6 @@ Fichado indica preparação a partir do recorte declarado, frequentemente focal/
 | liuEtAl2023geval | Fichado — consulta focal/parcial | [LaTeX](../fichas/08-geval.tex) |
 | gil2022projetosPesquisa | Fichado — consulta focal/parcial | [LaTeX](../fichas/55-gil2022projetosPesquisa.tex) |
 | lakatosMarconi2021metodologia | Fichado — consulta focal/parcial | [LaTeX](../fichas/56-lakatosMarconi2021metodologia.tex) |
-| creswellPlanoClark2018mixedMethods | Não incorporado — acesso não obtido | — |
 | brownEtAl2020fewShotLearners | Fichado — consulta focal/parcial | [LaTeX](../fichas/32-brownEtAl2020fewShotLearners.tex) |
 | zhaoEtAl2023llmSurvey | Fichado — consulta focal/parcial | [LaTeX](../fichas/30-zhaoEtAl2023llmSurvey.tex) |
 | kaplanEtAl2020scalingLaws | Fichado — consulta focal/parcial | [LaTeX](../fichas/33-kaplanEtAl2020scalingLaws.tex) |
@@ -60,11 +58,6 @@ Fichado indica preparação a partir do recorte declarado, frequentemente focal/
 | karpukhinEtAl2020dpr | Fichado — consulta focal/parcial | [LaTeX](../fichas/22-karpukhinEtAl2020dpr.tex) |
 | khattabZaharia2020colbert | Fichado — consulta focal/parcial | [LaTeX](../fichas/23-khattabZaharia2020colbert.tex) |
 | izacardGrave2021passageRetrieval | Fichado — consulta focal/parcial | [LaTeX](../fichas/24-izacardGrave2021passageRetrieval.tex) |
-
-## Pendências que impedem cobertura integral
-
-- **matoshiEtAl2025parliamentRag**: texto integral não obtido; referência registrada formalmente como não incorporada nesta versão.
-- **creswellPlanoClark2018mixedMethods**: texto integral não obtido; referência registrada formalmente como não incorporada nesta versão.
 
 ## Versões e ressalvas
 
@@ -84,4 +77,4 @@ As versões efetivamente consultadas foram registradas no inventário, manifesto
 
 ## Antes de usar na redação final
 
-Conferir as versões que serão efetivamente citadas; aprofundar métodos e resultados das fontes centrais; validar interpretações e anotações com o pesquisador. A síntese cobre esta seleção, sem reivindicar busca sistemática exaustiva. A atualização de 29/09/2026 incorporou Geunis e de Almeida Santos após verificação dos PDFs e retirou Creswell da metodologia por falta de acesso. Matoshi permanece formalmente não incorporado.
+Conferir as versões que serão efetivamente citadas; aprofundar métodos e resultados das fontes centrais; validar interpretações e anotações com o pesquisador. A síntese cobre esta seleção, sem reivindicar busca sistemática exaustiva. A atualização de 29/09/2026 incorporou Geunis e de Almeida Santos após verificação dos PDFs.

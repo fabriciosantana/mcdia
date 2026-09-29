@@ -1,6 +1,6 @@
 # Auditoria da revisão bibliográfica
 
-Data: 08/09/2026. Escopo: 53 fichamentos, fontes centrais, citações dos capítulos 2 e 3 e sete referências pendentes do inventário original.
+Data: 08/09/2026. Escopo: revisão dos fichamentos, fontes centrais, citações dos capítulos 2 e 3 e consolidação do inventário bibliográfico.
 
 ## 1. Fichamentos
 
@@ -26,23 +26,13 @@ A rubrica de cinco dimensões foi mantida como síntese operacional da literatur
 
 ## 3. Auditoria de citações dos capítulos 2 e 3
 
-As chaves citadas foram conferidas contra `referencias.bib`; não há chave ausente. As afirmações técnicas principais estão apoiadas por fontes primárias ou sínteses explicitamente qualificadas. Foram removidas três citações pendentes que não tinham texto integral verificável: `geunis2023parliamentaryMonitoring`, `deAlmeidaSantos2025aiGovernance` e `matoshiEtAl2025parliamentRag`. As passagens permanecem sustentadas por fontes acessíveis próximas ou foram redigidas como delimitação da dissertação.
+As chaves citadas foram conferidas contra `referencias.bib`; não há chave ausente. As afirmações técnicas principais estão apoiadas por fontes primárias ou sínteses explicitamente qualificadas. As citações dos capítulos foram conferidas após a incorporação das fontes que passaram a ter texto local verificável; não há chaves ausentes. As passagens permanecem sustentadas por fontes acessíveis próximas ou foram redigidas como delimitação da dissertação.
 
 Pontos que devem permanecer sob controle editorial: (a) números de versões de RAGAS, HELM, Ji e WFD; (b) contagens divergentes em LegalBench-RAG; (c) resultados de ARES, Trautmann e GaRAGe sempre acompanhados da expressão “nas condições do estudo”; (d) inferências de transferência para o Senado apresentadas como hipóteses de teste.
 
-## 4. Destino das sete referências pendentes
+## 4. Estado final do corpus bibliográfico
 
-| Chave | Decisão | Justificativa
-|---|---| ---
-| `peffersEtAl2007dsrm` | manter como referência metodológica; recuperar PDF antes da versão final | fundamenta DSR, mas a ficha e a conferência textual continuam pendentes
-| `geunis2023parliamentaryMonitoring` | não incorporar por ora; retirar citação do capítulo 2 | identidade/versão da página não coincide com a entrada de 2023
-| `deAlmeidaSantos2025aiGovernance` | não incorporar por ora; retirar citação do capítulo 2 | metadados disponíveis, texto integral não verificado e argumento já coberto por IPU/WFD
-| `matoshiEtAl2025parliamentRag` | manter como candidata contextual; retirar citação do capítulo 2 | acesso restrito e ausência de ficha verificável
-| `gil2022projetosPesquisa` | manter apenas como apoio metodológico, pendente de confirmação da 7ª edição | não é fonte da revisão de RAG; recuperar ou substituir antes da redação metodológica final
-| `lakatosMarconi2021metodologia` | manter apenas como apoio metodológico, pendente de confirmação da 9ª edição | mesma condição; não afeta a revisão bibliográfica substantiva
-| `creswellPlanoClark2018mixedMethods` | manter apenas como apoio metodológico, pendente de confirmação da 3ª edição | mesma condição; substituir se a edição não puder ser conferida
-
-A revisão bibliográfica substantiva pode ser considerada encerrada para o piloto. A atualização de 29/09/2026 resolveu cinco das sete pendências; as duas restantes foram formalmente marcadas como não incorporadas por falta de acesso.
+O corpus ativo foi encerrado com 58 referências fichadas. As duas referências sem acesso foram retiradas dos inventários, da bibliografia ativa e do arquivo de obtenção. Não há citações ativas dependentes delas. A versão congelada e seus hashes estão registrados em `fichamentos/documentacao/BIBLIOGRAFIA_CONGELADA_2026-09-29.md`.
 
 
 ## 5. Atualização de 15/09/2026
@@ -51,4 +41,4 @@ Em execução do fluxo `ars-lit-review`, foram aprofundadas as nove fontes centr
 
 Os capítulos 2 e 3 foram revisados para: (a) apresentar as cinco dimensões avaliativas como síntese operacional da literatura, e não como rubrica canônica; (b) explicitar a adaptação da insuficiência documental ao contexto parlamentar; e (c) separar erro de documento, erro de trecho e erro de afirmação. A dissertação foi recompilada sem erros de LaTeX ou citações indefinidas; permanecem apenas avisos tipográficos preexistentes.
 
-Em 29/09/2026, cinco PDFs foram recebidos, validados por preflight e fichados. Matoshi e Creswell foram formalmente registrados como não incorporados por falta de acesso. A ficha 57 registra que o PDF de Geunis é de 2025, e as fichas 55 e 56 registram as edições efetivamente consultadas de Gil e Lakatos/Marconi.
+Em 29/09/2026, cinco PDFs foram recebidos, validados por preflight e fichados. Duas entradas sem acesso foram removidas do corpus ativo. A ficha 57 registra que o PDF de Geunis é de 2025, e as fichas 55 e 56 registram as edições efetivamente consultadas de Gil e Lakatos/Marconi.

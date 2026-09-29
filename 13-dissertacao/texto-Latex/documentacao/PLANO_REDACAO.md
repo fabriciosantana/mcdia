@@ -62,10 +62,10 @@ A entrega bibliográfica é a prioridade imediata indicada pelo pesquisador. As 
 - [ ] Refinar a interpretação da cobertura de partido e UF: as 2.074 ausências coincidem com autores externos; ambos os campos estão preenchidos entre senadores e deputados. Distinguir ausência e possível não aplicabilidade antes de caracterizar deficiência dos metadados ou revisar o quadro de prontidão.
 - [ ] Conferir a proveniência e a necessidade dos dois CSVs de prontidão atualmente idênticos: `prontidao_rag.csv` e `prontidao_dados_experimentacao_rag.csv`.
 - [ ] Implementar o notebook 02, atualmente apenas planejado, com construção efetiva de trechos e comparação da recuperação. As estimativas de chunking do notebook 01 não são resultados experimentais.
-- [ ] Congelar código experimental, configurações, perguntas e conjunto de referência. O congelamento do corpus não encerra o congelamento do experimento.
+- [~] Congelar código experimental, configurações, perguntas e conjunto de referência. O notebook 02 e a configuração do baseline estão registrados; a bateria e o conjunto de referência continuam em curadoria (`dados/piloto/`).
 - [ ] Registrar versões, hashes, modelos, prompts, parâmetros, sementes aplicáveis e datas das execuções experimentais.
 - [ ] Executar piloto e registrar mudanças previamente ao experimento principal.
-- [ ] Executar recuperação e baselines sob os mesmos dados, perguntas e critérios de relevância; posteriormente executar geração e avaliações, mantendo as camadas analíticas separadas.
+- [~] Executar recuperação e baselines sob os mesmos dados, perguntas e critérios de relevância; o baseline lexical foi executado com consultas provisórias, mas a execução controlada do conjunto-ouro aguarda a validação das perguntas e evidências.
 - [ ] Concluir avaliação humana e análise de concordância.
 
 ## Fase 3 — capítulos empíricos

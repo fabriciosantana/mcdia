@@ -16,11 +16,11 @@ python -m pip install -r 13-dissertacao/notebooks/requirements.txt
 | Ordem | Notebook | Finalidade | Situação |
 |---:|---|---|---|
 | 01 | `01-analisar-base-discursos-rag.ipynb` | Auditoria completa, análise exploratória e avaliação da prontidão do corpus para uma solução RAG | Criado |
-| 02 | `02-avaliar-recuperacao-rag.ipynb` | Construção do corpus indexado e avaliação comparativa da recuperação lexical, vetorial e híbrida | Planejado |
+| 02 | `02-avaliar-recuperacao-rag.ipynb` | Baseline de recuperação em trechos com BM25, TF–IDF e combinação híbrida; conjunto de consultas provisório | Piloto criado |
 
 ## Convenções
 
-- Os arquivos originais ficam em `13-dissertacao/dados/` e não são modificados pelos notebooks.
+- Os arquivos originais ficam em `13-dissertacao/dados/` e não são modificados pelos notebooks. O piloto 02 grava apenas consultas provisórias em `dados/piloto/` e métricas em `dados/outputs/`.
 - Um notebook pode baixar dados públicos quando o arquivo necessário não estiver disponível localmente.
 - Tabelas ou figuras destinadas à dissertação devem ser exportadas apenas para diretórios próprios, sem sobrescrever os dados de origem.
 - Novos notebooks devem receber prefixos numéricos sequenciais e ser registrados neste catálogo.
