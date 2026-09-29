@@ -6,7 +6,7 @@
 
 ## 1. Resultado executivo
 
-A literatura selecionada é adequada para o piloto e cobre quatro necessidades centrais do protocolo: fundamentos de RAG e recuperação; avaliação de geração e grounding; aplicações jurídico-parlamentares; e contexto institucional dos acervos legislativos. O inventário consolidado contém 60 referências: 52 provenientes do pré-projeto e oito incorporadas na busca complementar posterior. Há 53 fichamentos disponíveis e sete referências pendentes de acesso ou confirmação de versão.
+A literatura selecionada é adequada para o piloto e cobre quatro necessidades centrais do protocolo: fundamentos de RAG e recuperação; avaliação de geração e grounding; aplicações jurídico-parlamentares; e contexto institucional dos acervos legislativos. O inventário consolidado contém 60 referências: 52 provenientes do pré-projeto e oito incorporadas na busca complementar posterior. Há 58 fichamentos disponíveis e duas referências formalmente não incorporadas por falta de acesso.
 
 A lacuna está formulada de modo defensável como **integração e adaptação contextual**: os estudos existentes oferecem técnicas ou aplicações parciais, mas não combinam, no mesmo desenho empírico, corpus parlamentar brasileiro, recuperação documental, geração, verificabilidade das citações, reconhecimento de insuficiência documental e validação humana independente.
 
@@ -30,7 +30,7 @@ Em que condições um sistema RAG aplicado a discursos parlamentares brasileiros
 
 Foram mantidos trabalhos diretamente relacionados a pelo menos um componente do problema: arquitetura ou recuperação RAG; métrica, benchmark ou rubrica de avaliação; aplicação jurídico-legislativa/parlamentar; corpus de discurso parlamentar; ou fundamento metodológico usado no desenho da dissertação. Fontes fundacionais foram preservadas quando necessárias para a linhagem conceitual, mesmo sendo anteriores ao recorte recente.
 
-Foram retiradas do texto principal as referências cuja identidade, versão ou texto integral não pôde ser confirmado: `geunis2023parliamentaryMonitoring`, `deAlmeidaSantos2025aiGovernance` e `matoshiEtAl2025parliamentRag`. As quatro referências metodológicas pendentes permanecem separadas para decisão editorial.
+Foram incorporadas, com ressalvas de versão, Geunis, de Almeida Santos, Gil, Lakatos/Marconi e Peffers. `matoshiEtAl2025parliamentRag` e `creswellPlanoClark2018mixedMethods` permanecem formalmente não incorporadas por falta de acesso.
 
 ### Limitação de rastreabilidade
 
@@ -40,9 +40,9 @@ O inventário permite reproduzir a seleção final e suas justificativas, mas n�
 
 | Estado | Quantidade | Interpretação |
 |---|---:|---|
-| Fichado — consulta focal/parcial | 45 | Ficha produzida a partir do recorte consultado; não equivale a leitura integral |
-| Incorporado — fichas 46–53 | 8 | Fontes complementares pós-pré-projeto, centradas em avaliação de RAG |
-| Pendente — acesso ou versão | 7 | Não usar como sustentação principal até resolver a pendência |
+| Fichado — consulta focal/parcial | 50 | Ficha produzida a partir do recorte consultado; não equivale a leitura integral |
+| Incorporado — fichas 46–53 e 54–58 | 8 | Fontes complementares pós-pré-projeto, centradas em avaliação de RAG |
+| Não incorporado — acesso não obtido | 2 | Não usar como sustentação principal até resolver a pendência |
 | **Total do inventário** | **60** | 52 do pré-projeto + 8 complementares |
 
 ### Aviso de distribuição temporal
@@ -50,7 +50,7 @@ O inventário permite reproduzir a seleção final e suas justificativas, mas n�
 **DISTRIBUTIONAL_SKEW_ADVISORY**
 
 - **Dimensão:** distribuição temporal.
-- **Concentração:** 2024–2025 = 30/60 referências (50%); 2023–2025 = 38/60 (63,3%).
+- **Concentração:** 2024–2025 = 31/60 referências (51,7%); 2023–2025 = 39/60 (65%).
 - **Interpretação:** há concentração recente, mas ela não alcança o limiar de 70% para um alerta forte. Ela é compatível com a rápida evolução da avaliação de RAG.
 - **Resposta de busca:** manter fontes fundacionais de 2004–2021 e não ampliar a busca temporal sem uma lacuna conceitual específica.
 
@@ -58,7 +58,7 @@ Não foi emitido alerta quantitativo para geografia, método ou estrato de venue
 
 ## 4. Bibliografia anotada e matriz temática
 
-As anotações individuais estão nas 53 fichas em `fichamentos/fichas/`. Cada ficha registra contribuição, resumo extrativo, limitações e uso proposto. A matriz abaixo consolida a função das fontes no argumento; “alta” significa boa adequação ao claim indicado, não uma classificação universal de prestígio.
+As anotações individuais estão nas 58 fichas em `fichamentos/fichas/`. Cada ficha registra contribuição, resumo extrativo, limitações e uso proposto. A matriz abaixo consolida a função das fontes no argumento; “alta” significa boa adequação ao claim indicado, não uma classificação universal de prestígio.
 
 | Grupo de fontes | Fontes representativas | Tema/claim coberto | Método ou evidência | Adequação |
 |---|---|---|---|---|
@@ -72,7 +72,7 @@ As anotações individuais estão nas 53 fichas em `fichamentos/fichas/`. Cada f
 | Aplicações jurídico-políticas | RAGAR; LexDrafter; Talk to the NDAA; KamerRaad; LegisSearch; World Avatar | Variedade de tarefas, corpora e arquiteturas | Sistemas aplicados e demonstrações | Média: contextualiza, mas não forma benchmark comum |
 | Parlamento e discurso | Skubic/Fiser; Blanco; Martello/Viola; Bandeira/Bernardes | Natureza do acervo, organização e uso institucional | Revisão, estudo de corpus e organização do conhecimento | Alta para contextualização brasileira/institucional |
 | Governança | IPU; WFD; Bender et al.; Bommasani et al. | Transparência, supervisão, riscos sociotécnicos | Diretrizes e textos conceituais | Média/alta para justificativa institucional |
-| Desenho de pesquisa | Hevner et al.; Peffers et al.; Creswell/Plano-Clark; Gil; Lakatos/Marconi | DSR, métodos mistos e desenho metodológico | Textos metodológicos | Condicional: quatro itens ainda pendentes de confirmação |
+| Desenho de pesquisa | Hevner et al.; Peffers et al.; Gil; Lakatos/Marconi | DSR, projeto, métodos e desenho metodológico | Textos metodológicos | Alta para desenho; versões consultadas têm ressalvas |
 
 ## 5. Lacunas identificadas
 
@@ -93,7 +93,7 @@ Essas lacunas são inferências de cobertura do corpus selecionado e dos capítu
 | Referencial teórico: acervo legislativo | Bandeira/Bernardes; Skubic/Fiser; Blanco; Martello/Viola; IPU; WFD | Justificar especificidade institucional e parlamentar |
 | Referencial teórico: avaliação | ARES; RAGAS; RAGEval; HELM; Yu; Ji | Delimitar dimensões, métricas e riscos |
 | Trabalhos relacionados | Trautmann; RAGTruth; Zhang; GaRAGe; Reuter; eRAG; GroUSE; ConsJudge; LegalBench-RAG | Comparar unidade, tarefa, grounding, recusa e avaliação humana |
-| Metodologia | Hevner; Peffers; Creswell/Plano-Clark; Gil; Lakatos/Marconi | Sustentar o desenho, após confirmar as edições pendentes |
+| Metodologia | Hevner; Peffers; Gil; Lakatos/Marconi | Sustentar o desenho e a documentação, com as edições consultadas explicitadas |
 | Discussão | Toda a matriz, com ênfase em Trautmann, GaRAGe, Reuter e GroUSE | Interpretar transferibilidade, limites e casos-limite |
 
 ## 7. Decisões editoriais e próximos passos
@@ -102,13 +102,13 @@ Essas lacunas são inferências de cobertura do corpus selecionado e dos capítu
 - Não transformar a rubrica de cinco dimensões em “padrão da literatura”. Apresentá-la como síntese operacional, com a dimensão de insuficiência documental explicitamente adaptada ao contexto parlamentar.
 - Nas fontes centrais, conservar qualificadores como “nas condições do estudo” para números de Trautmann, GaRAGe, ARES e demais benchmarks.
 - **Concluído nesta rodada:** aprofundar ARES, RAGAS, ConsJudge, LegalBench-RAG, Trautmann, RAGTruth, Zhang, GaRAGe e Reuter; as fichas agora registram controle explícito de uso e limites de transferência.
-- Resolver as sete pendências no controle de cobertura. Até lá, não usá-las como evidência principal.
+- Manter Matoshi e Creswell registrados como não incorporados. Conferir na redação final as ressalvas de edição de Gil, Lakatos/Marconi e Geunis.
 - Se uma nova rodada de busca for realizada, registrar data, base, string, filtros, resultados iniciais e motivo de inclusão/exclusão; anexar os resultados ao inventário em vez de substituir silenciosamente o corpus atual.
 
 ## 8. Julgamento do fluxo ARS
 
 **Cobertura temática:** adequada para o piloto, com lacunas nomeadas.  
 **Estratégia reproduzível:** parcial; a seleção final é rastreável, mas faltam logs prospectivos de bases e contagens de busca.  
-**Bibliografia anotada:** adequada para as 53 fichas existentes.  
+**Bibliografia anotada:** adequada para as 58 fichas existentes.  
 **Matriz de literatura:** adequada em nível temático; pode ser refinada depois da leitura integral das fontes centrais.  
 **Prontidão para redação:** suficiente para consolidar o piloto e a revisão dos capítulos; insuficiente para declarar revisão exaustiva ou fechar a versão final sem resolver as pendências metodológicas e de acesso.

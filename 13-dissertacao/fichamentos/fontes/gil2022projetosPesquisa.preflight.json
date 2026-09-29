@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/gil2022projetosPesquisa.pdf",
+  "sha256": "c55b2e3c985002fd74118db672aa2510e5faaac48f891f30189cf26ecd599f97",
+  "declared_page_count": 176,
+  "enumerated_page_count": 176,
+  "reader_page_count": 176,
+  "warnings": [],
+  "generated_at": "2026-09-29T14:10:33.717507+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

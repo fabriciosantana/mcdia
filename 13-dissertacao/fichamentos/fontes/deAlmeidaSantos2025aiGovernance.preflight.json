@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/deAlmeidaSantos2025aiGovernance.pdf",
+  "sha256": "dc94c9c11309346f0e4b1412306da1d77a3d041d0cbea86addd66c077412e5c1",
+  "declared_page_count": 18,
+  "enumerated_page_count": 18,
+  "reader_page_count": 18,
+  "warnings": [],
+  "generated_at": "2026-09-29T14:10:37.931419+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

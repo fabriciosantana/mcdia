@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/geunis2023parliamentaryMonitoring.pdf",
+  "sha256": "0dba42215593e1df1e5a32eaa5f7c320b3351405d9ef21251674010449ac3e17",
+  "declared_page_count": 21,
+  "enumerated_page_count": 21,
+  "reader_page_count": 21,
+  "warnings": [],
+  "generated_at": "2026-09-29T14:10:36.953786+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

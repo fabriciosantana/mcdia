@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/peffersEtAl2007dsrm.pdf",
+  "sha256": "3b0eee0e13dec73c03672caa9dec073f139c73cdaaf36b2f90045e48c38b0c36",
+  "declared_page_count": 34,
+  "enumerated_page_count": 34,
+  "reader_page_count": 34,
+  "warnings": [],
+  "generated_at": "2026-09-29T14:10:36.441498+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

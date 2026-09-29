@@ -1,17 +1,17 @@
 # Controle de cobertura dos fichamentos
 
-Atualizado em 08/09/2026. **45 de 52 referências fichadas; sete pendentes de acesso ou confirmação de versão.**
+Atualizado em 29/09/2026. **58 fichas disponíveis; duas referências não incorporadas por falta de acesso.**
 
-Fichado indica preparação a partir do recorte declarado, frequentemente focal/parcial. Não atesta leitura integral nem leitura do texto-fonte pelo pesquisador. Os três pilotos foram preservados. O primeiro lote acrescentou dez fichas; a retomada acrescentou 32.
+Fichado indica preparação a partir do recorte declarado, frequentemente focal/parcial. Não atesta leitura integral nem leitura do texto-fonte pelo pesquisador. Os três pilotos foram preservados. O primeiro lote acrescentou dez fichas; a retomada acrescentou 32; a atualização de 29/09 acrescentou cinco fichas para as fontes antes pendentes.
 
 ## Situação por referência
 
 | Chave | Situação | Ficha |
 |---|---|---|
 | hevnerEtAl2004designScience | Fichado — consulta focal/parcial | [LaTeX](../fichas/43-hevnerEtAl2004designScience.tex) |
-| peffersEtAl2007dsrm | Pendente — acesso ou versão | — |
+| peffersEtAl2007dsrm | Fichado — consulta focal/parcial | [LaTeX](../fichas/54-peffersEtAl2007dsrm.tex) |
 | bandeiraBernardes2016information | Fichado — consulta focal/parcial | [LaTeX](../fichas/14-bandeiraBernardes2016information.tex) |
-| geunis2023parliamentaryMonitoring | Pendente — acesso ou versão | — |
+| geunis2023parliamentaryMonitoring | Fichado — consulta focal/parcial | [LaTeX](../fichas/57-geunis2023parliamentaryMonitoring.tex) |
 | ipu2024aiParliaments | Fichado — consulta focal/parcial | [LaTeX](../fichas/03-ipu.tex) |
 | skubicFiser2024discourseReview | Fichado — consulta focal/parcial | [LaTeX](../fichas/12-skubic.tex) |
 | martelloteViola2025organizacaoConhecimento | Fichado — consulta focal/parcial | [LaTeX](../fichas/45-martelloteViola2025organizacaoConhecimento.tex) |
@@ -19,7 +19,7 @@ Fichado indica preparação a partir do recorte declarado, frequentemente focal/
 | anhHoang2025hallucinations | Fichado — consulta focal/parcial | [LaTeX](../fichas/39-anhHoang2025hallucinations.tex) |
 | dahlEtAl2024largeLegalFictions | Fichado — consulta focal/parcial | [LaTeX](../fichas/40-dahlEtAl2024largeLegalFictions.tex) |
 | wfd2023guidelinesAiParliaments | Fichado — consulta focal/parcial | [LaTeX](../fichas/19-wfd2023guidelinesAiParliaments.tex) |
-| deAlmeidaSantos2025aiGovernance | Pendente — acesso ou versão | — |
+| deAlmeidaSantos2025aiGovernance | Fichado — consulta focal/parcial | [LaTeX](../fichas/58-deAlmeidaSantos2025aiGovernance.tex) |
 | lewisEtAl2020rag | Fichado — consulta focal/parcial | [LaTeX](../fichas/09-lewis.tex) |
 | gao2023ragSurvey | Fichado — consulta focal/parcial | [LaTeX](../fichas/26-gao2023ragSurvey.tex) |
 | gupta2024comprehensiveRag | Fichado — consulta focal/parcial | [LaTeX](../fichas/27-gupta2024comprehensiveRag.tex) |
@@ -30,7 +30,7 @@ Fichado indica preparação a partir do recorte declarado, frequentemente focal/
 | chouhanGertz2024lexdrafter | Fichado — consulta focal/parcial | [LaTeX](../fichas/10-lexdrafter.tex) |
 | garrisonEtAl2024talkNdaa | Fichado — consulta focal/parcial | [LaTeX](../fichas/13-ndaa.tex) |
 | rogiersEtAl2024kamerraad | Fichado — consulta focal/parcial | [LaTeX](../fichas/02-kamerraad.tex) |
-| matoshiEtAl2025parliamentRag | Pendente — acesso ou versão | — |
+| matoshiEtAl2025parliamentRag | Não incorporado — acesso não obtido | — |
 | colomboEtAl2025legisSearch | Fichado — consulta focal/parcial | [LaTeX](../fichas/15-colomboEtAl2025legisSearch.tex) |
 | mosbachEtAl2025worldAvatarParliament | Fichado — consulta focal/parcial | [LaTeX](../fichas/16-mosbachEtAl2025worldAvatarParliament.tex) |
 | blanco2025plenarioPalanqueEstudio | Fichado — consulta focal/parcial | [LaTeX](../fichas/17-blanco2025plenarioPalanqueEstudio.tex) |
@@ -43,9 +43,9 @@ Fichado indica preparação a partir do recorte declarado, frequentemente focal/
 | gao2024modularRag | Fichado — consulta focal/parcial | [LaTeX](../fichas/28-gao2024modularRag.tex) |
 | nie2024textEmbeddingSurvey | Fichado — consulta focal/parcial | [LaTeX](../fichas/29-nie2024textEmbeddingSurvey.tex) |
 | liuEtAl2023geval | Fichado — consulta focal/parcial | [LaTeX](../fichas/08-geval.tex) |
-| gil2022projetosPesquisa | Pendente — acesso ou versão | — |
-| lakatosMarconi2021metodologia | Pendente — acesso ou versão | — |
-| creswellPlanoClark2018mixedMethods | Pendente — acesso ou versão | — |
+| gil2022projetosPesquisa | Fichado — consulta focal/parcial | [LaTeX](../fichas/55-gil2022projetosPesquisa.tex) |
+| lakatosMarconi2021metodologia | Fichado — consulta focal/parcial | [LaTeX](../fichas/56-lakatosMarconi2021metodologia.tex) |
+| creswellPlanoClark2018mixedMethods | Não incorporado — acesso não obtido | — |
 | brownEtAl2020fewShotLearners | Fichado — consulta focal/parcial | [LaTeX](../fichas/32-brownEtAl2020fewShotLearners.tex) |
 | zhaoEtAl2023llmSurvey | Fichado — consulta focal/parcial | [LaTeX](../fichas/30-zhaoEtAl2023llmSurvey.tex) |
 | kaplanEtAl2020scalingLaws | Fichado — consulta focal/parcial | [LaTeX](../fichas/33-kaplanEtAl2020scalingLaws.tex) |
@@ -63,17 +63,12 @@ Fichado indica preparação a partir do recorte declarado, frequentemente focal/
 
 ## Pendências que impedem cobertura integral
 
-- **peffersEtAl2007dsrm**: Texto integral não obtido: cópia universitária excedeu tempo de conexão e alternativas anteriores falharam. Necessário PDF da publicação de 2007.
-- **geunis2023parliamentaryMonitoring**: Identidade/versão pendente: URL atualmente apresenta Partners in Parliamentary Strengthening, com material de 2025, divergindo de título e ano da entrada de 2023. Não substituído silenciosamente.
-- **deAlmeidaSantos2025aiGovernance**: Texto integral não localizado; acesso disponível a metadados/resumo. Necessária cópia da publicação identificada pelo DOI.
-- **matoshiEtAl2025parliamentRag**: Repositório institucional indica acesso restrito; necessária cópia autorizada do artigo de 2025.
-- **gil2022projetosPesquisa**: Livro não disponível localmente: necessária 7ª edição (2022), ou definição explícita do recorte dessa edição.
-- **lakatosMarconi2021metodologia**: Livro não disponível localmente: necessária 9ª edição (2021), ou definição explícita do recorte dessa edição.
-- **creswellPlanoClark2018mixedMethods**: Livro não disponível localmente: necessária 3ª edição (2018), ou definição explícita do recorte dessa edição.
+- **matoshiEtAl2025parliamentRag**: texto integral não obtido; referência registrada formalmente como não incorporada nesta versão.
+- **creswellPlanoClark2018mixedMethods**: texto integral não obtido; referência registrada formalmente como não incorporada nesta versão.
 
 ## Versões e ressalvas
 
-Os metadados originais em `referencias.bib` não foram alterados. Cada ficha identifica a versão consultada. A coluna `observacao` do inventário registra recortes e divergências; o manifesto preserva URLs e hashes.
+As versões efetivamente consultadas foram registradas no inventário, manifesto e fichas. As chaves internas foram preservadas para manter a rastreabilidade; divergências de edição e ano estão explicitadas. A coluna `observacao` do inventário registra recortes e divergências; o manifesto preserva URLs e hashes.
 
 - RAGAS: publicação de 2024, embora a chave remeta ao preprint de 2023.
 - WFD: PDF de julho de 2024; entrada bibliográfica de 2023.
@@ -85,7 +80,8 @@ Os metadados originais em `referencias.bib` não foram alterados. Cada ficha ide
 - Gao (2023), v1: conferir afirmações sobre ARES diretamente na fonte primária.
 - Anh-Hoang: relação entre exemplos da seção 4 e experimentos da seção 5 requer esclarecimento antes de reutilizar números.
 - NDAA: PDF local oficial recebido em 22/09/2026, com preflight estrutural PASS; a extração web anterior permanece preservada em `fontes/ndaa-web.txt`. Viola et al. continua consultado por extração web, sem PDF local.
+- Gil: PDF local é a 4. ed. (2002), embora a entrada original indicasse 7. ed. (2022). Lakatos/Marconi: PDF local é a 8. ed. (2017), embora a entrada original indicasse 9. ed. (2021). Geunis: PDF local é publicação de 2025, com título diferente da entrada original.
 
 ## Antes de usar na redação final
 
-Conferir as versões que serão efetivamente citadas; aprofundar métodos e resultados das fontes centrais; validar interpretações e anotações com o pesquisador. A síntese cobre esta seleção, sem reivindicar busca sistemática exaustiva. A auditoria de 08/09/2026 retirou do texto principal as citações de Geunis, de Almeida Santos e Matoshi enquanto não houver versão integral verificável; as três permanecem registradas como candidatas.
+Conferir as versões que serão efetivamente citadas; aprofundar métodos e resultados das fontes centrais; validar interpretações e anotações com o pesquisador. A síntese cobre esta seleção, sem reivindicar busca sistemática exaustiva. A atualização de 29/09/2026 incorporou Geunis e de Almeida Santos após verificação dos PDFs e retirou Creswell da metodologia por falta de acesso. Matoshi permanece formalmente não incorporado.

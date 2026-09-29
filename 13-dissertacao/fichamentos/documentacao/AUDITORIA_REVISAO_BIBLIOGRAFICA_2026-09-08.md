@@ -4,7 +4,7 @@ Data: 08/09/2026. Escopo: 53 fichamentos, fontes centrais, citações dos capít
 
 ## 1. Fichamentos
 
-A verificação estrutural encontrou 53 fichas compiláveis, todas com contribuição principal, excertos localizados e proposta de aproveitamento. Cinquenta e duas usam explicitamente o campo de limitações; a ficha institucional da IPU usa uma formulação equivalente de riscos/ressalvas. Não foram identificadas fichas sem os quatro conteúdos mínimos.
+A verificação estrutural inicial encontrou 53 fichas compiláveis, todas com contribuição principal, excertos localizados e proposta de aproveitamento. Após a atualização de 29/09/2026, o conjunto passou a 58 fichas. Cinquenta e sete usam explicitamente o campo de limitações; a ficha institucional da IPU usa uma formulação equivalente de riscos/ressalvas. Não foram identificadas fichas sem os quatro conteúdos mínimos.
 
 A revisão de conteúdo foi focal e não substitui a leitura integral pelo pesquisador. As fichas centrais foram conferidas contra os PDFs/extrações locais; as interpretações foram mantidas com ressalvas de transferência e sem converter resultados dos artigos em resultados da dissertação.
 
@@ -42,7 +42,7 @@ Pontos que devem permanecer sob controle editorial: (a) números de versões de 
 | `lakatosMarconi2021metodologia` | manter apenas como apoio metodológico, pendente de confirmação da 9ª edição | mesma condição; não afeta a revisão bibliográfica substantiva
 | `creswellPlanoClark2018mixedMethods` | manter apenas como apoio metodológico, pendente de confirmação da 3ª edição | mesma condição; substituir se a edição não puder ser conferida
 
-A revisão bibliográfica substantiva pode ser considerada encerrada para o piloto. As quatro referências metodológicas pendentes exigem apenas decisão editorial e confirmação de edição, não nova busca temática.
+A revisão bibliográfica substantiva pode ser considerada encerrada para o piloto. A atualização de 29/09/2026 resolveu cinco das sete pendências; as duas restantes foram formalmente marcadas como não incorporadas por falta de acesso.
 
 
 ## 5. Atualização de 15/09/2026
@@ -51,4 +51,4 @@ Em execução do fluxo `ars-lit-review`, foram aprofundadas as nove fontes centr
 
 Os capítulos 2 e 3 foram revisados para: (a) apresentar as cinco dimensões avaliativas como síntese operacional da literatura, e não como rubrica canônica; (b) explicitar a adaptação da insuficiência documental ao contexto parlamentar; e (c) separar erro de documento, erro de trecho e erro de afirmação. A dissertação foi recompilada sem erros de LaTeX ou citações indefinidas; permanecem apenas avisos tipográficos preexistentes.
 
-O item das sete referências pendentes foi deliberadamente deixado em aberto, conforme decisão editorial.
+Em 29/09/2026, cinco PDFs foram recebidos, validados por preflight e fichados. Matoshi e Creswell foram formalmente registrados como não incorporados por falta de acesso. A ficha 57 registra que o PDF de Geunis é de 2025, e as fichas 55 e 56 registram as edições efetivamente consultadas de Gil e Lakatos/Marconi.

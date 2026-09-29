@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "fichamentos/fontes/lakatosMarconi2021metodologia.pdf",
+  "sha256": "d09f511ec23e6236d78aa702b69c050671856fe3202554ae2f24c7a0462b2d41",
+  "declared_page_count": 375,
+  "enumerated_page_count": 375,
+  "reader_page_count": 375,
+  "warnings": [],
+  "generated_at": "2026-09-29T14:10:38.571565+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}
