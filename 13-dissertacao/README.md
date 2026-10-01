@@ -89,7 +89,7 @@ Sugestões do orientador devem ser feitas no branch `revisao-orientador-qualific
 
 ```bash
 git status
-git add 13-dissertacao/texto-Latex
+git add texto-Latex
 # ou adicione apenas os arquivos revisados
 git commit -m "revisa texto para qualificacao"
 git push
