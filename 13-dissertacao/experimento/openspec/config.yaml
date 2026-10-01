@@ -1,0 +1,18 @@
+schema: spec-driven
+
+context: |
+  Este subprojeto apoia os experimentos da dissertação sobre avaliação de sistemas RAG em discursos parlamentares brasileiros.
+  Os artefatos devem ser escritos em português do Brasil, preservar a separação entre o gerenciador de experimentos e o sistema RAG sob avaliação e manter rastreabilidade de dados, configurações, modelos, prompts, execuções e métricas.
+  O escopo inicial é um protótipo local e reproduzível; não inclui implantação pública, autenticação, escalabilidade de produção ou coleta de dados pessoais.
+  Não modificar os dados brutos em dados/; gerar artefatos derivados em diretórios próprios e registrar versões e hashes quando forem relevantes para a reprodução.
+
+rules:
+  proposal:
+    - Explicitar objetivo, escopo, fora de escopo, dependências e critérios de aceitação.
+    - Distinguir requisitos do gerenciador de experimentos dos requisitos do RAG sob avaliação.
+  design:
+    - Registrar decisões sobre persistência relacional, índice vetorial, modelos e interfaces entre componentes.
+    - Identificar riscos de validade experimental e estratégias de rastreabilidade.
+  tasks:
+    - Dividir a implementação em tarefas pequenas e verificáveis.
+    - Incluir validação ou teste reproduzível para cada comportamento observável.
