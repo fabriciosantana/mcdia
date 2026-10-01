@@ -1,6 +1,6 @@
 # Dissertação — instruções de desenvolvimento e compilação
 
-Este diretório contém o texto da dissertação, os fichamentos, os notebooks, os dados derivados e o cronograma. A versão atual está preparada para revisão do orientador e corresponde a uma **versão para qualificação**, não à versão final da dissertação.
+Este diretório contém o texto da dissertação, os fichamentos, os notebooks, os dados derivados e o cronograma. 
 
 ## Requisitos
 
@@ -22,8 +22,6 @@ sudo apt install -y \
   texlive-pictures
 ```
 
-O executável `pdflatex` é instalado pelo pacote `texlive-latex-base`. Não é necessário instalar o abnTeX: o projeto usa a classe local `texto-Latex/idp.cls`, com `biblatex` no estilo `abnt` e Biber como backend bibliográfico.
-
 Para uma instalação completa, pode-se usar:
 
 ```bash
@@ -35,7 +33,7 @@ sudo apt install -y texlive-full
 Para trabalhar na versão destinada ao orientador:
 
 ```bash
-git clone --branch revisao-orientador-qualificacao-20261001 \
+git clone --branch revisao-orientador-#1 \
   --single-branch \
   git@github.com:fabriciosantana/mcdia.git
 cd mcdia/13-dissertacao
@@ -44,7 +42,7 @@ cd mcdia/13-dissertacao
 Se o acesso SSH não estiver configurado, use HTTPS:
 
 ```bash
-git clone --branch revisao-orientador-qualificacao-20261001 \
+git clone --branch revisao-orientador-#1 \
   --single-branch \
   https://github.com/fabriciosantana/mcdia.git
 ```
@@ -85,7 +83,7 @@ Para atualizar a cópia local:
 git pull --ff-only
 ```
 
-Sugestões do orientador devem ser feitas no branch `revisao-orientador-qualificacao-20261001`. Depois de revisar o texto, registre as alterações com uma mensagem descritiva:
+Sugestões do orientador devem ser feitas no branch `revisao-orientador-#1`. Depois de revisar o texto, registre as alterações com uma mensagem descritiva:
 
 ```bash
 git status
