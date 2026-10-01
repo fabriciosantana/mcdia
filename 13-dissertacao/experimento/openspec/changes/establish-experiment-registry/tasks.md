@@ -2,7 +2,7 @@
 
 ## 1. Estrutura e dependências
 
-- [ ] 1.1 Criar o módulo Python do registro, o diretório de migrações e a configuração de caminhos; verificar a estrutura com `python -m compileall`.
+- [x] 1.1 Criar o módulo Python do registro, o diretório de migrações e a configuração de caminhos; verificar a estrutura com `python -m compileall`.
 - [ ] 1.2 Fixar as dependências mínimas em um arquivo próprio do subprojeto; verificar a instalação em ambiente limpo.
 
 ## 2. Persistência relacional
