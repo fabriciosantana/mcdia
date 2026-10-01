@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-10-01
+goal: Substituir planilhas e arquivos dispersos por um registro reproduzível de
+  experimentos
