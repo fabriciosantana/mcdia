@@ -89,3 +89,5 @@ def build(download=False):
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--download',action='store_true',help='Baixar novamente a revisão fixada')
     build(parser.parse_args().download)
+    from build_catalog import build as build_catalog
+    build_catalog()
