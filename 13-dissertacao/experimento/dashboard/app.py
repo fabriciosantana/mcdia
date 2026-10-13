@@ -83,6 +83,13 @@ def main() -> None:
         runs = list_runs(connection)
         st.subheader("Execuções")
         st.dataframe(runs, use_container_width=True, hide_index=True)
+        metrics = [dict(row) for row in connection.execute(
+            "SELECT run_id, method, recall_at_1, recall_at_5, recall_at_10, mrr, respondible_questions "
+            "FROM retrieval_metrics ORDER BY run_id"
+        )]
+        if metrics:
+            st.subheader("Métricas de recuperação")
+            st.dataframe(metrics, use_container_width=True, hide_index=True)
         if runs:
             options = {f'{run["name"]} — {run["run_id"]}': run["run_id"] for run in runs}
             selected_label = st.selectbox("Execução selecionada", list(options))

@@ -9,6 +9,7 @@ from pathlib import Path
 from .config import ExperimentPaths
 from .db import connect, initialize_database
 from .registry import create_run, get_run, list_runs, register_artifact, validate_run
+from .retrieval import run_retrieval
 
 
 def _paths(root: Path | None) -> ExperimentPaths:
@@ -33,10 +34,19 @@ def main() -> int:
     validate = sub.add_parser("validate", help="valida hashes de uma execução")
     validate.add_argument("run_id")
     validate.add_argument("--root", type=Path)
+    retrieval = sub.add_parser("run-retrieval", help="executa um baseline de recuperação")
+    retrieval.add_argument("--documents", type=Path, required=True)
+    retrieval.add_argument("--questions", type=Path, required=True)
+    retrieval.add_argument("--method", choices=("bm25", "tfidf", "hybrid"), default="bm25")
+    retrieval.add_argument("--name", default="retrieval-run")
+    retrieval.add_argument("--root", type=Path)
     args = parser.parse_args()
     paths = _paths(args.root)
     if args.command == "init":
         print(paths.database)
+        return 0
+    if args.command == "run-retrieval":
+        print(json.dumps(run_retrieval(paths, args.documents, args.questions, args.method, args.name), ensure_ascii=False, indent=2))
         return 0
     with connect(paths.database) as connection:
         if args.command == "demo":

@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-10-13
+goal: Executar baselines lexical, vetorial e híbrido e persistir resultados no
+  registro

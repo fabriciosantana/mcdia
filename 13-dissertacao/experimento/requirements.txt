@@ -2,3 +2,5 @@
 # Testes reproduzíveis do registro
 pytest>=8.0,<9.0
 streamlit>=1.40,<2.0
+
+scikit-learn>=1.4,<2.0

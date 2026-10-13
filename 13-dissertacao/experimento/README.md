@@ -64,3 +64,22 @@ streamlit run dashboard/app.py
 ```
 
 O dashboard permite criar execuções com configuração JSON, listar e consultar execuções e validar a integridade dos artefatos. Ele é local e não possui autenticação ou acesso remoto configurado.
+
+## Executor de recuperação
+
+Entradas do executor:
+
+- documentos em JSONL, uma linha por documento: `{"id": "doc-1", "text": "..."}`;
+- perguntas em CSV com as colunas `question_id,query,reference_doc_ids`; múltiplas referências são separadas por `;`.
+
+Execute um baseline:
+
+```bash
+python -m experiment_registry.cli run-retrieval \
+  --documents /caminho/documentos.jsonl \
+  --questions /caminho/perguntas.csv \
+  --method bm25 \
+  --name piloto-bm25
+```
+
+As estratégias disponíveis são `bm25`, `tfidf` e `hybrid`. Resultados, métricas e hashes das entradas são gravados no registro e em `data/outputs/`.
