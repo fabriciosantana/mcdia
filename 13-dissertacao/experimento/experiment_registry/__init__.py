@@ -10,3 +10,5 @@ __all__ = [
 ]
 
 from .response_evaluation import record_response, record_human_evaluation, list_responses, ingest_jsonl
+
+from .openai_adapter import generate_responses

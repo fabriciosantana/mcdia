@@ -11,6 +11,7 @@ from .db import connect, initialize_database
 from .registry import create_run, get_run, list_runs, register_artifact, validate_run
 from .retrieval import run_retrieval
 from .response_evaluation import ingest_jsonl, list_responses
+from .openai_adapter import generate_responses
 
 
 def _paths(root: Path | None) -> ExperimentPaths:
@@ -47,6 +48,11 @@ def main() -> int:
     responses = sub.add_parser("responses", help="lista respostas de uma execução")
     responses.add_argument("run_id")
     responses.add_argument("--root", type=Path)
+    generate = sub.add_parser("generate-responses", help="gera respostas via OpenAI")
+    generate.add_argument("run_id")
+    generate.add_argument("--documents", type=Path, required=True)
+    generate.add_argument("--model")
+    generate.add_argument("--root", type=Path)
     args = parser.parse_args()
     paths = _paths(args.root)
     if args.command == "init":
@@ -57,6 +63,9 @@ def main() -> int:
         return 0
     if args.command == "ingest-responses":
         with connect(paths.database) as connection: print(json.dumps({"ingested": ingest_jsonl(connection, args.input)}))
+        return 0
+    if args.command == "generate-responses":
+        print(json.dumps(generate_responses(paths, args.run_id, args.documents, args.model), ensure_ascii=False, indent=2))
         return 0
     with connect(paths.database) as connection:
         if args.command == "demo":

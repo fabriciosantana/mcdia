@@ -7,3 +7,5 @@ data/artifacts/*
 data/outputs/*
 !data/artifacts/.gitkeep
 !data/outputs/.gitkeep
+
+.env

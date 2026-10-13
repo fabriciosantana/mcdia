@@ -100,3 +100,15 @@ python -m experiment_registry.cli responses RUN_ID
 ```
 
 As avaliações humanas usam as cinco dimensões ordinais de 0 a 2: `factual_correctness`, `context_adherence`, `citation_support`, `proportional_completeness` e `insufficiency_recognition`.
+
+## Geração via OpenAI
+
+Com `OPENAI_API_KEY` e `OPENAI_MODEL` definidos em `.env`, gere respostas para uma execução de recuperação:
+
+```bash
+python -m experiment_registry.cli generate-responses RUN_ID \
+  --documents documentos.jsonl \
+  --model "$OPENAI_MODEL"
+```
+
+O adaptador usa a API Responses, registra o hash do prompt e associa os documentos recuperados como citações. Os testes usam um cliente falso; nenhuma chave é necessária para executar a suíte.
