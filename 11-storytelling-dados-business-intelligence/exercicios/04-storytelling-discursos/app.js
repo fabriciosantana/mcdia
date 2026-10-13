@@ -5,6 +5,7 @@ import {$,fmt,pct,monthName,dayName,esc,options,table,evidenceHTML,barChart} fro
 import {comparison,distribution,evolution,quality,historyContext} from './views.mjs';
 import {setupReview} from './review.mjs';
 import {download,zipStore} from './export.mjs';
+import {setupNarrative,updateNarrative} from './narrative.mjs';
 const mainKeys=['from','to','kind','party','uf','author','theme','query'];
 let store,allRows=[],meta,state={...defaults},filtered=[],stats,comparisonResult,page=0,renderId=0,recordsId=0,choices={};
 const pageSize=8;
@@ -39,7 +40,7 @@ async function renderRecords(){
   $('records').innerHTML=detailed.map(r=>`<article class="record"><div><time class="record-date" datetime="${esc(r.date)}">${dayName(r.date)}</time><span class="record-kind">${esc(r.kind)}</span></div><div><h3>${esc(r.author)}<small>${esc(r.party)} · ${esc(r.uf)}</small></h3><p>${esc(r.summary||'Resumo não disponível neste registro.')}</p><a href="${sourceUrl(r.id)}" target="_blank" rel="noopener noreferrer">Consultar registro no Senado ↗ #${esc(r.id)}</a><div class="tags">${r.themes.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}${!r.fullText?'<span class="tag warning">Texto integral ausente no dataset</span>':''}</div><details><summary>Por que estes temas? Ver palavras e campos</summary>${evidenceHTML(themeEvidence(r,meta.themes))}<p><strong>Indexação original:</strong> ${esc(r.index||'Não disponível')}</p></details></div></article>`).join('');
  }catch(e){if(token!==recordsId)return;$('records').innerHTML='<p class="empty">Os indicadores estão disponíveis, mas os textos desta página não carregaram.</p>';fail(e.message,()=>{$('operation-error').hidden=true;renderRecords();});}finally{if(token===recordsId)$('records').setAttribute('aria-busy','false');}
 }
-function resultsVisible(visible){document.querySelectorAll('.metrics,#ritmo,#comparar,#vozes,#concentracao,#evolucao,#qualidade,#evidencias').forEach(el=>el.hidden=!visible);}
+function resultsVisible(visible){document.querySelectorAll('.metrics,#ritmo,#comparar,#vozes,#concentracao,#evolucao,#qualidade,#evidencias,#conclusao').forEach(el=>el.hidden=!visible);}
 async function render(){
  const token=++renderId;recordsId++;page=0;$('dashboard').setAttribute('aria-busy','true');$('operation-error').hidden=true;$('operation-status').textContent='';$('export').disabled=true;$('export-package').disabled=true;
  try{
@@ -68,6 +69,7 @@ async function render(){
   barChart('authors-chart',stats.authors.slice(0,10),n,author=>commit({author}));$('authors-table').innerHTML=table(['Orador','Registros','% do recorte'],stats.authors.map(r=>[r.name,fmt(r.count),pct(r.count,n)]));
   barChart('themes-chart',stats.themes.map(([name,count])=>({id:name,name,count})),n,theme=>commit({theme}));$('themes-note').textContent=`${fmt(n-stats.noTheme)} de ${fmt(n)} registros têm tema detectado (${pct(n-stats.noTheme,n)}). Sem correspondência: ${fmt(stats.noTheme)}. Consulte as palavras acionadoras nos registros e a auditoria da amostra.`;
   comparisonResult=comparison(allRows,state,Object.keys(meta.themes));distribution(stats,allRows,state);evolution(allRows,state,selectMonth);quality(filtered,state);historyContext(state);
+  updateNarrative(stats,comparisonResult);
   $('export').disabled=!n;$('export-package').disabled=!n||!comparisonResult;
   await renderRecords();
  }catch(e){if(token===renderId){$('operation-status').textContent='Consulta não concluída; os resultados anteriores foram ocultados.';filtered=[];comparisonResult=null;resultsVisible(false);$('records').replaceChildren();for(const id of ['kpi-count','kpi-authors','kpi-share','kpi-full'])$(id).textContent='—';fail(e.message,render);}}
@@ -89,6 +91,7 @@ async function exportData(bundle=false){
  finally{button.disabled=!filtered.length||(bundle&&!comparisonResult);}
 }
 async function init(){try{
+ setupNarrative();
  store=await new DataStore().init();allRows=store.rows;meta=store.catalog.meta;
  const unique=key=>[...new Set(allRows.map(r=>r[key]))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
  for(const [id,label]of [['kind','Todos os usos'],['party','Todos os partidos'],['uf','Todas as UFs']])options(id,unique(id),label);

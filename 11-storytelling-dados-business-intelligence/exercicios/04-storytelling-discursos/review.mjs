@@ -29,7 +29,9 @@ export function setupReview(meta){
   }catch(e){$('review-panel').hidden=false;for(const id of ['review-prev','review-next','review-export','review-import'])$(id).disabled=true;status(`Falha ao abrir amostra: ${e.message}. Tente novamente.`);}finally{$('open-review').disabled=false;}
  });
  $('review-prev').addEventListener('click',()=>{if(index>0){index--;draw();}});$('review-next').addEventListener('click',()=>{if(index<sample.items.length-1){index++;draw();}});
- $('reviewer').addEventListener('change',()=>{if(loaded&&$('reviewer').value.trim())persist();});
+ // Save while typing: adding the status line on blur could move a radio button
+ // between pointer-down and pointer-up, losing the first review selection.
+ $('reviewer').addEventListener('input',()=>{if(loaded&&$('reviewer').value.trim())persist();});
  $('review-export').addEventListener('click',()=>{try{const value=validateReview(payload(),sample.items,meta.revision,meta.rulesVersion);download(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}),'revisao-humana-vozes.json');status('Arquivo de revisão humana exportado.');}catch(e){status(e.message);}});
  $('review-import').addEventListener('change',async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>2_000_000)throw new Error('Arquivo maior que 2 MB.');const value=validateReview(JSON.parse(await file.text()),sample.items,meta.revision,meta.rulesVersion);annotations=value.annotations;$('reviewer').value=value.reviewer;persist();draw();status('Revisão importada e substituída neste navegador.');}catch(err){status(`Importação recusada: ${err.message}`);}finally{e.target.value='';}});
 }

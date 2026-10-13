@@ -1,0 +1,68 @@
+/* Run after build_delivery.mjs; NODE_PATH points to a Playwright installation. */
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+const fs=require('node:fs/promises');
+const path=require('node:path');
+const {pathToFileURL}=require('node:url');
+(async()=>{
+ const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/opt/google/chrome/chrome',headless:true,args:['--no-sandbox']});
+ const context=await browser.newContext({viewport:{width:1440,height:1080},offline:true});
+ const page=await context.newPage(),errors=[],network=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('request',r=>{if(/^https?:/.test(r.url()))network.push(r.url());});
+ const ready=()=>page.waitForFunction(()=>document.getElementById('dashboard')?.getAttribute('aria-busy')==='false');
+ const count=n=>page.waitForFunction(n=>document.getElementById('kpi-count')?.textContent===n,n);
+ const root=path.resolve(__dirname,'..');
+ try{
+  await page.goto(pathToFileURL(path.join(root,'entrega/vozes-do-senado.html')).href);await ready();
+  await count('4.045');
+  assert.match(await page.locator('#conclusion-answer').innerText(),/1\.955.*4\.045.*48,3%/);
+  assert.match(await page.locator('#qualidade h2').innerText(),/15,3%/);
+  assert.match(await page.locator('#themes-title').innerText(),/dos registros/);
+  assert.match(await page.locator('#comparar h2').innerText(),/em relação a A/);
+  assert.equal(await page.locator('#authors-chart button .bar-fill').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(23, 105, 95)');
+  assert.equal(await page.locator('#themes-chart button .bar-fill').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(180, 84, 48)');
+  assert.ok(await page.locator('#share').isDisabled());
+  assert.match(await page.locator('#metodo').innerText(),/Senado Federal/);
+  assert.equal(await page.locator('#records article').count(),8);
+  await page.locator('#apresentacao summary').click();
+  assert.match(await page.locator('#apresentacao').innerText(),/8:30–10:00/);
+  const guideDownload=page.waitForEvent('download');
+  await page.locator('a[href="ROTEIRO-APRESENTACAO.md"]').click();
+  const guide=await guideDownload;assert.equal(guide.suggestedFilename(),'ROTEIRO-APRESENTACAO.md');
+  assert.match(await fs.readFile(await guide.path(),'utf8'),/600 segundos/);
+  await page.locator('#apresentacao summary').click();
+  await page.locator('#conclusao').screenshot({path:'/tmp/vozes-final-conclusao.png'});
+  await page.screenshot({path:'/tmp/vozes-final-desktop.png',fullPage:true});
+  await page.selectOption('#author','825');await count('442');await ready();
+  assert.match(await page.locator('#conclusion-answer').innerText(),/100% por construção/);
+  await page.click('#reset');await count('4.045');await ready();
+  await page.fill('#query','zzzz-sem-registros');await count('0');await ready();
+  assert.match(await page.locator('#conclusion-answer').innerText(),/Não há registros/);
+  assert.ok(await page.locator('#export').isDisabled());
+  await page.click('#reset');await count('4.045');await ready();
+  // Searching forces hydration across the entire local corpus, not just the first page.
+  await page.fill('#query','educação');await page.waitForTimeout(400);await ready();
+  assert.notEqual(await page.locator('#kpi-count').innerText(),'0');
+  await page.click('#reset');await count('4.045');await ready();
+  const csvDownload=page.waitForEvent('download');await page.click('#export');
+  const csv=await csvDownload;assert.equal((await fs.readFile(await csv.path(),'utf8')).trim().split('\r\n').length,4046);
+  const zipDownload=page.waitForEvent('download');await page.click('#export-package');
+  const zip=await zipDownload;assert.equal((await fs.readFile(await zip.path())).readUInt32LE(0),0x04034b50);
+  await page.click('#open-review');await page.waitForFunction(()=>document.getElementById('review-position').textContent==='Item 1 de 60');
+  assert.match(await page.locator('#review-metrics').innerText(),/60 pendentes/);
+  await page.fill('#reviewer','QA — teste sintético, não revisão científica');
+  await page.locator('[name="review-label"][value="yes"]').check();
+  assert.match(await page.locator('#review-metrics').innerText(),/1 pares decididos/);
+  await page.locator('#review-panel details').first().locator('summary').click();
+  const aiDownload=page.waitForEvent('download');await page.locator('a[href="data/assisted-review.json"]').click();
+  assert.equal((await aiDownload).suggestedFilename(),'assisted-review.json');
+  await page.setViewportSize({width:390,height:844});await page.click('#reset');await ready();
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.locator('#conclusao').screenshot({path:'/tmp/vozes-final-conclusao-mobile.png'});
+  await page.screenshot({path:'/tmp/vozes-final-mobile.png',fullPage:true});
+  const brokenAnchors=await page.evaluate(()=>[...document.querySelectorAll('a[href^="#"]')].filter(a=>!document.getElementById(a.getAttribute('href').slice(1))).map(a=>a.href));
+  assert.deepEqual(brokenAnchors,[]);assert.deepEqual(errors,[]);assert.deepEqual(network,[]);
+  console.log('PASS: standalone file:// offline; narrative, empty/single-author filters, text search, CSV/ZIP, embedded docs, review, mobile, anchors; no JS errors or HTTP requests.');
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

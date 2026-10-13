@@ -28,6 +28,7 @@ export function distribution(stats,allRows,state){
  const pool=validPeriod(state.from,state.to)?filterRows(allRows,{...state,author:''}):[];
  const counts=[state.voice1,state.voice2].map(id=>pool.filter(r=>r.authorId===id).length);
  const labels=['voice1','voice2'].map(id=>$(id).selectedOptions[0]?.textContent||'Orador não selecionado');
+ document.querySelector('#concentracao h3').textContent=state.voice1===state.voice2?'O mesmo orador foi selecionado nos dois lados.':`${labels[0]} e ${labels[1]}: ${fmt(counts[0])} e ${fmt(counts[1])} registros na base comparável.`;
  $('voice-comparison').innerHTML=pairBars(...counts,labels)+table(['Orador','Registros','% da base sem filtro de orador'],labels.map((name,i)=>[name,fmt(counts[i]),pct(counts[i],pool.length)]))+`<p class="footnote">Base comum: ${fmt(pool.length)} registros. ${state.voice1===state.voice2?'O mesmo orador está selecionado nos dois lados.':''} A frequência não mede produtividade.</p>`;
 }
 export function evolution(allRows,state,onMonth){
@@ -36,6 +37,7 @@ export function evolution(allRows,state,onMonth){
  lineChart('trend-chart',series.map(r=>({value:r.share,month:r.month,label:r.month,title:`${monthName(r.month)}: ${r.count} de ${r.total}, ${r.share===null?'sem base':fmt(r.share)+'%'}. Explorar.`})),{label:'Registros com menção ao tema / total do mês (%)',onPoint:p=>onMonth(p.month,state.trend)});
  const peak=series.filter(r=>r.share!==null).sort((a,b)=>b.share-a.share)[0];
  const missing=series.filter(r=>r.total===0).length;
+ document.querySelector('#evolucao h2').textContent=peak?.count?`${state.trend} atinge ${pct(peak.count,peak.total)} em ${monthName(peak.month)}${series.filter(r=>r.share===peak.share).length>1?' (máximo empatado)':''}.`:peak?'O tema não foi detectado nos meses com base.':'Sem base mensal para este tema.';
  $('trend-insight').textContent=peak?`${state.trend}: maior proporção em ${monthName(peak.month)}, ${pct(peak.count,peak.total)} (${fmt(peak.count)} de ${fmt(peak.total)} registros do mês). ${series.filter(r=>r.share===peak.share).length>1?'Há empate no máximo. ':''}${missing} meses sem base. Valores com poucos registros podem oscilar muito; o dicionário não identifica posição política.`:'Não há registros para calcular a evolução temática.';
  $('trend-table').innerHTML=table(['Mês','Registros com tema','Total do mês','% do mês'],series.map(r=>[monthName(r.month),fmt(r.count),fmt(r.total),pct(r.count,r.total)]));
 }

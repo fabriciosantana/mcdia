@@ -1,5 +1,10 @@
 # Registro de implementação e validação
 
+> Registro histórico da primeira versão. Para a adequação ao trabalho final,
+> testes atuais e entrega offline, consulte [AVALIACAO-FINAL.md](AVALIACAO-FINAL.md).
+> As medidas de carregamento e o comportamento móvel abaixo descrevem a v1,
+> não a versão atual com catálogo compacto.
+
 Primeira versão funcional concluída em 09/10/2026. Verificações executadas no ambiente de desenvolvimento; não são resultados de uma avaliação independente.
 
 ## Execução em ciclos

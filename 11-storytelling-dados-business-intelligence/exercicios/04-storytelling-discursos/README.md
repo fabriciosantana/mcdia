@@ -4,6 +4,26 @@ Dashboard interativo da 56ª legislatura, em português, com dados reais do corp
 
 ## Como visualizar
 
+### Entrega do trabalho final: um único HTML
+
+Abra **[entrega/vozes-do-senado.html](entrega/vozes-do-senado.html)** por duplo clique.
+Esse arquivo inclui código, estilos, dados e documentos de método; funciona
+offline em navegador moderno. Somente os links externos para as fontes precisam
+de internet. Envie esse HTML ao professor até **15/10/2026**; um endereço local
+`file://` ou `localhost` não é um link público. Os documentos embutidos são baixados
+ao clicar. A revisão humana continua local ao navegador: exporte-a para preservar.
+
+Para regenerar após modificar o projeto, a partir da raiz do repositório:
+
+```bash
+node exercicios/04-storytelling-discursos/scripts/build_delivery.mjs
+```
+
+Consulte o [roteiro de 10 minutos](ROTEIRO-APRESENTACAO.md), o
+[plano por ciclos](PLANO-TRABALHO-FINAL.md) e a [avaliação final](AVALIACAO-FINAL.md).
+
+### Desenvolvimento modular com servidor
+
 No terminal, a partir da raiz deste repositório:
 
 ```bash
@@ -114,7 +134,7 @@ Esta é uma análise descritiva de um corpus, não uma avaliação de desempenho
 
 Abra **Auditoria → Abrir amostra e revisão temática**. Informe um identificador de revisor, leia resumo/indexação e escolha Sim, Não ou Em dúvida, acrescentando justificativa. A previsão pode ser revelada em um painel separado. As anotações são salvas no armazenamento local do navegador e não são enviadas a nenhum servidor. Exporte o JSON para preservar ou compartilhar; a importação **substitui** a revisão local e exige a mesma revisão do dataset e versão de regras.
 
-A amostra é fixa e independente dos filtros principais, com 5 detecções positivas e 5 negativas por tema. Métricas referem-se somente aos pares decididos dessa amostra. A leitura assistida por IA encontrou cinco divergências possíveis; não é validação humana, revisão cega ou estimativa de desempenho no corpus. Consulte [AUDITORIA-TEMATICA.md](AUDITORIA-TEMATICA.md).
+A amostra é fixa e independente dos filtros principais, com 5 detecções positivas e 5 negativas por tema. Métricas referem-se somente aos pares decididos dessa amostra. A leitura assistida por IA encontrou cinco divergências possíveis; não é validação humana, revisão cega ou estimativa de desempenho no corpus. Consulte as [justificativas assistidas](data/assisted-review.json) e a [metodologia](METODOLOGIA.md).
 
 ## Limites que continuam importantes
 
