@@ -1,7 +1,7 @@
 """Baselines de recuperação e persistência dos resultados."""
 from __future__ import annotations
 
-import csv, hashlib, json, math, re
+import csv, hashlib, json, math, os, re
 from pathlib import Path
 from typing import Any
 import numpy as np
@@ -78,10 +78,10 @@ def _normalize(values):
     lo,hi=float(values.min()),float(values.max())
     return (values-lo)/(hi-lo) if hi>lo else np.zeros_like(values)
 
-def rank_documents(docs, query, method, embedding_model=None, embedding_client=None):
+def rank_documents(docs, query, method, embedding_model=None, embedding_client=None, embedding_cache=None):
     if method == 'dense':
         from .embedding_retrieval import rank_dense
-        return rank_dense(docs, query, embedding_model, embedding_client)
+        return rank_dense(docs, query, embedding_model, embedding_client, embedding_cache)
     if method not in {'bm25','tfidf','hybrid'}: raise ValueError(f'estratégia não suportada: {method}')
     bm=bm25_scores(docs,query); tf=tfidf_scores(docs,query)
     scores=bm if method=='bm25' else tf if method=='tfidf' else (_normalize(bm)+_normalize(tf))/2
@@ -111,7 +111,8 @@ def _metrics(results, questions):
 
 def run_retrieval(paths:ExperimentPaths, documents_path, questions_path, method, name, embedding_model=None, embedding_client=None):
     docs=load_documents(documents_path); questions=load_questions(questions_path)
-    config={'retrieval':{'method':method,'k':10,'embedding_model':embedding_model},'inputs':{'documents_sha256':file_sha256(documents_path),'questions_sha256':file_sha256(questions_path)}}
+    effective_embedding_model = embedding_model or os.environ.get('OPENAI_EMBEDDING_MODEL')
+    config={'retrieval':{'method':method,'k':10,'embedding_model':effective_embedding_model},'inputs':{'documents_sha256':file_sha256(documents_path),'questions_sha256':file_sha256(questions_path)}}
     paths.ensure_directories(); initialize_database(paths)
     with connect(paths.database) as con:
         run_id=create_run(con,name,config)
@@ -120,7 +121,7 @@ def run_retrieval(paths:ExperimentPaths, documents_path, questions_path, method,
             con.execute('INSERT INTO question_metadata(run_id,question_id,category,validation_status,reference_chunks_json,relevance_judgments_json) VALUES (?,?,?,?,?,?)',(run_id,q['question_id'],q.get('category'),'validated',json.dumps(q.get('reference_chunks',[])),json.dumps(q.get('judgments',{}))))
         detailed=[]
         for q in questions:
-            ranking=rank_documents(docs,q['query'],method,embedding_model,embedding_client)
+            ranking=rank_documents(docs,q['query'],method,effective_embedding_model,embedding_client, paths.embeddings if method == 'dense' else None)
             top=ranking[:10]; detailed.append({'question_id':q['question_id'],'ranking':top})
             con.execute('INSERT INTO retrieval_results(run_id,question_id,ranked_doc_ids_json,scores_json) VALUES (?,?,?,?)',(run_id,q['question_id'],json.dumps([x['id'] for x in top]),json.dumps([x['score'] for x in top])))
         metrics=_metrics(detailed,questions)
@@ -128,6 +129,9 @@ def run_retrieval(paths:ExperimentPaths, documents_path, questions_path, method,
         con.execute("UPDATE experiment_runs SET state='completed', finished_at=CURRENT_TIMESTAMP WHERE run_id=?", (run_id,))
         register_artifact(con,run_id,'documents-input',documents_path)
         register_artifact(con,run_id,'questions-input',questions_path)
+        if method == 'dense':
+            from .embedding_retrieval import EmbeddingStore
+            register_artifact(con,run_id,'embedding-index',EmbeddingStore(paths.embeddings).document_manifest(docs, effective_embedding_model))
         output=paths.outputs/f'{run_id}-retrieval.json'; output.write_text(json.dumps({'run_id':run_id,'method':method,'metrics':metrics,'results':detailed},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         register_artifact(con,run_id,'retrieval-detail',output)
     return {'run_id':run_id,'metrics':metrics,'output':str(output)}

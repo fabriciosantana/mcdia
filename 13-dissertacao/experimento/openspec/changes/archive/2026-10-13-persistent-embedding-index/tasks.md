@@ -1,0 +1,5 @@
+- [x] Criar o armazenamento persistente de matrizes e vetores de consulta.
+- [x] Integrar o armazenamento ao recuperador denso.
+- [x] Registrar o índice usado como artefato da execução.
+- [x] Adicionar testes de reutilização e invalidação.
+- [x] Atualizar a documentação de operação.

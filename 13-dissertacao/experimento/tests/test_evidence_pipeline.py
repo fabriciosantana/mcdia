@@ -38,6 +38,27 @@ class EvidencePipelineTest(unittest.TestCase):
         ranked = rank_dense([{"id": "a", "text": "segurança"}, {"id": "b", "text": "economia"}], "segurança", "mock", client)
         self.assertEqual(ranked[0]["id"], "a")
 
+    def test_dense_embeddings_are_reused_and_invalidated(self):
+        class Embeddings:
+            def __init__(self): self.calls = 0
+            def create(self, model, input):
+                self.calls += 1
+                class Item:
+                    def __init__(self, index, embedding): self.index, self.embedding = index, embedding
+                vectors = [[1.0, 0.0] if "segurança" in text else [0.0, 1.0] for text in input]
+                return type("R", (), {"data": [Item(i, value) for i, value in enumerate(vectors)]})()
+        embeddings = Embeddings()
+        client = type("C", (), {"embeddings": embeddings})()
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / "embeddings"
+            docs = [{"id": "a", "text": "segurança"}, {"id": "b", "text": "economia"}]
+            rank_dense(docs, "segurança", "mock", client, cache)
+            self.assertEqual(embeddings.calls, 2)
+            rank_dense(docs, "segurança", "mock", client, cache)
+            self.assertEqual(embeddings.calls, 2)
+            rank_dense([{"id": "a", "text": "segurança alterada"}, docs[1]], "segurança", "mock", client, cache)
+            self.assertEqual(embeddings.calls, 3)
+
     def test_prepare_chunks_and_export_metrics(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); paths = ExperimentPaths.from_environment(root / "run")

@@ -52,7 +52,7 @@ Os testes podem ser executados sem dependências externas:
 python -m unittest discover -s tests -v
 ```
 
-O registro atual implementa preparação de corpus e chunks, baselines BM25, TF-IDF, híbrido e recuperação densa por embeddings, geração via API Responses, julgamento automatizado auxiliar, concordância e persistência SQLite. A recuperação densa exige `OPENAI_EMBEDDING_MODEL` configurado e registra esse modelo na configuração da execução.
+O registro atual implementa preparação de corpus e chunks, baselines BM25, TF-IDF, híbrido e recuperação densa por embeddings, geração via API Responses, julgamento automatizado auxiliar, concordância e persistência SQLite. A recuperação densa exige `OPENAI_EMBEDDING_MODEL` configurado. Seus embeddings são persistidos em `data/embeddings`, com matriz e manifesto identificados pelo modelo e pelo hash do corpus; consultas repetidas também são reutilizadas. Quando o corpus ou o modelo muda, um novo índice é criado e o manifesto usado é registrado como artefato da execução.
 
 ## Pipeline de evidências
 

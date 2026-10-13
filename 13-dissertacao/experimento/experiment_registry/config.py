@@ -31,6 +31,10 @@ class ExperimentPaths:
         return self.root / "data" / "outputs"
 
     @property
+    def embeddings(self) -> Path:
+        return self.root / "data" / "embeddings"
+
+    @property
     def migrations(self) -> Path:
         return Path(__file__).resolve().parent / "migrations"
 
@@ -38,3 +42,4 @@ class ExperimentPaths:
         self.database.parent.mkdir(parents=True, exist_ok=True)
         self.artifacts.mkdir(parents=True, exist_ok=True)
         self.outputs.mkdir(parents=True, exist_ok=True)
+        self.embeddings.mkdir(parents=True, exist_ok=True)
