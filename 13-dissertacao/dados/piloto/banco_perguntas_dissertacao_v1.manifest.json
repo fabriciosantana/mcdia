@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "source": "/workspaces/mcdia/06-inteligencia-artificial-generativa/4-project/eval/discursos_questions_v4_200.json",
+  "source_sha256": "628384bf942e5eb7c64764b655afe72523999e6dad492aadcd066e65b4ece6fe",
+  "corpus": "/workspaces/mcdia/13-dissertacao/dados/data/full/discursos_2019-02-01_2023-01-31.parquet",
+  "corpus_sha256": "e09cfc4793e5394be440906320c7d3008cda5a52b90bbc85bf47446362406af1",
+  "canonical_count": 200,
+  "pilot_count": 24,
+  "primary_categories": [
+    "factual",
+    "foco_autor",
+    "desambiguacao",
+    "evidencia_negativa",
+    "comparacao_autores",
+    "comparacao_temporal",
+    "pergunta_numerica",
+    "sintese_tematica",
+    "multiplas_etapas",
+    "autoria_cruzada",
+    "controle_escopo",
+    "estresse_recuperacao"
+  ],
+  "canonical_category_counts": {
+    "factual": 12,
+    "pergunta_numerica": 13,
+    "foco_autor": 12,
+    "comparacao_autores": 12,
+    "sintese_tematica": 26,
+    "evidencia_negativa": 12,
+    "controle_escopo": 50,
+    "multiplas_etapas": 12,
+    "autoria_cruzada": 12,
+    "desambiguacao": 13,
+    "comparacao_temporal": 13,
+    "estresse_recuperacao": 13
+  },
+  "pilot_category_counts": {
+    "factual": 2,
+    "foco_autor": 2,
+    "desambiguacao": 2,
+    "evidencia_negativa": 2,
+    "comparacao_autores": 2,
+    "comparacao_temporal": 2,
+    "pergunta_numerica": 2,
+    "sintese_tematica": 2,
+    "multiplas_etapas": 2,
+    "autoria_cruzada": 2,
+    "controle_escopo": 2,
+    "estresse_recuperacao": 2
+  },
+  "status_policy": "rascunho; nenhuma pergunta foi validada automaticamente"
+}
