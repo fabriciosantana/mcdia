@@ -18,6 +18,7 @@ import streamlit as st
 from experiment_registry.config import ExperimentPaths
 from experiment_registry.db import connect, initialize_database
 from experiment_registry.registry import create_run, get_run, list_runs, validate_run
+from experiment_registry.response_evaluation import list_responses
 
 
 def parse_configuration(text: str) -> dict[str, Any]:
@@ -93,7 +94,12 @@ def main() -> None:
         if runs:
             options = {f'{run["name"]} — {run["run_id"]}': run["run_id"] for run in runs}
             selected_label = st.selectbox("Execução selecionada", list(options))
-            render_run_details(connection, options[selected_label])
+            selected_run = options[selected_label]
+            render_run_details(connection, selected_run)
+            responses = list_responses(connection, selected_run)
+            if responses:
+                st.subheader("Respostas e avaliações")
+                st.json(responses)
         else:
             st.info("Nenhuma execução registrada.")
 

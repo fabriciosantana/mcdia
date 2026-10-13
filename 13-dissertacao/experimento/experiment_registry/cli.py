@@ -10,6 +10,7 @@ from .config import ExperimentPaths
 from .db import connect, initialize_database
 from .registry import create_run, get_run, list_runs, register_artifact, validate_run
 from .retrieval import run_retrieval
+from .response_evaluation import ingest_jsonl, list_responses
 
 
 def _paths(root: Path | None) -> ExperimentPaths:
@@ -40,6 +41,12 @@ def main() -> int:
     retrieval.add_argument("--method", choices=("bm25", "tfidf", "hybrid"), default="bm25")
     retrieval.add_argument("--name", default="retrieval-run")
     retrieval.add_argument("--root", type=Path)
+    ingest = sub.add_parser("ingest-responses", help="ingere respostas JSONL")
+    ingest.add_argument("input", type=Path)
+    ingest.add_argument("--root", type=Path)
+    responses = sub.add_parser("responses", help="lista respostas de uma execução")
+    responses.add_argument("run_id")
+    responses.add_argument("--root", type=Path)
     args = parser.parse_args()
     paths = _paths(args.root)
     if args.command == "init":
@@ -47,6 +54,9 @@ def main() -> int:
         return 0
     if args.command == "run-retrieval":
         print(json.dumps(run_retrieval(paths, args.documents, args.questions, args.method, args.name), ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "ingest-responses":
+        with connect(paths.database) as connection: print(json.dumps({"ingested": ingest_jsonl(connection, args.input)}))
         return 0
     with connect(paths.database) as connection:
         if args.command == "demo":
@@ -65,6 +75,8 @@ def main() -> int:
             print(json.dumps(result, ensure_ascii=False, indent=2))
         elif args.command == "validate":
             print(json.dumps(validate_run(connection, args.run_id), ensure_ascii=False, indent=2))
+        elif args.command == "responses":
+            print(json.dumps(list_responses(connection, args.run_id), ensure_ascii=False, indent=2))
     return 0
 
 

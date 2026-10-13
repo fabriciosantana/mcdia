@@ -83,3 +83,20 @@ python -m experiment_registry.cli run-retrieval \
 ```
 
 As estratégias disponíveis são `bm25`, `tfidf` e `hybrid`. Resultados, métricas e hashes das entradas são gravados no registro e em `data/outputs/`.
+
+## Respostas e avaliações
+
+Respostas geradas por qualquer modelo podem ser entregues em JSONL, sem dependência de provedor:
+
+```json
+{"run_id":"...","question_id":"q1","answer":"...","model":"modelo-local","prompt_hash":"...","citations":[{"document_id":"doc-1","chunk_id":"doc-1:0"}]}
+```
+
+Ingestão e consulta:
+
+```bash
+python -m experiment_registry.cli ingest-responses respostas.jsonl
+python -m experiment_registry.cli responses RUN_ID
+```
+
+As avaliações humanas usam as cinco dimensões ordinais de 0 a 2: `factual_correctness`, `context_adherence`, `citation_support`, `proportional_completeness` e `insufficiency_recognition`.
