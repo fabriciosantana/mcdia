@@ -8,8 +8,12 @@ if str(PROJECT_ROOT) not in sys.path: sys.path.insert(0, str(PROJECT_ROOT))
 import streamlit as st
 from experiment_registry.config import ExperimentPaths
 from experiment_registry.config_profiles import list_profiles, save_profile
+from experiment_registry.corpus import prepare_documents
 from experiment_registry.db import connect, initialize_database
+from experiment_registry.evaluation_analysis import agreement_report, judge_response
+from experiment_registry.exports import export_run
 from experiment_registry.openai_adapter import generate_responses
+from experiment_registry.question_curation import get_question_metadata, save_question_metadata
 from experiment_registry.registry import get_run, list_runs, validate_run
 from experiment_registry.response_evaluation import list_responses, record_human_evaluation
 from experiment_registry.retrieval import run_retrieval
@@ -25,7 +29,7 @@ def _run_options(runs): return {f'{run["name"]} — {run["run_id"]}': run["run_i
 
 def render_overview(connection, runs):
     st.header("Visão geral")
-    metric_rows = [dict(row) for row in connection.execute("SELECT run_id, method, recall_at_1, recall_at_5, recall_at_10, mrr, respondible_questions FROM retrieval_metrics ORDER BY rowid DESC")]
+    metric_rows = [dict(row) for row in connection.execute("SELECT run_id, method, recall_at_1, recall_at_5, recall_at_10, precision_at_5, hit_at_5, mrr, ndcg_at_5, respondible_questions FROM retrieval_metrics ORDER BY rowid DESC")]
     c1,c2,c3 = st.columns(3); c1.metric("Execuções",len(runs)); c2.metric("Respostas geradas",connection.execute("SELECT COUNT(*) FROM responses").fetchone()[0]); c3.metric("Avaliações humanas",connection.execute("SELECT COUNT(*) FROM human_evaluations").fetchone()[0])
     if metric_rows: st.subheader("Métricas de recuperação"); st.dataframe(metric_rows,use_container_width=True,hide_index=True)
     else: st.info("Ainda não há resultados de recuperação.")
@@ -49,21 +53,31 @@ def render_configuration_tab(connection):
 def render_experiments_tab(paths, connection, runs, profiles):
     st.header("Experimentos"); st.caption("Execute recuperação e geração de respostas sem editar arquivos do registro manualmente.")
     profile_map={f'{p["name"]} — {p["profile_id"]}':p for p in profiles}
+    with st.expander("Preparar corpus e chunks"):
+        with st.form("prepare-corpus-form"):
+            source_path=st.text_input("Corpus JSONL ou Parquet", placeholder="../dados/data/full/discursos.parquet")
+            window=st.number_input("Tokens por chunk", min_value=20, value=160, step=16)
+            overlap=st.number_input("Sobreposição", min_value=0, value=32, step=8)
+            prepare=st.form_submit_button("Preparar corpus")
+        if prepare:
+            try: st.success("Corpus preparado."); st.json(prepare_documents(paths, source_path, int(window), int(overlap)))
+            except (OSError, RuntimeError, ValueError) as exc: st.error(str(exc))
     with st.form("retrieval-form"):
         name=st.text_input("Nome da execução",placeholder="piloto-hibrido")
         st.selectbox("Perfil",list(profile_map) or ["(sem perfil — use os campos abaixo)"])
         documents_path=st.text_input("Arquivo de documentos JSONL",placeholder="dados/documentos.jsonl")
         questions_path=st.text_input("Arquivo de questões CSV",placeholder="dados/questoes.csv")
-        method=st.selectbox("Método de recuperação",["bm25","tfidf","hybrid"])
+        method=st.selectbox("Método de recuperação",["bm25","tfidf","hybrid","dense"])
+        embedding_model=st.text_input("Modelo de embeddings (apenas dense)", value=os.environ.get("OPENAI_EMBEDDING_MODEL", ""))
         submitted=st.form_submit_button("Executar recuperação")
     if submitted:
         try:
             selected_profile=profile_map.get(profile_label)
             if selected_profile:
                 configured_method=json.loads(selected_profile["configuration_json"]).get("retrieval", {}).get("method")
-                if configured_method in {"bm25", "tfidf", "hybrid"}:
+                if configured_method in {"bm25", "tfidf", "hybrid", "dense"}:
                     method=configured_method
-            result=run_retrieval(paths,documents_path,questions_path,method,name.strip() or f"run-{method}"); st.success(f"Recuperação concluída: {result['run_id']}"); st.json(result); st.rerun()
+            result=run_retrieval(paths,documents_path,questions_path,method,name.strip() or f"run-{method}",embedding_model=embedding_model or None); st.success(f"Recuperação concluída: {result['run_id']}"); st.json(result); st.rerun()
         except (OSError,ValueError) as exc: st.error(str(exc))
     if not runs: st.info("Crie uma execução para habilitar a geração de respostas."); return
     options=_run_options(runs); selected_label=st.selectbox("Execução para administrar",list(options),key="experiment-run"); run_id=options[selected_label]; run=get_run(connection,run_id)
@@ -81,19 +95,43 @@ def render_experiments_tab(paths, connection, runs, profiles):
         if report["ok"]: st.success("Execução íntegra.")
         else: st.error("Há artefatos ausentes ou alterados.")
         st.json(report)
+    if st.button("Exportar resultados CSV/LaTeX", key=f"export-{run_id}"):
+        try:
+            result=export_run(connection, paths.outputs, run_id); st.success("Artefatos de redação exportados."); st.json(result)
+        except ValueError as exc: st.error(str(exc))
+    if st.button("Ver concordância humano–juiz", key=f"agreement-{run_id}"):
+        st.json(agreement_report(connection, run_id))
 
 def render_questions_tab(connection,runs):
     st.header("Questões e respostas")
     if not runs: st.info("Nenhuma execução disponível."); return
     options=_run_options(runs); selected_label=st.selectbox("Execução",list(options),key="questions-run"); run_id=options[selected_label]
-    questions=[dict(row) for row in connection.execute("SELECT question_id, query, reference_doc_ids_json, respondible FROM questions WHERE run_id=? ORDER BY question_id",(run_id,))]
+    questions=[dict(row) for row in connection.execute("SELECT q.question_id, q.query, q.reference_doc_ids_json, q.respondible, m.category, m.validation_status, m.reference_chunks_json FROM questions q LEFT JOIN question_metadata m ON m.run_id=q.run_id AND m.question_id=q.question_id WHERE q.run_id=? ORDER BY q.question_id",(run_id,))]
     if questions: st.subheader("Perguntas"); st.dataframe(questions,use_container_width=True,hide_index=True)
+    if questions:
+        question_map={q["question_id"]: q for q in questions}; selected_question=st.selectbox("Pergunta para curadoria", list(question_map), key=f"curation-question-{run_id}"); metadata=get_question_metadata(connection, run_id, selected_question)
+        with st.form(f"curation-form-{run_id}-{selected_question}"):
+            category=st.text_input("Categoria", value=metadata["category"] or "")
+            status=st.selectbox("Status", ["rascunho","revisar","validada"], index=["rascunho","revisar","validada"].index(metadata["validation_status"]) if metadata["validation_status"] in {"rascunho","revisar","validada"} else 0)
+            chunks=st.text_input("IDs dos trechos relevantes (separados por ;)", value=";".join(metadata["reference_chunks"]))
+            notes=st.text_area("Justificativa/observações", value=metadata["curation_notes"])
+            save=st.form_submit_button("Salvar curadoria")
+        if save:
+            try: save_question_metadata(connection,run_id,selected_question,category,status,[x.strip() for x in chunks.split(";") if x.strip()],{},notes); st.success("Curadoria salva."); st.rerun()
+            except ValueError as exc: st.error(str(exc))
     responses=list_responses(connection,run_id)
     if not responses: st.info("Nenhuma resposta gerada para esta execução."); return
     st.subheader("Respostas"); response_map={f'{item["question_id"]} — {item["response_id"]}':item for item in responses}; selected_response=st.selectbox("Resposta para visualizar e avaliar",list(response_map)); item=response_map[selected_response]
     st.markdown(item["answer"])
     with st.expander("Citações e metadados",expanded=True): st.json({"model":item["model"],"prompt_hash":item["prompt_hash"],"citations":item["citations"]})
+    if st.button("Executar LLM-as-a-judge", key=f"judge-{item['response_id']}"):
+        try:
+            model=os.environ.get("OPENAI_MODEL")
+            if not model: raise ValueError("OPENAI_MODEL não está configurado")
+            judge_response(connection,item["response_id"],model); st.success("Julgamento automatizado registrado."); st.rerun()
+        except (OSError,RuntimeError,ValueError) as exc: st.error(str(exc))
     if item["evaluations"]: st.write("Avaliações registradas"); st.dataframe(item["evaluations"],use_container_width=True,hide_index=True)
+    if item["automated_evaluations"]: st.write("Julgamentos automatizados"); st.dataframe(item["automated_evaluations"],use_container_width=True,hide_index=True)
     with st.form(f"evaluation-form-{item['response_id']}"):
         evaluator=st.text_input("Avaliador",placeholder="nome ou identificador")
         scores={field:st.selectbox(label,[0,1,2],key=f"{item['response_id']}-{field}") for field,label in EVALUATION_FIELDS}

@@ -52,7 +52,13 @@ Os testes podem ser executados sem dependências externas:
 python -m unittest discover -s tests -v
 ```
 
-A primeira versão ainda não implementa recuperação, geração, embeddings ou banco vetorial; ela apenas registra e valida execuções e artefatos.
+O registro atual implementa preparação de corpus e chunks, baselines BM25, TF-IDF, híbrido e recuperação densa por embeddings, geração via API Responses, julgamento automatizado auxiliar, concordância e persistência SQLite. A recuperação densa exige `OPENAI_EMBEDDING_MODEL` configurado e registra esse modelo na configuração da execução.
+
+## Pipeline de evidências
+
+A aba **Experimentos** também prepara JSONL ou Parquet em chunks determinísticos, registra a proveniência e exporta tabelas CSV/LaTeX por execução. A aba **Questões e respostas** permite editar categoria, status de validação, trechos relevantes e notas de curadoria. O conjunto CSV só entra na recuperação quando a linha estiver marcada como `validada` (ou `validated`).
+
+As métricas ampliadas incluem Precision@k, Hit@k e nDCG quando os julgamentos de relevância fornecem graus suficientes. O julgamento automatizado fica em tabela própria e a tela de execução calcula acordo exato e kappa ponderado apenas para respostas com avaliação humana e automática correspondentes.
 
 ## Dashboard local
 
