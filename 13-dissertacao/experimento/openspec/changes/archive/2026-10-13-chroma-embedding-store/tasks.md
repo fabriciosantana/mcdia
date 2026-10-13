@@ -1,0 +1,4 @@
+- [x] Migrar documentos para coleções persistentes ChromaDB.
+- [x] Migrar consultas para coleções persistentes ChromaDB.
+- [x] Atualizar dependências e documentação.
+- [x] Validar reutilização, invalidação e suíte de testes.

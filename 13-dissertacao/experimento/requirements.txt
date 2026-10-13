@@ -8,3 +8,4 @@ openai>=1.0,<2.0
 python-dotenv>=1.0,<2.0
 pandas>=2.0,<3.0
 pyarrow>=14,<22
+chromadb>=1.5,<2.0

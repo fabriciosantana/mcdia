@@ -4,7 +4,6 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import re
 import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -33,23 +32,6 @@ def _digest(payload: Any) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
-def _safe_model(model: str) -> str:
-    return re.sub(r"[^A-Za-z0-9_.-]+", "_", model).strip("._") or "model"
-
-
-def _atomic_save_npz(path: Path, **arrays: np.ndarray) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp", delete=False) as stream:
-        temporary = Path(stream.name)
-    try:
-        np.savez_compressed(temporary, **arrays)
-        generated = temporary.with_suffix(temporary.suffix + ".npz")
-        generated.replace(path)
-    finally:
-        temporary.unlink(missing_ok=True)
-        temporary.with_suffix(temporary.suffix + ".npz").unlink(missing_ok=True)
-
-
 def _atomic_write_json(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, prefix=f".{path.name}.", delete=False) as stream:
@@ -60,34 +42,54 @@ def _atomic_write_json(path: Path, value: dict[str, Any]) -> None:
 
 
 class EmbeddingStore:
-    """Armazena matrizes de documentos e vetores de consultas por hash."""
+    """Armazena embeddings em coleções persistentes do ChromaDB."""
 
     def __init__(self, root: str | Path):
         self.root = Path(root)
+        self.chroma_root = self.root / "chroma"
+        self.manifest_root = self.root / "manifests"
+
+    def _client(self):
+        import chromadb
+        self.chroma_root.mkdir(parents=True, exist_ok=True)
+        return chromadb.PersistentClient(path=str(self.chroma_root))
 
     def _document_key(self, documents: list[dict[str, Any]], model: str) -> str:
         return _digest({"model": model, "documents": [(str(item["id"]), item["text"]) for item in documents]})
 
-    def _document_paths(self, documents: list[dict[str, Any]], model: str) -> tuple[Path, Path, str]:
+    def _document_paths(self, documents: list[dict[str, Any]], model: str) -> tuple[Path, str]:
         key = self._document_key(documents, model)
-        prefix = f"documents-{_safe_model(model)}-{key}"
-        return self.root / f"{prefix}.npz", self.root / f"{prefix}.json", key
+        return self.manifest_root / f"documents-{key}.json", key
 
     def document_manifest(self, documents: list[dict[str, Any]], model: str) -> Path:
-        return self._document_paths(documents, model)[1]
+        return self._document_paths(documents, model)[0]
 
     def documents(self, documents: list[dict[str, Any]], model: str, client=None, batch_size: int = 128) -> tuple[np.ndarray, Path]:
-        matrix_path, manifest_path, key = self._document_paths(documents, model)
-        if matrix_path.is_file() and manifest_path.is_file():
-            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-            if manifest.get("cache_key") == key and manifest.get("model") == model:
-                matrix = np.load(matrix_path, allow_pickle=False)["vectors"]
-                if matrix.shape[0] == len(documents) and manifest.get("document_ids") == [str(item["id"]) for item in documents]:
-                    return matrix, matrix_path
+        manifest_path, key = self._document_paths(documents, model)
+        collection_name = f"documents_{key[:40]}"
+        chroma = self._client()
+        try:
+            collection = chroma.get_collection(collection_name)
+            if collection.metadata and collection.metadata.get("cache_key") == key and collection.count() == len(documents):
+                stored = collection.get(ids=[str(item["id"]) for item in documents], include=["embeddings"])
+                by_id = dict(zip(stored["ids"], stored["embeddings"]))
+                if len(by_id) == len(documents):
+                    matrix = np.asarray([by_id[str(item["id"])] for item in documents], dtype=np.float32)
+                    return matrix, manifest_path
+        except Exception:
+            collection = None
 
-        batches = [embed([item["text"] for item in documents[start:start + batch_size]], model, client) for start in range(0, len(documents), batch_size)]
-        matrix = np.vstack(batches).astype(np.float32, copy=False) if batches else np.empty((0, 0), dtype=np.float32)
-        _atomic_save_npz(matrix_path, vectors=matrix)
+        try:
+            chroma.delete_collection(collection_name)
+        except Exception:
+            pass
+        collection = chroma.get_or_create_collection(collection_name, metadata={"kind": "document-embeddings", "cache_key": key, "model": model})
+        for start in range(0, len(documents), batch_size):
+            batch = documents[start:start + batch_size]
+            vectors = embed([item["text"] for item in batch], model, client)
+            collection.add(ids=[str(item["id"]) for item in batch], documents=[item["text"] for item in batch], embeddings=vectors.tolist(), metadatas=[{"document_id": str(item.get("document_id", item["id"]))} for item in batch])
+        matrix = np.asarray(collection.get(ids=[str(item["id"]) for item in documents], include=["embeddings"])["embeddings"], dtype=np.float32)
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
         _atomic_write_json(manifest_path, {
             "kind": "document-embeddings",
             "cache_key": key,
@@ -95,30 +97,24 @@ class EmbeddingStore:
             "document_ids": [str(item["id"]) for item in documents],
             "count": int(matrix.shape[0]),
             "dimensions": int(matrix.shape[1]) if matrix.ndim == 2 else 0,
+            "backend": "chromadb",
+            "collection": collection_name,
+            "persist_directory": str(self.chroma_root),
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
-        return matrix, matrix_path
+        return matrix, manifest_path
 
     def query(self, query: str, model: str, client=None) -> tuple[np.ndarray, Path]:
         key = _digest({"model": model, "query": query})
-        path = self.root / "queries" / _safe_model(model) / f"{key}.npy"
-        manifest_path = path.with_suffix(".json")
-        if path.is_file() and manifest_path.is_file():
-            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-            if manifest.get("cache_key") == key:
-                return np.load(path, allow_pickle=False), path
-        path.parent.mkdir(parents=True, exist_ok=True)
+        collection_name = f"queries_{_digest({'model': model})[:40]}"
+        chroma = self._client()
+        collection = chroma.get_or_create_collection(collection_name, metadata={"kind": "query-embeddings", "model": model})
+        found = collection.get(ids=[key], include=["embeddings"])
+        if found["ids"]:
+            return np.asarray(found["embeddings"][0], dtype=np.float32), self.root / "chroma" / collection_name
         vector = embed([query], model, client)[0].astype(np.float32, copy=False)
-        with tempfile.NamedTemporaryFile(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp", delete=False) as stream:
-            temporary = Path(stream.name)
-        try:
-            np.save(temporary, vector)
-            temporary.with_suffix(temporary.suffix + ".npy").replace(path)
-        finally:
-            temporary.unlink(missing_ok=True)
-            temporary.with_suffix(temporary.suffix + ".npy").unlink(missing_ok=True)
-        _atomic_write_json(manifest_path, {"kind": "query-embedding", "cache_key": key, "model": model, "query": query, "dimensions": int(vector.shape[0]), "created_at": datetime.now(timezone.utc).isoformat()})
-        return vector, path
+        collection.add(ids=[key], documents=[query], embeddings=[vector.tolist()], metadatas=[{"cache_key": key, "model": model}])
+        return vector, self.root / "chroma" / collection_name
 
 
 def rank_dense(documents: list[dict[str, Any]], query: str, model: str | None = None, client=None, embedding_cache: str | Path | None = None) -> list[dict[str, Any]]:
