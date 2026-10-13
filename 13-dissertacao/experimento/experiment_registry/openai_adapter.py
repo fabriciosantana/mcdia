@@ -1,6 +1,7 @@
 """Adaptador OpenAI para gerar respostas a partir de uma execução de recuperação."""
 from __future__ import annotations
 import os
+import re
 from pathlib import Path
 from .config import ExperimentPaths
 from .db import connect
@@ -37,7 +38,8 @@ def generate_responses(paths: ExperimentPaths, run_id, documents_path, model=Non
             prompt=build_prompt(questions[row['question_id']]['query'],contexts)
             response=client.responses.create(model=model,input=prompt)
             answer=response.output_text
-            citations=[{'document_id':c['id'],'cited_text':None} for c in contexts]
+            cited_ids = set(re.findall(r"\[([^\]]+)\]", answer))
+            citations=[{'document_id':c['id'],'cited_text':None} for c in contexts if c['id'] in cited_ids]
             response_id=record_response(con,run_id,row['question_id'],answer,model,sha256_text(prompt),citations)
             generated.append({'response_id':response_id,'question_id':row['question_id'],'model':model})
     return generated

@@ -12,6 +12,7 @@ from experiment_registry.corpus import prepare_documents
 from experiment_registry.db import connect, initialize_database
 from experiment_registry.evaluation_analysis import agreement_report, judge_response
 from experiment_registry.exports import export_run
+from experiment_registry.analysis import record_error_case
 from experiment_registry.openai_adapter import generate_responses
 from experiment_registry.question_curation import get_question_metadata, save_question_metadata
 from experiment_registry.registry import get_run, list_runs, validate_run
@@ -132,6 +133,15 @@ def render_questions_tab(connection,runs):
         except (OSError,RuntimeError,ValueError) as exc: st.error(str(exc))
     if item["evaluations"]: st.write("Avaliações registradas"); st.dataframe(item["evaluations"],use_container_width=True,hide_index=True)
     if item["automated_evaluations"]: st.write("Julgamentos automatizados"); st.dataframe(item["automated_evaluations"],use_container_width=True,hide_index=True)
+    if item["error_cases"]: st.write("Casos críticos"); st.dataframe(item["error_cases"],use_container_width=True,hide_index=True)
+    with st.form(f"error-form-{item['response_id']}"):
+        error_type=st.selectbox("Tipo de erro", ["falha_recuperacao","extrapolacao_contexto","atribuicao_incorreta","citacao_insuficiente","insuficiencia_nao_reconhecida","outro"])
+        severity=st.selectbox("Severidade", ["low","moderate","high","critical"])
+        error_notes=st.text_area("Descrição do caso crítico", height=80)
+        save_error=st.form_submit_button("Registrar caso crítico")
+    if save_error:
+        try: record_error_case(connection,item["response_id"],error_type,severity,error_notes); st.success("Caso crítico registrado."); st.rerun()
+        except ValueError as exc: st.error(str(exc))
     with st.form(f"evaluation-form-{item['response_id']}"):
         evaluator=st.text_input("Avaliador",placeholder="nome ou identificador")
         scores={field:st.selectbox(label,[0,1,2],key=f"{item['response_id']}-{field}") for field,label in EVALUATION_FIELDS}

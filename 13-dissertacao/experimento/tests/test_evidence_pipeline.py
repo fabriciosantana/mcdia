@@ -14,9 +14,19 @@ from experiment_registry.response_evaluation import record_human_evaluation, rec
 from experiment_registry.question_curation import get_question_metadata, save_question_metadata
 from experiment_registry.retrieval import run_retrieval
 from experiment_registry.embedding_retrieval import rank_dense
+from experiment_registry.analysis import bootstrap_mean, record_error_case
 
 
 class EvidencePipelineTest(unittest.TestCase):
+    def test_bootstrap_and_error_case(self):
+        interval = bootstrap_mean([0, 1, 1, 2], repetitions=100, seed=42)
+        self.assertEqual(interval["n"], 4); self.assertLessEqual(interval["lower"], interval["mean"]); self.assertLessEqual(interval["mean"], interval["upper"])
+        with tempfile.TemporaryDirectory() as tmp:
+            paths = ExperimentPaths.from_environment(tmp); initialize_database(paths)
+            with connect(paths.database) as con:
+                run = create_run(con, "r", {"method": "bm25"}); con.execute("INSERT INTO questions(run_id,question_id,query,reference_doc_ids_json,respondible) VALUES (?,?,?,?,?)", (run, "q", "x", "[]", 0)); response = record_response(con, run, "q", "r")
+                self.assertTrue(record_error_case(con, response, "falha_recuperacao"))
+
     def test_dense_ranking_with_injected_client(self):
         class Embeddings:
             def create(self, model, input):

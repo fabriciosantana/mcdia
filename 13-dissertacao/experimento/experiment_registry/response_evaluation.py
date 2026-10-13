@@ -32,7 +32,7 @@ def record_human_evaluation(con, response_id, evaluator, scores, notes=''):
 def list_responses(con, run_id):
     rows=[]
     for row in con.execute('SELECT * FROM responses WHERE run_id=? ORDER BY created_at,response_id',(run_id,)):
-        item=dict(row); item['citations']=[dict(c) for c in con.execute('SELECT citation_id,document_id,chunk_id,cited_text FROM citations WHERE response_id=?',(row['response_id'],))]; item['evaluations']=[dict(e) for e in con.execute('SELECT * FROM human_evaluations WHERE response_id=?',(row['response_id'],))]; item['automated_evaluations']=[dict(e) for e in con.execute('SELECT * FROM automated_evaluations WHERE response_id=?',(row['response_id'],))]; rows.append(item)
+        item=dict(row); item['citations']=[dict(c) for c in con.execute('SELECT citation_id,document_id,chunk_id,cited_text FROM citations WHERE response_id=?',(row['response_id'],))]; item['evaluations']=[dict(e) for e in con.execute('SELECT * FROM human_evaluations WHERE response_id=?',(row['response_id'],))]; item['automated_evaluations']=[dict(e) for e in con.execute('SELECT * FROM automated_evaluations WHERE response_id=?',(row['response_id'],))]; item['error_cases']=[dict(e) for e in con.execute('SELECT * FROM error_cases WHERE response_id=?',(row['response_id'],))]; rows.append(item)
     return rows
 
 def ingest_jsonl(con, path):

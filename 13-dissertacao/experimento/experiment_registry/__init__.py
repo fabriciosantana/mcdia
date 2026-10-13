@@ -17,3 +17,4 @@ from .corpus import load_corpus, chunk_documents, prepare_documents, load_chunks
 from .evaluation_analysis import record_automated_evaluation, agreement_report, parse_judge_json, judge_response
 from .exports import export_run
 from .question_curation import save_question_metadata, get_question_metadata
+from .analysis import bootstrap_mean, record_error_case, list_error_cases

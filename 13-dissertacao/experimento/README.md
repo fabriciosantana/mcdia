@@ -60,6 +60,8 @@ A aba **Experimentos** também prepara JSONL ou Parquet em chunks determinístic
 
 As métricas ampliadas incluem Precision@k, Hit@k e nDCG quando os julgamentos de relevância fornecem graus suficientes. O julgamento automatizado fica em tabela própria e a tela de execução calcula acordo exato e kappa ponderado apenas para respostas com avaliação humana e automática correspondentes.
 
+O sistema também calcula intervalos de confiança por bootstrap com semente explícita, registra casos críticos por tipo e severidade e atribui citações somente quando o identificador da fonte aparece explicitamente na resposta gerada.
+
 ## Dashboard local
 
 Instale as dependências do subprojeto e execute a interface:
