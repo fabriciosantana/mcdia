@@ -53,3 +53,14 @@ python -m unittest discover -s tests -v
 ```
 
 A primeira versão ainda não implementa recuperação, geração, embeddings ou banco vetorial; ela apenas registra e valida execuções e artefatos.
+
+## Dashboard local
+
+Instale as dependências do subprojeto e execute a interface:
+
+```bash
+python -m pip install -r requirements.txt
+streamlit run dashboard/app.py
+```
+
+O dashboard permite criar execuções com configuração JSON, listar e consultar execuções e validar a integridade dos artefatos. Ele é local e não possui autenticação ou acesso remoto configurado.
