@@ -145,6 +145,15 @@ def render_questions_tab(connection,runs):
     if save_error:
         try: record_error_case(connection,item["response_id"],error_type,severity,error_notes); st.success("Caso crítico registrado."); st.rerun()
         except ValueError as exc: st.error(str(exc))
+    with st.form(f"evaluation-form-{item['response_id']}"):
+        evaluator=st.text_input("Avaliador",placeholder="nome ou identificador")
+        scores={field:st.selectbox(label,[0,1,2],key=f"{item['response_id']}-{field}") for field,label in EVALUATION_FIELDS}
+        notes=st.text_area("Notas",height=100); submit=st.form_submit_button("Registrar avaliação")
+    if submit:
+        try:
+            if not evaluator.strip(): raise ValueError("o avaliador é obrigatório")
+            record_human_evaluation(connection,item["response_id"],evaluator,scores,notes); st.success("Avaliação registrada."); st.rerun()
+        except ValueError as exc: st.error(str(exc))
 
 
 def render_question_catalog_tab(connection):
@@ -193,16 +202,6 @@ def render_question_catalog_tab(connection):
             st.success("Pergunta salva no SQLite.")
             st.rerun()
         except ValueError as exc: st.error(str(exc))
-    with st.form(f"evaluation-form-{item['response_id']}"):
-        evaluator=st.text_input("Avaliador",placeholder="nome ou identificador")
-        scores={field:st.selectbox(label,[0,1,2],key=f"{item['response_id']}-{field}") for field,label in EVALUATION_FIELDS}
-        notes=st.text_area("Notas",height=100); submit=st.form_submit_button("Registrar avaliação")
-    if submit:
-        try:
-            if not evaluator.strip(): raise ValueError("o avaliador é obrigatório")
-            record_human_evaluation(connection,item["response_id"],evaluator,scores,notes); st.success("Avaliação registrada."); st.rerun()
-        except ValueError as exc: st.error(str(exc))
-
 def main():
     st.set_page_config(page_title="Centro de controle experimental",layout="wide"); st.title("Centro de controle experimental"); st.caption("Execute, acompanhe e avalie os experimentos da dissertação em um único lugar.")
     root_default=os.environ.get("EXPERIMENTO_ROOT",str(PROJECT_ROOT)); root_text=st.sidebar.text_input("Raiz do experimento",root_default); paths=ExperimentPaths.from_environment(root_text); initialize_database(paths)
