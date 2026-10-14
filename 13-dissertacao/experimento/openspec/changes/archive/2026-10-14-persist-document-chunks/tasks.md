@@ -1,0 +1,5 @@
+- [x] Persistir chunks preparados na tabela `document_chunks`.
+- [x] Registrar hash da fonte e parâmetros de segmentação.
+- [x] Criar funções de consulta paginada para a interface.
+- [x] Criar tela de visualização e busca no dashboard.
+- [x] Adicionar testes de persistência e consulta.

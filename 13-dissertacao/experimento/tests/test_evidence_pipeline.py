@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 from experiment_registry.config import ExperimentPaths
-from experiment_registry.corpus import chunk_documents, prepare_documents
+from experiment_registry.corpus import chunk_documents, prepare_documents, search_chunks
 from experiment_registry.db import connect, initialize_database
 from experiment_registry.evaluation_analysis import agreement_report, judge_response, parse_judge_json
 from experiment_registry.exports import export_run
@@ -68,6 +68,10 @@ class EvidencePipelineTest(unittest.TestCase):
                 writer = csv.DictWriter(stream, fieldnames=["question_id", "query", "reference_doc_ids", "category", "status"]); writer.writeheader(); writer.writerow({"question_id": "q1", "query": "segurança barragens", "reference_doc_ids": "a", "category": "factual", "status": "validada"})
             prepared = prepare_documents(paths, docs, window=20, overlap=4)
             self.assertGreater(prepared["chunks"], 0)
+            with connect(paths.database) as con:
+                persisted = search_chunks(con, text="segurança")
+                self.assertEqual(len(persisted), prepared["chunks"])
+                self.assertTrue(persisted[0]["chunk_id"].startswith("a:"))
             result = run_retrieval(paths, docs, questions, "bm25", "evidence")
             with connect(paths.database) as con:
                 save_question_metadata(con, result["run_id"], "q1", "factual", "validada", ["a:0"], {"a:0": 2}, "suficiente")

@@ -10,6 +10,7 @@ from typing import Any
 
 from .config import ExperimentPaths
 from .registry import sha256_file
+from .db import connect, initialize_database
 
 TOKEN = re.compile(r"\S+", re.UNICODE)
 
@@ -98,7 +99,33 @@ def prepare_documents(paths: ExperimentPaths, source_path: str | Path, window: i
     with output.open("w", encoding="utf-8") as stream:
         for chunk in chunks:
             stream.write(json.dumps(chunk, ensure_ascii=False) + "\n")
-    return {"source": str(source), "source_sha256": sha256_file(source), "output": str(output), "output_sha256": sha256_file(output), "documents": len(documents), "chunks": len(chunks), "window": window, "overlap": overlap}
+    source_sha256 = sha256_file(source)
+    initialize_database(paths)
+    with connect(paths.database) as connection:
+        connection.execute("DELETE FROM document_chunks WHERE source_sha256=?", (source_sha256,))
+        for chunk in chunks:
+            metadata = {**chunk.get("metadata", {}), "source_path": str(source), "window": window, "overlap": overlap}
+            connection.execute(
+                "INSERT INTO document_chunks(chunk_id,document_id,text,metadata_json,source_sha256) VALUES (?,?,?,?,?)",
+                (chunk["id"], chunk["document_id"], chunk["text"], json.dumps(metadata, ensure_ascii=False), source_sha256),
+            )
+    return {"source": str(source), "source_sha256": source_sha256, "output": str(output), "output_sha256": sha256_file(output), "documents": len(documents), "chunks": len(chunks), "persisted_chunks": len(chunks), "window": window, "overlap": overlap}
+
+
+def search_chunks(connection, text: str = "", document_id: str = "", limit: int = 100) -> list[dict[str, Any]]:
+    """Consulta chunks persistidos para a curadoria manual."""
+    clauses = []
+    params: list[Any] = []
+    if text.strip():
+        clauses.append("text LIKE ?")
+        params.append(f"%{text.strip()}%")
+    if document_id.strip():
+        clauses.append("document_id LIKE ?")
+        params.append(f"%{document_id.strip()}%")
+    where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
+    params.append(max(1, min(int(limit), 500)))
+    rows = connection.execute(f"SELECT chunk_id,document_id,text,metadata_json,source_sha256,created_at FROM document_chunks{where} ORDER BY document_id,chunk_id LIMIT ?", params)
+    return [dict(row) for row in rows]
 
 
 def load_chunks(path: str | Path) -> list[dict[str, Any]]:

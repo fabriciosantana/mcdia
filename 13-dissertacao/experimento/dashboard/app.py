@@ -8,7 +8,7 @@ if str(PROJECT_ROOT) not in sys.path: sys.path.insert(0, str(PROJECT_ROOT))
 import streamlit as st
 from experiment_registry.config import ExperimentPaths
 from experiment_registry.config_profiles import list_profiles, save_profile
-from experiment_registry.corpus import prepare_documents
+from experiment_registry.corpus import prepare_documents, search_chunks
 from experiment_registry.db import connect, initialize_database
 from experiment_registry.evaluation_analysis import agreement_report, judge_response
 from experiment_registry.exports import export_run
@@ -202,16 +202,41 @@ def render_question_catalog_tab(connection):
             st.success("Pergunta salva no SQLite.")
             st.rerun()
         except ValueError as exc: st.error(str(exc))
+
+
+def render_chunks_tab(connection):
+    st.header("Documentos e chunks")
+    st.caption("Consulte os chunks persistidos no SQLite para localizar evidências e preencher a curadoria das perguntas.")
+    total = connection.execute("SELECT COUNT(*) FROM document_chunks").fetchone()[0]
+    st.metric("Chunks persistidos", total)
+    with st.form("chunk-search-form"):
+        c1, c2, c3 = st.columns([2, 2, 1])
+        text = c1.text_input("Texto contém", placeholder="ex.: segurança bancária")
+        document_id = c2.text_input("Document ID", placeholder="ex.: 451286")
+        limit = c3.number_input("Limite", min_value=10, max_value=500, value=100, step=10)
+        search = st.form_submit_button("Pesquisar chunks")
+    if search or total:
+        rows = search_chunks(connection, text, document_id, int(limit))
+        if rows:
+            st.dataframe([{"chunk_id": row["chunk_id"], "document_id": row["document_id"], "texto": row["text"], "fonte_sha256": row["source_sha256"]} for row in rows], use_container_width=True, hide_index=True)
+            selected = st.selectbox("Visualizar chunk", [row["chunk_id"] for row in rows], key="selected-chunk")
+            item = next(row for row in rows if row["chunk_id"] == selected)
+            st.code(item["chunk_id"], language="text")
+            st.text_area("Conteúdo do chunk", item["text"], height=240, key=f"chunk-content-{selected}")
+            st.json(json.loads(item["metadata_json"]))
+        else:
+            st.info("Nenhum chunk corresponde aos filtros informados. Prepare o corpus na aba Experimentos se o catálogo estiver vazio.")
 def main():
     st.set_page_config(page_title="Centro de controle experimental",layout="wide"); st.title("Centro de controle experimental"); st.caption("Execute, acompanhe e avalie os experimentos da dissertação em um único lugar.")
     root_default=os.environ.get("EXPERIMENTO_ROOT",str(PROJECT_ROOT)); root_text=st.sidebar.text_input("Raiz do experimento",root_default); paths=ExperimentPaths.from_environment(root_text); initialize_database(paths)
     with connect(paths.database) as connection:
-        runs=list_runs(connection); profiles=list_profiles(connection); tabs=st.tabs(["Visão geral","Configurações","Banco de perguntas","Experimentos","Questões e respostas"])
+        runs=list_runs(connection); profiles=list_profiles(connection); tabs=st.tabs(["Visão geral","Configurações","Banco de perguntas","Documentos e chunks","Experimentos","Questões e respostas"])
         with tabs[0]: render_overview(connection,runs)
         with tabs[1]: render_configuration_tab(connection)
         with tabs[2]: render_question_catalog_tab(connection)
-        with tabs[3]: render_experiments_tab(paths,connection,runs,profiles)
-        with tabs[4]: render_questions_tab(connection,runs)
+        with tabs[3]: render_chunks_tab(connection)
+        with tabs[4]: render_experiments_tab(paths,connection,runs,profiles)
+        with tabs[5]: render_questions_tab(connection,runs)
 
 if __name__ == "__main__": main()
 
