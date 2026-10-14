@@ -71,7 +71,7 @@ python -m pip install -r requirements.txt
 streamlit run dashboard/app.py
 ```
 
-O dashboard é o centro de controle local do piloto. A aba **Visão geral** mostra execuções, métricas, respostas e avaliações; **Configurações** salva e consulta perfis JSON persistentes; **Experimentos** executa recuperação, gera respostas via LLM e valida artefatos; **Questões e respostas** permite consultar perguntas, respostas, citações e registrar as cinco avaliações humanas de 0 a 2. Depois de iniciar o Streamlit, o fluxo normal pode ser feito pela interface, sem executar os comandos de domínio no terminal. Ele é local e não possui autenticação ou acesso remoto configurado.
+O dashboard é o centro de controle local do piloto. A aba **Visão geral** mostra execuções, métricas, respostas e avaliações; **Configurações** salva e consulta perfis persistentes; **Banco de perguntas** administra o catálogo SQLite, incluindo importação inicial, edição, curadoria e validação; **Experimentos** executa recuperação selecionando perguntas validadas do catálogo, gera respostas via LLM e valida artefatos; **Questões e respostas** permite consultar perguntas, respostas, citações e registrar as cinco avaliações humanas de 0 a 2. Depois de iniciar o Streamlit, o fluxo normal pode ser feito pela interface, sem editar CSVs ou JSONs. O corpus bruto ainda é informado como entrada documental, enquanto configurações, perguntas, execuções e avaliações ficam no SQLite e os embeddings no ChromaDB. Ele é local e não possui autenticação ou acesso remoto configurado.
 
 ## Executor de recuperação
 

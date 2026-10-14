@@ -1,0 +1,5 @@
+- [x] Criar migração e funções de catálogo no SQLite.
+- [x] Importar o banco inicial de 200 perguntas.
+- [x] Criar tela de administração e curadoria de perguntas.
+- [x] Permitir que execuções selecionem perguntas validadas do catálogo.
+- [x] Adicionar testes e validar o fluxo completo.

@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from .config import ExperimentPaths
 from .db import connect, initialize_database
 from .registry import create_run, register_artifact
+from .question_bank import catalog_questions_for_run
 
 TOKEN = re.compile(r"[\wÀ-ÿ]+", re.UNICODE)
 
@@ -49,6 +50,19 @@ def load_questions(path):
                 except json.JSONDecodeError: raise ValueError(f'julgamentos inválidos para {row["question_id"]}')
             rows.append({'question_id':row['question_id'],'query':row['query'],'references':refs,'reference_chunks':chunks,'judgments':judgments,'category':row.get('category') or row.get('categoria'),'respondible':(row.get('respondible') or row.get('respondibilidade') or ('sim' if refs else '')).lower() not in {'não','nao','false','0',''}})
     if not rows: raise ValueError('o arquivo de perguntas está vazio')
+    return rows
+
+
+def load_catalog_questions(database, question_ids=None):
+    rows = []
+    with connect(database) as connection:
+        for item in catalog_questions_for_run(connection, question_ids):
+            rows.append({
+                'question_id': item['question_id'], 'query': item['query'],
+                'references': item['reference_doc_ids'], 'reference_chunks': item['reference_chunk_ids'],
+                'judgments': item['relevance_judgments'], 'category': item['category'],
+                'respondible': bool(item['respondible']),
+            })
     return rows
 
 def _tokens(text): return TOKEN.findall(text.lower())
@@ -109,10 +123,19 @@ def _metrics(results, questions):
     result.update({key:(sum(vals)/len(vals) if vals else None) for key,vals in values.items()})
     return result
 
-def run_retrieval(paths:ExperimentPaths, documents_path, questions_path, method, name, embedding_model=None, embedding_client=None):
-    docs=load_documents(documents_path); questions=load_questions(questions_path)
+def run_retrieval(paths:ExperimentPaths, documents_path, questions_path=None, method='bm25', name='retrieval-run', embedding_model=None, embedding_client=None, question_ids=None):
+    docs=load_documents(documents_path)
+    if question_ids is None:
+        if questions_path is None:
+            raise ValueError('informe um arquivo de perguntas ou selecione perguntas validadas no catálogo')
+        questions=load_questions(questions_path)
+    else:
+        questions=load_catalog_questions(paths.database, question_ids)
+        if not questions:
+            raise ValueError('nenhuma pergunta validada foi selecionada no catálogo')
     effective_embedding_model = embedding_model or os.environ.get('OPENAI_EMBEDDING_MODEL')
-    config={'retrieval':{'method':method,'k':10,'embedding_model':effective_embedding_model},'inputs':{'documents_sha256':file_sha256(documents_path),'questions_sha256':file_sha256(questions_path)}}
+    question_hash = file_sha256(questions_path) if question_ids is None else hashlib.sha256(json.dumps(questions, ensure_ascii=False, sort_keys=True).encode('utf-8')).hexdigest()
+    config={'retrieval':{'method':method,'k':10,'embedding_model':effective_embedding_model},'inputs':{'documents_sha256':file_sha256(documents_path),'questions_sha256':question_hash,'question_source':'catalog' if question_ids is not None else 'file'}}
     paths.ensure_directories(); initialize_database(paths)
     with connect(paths.database) as con:
         run_id=create_run(con,name,config)
@@ -128,7 +151,8 @@ def run_retrieval(paths:ExperimentPaths, documents_path, questions_path, method,
         con.execute('INSERT INTO retrieval_metrics(run_id,method,recall_at_1,recall_at_5,recall_at_10,mrr,respondible_questions,precision_at_1,precision_at_5,precision_at_10,hit_at_1,hit_at_5,hit_at_10,ndcg_at_5,ndcg_at_10) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',(run_id,method,metrics['recall_at_1'],metrics['recall_at_5'],metrics['recall_at_10'],metrics['mrr'],metrics['respondible_questions'],metrics['precision_at_1'],metrics['precision_at_5'],metrics['precision_at_10'],metrics['hit_at_1'],metrics['hit_at_5'],metrics['hit_at_10'],metrics['ndcg_at_5'],metrics['ndcg_at_10']))
         con.execute("UPDATE experiment_runs SET state='completed', finished_at=CURRENT_TIMESTAMP WHERE run_id=?", (run_id,))
         register_artifact(con,run_id,'documents-input',documents_path)
-        register_artifact(con,run_id,'questions-input',questions_path)
+        if questions_path is not None:
+            register_artifact(con,run_id,'questions-input',questions_path)
         if method == 'dense':
             from .embedding_retrieval import EmbeddingStore
             register_artifact(con,run_id,'embedding-index',EmbeddingStore(paths.embeddings).document_manifest(docs, effective_embedding_model))

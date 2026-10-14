@@ -15,6 +15,7 @@ from experiment_registry.exports import export_run
 from experiment_registry.analysis import record_error_case
 from experiment_registry.openai_adapter import generate_responses
 from experiment_registry.question_curation import get_question_metadata, save_question_metadata
+from experiment_registry.question_bank import list_catalog, save_catalog_question, seed_question_catalog, get_catalog_question
 from experiment_registry.registry import get_run, list_runs, validate_run
 from experiment_registry.response_evaluation import list_responses, record_human_evaluation
 from experiment_registry.retrieval import run_retrieval
@@ -65,9 +66,11 @@ def render_experiments_tab(paths, connection, runs, profiles):
             except (OSError, RuntimeError, ValueError) as exc: st.error(str(exc))
     with st.form("retrieval-form"):
         name=st.text_input("Nome da execução",placeholder="piloto-hibrido")
-        st.selectbox("Perfil",list(profile_map) or ["(sem perfil — use os campos abaixo)"])
+        profile_label=st.selectbox("Perfil",list(profile_map) or ["(sem perfil — use os campos abaixo)"])
         documents_path=st.text_input("Arquivo de documentos JSONL",placeholder="dados/documentos.jsonl")
-        questions_path=st.text_input("Arquivo de questões CSV",placeholder="dados/questoes.csv")
+        catalog = list_catalog(connection, "validada")
+        question_options = {f'{item["question_id"]} — {item["query"][:90]}': item["question_id"] for item in catalog}
+        selected_question_ids = st.multiselect("Perguntas validadas do catálogo", list(question_options), disabled=not question_options)
         method=st.selectbox("Método de recuperação",["bm25","tfidf","hybrid","dense"])
         embedding_model=st.text_input("Modelo de embeddings (apenas dense)", value=os.environ.get("OPENAI_EMBEDDING_MODEL", ""))
         submitted=st.form_submit_button("Executar recuperação")
@@ -78,7 +81,7 @@ def render_experiments_tab(paths, connection, runs, profiles):
                 configured_method=json.loads(selected_profile["configuration_json"]).get("retrieval", {}).get("method")
                 if configured_method in {"bm25", "tfidf", "hybrid", "dense"}:
                     method=configured_method
-            result=run_retrieval(paths,documents_path,questions_path,method,name.strip() or f"run-{method}",embedding_model=embedding_model or None); st.success(f"Recuperação concluída: {result['run_id']}"); st.json(result); st.rerun()
+            result=run_retrieval(paths,documents_path,None,method,name.strip() or f"run-{method}",embedding_model=embedding_model or None, question_ids=[question_options[label] for label in selected_question_ids]); st.success(f"Recuperação concluída: {result['run_id']}"); st.json(result); st.rerun()
         except (OSError,ValueError) as exc: st.error(str(exc))
     if not runs: st.info("Crie uma execução para habilitar a geração de respostas."); return
     options=_run_options(runs); selected_label=st.selectbox("Execução para administrar",list(options),key="experiment-run"); run_id=options[selected_label]; run=get_run(connection,run_id)
@@ -142,6 +145,54 @@ def render_questions_tab(connection,runs):
     if save_error:
         try: record_error_case(connection,item["response_id"],error_type,severity,error_notes); st.success("Caso crítico registrado."); st.rerun()
         except ValueError as exc: st.error(str(exc))
+
+
+def render_question_catalog_tab(connection):
+    st.header("Banco de perguntas")
+    st.caption("O catálogo operacional fica no SQLite. CSV e JSON servem apenas para importação inicial ou exportação.")
+    default_source = PROJECT_ROOT.parent / "dados" / "piloto" / "banco_perguntas_dissertacao_v1.json"
+    if connection.execute("SELECT COUNT(*) FROM question_catalog").fetchone()[0] == 0 and default_source.is_file():
+        if st.button("Importar banco inicial para o SQLite"):
+            inserted = seed_question_catalog(connection, default_source)
+            st.success(f"{inserted} perguntas importadas.")
+            st.rerun()
+        st.info("O banco inicial está disponível para importação. Depois disso, administre as perguntas nesta tela.")
+    catalog = list_catalog(connection)
+    if catalog:
+        summary = [{"ID": q["question_id"], "Pergunta": q["query"], "Categoria": q["category"], "Dificuldade": q["difficulty"], "Status": q["status"], "Respondível": q["respondible"]} for q in catalog]
+        st.dataframe(summary, use_container_width=True, hide_index=True)
+    st.subheader("Cadastrar ou editar pergunta")
+    ids = [q["question_id"] for q in catalog]
+    selected = st.selectbox("Pergunta", ["(nova pergunta)"] + ids, key="catalog-selected")
+    current = get_catalog_question(connection, selected) if selected != "(nova pergunta)" else {}
+    def text_value(name, default=""):
+        value = current.get(name, default)
+        if isinstance(value, list): return ";".join(value)
+        if isinstance(value, dict): return json.dumps(value, ensure_ascii=False)
+        return value or ""
+    with st.form("catalog-question-form"):
+        c1, c2, c3 = st.columns(3)
+        question_id = c1.text_input("ID", value=text_value("question_id", "Q001"), disabled=selected != "(nova pergunta)")
+        category = c2.text_input("Categoria", value=text_value("category"))
+        status = c3.selectbox("Status", ["rascunho", "revisar", "validada", "arquivada"], index=["rascunho", "revisar", "validada", "arquivada"].index(text_value("status") or "rascunho"))
+        query = st.text_area("Pergunta", value=text_value("query"), height=90)
+        c1, c2, c3 = st.columns(3)
+        difficulty = c1.selectbox("Dificuldade", ["easy", "medium", "hard"], index=["easy", "medium", "hard"].index(text_value("difficulty") or "medium"))
+        answerability = c2.selectbox("Respondibilidade", ["sim", "parcial", "nao"], index=["sim", "parcial", "nao"].index(text_value("answerability") or "sim"))
+        respondible = c3.checkbox("Utilizável no experimento", value=bool(current.get("respondible", True)))
+        expected_authors = st.text_input("Autores esperados (separados por ;)", value=text_value("expected_authors"))
+        reference_docs = st.text_input("Documentos de referência (separados por ;)", value=text_value("reference_doc_ids"))
+        reference_chunks = st.text_input("Trechos de referência (separados por ;)", value=text_value("reference_chunk_ids"))
+        criteria = st.text_area("Critérios da resposta", value=text_value("expected_answer_criteria"))
+        risks = st.text_area("Riscos de avaliação", value=text_value("evaluation_risks"))
+        notes = st.text_area("Notas de curadoria", value=text_value("curation_notes"))
+        save = st.form_submit_button("Salvar pergunta")
+    if save:
+        try:
+            save_catalog_question(connection, {"question_id": question_id, "query": query, "category": category, "status": status, "difficulty": difficulty, "answerability": answerability, "respondible": respondible, "expected_authors": expected_authors, "reference_doc_ids": reference_docs, "reference_chunk_ids": reference_chunks, "expected_answer_criteria": criteria, "evaluation_risks": risks, "curation_notes": notes, "source_category": current.get("source_category"), "source_question_id": current.get("source_question_id"), "source_file": current.get("source_file")})
+            st.success("Pergunta salva no SQLite.")
+            st.rerun()
+        except ValueError as exc: st.error(str(exc))
     with st.form(f"evaluation-form-{item['response_id']}"):
         evaluator=st.text_input("Avaliador",placeholder="nome ou identificador")
         scores={field:st.selectbox(label,[0,1,2],key=f"{item['response_id']}-{field}") for field,label in EVALUATION_FIELDS}
@@ -156,11 +207,12 @@ def main():
     st.set_page_config(page_title="Centro de controle experimental",layout="wide"); st.title("Centro de controle experimental"); st.caption("Execute, acompanhe e avalie os experimentos da dissertação em um único lugar.")
     root_default=os.environ.get("EXPERIMENTO_ROOT",str(PROJECT_ROOT)); root_text=st.sidebar.text_input("Raiz do experimento",root_default); paths=ExperimentPaths.from_environment(root_text); initialize_database(paths)
     with connect(paths.database) as connection:
-        runs=list_runs(connection); profiles=list_profiles(connection); tabs=st.tabs(["Visão geral","Configurações","Experimentos","Questões e respostas"])
+        runs=list_runs(connection); profiles=list_profiles(connection); tabs=st.tabs(["Visão geral","Configurações","Banco de perguntas","Experimentos","Questões e respostas"])
         with tabs[0]: render_overview(connection,runs)
         with tabs[1]: render_configuration_tab(connection)
-        with tabs[2]: render_experiments_tab(paths,connection,runs,profiles)
-        with tabs[3]: render_questions_tab(connection,runs)
+        with tabs[2]: render_question_catalog_tab(connection)
+        with tabs[3]: render_experiments_tab(paths,connection,runs,profiles)
+        with tabs[4]: render_questions_tab(connection,runs)
 
 if __name__ == "__main__": main()
 
