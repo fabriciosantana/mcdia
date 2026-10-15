@@ -34,9 +34,18 @@ Abra **http://localhost:8000** no navegador. Em Codespaces/VS Code remoto, abra 
 
 Não abra `index.html` por duplo clique: o navegador precisa de HTTP para carregar o módulo JavaScript e o JSON. Para visualizar, basta Python 3 e um navegador moderno. **Não é necessário instalar pacotes, obter token do Hugging Face ou ter internet após baixar este diretório completo, incluindo `data/details/`.** Os links de fonte original exigem internet. O servidor acima serve somente este exercício; não o diretório inteiro do repositório.
 
+## Apresentação e exploração
+
+O botão **Apresentar em 6 telas** mostra pergunta e achado, distribuição, curva
+acumulada, ritmo, um discurso selecionado e conclusão, com fontes maiores.
+Anterior/Próxima navegam; Esc sai. Os filtros ativos são preservados. Restaure a
+visão inicial em **Explorar** para seguir os números do roteiro. Comparações,
+temas, qualidade, auditoria e registros ficam recolhidos após a conclusão.
+O exemplo #453869 é fixo e informa se pertence ao recorte ativo.
+
 ## O que foi construído
 
-- Narrativa em quatro partes: ritmo temporal, distribuição da palavra, assuntos exploratórios e consulta aos registros.
+- Narrativa principal em seis telas: pergunta e achado, distribuição, curva acumulada, ritmo, registro concreto e conclusão.
 - Filtros combináveis de mês inicial/final, tipo de uso da palavra, partido na data, UF, orador, tema e busca por expressão em resumo/indexação.
 - Indicadores e títulos calculados para o recorte ativo; contagem e percentual na série mensal.
 - Barras selecionáveis por mouse ou teclado, tabelas acessíveis para meses e oradores, dicionário temático exposto, estados vazio/erro e layout responsivo.

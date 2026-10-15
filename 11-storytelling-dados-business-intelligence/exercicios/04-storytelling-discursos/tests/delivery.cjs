@@ -25,6 +25,7 @@ const {pathToFileURL}=require('node:url');
   assert.ok(await page.locator('#share').isDisabled());
   assert.match(await page.locator('#metodo').innerText(),/Senado Federal/);
   assert.equal(await page.locator('#records article').count(),8);
+  await page.locator('#exploracao > summary').click();
   await page.locator('#apresentacao summary').click();
   assert.match(await page.locator('#apresentacao').innerText(),/8:30–10:00/);
   const guideDownload=page.waitForEvent('download');

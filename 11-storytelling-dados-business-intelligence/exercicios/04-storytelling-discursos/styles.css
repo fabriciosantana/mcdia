@@ -12,3 +12,31 @@ tbody th{position:static;background:transparent;font-weight:500}thead th{positio
 .conclusion { border-left: 5px solid #17695f; padding-left: 1.5rem; }
 .bar-row:first-of-type .bar-fill { background: var(--teal); }
 .theme-panel .bar-row:first-of-type .bar-fill { background: var(--accent); }
+/* Main story and optional exploration. */
+.hero{padding:36px 0 28px}.hero h1{font-size:clamp(40px,4.8vw,66px)}
+.opening-finding{max-width:750px;border-left:4px solid var(--teal);padding:2px 18px;margin:20px 0;background:var(--light)}
+#opening-answer{font-size:clamp(22px,2.2vw,30px);line-height:1.35;font-weight:650;margin:12px 0}
+#opening-scope{margin:10px 0;overflow-wrap:anywhere}
+#present{margin:12px 0 12px 24px;color:var(--teal);font-weight:650}
+.exploration{margin:32px 0;padding:22px;border:1px solid var(--line);border-radius:6px}
+.exploration>summary{font-size:20px}.exploration>p{font-size:15px}
+#temas .theme-panel{border:0;padding:0;margin:0}
+#vozes #authors-chart{max-width:950px}.featured-evidence blockquote{margin:22px 0;padding:20px 24px;border-left:4px solid var(--accent);background:#eee9df;font-size:19px;line-height:1.65}
+.presentation-controls{position:fixed;bottom:0;left:0;right:0;padding:12px 4%;background:var(--paper);border-top:2px solid var(--teal);display:flex;align-items:center;justify-content:center;gap:16px;z-index:100}
+.presentation-controls span{font-size:17px}.presentation-controls button{font-size:17px}
+.presenting{font-size:20px;padding-bottom:100px}
+.presenting main{max-width:1440px;padding:0 5%}
+.presenting .masthead,.presenting footer,.presenting .skip,.presenting .metrics,.presenting .reading-note,.presenting .method-section,.presenting .exploration,.presenting .hero-note,.presenting .primary-link,.presenting #present{display:none}
+.presenting .presentation-slide:not(.active-slide){display:none!important}
+.presenting .presentation-slide{padding:28px 0;border:0;min-height:75vh}
+.presenting .hero{grid-template-columns:1fr;max-width:1100px}
+.presenting h2{font-size:clamp(28px,3vw,42px)}
+.presenting .intro,.presenting .chart-caption,.presenting .footnote,.presenting .insight,.presenting .bar-label,.presenting .bar-axis,.presenting .featured-evidence p{font-size:18px}
+.presenting .eyebrow{font-size:15px}.presenting .bar-row{margin-bottom:14px}
+.presenting .bar-track,.presenting .bar-fill{height:10px}
+.presenting .chapter details,.presenting .segmented,.presenting .chart-help,.presenting .context-strip,.presenting .historical-context{display:none}
+.presenting .line-chart svg{max-height:48vh}.presenting .timeline svg{max-height:45vh}
+.presenting .timeline{display:block}.presenting .mobile-months{display:none}
+.presenting .featured-evidence blockquote{font-size:22px}
+.presentation-slide:focus{outline:none}
+@media(max-width:700px){#present{margin-left:0;display:block}.exploration{padding:14px}.presentation-controls{gap:6px;flex-wrap:wrap;padding:8px}.presentation-controls span{font-size:14px;order:-1;width:100%;text-align:center}.presentation-controls button{font-size:14px}.presenting{padding-bottom:140px}.presenting .bar-label{font-size:15px}.presenting .line-chart svg{max-height:none}.presenting .footnote{font-size:16px}}

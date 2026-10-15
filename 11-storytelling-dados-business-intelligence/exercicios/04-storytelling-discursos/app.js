@@ -42,6 +42,8 @@ async function renderRecords(){
 }
 function resultsVisible(visible){document.querySelectorAll('.metrics,#ritmo,#comparar,#vozes,#concentracao,#evolucao,#qualidade,#evidencias,#conclusao').forEach(el=>el.hidden=!visible);}
 async function render(){
+ $('opening-answer').textContent='Atualizando o achado para o recorte…';
+ $('opening-scope').textContent='';
  const token=++renderId;recordsId++;page=0;$('dashboard').setAttribute('aria-busy','true');$('operation-error').hidden=true;$('operation-status').textContent='';$('export').disabled=true;$('export-package').disabled=true;
  try{
   if(state.query.trim()){
@@ -70,6 +72,7 @@ async function render(){
   barChart('themes-chart',stats.themes.map(([name,count])=>({id:name,name,count})),n,theme=>commit({theme}));$('themes-note').textContent=`${fmt(n-stats.noTheme)} de ${fmt(n)} registros têm tema detectado (${pct(n-stats.noTheme,n)}). Sem correspondência: ${fmt(stats.noTheme)}. Consulte as palavras acionadoras nos registros e a auditoria da amostra.`;
   comparisonResult=comparison(allRows,state,Object.keys(meta.themes));distribution(stats,allRows,state);evolution(allRows,state,selectMonth);quality(filtered,state);historyContext(state);
   updateNarrative(stats,comparisonResult);
+  $('example-scope').textContent=filtered.some(r=>r.id==='453869')?'Este registro pertence ao recorte ativo.':'Este registro está fora do recorte ativo.';
   $('export').disabled=!n;$('export-package').disabled=!n||!comparisonResult;
   await renderRecords();
  }catch(e){if(token===renderId){$('operation-status').textContent='Consulta não concluída; os resultados anteriores foram ocultados.';filtered=[];comparisonResult=null;resultsVisible(false);$('records').replaceChildren();for(const id of ['kpi-count','kpi-authors','kpi-share','kpi-full'])$(id).textContent='—';fail(e.message,render);}}

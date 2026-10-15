@@ -12,18 +12,25 @@ marcos de fala, não uma garantia automática de duração.
 
 | Tempo | Tela e mensagem | Transição / ação |
 | --- | --- | --- |
-| 0:00–1:00 (60 s) | Pergunta: quem ocupa o espaço da palavra? A participação registrada importa para investigar representação, mas falar mais não é produzir mais. | Apresente a pergunta, sem ler todos os indicadores. |
-| 1:00–2:00 (60 s) | Método: dados públicos do Senado, consolidação identificada no painel; 4.045 discursos de 106 oradores ao longo da legislatura. Cada código conta uma vez. | Explique por que 106 pessoas não equivalem a 106 cadeiras simultâneas. |
-| 2:00–3:30 (90 s) | Ritmo: maio/2019 tem o maior volume, 208 discursos. Barras com base zero permitem comparar meses. | Aponte o pico e o eixo. Janeiro/2023 é apenas o final da janela; mudanças não demonstram causas. |
-| 3:30–5:30 (120 s) | Vozes: dez oradores reúnem 1.955 dos 4.045 discursos, aproximadamente 48,3%. Leia a curva acumulada como extensão desse achado. | Compare comprimentos de duas barras; explique o denominador e a falta de ajuste por dias de exercício. Não faça ranking de mérito. |
-| 5:30–7:00 (90 s) | Temas: use o título e os valores atuais como pistas dos assuntos registrados. O dicionário procura palavras em resumo e indexação. | Um discurso pode ter vários temas. Menção não é apoio; a detecção ainda não tem validação humana representativa. |
-| 7:00–8:30 (90 s) | Qualidade: 620 discursos não têm texto integral no snapshot, mas continuam na contagem. Abra um registro para mostrar resumo e link de origem. | Não dependa da internet: mostre a citação no painel; acessar o Senado é opcional. |
-| 8:30–10:00 (90 s) | Conclusão: a frequência é desigual neste recorte; quase metade está nos dez mais frequentes. Isso responde quem aparece na contagem, não quem trabalha melhor. | Retome pergunta → evidência → limite. Proponha estudar oportunidades de fala. Reserve os últimos 15 s à frase final e encerre em 10:00. |
+| 0:00–2:00 (120 s) | Tela 1 · Pergunta e achado: dez dos 106 oradores reúnem 48,3% dos 4.045 discursos. Apresente a fonte, a categoria Discurso e fev/2019–jan/2023. | Explique que são registros, não minutos de fala; 106 pessoas ao longo de quatro anos não são cadeiras simultâneas. |
+| 2:00–4:00 (120 s) | Tela 2 · Distribuição: compare as barras dos oradores; Paulo Paim tem a maior contagem inicial. | Conecte a frequência à pergunta de representação, sem classificar desempenho. |
+| 4:00–5:00 (60 s) | Tela 3 · Curva acumulada: mostre quantos oradores alcançam metade das falas. | Explique a ordem decrescente e a falta de ajuste por dias de exercício. |
+| 5:00–6:30 (90 s) | Tela 4 · Ritmo: maio/2019 tem o maior volume, 208 discursos. | Compare meses; não atribua causas ao pico. Janeiro/2023 encerra uma janela parcial. |
+| 6:30–8:30 (120 s) | Tela 5 · Registro #453869: Paulo Paim, PT–RS, 29/05/2019. O resumo registra uma manifestação ligada à educação e à previdência. | Este exemplo conecta o orador mais frequente ao mês de pico. Uma fala conta uma vez, mas pode ter vários temas. Não é amostra representativa nem explicação do pico. Mencione os 620 textos integrais ausentes que permanecem na contagem inicial. |
+| 8:30–10:00 (90 s) | Tela 6 · Resposta: dez oradores reúnem quase metade dos discursos do recorte inicial. | Retome pergunta → evidência → limite. Próximo passo: investigar oportunidades de fala e dias efetivos de exercício. Reserve os últimos 15 s para encerrar. |
+
+Clique em **Apresentar em 6 telas** na abertura. Use Anterior/Próxima ou as setas
+quando o foco estiver na tela; **Esc** encerra o modo. As telas mantêm o recorte
+ativo, portanto restaure a visão inicial na área **Explorar** antes de começar.
+A contagem de telas não é cronômetro: acompanhe os marcos acima com relógio externo.
+
+O resumo do exemplo está embutido no HTML e pode ser mostrado sem internet.
+Ele é um exemplo editorial fixo: o painel informa se pertence aos filtros ativos.
+A fonte oficial é https://www25.senado.leg.br/web/atividade/pronunciamentos/-/p/texto/453869.
 
 ## Disciplina de apresentação
 
-Narre a relação entre números e pergunta; não leia tabelas inteiras. Não abra
-comparação A/B, auditoria ou exportações durante o percurso principal.
+Narre a relação entre números e pergunta; não leia tabelas inteiras. Mantenha a área de exploração recolhida durante o percurso principal.
 Se estiver atrasado, reduza detalhes e exemplos dentro do bloco, preservando
 conclusão e horário final. Não receba perguntas durante a fala; o debate ocorre
 na avaliação entre pares. Uma pausa planejada deve servir para observar o

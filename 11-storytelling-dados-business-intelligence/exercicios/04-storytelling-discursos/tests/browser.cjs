@@ -7,7 +7,7 @@ const path=require('node:path');
  const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/opt/google/chrome/chrome',headless:true,args:['--no-sandbox']});
  const page=await browser.newPage({viewport:{width:1440,height:1080}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  const base=process.env.DASHBOARD_URL||'http://127.0.0.1:8000';
- const ready=async()=>{await page.waitForFunction(()=>document.getElementById('dashboard')?.getAttribute('aria-busy')==='false');};
+ const ready=async()=>{await page.waitForFunction(()=>document.getElementById('dashboard')?.getAttribute('aria-busy')==='false');await page.locator('#exploracao').evaluate(el=>el.open=true);};
  const select=async(id,v)=>{await page.selectOption('#'+id,v);await ready();};
  const click=async(selector)=>{await page.click(selector);await ready();};
  const count=async n=>{await page.waitForFunction(n=>document.getElementById('kpi-count').textContent===n,n);await ready();};
