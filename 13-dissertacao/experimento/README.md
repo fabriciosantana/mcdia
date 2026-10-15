@@ -1,19 +1,40 @@
-# Construção do experimento
+# Centro de controle dos experimentos
 
-Este diretório será usado para desenvolver a infraestrutura de apoio e execução dos experimentos da dissertação.
+Aplicativo local para preparar o corpus, curar perguntas e evidências, executar baselines RAG, gerar respostas, organizar avaliações humanas e do juiz, e exportar evidências da dissertação. SQLite é o registro operacional; ChromaDB armazena os vetores. O fluxo normal é pela interface, sem editar CSVs ou JSONs.
 
-O escopo será separado em dois componentes:
+## Instalação e execução
 
-- gerenciador de experimentos, responsável por configurações, execuções, dados persistentes, métricas e relatórios;
-- sistema RAG de referência, responsável por indexação, recuperação, geração e registro das evidências.
+```bash
+python -m pip install -r requirements.txt
+streamlit run dashboard/app.py
+```
 
-As primeiras decisões de arquitetura e especificações serão registradas aqui antes da implementação.
+Configure `OPENAI_API_KEY`, `OPENAI_MODEL` e `OPENAI_EMBEDDING_MODEL` no ambiente ou em `.env` para geração e embeddings. BM25 pode ser executado sem credenciais. A interface abre em **Visão geral** e aplica migrações SQLite automaticamente.
 
-## OpenSpec
+## Fluxo de trabalho
 
-A estrutura de especificações está em `openspec/`, com o schema `spec-driven` e regras específicas deste subprojeto em `openspec/config.yaml`.
+1. Em **Experimentos → Preparar corpus e chunks**, importe JSONL ou Parquet e escolha tokenizador, janela e sobreposição. O arquivo é lido como fonte de importação; documentos, proveniência, metadados, exclusões e chunks ficam persistidos no SQLite. Versões e segmentações coexistem. O tokenizador `whitespace-regex` está identificado como legado.
+2. Em **Banco de perguntas**, importe o catálogo inicial uma vez e edite as perguntas no SQLite. Elegibilidade, respondibilidade e validação são campos separados. Uma pergunta só entra em bateria congelada após decisão documentada e vínculo com a segmentação escolhida.
+3. Em **Documentos e chunks**, filtre por texto, documento, autoria, data e versão. Selecione o trecho e associe-o à pergunta com grau 0–2, suficiência, justificativa e estado de revisão.
+4. Em **Baterias**, crie uma composição ou importe o piloto de 24 perguntas por `source_question_id`. Revise itens, registre a decisão de respondibilidade para cada segmentação e congele a bateria antes da execução.
+5. Em **Experimentos**, construa ou retome um índice Chroma. Escolha BM25, busca vetorial ou híbrida, bateria, segmentação e parâmetros; o aplicativo mostra os valores efetivos e salva um plano congelado. As tarefas rodam em worker local e persistem progresso e falhas.
+6. Gere respostas para uma repetição explícita. O sistema usa o contexto recuperado congelado e guarda prompt, hash, parâmetros, duração, uso informado pelo provedor e citações. Antes das chamadas, estima tokens de entrada e aplica limites de tokens, chamadas e duração. Quando uma chamada fica incerta, o reenvio exige confirmação explícita.
+7. Em **Avaliação humana → Gestão**, cadastre pseudônimos com códigos individuais, crie rodadas e distribua todas as respostas ou uma amostra estratificada reprodutível. O avaliador entra na **Sessão do avaliador**, que mostra pergunta, resposta, contexto, evidência de referência e rubrica sem exibir sistema, modelo ou notas alheias. Adjudicação cria novos registros e preserva os originais.
+8. Configure e congele versões da rubrica e do protocolo H1–H3. Defina grupos simples/complexos e rodadas comparadas. Gere relatórios por pergunta, categoria e execução, com cobertura, denominadores, intervalos bootstrap, concordância e casos críticos. Baixe JSON, CSV e um `.tex` mínimo.
+9. Gere um pacote de auditoria SQLite + Chroma e, se necessário, restaure-o em um diretório novo. O pacote remove códigos de acesso e substitui pseudônimos por aliases estáveis.
 
-Comandos úteis, executados a partir deste diretório:
+## Dados locais
+
+- Registro SQLite: `data/experiment_registry.sqlite3`.
+- Manifestos e artefatos derivados: `data/artifacts/` e `data/outputs/`.
+- Coleções persistentes Chroma: `data/embeddings/chroma/`.
+- Índice lexical BM25 versionado e comprimido: tabela `lexical_indexes` no SQLite.
+
+Se a migração encontrar chunks do esquema anterior, cria primeiro `data/artifacts/experiment_registry-pre-versioned-corpus.sqlite3` e registra a reconciliação no banco. O registro legado é preservado para auditoria.
+
+## OpenSpec e validação
+
+As seis mudanças em `openspec/changes/` documentam corpus versionado, baterias curadas, recuperação, execução, avaliação e relatórios. Não as arquive antes de executar a aceitação sintética descrita em cada `tasks.md` e conciliar os resultados. Comandos úteis:
 
 ```bash
 openspec list
@@ -22,101 +43,12 @@ openspec validate --changes
 openspec validate --specs
 ```
 
-Cada mudança relevante deve ser proposta e especificada antes da implementação. As especificações permanentes ficam em `openspec/specs/`; propostas em andamento ficam em `openspec/changes/` e só devem ser arquivadas depois de implementadas e verificadas.
-
-## Registro experimental inicial
-
-A primeira implementação usa apenas a biblioteca padrão do Python e SQLite. As dependências de teste estão em `requirements.txt`.
-
-Inicialize o banco local:
+Para repetir a aceitação integrada, com banco e dados sintéticos criados em diretório temporário, use:
 
 ```bash
-python -m experiment_registry.cli init
+python scripts/acceptance_synthetic.py
 ```
 
-Crie uma execução sintética e um relatório JSON:
+O roteiro aplica as migrações 001–015 num registro legado descartável, prepara corpus, congela bateria, constrói vetores Chroma determinísticos, executa BM25/denso/híbrido, gera e avalia respostas falsas, compila o relatório `.tex`, restaura SQLite + Chroma e verifica a renderização do dashboard. Requer as dependências de `requirements.txt` e `pdflatex`; não usa credenciais nem altera `data/experiment_registry.sqlite3`.
 
-```bash
-python -m experiment_registry.cli demo
-```
-
-O banco será criado em `data/experiment_registry.sqlite3` e o relatório em `data/outputs/demo-run.json`. Para listar execuções:
-
-```bash
-python -m experiment_registry.cli list
-```
-
-Os testes podem ser executados sem dependências externas:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-O registro atual implementa preparação de corpus e chunks, baselines BM25, TF-IDF, híbrido e recuperação densa por embeddings, geração via API Responses, julgamento automatizado auxiliar, concordância e persistência SQLite. A recuperação densa exige `OPENAI_EMBEDDING_MODEL` configurado. Seus embeddings são persistidos em coleções ChromaDB sob `data/embeddings/chroma`, identificadas pelo modelo e pelo hash do corpus; consultas repetidas também são reutilizadas. Manifestos JSON registram a coleção, o modelo, as dimensões e os IDs dos documentos. Quando o corpus ou o modelo muda, uma nova coleção é criada e o manifesto usado é registrado como artefato da execução.
-
-## Pipeline de evidências
-
-A aba **Experimentos** também prepara JSONL ou Parquet em chunks determinísticos, registra a proveniência e exporta tabelas CSV/LaTeX por execução. A aba **Questões e respostas** permite editar categoria, status de validação, trechos relevantes e notas de curadoria. O conjunto CSV só entra na recuperação quando a linha estiver marcada como `validada` (ou `validated`).
-
-As métricas ampliadas incluem Precision@k, Hit@k e nDCG quando os julgamentos de relevância fornecem graus suficientes. O julgamento automatizado fica em tabela própria e a tela de execução calcula acordo exato e kappa ponderado apenas para respostas com avaliação humana e automática correspondentes.
-
-O sistema também calcula intervalos de confiança por bootstrap com semente explícita, registra casos críticos por tipo e severidade e atribui citações somente quando o identificador da fonte aparece explicitamente na resposta gerada.
-
-## Dashboard local
-
-Instale as dependências do subprojeto e execute a interface:
-
-```bash
-python -m pip install -r requirements.txt
-streamlit run dashboard/app.py
-```
-
-O dashboard é o centro de controle local do piloto. A aba **Visão geral** mostra execuções, métricas, respostas e avaliações; **Configurações** salva e consulta perfis persistentes; **Banco de perguntas** administra o catálogo SQLite, incluindo importação inicial, edição, curadoria e validação; **Experimentos** executa recuperação selecionando perguntas validadas do catálogo, gera respostas via LLM e valida artefatos; **Questões e respostas** permite consultar perguntas, respostas, citações e registrar as cinco avaliações humanas de 0 a 2. Depois de iniciar o Streamlit, o fluxo normal pode ser feito pela interface, sem editar CSVs ou JSONs. O corpus bruto ainda é informado como entrada documental, enquanto configurações, perguntas, execuções e avaliações ficam no SQLite e os embeddings no ChromaDB. Ele é local e não possui autenticação ou acesso remoto configurado.
-
-## Executor de recuperação
-
-Entradas do executor:
-
-- documentos em JSONL, uma linha por documento: `{"id": "doc-1", "text": "..."}`;
-- perguntas em CSV com as colunas `question_id,query,reference_doc_ids`; múltiplas referências são separadas por `;`.
-
-Execute um baseline:
-
-```bash
-python -m experiment_registry.cli run-retrieval \
-  --documents /caminho/documentos.jsonl \
-  --questions /caminho/perguntas.csv \
-  --method bm25 \
-  --name piloto-bm25
-```
-
-As estratégias disponíveis são `bm25`, `tfidf` e `hybrid`. Resultados, métricas e hashes das entradas são gravados no registro e em `data/outputs/`.
-
-## Respostas e avaliações
-
-Respostas geradas por qualquer modelo podem ser entregues em JSONL, sem dependência de provedor:
-
-```json
-{"run_id":"...","question_id":"q1","answer":"...","model":"modelo-local","prompt_hash":"...","citations":[{"document_id":"doc-1","chunk_id":"doc-1:0"}]}
-```
-
-Ingestão e consulta:
-
-```bash
-python -m experiment_registry.cli ingest-responses respostas.jsonl
-python -m experiment_registry.cli responses RUN_ID
-```
-
-As avaliações humanas usam as cinco dimensões ordinais de 0 a 2: `factual_correctness`, `context_adherence`, `citation_support`, `proportional_completeness` e `insufficiency_recognition`.
-
-## Geração via OpenAI
-
-Com `OPENAI_API_KEY` e `OPENAI_MODEL` definidos em `.env`, gere respostas para uma execução de recuperação:
-
-```bash
-python -m experiment_registry.cli generate-responses RUN_ID \
-  --documents documentos.jsonl \
-  --model "$OPENAI_MODEL"
-```
-
-O adaptador usa a API Responses, registra o hash do prompt e associa os documentos recuperados como citações. Os testes usam um cliente falso; nenhuma chave é necessária para executar a suíte.
+O modo administrativo é local e não tem autenticação geral. Os códigos dos avaliadores são armazenados como hashes e isolam as atribuições na sessão cega; compartilhe o endereço do dashboard somente com pessoas autorizadas.

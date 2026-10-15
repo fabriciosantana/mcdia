@@ -14,10 +14,10 @@ def record_response(con, run_id, question_id, answer, model=None, prompt_hash=No
         con.execute('INSERT INTO responses(response_id,run_id,question_id,answer,model,prompt_hash) VALUES (?,?,?,?,?,?)',(response_id,run_id,question_id,answer,model,prompt_hash))
         for citation in citations:
             if not citation.get('document_id'): raise ValueError('citação requer document_id')
-            con.execute('INSERT INTO citations(citation_id,response_id,document_id,chunk_id,cited_text) VALUES (?,?,?,?,?)',(str(uuid.uuid4()),response_id,citation['document_id'],citation.get('chunk_id'),citation.get('cited_text')))
+            con.execute('INSERT INTO citations(citation_id,response_id,document_id,chunk_id,cited_text,source_url,validity) VALUES (?,?,?,?,?,?,?)',(str(uuid.uuid4()),response_id,citation['document_id'],citation.get('chunk_id'),citation.get('cited_text'),citation.get('source_url'),citation.get('validity','unverified')))
     return response_id
 
-def record_human_evaluation(con, response_id, evaluator, scores, notes=''):
+def record_human_evaluation(con, response_id, evaluator, scores, notes='',round_id=None,assignment_id=None,evaluator_id=None):
     fields=('factual_correctness','context_adherence','citation_support','proportional_completeness','insufficiency_recognition')
     if con.execute('SELECT 1 FROM responses WHERE response_id=?',(response_id,)).fetchone() is None: raise ValueError(f'resposta inexistente: {response_id}')
     values=[]
@@ -26,7 +26,8 @@ def record_human_evaluation(con, response_id, evaluator, scores, notes=''):
         if not isinstance(value,int) or isinstance(value,bool) or value not in (0,1,2): raise ValueError(f'nota inválida: {field}')
         values.append(value)
     evaluation_id=str(uuid.uuid4())
-    with con: con.execute('INSERT INTO human_evaluations(evaluation_id,response_id,evaluator,factual_correctness,context_adherence,citation_support,proportional_completeness,insufficiency_recognition,notes) VALUES (?,?,?,?,?,?,?,?,?)',(evaluation_id,response_id,evaluator,*values,notes))
+    with con: con.execute('INSERT INTO human_evaluations(evaluation_id,response_id,evaluator,factual_correctness,context_adherence,citation_support,proportional_completeness,insufficiency_recognition,notes,round_id,assignment_id,evaluator_id,submitted_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)',(evaluation_id,response_id,evaluator,*values,notes,round_id,assignment_id,evaluator_id))
+    if assignment_id: con.execute("UPDATE evaluation_assignments SET state='submitted' WHERE assignment_id=?",(assignment_id,))
     return evaluation_id
 
 def list_responses(con, run_id):

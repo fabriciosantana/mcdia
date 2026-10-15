@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
+import hashlib, json
 from pathlib import Path
 from typing import Iterator
 
@@ -10,6 +11,12 @@ from .config import ExperimentPaths
 
 
 SCHEMA_VERSION_TABLE = "schema_migrations"
+
+def _sha256_file(path:Path)->str:
+    digest=hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda:stream.read(1024*1024),b''):digest.update(block)
+    return digest.hexdigest()
 
 
 def connect(database: str | Path) -> sqlite3.Connection:
@@ -42,7 +49,21 @@ def initialize_database(paths: ExperimentPaths) -> Path:
             version = int(migration.name.split("_", 1)[0])
             if version in applied:
                 continue
+            backup=None
+            if version==9 and connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='document_chunks'").fetchone():
+                count=connection.execute("SELECT COUNT(*) FROM document_chunks").fetchone()[0]
+                if count:
+                    backup=paths.artifacts/"experiment_registry-pre-versioned-corpus.sqlite3"
+                    if not backup.exists():
+                        backup.parent.mkdir(parents=True,exist_ok=True)
+                        connection.commit()
+                        target=sqlite3.connect(str(backup))
+                        try: connection.backup(target)
+                        finally: target.close()
             connection.executescript(migration.read_text(encoding="utf-8"))
+            if version==9 and backup and backup.exists():
+                digest=_sha256_file(backup)
+                connection.execute("UPDATE migration_reconciliation SET details_json=? WHERE migration_name='009_versioned_corpus'",(json.dumps({"backup_path":str(backup),"backup_sha256":digest,"note":"Legacy chunks copied; source documents can be re-imported to restore original full text and metadata."},ensure_ascii=False),))
             connection.execute(
                 f"INSERT INTO {SCHEMA_VERSION_TABLE}(version, filename) VALUES (?, ?)",
                 (version, migration.name),

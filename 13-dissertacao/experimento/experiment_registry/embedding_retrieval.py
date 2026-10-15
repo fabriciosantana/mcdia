@@ -68,27 +68,20 @@ class EmbeddingStore:
         manifest_path, key = self._document_paths(documents, model)
         collection_name = f"documents_{key[:40]}"
         chroma = self._client()
-        try:
-            collection = chroma.get_collection(collection_name)
-            if collection.metadata and collection.metadata.get("cache_key") == key and collection.count() == len(documents):
-                stored = collection.get(ids=[str(item["id"]) for item in documents], include=["embeddings"])
-                by_id = dict(zip(stored["ids"], stored["embeddings"]))
-                if len(by_id) == len(documents):
-                    matrix = np.asarray([by_id[str(item["id"])] for item in documents], dtype=np.float32)
-                    return matrix, manifest_path
-        except Exception:
-            collection = None
-
-        try:
-            chroma.delete_collection(collection_name)
-        except Exception:
-            pass
-        collection = chroma.get_or_create_collection(collection_name, metadata={"kind": "document-embeddings", "cache_key": key, "model": model})
+        try: collection = chroma.get_collection(collection_name)
+        except Exception: collection = chroma.get_or_create_collection(collection_name, metadata={"kind": "document-embeddings", "cache_key": key, "model": model})
+        if not collection.metadata or collection.metadata.get("cache_key")!=key or collection.metadata.get("model")!=model:
+            raise ValueError("coleção Chroma incompatível; crie um índice com outra versão em vez de sobrescrever vetores existentes")
         for start in range(0, len(documents), batch_size):
             batch = documents[start:start + batch_size]
-            vectors = embed([item["text"] for item in batch], model, client)
-            collection.add(ids=[str(item["id"]) for item in batch], documents=[item["text"] for item in batch], embeddings=vectors.tolist(), metadatas=[{"document_id": str(item.get("document_id", item["id"]))} for item in batch])
-        matrix = np.asarray(collection.get(ids=[str(item["id"]) for item in documents], include=["embeddings"])["embeddings"], dtype=np.float32)
+            batch_ids=[str(item['id']) for item in batch];existing=set(collection.get(ids=batch_ids)['ids']);missing=[item for item in batch if str(item['id']) not in existing]
+            if missing:
+                vectors = embed([item["text"] for item in missing], model, client)
+                if vectors.ndim!=2 or not vectors.shape[1] or not np.isfinite(vectors).all():raise ValueError("embedding inválido")
+                collection.add(ids=[str(item["id"]) for item in missing], documents=[item["text"] for item in missing], embeddings=vectors.tolist(), metadatas=[{"document_id": str(item.get("document_id", item["id"]))} for item in missing])
+        stored=collection.get(ids=[str(item['id']) for item in documents],include=['embeddings']);by_id=dict(zip(stored['ids'],stored['embeddings']))
+        if len(by_id)!=len(documents):raise ValueError("coleção Chroma incompleta; vetores preservados para retomada explícita")
+        matrix = np.asarray([by_id[str(item['id'])] for item in documents], dtype=np.float32)
         manifest_path.parent.mkdir(parents=True, exist_ok=True)
         _atomic_write_json(manifest_path, {
             "kind": "document-embeddings",
@@ -132,3 +125,15 @@ def rank_dense(documents: list[dict[str, Any]], query: str, model: str | None = 
     scores = (matrix @ query_vector) / np.maximum(denominator, 1e-12)
     order = np.argsort(-scores, kind="stable")
     return [{"id": documents[i]["id"], "document_id": str(documents[i].get("document_id", documents[i]["id"]).split(":", 1)[0]), "score": float(scores[i])} for i in order]
+
+
+def rank_chroma(root: str | Path, collection_name: str, query: str, model: str, client=None, limit: int = 1000) -> list[dict[str, Any]]:
+    """Consulta o índice persistente e mantém score associado ao ID devolvido pelo Chroma."""
+    store=EmbeddingStore(root)
+    collection=store._client().get_collection(collection_name)
+    vector=embed([query],model,client)[0].tolist()
+    result=collection.query(query_embeddings=[vector],n_results=min(limit,collection.count()),include=["metadatas","distances"])
+    ranked=[]
+    for chunk_id,metadata,distance in zip(result["ids"][0],result["metadatas"][0],result["distances"][0]):
+        ranked.append({"id":str(chunk_id),"document_id":str((metadata or {}).get("document_id","")),"score":1.0-float(distance)})
+    return ranked

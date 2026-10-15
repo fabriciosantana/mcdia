@@ -15,6 +15,7 @@ from experiment_registry.question_curation import get_question_metadata, save_qu
 from experiment_registry.retrieval import run_retrieval
 from experiment_registry.embedding_retrieval import rank_dense
 from experiment_registry.analysis import bootstrap_mean, record_error_case
+from experiment_registry.evaluation_workflow import create_round
 
 
 class EvidencePipelineTest(unittest.TestCase):
@@ -83,8 +84,12 @@ class EvidencePipelineTest(unittest.TestCase):
     def test_judge_and_agreement(self):
         with tempfile.TemporaryDirectory() as tmp:
             paths = ExperimentPaths.from_environment(tmp); initialize_database(paths)
+            docs=Path(tmp)/"docs.jsonl";docs.write_text(json.dumps({"id":"d","text":"contexto sintético com evidência documental para a avaliação"})+"\n",encoding="utf-8")
+            prepared=prepare_documents(paths,docs)
             with connect(paths.database) as con:
                 run = create_run(con, "r", {"method": "bm25"}); con.execute("INSERT INTO questions(run_id,question_id,query,reference_doc_ids_json,respondible) VALUES (?,?,?,?,?)", (run, "q", "x", '["d"]', 1))
+                chunk=con.execute("SELECT chunk_id,document_id,text FROM document_chunks WHERE chunk_set_id=? LIMIT 1",(prepared["chunk_set_id"],)).fetchone()
+                con.execute("INSERT INTO run_contexts(run_id,question_id,rank,chunk_set_id,chunk_id,document_id,text,score) VALUES (?,?,?,?,?,?,?,1)",(run,"q",1,prepared["chunk_set_id"],chunk["chunk_id"],chunk["document_id"],chunk["text"]))
                 response = record_response(con, run, "q", "resposta")
                 record_human_evaluation(con, response, "h", {field: 2 for field in ("factual_correctness", "context_adherence", "citation_support", "proportional_completeness", "insufficiency_recognition")})
                 class Responses:
@@ -92,7 +97,8 @@ class EvidencePipelineTest(unittest.TestCase):
                         class R: output_text = json.dumps({field: 2 for field in ("factual_correctness", "context_adherence", "citation_support", "proportional_completeness", "insufficiency_recognition")})
                         return R()
                 class Client: responses = Responses()
-                judge_response(con, response, "mock", Client())
+                round_id=create_round(con,run,"juiz de teste","judge",True,"mock")
+                judge_response(con, response, "mock", Client(),round_id=round_id)
                 report = agreement_report(con, run)
             self.assertEqual(report["paired_responses"], 1)
             self.assertEqual(report["dimensions"]["citation_support"]["exact_agreement"], 1.0)
