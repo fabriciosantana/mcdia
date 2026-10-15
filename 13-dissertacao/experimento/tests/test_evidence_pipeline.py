@@ -73,6 +73,9 @@ class EvidencePipelineTest(unittest.TestCase):
                 persisted = search_chunks(con, text="segurança")
                 self.assertEqual(len(persisted), prepared["chunks"])
                 self.assertTrue(persisted[0]["chunk_id"].startswith("a:"))
+                by_document = search_chunks(con, document_id="a", chunk_set_id=prepared["chunk_set_id"])
+                self.assertEqual(len(by_document), prepared["chunks"])
+                self.assertTrue(all(row["document_id"] == "a" for row in by_document))
             result = run_retrieval(paths, docs, questions, "bm25", "evidence")
             with connect(paths.database) as con:
                 save_question_metadata(con, result["run_id"], "q1", "factual", "validada", ["a:0"], {"a:0": 2}, "suficiente")

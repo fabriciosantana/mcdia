@@ -153,10 +153,10 @@ def search_chunks(connection, text: str = "", document_id: str = "", limit: int 
     clauses = []
     params: list[Any] = []
     if text.strip():
-        clauses.append("text LIKE ?")
+        clauses.append("c.text LIKE ?")
         params.append(f"%{text.strip()}%")
     if document_id.strip():
-        clauses.append("document_id LIKE ?")
+        clauses.append("c.document_id LIKE ?")
         params.append(f"%{document_id.strip()}%")
     joins=" JOIN documents d ON d.corpus_version_id=c.corpus_version_id AND d.document_id=c.document_id"
     for column,value,operator in (("d.author",author, "contains"),("d.document_date",date_from,">="),("d.document_date",date_to,"<="),("c.chunk_set_id",chunk_set_id,"=")):
