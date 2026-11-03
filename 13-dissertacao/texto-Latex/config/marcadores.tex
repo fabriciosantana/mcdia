@@ -1,0 +1,100 @@
+%% Marcadores de revisão do orientador.
+%% -------------------------------------------------------------------
+%% Uso previsto: o orientador marca, em cor, o que revisou no texto de
+%% Fabricio. A marcação e visual, nao altera o conteudo: o texto continua
+%% identico quando a cor e desligada.
+%%
+%%   \pita{texto}                 texto revisado, na cor padrao (verde)
+%%   \pita[azul]{texto}           texto revisado, em azul
+%%   \pita[vermelho]{texto}       texto revisado, em vermelho
+%%   \pita[caixa]{texto}          texto revisado em caixa independente
+%%   \pita[caixa,vermelho]{texto} caixa com borda e texto em vermelho
+%%   \pitacom[cor]{texto}{motivo} texto revisado + motivo
+%%   \pitanota[cor]{motivo}       nota de rodape curta
+%%   \begin{pitabloco}[cor] ... \end{pitabloco}   paragrafos inteiros
+%%
+%% Cores disponiveis: verde (padrao), azul e vermelho. A opcao `caixa'
+%% pode ser combinada com uma cor, separada por virgula.
+%%
+%% A cor e desligada automaticamente na versao de entrega (opcao
+%% `entrega' em main.tex) e pode ser desligado a mao com \pitacorfalse
+%% antes de \input{config/marcadores} (ou \pitacortrue para forcar).
+%%
+%% Nao usar dentro de titulos de secao nem de legendas: o hyperref
+%% processa esses argumentos novamente e a cor vaza para o marcador do
+%% PDF. Fora disso, o marcador funciona em qualquer lugar do texto.
+%% -------------------------------------------------------------------
+
+\RequirePackage{xcolor}
+
+\definecolor{pitaverde}{HTML}{1A7F37}
+\definecolor{pitaazul}{HTML}{1F6FEB}
+\definecolor{pitavermelho}{HTML}{C00000}
+
+%% Nomes curtos aceitos como parametro de cor.
+\colorlet{verde}{pitaverde}
+\colorlet{azul}{pitaazul}
+\colorlet{vermelho}{pitavermelho}
+
+%% \ifpitacor: verdadeiro enquanto as marcas de revisão estão ativas.
+\newif\ifpitacor
+\pitacortrue
+
+%% Na versão de entrega as marcas somem sozinhas, sem depender de
+%% lembrete: o texto revisado permanece, apenas sem a cor.
+%% Todas as definicoes ficam dentro de \makeatletter porque os corpos
+%% de \pita, \pitacom, \pitanota e pitabloco referenciam comandos
+%% internos com `@'; fora deste bloco, o `@' teria catcode errado.
+\makeatletter
+\ifidp@entrega \pitacorfalse \fi
+
+%% Interpreta a lista de opcoes do marcador: uma cor (verde, azul ou
+%% vermelho) e/ou a palavra `caixa'. A cor padrao e verde.
+\def\pita@caixanome{caixa}
+\newif\ifpita@caixa
+\newcommand*{\pita@cor}{verde}
+\newcommand*{\pita@opcoes}[1]{%
+  \pita@caixafalse
+  \def\pita@cor{verde}%
+  \@for\pita@item:=#1\do{%
+    \ifx\pita@item\pita@caixanome
+      \pita@caixatrue
+    \else
+      \let\pita@cor\pita@item
+    \fi
+  }%
+}
+
+%% Caixa independente do texto, sem recuo de paragrafo, com borda na
+%% mesma cor do texto.
+\newcommand*{\pita@caixaimprimir}[1]{%
+  \par\noindent
+  {\color{\pita@cor}%
+    \fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{#1}}}%
+  \par
+}
+
+%% Texto revisado. Opcoes: cor (verde padrao, azul, vermelho) e/ou `caixa'.
+\newcommand*{\pita}[2][verde]{%
+  \pita@opcoes{#1}%
+  \ifpitacor
+    \ifpita@caixa
+      \pita@caixaimprimir{#2}%
+    \else
+      \textcolor{\pita@cor}{#2}%
+    \fi
+  \else
+    #2%
+  \fi}
+
+%% Texto revisado com o motivo da intervenção logo em seguida.
+\newcommand*{\pitacom}[3][verde]{\pita[#1]{#2}\ \pita[#1]{[#3]}}
+
+%% Motivo em nota de rodapé.
+\newcommand*{\pitanota}[2][verde]{\footnote{\pita[#1]{#2}}}
+
+%% Trecho longo, com mais de um parágrafo, inteiramente na cor escolhida.
+\newenvironment{pitabloco}[1][verde]%
+  {\ifpitacor \color{#1}\fi \ignorespaces}%
+  {\par}
+\makeatother

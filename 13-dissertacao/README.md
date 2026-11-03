@@ -28,6 +28,22 @@ Para uma instalação completa, pode-se usar:
 sudo apt install -y texlive-full
 ```
 
+Em macOS, o equivalente é o TeX Live do Homebrew, que já traz `latexmk`, `biber` e todos os pacotes usados pelo projeto:
+
+```bash
+brew install texlive
+```
+
+Também funciona `brew install --cask mactex-no-gui` (MacTeX, sem os aplicativos gráficos). Para conferir a instalação:
+
+```bash
+latexmk --version | head -1
+biber --version | head -1
+pdflatex --version | head -1
+```
+
+A opção `accite` do estilo `biblatex-abnt` só existe na versão 4.0 ou superior do pacote. O preâmbulo de `main.tex` detecta a versão instalada e se adapta, de modo que o mesmo arquivo compila tanto em TeX Live 2023 (pacotes do Ubuntu 24.04) quanto em TeX Live 2026 (Homebrew).
+
 ## Clonagem
 
 Para trabalhar na versão destinada ao orientador:
@@ -94,6 +110,25 @@ git push
 ```
 
 Evite adicionar os arquivos gerados em `texto-Latex/out/` e `texto-Latex/aux/` ao commit; eles são produtos locais da compilação.
+
+### Marcas de revisão do orientador
+
+`texto-Latex/config/marcadores.tex` (carregado por `main.tex`) define os marcadores usados na revisão. São visuais: não alteram o conteúdo do texto.
+
+```latex
+\pita{texto revisado}                        % verde (padrão)
+\pita[azul]{texto revisado}                  % em azul
+\pita[vermelho]{texto revisado}              % em vermelho
+\pita[caixa]{texto revisado}                 % caixa independente, borda e texto na cor
+\pita[caixa,vermelho]{texto revisado}        % caixa com borda e texto em vermelho
+\pitacom[cor]{texto revisado}{motivo}        % texto revisado + motivo da intervenção
+\pitanota[cor]{motivo}                       % motivo em nota de rodapé
+\begin{pitabloco}[cor] ... \end{pitabloco}   % trechos com mais de um parágrafo
+```
+
+As cores disponíveis são `verde` (padrão), `azul` e `vermelho`. A opção `caixa` pode ser combinada com uma cor, separada por vírgula. O argumento de cor é opcional em todos os comandos.
+
+As marcas somem sozinhas na versão de entrega (opção `entrega` da classe `idp`) e podem ser desligadas a qualquer momento com `\pitacorfalse` (ou forçadas com `\pitacortrue`) antes de `\input{config/marcadores}`. Não use os marcadores dentro de títulos de seção nem de legendas: o `hyperref` reprocessa esses argumentos e a cor vaza para os marcadores internos do PDF.
 
 ## Organização principal
 
