@@ -113,16 +113,22 @@ Evite adicionar os arquivos gerados em `texto-Latex/out/` e `texto-Latex/aux/` a
 
 ### Marcas de revisão do orientador
 
-`texto-Latex/config/marcadores.tex` (carregado por `main.tex`) define os marcadores em verde usados na revisão. São visuais: não alteram o conteúdo do texto.
+`texto-Latex/config/marcadores.tex` (carregado por `main.tex`) define os marcadores usados na revisão. São visuais: não alteram o conteúdo do texto.
 
 ```latex
-\pita{texto revisado}
-\pitacom{texto revisado}{motivo da intervenção}
-\pitanota{motivo em nota de rodapé}
-\begin{pitabloco} ... \end{pitabloco}   % trechos com mais de um parágrafo
+\pita{texto revisado}                        % verde (padrão)
+\pita[azul]{texto revisado}                  % em azul
+\pita[vermelho]{texto revisado}              % em vermelho
+\pita[caixa]{texto revisado}                 % caixa independente, borda e texto na cor
+\pita[caixa,vermelho]{texto revisado}        % caixa com borda e texto em vermelho
+\pitacom[cor]{texto revisado}{motivo}        % texto revisado + motivo da intervenção
+\pitanota[cor]{motivo}                       % motivo em nota de rodapé
+\begin{pitabloco}[cor] ... \end{pitabloco}   % trechos com mais de um parágrafo
 ```
 
-O verde desaparece sozinho na versão de entrega (opção `entrega` em `main.tex`) e pode ser desligado a qualquer momento com `\pitacorfalse`. Não use os marcadores dentro de títulos de seção nem de legendas: o `hyperref` reprocessa esses argumentos e a cor vaza para os marcadores internos do PDF.
+As cores disponíveis são `verde` (padrão), `azul` e `vermelho`. A opção `caixa` pode ser combinada com uma cor, separada por vírgula. O argumento de cor é opcional em todos os comandos.
+
+As marcas somem sozinhas na versão de entrega (opção `entrega` da classe `idp`) e podem ser desligadas a qualquer momento com `\pitacorfalse` (ou forçadas com `\pitacortrue`) antes de `\input{config/marcadores}`. Não use os marcadores dentro de títulos de seção nem de legendas: o `hyperref` reprocessa esses argumentos e a cor vaza para os marcadores internos do PDF.
 
 ## Organização principal
 
