@@ -1,16 +1,46 @@
 \section{Referencial teórico}
 
-Esta seção organiza os fundamentos teóricos que sustentam a pergunta de pesquisa e a delimitação conceitual do projeto. O argumento está estruturado em três eixos complementares: a relação entre inteligência artificial generativa, RAG e recuperação da informação; as especificidades da informação legislativa como acervo público; e os critérios de avaliação aplicáveis a sistemas RAG em domínios institucionais.
+Esta seção organiza os fundamentos teóricos que sustentam a pergunta de pesquisa e a delimitação
+conceitual do projeto. O argumento está estruturado em três eixos complementares: a relação entre
+inteligência artificial generativa, RAG e recuperação da informação; as especificidades da informação
+legislativa como acervo público; e os critérios de avaliação aplicáveis a sistemas RAG em domínios
+institucionais.
 
 \subsection{Inteligência artificial generativa, RAG e recuperação da informação}
 
-Os grandes modelos de linguagem ampliaram a capacidade de interação com sistemas computacionais por meio de linguagem natural, viabilizando tarefas de sumarização, classificação, geração de texto, resposta a perguntas e apoio à análise documental \parencite{brownEtAl2020fewShotLearners,zhaoEtAl2023llmSurvey,minaee2024llmSurvey}. A arquitetura dominante desses modelos se apoia em avanços associados aos \textit{transformers}, combinados a estratégias de pré-treinamento em larga escala e ajuste para seguir instruções \parencite{vaswani2017attention,brownEtAl2020fewShotLearners,ouyangEtAl2022instructGpt}. Apesar dessas capacidades, LLMs não são mecanismos de recuperação documental por definição: suas respostas podem refletir padrões aprendidos no treinamento, inferências probabilísticas e lacunas de atualização, sem indicar de forma confiável quais documentos sustentam cada afirmação \parencite{jiEtAl2023hallucinationSurvey,anhHoang2025hallucinations,dahlEtAl2024largeLegalFictions}.
+Os grandes modelos de linguagem ampliaram a capacidade de interação com sistemas computacionais por
+meio de linguagem natural, viabilizando tarefas de sumarização, classificação, geração de texto,
+resposta a perguntas e apoio à análise documental \parencite{brownEtAl2020fewShotLearners,
+zhaoEtAl2023llmSurvey,minaee2024llmSurvey}. As características dominantes desses modelos se apoiam
+em avanços associados \pita{à arquitetura \textit{Transformer}}, combinados a estratégias de
+pré-treinamento em larga escala e \pita{alinhamento} para seguir instruções
+\parencite{vaswani2017attention,brownEtAl2020fewShotLearners,ouyangEtAl2022instructGpt}.
+Apesar dessas capacidades, LLMs não são mecanismos de recuperação documental por definição: suas
+respostas podem refletir padrões aprendidos no treinamento, inferências probabilísticas e lacunas
+de atualização, sem indicar de forma confiável quais documentos sustentam cada afirmação
+\parencite{jiEtAl2023hallucinationSurvey,anhHoang2025hallucinations,dahlEtAl2024largeLegalFictions}.
 
-O RAG surge como uma estratégia para aproximar geração textual e recuperação da informação. Na formulação clássica, a arquitetura combina um mecanismo de recuperação sobre uma base documental externa com um modelo generativo que produz a resposta a partir do contexto recuperado \parencite{lewisEtAl2020rag}. Revisões recentes classificam essas arquiteturas em configurações ingênuas, avançadas e modulares, destacando que o desempenho depende de todo o \textit{pipeline}, não apenas do modelo final de geração \parencite{gao2023ragSurvey,gao2024modularRag}. Componentes como extração documental, segmentação em \textit{chunks}, enriquecimento por metadados, geração de \textit{embeddings}, recuperação vetorial, reranqueamento, seleção de contexto e \textit{prompting} orientado a evidências influenciam diretamente a qualidade das respostas \parencite{gupta2024comprehensiveRag,nie2024textEmbeddingSurvey}.
+O RAG surge como uma estratégia para aproximar geração textual e recuperação da informação. Na
+formulação clássica, a arquitetura combina um mecanismo de recuperação sobre uma base documental
+externa com um modelo generativo que produz a resposta a partir do contexto recuperado
+\parencite{lewisEtAl2020rag} \pita{(conforme ilustrado na Figura \ref{fig:rag-pipeline})}. Revisões
+recentes classificam essas arquiteturas em configurações ingênuas, avançadas e modulares, destacando
+que o desempenho depende de todo o \textit{pipeline}, não apenas do modelo final de geração
+\parencite{gao2023ragSurvey,gao2024modularRag}. Componentes como extração documental, segmentação em
+\textit{chunks}, enriquecimento por metadados, geração de \textit{embeddings}, recuperação vetorial,
+reranqueamento \pita{(ou reclassificação)}, seleção de contexto e \textit{prompting} orientado a
+evidências influenciam diretamente a qualidade das respostas \parencite{gupta2024comprehensiveRag,
+nie2024textEmbeddingSurvey}.
 
 No componente de recuperação, o problema se aproxima da tradição de recuperação da informação, que envolve representação de documentos, formulação de consultas, ranqueamento e avaliação da pertinência dos resultados recuperados \parencite{manningEtAl2008informationRetrieval}. Em sistemas RAG, essa etapa é frequentemente operacionalizada por recuperação densa ou vetorial, em que representações semânticas são usadas para localizar passagens relevantes ao contexto da consulta \parencite{karpukhinEtAl2020dpr,thakurEtAl2021beir}.
 
-Essa literatura é central para o projeto porque desloca a análise de uma discussão genérica sobre ``uso de IA'' para uma questão avaliativa delimitada: em que condições uma arquitetura RAG recupera evidências pertinentes, gera respostas verificáveis e reconhece limites de escopo. Essa delimitação exige distinguir, no desenho da pesquisa, a recuperação documental, a geração de respostas e o julgamento das respostas.
+Essa literatura é central para \pita{a presente investigação} porque desloca a análise de uma
+discussão genérica sobre \pita{o uso de inteligência artificial} para uma questão avaliativa
+delimitada: em que condições uma arquitetura RAG recupera evidências pertinentes, gera respostas
+verificáveis e reconhece \pita{os} limites de \pita{seu} escopo. \pita{Tal} delimitação exige
+distinguir \pita{analiticamente}, no desenho da pesquisa, \pita{três camadas complementares --}
+a recuperação documental, a geração de respostas e o julgamento das respostas\pita{ --, de modo a
+preservar a articulação entre elas sem confundi-las.}
 
 \subsection{Informação legislativa, transparência e acervos parlamentares}
 
@@ -18,19 +48,159 @@ O acesso à informação pública é dimensão central da administração democr
 
 No caso brasileiro, estudos recentes da Consultoria Legislativa do Senado mostram que os pronunciamentos em plenário formam um \textit{corpus} extenso, dinâmico e analiticamente relevante, com variações de volume, extensão, interatividade e complexidade textual ao longo do tempo \parencite{blanco2025plenarioPalanqueEstudio,blanco2026letrasGraudas}. Em paralelo, pesquisas sobre organização do conhecimento legislativo indicam que o uso de inteligência artificial nesse domínio precisa considerar estrutura informacional, explicabilidade, mediação documental e confiabilidade dos resultados \parencite{martelloteViola2025organizacaoConhecimento}.
 
-Assim, a informação legislativa não deve ser tratada apenas como massa textual a ser processada. Trata-se de um recurso institucional, marcado por regras de produção, metadados, autoria, temporalidade, retificações, usos políticos e requisitos de accountability \parencite{bandeiraBernardes2016information,martelloteViola2025organizacaoConhecimento}. Essa característica reforça a necessidade de combinar inovação técnica com critérios de avaliação compatíveis com o uso público e institucional da informação legislativa.
+Assim, a informação legislativa não deve ser tratada apenas como massa textual a ser processada.
+Trata-se de um recurso institucional, marcado por regras de produção, metadados, autoria, temporalidade,
+retificações, usos políticos e requisitos de \textit{accountability} \parencite{bandeiraBernardes2016information,
+martelloteViola2025organizacaoConhecimento}. Essa característica reforça a necessidade de combinar inovação técnica com critérios de avaliação compatíveis com o uso público e institucional da informação legislativa.
+
+\pita[caixa,azul]{Não é uma observação de correção, mas eu senti falta de mais detalhes sobre o domínio alvo de sua pesquisa,
+como o volume de dados, a granularidade dos documentos, a diversidade de tópicos e a eventual complexidade das perguntas que você
+pretende responder. Isso ajudaria a contextualizar melhor o desafio de avaliação do sistema RAG no contexto legislativo.}
 
 \subsection{Avaliação de sistemas RAG em domínios institucionais}
 
-A avaliação de sistemas RAG apresenta desafios próprios porque uma resposta final aparentemente correta pode ocultar recuperação deficiente, uso inadequado das fontes, extrapolação além do contexto ou julgamento automatizado permissivo. Essa dificuldade se relaciona ao caráter multidimensional da avaliação de sistemas baseados em modelos de linguagem, nos quais diferentes dimensões de desempenho, confiabilidade e uso precisam ser analisadas de forma articulada \parencite{liangEtAl2023helm}. Corpus anotados em nível de afirmação e palavra, como RAGTruth, tornam observáveis conflitos e conteúdos sem suporte que podem desaparecer em uma nota agregada \parencite{niuEtAl2024ragtruth}. Por isso, a literatura recomenda distinguir métricas de recuperação, critérios de avaliação da geração, avaliação humana, avaliação automatizada baseada em LLMs e análise qualitativa de erros \parencite{saadFalconEtAl2024ares,esEtAl2023ragas,pipitoneAlami2024legalbenchRag}. Benchmarks recentes também apontam a importância de testar diferentes famílias de perguntas, como questões factuais, comparativas, temporais, multietapas, numéricas e não respondíveis \parencite{zhuEtAl2025rageval}.
+A avaliação de sistemas RAG apresenta desafios próprios porque uma resposta final aparentemente correta pode ocultar
+recuperação deficiente, uso inadequado das fontes, extrapolação além do contexto ou julgamento automatizado permissivo.
+Essa dificuldade se relaciona ao caráter multidimensional da avaliação de sistemas baseados em modelos de linguagem, nos
+quais diferentes dimensões de desempenho, confiabilidade e uso precisam ser analisadas de forma articulada
+\parencite{liangEtAl2023helm}. \textit{Corpus} anotados em nível de afirmação e palavra, como RAGTruth, tornam
+observáveis conflitos e conteúdos sem suporte que podem desaparecer em uma nota agregada \parencite{niuEtAl2024ragtruth}.
+Por isso, a literatura recomenda distinguir métricas de recuperação, critérios de avaliação da geração, avaliação humana,
+avaliação automatizada baseada em LLMs (\textit{LLM-as-a-judge}) e análise qualitativa de erros \parencite{saadFalconEtAl2024ares,esEtAl2023ragas,
+pipitoneAlami2024legalbenchRag}. \textit{Benchmarks} recentes também apontam a importância de testar diferentes famílias
+de perguntas, como questões factuais, comparativas, temporais, multietapas, numéricas e não respondíveis
+\parencite{zhuEtAl2025rageval}.
 
-Entre essas técnicas, o paradigma \textit{LLM-as-a-judge} merece atenção específica neste projeto porque permite avaliar respostas geradas com base em rubricas explícitas \parencite{liuEtAl2023geval,liuEtAl2025judgeRag}. Estudos recentes também mostram que a consistência do juiz depende da formulação da avaliação e das dimensões observadas \parencite{liuEtAl2025judgeRag}. Essa abordagem pode ajudar a escalar avaliações, mas não elimina a necessidade de validação humana, pois o julgamento automatizado pode variar conforme modelo, rubrica, formato de entrada e complexidade da tarefa. Em domínios públicos, esse ponto é decisivo: uma avaliação automatizada não deve ser confundida com certificação de qualidade institucional.
+Entre \pita{as} técnicas \pita{de avaliação}, a \textit{LLM-as-a-judge} merece atenção específica neste projeto, porque
+permite avaliar respostas geradas com base em rubricas explícitas \parencite{liuEtAl2023geval,liuEtAl2025judgeRag}. Estudos
+recentes também mostram que a consistência do juiz depende da formulação da avaliação e das dimensões observadas
+\parencite{liuEtAl2025judgeRag}. Essa abordagem pode ajudar a escalar avaliações, mas não elimina a necessidade de validação
+humana, pois o julgamento automatizado pode variar conforme modelo, rubrica, formato de entrada e complexidade da tarefa.
+Em domínios públicos, esse ponto é decisivo: uma avaliação automatizada não deve ser confundida com certificação de qualidade
+institucional.
 
-A partir dessa literatura, a dissertação organiza a avaliação humana em cinco dimensões operacionais: correção factual da resposta; aderência ao contexto recuperado; suporte e precisão das citações; completude proporcional à pergunta; e reconhecimento de insuficiência documental. Essa composição é uma síntese operacional, e não uma rubrica canônica única: ARES e RAGAS sustentam a separação entre contexto e resposta, Trautmann e RAGTruth informam a fidelidade e a análise de afirmações, Zhang fundamenta o suporte graduado de citações e GaRAGe fundamenta a avaliação de suficiência e deflexão \parencite{saadFalconEtAl2024ares,esEtAl2023ragas,trautmannEtAl2024groundedness,niuEtAl2024ragtruth,zhangEtAl2024fineGrainedCitation,sorodocEtAl2025garage}. A dimensão de insuficiência documental é uma adaptação explícita ao contexto parlamentar e deverá ser calibrada com avaliadores humanos.
+\pita{Considerando essa} literatura, \pita{este trabalho} organiza a avaliação humana em cinco dimensões operacionais:
+correção factual da resposta; aderência ao contexto recuperado \pita{(\textit{groundedness})}; suporte e precisão das citações;
+completude proporcional à pergunta; e reconhecimento de insuficiência documental. Essa composição é uma síntese operacional,
+e não uma rubrica canônica única: ARES e RAGAS sustentam a separação entre contexto e resposta, Trautmann e RAGTruth informam
+a fidelidade e a análise de afirmações, Zhang fundamenta o suporte graduado de citações e GaRAGe fundamenta a avaliação de
+suficiência e deflexão \parencite{saadFalconEtAl2024ares,esEtAl2023ragas,trautmannEtAl2024groundedness,niuEtAl2024ragtruth,
+zhangEtAl2024fineGrainedCitation,sorodocEtAl2025garage}. A dimensão de insuficiência documental é uma adaptação explícita ao
+contexto parlamentar e deverá ser calibrada com avaliadores humanos.
 
-Em domínios públicos, diretrizes e estudos sobre IA enfatizam transparência, finalidade pública, supervisão humana e responsabilização \parencite{ipu2024aiParliaments,wfd2023guidelinesAiParliaments,deAlmeidaSantos2025aiGovernance}. Estudos institucionais sobre monitoramento parlamentar acrescentam que transparência formal precisa ser acompanhada por mecanismos de compreensão, participação e accountability \parencite{geunis2023parliamentaryMonitoring}. A meta-avaliação de avaliadores também precisa ser considerada: o benchmark GroUSE mostra que uma boa correlação agregada com outro juiz não assegura cobertura de casos-limite, recomendando testes unitários para verificar contradição, insuficiência e relevância no protocolo \parencite{mullerEtAl2025grouse}. Como apoio de organização, o survey de Yu et al. sintetiza as dimensões de recuperação e geração e reforça que a avaliação deve preservar a articulação entre ambas \parencite{yuEtAl2024ragEvaluationSurvey}. Nesta pesquisa, esses elementos são tratados como contexto institucional para justificar a necessidade de avaliação criteriosa, e não como dimensão autônoma do protocolo. O protocolo concentra-se em aspectos diretamente observáveis no sistema RAG: recuperação documental, geração de respostas, indicação das fontes, explicitação de insuficiência documental e verificabilidade das fontes. A possibilidade de recusar quando o contexto é insuficiente deve ser tratada como comportamento avaliável, pois benchmarks recentes mostram que respostas tendem a incorporar conhecimento não ancorado e a evitar a deflexão \parencite{sorodocEtAl2025garage}.
+Em domínios públicos, diretrizes e estudos sobre IA enfatizam transparência, finalidade pública, supervisão humana e
+responsabilização \parencite{ipu2024aiParliaments,wfd2023guidelinesAiParliaments,deAlmeidaSantos2025aiGovernance}. Estudos
+institucionais sobre monitoramento parlamentar acrescentam que transparência formal precisa ser acompanhada por mecanismos
+de compreensão, participação e \textit{accountability} \parencite{geunis2023parliamentaryMonitoring}. A meta-avaliação de
+avaliadores também precisa ser considerada: o \textit{benchmark} GroUSE mostra que uma boa correlação agregada com outro
+juiz não assegura cobertura de casos-limite, recomendando testes unitários para verificar contradição, insuficiência e
+relevância no protocolo \parencite{mullerEtAl2025grouse}. Como apoio de organização, o \textit{survey} de
+\textcite{yuEtAl2024ragEvaluationSurvey} sintetiza as dimensões de recuperação e geração e reforça que a avaliação deve
+preservar a articulação entre ambas. Nesta pesquisa, esses elementos são tratados como contexto institucional para justificar a necessidade de avaliação criteriosa, e não como dimensão autônoma do protocolo. O protocolo concentra-se em aspectos diretamente observáveis no sistema RAG: recuperação documental, geração de respostas, indicação das fontes, explicitação de insuficiência documental e verificabilidade das fontes. A possibilidade de recusar quando o contexto é insuficiente deve ser tratada como comportamento avaliável, pois benchmarks recentes mostram que respostas tendem a incorporar conhecimento não ancorado e a evitar a deflexão \parencite{sorodocEtAl2025garage}.
 
 Nesse contexto, o protocolo deve ser entendido como uma organização explícita de procedimentos, métricas, rubricas e critérios de interpretação voltados a avaliar, de forma reprodutível, dimensões complementares de um sistema RAG.
+
+\pita{\subsection{Trabalhos relacionados e protocolos de avaliação de RAG}}
+
+\pita[caixa,vermelho]{Trabalho relacionados deixou de ter uma seção própria, e passou a ser parte do referencial teórico.}
+
+\pita{Esta seção} posiciona a dissertação diante de estudos que combinam recuperação, geração, avaliação de
+\pita{\textit{grounding}} e uso de acervos jurídicos ou parlamentares. A \pita{seleção dos estudos} considera
+\pita{\textit{corpus}}, tarefa, unidade de avaliação, participação humana e transferência para os discursos
+do Senado. \pita{A Tabela~\ref{tab:trabalhos-relacionados} resume os trabalhos selecionados, com foco em suas
+contribuições para a avaliação de RAG e sua aplicabilidade ao contexto parlamentar brasileiro.}
+
+\begin{table}[hb!]
+\centering
+\caption{Comparação de estudos diretamente relacionados ao protocolo.}
+\label{tab:trabalhos-relacionados}
+\small
+\begin{tabular}{p{2.7cm}p{2.8cm}p{3.1cm}p{2.5cm}}
+\toprule
+Estudo & Corpus/domínio & Foco de avaliação & Transferência para o Senado \\
+\midrule
+ARES & QA em múltiplos domínios & \textit{Groundedness}, correção e completude & Rubrica geral; requer calibração local \\
+LegalBench-RAG & Questões jurídicas em inglês & Recuperação e resposta fundamentada & Alta proximidade jurídica; baixa proximidade institucional \\
+\textcite{trautmannEtAl2024groundedness} & QA jurídico & \textit{Groundedness} por similaridade, NLI e LLM & Base para fidelidade ao contexto \\
+RAGTruth & Respostas RAG em vários domínios & Alucinação em nível de caso e palavra & Taxonomia de erros; idioma não parlamentar \\
+\textcite{zhangEtAl2024fineGrainedCitation} & Texto gerado com citações & Suporte completo, parcial ou ausente & Base para verificabilidade graduada \\
+GaRAGe & QA com passagens anotadas & \textit{Grounding} relevante e deflexão & Base para perguntas não respondíveis \\
+\textcite{reuterEtAl2025reliableRetrieval} & Grandes bases jurídicas & Erro no nível do documento e \textit{chunking} & Hipótese de erro documental a testar \\
+eRAG & Três conjuntos de QA & Utilidade \textit{downstream} de cada documento & Liga recuperação ao desempenho da resposta \\
+GroUSE & QA fundamentado controlado & Meta-avaliação por testes unitários & Calibra o \textit{LLM-as-a-judge} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pita[caixa, vermelho]{O TERMO "QA" É UMA SIGLA AINDA NÃO EXPLICADA. PENSO QUE SE REFIRA A "QUESTION ANSWERING", MAS ISSO DEVERIA
+SER EXPLICADO NA PRIMEIRA OCORRÊNCIA.}
+
+\pita[caixa,vermelho]{O QUE É NLI? DEFINIR A SIGLA NA PRIMEIRA OCORRÊNCIA.}
+
+\pita[caixa, vermelho]{NESTA TABELA SURGE A PRIMEIRA REFERÊNCIA AO TERMO GROUNDEDNESS, QUE AINDA NÃO FOI DEFINIDO. A DEFINIÇÃO DEVERIA VIR ANTES,
+OU O TERMO EM PORTUGUÊS USADO NO REFERENCIAL TEÓRICO ADOTADO. SERIA UMA DAS 5 DIMENSÕES OPERACIONAIS ESPECIFICADAS, PENSO, TALVEZ
+"ADERÊNCIA AO CONTEXTO". ISSO VALE PARA TODAS AS OCORRÊNCIAS SEGUINTES DO TERMO GROUNDEDNESS. VALE TAMBÉM PARA O TERMO "GROUNDING" QUE
+SURGE MAIS ADIANTE.}
+
+\pita[caixa, vermelho]{DEFINIR O CONCEITO DE UTILIDADE DOWNSTREAM. ENTENDO QUE SERIA A CAPACIDADE DE UM DOCUMENTO RECUPERADO DE MELHORAR O
+DESEMPENHO DO MODELO NA TAREFA DE GERAÇÃO, MAS ISSO NÃO ESTÁ CLARO AQUI.}
+
+\pita{A subseção seguinte detalha os sistemas RAG existentes nos domínios jurídico, legislativo e parlamentar, enquanto a
+subseção final discute protocolos, métricas e benchmarks de avaliação de RAG, sintetizando as lições aprendidas
+e o posicionamento da dissertação em relação a esses trabalhos.}
+
+\subsubsection{Sistemas RAG nos domínios jurídico, legislativo e parlamentar}
+
+Aplicações legislativas e parlamentares existentes cobrem tarefas distintas. KamerRaad e Talk to the NDAA exploram interfaces de
+consulta em debates e legislação; RAGAR trata verificação política; LexDrafter trata terminologia legislativa; e LegalBench-RAG
+organiza evidência jurídica. Essas fontes demonstram a variedade de tarefas, mas não formam um benchmark comum. LegisSearch e o
+sistema do World Avatar acrescentam grafos, metadados e consultas relacionais.~\pita{Esta} dissertação se diferencia por avaliar
+um acervo real de discursos do Senado brasileiro, com perguntas e critérios definidos para recuperação, geração e verificabilidade.
+
+\pita{\textcite{reuterEtAl2025reliableRetrieval}} identificam \pita{a ocorrência dos que eles chamam de} \textit{Document-Level Retrieval
+Mismatch} em grandes bases legais e mostram que a recuperação pode apontar para o documento errado mesmo quando o trecho parece
+semanticamente próximo.~\pita{Os autores propõem uma abordagem de \textit{Summary-Augmented Chunking} (SAC) para reduzir o erro, mas não
+testam sua transferência para outros domínios, embora a} observação \pita{seja} diretamente relevante para discursos parlamentares,
+nos quais autoria, sessão, data e proposição podem distinguir documentos linguisticamente semelhantes. O resultado\pita{, contudo, }
+deve ser tratado como hipótese de erro a \pita{ser testada} no \textit{corpus} do Senado, não como ganho transferível do SAC.
+
+\subsubsection{Protocolos, métricas e benchmarks de avaliação de RAG}
+
+ARES, RAGAS, G-Eval, ConsJudge e RAGEval cobrem dimensões complementares, mas usam tarefas, modelos e formas de validação diferentes.
+Trautmann et al. oferecem uma referência mais próxima para a dimensão de \textit{groundedness}: comparam similaridade, NLI e LLMs em perguntas
+jurídicas e reportam macro-F1 de 0,80 para o melhor método no corpus estudado \parencite{trautmannEtAl2024groundedness}. O resultado
+apoia a inclusão de uma rubrica de aderência ao contexto, preservando a necessidade de validação local.
+
+\textcite{salemiZamani2024erag} propõem o eRAG, que estima a utilidade de cada documento recuperado pelo efeito que produz quando usado individualmente
+pelo gerador; essa perspectiva aproxima a métrica de recuperação do desempenho \textit{downstream}. \textcite{niuEtAl2024ragtruth}
+criam o RAGTruth, com anotações em nível de caso e palavra, permitindo observar afirmações contraditórias ou sem suporte.
+\textcite{zhangEtAl2024fineGrainedCitation} mostram que o suporte de uma citação pode ser completo, parcial ou inexistente, e que
+nenhuma métrica é superior em todas as tarefas de correlação, classificação e recuperação.
+GaRAGe amplia esse problema para perguntas que exigem \textit{grounding} por passagem e deflexão quando o contexto não basta; seus resultados
+indicam dificuldades de atribuição e recusa mesmo em modelos recentes \parencite{sorodocEtAl2025garage}.
+
+A avaliação do avaliador também é objeto de estudo. ConsJudge mostra que a consistência do juiz deve ser examinada em diferentes
+combinações de dimensões e prompts \parencite{liuEtAl2025judgeRag}. Essa evidência reforça o desenho multimétodo da dissertação:
+métricas automáticas devem ser comparadas com julgamentos humanos \pita{com} análise de erros.
+
+\subsubsection{Síntese comparativa}
+
+\pita[caixa,vermelho]{Fabrício, veja como essa subsubseção se integra com a subseção de lacuna de pesquisa. Ajuste o texto para que
+ambas se encaixem em termos de argumentação e não se repitam.}
+
+A literatura converge em três pontos: recuperação e geração devem ser separadas analiticamente; suporte documental precisa ser
+verificado em unidade menor que a resposta inteira; e a avaliação automática requer calibração e limites explícitos.
+A comparação das fontes centrais também recomenda separar três unidades de erro: documento recuperado, trecho recuperado e
+afirmação gerada. Reuter et al. sustentam a primeira distinção, LegalBench-RAG a segunda e RAGTruth e Zhang et al. a terceira,
+enquanto GroUSE e ConsJudge impõem cautela na interpretação de avaliadores automáticos. Essa decomposição orienta a matriz de análise
+da dissertação e evita que uma nota agregada oculte falhas de recuperação ou de atribuição. Ela diverge quanto à unidade ideal de
+avaliação, à definição de relevância e ao equilíbrio entre conhecimento paramétrico e contexto recuperado. Os estudos selecionados
+também se concentram \pita{no idioma} inglês, legislação ou domínios gerais.
+
+A contribuição proposta ocupa a interseção ainda pouco coberta entre \textit{corpus} parlamentar brasileiro, recuperação documental,
+respostas geradas, citações verificáveis, insuficiência documental e validação humana independente. O quadro comparativo a ser
+consolidado deve registrar: corpus e idioma; jurisdição; tipo de pergunta; arquitetura; métricas de recuperação; critérios de
+\textit{grounding}; tratamento de respostas não respondíveis; participação humana; e disponibilidade de dados e código. A lacuna é, portanto, uma lacuna de integração e adaptação contextual, não a ausência de técnicas isoladas.
 
 \subsection{Lacuna de pesquisa}
 

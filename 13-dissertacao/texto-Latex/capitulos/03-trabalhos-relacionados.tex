@@ -1,45 +1,96 @@
 \section{Trabalhos relacionados}
 
-Este capítulo posiciona a dissertação diante de estudos que combinam recuperação, geração, avaliação de grounding e uso de acervos jurídicos ou parlamentares. A comparação considera corpus, tarefa, unidade de avaliação, participação humana e transferência para os discursos do Senado.
+\pita{Esta seção} posiciona a dissertação diante de estudos que combinam recuperação, geração, avaliação de
+\pita{\textit{grounding}} e uso de acervos jurídicos ou parlamentares. A \pita{seleção dos estudos} considera
+\pita{\textit{corpus}}, tarefa, unidade de avaliação, participação humana e transferência para os discursos
+do Senado. \pita{A Tabela~\ref{tab:trabalhos-relacionados} resume os trabalhos selecionados, com foco em suas
+contribuições para a avaliação de RAG e sua aplicabilidade ao contexto parlamentar brasileiro.}
 
-\begin{table}[H]
+\begin{table}[hb!]
 \centering
-\caption{Comparação de estudos diretamente relacionados ao protocolo}
+\caption{Comparação de estudos diretamente relacionados ao protocolo.}
 \label{tab:trabalhos-relacionados}
 \small
 \begin{tabular}{p{2.7cm}p{2.8cm}p{3.1cm}p{2.5cm}}
 \toprule
 Estudo & Corpus/domínio & Foco de avaliação & Transferência para o Senado \\
 \midrule
-ARES & QA em múltiplos domínios & Groundedness, correção e completude & Rubrica geral; requer calibração local \\
+ARES & QA em múltiplos domínios & \textit{Groundedness}, correção e completude & Rubrica geral; requer calibração local \\
 LegalBench-RAG & Questões jurídicas em inglês & Recuperação e resposta fundamentada & Alta proximidade jurídica; baixa proximidade institucional \\
-Trautmann et al. & QA jurídico & Groundedness por similaridade, NLI e LLM & Base para fidelidade ao contexto \\
+\textcite{trautmannEtAl2024groundedness} & QA jurídico & \textit{Groundedness} por similaridade, NLI e LLM & Base para fidelidade ao contexto \\
 RAGTruth & Respostas RAG em vários domínios & Alucinação em nível de caso e palavra & Taxonomia de erros; idioma não parlamentar \\
-Zhang et al. & Texto gerado com citações & Suporte completo, parcial ou ausente & Base para verificabilidade graduada \\
-GaRAGe & QA com passagens anotadas & Grounding relevante e deflexão & Base para perguntas não respondíveis \\
-Reuter et al. & Grandes bases jurídicas & Erro no nível do documento e chunking & Hipótese de erro documental a testar \\
-eRAG & Três conjuntos de QA & Utilidade downstream de cada documento & Liga recuperação ao desempenho da resposta \\
-GroUSE & QA fundamentado controlado & Meta-avaliação por testes unitários & Calibra o LLM-as-a-judge \\
+\textcite{zhangEtAl2024fineGrainedCitation} & Texto gerado com citações & Suporte completo, parcial ou ausente & Base para verificabilidade graduada \\
+GaRAGe & QA com passagens anotadas & \textit{Grounding} relevante e deflexão & Base para perguntas não respondíveis \\
+\textcite{reuterEtAl2025reliableRetrieval} & Grandes bases jurídicas & Erro no nível do documento e \textit{chunking} & Hipótese de erro documental a testar \\
+eRAG & Três conjuntos de QA & Utilidade \textit{downstream} de cada documento & Liga recuperação ao desempenho da resposta \\
+GroUSE & QA fundamentado controlado & Meta-avaliação por testes unitários & Calibra o \textit{LLM-as-a-judge} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\pita[caixa, vermelho]{O TERMO "QA" É UMA SIGLA AINDA NÃO EXPLICADA. PENSO QUE SE REFIRA A "QUESTION ANSWERING", MAS ISSO DEVERIA
+SER EXPLICADO NA PRIMEIRA OCORRÊNCIA.}
+
+\pita[caixa,vermelho]{O QUE É NLI? DEFINIR A SIGLA NA PRIMEIRA OCORRÊNCIA.}
+
+\pita[caixa, vermelho]{NESTA TABELA SURGE A PRIMEIRA REFERÊNCIA AO TERMO GROUNDEDNESS, QUE AINDA NÃO FOI DEFINIDO. A DEFINIÇÃO DEVERIA VIR ANTES,
+OU O TERMO EM PORTUGUÊS USADO NO REFERENCIAL TEÓRICO ADOTADO. SERIA UMA DAS 5 DIMENSÕES OPERACIONAIS ESPECIFICADAS, PENSO, TALVEZ
+"ADERÊNCIA AO CONTEXTO". ISSO VALE PARA TODAS AS OCORRÊNCIAS SEGUINTES DO TERMO GROUNDEDNESS. VALE TAMBÉM PARA O TERMO "GROUNDING" QUE
+SURGE MAIS ADIANTE.}
+
+\pita[caixa, vermelho]{DEFINIR O CONCEITO DE UTILIDADE DOWNSTREAM. ENTENDO QUE SERIA A CAPACIDADE DE UM DOCUMENTO RECUPERADO DE MELHORAR O
+DESEMPENHO DO MODELO NA TAREFA DE GERAÇÃO, MAS ISSO NÃO ESTÁ CLARO AQUI.}
+
+\pita{A subseção seguinte detalha os sistemas RAG existentes nos domínios jurídico, legislativo e parlamentar, enquanto a
+subseção final discute protocolos, métricas e benchmarks de avaliação de RAG, sintetizando as lições aprendidas
+e o posicionamento da dissertação em relação a esses trabalhos.}
+
 \subsection{Sistemas RAG nos domínios jurídico, legislativo e parlamentar}
 
-Aplicações legislativas e parlamentares existentes cobrem tarefas distintas. KamerRaad e Talk to the NDAA exploram interfaces de consulta em debates e legislação; RAGAR trata verificação política; LexDrafter trata terminologia legislativa; e LegalBench-RAG organiza evidência jurídica. Essas fontes demonstram a variedade de tarefas, mas não formam um benchmark comum. LegisSearch e o sistema do World Avatar acrescentam grafos, metadados e consultas relacionais. A dissertação se diferencia por avaliar um acervo real de discursos do Senado brasileiro, com perguntas e critérios definidos para recuperação, geração e verificabilidade.
+Aplicações legislativas e parlamentares existentes cobrem tarefas distintas. KamerRaad e Talk to the NDAA exploram interfaces de
+consulta em debates e legislação; RAGAR trata verificação política; LexDrafter trata terminologia legislativa; e LegalBench-RAG
+organiza evidência jurídica. Essas fontes demonstram a variedade de tarefas, mas não formam um benchmark comum. LegisSearch e o
+sistema do World Avatar acrescentam grafos, metadados e consultas relacionais.~\pita{Esta} dissertação se diferencia por avaliar
+um acervo real de discursos do Senado brasileiro, com perguntas e critérios definidos para recuperação, geração e verificabilidade.
 
-Reuter et al. identificam o *Document-Level Retrieval Mismatch* em grandes bases legais e mostram que a recuperação pode apontar para o documento errado mesmo quando o trecho parece semanticamente próximo \parencite{reuterEtAl2025reliableRetrieval}. A observação é diretamente relevante para discursos parlamentares, nos quais autoria, sessão, data e proposição podem distinguir documentos linguisticamente semelhantes. O resultado deve ser tratado como hipótese de erro a testar no corpus do Senado, não como ganho transferível do *Summary-Augmented Chunking*.
+\pita{\textcite{reuterEtAl2025reliableRetrieval}} identificam \pita{a ocorrência dos que eles chamam de} \textit{Document-Level Retrieval
+Mismatch} em grandes bases legais e mostram que a recuperação pode apontar para o documento errado mesmo quando o trecho parece
+semanticamente próximo.~\pita{Os autores propõem uma abordagem de \textit{Summary-Augmented Chunking} (SAC) para reduzir o erro, mas não
+testam sua transferência para outros domínios, embora a} observação \pita{seja} diretamente relevante para discursos parlamentares,
+nos quais autoria, sessão, data e proposição podem distinguir documentos linguisticamente semelhantes. O resultado\pita{, contudo, }
+deve ser tratado como hipótese de erro a \pita{ser testada} no \textit{corpus} do Senado, não como ganho transferível do SAC.
 
 \subsection{Protocolos, métricas e benchmarks de avaliação de RAG}
 
-ARES, RAGAS, G-Eval, ConsJudge e RAGEval cobrem dimensões complementares, mas usam tarefas, modelos e formas de validação diferentes. Trautmann et al. oferecem uma referência mais próxima para a dimensão de groundedness: comparam similaridade, NLI e LLMs em perguntas jurídicas e reportam macro-F1 de 0,80 para o melhor método no corpus estudado \parencite{trautmannEtAl2024groundedness}. O resultado apoia a inclusão de uma rubrica de aderência ao contexto, preservando a necessidade de validação local.
+ARES, RAGAS, G-Eval, ConsJudge e RAGEval cobrem dimensões complementares, mas usam tarefas, modelos e formas de validação diferentes.
+Trautmann et al. oferecem uma referência mais próxima para a dimensão de \textit{groundedness}: comparam similaridade, NLI e LLMs em perguntas
+jurídicas e reportam macro-F1 de 0,80 para o melhor método no corpus estudado \parencite{trautmannEtAl2024groundedness}. O resultado
+apoia a inclusão de uma rubrica de aderência ao contexto, preservando a necessidade de validação local.
 
-Salemi e Zamani propõem o eRAG, que estima a utilidade de cada documento recuperado pelo efeito que produz quando usado individualmente pelo gerador; essa perspectiva aproxima a métrica de recuperação do desempenho downstream \parencite{salemiZamani2024erag}. Niu et al. criam o RAGTruth, com anotações em nível de caso e palavra, permitindo observar afirmações contraditórias ou sem suporte \parencite{niuEtAl2024ragtruth}. Zhang et al. mostram que o suporte de uma citação pode ser completo, parcial ou inexistente, e que nenhuma métrica é superior em todas as tarefas de correlação, classificação e recuperação \parencite{zhangEtAl2024fineGrainedCitation}. GaRAGe amplia esse problema para perguntas que exigem grounding por passagem e deflexão quando o contexto não basta; seus resultados indicam dificuldades de atribuição e recusa mesmo em modelos recentes \parencite{sorodocEtAl2025garage}.
+\textcite{salemiZamani2024erag} propõem o eRAG, que estima a utilidade de cada documento recuperado pelo efeito que produz quando usado individualmente
+pelo gerador; essa perspectiva aproxima a métrica de recuperação do desempenho \textit{downstream}. \textcite{niuEtAl2024ragtruth}
+criam o RAGTruth, com anotações em nível de caso e palavra, permitindo observar afirmações contraditórias ou sem suporte.
+\textcite{zhangEtAl2024fineGrainedCitation} mostram que o suporte de uma citação pode ser completo, parcial ou inexistente, e que
+nenhuma métrica é superior em todas as tarefas de correlação, classificação e recuperação.
+GaRAGe amplia esse problema para perguntas que exigem \textit{grounding} por passagem e deflexão quando o contexto não basta; seus resultados
+indicam dificuldades de atribuição e recusa mesmo em modelos recentes \parencite{sorodocEtAl2025garage}.
 
-A avaliação do avaliador também é objeto de estudo. ConsJudge mostra que a consistência do juiz deve ser examinada em diferentes combinações de dimensões e prompts \parencite{liuEtAl2025judgeRag}. Essa evidência reforça o desenho multimétodo da dissertação: métricas automáticas devem ser comparadas com julgamentos humanos e análise de erros.
+A avaliação do avaliador também é objeto de estudo. ConsJudge mostra que a consistência do juiz deve ser examinada em diferentes
+combinações de dimensões e prompts \parencite{liuEtAl2025judgeRag}. Essa evidência reforça o desenho multimétodo da dissertação:
+métricas automáticas devem ser comparadas com julgamentos humanos \pita{com} análise de erros.
 
 \subsection{Síntese comparativa e posicionamento da dissertação}
 
-A literatura converge em três pontos: recuperação e geração devem ser separadas analiticamente; suporte documental precisa ser verificado em unidade menor que a resposta inteira; e a avaliação automática requer calibração e limites explícitos. A comparação das fontes centrais também recomenda separar três unidades de erro: documento recuperado, trecho recuperado e afirmação gerada. Reuter et al. sustentam a primeira distinção, LegalBench-RAG a segunda e RAGTruth e Zhang et al. a terceira, enquanto GroUSE e ConsJudge impõem cautela na interpretação de avaliadores automáticos. Essa decomposição orienta a matriz de análise da dissertação e evita que uma nota agregada oculte falhas de recuperação ou de atribuição. Ela diverge quanto à unidade ideal de avaliação, à definição de relevância e ao equilíbrio entre conhecimento paramétrico e contexto recuperado. Os estudos selecionados também se concentram em inglês, legislação ou domínios gerais.
+A literatura converge em três pontos: recuperação e geração devem ser separadas analiticamente; suporte documental precisa ser
+verificado em unidade menor que a resposta inteira; e a avaliação automática requer calibração e limites explícitos.
+A comparação das fontes centrais também recomenda separar três unidades de erro: documento recuperado, trecho recuperado e
+afirmação gerada. Reuter et al. sustentam a primeira distinção, LegalBench-RAG a segunda e RAGTruth e Zhang et al. a terceira,
+enquanto GroUSE e ConsJudge impõem cautela na interpretação de avaliadores automáticos. Essa decomposição orienta a matriz de análise
+da dissertação e evita que uma nota agregada oculte falhas de recuperação ou de atribuição. Ela diverge quanto à unidade ideal de
+avaliação, à definição de relevância e ao equilíbrio entre conhecimento paramétrico e contexto recuperado. Os estudos selecionados
+também se concentram \pita{no idioma} inglês, legislação ou domínios gerais.
 
-A contribuição proposta ocupa a interseção ainda pouco coberta entre corpus parlamentar brasileiro, recuperação documental, respostas geradas, citações verificáveis, insuficiência documental e validação humana independente. O quadro comparativo a ser consolidado deve registrar: corpus e idioma; jurisdição; tipo de pergunta; arquitetura; métricas de recuperação; critérios de grounding; tratamento de respostas não respondíveis; participação humana; e disponibilidade de dados e código. A lacuna é, portanto, uma lacuna de integração e adaptação contextual, não a ausência de técnicas isoladas.
+A contribuição proposta ocupa a interseção ainda pouco coberta entre \textit{corpus} parlamentar brasileiro, recuperação documental,
+respostas geradas, citações verificáveis, insuficiência documental e validação humana independente. O quadro comparativo a ser
+consolidado deve registrar: corpus e idioma; jurisdição; tipo de pergunta; arquitetura; métricas de recuperação; critérios de
+\textit{grounding}; tratamento de respostas não respondíveis; participação humana; e disponibilidade de dados e código. A lacuna é, portanto, uma lacuna de integração e adaptação contextual, não a ausência de técnicas isoladas.

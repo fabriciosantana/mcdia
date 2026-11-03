@@ -1,12 +1,25 @@
-\section{Artefato e caso empírico}
+\section{\pita{Sistema RAG e o acervo de discursos parlamentares}}
 
-Este capítulo documentará o sistema RAG e o corpus de discursos da 56\textordfeminine{} Legislatura do Senado Federal empregados como caso empírico. O corpus já possui versão congelada e análise exploratória documentada no notebook 01. A prova de conceito já implementada constitui o ponto de partida técnico; a configuração do sistema efetivamente avaliada na dissertação ainda deverá ser congelada e descrita de modo reproduzível, incluindo código, modelos, parâmetros e configurações.
+\pita{Esta seção} documentará o sistema RAG e o corpus de discursos da 56\textordfeminine{} Legislatura do
+Senado Federal empregados como caso empírico. O corpus já possui versão congelada e análise exploratória
+documentada. A prova de conceito já implementada constitui o ponto de partida técnico; a
+configuração do sistema efetivamente avaliada na dissertação ainda deverá ser congelada e descrita de modo
+reproduzível, incluindo código, modelos, parâmetros e configurações.
 
 \subsection{Caracterização do corpus legislativo}
 
 % TODO: incorporar, sem duplicar a descrição metodológica, a caracterização já
 % confirmada no notebook 01: origem, cobertura temporal, critérios de inclusão e
 % exclusão, volume final, campos, duplicatas, ausências, versão e hash do corpus.
+
+\pita[caixa,vermelho]{Movidos os números da AED para cá. Lá na seção de metodologia fica apenas a descrição do processo,
+não o resultado do processo.}
+
+Dos 15.729 registros, 15.039 possuem texto integral, 687 dependem de resumo como fonte substituta e três não contêm texto nem resumo utilizável. Assim, 15.726 registros, ou 99,98\%, têm algum conteúdo indexável, mas texto integral e resumo não serão tratados como evidências equivalentes. A proveniência deverá acompanhar cada unidade recuperável para permitir que a avaliação distinga a fonte documental utilizada. Também foram identificadas 28 cópias textuais exatas excedentes, 1.291 documentos com menos de 50 palavras, sete documentos com mais de 10 mil palavras e cobertura de 86,81\% para partido e unidade federativa entre os documentos indexáveis. Esses achados recomendam inspeção antes de deduplicação, tratamento explícito de documentos curtos e longos e cautela no uso de filtros por metadados incompletos.
+
+A estimativa de segmentação não criou unidades de recuperação reais. Com aproximação de 512 tokens por trecho e sobreposição de 64 tokens, o \textit{notebook} estimou 45.971 trechos, mediana de dois trechos para textos integrais e máximo aproximado de 60. Configurações de 256, 768 e 1.024 tokens também foram simuladas para dimensionar o índice. Esses valores servem ao planejamento; a segmentação efetiva deverá usar o tokenizador do modelo escolhido, respeitar limites semânticos e ser comparada empiricamente no protocolo de recuperação.
+
+\pita[caixa,vermelho]{Explorar mais tabelas e gráficos nesta seção.}
 
 \subsection{Arquitetura e componentes do sistema RAG}
 
@@ -21,6 +34,9 @@ Este capítulo documentará o sistema RAG e o corpus de discursos da 56\textordf
 
 % TODO: registrar versões, modelos, prompts, top-k, reranqueamento, temperatura,
 % datas de execução, sementes quando aplicáveis e localização dos artefatos.
+
+\pita{\subsection{Prova de conceito realizada}}
+
 
 \subsection{Evolução em relação à prova de conceito}
 

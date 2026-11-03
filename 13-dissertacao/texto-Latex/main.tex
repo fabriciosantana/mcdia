@@ -1,11 +1,24 @@
-%% Compatibilidade com a versão de biblatex-abnt do TeX Live 2023 presente no
-%% ambiente local. Versões recentes já declaram a opção `accite' usada pela
-%% classe do IDP; este shim apenas evita que a versão antiga rejeite a opção.
+%% Compatibilidade com biblatex-abnt anterior ao 4.0 (ex.: TeX Live 2023), que
+%% nao declara a opcao `accite' usada pela classe do IDP. A partir do 4.0 a opcao
+%% e declarada pelo proprio estilo, e uma segunda declaracao aborta a compilacao
+%% com "Package biblatex Error: Option 'accite' already defined".
+%% A decisao e tomada pelo conteudo do abnt.cbx instalado, de modo que o mesmo
+%% main.tex compile tanto no TeX Live 2023 (Ubuntu 24.04) quanto no TeX Live 2026.
 \makeatletter
-\AddToHook{package/biblatex/before}{%
-  \define@boolkey{blx@opt@pre}{accite}[true]{}%
+\newcommand*{\idpShimAccite}{%          % nome sem `@' nem `_': legivel dentro do expl3
+  \AddToHook{package/biblatex/before}{%
+    \define@boolkey{blx@opt@pre}{accite}[true]{}%
+  }%
 }
 \makeatother
+\ExplSyntaxOn
+\file_if_exist:nTF { abnt.cbx }
+  {
+    \file_get:nnN { abnt.cbx } { } \l_tmpa_tl
+    \str_if_in:NnF \l_tmpa_tl { accite } { \idpShimAccite }
+  }
+  { \idpShimAccite }
+\ExplSyntaxOff
 
 \documentclass[mestrado,rascunho]{idp}
 
@@ -20,9 +33,12 @@
 
 \addbibresource{referencias.bib}
 \input{config/dados}
+\input{config/marcadores}
 
 % Citações no texto em azul; links estruturais permanecem pretos.
 \hypersetup{colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=blue}
+
+\hyphenation{Machado}
 
 \begin{document}
 
@@ -51,8 +67,8 @@
 
 \input{capitulos/01-introducao}
 \input{capitulos/02-referencial-teorico}
-\input{capitulos/03-trabalhos-relacionados}
-\input{capitulos/04-hipoteses-de-trabalho}
+% \input{capitulos/03-trabalhos-relacionados}
+% \input{capitulos/04-hipoteses-de-trabalho}
 \input{capitulos/04-procedimentos-metodologicos}
 \input{capitulos/05-artefato-e-caso-empirico}
 \input{capitulos/06-resultados}

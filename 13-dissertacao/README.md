@@ -28,6 +28,22 @@ Para uma instalação completa, pode-se usar:
 sudo apt install -y texlive-full
 ```
 
+Em macOS, o equivalente é o TeX Live do Homebrew, que já traz `latexmk`, `biber` e todos os pacotes usados pelo projeto:
+
+```bash
+brew install texlive
+```
+
+Também funciona `brew install --cask mactex-no-gui` (MacTeX, sem os aplicativos gráficos). Para conferir a instalação:
+
+```bash
+latexmk --version | head -1
+biber --version | head -1
+pdflatex --version | head -1
+```
+
+A opção `accite` do estilo `biblatex-abnt` só existe na versão 4.0 ou superior do pacote. O preâmbulo de `main.tex` detecta a versão instalada e se adapta, de modo que o mesmo arquivo compila tanto em TeX Live 2023 (pacotes do Ubuntu 24.04) quanto em TeX Live 2026 (Homebrew).
+
 ## Clonagem
 
 Para trabalhar na versão destinada ao orientador:
@@ -94,6 +110,19 @@ git push
 ```
 
 Evite adicionar os arquivos gerados em `texto-Latex/out/` e `texto-Latex/aux/` ao commit; eles são produtos locais da compilação.
+
+### Marcas de revisão do orientador
+
+`texto-Latex/config/marcadores.tex` (carregado por `main.tex`) define os marcadores em verde usados na revisão. São visuais: não alteram o conteúdo do texto.
+
+```latex
+\pita{texto revisado}
+\pitacom{texto revisado}{motivo da intervenção}
+\pitanota{motivo em nota de rodapé}
+\begin{pitabloco} ... \end{pitabloco}   % trechos com mais de um parágrafo
+```
+
+O verde desaparece sozinho na versão de entrega (opção `entrega` em `main.tex`) e pode ser desligado a qualquer momento com `\pitacorfalse`. Não use os marcadores dentro de títulos de seção nem de legendas: o `hyperref` reprocessa esses argumentos e a cor vaza para os marcadores internos do PDF.
 
 ## Organização principal
 
