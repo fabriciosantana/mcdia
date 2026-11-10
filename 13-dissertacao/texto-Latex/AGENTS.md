@@ -16,7 +16,7 @@ Antes de alterações substantivas, leia o arquivo afetado, `documentacao/MAPA_F
 - `config/dados.tex` é a fonte única dos metadados.
 - Não alterar `idp.cls`.
 - Não inventar referências, dados, resultados, parâmetros, nomes de banca ou informações catalográficas.
-- Diferenciar prova de conceito anterior, protocolo planejado e evidência final da dissertação.
+- Distinguir o protótipo técnico, o experimento de viabilidade da pesquisa (incluindo reexecuções em andamento) e o experimento principal; não tratar resultados preliminares de viabilidade como evidência final das hipóteses.
 - Manter recuperação, geração, avaliação humana e julgamento automatizado como camadas analíticas distintas.
 - Tratar o sistema como artefato sociotécnico e calibrar as conclusões ao alcance das evidências.
 - Todo capítulo primário deve ter parágrafo introdutório antes da primeira subseção.

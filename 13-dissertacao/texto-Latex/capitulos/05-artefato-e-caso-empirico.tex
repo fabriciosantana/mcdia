@@ -2,8 +2,8 @@
 
 Esta seção documentará o sistema RAG e o corpus de discursos da 56\textordfeminine{} Legislatura do
 Senado Federal empregados como caso empírico. O corpus já possui versão congelada e análise exploratória
-documentada. A prova de conceito já implementada constitui o ponto de partida técnico; a
-configuração do sistema efetivamente avaliada na dissertação ainda deverá ser congelada e descrita de modo
+documentada. O protótipo técnico já implementado constitui o ponto de partida da análise de viabilidade; a
+configuração do sistema usada no experimento principal ainda deverá ser congelada e descrita de modo
 reproduzível, incluindo código, modelos, parâmetros e configurações.
 
 \subsection{Caracterização do corpus legislativo}
@@ -64,16 +64,18 @@ A inspeção exploratória usou referências de planejamento: ao menos 99\% de r
 % TODO: registrar versões, modelos, prompts, top-k, reranqueamento, temperatura,
 % datas de execução, sementes quando aplicáveis e localização dos artefatos.
 
-\subsection{Prova de conceito realizada}
-\label{sec:poc}
+\subsection{Protótipo técnico e experimento de viabilidade}
+\label{sec:viabilidade}
 
-O antecedente técnico da dissertação é um chatbot para consulta aos discursos da 56\textordfeminine{} Legislatura, desenvolvido pelo autor com preparação documental em Python, Open WebUI para interação e orquestração e ChromaDB para persistência vetorial. A configuração documentada no artigo antecedente utilizou a API da OpenAI para embeddings e geração; Ollama permaneceu como alternativa para modelos locais. Esses componentes descrevem a prova de conceito, não a configuração final ainda a congelar nesta pesquisa.
+O protótipo técnico para consulta aos discursos da 56\textordfeminine{} Legislatura foi desenvolvido pelo autor com preparação documental em Python, Open WebUI para interação e orquestração e ChromaDB para persistência vetorial. Sua configuração inicial, documentada em artigo, utilizou a API da OpenAI para \textit{embeddings} e geração; Ollama permaneceu como alternativa para modelos locais. Essa implementação constitui o artefato técnico examinado na análise de viabilidade e não deve ser confundida com a configuração final do experimento principal, ainda a congelar.
 
-O fluxo preparou segmentos enriquecidos por autoria, data, partido, unidade federativa e URL; produziu lotes de ingestão; recuperou contexto para cada pergunta; e registrou respostas e fontes para avaliação posterior. Na configuração relatada, foram usados \texttt{text-embedding-3-small} e \texttt{gpt-5-nano}. A avaliação automatizada compreendeu três rodadas de 20 perguntas, com rubrica de cinco critérios em escala de 0 a 2, acompanhada de inspeção manual amostral de sete respostas da rodada base. O artigo registra um caso em que uma resposta recebeu nota automática máxima, mas foi considerada inadequada na inspeção humana por erro de escopo.
+O fluxo preparou segmentos enriquecidos por autoria, data, partido, unidade federativa e URL; produziu lotes de ingestão; recuperou contexto para cada pergunta; e registrou respostas e fontes para avaliação posterior. Na configuração relatada no artigo, foram usados \texttt{text-embedding-3-small} e \texttt{gpt-5-nano}. A primeira avaliação automatizada documentada compreendeu três rodadas de 20 perguntas, com rubrica de cinco critérios em escala de 0 a 2, acompanhada de inspeção manual amostral de sete respostas da rodada base. O artigo registra um caso em que uma resposta recebeu nota automática máxima, mas foi considerada inadequada na inspeção humana por erro de escopo.
 
-Essa experiência motivou a separação entre recuperação, geração e julgamento no desenho da dissertação. O antecedente não incluiu comparação controlada com baseline lexical, métricas formais de recuperação ou avaliação humana ampla e independente. Por isso, serve como evidência preliminar e ponto de partida de implementação, não como validação do protocolo final. O artigo e os artefatos antecedentes estão identificados no Apêndice~\ref{ap:reproducao}.
+Na continuidade desse trabalho, o experimento de viabilidade da pesquisa ampliou a bateria para 200 perguntas em 16 categorias e selecionou um piloto estratificado de 32 itens. A preparação documentada gerou 23.806 trechos a partir de 15.729 registros de entrada, e as rodadas registradas exercitaram o fluxo de geração e julgamento automatizado. Quatro execuções da série disponível processaram baterias de 20 e 32 perguntas; nas duas últimas, com 32 itens cada, as médias atribuídas pelo juiz automático foram 9,031 e 9,094 em escala de 0 a 10. A reexecução atualmente em curso deverá confirmar as versões da bateria, as configurações e os resultados que serão mantidos no registro da pesquisa.
 
-\subsection{Evolução em relação à prova de conceito}
+Esses achados documentam a exequibilidade de partes do fluxo técnico e ajudam a identificar ajustes metodológicos. Não incluem comparação controlada entre BM25, recuperação vetorial e híbrida nem um conjunto de relevância validado; tampouco as notas automatizadas das rodadas mais recentes são julgamentos humanos independentes. A inspeção humana de sete respostas relatada no artigo é amostral e pertence à primeira avaliação do protótipo. Portanto, os resultados da análise de viabilidade não corroboram, por si, as hipóteses da dissertação. O artigo que documenta a implementação inicial e os artefatos do experimento de viabilidade estão identificados no Apêndice~\ref{ap:reproducao}.
 
-% TODO: separar claramente o que foi herdado do artigo, o que foi modificado e
-% o que foi criado especificamente para a dissertação.
+\subsection{Evolução do protótipo ao experimento principal}
+
+% TODO: separar claramente o que foi herdado do protótipo, o que foi ajustado
+% na análise de viabilidade e o que compõe o experimento principal.

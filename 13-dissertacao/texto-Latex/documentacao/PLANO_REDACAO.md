@@ -73,7 +73,7 @@ A entrega bibliográfica é a prioridade imediata indicada pelo pesquisador. As 
 - [x] Fechar a seção 3 (Trabalhos relacionados) com quadro comparativo inicial por corpus/domínio, foco de avaliação e transferência para o Senado; revisar e ampliar os campos na versão final.
 - [~] Atualizar a seção 5 (Metodologia) conforme os procedimentos forem efetivamente realizados. Constituição e análise exploratória do corpus já foram incorporadas; conferir a reprodução do notebook e preservar o caráter prospectivo das etapas experimentais.
 - [ ] Redigir a caracterização do corpus na seção 6 (Artefato e caso empírico), sem duplicar a descrição dos procedimentos metodológicos.
-- [ ] Completar a seção 6 com arquitetura, preparação documental, configuração final e evolução em relação à prova de conceito, usando apenas configurações confirmadas.
+- [ ] Completar a seção 6 com arquitetura, preparação documental, configuração final e evolução do protótipo técnico à análise de viabilidade e ao experimento principal, usando apenas configurações confirmadas.
 - [ ] Apresentar observações, inclusive negativas, na seção 7 (Resultados), com base na execução final congelada.
 - [ ] Interpretar achados, hipóteses e ameaças à validade na seção 8 (Discussão), distinguindo evidência técnica e implicações institucionais.
 - [ ] Responder à pergunta e aos objetivos na seção 9 (Considerações finais), limitando as contribuições ao que tiver sido demonstrado.

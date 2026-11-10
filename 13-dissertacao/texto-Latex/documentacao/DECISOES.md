@@ -5,7 +5,7 @@ Use este arquivo para decisões que afetem problema, escopo, corpus, protocolo, 
 ## 2026-08-17 — estrutura inicial
 
 - A dissertação usa o template institucional do IDP com opção `mestrado` e modo `rascunho`.
-- A prova de conceito anterior é antecedente e ponto de partida, não resultado final.
+- O protótipo técnico documentado inicialmente como prova de conceito integra o percurso da pesquisa. Distinguir a análise de viabilidade (incluindo reexecuções) do experimento principal; resultados preliminares de viabilidade não testam as hipóteses nem substituem os resultados finais.
 - O protocolo avaliativo é o artefato metodológico principal; o sistema RAG é o caso empírico de aplicação.
 - A estrutura separa trabalhos relacionados, artefato/caso, resultados e discussão para tornar explícita a cadeia problema--método--evidência--interpretação.
 

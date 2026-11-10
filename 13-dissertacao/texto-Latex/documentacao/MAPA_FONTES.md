@@ -9,15 +9,15 @@
 | `chatbot-rag-pre/sections/04-metodologia.tex` | Desenho planejado, protocolo e matriz metodológica | Seção autônoma de metodologia, preservada após as hipóteses e atualizada conforme as anotações do orientador | Converter futuro em procedimento realizado apenas após execução; qualquer reorganização exige decisão editorial explícita |
 | `../notebooks/01-analisar-base-discursos-rag.ipynb` | Evidência executada sobre caracterização, qualidade e prontidão do corpus | Capítulos 4 e 5 | Distinguir resultados da análise do corpus de resultados de recuperação ou geração; estimativas de chunks não representam chunks efetivamente construídos |
 | `../notebooks/ANOTACOES.md` | Fundamentação explicativa e registro das decisões analíticas do notebook 01 | Apoio à redação dos capítulos 4 e 5 | Confirmar toda afirmação numérica nas saídas executadas do notebook antes de incorporá-la ao texto final |
-| `chatbot-rag/` | Prova de conceito e evidência preliminar | Capítulos 3, 5 e 7 | Não apresentar como resultado final da dissertação |
-| `4-project/README.md` e scripts | Implementação e reprodutibilidade | Capítulo 5 e apêndices | Conferir configuração efetivamente usada na rodada final |
-| `4-project/eval/` | Baterias, rubricas, prompts e resultados | Capítulos 4 e 6; apêndices | Congelar a versão escolhida e registrar hashes |
+| `chatbot-rag/` | Artigo que documenta o protótipo técnico e a primeira avaliação | Capítulo do sistema e apêndice de reprodução | Tratar os resultados como registro inicial da etapa de viabilidade; não confundir com avaliação humana independente ou experimento principal |
+| `4-project/README.md` e scripts | Implementação e reprodutibilidade do experimento de viabilidade em reexecução | Capítulos 4 a 6 e apêndices | Confirmar configurações e artefatos da reexecução; congelar separadamente o protocolo do experimento principal |
+| `4-project/eval/` | Baterias, rubricas, prompts e resultados da análise de viabilidade | Capítulos 4 e 6; apêndices | Revisar respondibilidade e evidências, identificar versões e hashes e separar resultados registrados dos que ainda serão reexecutados |
 | `4-project/knowledge_openwebui/build_metadata.json` | Manifesto da base preparada | Capítulo 5 | Verificar se corresponde ao corpus final |
 | `chatbot-rag/literatura/` | Triagem e comparação bibliográfica | Capítulo 3 | Verificar cada referência e atualizar a busca |
 
 ## Linha de demarcação da evidência
 
-1. O artigo demonstra viabilidade preliminar com bateria pequena e avaliação automatizada acompanhada de inspeção humana amostral.
-2. A dissertação amplia o desenho com bateria balanceada, conjunto de referência, avaliação formal da recuperação, baselines, avaliação humana independente e comparação controlada com juiz automatizado.
-3. Números do artigo só podem aparecer identificados como resultados preliminares ou antecedentes do estudo.
-4. Números dos capítulos de resultados e discussão devem vir de uma execução final congelada e documentada.
+1. O protótipo técnico foi inicialmente documentado em artigo, com uma bateria pequena, avaliação automatizada e inspeção humana amostral.
+2. A pesquisa inclui um experimento de viabilidade, com preparação de trechos, bateria ampliada e rodadas automatizadas; essa etapa está sendo reexecutada e seus artefatos precisam ser conferidos e versionados.
+3. O experimento principal deverá usar conjunto de referência validado, comparação controlada de recuperadores, avaliação humana independente e comparação com juiz automatizado.
+4. Resultados da viabilidade devem ser apresentados como evidência preliminar do percurso da pesquisa, sem serem tratados como teste das hipóteses ou substitutos dos resultados do experimento principal.

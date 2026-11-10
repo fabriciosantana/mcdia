@@ -1,6 +1,6 @@
 # Dissertação — técnicas de avaliação de sistemas RAG
 
-Base LaTeX da dissertação de Fabricio Fernandes Santana no Mestrado em Administração Pública do IDP. A estrutura usa a classe institucional `idp.cls` e reaproveita, de forma rastreável, o pré-projeto, o artigo de prova de conceito e os artefatos da implementação.
+Base LaTeX da dissertação de Fabricio Fernandes Santana no Mestrado em Administração Pública do IDP. A estrutura usa a classe institucional `idp.cls` e registra, de forma rastreável, o pré-projeto, o protótipo técnico documentado em artigo, os artefatos do experimento de viabilidade e o protocolo do experimento principal.
 
 ## Compilação
 
