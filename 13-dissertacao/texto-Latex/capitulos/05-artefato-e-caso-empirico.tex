@@ -6,11 +6,9 @@ documentada. O protótipo técnico já implementado constitui o ponto de partida
 configuração do sistema usada no experimento principal ainda deverá ser congelada e descrita de modo
 reproduzível, incluindo código, modelos, parâmetros e configurações.
 
-\subsection{Caracterização do corpus legislativo}
+\subsection{Caracterização do corpus legislativo}\label{sec:caracterizacao-corpus}
 
-% TODO: incorporar, sem duplicar a descrição metodológica, a caracterização já
-% confirmada no notebook 01: origem, cobertura temporal, critérios de inclusão e
-% exclusão, volume final, campos, duplicatas, ausências, versão e hash do corpus.
+O corpus analisado reúne os pronunciamentos da 56\textordfeminine{} Legislatura abrangidos pela coleta descrita na seção metodológica. A fonte, a janela consultada, a versão do arquivo e os procedimentos de coleta e auditoria estão documentados na Seção de coleta e análise exploratória do corpus. Esta subseção apresenta os resultados descritivos da auditoria e discute suas implicações para a preparação e a avaliação do sistema RAG.
 
 Dos 15.729 registros, 15.039 possuem texto integral, 687 dependem de resumo como fonte substituta e três não contêm texto nem resumo utilizável. Assim, 15.726 registros, ou 99,98\%, têm algum conteúdo indexável, mas texto integral e resumo não serão tratados como evidências equivalentes. A proveniência deverá acompanhar cada unidade recuperável para permitir que a avaliação distinga a fonte documental utilizada. Também foram identificadas 28 cópias textuais exatas excedentes, 1.291 documentos com menos de 50 palavras, sete documentos com mais de 10 mil palavras e cobertura de 86,81\% para partido e unidade federativa entre os documentos indexáveis. Esses achados recomendam inspeção antes de deduplicação, tratamento explícito de documentos curtos e longos e cautela no uso de filtros por metadados incompletos.
 
