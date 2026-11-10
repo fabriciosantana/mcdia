@@ -10,6 +10,16 @@ services:
     restart: unless-stopped
     network_mode: host
 
+  chromadb-admin:
+    image: chromadb-admin
+    container_name: chromadb-admin
+    ports:
+      - "3001:3001"
+    depends_on:
+      - chromadb
+    restart: unless-stopped
+    network_mode: host
+
   docling:
     image: ghcr.io/docling-project/docling-serve-cpu:latest
     container_name: docling-service
