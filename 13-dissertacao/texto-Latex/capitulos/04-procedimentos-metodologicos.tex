@@ -1,7 +1,7 @@
-\pita{\section{Procedimentos metodológicos}}
+\section{Procedimentos metodológicos}\label{sec:metodologia}
 
-\pita{Esta seção} apresenta o desenho metodológico da pesquisa e distingue os procedimentos já executados daqueles que ainda
-integram o protocolo experimental. Até \pita{o presente momento da}, foram concluídas a constituição, o versionamento e a
+Esta seção apresenta o desenho metodológico da pesquisa e distingue os procedimentos já executados daqueles que ainda
+integram o protocolo experimental. Até o momento desta redação, foram concluídas a constituição, o versionamento e a
 análise exploratória do \textit{corpus} de discursos. Permanecem planejadas a construção efetiva das unidades de recuperação,
 a elaboração do conjunto de perguntas e dos julgamentos de relevância, a comparação entre estratégias de busca e, em etapa
 posterior, a avaliação das respostas geradas. Essa distinção temporal evita tratar estimativas de preparação dos dados como
@@ -30,31 +30,34 @@ das respostas geradas e dos julgamentos humanos e automatizados definidos pelo p
 
 \subsubsection{Técnica de revisão bibliográfica e técnico-normativa}
 
-\pita[vermelho]{<DESCREVER A TÉCNICA DE REVISÃO BIBLIOGRÁFICA E TÉCNICO-NORMATIVA, COM FONTES, CRITÉRIOS DE INCLUSÃO E
-EXCLUSÃO, PROCEDIMENTOS DE SÍNTESE E FICHAMENTO, ETC.>}
+A revisão é narrativa e orientada pelo problema de pesquisa, com seleção intencional de estudos sobre recuperação, geração, avaliação de RAG e informação legislativa. O conjunto inicial foi ampliado por busca complementar documentada em 8 de setembro de 2026, em registros da ACL Anthology e páginas oficiais do arXiv. Foram combinados os termos \textit{RAG evaluation}, \textit{faithfulness}, \textit{groundedness}, \textit{citation}, \textit{legal RAG}, \textit{parliamentary corpus} e \textit{LLM-as-a-judge}, com foco em 2024--2025 nas buscas por trabalhos recentes. Essa delimitação corresponde à busca registrada, não a uma cobertura exaustiva de toda a produção até a data da dissertação.
+
+A inclusão privilegiou estudos com método de avaliação, conjunto de testes, corpus anotado ou aplicação jurídica e parlamentar pertinente às dimensões do protocolo. Foram excluídos textos apenas opinativos, duplicatas e trabalhos cuja relação com o problema se limitava à menção a modelos de linguagem. Candidatos sem incorporação foram mantidos em registro separado. A frente técnico-normativa reúne diretrizes e relatórios institucionais sobre IA e parlamentos, utilizados para contextualizar transparência e supervisão humana, sem tratá-los como evidência experimental de desempenho.
+
+Os fichamentos registram referência, versão consultada, localização da fonte, contribuição, método, resultados, limitações e aproveitamento proposto. Excertos seletivos e localizadores permitem retornar aos textos-fonte; a síntese compara corpus, tarefa, unidade de avaliação e participação humana. O inventário de trabalho congelado em 29 de setembro de 2026 contém 58 referências e 58 fichamentos ativos, após oito incorporações e a retirada de duas referências sem acesso do inventário original de 52 entradas. A preparação contou com assistência de IA e leitura focal; não constitui comprovação de leitura integral dos textos pelo pesquisador. O aprofundamento e a conferência das fontes centrais permanecem necessários antes da redação final.
+
+A busca favorece literatura de processamento de linguagem natural e não cobre exaustivamente administração pública e ciência política. Por isso, a síntese fundamenta a seleção do protocolo, mas não comprova a inexistência de estudos semelhantes nem é apresentada como revisão sistemática. O inventário, o manifesto de fontes e o registro da busca são disponibilizados com os artefatos da pesquisa, conforme o Apêndice~\ref{ap:reproducao}.
 
 \subsubsection{Coleta e caracterização do \textit{corpus} documental}
 
 O \textit{corpus} documental foi constituído com dados públicos e secundários de pronunciamentos da 56\textordfeminine{} Legislatura
-do Senado Federal. A coleta consolidada abrange o período de 1 de fevereiro de 2019 a 10 de janeiro de 2023 e produziu
+do Senado Federal. A janela consultada abrangeu 1 de fevereiro de 2019 a 31 de janeiro de 2023; os registros obtidos têm datas entre 1 de fevereiro de 2019 e 10 de janeiro de 2023. A coleta produziu
 15.729 registros, cada qual identificado por um código de pronunciamento único. A versão utilizada na análise foi publicada como
-revisão \texttt{v1.1.1} e fixada pelo resumo SHA-256 \path{e09cfc4793e5394be440906320c7d3008cda5a52b90bbc85bf47446362406af1}.
+revisão \texttt{v1.1.1} no repositório \texttt{fabriciosantana/discursos-senado-legislatura-56}, na plataforma Hugging Face\footnote{\url{https://huggingface.co/datasets/fabriciosantana/discursos-senado-legislatura-56/tree/v1.1.1/data/full}.}, no arquivo \path{discursos_2019-02-01_2023-01-31.parquet}, e fixada pelo resumo SHA-256 \path{e09cfc4793e5394be440906320c7d3008cda5a52b90bbc85bf47446362406af1}.
 O uso do resumo criptográfico permite verificar a identidade binária do arquivo analisado, embora não substitua a auditoria de
 qualidade de seu conteúdo.
 
-\pita[caixa,vermelho]{A versão foi publicada onde?}
-\pita[caixa,vermelho]{Colocar como apêndice o script de coleta, ou melhor ainda: indicar onde ele está publicado, para que o
-leitor possa reproduzir a coleta. Neste último caso, o apêndice poderia ser um link para o repositório, com instruções de uso.}
 ~
 
-A constituição do \textit{corpus} preservou o esquema canônico empregado na prova de conceito \pita[vermelho]{<Que prova de
-conceito? O leitor ainda não tem conhecimento sobre isso.>} e os campos adicionais retornados pela fonte oficial. Entre os
+A prova de conceito antecedente é um chatbot experimental de consulta aos discursos, construído com Open WebUI, preparação documental em Python e recuperação vetorial; sua configuração e seus limites são descritos na Seção~\ref{sec:poc}. A constituição do \textit{corpus} desta dissertação preservou o esquema canônico empregado nesse antecedente e os campos adicionais retornados pela fonte oficial. Entre os
 metadados disponíveis estão data, autor, partido, unidade federativa, tipo de uso da palavra, resumo, indexação e URL do
 pronunciamento original. Os campos internos de início e fim da janela de coleta registram os intervalos mensais efetivamente
 consultados, sem alteração artificial para reproduzir a coleta anterior. Como se trata da organização de documentos públicos,
 não houve coleta direta de informações com participantes humanos nessa etapa.
 
-\noindent\textbf{\pita{Técnicas de análise exploratória de dados.}} A análise exploratória auditou esquema, tipos, unicidade dos
+O código de coleta, as dependências e um comando de execução encontram-se no Apêndice~\ref{ap:reproducao}. A disponibilização dos artefatos complementa a descrição do processo sem exigir que o leitor conheça nomes internos de arquivos para compreender o método.
+
+\noindent\textbf{Técnicas de análise exploratória de dados.} A análise exploratória auditou esquema, tipos, unicidade dos
 códigos, validade das datas, valores ausentes, cobertura textual, distribuições temporal e institucional, extensão dos documentos,
 resíduos de HTML e URLs, caracteres problemáticos, duplicidade textual exata e aproximada, frequência lexical, mudança lexical
 anual, cobertura de metadados e concentração de representação. A análise de duplicidade aproximada empregou, em amostra reprodutível
@@ -62,27 +65,11 @@ e controlada, assinaturas MinHash, candidatos por \textit{Locality-Sensitive Has
 \textit{shingles} e similaridade TF-IDF. Esses procedimentos caracterizam riscos do \textit{corpus}; não avaliam a qualidade de um
 recuperador ou de um modelo gerador.
 
-\pita[caixa,vermelho]{Não faz sentido mencionar arquivos específicos ou trechos de código, pois o leitor não tem acesso a eles.
-Melhor descrever apenas o que foi feito. Removida menção ao "Notebook 01".}
-
-\pita[caixa,vermelho]{Números, resultados e conclusões da AED que estavam aqui foram movidos para a seção de caso empírico, para não
-misturar metodologia com resultados.}
-
-\pita[caixa,vermelho]{Muitos conceitos abaixo (destacado em azul) que eu e o leitor eventual desconhecem: quadro de prontidão,
-limiares heurísticos, critérios de certificação, limiares exploratórios de indexabilidade, cobertura de texto integral, baixa
-duplicidade exata excedente... Avaliar o excesso de conceitos e mover para seção de caso empírico.}
-
-\pita[azul]{O quadro de prontidão adotou limiares heurísticos, e não critérios de certificação. O \textit{corpus} atendeu aos
-limiares exploratórios de indexabilidade, cobertura de texto integral, baixa proporção de registros sem conteúdo, baixa duplicidade
-exata excedente e proporção de documentos curtos. A cobertura mínima entre os metadados candidatos a filtro ficou abaixo do limiar
-heurístico de 90\%, em razão dos 86,81\% observados para partido e unidade federativa. Portanto, a conclusão desta etapa limita-se a
-considerar os dados aptos a avançar para experimentos controlados, com as ressalvas documentadas.}
+A inspeção incluiu proporção de registros com conteúdo utilizável, disponibilidade de texto integral, duplicidade e cobertura dos metadados candidatos a filtro. Os limites empregados nessa inspeção são referências exploratórias de planejamento, sem equivalência a certificação de qualidade; seus valores e as ressalvas estão na Seção~\ref{sec:caso}.
 
 % \subsubsection{Etapas ainda planejadas para o protocolo experimental}
 
 \subsubsection{Construção dos dados de avaliação}
-
-\pita[caixa,vermelho]{Removida menção ao "Notebook 02".}
 
 Essa etapa construirá um conjunto de perguntas estratificado; associará a cada pergunta respondível os pronunciamentos ou trechos relevantes; produzirá efetivamente as unidades de recuperação; e comparará tamanhos e sobreposições de segmentação. Serão implementadas busca lexical com BM25, busca vetorial e busca híbrida, preservados os mesmos dados, perguntas e julgamentos de relevância para tornar a comparação controlada.
 
@@ -96,53 +83,86 @@ Após a estabilização da recuperação, o protocolo avançará para a geraçã
 
 \subsection{Técnicas de análise dos dados}
 
-\pita[caixa,vermelho]{Organize tudo que está aqui em mais subseções separadas. Além disso, a descrição das métricas de recuperação
-deve ser mais detalhada, com fórmulas e referências.}
+\label{sec:analise}
 
-A análise experimental será organizada em quatro camadas, posteriores à caracterização do \textit{corpus}. A primeira avaliará a
-recuperação documental por meio de métricas de recuperação ranqueada consolidadas na literatura de recuperação da informação, como
+A análise experimental será organizada em quatro camadas, posteriores à caracterização do \textit{corpus}. As subseções seguintes especificam seus procedimentos.
+
+\subsubsection{Avaliação da recuperação documental}
+\label{sec:metricas}
+
+A primeira camada avaliará a recuperação documental por meio de métricas de recuperação ranqueada consolidadas na literatura de recuperação da informação, como
 \textit{Recall@k}, \textit{Precision@k}, MRR e nDCG \parencite{manningEtAl2008informationRetrieval}, também empregadas em
-\textit{benchmarks} contemporâneos como o BEIR \parencite{thakurEtAl2021beir}. \pita{Especificamente, serão calculados}
+\textit{benchmarks} contemporâneos como o BEIR \parencite{thakurEtAl2021beir}. Especificamente, serão calculados
 \textit{Recall@1}, \textit{Recall@5} e \textit{Recall@10}, além de MRR e nDCG@k; \textit{Precision@k} e \textit{Hit@k} serão mantidas
 quando compatíveis com a granularidade dos julgamentos de relevância. A comparação abrangerá BM25, recuperação vetorial e recuperação
 híbrida sob o mesmo conjunto de referência.
 
 Para fins de avaliação da recuperação, a unidade principal de análise será o trecho recuperável indexado no sistema, preservada sua vinculação ao discurso original, aos metadados e à URL da fonte. Quando a evidência esperada corresponder a um discurso inteiro, serão considerados relevantes os trechos desse discurso que contenham informação suficiente para responder à pergunta.
 
-\textit{Recall@k} indicará a proporção das evidências esperadas presente entre os primeiros resultados; \textit{Precision@k} indicará a proporção de itens relevantes entre os recuperados; MRR observará a posição da primeira evidência relevante; nDCG considerará a ordenação das evidências segundo seus graus de relevância; e \textit{Hit@k} indicará se ao menos uma evidência suficiente foi recuperada. Além dos resultados agregados, o desempenho será estratificado por ano, tamanho do documento, tipo de fonte e demais metadados cuja cobertura permita comparação válida. A diversidade dos resultados e os erros de recuperação serão examinados separadamente para identificar redundância, concentração e falhas sistemáticas.
+Seja $Q^+$ o conjunto de perguntas respondíveis com evidências de referência, $R_q$ o conjunto de unidades relevantes para a pergunta $q$, e $L_q^k$ a lista dos primeiros $k$ resultados, sem repetição de identificadores. O corte $k$ é a quantidade máxima de resultados considerada. Precisão e revocação no corte são definidas por \parencite{manningEtAl2008informationRetrieval}:
+\begin{equation}
+\mathrm{Precision@}k(q)=\frac{|L_q^k\cap R_q|}{k},\qquad
+\mathrm{Recall@}k(q)=\frac{|L_q^k\cap R_q|}{|R_q|}.
+\end{equation}
+Se o sistema retornar menos de $k$ itens, as posições ausentes não contarão como acertos. A revocação depende da cobertura das evidências anotadas: um conjunto incompleto permite medir recuperação das referências conhecidas, não de toda evidência potencialmente relevante no acervo.
+
+A posição $r_q$ do primeiro resultado relevante define o posto recíproco: $RR(q)=1/r_q$, ou zero quando não houver resultado relevante na lista avaliada. A média é
+\begin{equation}
+\mathrm{MRR}=\frac{1}{|Q^+|}\sum_{q\in Q^+}RR(q).
+\end{equation}
+A profundidade examinada será registrada; quando limitada a $k$, a medida será identificada como MRR@$k$, sem equipará-la à avaliação do ranking completo \parencite{thakurEtAl2021beir}.
+
+Para relevância graduada, seja $g_{q,i}$ o grau de relevância do resultado na posição $i$. Será empregada a convenção de ganho exponencial:
+\begin{equation}
+\mathrm{DCG@}k(q)=\sum_{i=1}^{k}\frac{2^{g_{q,i}}-1}{\log_2(i+1)},\qquad
+\mathrm{nDCG@}k(q)=\frac{\mathrm{DCG@}k(q)}{\mathrm{IDCG@}k(q)}.
+\end{equation}
+IDCG é o ganho da ordenação ideal das evidências julgadas no mesmo corte. Essa normalização permite comparar a ordenação obtida à melhor ordenação possível para a pergunta \parencite{manningEtAl2008informationRetrieval}. A escala de relevância e a cobertura dos julgamentos deverão ser fixadas antes da comparação; itens não julgados não serão interpretados automaticamente como irrelevantes. Casos com IDCG igual a zero não receberão nDCG e terão sua quantidade informada separadamente.
+
+Para distinguir qualquer passagem pertinente de uma evidência suficiente, seja $S_q\subseteq R_q$ o conjunto de unidades que, individualmente, contêm suporte suficiente para a resposta esperada. Define-se neste protocolo:
+\begin{equation}
+\mathrm{Hit@}k(q)=\begin{cases}1,&L_q^k\cap S_q\ne\varnothing,\\0,&\text{caso contrário}.\end{cases}
+\label{eq:hit}
+\end{equation}
+A média de Hit@$k$ é a proporção de perguntas com ao menos uma evidência suficiente nos primeiros $k$ resultados. Para perguntas que exigem evidências complementares, o protocolo deverá registrar os conjuntos suficientes; o acerto exigirá recuperar todos os componentes de ao menos um desses conjuntos, e será reportado separadamente da convenção de evidência única. Assim, relevância parcial não será confundida com suficiência documental.
+
+As médias serão calculadas sobre perguntas elegíveis, informando seu número e os casos sem julgamento suficiente. Perguntas não respondíveis não terão Recall, MRR ou nDCG interpretados como sucesso ou falha de localização de uma evidência inexistente; serão analisadas quanto à recusa e à insuficiência documental. O desempenho será também estratificado por ano, tamanho do documento, tipo de fonte e metadados com cobertura adequada, com exame separado de redundância e erros.
 
 O uso de \textit{Precision@k} e nDCG dependerá da granularidade do conjunto de referência e da possibilidade de classificar os itens recuperados como relevantes, parcialmente relevantes ou irrelevantes. Caso o conjunto de referência registre apenas evidências suficientes por pergunta, a análise priorizará \textit{Hit@k}, \textit{Recall@k} e MRR, mantendo \textit{Precision@k} e nDCG apenas quando houver julgamento de relevância suficientemente detalhado para sua aplicação.
+
+\subsubsection{Avaliação da geração de respostas}\label{sec:rubrica}
 
 A segunda camada avaliará a geração de respostas por rubrica, considerando correção factual, aderência ao contexto recuperado,
 fidelidade às fontes, precisão de autoria, explicitação de insuficiência documental, completude proporcional e ausência de alucinação.
 
-A terceira camada comparará avaliação humana e avaliação baseada no paradigma \textit{LLM-as-a-judge}, observando concordâncias,
-divergências, falsos positivos de qualidade e falsos negativos.
-
-A quarta camada analisará qualitativamente erros e casos críticos, buscando identificar padrões como falhas de recuperação, uso inadequado de fontes, atribuição incorreta, extrapolação do contexto recuperado, resposta sem evidência suficiente e ausência de explicitação de insuficiência documental.
-
-Essas camadas operacionalizam as hipóteses do estudo e mantêm correspondência direta com os objetivos específicos. A sistematização da literatura orientará a seleção das métricas, rubricas e categorias de pergunta. A caracterização do acervo delimitará o \textit{corpus}, os metadados e os riscos documentais relevantes. A bateria de perguntas e o conjunto de referência permitirão examinar recuperação documental, geração de respostas e verificabilidade das fontes em condições controladas. A comparação entre avaliação humana e avaliação baseada no paradigma \textit{LLM-as-a-judge} permitirá examinar o alcance do julgamento automatizado. Por fim, a análise qualitativa dos erros e casos críticos sustentará a discussão sobre limites, riscos e condições de interpretação dos resultados em contexto institucional. Assim, a verificabilidade será examinada pela relação entre evidências recuperadas, fontes citadas e afirmações geradas; a variação por tipo de pergunta será analisada por desempenho agregado e padrões de erro; o alcance da avaliação baseada no paradigma \textit{LLM-as-a-judge} será avaliado pela comparação com julgamentos humanos independentes; e as condições de interpretação e uso cauteloso serão discutidas a partir dos resultados técnicos, dos casos críticos e dos requisitos institucionais identificados na literatura.
-
-O protocolo avaliativo incluirá: aplicação a um sistema RAG construído sobre o \textit{corpus} documental; bateria de perguntas distribuída por categorias; conjunto de referência com evidências documentais associadas às perguntas respondíveis; registro das evidências recuperadas e das respostas geradas; avaliação humana independente de uma amostra de respostas; e avaliação auxiliar baseada no paradigma \textit{LLM-as-a-judge}. Esses componentes serão utilizados para examinar recuperação documental, geração de respostas e verificabilidade das fontes, sem pretensão de comparar arquiteturas RAG de forma abrangente.
+O protocolo articula sistema RAG, bateria estratificada, evidências de referência, registro da recuperação e das respostas, rubrica humana e julgamento automatizado auxiliar. As regras específicas de interpretação de H1--H3 são apresentadas na Seção~\ref{sec:hipoteses-operacionais}.
 
 A rubrica usará escala de 0 a 2 em cinco dimensões: correção factual; aderência ao contexto recuperado; suporte e precisão das citações; completude proporcional à pergunta; e reconhecimento de insuficiência documental. Essas dimensões constituem uma síntese operacional de critérios recorrentes em frameworks e benchmarks de avaliação de RAG, e não a reprodução integral de uma rubrica única da literatura. A explicitação da insuficiência documental como dimensão própria adapta ao contexto parlamentar noções tratadas na literatura como deflexão, abstinência, recusa ou prevenção de alucinação. A nota 0 indica falha grave ou ausência da propriedade, 1 indica atendimento parcial ou ambíguo e 2 indica atendimento suficiente. A avaliação será feita no nível da resposta e, quando houver mais de uma afirmação central, registrará também as afirmações que motivaram a nota.
+
+\subsubsection{Avaliação humana}
 
 A avaliação humana será organizada por rubrica explícita, preferencialmente aplicada por pelo menos dois avaliadores independentes com familiaridade mínima com documentação legislativa ou com avaliação de sistemas de informação. Antes da anotação principal, será realizado piloto com amostra reduzida de perguntas para calibrar instruções, exemplos positivos, exemplos negativos e casos limítrofes. Sempre que viável, os avaliadores não terão acesso à identidade do sistema que gerou cada resposta. Divergências serão registradas e, quando necessário, dirimidas por revisão conjunta ou por avaliador adicional. A concordância entre julgamentos será descrita por percentual de acordo e pela análise das divergências observadas. A interpretação dos resultados será cautelosa e proporcional ao desenho amostral, evitando apresentar médias agregadas ou percentuais de concordância como prova isolada de qualidade.
 
 Os avaliadores serão informados sobre a finalidade da avaliação, o uso dos resultados e a forma de registro das respostas, preservando-se sua identificação individual na apresentação dos resultados.
 
+\subsubsection{Julgamento automatizado e comparação com avaliadores humanos}
+
+A terceira camada comparará os julgamentos humanos e automatizados, preservando as notas individuais e registrando concordâncias, divergências e falsos positivos ou negativos de qualidade. As medidas de concordância previstas para H3 são especificadas na Seção~\ref{sec:hipoteses-operacionais}.
+
 Para o julgamento automatizado, serão registrados modelo, versão, \textit{prompt}, rubrica, temperatura, formato de entrada e data de execução. Sempre que viável, o julgamento será repetido ou validado em amostra piloto para observar estabilidade. Os resultados do \textit{LLM-as-a-judge} serão tratados como auxiliares e comparados à avaliação humana, sem função de certificação autônoma.
 
+\subsubsection{Análise qualitativa de erros e casos críticos}
+
+A quarta camada examinará falhas de recuperação, uso inadequado de fontes, atribuição incorreta, extrapolação do contexto, resposta sem evidência suficiente e falha de recusa. Cada caso será vinculado à pergunta, aos documentos recuperados, à resposta e aos julgamentos, permitindo distinguir a origem do erro e discutir seus limites institucionais. Padrões emergentes serão registrados sem substituir as categorias previamente definidas.
+
 \subsection{Operacionalização das hipóteses e regras de decisão}
+\label{sec:hipoteses-operacionais}
 
-\pita[caixa,vermelho]{Operacionalização das hipóteses de trabalho movida para cá (deixou de ser parte da seção de hipóteses).
-Verificar a sobreposição com a seção anterior e, se for o caso, fundir ou reorganizar.}
+A unidade de análise será o par pergunta--resposta, vinculado às evidências recuperadas e às afirmações verificáveis da resposta. Cada pergunta receberá uma categoria de complexidade, um indicador de respondibilidade (respondível ou não respondível) e um conjunto de evidências de referência. A avaliação seguirá a rubrica da Seção~\ref{sec:rubrica}. A pontuação global será a média das cinco dimensões, sem substituir a análise por dimensão.
 
-A unidade de análise será o par pergunta--resposta, vinculado às evidências recuperadas e às afirmações verificáveis da resposta. Cada pergunta receberá uma categoria de complexidade, um indicador de respondibilidade (respondível ou não respondível) e um conjunto de evidências de referência. As respostas serão avaliadas em escala ordinal de 0 a 2 para correção factual, aderência ao contexto, suporte das citações, completude proporcional e explicitação de insuficiência documental; a pontuação global será a média das dimensões, sem substituir a análise por dimensão.
+Para H1, serão formados dois indicadores binários: recuperação pertinente (ao menos uma evidência suficiente em $k=5$, em que $k$ é o número de posições consideradas no ranking recuperado) e verificabilidade da resposta (todas as afirmações centrais apoiadas por evidência identificável). A análise separará quatro células: recuperação pertinente/verificável, pertinente/não verificável, não pertinente/verificável e não pertinente/não verificável. H1 será corroborada quando houver pelo menos um caso documentado nas células pertinente/não verificável e não pertinente/não verificável, com exame qualitativo das causas; será qualificada quando os casos se concentrarem em uma categoria ou condição; e será rejeitada quando a célula pertinente/não verificável não ocorrer e a verificabilidade variar apenas com a recuperação.
 
-Para H1, serão formados dois indicadores binários: recuperação pertinente (ao menos uma evidência suficiente em $k=5$\pita{, onde $k$ é...}) e verificabilidade da resposta (todas as afirmações centrais apoiadas por evidência identificável). A análise separará quatro células: recuperação pertinente/verificável, pertinente/não verificável, não pertinente/verificável e não pertinente/não verificável. H1 será corroborada quando houver pelo menos um caso documentado nas células pertinente/não verificável e não pertinente/não verificável, com exame qualitativo das causas; será qualificada quando os casos se concentrarem em uma categoria ou condição; e será rejeitada quando a célula pertinente/não verificável não ocorrer e a verificabilidade variar apenas com a recuperação.
-
-Para H2, perguntas factuais simples formarão o grupo de referência e perguntas multievidência, multietapas e não respondíveis formarão os grupos de maior complexidade. O contraste primário será a diferença entre as médias de pontuação global e de 	\textit{Hit@5} dos grupos \pita{{[ADICIONAR REFERÊNCIA PARA MÉTRICA \textit{Hit@5} OU EXPLICAR EM NOTA DE RODAPÉ.]}}. A hipótese será corroborada se o grupo de maior complexidade apresentar desempenho menor em pelo menos duas dimensões e em duas das três comparações principais; será qualificada se a diferença aparecer somente em categorias ou dimensões específicas\pita{; [E SERÁ REFUTADA SE...]}. Intervalos de confiança por \textit{bootstrap} e a distribuição dos casos, e não apenas a média, serão reportados.
+Para H2, perguntas factuais simples formarão o grupo de referência e perguntas multievidência, multietapas e não respondíveis formarão os grupos de maior complexidade. O contraste primário será a diferença entre as médias de pontuação global; para os grupos respondíveis, será examinada também a diferença de \textit{Hit@5} dos grupos\footnote{Hit@5 aplica a definição da Equação~\ref{eq:hit} aos cinco primeiros resultados. Mede a recuperação de suporte suficiente, conforme a convenção de evidência única ou complementar registrada para a pergunta.}. A hipótese será corroborada se o grupo de maior complexidade apresentar desempenho menor em pelo menos duas dimensões e em duas das três comparações principais; será qualificada se a diferença aparecer somente em categorias ou dimensões específicas; será refutada se os grupos comparados apresentarem desempenho homogêneo segundo os critérios observados ou se os grupos de maior complexidade apresentarem desempenho superior de modo consistente nas mesmas dimensões e comparações. Ausência de diferença conclusiva em amostra limitada não será interpretada, isoladamente, como demonstração de equivalência. Perguntas não respondíveis serão contrastadas pela rubrica e pelo reconhecimento de insuficiência, sem atribuir-lhes Hit@5. Intervalos de confiança por \textit{bootstrap} e a distribuição dos casos, e não apenas a média, serão reportados.
 
 Para H3, a concordância entre avaliação humana e julgamento automatizado será calculada por $kappa$ ponderado para as dimensões ordinais, percentual de acordo exato e análise dos casos em que o juiz automático aprova uma resposta que os humanos classificam como não verificável. Concordância parcial será descrita como $kappa$ entre 0,40 e 0,75, acompanhada de pelo menos 10\% de divergências em alguma dimensão. H3 será corroborada se houver concordância nesse intervalo e falsos positivos ou falsos negativos documentados em pelo menos 10\% da amostra; será qualificada se a divergência depender da categoria ou da rubrica; e será rejeitada se a concordância for alta e as divergências residuais não alterarem decisões de qualidade.
 
@@ -150,12 +170,10 @@ Em conjunto, essas hipóteses orientam a organização da bateria de perguntas, 
 
 \subsection{Matriz de opções metodológicas}
 
-\pita[caixa,vermelho]{A matriz de opções metodológicas foi colocada nessa seção própria.}
-
-\pita{A Tabela~\ref{tab:matriz-metodologica} apresenta a matriz preliminar de opções metodológicas, articulando objetivos específicos,
+A Tabela~\ref{tab:matriz-metodologica} apresenta a matriz preliminar de opções metodológicas, articulando objetivos específicos,
 abordagem, natureza, dados coletados, público-alvo, amostragem, técnicas de coleta, técnicas de análise e formas de apresentação
 dos resultados. A matriz será refinada à medida que o protocolo avaliativo for consolidado e os procedimentos experimentais forem
-executados.}
+executados.
 
 \begin{landscape}
 \begingroup
@@ -189,10 +207,9 @@ Analisar limites e condições de interpretação dos resultados & Qualitativa &
 
 A viabilidade da pesquisa depende de quatro condições principais. A primeira é a disponibilidade do \textit{corpus}, composto por dados públicos e secundários, o que reduz riscos de acesso e dispensa coleta direta de dados pessoais sensíveis junto a participantes humanos para constituição da base documental. A segunda é a infraestrutura computacional para preparação textual, indexação vetorial, execução do sistema RAG, armazenamento de resultados e registro de versões; essa infraestrutura poderá ser composta por ferramentas de código aberto e, quando necessário, por serviços de API para geração ou julgamento automatizado. A terceira é a disponibilidade de avaliadores humanos para aplicar rubrica explícita a uma amostra das respostas; por isso, a avaliação humana será tratada como etapa amostral, com piloto prévio e escopo ajustável ao número efetivo de avaliadores. A quarta é o controle de custos e tempo de execução, que será enfrentado pela delimitação do protocolo avaliativo, pela aplicação a um \textit{corpus} documental específico e pela realização da avaliação humana em amostra de respostas.
 
-\pita[caixa,vermelho]{O parágrafo acima informa recursos importantes e elementos de viabilidade, mas não
-detalha que recursos se pretende usar na prática e se esse elementos de viabilidade estão satisfeitos. A banca
-de qualificação quer saber justamente se o trabalho é viável, isto é, se os recursos necessários para realização
-da pesquisa estão disponíveis.}
+Na situação documentada, estão disponíveis a base versionada, o código Python de coleta, as dependências declaradas, as saídas da análise exploratória e um piloto lexical de recuperação com BM25, TF--IDF e combinação de escores, ainda com consultas provisórias. Esse piloto não equivale à comparação final entre recuperação lexical, vetorial densa e híbrida. Há também uma implementação antecedente em Open WebUI e ChromaDB, com uso de API para geração e embeddings; sua existência documenta experiência técnica anterior, mas não assegura disponibilidade atual dos serviços ou orçamento para a rodada final.
+
+Permanecem por confirmar a máquina ou serviço de execução, a memória e eventual GPU necessárias à configuração selecionada, os limites de gasto com APIs e o número e a disponibilidade dos avaliadores humanos. A etapa principal depende dessas definições, da curadoria das perguntas e do piloto de anotação. Portanto, a viabilidade está demonstrada quanto ao acesso documental e à preparação inicial, mas permanece condicionada quanto à execução final e à avaliação humana. O cronograma da Seção~\ref{sec:cronograma} explicita a sequência planejada, sem pressupor que recursos ainda não confirmados estejam assegurados.
 
 O uso de IA generativa na pesquisa será tratado de forma transparente. Modelos de linguagem poderão ser utilizados como componentes do
 sistema RAG avaliado, como instrumentos auxiliares de julgamento automatizado e, como apoio editorial à revisão de texto, sempre sob

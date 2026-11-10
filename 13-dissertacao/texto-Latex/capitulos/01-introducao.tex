@@ -1,8 +1,11 @@
 \section{Introdução}
+\label{sec:introducao}
+
+A avaliação de sistemas de geração aumentada por recuperação em acervos legislativos constitui o problema desta pesquisa. Esta seção delimita o contexto institucional, a pergunta de pesquisa, as hipóteses de trabalho, os objetivos e a justificativa do estudo.
 
 \subsection{Contextualização temática}
 
-No campo da inteligência artificial generativa, grandes modelos de linguagem (\pita{LLM, do inglês ''\textit{Large Language Model}''})
+No campo da inteligência artificial generativa, grandes modelos de linguagem (LLM, do inglês ''\textit{Large Language Model}'')
 são modelos capazes de produzir texto em linguagem natural a partir de padrões aprendidos em grandes volumes de dados
 textuais \parencite{brownEtAl2020fewShotLearners,zhaoEtAl2023llmSurvey,minaee2024llmSurvey}. Apesar dessa capacidade,
 LLMs não garantem, por si só, confiabilidade factual, atualização ou verificabilidade documental, pois, quando
@@ -86,9 +89,7 @@ Em contextos jurídico-legislativos, estudos já exploram RAG, LLMs e recuperaç
 
 Diante disso, formula-se a seguinte pergunta de pesquisa: \textbf{como técnicas de avaliação de sistemas RAG podem ser organizadas e aplicadas à análise da recuperação documental, da geração de respostas e da verificabilidade das fontes em um sistema voltado à consulta de discursos da 56\textordfeminine{} Legislatura do Senado Federal?}
 
-\pita{\subsection{Hipóteses de trabalho}}
-
-\pita[caixa,vermelho]{Hipóteses de trabalho movidas para cá (deixou de ser a seção 3).}
+\subsection{Hipóteses de trabalho}
 
 Esta pesquisa caracteriza-se como investigação aplicada, multimétodos e orientada à organização e aplicação de um protocolo avaliativo a um sistema RAG em contexto institucional. Nesse contexto, as hipóteses assumem a forma de hipóteses de trabalho verificáveis, funcionando como respostas provisórias ao problema de pesquisa que poderão ser corroboradas, qualificadas ou rejeitadas pelas evidências empíricas produzidas no estudo. Desse modo, não serão tratadas como teste causal clássico entre uma variável independente e uma variável dependente única. Essa opção é compatível com a \textit{Design Science Research}, na qual a construção e a avaliação de artefatos constituem parte do processo de produção de conhecimento \parencite{hevnerEtAl2004designScience,peffersEtAl2007dsrm}.
 
@@ -100,8 +101,6 @@ As hipóteses de trabalho são as seguintes:
   \item \textbf{A avaliação baseada no paradigma \textit{LLM-as-a-judge} apresentará concordância parcial com a avaliação humana, mas será insuficiente como critério único de qualidade.} A hipótese será examinada pela comparação entre julgamentos automatizados e avaliação humana independente. Será considerada corroborada se a avaliação automatizada apresentar concordância parcial com a avaliação humana, mas também revelar divergências suficientes para impedir seu uso como critério único de qualidade. Será qualificada se a concordância variar conforme o tipo de pergunta, a dimensão avaliada ou a formulação da rubrica, e será rejeitada se os julgamentos automatizados se mostrarem plenamente consistentes com a avaliação humana ou, inversamente, incapazes de discriminar diferenças de qualidade segundo os critérios da rubrica. Essa hipótese se fundamenta na literatura sobre avaliação automatizada de linguagem natural e sobre uso de LLMs como avaliadores, que aponta sensibilidade a rubricas, modelos e formato de entrada \parencite{liuEtAl2023geval,liuEtAl2025judgeRag}.
 
 \end{enumerate}
-
-\pita[caixa,vermelho]{Operacionalização das hipóteses foi movida para a seção de procedimentos metodológicos.}
 
 \subsection{Enunciação dos objetivos}
 
@@ -122,12 +121,12 @@ Organizar técnicas de avaliação de sistemas RAG em um protocolo articulado e 
 
 Em conjunto, esses objetivos conectam três níveis do estudo: a sistematização conceitual das técnicas de avaliação, a organização dessas técnicas em protocolo empírico e a análise dos resultados no contexto do \textit{corpus} legislativo. Essa sequência busca garantir que a pergunta de pesquisa seja respondida por evidências observáveis, e não apenas por revisão bibliográfica ou demonstração técnica isolada.
 
-\pita{\subsection{Justificativa da pesquisa}}
+\subsection{Justificativa da pesquisa}
 
 A justificativa prática da pesquisa está na necessidade de avaliar, com critérios explícitos, sistemas generativos aplicados a acervos documentais de interesse público \parencite{wfd2023guidelinesAiParliaments,ipu2024aiParliaments,deAlmeidaSantos2025aiGovernance}. Sistemas RAG podem ampliar a mediação entre usuários e documentos legislativos, mas seu uso institucional exige critérios capazes de indicar quando a resposta está adequadamente ancorada em fontes, quando extrapola o contexto recuperado e quando deve explicitar incerteza ou insuficiência documental. Assim, a contribuição esperada não está em defender a adoção automática de sistemas generativos, mas em oferecer uma forma mais criteriosa de avaliá-los antes de qualquer uso ampliado.
 
 No plano científico, a pesquisa se justifica porque a avaliação de RAG ainda é um campo em consolidação, especialmente quando transposta de \textit{benchmarks} genéricos para domínios públicos específicos. Métricas de recuperação, rubricas de geração, avaliação humana e avaliações baseadas no paradigma \textit{LLM-as-a-judge} medem dimensões complementares, mas nenhuma delas, isoladamente, resolve o problema de verificar qualidade, rastreabilidade e verificabilidade das fontes. A organização e a aplicação do protocolo produzem um artefato metodológico destinado a enfrentar um problema institucional relevante e, por isso, aproximam o desenho da pesquisa da \textit{Design Science Research} \parencite{hevnerEtAl2004designScience,peffersEtAl2007dsrm}. Nesse enquadramento, a dissertação pretende organizar as técnicas avaliativas e aplicá-las a um \textit{corpus} legislativo brasileiro, distinguindo dimensões que, na prática, tendem a aparecer sobrepostas: recuperação documental, geração de respostas, julgamento automatizado, validação humana e verificabilidade das fontes \parencite{esEtAl2023ragas,saadFalconEtAl2024ares,pipitoneAlami2024legalbenchRag}.
 
-\pita{\subsection{Organização da dissertação}}
+\subsection{Organização da dissertação}
 
-\pita{<Escrever parágrafo final de introdução, descrevendo a organização da dissertação.>}
+Além desta introdução, a dissertação compreende seis seções. O referencial teórico (Seção~\ref{sec:referencial}) reúne os fundamentos, os trabalhos relacionados e a lacuna de pesquisa. Os procedimentos metodológicos (Seção~\ref{sec:metodologia}) descrevem a constituição do corpus, a produção das evidências e as regras de avaliação das hipóteses. A Seção~\ref{sec:caso} caracteriza o sistema RAG, o acervo e a prova de conceito que antecede esta investigação. Os resultados preliminares (Seção~\ref{sec:resultados}) são reservados às evidências do protocolo, e a discussão (Seção~\ref{sec:discussao}) à sua interpretação diante das hipóteses e da literatura. As considerações finais (Seção~\ref{sec:finais}) sintetizam as contribuições demonstradas, os limites e os próximos passos, incluindo o cronograma. Os apêndices reúnem instrumentos e instruções de reprodução.

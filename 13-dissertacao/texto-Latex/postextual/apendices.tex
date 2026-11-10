@@ -16,3 +16,31 @@
 
 % TODO: incluir prompts, formulário dos avaliadores e tabelas extensas que não
 % pertençam ao fluxo principal da argumentação.
+
+\apendice{Reprodução da coleta e localização dos artefatos}
+\label{ap:reproducao}
+
+O código de coleta e suas dependências estão disponíveis no repositório do pesquisador\footnote{\url{https://github.com/fabriciosantana/mcdia/tree/fc6c67ec60ab8442db3ae9bef53898d8bf9f6350/13-dissertacao/scripts}.}. A referência fixa identifica a versão consultada nesta redação, sem pressupor que o ramo principal permanecerá inalterado. O script consulta dados públicos do Senado em janelas mensais, preserva os lotes intermediários e consolida os registros por código de pronunciamento. Para executar em ambiente Python, a partir da raiz do repositório:
+
+\begin{verbatim}
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r 13-dissertacao/scripts/requirements.txt
+python 13-dissertacao/scripts/01_preparar_base_discursos_batch.py \
+  --data-inicio 2019-02-01 --data-fim 2023-01-31 \
+  --diretorio-saida /tmp/coleta-discursos-reproducao \
+  --tamanho-lote-textos 250 --trabalhadores 5 \
+  --tentativas 10 --backoff 1 --pausa-entre-lotes 2
+\end{verbatim}
+
+O diretório de saída deve ser separado dos dados originais. Os lotes existentes são reutilizados na retomada; uma nova coleta independente requer um diretório vazio. O arquivo consolidado será denominado \path{discursos_2019-02-01_2023-01-31.parquet}. Para preservar os resultados fora de uma sessão temporária, deve-se substituir o caminho de exemplo por armazenamento persistente. As opções adicionais são apresentadas pelo argumento \texttt{--help}.
+
+Reexecutar a coleta reproduz o procedimento, mas não garante identidade binária com uma coleta passada: a fonte pública e as dependências podem mudar. Para reproduzir a análise da versão congelada, deve-se obter o arquivo na revisão \texttt{v1.1.1}\footnote{\url{https://huggingface.co/datasets/fabriciosantana/discursos-senado-legislatura-56/tree/v1.1.1/data/full}.} e conferir seu SHA-256:
+\begin{verbatim}
+sha256sum discursos_2019-02-01_2023-01-31.parquet
+\end{verbatim}
+O resumo esperado é \path{e09cfc4793e5394be440906320c7d3008cda5a52b90bbc85bf47446362406af1}. Devem ser registrados data da execução e versões das dependências. O comando de coleta não foi reexecutado para esta revisão textual.
+
+A documentação da revisão bibliográfica está em \path{13-dissertacao/fichamentos/}, no mesmo repositório e referência: o inventário completo identifica as fontes; o manifesto registra versões e localizadores; e o relatório da busca complementar descreve critérios e limites. As tabelas de apoio à caracterização do corpus estão em \path{13-dissertacao/texto-Latex/dados/}. A tabela de cobertura textual e o gráfico de estimativas de segmentação desta dissertação usam, respectivamente, \path{cobertura_textual.csv} e \path{estimativa_chunking.csv}, conferidos com as saídas salvas da análise exploratória.
+
+O artigo antecedente que documenta a prova de conceito está em \path{06-inteligencia-artificial-generativa/5-project-paper/chatbot-rag/}, no mesmo repositório. As seções de proposta e experimentos descrevem a arquitetura, as rodadas e a inspeção manual citadas na Seção~\ref{sec:poc}. Esse material é um antecedente do pesquisador, distinto dos resultados finais a produzir nesta dissertação.

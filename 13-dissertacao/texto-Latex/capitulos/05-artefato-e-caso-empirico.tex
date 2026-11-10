@@ -1,6 +1,6 @@
-\section{\pita{Sistema RAG e o acervo de discursos parlamentares}}
+\section{Sistema RAG e o acervo de discursos parlamentares}\label{sec:caso}
 
-\pita{Esta seção} documentará o sistema RAG e o corpus de discursos da 56\textordfeminine{} Legislatura do
+Esta seção documentará o sistema RAG e o corpus de discursos da 56\textordfeminine{} Legislatura do
 Senado Federal empregados como caso empírico. O corpus já possui versão congelada e análise exploratória
 documentada. A prova de conceito já implementada constitui o ponto de partida técnico; a
 configuração do sistema efetivamente avaliada na dissertação ainda deverá ser congelada e descrita de modo
@@ -12,14 +12,43 @@ reproduzível, incluindo código, modelos, parâmetros e configurações.
 % confirmada no notebook 01: origem, cobertura temporal, critérios de inclusão e
 % exclusão, volume final, campos, duplicatas, ausências, versão e hash do corpus.
 
-\pita[caixa,vermelho]{Movidos os números da AED para cá. Lá na seção de metodologia fica apenas a descrição do processo,
-não o resultado do processo.}
-
 Dos 15.729 registros, 15.039 possuem texto integral, 687 dependem de resumo como fonte substituta e três não contêm texto nem resumo utilizável. Assim, 15.726 registros, ou 99,98\%, têm algum conteúdo indexável, mas texto integral e resumo não serão tratados como evidências equivalentes. A proveniência deverá acompanhar cada unidade recuperável para permitir que a avaliação distinga a fonte documental utilizada. Também foram identificadas 28 cópias textuais exatas excedentes, 1.291 documentos com menos de 50 palavras, sete documentos com mais de 10 mil palavras e cobertura de 86,81\% para partido e unidade federativa entre os documentos indexáveis. Esses achados recomendam inspeção antes de deduplicação, tratamento explícito de documentos curtos e longos e cautela no uso de filtros por metadados incompletos.
 
-A estimativa de segmentação não criou unidades de recuperação reais. Com aproximação de 512 tokens por trecho e sobreposição de 64 tokens, o \textit{notebook} estimou 45.971 trechos, mediana de dois trechos para textos integrais e máximo aproximado de 60. Configurações de 256, 768 e 1.024 tokens também foram simuladas para dimensionar o índice. Esses valores servem ao planejamento; a segmentação efetiva deverá usar o tokenizador do modelo escolhido, respeitar limites semânticos e ser comparada empiricamente no protocolo de recuperação.
+A estimativa de segmentação não criou unidades de recuperação reais. Com aproximação de 512 tokens por trecho e sobreposição de 64 tokens, a simulação estimou 45.971 trechos, mediana de dois trechos para textos integrais e máximo aproximado de 60. Configurações de 256, 768 e 1.024 tokens também foram simuladas para dimensionar o índice. Esses valores servem ao planejamento; a segmentação efetiva deverá usar o tokenizador do modelo escolhido, respeitar limites semânticos e ser comparada empiricamente no protocolo de recuperação.
 
-\pita[caixa,vermelho]{Explorar mais tabelas e gráficos nesta seção.}
+A Tabela~\ref{tab:cobertura-corpus} apresenta a disponibilidade textual, distinguindo documentos integrais de resumos usados como substitutos. Essa distinção deve acompanhar a avaliação: uma resposta apoiada apenas em resumo não possui necessariamente a mesma cobertura documental de uma resposta apoiada no pronunciamento integral.
+
+\begin{table}[htbp]
+\centering
+\caption{Disponibilidade textual dos registros do corpus.}\label{tab:cobertura-corpus}
+\begin{tabular}{lrr}\toprule
+Fonte disponível & Registros & Percentual (\%)\\\midrule
+Texto integral & 15.039 & 95,61\\
+Resumo substituto & 687 & 4,37\\
+Sem conteúdo utilizável & 3 & 0,02\\\midrule
+Total & 15.729 & 100,00\\\bottomrule
+\end{tabular}
+\par\smallskip Fonte: elaborado pelo autor a partir da análise exploratória do corpus, versão 1.1.1 (2026).
+\end{table}
+
+A Figura~\ref{fig:estimativa-segmentacao} compara estimativas do número de trechos sob quatro tamanhos e respectivas sobreposições. Reduzir o tamanho eleva o número estimado de unidades a indexar. A figura dimensiona o planejamento computacional; não demonstra melhoria de recuperação nem representa uma segmentação final executada.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.00011cm,y=0.85cm]
+\draw[->] (0,0)--(95000,0);
+\node[font=\small] at (47500,-1.0){Trechos estimados};
+\foreach \v/\t in {0/0,20000/20.000,40000/40.000,60000/60.000,80000/80.000}{\draw (\v,0)--(\v,-0.1) node[below,font=\small]{\t};}
+\foreach \y/\v/\t/\n in {4/84567/{256 / 32}/{84.567},3/45971/{512 / 64}/{45.971},2/33297/{768 / 96}/{33.297},1/27130/{1.024 / 128}/{27.130}}{
+\fill[blue!45] (0,\y-0.25) rectangle (\v,\y+0.25);
+\node[left,font=\small] at (0,\y){\t};
+\node[right,font=\small] at (\v,\y){\n};}
+\node[anchor=west,font=\small] at (0,4.7){Tamanho / sobreposição (tokens estimados)};
+\end{tikzpicture}
+\caption{Estimativa de segmentação do corpus por tamanho e sobreposição.}\label{fig:estimativa-segmentacao}
+\par\smallskip Fonte: elaborado pelo autor a partir das saídas da análise exploratória (2026).
+\end{figure}
+
+A inspeção exploratória usou referências de planejamento: ao menos 99\% de registros com conteúdo utilizável, 90\% com texto integral, menos de 1\% sem conteúdo, menos de 2\% de cópias exatas excedentes e menos de 10\% com menos de 50 palavras. Os valores observados foram, respectivamente, 99,98\%, 95,61\%, 0,02\%, 0,18\% e 8,21\%. Esses limites foram empregados para identificar pontos de atenção, não para certificar qualidade do corpus ou do sistema. A cobertura de partido e unidade federativa, de 86,81\% entre documentos indexáveis, ficou abaixo da referência exploratória de 90\%; sua interpretação exige distinguir ausência de informação de não aplicabilidade desses campos a determinados autores. O resultado autoriza planejar experimentos controlados com ressalvas, sem antecipar desempenho de recuperação ou geração.
 
 \subsection{Arquitetura e componentes do sistema RAG}
 
@@ -35,8 +64,14 @@ A estimativa de segmentação não criou unidades de recuperação reais. Com ap
 % TODO: registrar versões, modelos, prompts, top-k, reranqueamento, temperatura,
 % datas de execução, sementes quando aplicáveis e localização dos artefatos.
 
-\pita{\subsection{Prova de conceito realizada}}
+\subsection{Prova de conceito realizada}
+\label{sec:poc}
 
+O antecedente técnico da dissertação é um chatbot para consulta aos discursos da 56\textordfeminine{} Legislatura, desenvolvido pelo autor com preparação documental em Python, Open WebUI para interação e orquestração e ChromaDB para persistência vetorial. A configuração documentada no artigo antecedente utilizou a API da OpenAI para embeddings e geração; Ollama permaneceu como alternativa para modelos locais. Esses componentes descrevem a prova de conceito, não a configuração final ainda a congelar nesta pesquisa.
+
+O fluxo preparou segmentos enriquecidos por autoria, data, partido, unidade federativa e URL; produziu lotes de ingestão; recuperou contexto para cada pergunta; e registrou respostas e fontes para avaliação posterior. Na configuração relatada, foram usados \texttt{text-embedding-3-small} e \texttt{gpt-5-nano}. A avaliação automatizada compreendeu três rodadas de 20 perguntas, com rubrica de cinco critérios em escala de 0 a 2, acompanhada de inspeção manual amostral de sete respostas da rodada base. O artigo registra um caso em que uma resposta recebeu nota automática máxima, mas foi considerada inadequada na inspeção humana por erro de escopo.
+
+Essa experiência motivou a separação entre recuperação, geração e julgamento no desenho da dissertação. O antecedente não incluiu comparação controlada com baseline lexical, métricas formais de recuperação ou avaliação humana ampla e independente. Por isso, serve como evidência preliminar e ponto de partida de implementação, não como validação do protocolo final. O artigo e os artefatos antecedentes estão identificados no Apêndice~\ref{ap:reproducao}.
 
 \subsection{Evolução em relação à prova de conceito}
 
