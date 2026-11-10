@@ -2,10 +2,11 @@
 
 Esta seção apresenta o desenho metodológico da pesquisa e distingue os procedimentos já executados daqueles que ainda
 integram o protocolo experimental. Até o momento desta redação, foram concluídas a constituição, o versionamento e a
-análise exploratória do \textit{corpus} de discursos. Permanecem planejadas a construção efetiva das unidades de recuperação,
-a elaboração do conjunto de perguntas e dos julgamentos de relevância, a comparação entre estratégias de busca e, em etapa
-posterior, a avaliação das respostas geradas. Essa distinção temporal evita tratar estimativas de preparação dos dados como
-resultados de recuperação ou geração.
+análise exploratória do \textit{corpus} de discursos. No projeto antecedente, também foram preparados e indexados trechos,
+elaborada uma bateria ampliada de perguntas e executado um piloto de geração e julgamento automatizado. Essas execuções
+informam a viabilidade do protocolo, mas não substituem a validação do conjunto de referência, a comparação controlada de
+estratégias de recuperação nem a avaliação humana independente previstas para a dissertação. Essa distinção evita tratar
+resultados preliminares do artefato como evidência final das hipóteses.
 
 \subsection{Natureza e abordagem da pesquisa}
 
@@ -25,8 +26,9 @@ As técnicas de coleta e produção de evidências distribuem-se em três frente
 sistematiza artigos, \textit{surveys}, \textit{benchmarks}, relatórios institucionais e diretrizes sobre RAG, recuperação da
 informação, avaliação de sistemas generativos, informação legislativa e uso institucional de IA; (2) a frente documental, já
 executada quanto à obtenção e ao congelamento da base, abrange coleta, consolidação, controle de versão e auditoria do
-\textit{corpus}; e (3) a frente avaliativa, que permanece em desenvolvimento e compreenderá o registro das unidades recuperadas,
-das respostas geradas e dos julgamentos humanos e automatizados definidos pelo protocolo.
+\textit{corpus}; e (3) a frente avaliativa, em desenvolvimento, que já conta com bateria ampliada, preparação de trechos e
+execuções-piloto automatizadas no projeto antecedente, e cuja etapa da dissertação compreenderá a validação das evidências,
+as comparações controladas, o registro das respostas e os julgamentos humanos e automatizados definidos pelo protocolo.
 
 \subsubsection{Técnica de revisão bibliográfica e técnico-normativa}
 
@@ -71,7 +73,15 @@ A inspeção incluiu proporção de registros com conteúdo utilizável, disponi
 
 \subsubsection{Construção dos dados de avaliação}
 
-Essa etapa construirá um conjunto de perguntas estratificado; associará a cada pergunta respondível os pronunciamentos ou trechos relevantes; produzirá efetivamente as unidades de recuperação; e comparará tamanhos e sobreposições de segmentação. Serão implementadas busca lexical com BM25, busca vetorial e busca híbrida, preservados os mesmos dados, perguntas e julgamentos de relevância para tornar a comparação controlada.
+O trabalho realizado no projeto antecedente já produziu uma bateria v4 com 200 perguntas distribuídas em 16 categorias e uma seleção piloto estratificada de 32 perguntas, com duas perguntas por categoria. Os itens registram dificuldade, respondibilidade, autores esperados, fontes indicativas, critérios esperados para a resposta e riscos de avaliação. A classificação atual distingue itens respondíveis, parcialmente respondíveis e não respondíveis; antes do uso inferencial, a curadoria deverá revisar especialmente os casos parciais e fixar uma regra consistente para sua inclusão em cada análise. A bateria e o piloto estão nos arquivos \path{4-project/eval/discursos_questions_v4_200.json} e \path{4-project/eval/discursos_questions_v4_pilot_stratified.json} do projeto antecedente.
+
+Também foram produzidas 23.806 unidades textuais para indexação a partir de 15.729 registros de entrada: 15.726 registros forneceram texto utilizável, três foram descartados e 687 unidades documentais usaram resumo em lugar do texto integral. A preparação documentada adotou limite de 850 palavras por trecho, sobreposição de 150 palavras e máximo de 200 trechos por documento. Esses parâmetros descrevem a implementação antecedente e servem como referência para reprodução e comparação; não constituem, por si, a segmentação definitiva da dissertação. A validação de alternativas de tamanho e sobreposição continua necessária.
+
+As categorias da bateria abrangem perguntas factuais, foco e desambiguação de autoria, comparação temática e temporal, evidência negativa, consultas numéricas, síntese, múltiplas etapas, controle de escopo, verificação de citações e estresse de recuperação, entre outras. Sua distribuição contempla 12 ou 13 itens por categoria. Essa composição amplia a cobertura do piloto inicial, mas não representa uma amostra probabilística de consultas reais dos usuários do Senado.
+
+O conjunto de referência da dissertação deverá associar cada pergunta respondível a um ou mais pronunciamentos e trechos relevantes, preservando o vínculo ao identificador documental e à URL oficial. A existência de fontes indicativas na bateria v4 não equivale a julgamentos de relevância exaustivos nem a um conjunto-ouro validado. A curadoria deverá confirmar suficiência, pertinência e cobertura das evidências, documentar ambiguidades e registrar as decisões de anotação. Para perguntas não respondíveis, deverá confirmar-se a ausência de suporte no recorte; os casos parcialmente respondíveis exigem regra explícita para distinguir resposta parcial adequada de resposta sem evidência suficiente.
+
+O projeto antecedente já dispõe de implementação para preparação e ingestão da base e de avaliação automatizada no Open WebUI. O experimento da dissertação ainda deverá comparar, sob os mesmos dados, perguntas e julgamentos de referência, busca lexical com BM25, busca vetorial e busca híbrida, além de avaliar o efeito de alternativas de segmentação. Essa comparação não se confunde com a recuperação efetuada pelo sistema RAG antecedente, pois as rodadas existentes não usaram um conjunto de relevância validado nem produziram métricas comparativas de recuperação.
 
 A bateria contemplará perguntas factuais, foco em autor, desambiguação, evidência negativa, comparação entre autores, comparação temporal, perguntas numéricas, síntese temática, múltiplas etapas, autoria cruzada, controle de escopo e estresse de recuperação. Essas categorias representam famílias recorrentes em avaliações de RAG e riscos específicos do domínio legislativo, como dispersão temporal, multiplicidade de autores, variação terminológica e perguntas não respondíveis \parencite{zhuEtAl2025rageval,saadFalconEtAl2024ares,esEtAl2023ragas,pipitoneAlami2024legalbenchRag,dahlEtAl2024largeLegalFictions}. Sua distribuição será estratificada por período, tamanho do documento e tipo de fonte e, quando a cobertura permitir, por partido e unidade federativa, sem interpretar ausência de metadados como categoria substantiva de representação.
 
@@ -79,13 +89,13 @@ A bateria será balanceada por categorias, com distribuição registrada antes d
 
 O conjunto de referência será produzido por curadoria documental, com preservação do vínculo entre trecho, pronunciamento e URL oficial. Perguntas não respondíveis terão essa condição registrada explicitamente. Também serão documentadas ambiguidades, decisões de relevância e eventuais revisões do conjunto. Somente depois desse conjunto será possível calcular métricas de recuperação sem confundir similaridade automática com relevância de referência.
 
-Após a estabilização da recuperação, o protocolo avançará para a geração de respostas e para a comparação entre rubrica humana e julgamento automatizado. Essa fase permanecerá analiticamente separada da recuperação: uma resposta inadequada poderá decorrer da ausência de evidência pertinente, do uso incorreto de evidência disponível ou da extrapolação promovida pelo modelo gerador. Serão registrados estratégia de segmentação, modelos, \textit{embeddings}, índices, parâmetros de busca, valor de \textit{top-k}, reranqueamento, \textit{prompt}, modelo gerador, temperatura, \textit{top-p}, versões e datas de execução. Nesse vocabulário, \textit{top-k} designa a quantidade de resultados documentais considerada na recuperação, enquanto \textit{top-p} controla a amostragem probabilística de tokens na geração.
+Após a validação da recuperação, o protocolo avaliará as respostas e comparará rubrica humana e julgamento automatizado. Essa fase permanecerá analiticamente separada da recuperação: uma resposta inadequada poderá decorrer da ausência de evidência pertinente, do uso incorreto de evidência disponível ou da extrapolação promovida pelo modelo gerador. Serão registrados estratégia de segmentação, modelos, \textit{embeddings}, índices, parâmetros de busca, valor de \textit{top-k}, reranqueamento, \textit{prompt}, modelo gerador, temperatura, \textit{top-p}, versões e datas de execução. Nesse vocabulário, \textit{top-k} designa a quantidade de resultados documentais considerada na recuperação, enquanto \textit{top-p} controla a amostragem probabilística de tokens na geração.
 
 \subsection{Técnicas de análise dos dados}
 
 \label{sec:analise}
 
-A análise experimental será organizada em quatro camadas, posteriores à caracterização do \textit{corpus}. As subseções seguintes especificam seus procedimentos.
+A análise experimental será organizada em quatro camadas, posteriores à caracterização do \textit{corpus}. No projeto antecedente, foram documentadas quatro execuções automatizadas de baterias-piloto: duas com 20 perguntas e duas com 32. Nas duas últimas rodadas, todas as 32 perguntas foram processadas; as médias do juiz automático foram 9,031 e 9,094 em escala de 0 a 10. Esses valores descrevem exclusivamente as saídas do juiz automatizado naquele sistema e naquela configuração. Não são notas de avaliadores humanos, métricas de recuperação, estimativas da qualidade geral do sistema nem resultados de teste das hipóteses. A rubrica do projeto antecedente e sua escala não são idênticas à rubrica de cinco dimensões definida nesta dissertação. As subseções seguintes especificam a análise final planejada e identificam a função limitada desses antecedentes.
 
 \subsubsection{Avaliação da recuperação documental}
 \label{sec:metricas}
@@ -147,7 +157,7 @@ Os avaliadores serão informados sobre a finalidade da avaliação, o uso dos re
 
 \subsubsection{Julgamento automatizado e comparação com avaliadores humanos}
 
-A terceira camada comparará os julgamentos humanos e automatizados, preservando as notas individuais e registrando concordâncias, divergências e falsos positivos ou negativos de qualidade. As medidas de concordância previstas para H3 são especificadas na Seção~\ref{sec:hipoteses-operacionais}.
+A terceira camada comparará os julgamentos humanos e automatizados, preservando as notas individuais e registrando concordâncias, divergências e falsos positivos ou negativos de qualidade. No projeto antecedente, o mesmo modelo \texttt{gpt-5-nano} foi empregado como gerador e juiz em rodadas do piloto de 32 perguntas; portanto, essas notas não constituem avaliação independente nem permitem estimar concordância com especialistas. As medidas de concordância previstas para H3 são especificadas na Seção~\ref{sec:hipoteses-operacionais} e serão calculadas somente após a anotação humana independente.
 
 Para o julgamento automatizado, serão registrados modelo, versão, \textit{prompt}, rubrica, temperatura, formato de entrada e data de execução. Sempre que viável, o julgamento será repetido ou validado em amostra piloto para observar estabilidade. Os resultados do \textit{LLM-as-a-judge} serão tratados como auxiliares e comparados à avaliação humana, sem função de certificação autônoma.
 
@@ -159,6 +169,8 @@ A quarta camada examinará falhas de recuperação, uso inadequado de fontes, at
 \label{sec:hipoteses-operacionais}
 
 A unidade de análise será o par pergunta--resposta, vinculado às evidências recuperadas e às afirmações verificáveis da resposta. Cada pergunta receberá uma categoria de complexidade, um indicador de respondibilidade (respondível ou não respondível) e um conjunto de evidências de referência. A avaliação seguirá a rubrica da Seção~\ref{sec:rubrica}. A pontuação global será a média das cinco dimensões, sem substituir a análise por dimensão.
+
+As regras desta subseção são critérios prospectivos de interpretação, não conclusões já obtidas. As rodadas automatizadas do projeto antecedente não serão usadas para corroborar ou refutar H1--H3: foram conduzidas com bateria piloto, sem referência de relevância validada, sem comparação controlada entre os três recuperadores e sem julgamentos humanos independentes. A aplicação das regras dependerá da execução experimental congelada e dos dados de avaliação produzidos conforme as subseções anteriores.
 
 Para H1, serão formados dois indicadores binários: recuperação pertinente (ao menos uma evidência suficiente em $k=5$, em que $k$ é o número de posições consideradas no ranking recuperado) e verificabilidade da resposta (todas as afirmações centrais apoiadas por evidência identificável). A análise separará quatro células: recuperação pertinente/verificável, pertinente/não verificável, não pertinente/verificável e não pertinente/não verificável. H1 será corroborada quando houver pelo menos um caso documentado nas células pertinente/não verificável e não pertinente/não verificável, com exame qualitativo das causas; será qualificada quando os casos se concentrarem em uma categoria ou condição; e será rejeitada quando a célula pertinente/não verificável não ocorrer e a verificabilidade variar apenas com a recuperação.
 
