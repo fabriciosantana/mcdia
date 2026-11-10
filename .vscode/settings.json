@@ -33,5 +33,6 @@
     "%DIR%/aux/**/*",
     "%DIR%/out/*.synctex.gz"
   ],
-  "postman.settings.dotenv-detection-notification-visibility": false
+  "postman.settings.dotenv-detection-notification-visibility": false,
+  "python.terminal.useEnvFile": true
 }
