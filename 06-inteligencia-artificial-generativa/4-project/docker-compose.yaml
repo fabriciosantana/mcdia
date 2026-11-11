@@ -13,8 +13,8 @@ services:
   chromadb-admin:
     image: chromadb-admin
     container_name: chromadb-admin
-    ports:
-      - "3001:3001"
+    #ports:
+    #  - "3001:3001"
     depends_on:
       - chromadb
     restart: unless-stopped
@@ -60,16 +60,24 @@ services:
       - CHROMA_DATABASE=${CHROMA_DATABASE:-default_database}
 
       # Embeddings (ollama ou openai)
-      - RAG_EMBEDDING_ENGINE=${RAG_EMBEDDING_ENGINE:-ollama}
-      - RAG_EMBEDDING_MODEL=${RAG_EMBEDDING_MODEL:-qwen3-embedding:0.6b}
+      - RAG_EMBEDDING_ENGINE=${RAG_EMBEDDING_ENGINE:-openai}
+      - RAG_EMBEDDING_MODEL=${RAG_EMBEDDING_MODEL:-text-embedding-3-small}
       - RAG_EMBEDDING_BATCH_SIZE=${RAG_EMBEDDING_BATCH_SIZE:-32}
       - RAG_OPENAI_API_BASE_URL=${RAG_OPENAI_API_BASE_URL:-https://api.openai.com/v1}
       - RAG_OPENAI_API_KEY=${RAG_OPENAI_API_KEY:-}
+      - CHUNK_SIZE=${CHUNK_SIZE:-800}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP:-150}
 
       # Geração (OpenAI)
       - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - OPENAI_MODEL=${OPENAI_MODEL:-gpt-5.4-nano}
+
+      # Retrieval tuning
+      - RAG_TOP_K=${RAG_TOP_K:-30}
+      - RAG_TOP_K_RERANKER=${RAG_TOP_K_RERANKER:-5}
+      - ENABLE_RAG_HYBRID_SEARCH=${ENABLE_RAG_HYBRID_SEARCH:-true}
+      - ENABLE_RAG_HYBRID_SEARCH_ENRICHED_TEXTS=${ENABLE_RAG_HYBRID_SEARCH_ENRICHED_TEXTS:-true}
 
       # Timeout ampliado
       - WEBUI_TIMEOUT=${WEBUI_TIMEOUT:-300}
