@@ -77,30 +77,38 @@ A primeira camada avaliará a recuperação documental por meio de métricas de 
 Para fins de avaliação da recuperação, a unidade principal de análise será o trecho recuperável indexado no sistema, preservada sua vinculação ao discurso original, aos metadados e à URL da fonte. Quando a evidência esperada corresponder a um discurso inteiro, serão considerados relevantes os trechos desse discurso que contenham informação suficiente para responder à pergunta.
 
 Seja $Q^+$ o conjunto de perguntas respondíveis com evidências de referência, $R_q$ o conjunto de unidades relevantes para a pergunta $q$, e $L_q^k$ a lista dos primeiros $k$ resultados, sem repetição de identificadores. O corte $k$ é a quantidade máxima de resultados considerada. Precisão e revocação no corte são definidas por \parencite{manningEtAl2008informationRetrieval}:
+
 \begin{equation}
 \mathrm{Precision@}k(q)=\frac{|L_q^k\cap R_q|}{k},\qquad
 \mathrm{Recall@}k(q)=\frac{|L_q^k\cap R_q|}{|R_q|}.
 \end{equation}
+
 Se o sistema retornar menos de $k$ itens, as posições ausentes não contarão como acertos. A revocação depende da cobertura das evidências anotadas: um conjunto incompleto permite medir recuperação das referências conhecidas, não de toda evidência potencialmente relevante no acervo.
 
 A posição $r_q$ do primeiro resultado relevante define o posto recíproco: $RR(q)=1/r_q$, ou zero quando não houver resultado relevante na lista avaliada. A média é
+
 \begin{equation}
 \mathrm{MRR}=\frac{1}{|Q^+|}\sum_{q\in Q^+}RR(q).
 \end{equation}
+
 A profundidade examinada será registrada; quando limitada a $k$, a medida será identificada como MRR@$k$, sem equipará-la à avaliação do ranking completo \parencite{thakurEtAl2021beir}.
 
 Para relevância graduada, seja $g_{q,i}$ o grau de relevância do resultado na posição $i$. Será empregada a convenção de ganho exponencial:
+
 \begin{equation}
 \mathrm{DCG@}k(q)=\sum_{i=1}^{k}\frac{2^{g_{q,i}}-1}{\log_2(i+1)},\qquad
 \mathrm{nDCG@}k(q)=\frac{\mathrm{DCG@}k(q)}{\mathrm{IDCG@}k(q)}.
 \end{equation}
+
 IDCG é o ganho da ordenação ideal das evidências julgadas no mesmo corte. Essa normalização permite comparar a ordenação obtida à melhor ordenação possível para a pergunta \parencite{manningEtAl2008informationRetrieval}. A escala de relevância e a cobertura dos julgamentos deverão ser fixadas antes da comparação; itens não julgados não serão interpretados automaticamente como irrelevantes. Casos com IDCG igual a zero não receberão nDCG e terão sua quantidade informada separadamente.
 
 Para distinguir qualquer passagem pertinente de uma evidência suficiente, seja $S_q\subseteq R_q$ o conjunto de unidades que, individualmente, contêm suporte suficiente para a resposta esperada. Define-se neste protocolo:
+
 \begin{equation}
 \mathrm{Hit@}k(q)=\begin{cases}1,&L_q^k\cap S_q\ne\varnothing,\\0,&\text{caso contrário}.\end{cases}
 \label{eq:hit}
 \end{equation}
+
 A média de Hit@$k$ é a proporção de perguntas com ao menos uma evidência suficiente nos primeiros $k$ resultados. Para perguntas que exigem evidências complementares, o protocolo deverá registrar os conjuntos suficientes; o acerto exigirá recuperar todos os componentes de ao menos um desses conjuntos, e será reportado separadamente da convenção de evidência única. Assim, relevância parcial não será confundida com suficiência documental.
 
 As médias serão calculadas sobre perguntas elegíveis, informando seu número e os casos sem julgamento suficiente. Perguntas não respondíveis não terão Recall, MRR ou nDCG interpretados como sucesso ou falha de localização de uma evidência inexistente; serão analisadas quanto à recusa e à insuficiência documental. O desempenho será também estratificado por ano, tamanho do documento, tipo de fonte e metadados com cobertura adequada, com exame separado de redundância e erros.
@@ -148,8 +156,7 @@ Em conjunto, essas hipóteses orientam a organização da bateria de perguntas, 
 
 \subsection{Matriz de opções metodológicas}
 
-A Tabela~\ref{tab:matriz-metodologica} apresenta a matriz preliminar de opções metodológicas, articulando objetivos específicos, abordagem, natureza, dados coletados, público-alvo, amostragem, técnicas de coleta, técnicas de análise e formas de apresentação
-dos resultados. A matriz será refinada à medida que o protocolo avaliativo for consolidado e os procedimentos experimentais forem executados.
+A Tabela~\ref{tab:matriz-metodologica} apresenta a matriz preliminar de opções metodológicas, articulando objetivos específicos, abordagem, natureza, dados coletados, público-alvo, amostragem, técnicas de coleta, técnicas de análise e formas de apresentação dos resultados. A matriz será refinada à medida que o protocolo avaliativo for consolidado e os procedimentos experimentais forem executados.
 
 \begin{landscape}
 \begingroup
@@ -187,6 +194,4 @@ Na situação documentada, estão disponíveis a base versionada, o código Pyth
 
 O experimento de viabilidade examina a exequibilidade técnica do fluxo de preparação, ingestão, consulta e avaliação automatizada; sua reexecução deverá confirmar os artefatos, as configurações e a estabilidade operacional. Permanecem por confirmar para o experimento principal a infraestrutura de execução, os limites de gasto com APIs e o número e a disponibilidade dos avaliadores humanos. A execução principal depende também da curadoria das perguntas e do piloto de anotação. Assim, há evidência preliminar de viabilidade técnica, enquanto a viabilidade integral do protocolo principal permanece condicionada a essas definições. O cronograma da Seção~\ref{sec:cronograma} explicita a sequência planejada, sem pressupor que recursos ainda não confirmados estejam assegurados.
 
-O uso de IA generativa na pesquisa será tratado de forma transparente. Modelos de linguagem poderão ser utilizados como componentes do sistema RAG avaliado, como instrumentos auxiliares de julgamento automatizado e, como apoio editorial à revisão de texto, sempre sob
-responsabilidade do pesquisador. Quando integrarem a coleta ou a análise dos dados, serão registrados modelo, versão ou provedor disponível, configuração relevante, rubrica, \textit{prompt} ou instruções de julgamento e data de execução. As saídas automatizadas
-não serão tratadas como evidência autossuficiente: deverão ser confrontadas com fontes documentais, métricas de recuperação, rubricas e avaliação humana nos limites definidos pelo protocolo.
+O uso de IA generativa na pesquisa será tratado de forma transparente. Modelos de linguagem poderão ser utilizados como componentes do sistema RAG avaliado, como instrumentos auxiliares de julgamento automatizado e, como apoio editorial à revisão de texto, sempre sob responsabilidade do pesquisador. Quando integrarem a coleta ou a análise dos dados, serão registrados modelo, versão ou provedor disponível, configuração relevante, rubrica, \textit{prompt} ou instruções de julgamento e data de execução. As saídas automatizadas não serão tratadas como evidência autossuficiente: deverão ser confrontadas com fontes documentais, métricas de recuperação, rubricas e avaliação humana nos limites definidos pelo protocolo.
