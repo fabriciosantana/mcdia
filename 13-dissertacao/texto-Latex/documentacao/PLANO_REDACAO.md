@@ -6,19 +6,17 @@ Legenda: `[x]` concluído no escopo indicado; `[~]` parcialmente concluído; `[ 
 
 ## Estado atual e numeração
 
-O documento contém nove seções principais, na ordem de inclusão em `main.tex`. Os prefixos dos arquivos preservam a organização anterior e não correspondem integralmente à numeração do documento.
+O documento contém sete seções principais, na ordem de inclusão em `main.tex`. A metodologia passou a ser o capítulo 3; trabalhos relacionados e hipóteses estão incorporados, respectivamente, ao referencial teórico e à introdução. Os arquivos `XX-03-trabalhos-relacionados.tex` e `XX-04-hipoteses-de-trabalho.tex` estão fora da compilação e permanecem como candidatos a exclusão, até a decisão de arquivamento ou remoção.
 
 | Seção | Arquivo em `capitulos/` | Estado identificado |
 |---|---|---|
 | 1. Introdução | `01-introducao.tex` | Texto desenvolvido, com pergunta e seis objetivos específicos; alinhamento final e sustentação da lacuna pendentes. |
 | 2. Referencial teórico | `02-referencial-teorico.tex` | Texto desenvolvido e atualizado com oito fontes adicionais; revisão de coerência final pendente. |
-| 3. Trabalhos relacionados | `03-trabalhos-relacionados.tex` | Comparação crítica inicial redigida com as fontes prioritárias e três referências de apoio; quadro comparativo auditável e revisão final pendentes. |
-| 4. Hipóteses do estudo | `04-hipoteses-de-trabalho.tex` | H1, H2 e H3 formuladas e operacionalizadas; dimensionamento amostral e execução pendentes. |
-| 5. Metodologia | `04-procedimentos-metodologicos.tex` | Constituição e análise do corpus descritas como realizadas; etapas experimentais planejadas. |
-| 6. Artefato e caso empírico | `05-artefato-e-caso-empirico.tex` | Estrutura com `TODO`; já há evidências para redigir a caracterização do corpus. |
-| 7. Resultados | `06-resultados.tex` | Estrutura com `TODO`; depende da execução experimental final. |
-| 8. Discussão | `07-discussao.tex` | Estrutura com `TODO`; depende dos resultados e de sua interpretação. |
-| 9. Considerações finais | `08-consideracoes-finais.tex` | Estrutura com `TODO`; depende das contribuições efetivamente demonstradas. |
+| 3. Procedimentos metodológicos | `03-procedimentos-metodologicos.tex` | Constituição e análise do corpus descritas como realizadas; etapas experimentais planejadas. |
+| 4. Sistema RAG e caso empírico | `04-artefato-e-caso-empirico.tex` | Caracterização do corpus e experimento de viabilidade em desenvolvimento; configuração principal pendente. |
+| 5. Resultados preliminares | `05-resultados.tex` | Estrutura com `TODO`; depende da execução experimental. |
+| 6. Discussão | `06-discussao.tex` | Estrutura com `TODO`; depende dos resultados e de sua interpretação. |
+| 7. Considerações finais | `07-consideracoes-finais.tex` | Estrutura com `TODO`; depende das contribuições efetivamente demonstradas. |
 
 ## Próxima entrega: revisão da literatura (atualização de 08/09/2026)
 

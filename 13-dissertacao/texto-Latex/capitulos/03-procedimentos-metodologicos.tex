@@ -1,13 +1,6 @@
 \section{Procedimentos metodológicos}\label{sec:metodologia}
 
-Esta seção apresenta o desenho metodológico da pesquisa e distingue os procedimentos já executados daqueles que ainda
-integram o protocolo experimental. Até o momento desta redação, foram concluídas a constituição, o versionamento e a
-análise exploratória do \textit{corpus} de discursos. A pesquisa também compreende um experimento de viabilidade, no qual
-foram preparados e indexados trechos, construída uma bateria ampliada de perguntas e executadas rodadas-piloto de geração e
-julgamento automatizado; essa etapa está sendo reexecutada para conferir o pipeline e consolidar os registros. Seus achados
-orientam o aperfeiçoamento do protocolo, mas não substituem a validação do conjunto de referência, a comparação controlada de
-estratégias de recuperação nem a avaliação humana independente do experimento principal. Essa distinção evita tratar resultados
-preliminares como evidência final das hipóteses.
+Esta seção apresenta o desenho metodológico da pesquisa e distingue os procedimentos já executados daqueles que ainda serão executados. Até o momento desta redação, foram concluídas a constituição, o versionamento, a análise exploratória do \textit{corpus} de discursos e o desenvolvimento de um experimento de viabilidade, no qual foram preparados e indexados trechos, construída uma bateria de perguntas e executadas rodadas-piloto de geração e julgamento automatizado. Seus achados orientam o aperfeiçoamento do protocolo, mas não substituem o experimento principal proposto. Essa distinção evita tratar resultados preliminares como evidência final das hipóteses.
 
 \subsection{Natureza e abordagem da pesquisa}
 
@@ -23,51 +16,26 @@ O enquadramento geral dialoga com a \textit{Design Science Research}~\parencite{
 
 \subsection{Técnicas de coleta, caracterização e produção de evidências}
 
-As técnicas de coleta e produção de evidências distribuem-se em três frentes: (1) A frente bibliográfica e técnico-normativa
-sistematiza artigos, \textit{surveys}, \textit{benchmarks}, relatórios institucionais e diretrizes sobre RAG, recuperação da
-informação, avaliação de sistemas generativos, informação legislativa e uso institucional de IA; (2) a frente documental, já
-executada quanto à obtenção e ao congelamento da base, abrange coleta, consolidação, controle de versão e auditoria do
-\textit{corpus}; e (3) a frente avaliativa, que inclui o experimento de viabilidade em reexecução e o experimento principal.
-Na primeira, a bateria ampliada, a preparação dos trechos e as rodadas automatizadas permitem examinar a exequibilidade dos
-procedimentos. Na segunda, serão validadas as evidências, realizadas as comparações controladas e aplicados os julgamentos
-humanos e automatizados definidos pelo protocolo consolidado.
+As técnicas de coleta e produção de evidências distribuem-se em três frentes: (1) A frente bibliográfica e técnico-normativa sistematiza artigos, \textit{surveys}, \textit{benchmarks}, relatórios institucionais e diretrizes sobre RAG, recuperação da informação, avaliação de sistemas generativos, informação legislativa e uso institucional de IA; (2) a frente documental, já executada quanto à obtenção e ao congelamento da base, abrange coleta, consolidação, controle de versão e auditoria do \textit{corpus}; e (3) a frente avaliativa, que inclui o experimento de viabilidade e o experimento principal. Na primeira, a bateria de perguntas, a preparação dos trechos e as rodadas automatizadas permitem examinar a exequibilidade dos procedimentos. Na segunda, serão validadas as evidências, realizadas as comparações controladas e aplicados os julgamentos humanos e automatizados definidos pelo protocolo consolidado.
 
 \subsubsection{Técnica de revisão bibliográfica e técnico-normativa}
 
 A revisão é narrativa e orientada pelo problema de pesquisa, com seleção intencional de estudos sobre recuperação, geração, avaliação de RAG e informação legislativa. A identificação das fontes consultou registros da ACL Anthology e páginas oficiais do arXiv, combinando os termos \textit{RAG evaluation}, \textit{faithfulness}, \textit{groundedness}, \textit{citation}, \textit{legal RAG}, \textit{parliamentary corpus} e \textit{LLM-as-a-judge}. O levantamento também considerou \textit{surveys}, benchmarks, relatórios institucionais e diretrizes pertinentes à aplicação de IA em parlamentos. Por se tratar de revisão narrativa, essas consultas apoiam a seleção intencional e a síntese crítica; não caracterizam uma busca exaustiva de toda a produção existente.
 
-A inclusão privilegiou estudos com método de avaliação, conjunto de testes, corpus anotado ou aplicação jurídica e parlamentar pertinente às dimensões do protocolo. Foram excluídos textos apenas opinativos, duplicatas e trabalhos cuja relação com o problema se limitava à menção a modelos de linguagem; os candidatos não selecionados permanecem registrados para rastreabilidade. A frente técnico-normativa reúne diretrizes e relatórios institucionais sobre IA e parlamentos, utilizados para contextualizar transparência e supervisão humana, sem tratá-los como evidência experimental de desempenho.
+A inclusão privilegiou estudos com método de avaliação, conjunto de testes, corpus anotado ou aplicação jurídica e parlamentar pertinente às dimensões do protocolo. Foram excluídos textos apenas opinativos, duplicatas e trabalhos cuja relação com o problema se limitava à menção a modelos de linguagem. A frente técnico-normativa reúne diretrizes e relatórios institucionais sobre IA e parlamentos, utilizados para contextualizar transparência e supervisão humana, sem tratá-los como evidência experimental de desempenho.
 
-A síntese compara corpus, tarefa, unidade de avaliação, métricas e participação humana, de modo a fundamentar a seleção do protocolo e explicitar as diferenças entre os estudos. O aprofundamento e a conferência das fontes centrais permanecem necessários antes da redação final.
-
-A busca favorece literatura de processamento de linguagem natural e não cobre exaustivamente administração pública e ciência política. Por isso, a síntese fundamenta a seleção do protocolo, mas não comprova a inexistência de estudos semelhantes nem é apresentada como revisão sistemática. O inventário, o manifesto de fontes e o registro da busca são disponibilizados com os artefatos da pesquisa, conforme o Apêndice~\ref{ap:reproducao}.
+A busca favoreceu literatura de processamento de linguagem natural e não cobre exaustivamente administração pública e ciência política. Por isso, a síntese fundamenta a seleção do protocolo, mas não comprova a inexistência de estudos semelhantes nem é apresentada como revisão sistemática. O inventário, o manifesto de fontes e o registro da busca são disponibilizados com os artefatos da pesquisa, conforme o Apêndice~\ref{ap:reproducao}.
 
 \subsubsection{Coleta e análise exploratória do \textit{corpus} documental}
 
-O \textit{corpus} documental foi constituído com dados públicos e secundários de pronunciamentos da 56\textordfeminine{} Legislatura
-do Senado Federal. A janela consultada abrangeu 1 de fevereiro de 2019 a 31 de janeiro de 2023; os registros obtidos têm datas entre 1 de fevereiro de 2019 e 10 de janeiro de 2023. A coleta produziu
-15.729 registros, cada qual identificado por um código de pronunciamento único. A versão utilizada na análise foi publicada como
-revisão \texttt{v1.1.1} no repositório \texttt{fabriciosantana/discursos-senado-legislatura-56}, na plataforma Hugging Face\footnote{\url{https://huggingface.co/datasets/fabriciosantana/discursos-senado-legislatura-56/tree/v1.1.1/data/full}.}, no arquivo \path{discursos_2019-02-01_2023-01-31.parquet}, e fixada pelo resumo SHA-256 \path{e09cfc4793e5394be440906320c7d3008cda5a52b90bbc85bf47446362406af1}.
-O uso do resumo criptográfico permite verificar a identidade binária do arquivo analisado, embora não substitua a auditoria de
-qualidade de seu conteúdo.
+O \textit{corpus} documental foi constituído com dados públicos e secundários de pronunciamentos da 56\textordfeminine{} Legislatura do Senado Federal. A janela consultada abrangeu 1 de fevereiro de 2019 a 31 de janeiro de 2023; os registros obtidos têm datas entre 1 de fevereiro de 2019 e 10 de janeiro de 2023. A coleta produziu 15.729 registros, cada qual identificado por um código de pronunciamento único. A versão utilizada na análise foi publicada como revisão \texttt{v1.1.1} no repositório \texttt{fabriciosantana/discursos-senado-legislatura-56}, na plataforma Hugging Face\footnote{\url{https://huggingface.co/datasets/fabriciosantana/discursos-senado-legislatura-56/tree/v1.1.1/data/full}.}, no arquivo \path{discursos_2019-02-01_2023-01-31.parquet}, e fixada pelo resumo SHA-256 \path{e09cfc4793e5394be440906320c7d3008cda5a52b90bbc85bf47446362406af1}.
 
-~
+O experimento de viabilidade de consulta aos discursos foi construído no âmbito desta pesquisa com Open WebUI, preparação documental em Python e recuperação vetorial; sua configuração e seus limites são descritos na Seção~\ref{sec:viabilidade}. A constituição do \textit{corpus} preservou o esquema canônico empregado na implementação e os campos adicionais retornados pela fonte oficial. Entre os metadados disponíveis estão data, autor, partido, unidade federativa, tipo de uso da palavra, resumo, indexação e URL do
+pronunciamento original. Os campos internos de início e fim da janela de coleta registram os intervalos mensais efetivamente consultados, sem alteração artificial para reproduzir a coleta anterior. Como se trata da organização de documentos públicos, não houve coleta direta de informações com participantes humanos nessa etapa.
 
-O protótipo técnico de consulta aos discursos foi construído no âmbito desta pesquisa com Open WebUI, preparação documental em Python e recuperação vetorial; sua configuração e seus limites são descritos na Seção~\ref{sec:viabilidade}. A constituição do \textit{corpus} preservou o esquema canônico empregado na implementação e os campos adicionais retornados pela fonte oficial. Entre os
-metadados disponíveis estão data, autor, partido, unidade federativa, tipo de uso da palavra, resumo, indexação e URL do
-pronunciamento original. Os campos internos de início e fim da janela de coleta registram os intervalos mensais efetivamente
-consultados, sem alteração artificial para reproduzir a coleta anterior. Como se trata da organização de documentos públicos,
-não houve coleta direta de informações com participantes humanos nessa etapa.
+O código de coleta, as dependências e um comando de execução encontram-se no Apêndice~\ref{ap:reproducao}. 
 
-O código de coleta, as dependências e um comando de execução encontram-se no Apêndice~\ref{ap:reproducao}. A disponibilização dos artefatos complementa a descrição do processo sem exigir que o leitor conheça nomes internos de arquivos para compreender o método.
-
-\noindent\textbf{Técnicas de análise exploratória de dados.} A análise exploratória auditou esquema, tipos, unicidade dos
-códigos, validade das datas, valores ausentes, cobertura textual, distribuições temporal e institucional, extensão dos documentos,
-resíduos de HTML e URLs, caracteres problemáticos, duplicidade textual exata e aproximada, frequência lexical, mudança lexical
-anual, cobertura de metadados e concentração de representação. A análise de duplicidade aproximada empregou, em amostra reprodutível
-e controlada, assinaturas MinHash, candidatos por \textit{Locality-Sensitive Hashing}, similaridade de Jaccard sobre
-\textit{shingles} e similaridade TF-IDF. Esses procedimentos caracterizam riscos do \textit{corpus}; não avaliam a qualidade de um
-recuperador ou de um modelo gerador.
+A análise exploratória auditou esquema, tipos, unicidade dos códigos, validade das datas, valores ausentes, cobertura textual, distribuições temporal e institucional, extensão dos documentos, resíduos de HTML e URLs, caracteres problemáticos, duplicidade textual exata e aproximada, frequência lexical, mudança lexical anual, cobertura de metadados e concentração de representação. A análise de duplicidade aproximada empregou, em amostra reprodutível e controlada, assinaturas MinHash, candidatos por \textit{Locality-Sensitive Hashing}, similaridade de Jaccard sobre \textit{shingles} e similaridade TF-IDF.
 
 A inspeção incluiu proporção de registros com conteúdo utilizável, disponibilidade de texto integral, duplicidade e cobertura dos metadados candidatos a filtro. Os limites empregados nessa inspeção são referências exploratórias de planejamento, sem equivalência a certificação de qualidade. Os resultados descritivos e suas implicações para o caso empírico são apresentados na Seção~\ref{sec:caracterizacao-corpus}.
 
@@ -75,13 +43,15 @@ A inspeção incluiu proporção de registros com conteúdo utilizável, disponi
 
 \subsubsection{Construção dos dados de avaliação}
 
-No experimento de viabilidade desta pesquisa foram elaboradas uma bateria v4 com 200 perguntas distribuídas em 16 categorias e uma seleção piloto estratificada de 32 perguntas, com duas perguntas por categoria. Os itens registram dificuldade, respondibilidade, autores esperados, fontes indicativas, critérios esperados para a resposta e riscos de avaliação. A classificação atual distingue itens respondíveis, parcialmente respondíveis e não respondíveis; antes do uso inferencial, a curadoria deverá revisar especialmente os casos parciais e fixar uma regra consistente para sua inclusão em cada análise. Os arquivos de trabalho estão em \path{06-inteligencia-artificial-generativa/4-project/eval/discursos_questions_v4_200.json} e \path{06-inteligencia-artificial-generativa/4-project/eval/discursos_questions_v4_pilot_stratified.json}; a reexecução em curso deverá confirmar quais versões serão mantidas como artefatos do experimento.
+No experimento de viabilidade desta pesquisa foram elaboradas uma bateria com 200 perguntas distribuídas em 16 categorias e uma seleção piloto estratificada de 32 perguntas, com duas perguntas por categoria. Os itens registram dificuldade, respondibilidade, autores esperados, fontes indicativas, critérios esperados para a resposta e riscos de avaliação. A classificação atual distingue itens respondíveis, parcialmente respondíveis e não respondíveis; antes do uso inferencial, a curadoria deverá revisar especialmente os casos parciais e fixar uma regra consistente para sua inclusão em cada análise. 
+
+% Os arquivos de trabalho estão em \path{06-inteligencia-artificial-generativa/4-project/eval/discursos_questions_v4_200.json} e \path{06-inteligencia-artificial-generativa/4-project/eval/discursos_questions_v4_pilot_stratified.json}; a reexecução em curso deverá confirmar quais versões serão mantidas como artefatos do experimento.
 
 Também foram produzidas 23.806 unidades textuais para indexação a partir de 15.729 registros de entrada: 15.726 registros forneceram texto utilizável, três foram descartados e 687 unidades documentais usaram resumo em lugar do texto integral. A preparação documentada adotou limite de 850 palavras por trecho, sobreposição de 150 palavras e máximo de 200 trechos por documento. Esses parâmetros descrevem a preparação examinada no experimento de viabilidade e servem como referência para reprodução e comparação; não constituem, por si, a segmentação definitiva do experimento principal. A validação de alternativas de tamanho e sobreposição continua necessária.
 
-As 16 categorias já representadas na bateria v4 incluem perguntas factuais, foco e desambiguação de autoria, consultas multifocais, verificação de citações, comparação temática e temporal, limites de contexto, confusão entre autores, armadilhas de alucinação, múltiplas etapas, evidência negativa, consultas numéricas, estresse de recuperação, controle de escopo e síntese. A bateria contém 12 ou 13 perguntas por categoria e o piloto seleciona duas de cada uma. Essa composição amplia a cobertura temática, mas não representa uma amostra probabilística de consultas reais dos usuários do Senado.
+As 16 categorias da bateria incluem perguntas factuais, foco e desambiguação de autoria, consultas multifocais, verificação de citações, comparação temática e temporal, limites de contexto, confusão entre autores, armadilhas de alucinação, múltiplas etapas, evidência negativa, consultas numéricas, estresse de recuperação, controle de escopo e síntese. A bateria contém 12 ou 13 perguntas por categoria e o piloto seleciona duas de cada uma. Essa composição amplia a cobertura temática, mas não representa uma amostra probabilística de consultas reais dos usuários do Senado.
 
-O conjunto de referência da dissertação deverá associar cada pergunta respondível a um ou mais pronunciamentos e trechos relevantes, preservando o vínculo ao identificador documental e à URL oficial. A existência de fontes indicativas na bateria v4 não equivale a julgamentos de relevância exaustivos nem a um conjunto-ouro validado. A curadoria deverá confirmar suficiência, pertinência e cobertura das evidências, documentar ambiguidades e registrar as decisões de anotação. Para perguntas não respondíveis, deverá confirmar-se a ausência de suporte no recorte; os casos parcialmente respondíveis exigem regra explícita para distinguir resposta parcial adequada de resposta sem evidência suficiente.
+O conjunto de referência da dissertação deverá associar cada pergunta respondível a um ou mais pronunciamentos e trechos relevantes, preservando o vínculo ao identificador documental e à URL oficial. A existência de fontes indicativas na bateria não equivale a julgamentos de relevância exaustivos nem a um conjunto-ouro validado. A curadoria deverá confirmar suficiência, pertinência e cobertura das evidências, documentar ambiguidades e registrar as decisões de anotação. Para perguntas não respondíveis, deverá confirmar-se a ausência de suporte no recorte; os casos parcialmente respondíveis exigem regra explícita para distinguir resposta parcial adequada de resposta sem evidência suficiente.
 
 O experimento de viabilidade já dispõe de implementação para preparação e ingestão da base e de avaliação automatizada no Open WebUI. O experimento principal deverá comparar, sob os mesmos dados, perguntas e julgamentos de referência, busca lexical com BM25, busca vetorial e busca híbrida, além de avaliar o efeito de alternativas de segmentação. Essa comparação não se confunde com a recuperação efetuada pelo protótipo no experimento de viabilidade, pois as rodadas registradas não usaram um conjunto de relevância validado nem produziram métricas comparativas entre esses recuperadores.
 
@@ -102,12 +72,7 @@ A análise do experimento principal será organizada em quatro camadas, posterio
 \subsubsection{Avaliação da recuperação documental}
 \label{sec:metricas}
 
-A primeira camada avaliará a recuperação documental por meio de métricas de recuperação ranqueada consolidadas na literatura de recuperação da informação, como
-\textit{Recall@k}, \textit{Precision@k}, MRR e nDCG \parencite{manningEtAl2008informationRetrieval}, também empregadas em
-\textit{benchmarks} contemporâneos como o BEIR \parencite{thakurEtAl2021beir}. Especificamente, serão calculados
-\textit{Recall@1}, \textit{Recall@5} e \textit{Recall@10}, além de MRR e nDCG@k; \textit{Precision@k} e \textit{Hit@k} serão mantidas
-quando compatíveis com a granularidade dos julgamentos de relevância. A comparação abrangerá BM25, recuperação vetorial e recuperação
-híbrida sob o mesmo conjunto de referência.
+A primeira camada avaliará a recuperação documental por meio de métricas de recuperação ranqueada consolidadas na literatura de recuperação da informação, como \textit{Recall@k}, \textit{Precision@k}, MRR e nDCG \parencite{manningEtAl2008informationRetrieval}, também empregadas em \textit{benchmarks} contemporâneos como o BEIR \parencite{thakurEtAl2021beir}. Especificamente, serão calculados \textit{Recall@1}, \textit{Recall@5} e \textit{Recall@10}, além de MRR e nDCG@k; \textit{Precision@k} e \textit{Hit@k} serão mantidas quando compatíveis com a granularidade dos julgamentos de relevância. A comparação abrangerá BM25, recuperação vetorial e recuperação híbrida sob o mesmo conjunto de referência.
 
 Para fins de avaliação da recuperação, a unidade principal de análise será o trecho recuperável indexado no sistema, preservada sua vinculação ao discurso original, aos metadados e à URL da fonte. Quando a evidência esperada corresponder a um discurso inteiro, serão considerados relevantes os trechos desse discurso que contenham informação suficiente para responder à pergunta.
 
@@ -144,8 +109,7 @@ O uso de \textit{Precision@k} e nDCG dependerá da granularidade do conjunto de 
 
 \subsubsection{Avaliação da geração de respostas}\label{sec:rubrica}
 
-A segunda camada avaliará a geração de respostas por rubrica, considerando correção factual, aderência ao contexto recuperado,
-fidelidade às fontes, precisão de autoria, explicitação de insuficiência documental, completude proporcional e ausência de alucinação.
+A segunda camada avaliará a geração de respostas por rubrica, considerando correção factual, aderência ao contexto recuperado, fidelidade às fontes, precisão de autoria, explicitação de insuficiência documental, completude proporcional e ausência de alucinação. 
 
 O protocolo articula sistema RAG, bateria estratificada, evidências de referência, registro da recuperação e das respostas, rubrica humana e julgamento automatizado auxiliar. As regras específicas de interpretação de H1--H3 são apresentadas na Seção~\ref{sec:hipoteses-operacionais}.
 
@@ -184,10 +148,8 @@ Em conjunto, essas hipóteses orientam a organização da bateria de perguntas, 
 
 \subsection{Matriz de opções metodológicas}
 
-A Tabela~\ref{tab:matriz-metodologica} apresenta a matriz preliminar de opções metodológicas, articulando objetivos específicos,
-abordagem, natureza, dados coletados, público-alvo, amostragem, técnicas de coleta, técnicas de análise e formas de apresentação
-dos resultados. A matriz será refinada à medida que o protocolo avaliativo for consolidado e os procedimentos experimentais forem
-executados.
+A Tabela~\ref{tab:matriz-metodologica} apresenta a matriz preliminar de opções metodológicas, articulando objetivos específicos, abordagem, natureza, dados coletados, público-alvo, amostragem, técnicas de coleta, técnicas de análise e formas de apresentação
+dos resultados. A matriz será refinada à medida que o protocolo avaliativo for consolidado e os procedimentos experimentais forem executados.
 
 \begin{landscape}
 \begingroup
@@ -225,9 +187,6 @@ Na situação documentada, estão disponíveis a base versionada, o código Pyth
 
 O experimento de viabilidade examina a exequibilidade técnica do fluxo de preparação, ingestão, consulta e avaliação automatizada; sua reexecução deverá confirmar os artefatos, as configurações e a estabilidade operacional. Permanecem por confirmar para o experimento principal a infraestrutura de execução, os limites de gasto com APIs e o número e a disponibilidade dos avaliadores humanos. A execução principal depende também da curadoria das perguntas e do piloto de anotação. Assim, há evidência preliminar de viabilidade técnica, enquanto a viabilidade integral do protocolo principal permanece condicionada a essas definições. O cronograma da Seção~\ref{sec:cronograma} explicita a sequência planejada, sem pressupor que recursos ainda não confirmados estejam assegurados.
 
-O uso de IA generativa na pesquisa será tratado de forma transparente. Modelos de linguagem poderão ser utilizados como componentes do
-sistema RAG avaliado, como instrumentos auxiliares de julgamento automatizado e, como apoio editorial à revisão de texto, sempre sob
-responsabilidade do pesquisador. Quando integrarem a coleta ou a análise dos dados, serão registrados modelo, versão ou provedor
-disponível, configuração relevante, rubrica, \textit{prompt} ou instruções de julgamento e data de execução. As saídas automatizadas
-não serão tratadas como evidência autossuficiente: deverão ser confrontadas com fontes documentais, métricas de recuperação, rubricas
-e avaliação humana nos limites definidos pelo protocolo.
+O uso de IA generativa na pesquisa será tratado de forma transparente. Modelos de linguagem poderão ser utilizados como componentes do sistema RAG avaliado, como instrumentos auxiliares de julgamento automatizado e, como apoio editorial à revisão de texto, sempre sob
+responsabilidade do pesquisador. Quando integrarem a coleta ou a análise dos dados, serão registrados modelo, versão ou provedor disponível, configuração relevante, rubrica, \textit{prompt} ou instruções de julgamento e data de execução. As saídas automatizadas
+não serão tratadas como evidência autossuficiente: deverão ser confrontadas com fontes documentais, métricas de recuperação, rubricas e avaliação humana nos limites definidos pelo protocolo.

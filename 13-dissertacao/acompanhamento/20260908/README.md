@@ -18,7 +18,7 @@ Este diretório reúne os artefatos preparados para a reunião de ponto de contr
 - `../../fichamentos/documentacao/AUDITORIA_REVISAO_BIBLIOGRAFICA_2026-09-08.md`
 - `../../fichamentos/out/main.pdf`
 - `../../texto-Latex/capitulos/02-referencial-teorico.tex`
-- `../../texto-Latex/capitulos/03-trabalhos-relacionados.tex`
+- `../../texto-Latex/capitulos/XX-03-trabalhos-relacionados.tex` (arquivo histórico, fora da compilação)
 - `../../texto-Latex/documentacao/PLANO_REDACAO.md`
 
 ## Regra de versionamento
