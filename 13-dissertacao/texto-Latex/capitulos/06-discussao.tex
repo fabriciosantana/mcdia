@@ -1,28 +1,24 @@
 \section{Discussão}
 \label{sec:discussao}
 
-Este capítulo interpretará os resultados em relação à pergunta de pesquisa, aos objetivos, às hipóteses de trabalho e à literatura. A discussão deverá manter separadas a evidência técnica produzida, suas implicações para o caso estudado e as condições institucionais necessárias para eventual uso na administração pública.
+Este capítulo discute o alcance dos resultados preliminares da análise de viabilidade e delimita o que ainda não pode ser inferido. As execuções documentam a operação do fluxo e revelam questões de recuperação, atribuição e avaliação que ajudam a orientar o protocolo principal. Como não há conjunto de referência validado, comparação controlada de recuperadores ou avaliação humana independente, os resultados não corroboram nem refutam H1--H3.
 
 \subsection{Recuperação, geração e verificabilidade}
 
-% TODO: discutir a hipótese de que recuperação pertinente é necessária, mas não
-% suficiente, identificando mecanismos e casos que sustentem ou contrariem isso.
+As médias elevadas atribuídas pelo juiz automatizado não permitem avaliar se a pertinência da recuperação é necessária ou suficiente para a verificabilidade das respostas. As execuções não usaram um conjunto validado de trechos relevantes e o mesmo modelo foi empregado para gerar e julgar respostas. A inspeção proposta para `q20` sugere que uma resposta pode receber pontuação máxima e ainda assim exceder o escopo da pergunta; o diagnóstico é ilustrativo e requer revisão independente. Em conjunto com o risco frequente de mistura de autores sinalizado nos resumos, esse caso sustenta a necessidade metodológica de examinar a cadeia pergunta--trecho--afirmação--fonte, mas não constitui evidência suficiente para decidir H1.
 
 \subsection{Desempenho por categoria de pergunta}
 
-% TODO: discutir diferenças entre perguntas simples, multietapas, comparativas,
-% numéricas e não respondíveis.
+O piloto estratificado cobre 16 categorias, mas as médias agregadas disponíveis não bastam para comparar o desempenho entre elas. A amostra tem dois itens por categoria e as configurações das duas rodadas de 32 perguntas registram hashes diferentes para a bateria e para a rubrica. Além disso, o juiz automatizado não foi confrontado com anotações humanas independentes. Não é possível, portanto, atribuir diferenças entre notas a níveis de complexidade, nem avaliar a expectativa de H2. A comparação deverá ser feita após a validação da respondibilidade e das evidências e deverá apresentar resultados por categoria, além de medidas agregadas.
 
 \subsection{Limites do paradigma LLM-as-a-judge}
 
-% TODO: interpretar concordâncias e divergências frente à avaliação humana.
+Os registros atuais não permitem calcular concordância entre o juiz e avaliadores humanos. A inspeção de sete respostas e o apontamento relativo a `q20` não constituem avaliação independente; tampouco a variação de notas nas rodadas de abril mede concordância. O uso de `gpt-5-nano` tanto para geração quanto para julgamento adiciona dependência entre as duas etapas automatizadas. Assim, as notas servem como triagem exploratória de respostas, e não como critério autônomo de qualidade. H3 permanece em aberto até que julgamentos humanos independentes sejam coletados e comparados segundo as medidas previstas.
 
 \subsection{Implicações para a administração pública}
 
-% TODO: distinguir uso assistivo, prontidão operacional e requisitos de
-% governança, curadoria, auditoria, supervisão e contestação.
+Para o caso estudado, a viabilidade técnica do fluxo não equivale à prontidão para uso operacional. A preparação de trechos e o registro de fontes permitem construir uma base auditável, enquanto os riscos de mistura de autores e de respostas fora do escopo mostram por que a recuperação e a geração precisam ser inspecionadas em conjunto. Em uma eventual aplicação de caráter assistivo, seriam necessários procedimentos de curadoria e atualização do acervo, rastreabilidade entre afirmações e pronunciamentos, supervisão humana e mecanismos para identificar respostas sem suporte suficiente. Esses requisitos são implicações para desenho e avaliação; não foram testados como resultados de implantação institucional.
 
 \subsection{Ameaças à validade e limites de generalização}
 
-% TODO: validade interna, de construto e externa; dependências de corpus,
-% configuração, modelos, rubrica, amostra e avaliadores.
+Os resultados preliminares têm limitações de validade. A validade interna é restrita porque as rodadas variam em bateria e hash da rubrica, e porque os parâmetros de geração não estão integralmente registrados nos arquivos examinados. A validade de construto é limitada pela dependência de um juiz automatizado que compartilha o modelo gerador e pela diferença entre a rubrica exploratória do protótipo e a rubrica principal da dissertação. A inspeção de sete respostas não é independente nem dimensionada para representar a bateria. A generalização também é restrita a uma base específica de discursos da 56\textordfeminine{} Legislatura, à segmentação documentada e às configurações observadas; os achados não estabelecem desempenho para outros acervos, modelos ou ambientes. A comparação principal e a avaliação humana independente são necessárias para reduzir essas incertezas e examinar as hipóteses nos limites do desenho proposto.

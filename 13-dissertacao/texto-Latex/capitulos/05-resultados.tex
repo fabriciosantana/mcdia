@@ -5,33 +5,47 @@ Esta seção apresentará separadamente as evidências do experimento de viabili
 
 \subsection{Experimento de viabilidade: execução e ajustes do protocolo}
 
-% TODO: registrar a reexecução do pipeline, versões e hashes dos artefatos,
-% resultados automatizados e ajustes metodológicos decorrentes. Distinguir a
-% série previamente registrada das execuções em andamento e não usar suas notas
-% automáticas como teste das hipóteses.
+Os artefatos disponíveis registram quatro execuções completas, todas sem erro de processamento: duas rodadas com 20 perguntas e duas identificadas como piloto de 32. A Tabela~\ref{tab:resultados-viabilidade} resume as médias atribuídas pelo juiz automatizado. As duas rodadas de 20 perguntas usaram arquivos de pergunta distintos. As duas rodadas de 32 apontam para o mesmo nome de arquivo de piloto, mas registram hashes diferentes tanto para a bateria quanto para a rubrica; por isso, não é possível confirmar que os itens eram idênticos, nem tratá-las como repetições estritamente idênticas.
+
+\begin{table}[htbp]
+\centering
+\caption{Execuções automatizadas registradas no experimento de viabilidade.}\label{tab:resultados-viabilidade}
+\begin{tabular}{lrrr}\toprule
+Execução (UTC) & Perguntas concluídas & Erros & Média do juiz (0--10)\\\midrule
+05/05/2026, 14:26 & 20 & 0 & 9,350\\
+05/05/2026, 15:33 & 20 & 0 & 9,250\\
+05/05/2026, 16:27 & 32 & 0 & 9,031\\
+05/05/2026, 17:11 & 32 & 0 & 9,094\\\bottomrule
+\end{tabular}
+\par\smallskip Fonte: elaborado pelo autor a partir dos resumos de execução do projeto de viabilidade (2026).
+\end{table}
+
+As médias são notas produzidas pela rubrica exploratória do projeto, composta por cinco critérios em escala de 0 a 2, e não métricas de recuperação ou avaliações humanas independentes. Nas quatro configurações registradas, `gpt-5-nano` foi empregado tanto na geração quanto no julgamento. As notas, portanto, descrevem a saída de um avaliador automatizado que compartilha o modelo com o sistema gerador e não devem ser interpretadas como estimativa autônoma da qualidade das respostas.
+
+Os resumos também registram risco alto de mistura de autores entre os trechos recuperados em 29 dos 32 itens de uma rodada e em 28 dos 32 itens da outra. Esse indicador é um sinal para inspeção dos contextos e das atribuições documentais; não equivale, por si só, a erro confirmado em todas as respostas. Na série de abril, uma inspeção proposta para sete respostas apontou que a resposta `q20`, apesar de receber nota automática 10/10, extrapolava o escopo da pergunta. Como essa revisão foi preparada como proposta argumentada e não como anotação independente, o caso ilustra uma hipótese de falha a verificar, sem fornecer medida de concordância humano--juiz.
+
+Uma execução complementar de 5 de maio processou duas perguntas selecionadas para verificar problemas de escopo e recuperação; ambas foram concluídas, com média automática 9,0, e o resumo indicou risco alto de mistura de autores nos dois casos. Pelo tamanho e pela seleção dirigida, essa checagem funciona apenas como diagnóstico pontual e não foi agregada às quatro rodadas completas.
+
+Em conjunto, os registros demonstram que o fluxo de preparação, consulta e avaliação automatizada pôde ser executado com as baterias utilizadas e produzir artefatos rastreáveis. Eles também identificam questões para o protocolo seguinte: controlar autoria dos trechos recuperados, verificar o escopo das respostas e preservar hashes e configurações por rodada. Não demonstram desempenho validado nem testam as hipóteses da dissertação.
 
 \subsection{Caracterização da bateria e do conjunto de referência}
 
-% TODO: quantidade por categoria, critérios de balanceamento, respondibilidade,
-% processo de curadoria e estatísticas do gold standard.
+O material de trabalho disponível contém uma bateria de 200 perguntas em 16 categorias e um piloto estratificado de 32 itens, com dois itens por categoria. As categorias abrangem perguntas factuais, foco e desambiguação de autoria, consultas multifocais, verificação de citações, comparação, limites de contexto, confusão entre autores, armadilhas de alucinação, múltiplas etapas, evidência negativa, questões numéricas, estresse de recuperação, controle de escopo e síntese. Essa seleção busca cobrir tipos distintos de consulta, mas não é amostra probabilística de perguntas reais.
+
+A classificação de respondibilidade nos arquivos distingue itens respondíveis, parcialmente respondíveis e não respondíveis. A curadoria do conjunto de referência da dissertação ainda precisa confirmar essas classificações e associar, para cada item respondível, os documentos e trechos suficientes; as fontes indicativas da bateria não constituem julgamentos exaustivos de relevância. Consequentemente, ainda não há estatísticas de um conjunto-ouro validado que permitam reportar resultados inferenciais de recuperação.
 
 \subsection{Resultados da recuperação documental}
 
-% TODO: comparar BM25, busca vetorial e busca híbrida por Recall@1, Recall@5,
-% Recall@10, MRR e nDCG@k. Incluir Precision@k e Hit@k somente se forem
-% compatíveis com a granularidade real dos julgamentos, além de intervalos,
-% diversidade, estratificações e resultados por categoria.
+Os registros examinados não contêm uma comparação controlada entre BM25, recuperação vetorial e recuperação híbrida com consultas e julgamentos de relevância validados. Assim, não são reportados valores de Recall@k, Precision@k, MRR, nDCG ou Hit@k para o experimento principal. O piloto lexical registrado em outro artefato usa consultas provisórias e não substitui essa comparação. O cálculo das métricas previstas dependerá da validação dos documentos e trechos relevantes e da execução dos recuperadores sob condições equivalentes.
 
 \subsection{Resultados da geração de respostas}
 
-% TODO: apresentar dimensões da rubrica sem misturar observação e interpretação.
+As notas resumidas acima dizem respeito à rubrica exploratória do protótipo, com cinco critérios e escala de 0 a 2 por critério, agregados em escala de 0 a 10. A rubrica de cinco dimensões definida para o experimento principal da dissertação possui finalidade e regras próprias; não há resultados disponíveis de sua aplicação às respostas da bateria curada. Por essa razão, não se apresentam médias por dimensão nem pontuação global da rubrica principal.
 
 \subsection{Avaliação humana e avaliação automatizada}
 
-% TODO: perfil e número dos avaliadores, piloto, concordância, estabilidade do
-% juiz automatizado e divergências relevantes.
+Os artefatos disponíveis não documentam uma rodada de avaliação humana independente, nem informam perfil, número de avaliadores ou concordância calculada. A inspeção de sete respostas mencionada acima foi uma análise amostral preparada como proposta, sem independência de avaliador e sem cálculo de concordância. Também existe um resumo de estabilidade de abril: três rodadas de 20 perguntas na mesma base tiveram médias automatizadas de 9,15, 9,55 e 9,35, e 12 perguntas variaram entre as execuções. Esse registro descreve variação na configuração e no conjunto examinados; não mede estabilidade geral, e não supre a comparação com julgamentos humanos.
 
 \subsection{Análise de erros e casos críticos}
 
-% TODO: documentar falhas de recuperação, atribuição, escopo, extrapolação,
-% insuficiência documental e casos negativos ou ambíguos.
+Os casos documentados orientam uma agenda de inspeção qualitativa, sem permitir estimar a frequência geral de cada falha. A mistura de autores assinalada nos resumos deve ser confrontada com os trechos e metadados de cada resposta para distinguir contexto heterogêneo de atribuição efetivamente incorreta. A inspeção de abril sobre `q20` requer revisão independente para confirmar o diagnóstico de extrapolação de escopo. As fontes examinadas não oferecem uma análise sistemática de casos de insuficiência documental ou de perguntas não respondíveis; esses padrões deverão ser registrados durante a curadoria e a execução do experimento principal.
