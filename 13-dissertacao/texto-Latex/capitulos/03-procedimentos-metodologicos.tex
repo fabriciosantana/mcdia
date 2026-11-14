@@ -1,6 +1,6 @@
 \section{Procedimentos metodológicos}\label{sec:metodologia}
 
-Esta seção apresenta o desenho metodológico da pesquisa e distingue os procedimentos já executados daqueles que ainda serão executados. Até o momento desta redação, foram concluídas a constituição, o versionamento, a análise exploratória do \textit{corpus} de discursos e o desenvolvimento de um experimento de viabilidade, no qual foram preparados e indexados trechos, construída uma bateria de perguntas e executadas rodadas-piloto de geração e julgamento automatizado.
+Esta seção descreve o desenho metodológico, as fontes de evidência e as regras de análise e decisão das hipóteses.
 
 \subsection{Natureza e abordagem da pesquisa}
 
@@ -16,7 +16,7 @@ O enquadramento geral dialoga com a \textit{Design Science Research}~\parencite{
 
 \subsection{Técnicas de coleta, caracterização e produção de evidências}
 
-As técnicas de coleta e produção de evidências distribuem-se em três frentes: (1) A frente bibliográfica e técnico-normativa sistematiza artigos, \textit{surveys}, \textit{benchmarks}, relatórios institucionais e diretrizes sobre RAG, recuperação da informação, avaliação de sistemas generativos, informação legislativa e uso institucional de IA; (2) a frente documental, já executada quanto à obtenção e ao congelamento da base, abrange coleta, consolidação, controle de versão e auditoria do \textit{corpus}; e (3) a frente avaliativa, que inclui o experimento de viabilidade e o experimento principal. Na primeira, a bateria de perguntas, a preparação dos trechos e as rodadas automatizadas permitem examinar a exequibilidade dos procedimentos. Na segunda, serão validadas as evidências, realizadas as comparações controladas e aplicados os julgamentos humanos e automatizados definidos pelo protocolo consolidado.
+As técnicas de coleta e produção de evidências organizam-se em três frentes: bibliográfica e técnico-normativa; documental, concluída quanto à obtenção, ao versionamento e à auditoria do \textit{corpus}; e avaliativa, que compreende o experimento de viabilidade e o experimento principal. A etapa de viabilidade aplicou a bateria, a preparação documental e rodadas automatizadas para examinar a exequibilidade do fluxo. No experimento principal, serão validadas as evidências e realizadas comparações controladas e julgamentos humanos e automatizados segundo o protocolo.
 
 \subsubsection{Técnica de revisão bibliográfica e técnico-normativa}
 
@@ -48,7 +48,7 @@ As 16 categorias da bateria incluem perguntas factuais, foco e desambiguação d
 
 O conjunto de referência da dissertação deverá associar cada pergunta respondível a um ou mais pronunciamentos e trechos relevantes, preservando o vínculo ao identificador documental e à URL oficial. A existência de fontes indicativas na bateria não equivale a julgamentos de relevância exaustivos nem a um conjunto-ouro validado. A curadoria deverá confirmar suficiência, pertinência e cobertura das evidências, documentar ambiguidades e registrar as decisões de anotação. Para perguntas não respondíveis, deverá confirmar-se a ausência de suporte no recorte; os casos parcialmente respondíveis exigem regra explícita para distinguir resposta parcial adequada de resposta sem evidência suficiente.
 
-O experimento de viabilidade já dispõe de implementação para preparação e ingestão da base e de avaliação automatizada no Open WebUI. O experimento principal deverá comparar, sob os mesmos dados, perguntas e julgamentos de referência, busca lexical com BM25, busca vetorial e busca híbrida, além de avaliar o efeito de alternativas de segmentação.
+A avaliação principal comparará BM25, recuperação vetorial e híbrida sob os mesmos dados, perguntas e julgamentos de referência, além de examinar alternativas de segmentação.
 
 A seleção das categorias combina famílias recorrentes em avaliações de RAG com riscos específicos do domínio legislativo, como dispersão temporal, multiplicidade de autores, variação terminológica e perguntas sem suporte documental \parencite{zhuEtAl2025rageval,saadFalconEtAl2024ares,esEtAl2023ragas,pipitoneAlami2024legalbenchRag,dahlEtAl2024largeLegalFictions}. No experimento principal, a curadoria verificará a distribuição por período, tamanho do documento e tipo de fonte e, quando a cobertura permitir, por partido e unidade federativa, sem interpretar ausência de metadados como categoria substantiva de representação.
 
