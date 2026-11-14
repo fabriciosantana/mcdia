@@ -1,0 +1,18 @@
+{
+  "artifact_path": "provenance.json",
+  "artifact_sha256": "ef49b8531f40625ca94eaaf9f87c7f2d86bfd768212f60eabe0e58d2db990c5f",
+  "axes": {
+    "blind_to_peer_outputs": true,
+    "fresh_context": true,
+    "human_distinct": false,
+    "model_family_distinct": false,
+    "provider_distinct": false,
+    "role_separated": true
+  },
+  "execution_topology_sha256": "300c901f4432bd84b4d9bdf7195fe8f83bed413c148bd577f31fd4840b946979",
+  "fresh_context_scope": "within_panel_attempt_only",
+  "normalized_manifest_sha256": "be0fd3cb145453f08e877fa7303be52770afa24d19523a1dd81e72c5becdff08",
+  "review_mode": "reviewer_full",
+  "schema_version": "review-panel-provenance-carrier/1.0",
+  "status": "valid"
+}

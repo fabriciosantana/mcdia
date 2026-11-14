@@ -1,0 +1,314 @@
+{
+  "schema_version": "constructive-review-findings/1.0",
+  "target_review_id": "qualification-dissertacao-2026-11",
+  "resolved_digest": "6f675cd7c2eed7118e7d5f65c5e9073367d48f17a8a92797d5df181e6e8ed70e",
+  "selected_criterion_ids": [
+    "broad.claim-evidence-alignment",
+    "broad.limitation-calibration",
+    "broad.method-evidence-alignment",
+    "broad.submission-traceability"
+  ],
+  "findings": [
+    {
+      "finding_id": "R1-W1",
+      "consumer_id": "external_panel",
+      "reviewer_id": "R1",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.claim-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "3fa3b4d5a78ed61a13821b70f03e6b741ef91a5818c636f217e7a4461a8c48cc"
+        },
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "text",
+        "locator": "§3.4, p.38; 03-procedimentos-metodologicos.tex:149",
+        "quote": "H1 será corroborada quando houver pelo menos um caso documentado"
+      },
+      "scholarly_relevance": "uma regra pode produzir o rótulo de corroboração contrariando a própria hipótese.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "fundamenta D1/D3 na qualificação; não deriva de exigência específica do IDP."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "explicitar o domínio de H1, admitir conjuntos suficientes, registrar a célula que falsifica necessidade e distinguir ausência de contraexemplo na amostra de demonstração universal. Se a intenção for somente localizar falhas complementares, reformular H1 como proposição diagnóstica por decisão do autor.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "revisão da hipótese e da seção operacional; não exige fabricar dados, mas reduz a força de uma alegação universal."
+        },
+        "trade_offs": "revisão da hipótese e da seção operacional; não exige fabricar dados, mas reduz a força de uma alegação universal.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "contrastar contextos pertinentes, insuficientes e sem evidência com as mesmas perguntas, mediante novas execuções planejadas; maior custo e ampliação do desenho, sujeita à escolha do autor.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Novas execuções, perguntas ou anotações conforme a opção descrita, a planejar e autorizar pelo pesquisador."
+        },
+        "trade_offs": "Aumenta o esforço de execução e curadoria e pode exigir orçamento ou avaliadores adicionais; nenhum ganho é presumido.",
+        "changes_research_intent": "yes_author_choice_required",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    },
+    {
+      "finding_id": "R1-W2",
+      "consumer_id": "external_panel",
+      "reviewer_id": "R1",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "absence",
+        "locator": "§§3.2.3 e 3.3.1, pp.32–36; §4.3, p.45",
+        "absence_scope": "regra de correspondência entre evidências de referência e segmentações alternativas",
+        "check_performed": "definições de Rq e Sq, fórmulas de recuperação, tratamento de itens não julgados e apêndices A–B."
+      },
+      "scholarly_relevance": "diferenças de denominador, cobertura e orçamento de contexto podem parecer diferenças de qualidade de recuperação.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "afeta a comparação central de recuperadores e segmentações, portanto D1."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "anotar evidências por documento e intervalo textual estável, estabelecer o mapeamento para cada segmentação, a regra para sobreposição e conjuntos complementares e o tratamento dos não julgados. Uma alternativa de menor custo é comparar os recuperadores em segmentação fixa e limitar a análise de outras segmentações a um ensaio separado claramente delimitado.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "revisão do protocolo de referência; a alternativa simples reduz a amplitude da conclusão sobre segmentação e depende da escolha do autor."
+        },
+        "trade_offs": "revisão do protocolo de referência; a alternativa simples reduz a amplitude da conclusão sobre segmentação e depende da escolha do autor.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "curadoria conjunta dos resultados dos recuperadores e análise de sensibilidade por orçamento de contexto, com novas anotações; maior esforço documental, sem assegurar antecipadamente qualquer resultado.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Novas execuções, perguntas ou anotações conforme a opção descrita, a planejar e autorizar pelo pesquisador."
+        },
+        "trade_offs": "Aumenta o esforço de execução e curadoria e pode exigir orçamento ou avaliadores adicionais; nenhum ganho é presumido.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    },
+    {
+      "finding_id": "R1-W3",
+      "consumer_id": "external_panel",
+      "reviewer_id": "R1",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "absence",
+        "locator": "§§3.3.2 e 3.4, pp.36–39; apêndice C, p.66",
+        "absence_scope": "descritores por dimensão e regras de aplicabilidade para recusas e respostas parcialmente respondíveis",
+        "check_performed": "escala geral 0–2, média de cinco dimensões, regras de H2 e conteúdo do apêndice C."
+      },
+      "scholarly_relevance": "diferenças de pontuação podem refletir a aplicabilidade dos critérios, em vez da qualidade da resposta.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "afeta a mensuração principal prevista para a qualificação, D1."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "completar a rubrica com descritores e exemplos por dimensão, regras para recusa adequada, resposta parcial e ausência de afirmações/citações, além do tratamento de não aplicabilidade e do denominador da média. Fixar quais contrastes poderão usar uma pontuação comum.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "elaboração do instrumento e revisão dos contrastes; separar desfechos pode diminuir a simplicidade da nota global e aumentar sua interpretabilidade."
+        },
+        "trade_offs": "elaboração do instrumento e revisão dos contrastes; separar desfechos pode diminuir a simplicidade da nota global e aumentar sua interpretabilidade.",
+        "changes_research_intent": "no",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "realizar piloto cognitivo de anotação com exemplos de cada classe e revisar ambiguidades antes de congelar a rubrica; exige novas anotações e disponibilidade de avaliadores.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Novas execuções, perguntas ou anotações conforme a opção descrita, a planejar e autorizar pelo pesquisador."
+        },
+        "trade_offs": "Aumenta o esforço de execução e curadoria e pode exigir orçamento ou avaliadores adicionais; nenhum ganho é presumido.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    },
+    {
+      "finding_id": "R1-W4",
+      "consumer_id": "external_panel",
+      "reviewer_id": "R1",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "text",
+        "locator": "§3.4, pp.38–39; 03-procedimentos-metodologicos.tex:151",
+        "quote": "em pelo menos duas dimensões e em duas das três comparações principais"
+      },
+      "scholarly_relevance": "escolhas posteriores de agrupamento, configuração e unidade de reamostragem podem alterar a decisão da hipótese.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "afeta a executabilidade da comparação principal, D1."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "registrar mapa de grupos, tamanhos analíticos previstos, contrastes e desfechos primários, regra de interpretação da incerteza e categoria inconclusiva; definir reamostragem por pergunta, preservando seu conjunto de observações e a estrutura adicional de dependência quando houver. Justificar o tamanho da bateria pela precisão e cobertura pretendidas, sem impor teste causal ou poder convencional a toda a análise descritiva.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "completar o plano analítico antes dos resultados; uma análise restrita à bateria intencional terá generalização delimitada."
+        },
+        "trade_offs": "completar o plano analítico antes dos resultados; uma análise restrita à bateria intencional terá generalização delimitada.",
+        "changes_research_intent": "no",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "dimensionar e ampliar os grupos com base na precisão dos contrastes planejados, mediante novas perguntas e anotações; aumenta custo e precisa de escolha do autor.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Novas execuções, perguntas ou anotações conforme a opção descrita, a planejar e autorizar pelo pesquisador."
+        },
+        "trade_offs": "Aumenta o esforço de execução e curadoria e pode exigir orçamento ou avaliadores adicionais; nenhum ganho é presumido.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    },
+    {
+      "finding_id": "R1-W5",
+      "consumer_id": "external_panel",
+      "reviewer_id": "R1",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        },
+        {
+          "criterion_id": "broad.claim-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "3fa3b4d5a78ed61a13821b70f03e6b741ef91a5818c636f217e7a4461a8c48cc"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "text",
+        "locator": "§3.3.3, pp.36–37; 03-procedimentos-metodologicos.tex:128",
+        "quote": "preferencialmente aplicada por pelo menos dois avaliadores independentes"
+      },
+      "scholarly_relevance": "sem referência e decisão definidas, a mesma matriz de notas pode sustentar classificações distintas de H3.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "afeta um objetivo e uma hipótese centrais, D1; a falta de avaliadores confirmados é uma condição real de viabilidade."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "especificar um desenho humano mínimo executável, preservar julgamentos anteriores à adjudicação, fixar amostragem, comparação, pesos, limiares operacionais e denominadores; registrar decisões para concordância baixa, parcial, alta e inconclusiva. Justificar a insuficiência do juiz pelo tipo e consequência dos erros, além do acordo agregado.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "protocolo de anotação e confirmação de recursos; se o mínimo não for viável, reduzir o alcance de H3 exige escolha explícita do autor."
+        },
+        "trade_offs": "protocolo de anotação e confirmação de recursos; se o mínimo não for viável, reduzir o alcance de H3 exige escolha explícita do autor.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "ampliar a dupla anotação e adicionar avaliação cega por juiz de outra família, com orçamento e novas avaliações; reduz uma fonte de dependência, sem garantir independência completa nem qualidade.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Novas execuções, perguntas ou anotações conforme a opção descrita, a planejar e autorizar pelo pesquisador."
+        },
+        "trade_offs": "Aumenta o esforço de execução e curadoria e pode exigir orçamento ou avaliadores adicionais; nenhum ganho é presumido.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    },
+    {
+      "finding_id": "R1-W6",
+      "consumer_id": "external_panel",
+      "reviewer_id": "R1",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "absence",
+        "locator": "§§3.2.3, 4.6 e 5.2, pp.31–33, 47 e 49",
+        "absence_scope": "separação explícita entre perguntas usadas para ajustar o sistema e perguntas usadas na avaliação principal",
+        "check_performed": "descrição da bateria de 200 itens, piloto de 32, curadoria, congelamento e apêndices A–B."
+      },
+      "scholarly_relevance": "desempenho e padrões de erro em uma bateria adaptada podem refletir ajustes aos próprios exemplos.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "afeta a interpretação dos resultados principais futuros, D1."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "identificar itens e decisões usados no desenvolvimento, reservar um conjunto de avaliação não usado nos ajustes e congelar configurações antes de examiná-lo. Se toda a bateria for deliberadamente diagnóstica, declarar essa finalidade e limitar as inferências, por decisão do autor.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "reorganização da bateria e do procedimento; reservar itens diminui a amostra disponível para cada finalidade."
+        },
+        "trade_offs": "reorganização da bateria e do procedimento; reservar itens diminui a amostra disponível para cada finalidade.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "construir uma bateria adicional, curada sem consulta às saídas do sistema ajustado, com novas perguntas e evidências; maior custo de curadoria e anotação.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Novas execuções, perguntas ou anotações conforme a opção descrita, a planejar e autorizar pelo pesquisador."
+        },
+        "trade_offs": "Aumenta o esforço de execução e curadoria e pode exigir orçamento ou avaliadores adicionais; nenhum ganho é presumido.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    }
+  ]
+}

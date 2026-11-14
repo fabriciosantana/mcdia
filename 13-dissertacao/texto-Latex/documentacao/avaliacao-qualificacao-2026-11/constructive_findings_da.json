@@ -1,0 +1,173 @@
+{
+  "schema_version": "constructive-review-findings/1.0",
+  "target_review_id": "qualification-dissertacao-2026-11",
+  "resolved_digest": "6f675cd7c2eed7118e7d5f65c5e9073367d48f17a8a92797d5df181e6e8ed70e",
+  "selected_criterion_ids": [
+    "broad.claim-evidence-alignment",
+    "broad.limitation-calibration",
+    "broad.method-evidence-alignment",
+    "broad.submission-traceability"
+  ],
+  "findings": [
+    {
+      "finding_id": "DA-M1",
+      "consumer_id": "external_panel",
+      "reviewer_id": "DA",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.claim-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "3fa3b4d5a78ed61a13821b70f03e6b741ef91a5818c636f217e7a4461a8c48cc"
+        },
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "text",
+        "locator": "§3.4, p. 38, regra de corroboração de H1; confrontar com §1.3, p. 14, e com a célula não pertinente/verificável também listada em §3.4.",
+        "quote": "pertinente/não verificável e não pertinente/não verificável"
+      },
+      "scholarly_relevance": "A regra de H1 permite corroboração pelos dois padrões exigidos sem decidir o caso que desafia a necessidade. Pertinência, suporte suficiente para responder à pergunta e suporte às afirmações efetivamente produzidas também precisam designar propriedades compatíveis. Sem essa ligação, os dados poderiam satisfazer a regra sem sustentar a proposição enunciada.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "O alvo confirmado é uma dissertação em qualificação: a coerência entre hipótese e regra prospectiva é necessária para avaliar o plano, sem exigir resultados finais nem presumir requisitos institucionais não fornecidos."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "Fixar o universo de suporte e os indicadores, definir a interpretação das quatro células e separar o exame de necessidade do exame de não suficiência. Se o autor preferir restringir H1 à proposição efetivamente examinável, registrar essa escolha expressa antes de modificar a hipótese; nenhuma das alternativas está autorizada por este parecer.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "Esforço médio de revisão das definições em §1.3 e §3.4 e das regras prospectivas; não exige novos resultados empíricos."
+        },
+        "trade_offs": "Reformular a regra preserva a ambição, mas exige resolver os casos discrepantes. Restringir H1 reduz a ambição da hipótese e requer decisão explícita do autor.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "Após decisão do autor, acrescentar casos controlados de suficiência e insuficiência documental para verificar o comportamento dos indicadores, mantendo-os identificados e separados da amostra principal.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Esforço adicional de construção, curadoria e anotação de casos controlados; valores e resultados ainda não produzidos."
+        },
+        "trade_offs": "Permite inspecionar falhas das definições com maior controle, mas amplia a carga de curadoria e não substitui a avaliação do corpus real.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    },
+    {
+      "finding_id": "DA-M2",
+      "consumer_id": "external_panel",
+      "reviewer_id": "DA",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.claim-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "3fa3b4d5a78ed61a13821b70f03e6b741ef91a5818c636f217e7a4461a8c48cc"
+        },
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "absence",
+        "locator": "§§3.3.2–3.4, pp. 36–39, e Apêndice C, p. 66.",
+        "absence_scope": "Descritores condicionais e regra de não aplicabilidade das cinco dimensões da rubrica nos grupos de H2, com tratamento dos denominadores.",
+        "check_performed": "Confrontados a rubrica de 0 a 2, a definição da média global, o contraste por respondibilidade e o apêndice de rubrica sem conteúdo."
+      },
+      "scholarly_relevance": "A média global compara grupos respondíveis e não respondíveis sem fechar a pontuação de dimensões condicionais. Assim, uma diferença pode refletir a convenção para responder ou recusar, e não o desempenho inferior que H2 pretende examinar. O achado não pressupõe que essas tarefas sejam incomparáveis.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "Para o plano de qualificação, a promessa de comparação por complexidade precisa de uma variável cujo significado seja reconstruível entre grupos. O achado trata da inferência prevista, não da ausência de um experimento principal concluído."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "Definir descritores por condição de respondibilidade, tratamento de não aplicabilidade e denominadores. Demonstrar as regras em exemplos de anotação e manter apenas contrastes com significado comum; eventual abandono da média global como contraste primário depende de decisão do autor.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "Esforço médio de especificação da rubrica e atualização das regras em §3.4 e no Apêndice C, sem apresentar exemplos hipotéticos como dados coletados."
+        },
+        "trade_offs": "Definições condicionais exigem instruções mais detalhadas. Análises separadas podem preservar a interpretação, mas reduzem a síntese em uma única nota.",
+        "changes_research_intent": "uncertain_author_choice_required",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "Submeter os descritores condicionais a um piloto de anotação antes do congelamento, documentando dúvidas e revisões sem alegar consistência antes de observá-la.",
+        "resource_effort": {
+          "scope": "new_data",
+          "description": "Esforço adicional de anotação e exame das divergências no piloto ainda por realizar."
+        },
+        "trade_offs": "Aumenta a possibilidade de detectar interpretações diferentes da rubrica, mas consome disponibilidade dos avaliadores e não garante equivalência das tarefas.",
+        "changes_research_intent": "no",
+        "requires_new_data": true,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    },
+    {
+      "finding_id": "DA-M3",
+      "consumer_id": "external_panel",
+      "reviewer_id": "DA",
+      "severity": "major",
+      "criterion_refs": [
+        {
+          "criterion_id": "broad.claim-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "3fa3b4d5a78ed61a13821b70f03e6b741ef91a5818c636f217e7a4461a8c48cc"
+        },
+        {
+          "criterion_id": "broad.method-evidence-alignment",
+          "criterion_version": "1.0",
+          "criterion_digest": "1b753aeb4639e5b97f98732598cbbcd26ec8ebdaf8c15127eb45f584901d95d3"
+        }
+      ],
+      "evidence_anchor": {
+        "anchor_type": "text",
+        "locator": "§3.4, p. 39, rejeição de H3; confrontar com a rejeição por incapacidade de discriminar qualidade em §1.3, p. 15.",
+        "quote": "concordância for alta e as divergências residuais não alterarem decisões de qualidade"
+      },
+      "scholarly_relevance": "A introdução admite rejeitar H3 por incapacidade de discriminar qualidade, mas a regra operacional só explicita rejeição por concordância alta. Concordância uniformemente baixa fica sem consequência definida, e a aprovação binária necessária para identificar falsos positivos ou negativos não está fechada. Concordância e divergência, sem decisão material definida, não demonstram inadequação do uso exclusivo do juiz.",
+      "confirmed_target_relevance": {
+        "status": "confirmed",
+        "rationale": "A interpretação do experimento de uma dissertação em qualificação precisa ser decidível antes de observar seus resultados. Não se exige um limiar universal nem se presume regra institucional de avaliação não fornecida."
+      },
+      "remedy_status": "available",
+      "minimum_viable_remedy": {
+        "action": "Harmonizar a formulação e a operacionalização de H3, explicitar ramos para concordância baixa, intermediária, alta e resultado inconclusivo, definir aprovação e divergência material e distinguir concordância descritiva da adequação do uso exclusivo no caso estudado. Submeter as escolhas prospectivas à decisão do autor.",
+        "resource_effort": {
+          "scope": "section",
+          "description": "Esforço médio de revisão da hipótese, dos indicadores e da tabela ou texto de decisões antes da execução principal."
+        },
+        "trade_offs": "Critérios locais tornam a conclusão decidível, mas limitam a generalização para outros usos e riscos institucionais.",
+        "changes_research_intent": "no",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option": {
+        "action": "Após produzir os dados do experimento, realizar análise de sensibilidade a diferentes limiares, preservando o limiar principal previamente fixado e distinguindo as análises adicionais.",
+        "resource_effort": {
+          "scope": "re_analysis",
+          "description": "Esforço adicional de análise dos dados previstos no experimento; não requer amostra nova e não pressupõe que os dados já existam."
+        },
+        "trade_offs": "Expõe dependência das conclusões em relação às convenções, mas acrescenta análises e não substitui a escolha prospectiva principal.",
+        "changes_research_intent": "no",
+        "requires_new_data": false,
+        "proposed_result_values": false
+      },
+      "stronger_option_reason": null,
+      "no_honest_remedy_reason": null
+    }
+  ]
+}
