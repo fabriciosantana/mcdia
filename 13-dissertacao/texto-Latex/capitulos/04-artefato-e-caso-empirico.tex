@@ -52,14 +52,7 @@ O manifesto da base de viabilidade registra 23.806 trechos produzidos, dos quais
 
 \subsection{Configuração experimental e reprodutibilidade}\label{sec:config-viabilidade}
 
-As rodadas de avaliação durante o experimento de viabilidade foram realizadas contra a mesma base de conhecimento registrada; \texttt{gpt-5-nano} foi usado tanto para geração quanto para julgamento automatizado. Os arquivos de configuração preservam identificadores e hashes dos artefatos da base, das perguntas, da rubrica e dos prompts. O prompt de geração dependia do template RAG configurado no servidor; os registros não informam temperatura, \textit{top-p} ou limite de tokens e registram a semente como \texttt{null}, de modo que os valores aplicados não podem ser reconstruídos.
-
-\subsection{Execuções do experimento de viabilidade}
-\label{sec:viabilidade}
-
-Na configuração inicial do experimento de viabilidade, foram usados \texttt{text-embedding-3-small} e \texttt{gpt-5-nano}. A primeira série de avaliação automatizada compreendeu três rodadas de 20 perguntas, com rubrica de cinco critérios em escala de 0 a 2.
-
-No experimento de viabilidade foram processados duas baterias de 20 perguntas e duas execuções identificadas como piloto de 32 perguntas; nas duas últimas, as médias atribuídas pelo juiz automatizado foram 9,031 e 9,094 em escala de 0 a 10. As duas execuções usaram a mesma base de conhecimento e apontam para o mesmo arquivo de piloto.
+A configuração do experimento de viabilidade utilizou \texttt{text-embedding-3-small} e \texttt{gpt-5-nano}. Nas quatro execuções completas apresentadas na Seção~\ref{sec:resultados}, o modelo \texttt{gpt-5-nano} foi usado tanto para geração quanto para julgamento automatizado, sempre contra a mesma base de conhecimento. Os arquivos de configuração preservam identificadores e hashes dos artefatos da base, das perguntas, da rubrica e dos prompts. O prompt de geração dependia do template RAG configurado no servidor; os registros não informam temperatura, \textit{top-p} ou limite de tokens e registram a semente como \texttt{null}, de modo que os valores aplicados não podem ser reconstruídos.
 
 
 \subsection{Evolução do protótipo ao experimento principal}
