@@ -1,25 +1,41 @@
 \section{Considerações finais}
 \label{sec:finais}
 
-Este capítulo responderá diretamente à pergunta de pesquisa e sintetizará as contribuições efetivamente demonstradas. A redação final deverá distinguir o protocolo avaliativo produzido, os achados do caso empírico, as limitações e aquilo que permanece como agenda futura.
+No estágio atual do trabalho, a resposta à pergunta de pesquisa é parcial. A dissertação organizou um protocolo que articula recuperação documental, geração de respostas, avaliação humana e julgamento automatizado, e o aplicou preliminarmente a um sistema RAG voltado aos discursos da 56\textordfeminine{} Legislatura do Senado Federal. Como o experimento principal ainda não foi realizado, as considerações a seguir se restringem às contribuições documentadas e às etapas necessárias para avaliar o protocolo em condições controladas.
 
 \subsection{Síntese das contribuições até o momento}
 
-% TODO: retomar cada objetivo específico e indicar a evidência correspondente.
+A pesquisa sistematizou técnicas de avaliação de RAG e as organizou em um protocolo que mantém distintas, mas articuladas, a recuperação, a geração, a verificabilidade das fontes, a avaliação humana, o julgamento automatizado e a análise qualitativa de erros. O protocolo especifica métricas de recuperação, uma rubrica de cinco dimensões e regras de interpretação para H1--H3. Essa contribuição é metodológica e permanece como proposta a ser avaliada na etapa principal; sua especificação não equivale à validação empírica do protocolo.
+
+O estudo também caracterizou o corpus documental e documentou a preparação de uma bateria de 200 perguntas distribuídas em 16 categorias, da qual foi selecionado um piloto estratificado de 32 itens. Na execução de viabilidade reportada, os 32 itens foram processados sem erro, com média automatizada de 9,094 em escala de 0 a 10. O registro sinalizou risco alto de mistura de autores em 28 itens. Esses achados demonstram que o fluxo pôde ser executado e produziu material para inspeção; não medem a qualidade geral das respostas nem o desempenho da recuperação.
+
+Assim, a resposta provisória à pergunta de pesquisa é que as técnicas podem ser organizadas em um protocolo aplicado ao caso empírico, desde que suas dimensões sejam avaliadas separadamente e relacionadas por evidências rastreáveis. A execução disponível demonstra a viabilidade operacional de uma aplicação-piloto, mas ainda não permite concluir sobre a eficácia comparativa das técnicas ou sobre as hipóteses da dissertação.
 
 \subsection{Limitações identificadas}
 
-% TODO: consolidar apenas limitações que permanecerem após a execução final.
+A principal limitação é a ausência do experimento principal: ainda não há conjunto de referência validado, comparação controlada entre BM25, recuperação vetorial e híbrida, nem resultados de avaliação humana independente. Por isso, não é possível calcular as métricas de recuperação previstas, comparar respostas por categoria ou estimar concordância entre avaliadores humanos e juiz automatizado. H1, H2 e H3 permanecem sem avaliação empírica conclusiva.
+
+Os resultados de geração disponíveis provêm de uma rubrica exploratória e de uma execução em que \texttt{gpt-5-nano} atuou como gerador e juiz. A execução registrada também difere em dois enunciados da versão da bateria atualmente preservada no projeto. Além disso, temperatura, \textit{top-p} e limite de tokens não foram informados, o que limita a reprodução exata das condições. A bateria do piloto contém apenas dois itens por categoria e não representa uma amostra probabilística de consultas reais. Por fim, o estudo se restringe ao corpus de discursos da 56\textordfeminine{} Legislatura e às configurações documentadas; seus resultados não podem ser generalizados para outros acervos ou sistemas RAG.
 
 \subsection{Próximos passos da pesquisa}
 
-% TODO: hierarquizar por prioridade e horizonte, sem prometer etapas já realizadas.
+As etapas seguintes devem ocorrer na seguinte ordem:
+
+\begin{enumerate}
+  \item Congelar a bateria e sua versão analítica, resolver as divergências de enunciado, confirmar a respondibilidade e validar, para cada pergunta, as evidências documentais suficientes, inclusive nos casos parcialmente respondíveis e sem suporte.
+  \item Fixar a configuração do sistema e da segmentação e registrar modelos, \textit{embeddings}, parâmetros de recuperação e geração, \textit{prompts}, versões e sementes aplicáveis.
+  \item Executar BM25, recuperação vetorial e híbrida sob as mesmas perguntas e evidências de referência; calcular as métricas compatíveis com a granularidade dos julgamentos e analisar separadamente documentos, trechos e afirmações.
+  \item Aplicar a rubrica principal às respostas, realizar avaliação humana independente e comparar seus julgamentos com os do avaliador automatizado, preservando notas individuais, divergências e casos críticos.
+  \item Aplicar as regras de decisão de H1--H3 aos resultados, discutir as condições e os limites observados e avaliar o protocolo como artefato metodológico, registrando eventuais revisões decorrentes de sua aplicação.
+\end{enumerate}
+
+Somente após essas etapas será possível substituir a resposta provisória desta versão por conclusões empíricas sobre a complementaridade e os limites das técnicas avaliativas.
 
 \subsection{Cronograma de execução}
 
 \label{sec:cronograma}
 
-A Tabela~\ref{tab:cronograma} reproduz as etapas, entregas ao orientador e resultados esperados do cronograma de trabalho registrado pelo pesquisador. As datas são planejadas e dependem de confirmação institucional e da disponibilidade dos recursos; sua inclusão não comprova a realização dos eventos. Em particular, o prazo de envio à banca de qualificação já indicado no cronograma (7 de novembro de 2026) não é aqui declarado como cumprido. A execução empírica depende também da consolidação do conjunto de referência e do piloto de avaliação humana.
+A Tabela~\ref{tab:cronograma} reproduz as etapas, entregas ao orientador e resultados esperados do cronograma registrado.
 
 \begin{landscape}
 \begingroup
