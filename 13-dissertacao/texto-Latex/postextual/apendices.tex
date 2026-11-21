@@ -1,18 +1,80 @@
 \apendice{Protocolo de avaliação}
 
-% TODO: incluir a versão final do protocolo, com etapas, parâmetros e critérios
-% de interpretação suficientes para reprodução ou auditoria.
+Este apêndice organiza o protocolo previsto para o experimento principal. A descrição não significa que a execução principal tenha sido realizada ou que seus parâmetros operacionais estejam congelados. As hipóteses, métricas e regras de decisão estão detalhadas no Capítulo~\ref{sec:metodologia}; aqui são reunidas as etapas e os registros necessários à aplicação e à auditoria.
+
+\begin{enumerate}
+  \item \textbf{Validar as perguntas e as evidências.} Congelar uma versão analítica da bateria após revisar formulação, categoria, dificuldade e respondibilidade. Para cada pergunta respondível, associar os identificadores dos pronunciamentos e os trechos suficientes, preservando posição no texto, URL e justificativa. Classificar relevância como suficiente, parcial ou irrelevante conforme a escala definida para a curadoria. Para perguntas não respondíveis, registrar a busca realizada e a razão pela qual o recorte não oferece suporte; para as parcialmente respondíveis, explicitar quais componentes têm evidência. A curadoria deve preceder a comparação entre recuperadores.
+  \item \textbf{Comparar a recuperação.} Executar BM25, recuperação vetorial e recuperação híbrida sobre a mesma base, bateria e conjunto de referência. Registrar a unidade recuperada, a segmentação, os modelos de incorporação, parâmetros de busca, quantidade de resultados considerada e eventuais etapas de reranqueamento. Reportar \textit{Recall@1}, \textit{Recall@5}, \textit{Recall@10} e MRR na profundidade definida; usar \textit{Hit@k}, \textit{Precision@k} e nDCG somente conforme a suficiência e a granularidade dos julgamentos disponíveis. Perguntas não respondíveis devem ser analisadas separadamente, sem tratá-las como falha de recuperação de evidência existente.
+  \item \textbf{Avaliar a geração.} Para cada resposta, preservar pergunta, contexto recuperado, fontes, metadados e configuração do gerador. Aplicar a rubrica do Apêndice~\ref{ap:rubrica}, registrando notas por dimensão e justificativas vinculadas às afirmações centrais. A nota automatizada é auxiliar e deve ser mantida separada dos julgamentos humanos.
+  \item \textbf{Realizar avaliação humana e comparar julgamentos.} Aplicar a rubrica a uma amostra definida antes da análise, com avaliadores independentes e piloto de calibração. Sempre que viável, ocultar a identidade do sistema. Preservar as avaliações individuais, registrar divergências e documentar sua resolução. Comparar julgamentos por percentual de acordo e, para dimensões ordinais, por $\kappa$ ponderado, conforme a operacionalização da Seção~\ref{sec:hipoteses-operacionais}.
+  \item \textbf{Examinar erros e hipóteses.} Vincular cada caso analisado à pergunta, aos resultados recuperados, à resposta, às fontes e aos julgamentos. Distinguir falhas de recuperação, uso inadequado de evidência, erro de atribuição, extrapolação e falha em reconhecer insuficiência. Aplicar as regras de H1--H3 descritas na Seção~\ref{sec:hipoteses-operacionais}, apresentando distribuições e casos, além de médias agregadas.
+\end{enumerate}
+
+Para cada execução, o registro deve identificar a versão da base, da bateria e do conjunto de referência; recuperador, segmentação, modelos e parâmetros; perguntas processadas e eventuais erros; contexto recuperado; respostas; julgamentos individuais; e versões de rubricas e instruções. Parâmetros que não tenham sido registrados devem ser declarados como indisponíveis, sem reconstrução retrospectiva.
 
 \apendice{Bateria de perguntas e conjunto de referência}
 
-% TODO: incluir ou apontar para a versão completa e congelada dos itens,
-% categorias, respostas esperadas e evidências documentais.
+Os arquivos de trabalho da bateria estão no diretório \path{06-inteligencia-artificial-generativa/4-project/eval/}. A versão v4 contém 200 perguntas distribuídas em 16 categorias; o arquivo \path{discursos_questions_v4_pilot_stratified.json} contém a seleção estratificada de 32 perguntas, com dois itens de cada categoria. A versão integral está em \path{discursos_questions_v4_200.json}; os arquivos CSV correspondentes permitem inspeção tabular.
+
+Na versão integral atualmente armazenada, a distribuição é: perguntas factuais simples (12), foco no autor (12), desambiguação de autoria (13), multifocais amplas (13), verificação de citações e fontes (13), comparação (12), comparação temporal (13), limites de contexto (12), confusão entre autores (12), armadilhas de alucinação (12), múltiplas etapas (12), evidência negativa (12), perguntas numéricas (13), estresse de recuperação (13), controle de escopo (13) e síntese (13). Os campos de respondibilidade do arquivo registram 107 itens como respondíveis, 78 parcialmente respondíveis e 15 não respondíveis; no piloto de 32, são 16, 14 e 2, respectivamente. Essas contagens descrevem os metadados existentes e não constituem validação independente da respondibilidade.
+
+Os campos de resposta esperada, fontes indicativas e riscos de avaliação orientam a curadoria, mas não são respostas de referência completas nem julgamentos exaustivos de relevância. A versão atual da bateria também não deve ser confundida com \path{dados/piloto/bateria_rascunho.csv}, arquivo local de uma estrutura anterior de 12 categorias. O conjunto de referência do experimento principal permanece pendente: será necessário confirmar a respondibilidade e associar, pergunta a pergunta, documentos e trechos suficientes, incluindo justificativas, casos parcialmente respondíveis e evidência negativa. Até essa validação, os arquivos v4 são materiais de trabalho, não um conjunto de referência validado.
 
 \apendice{Rubrica de avaliação das respostas}
+\label{ap:rubrica}
 
-% TODO: incluir instruções, escala, exemplos de calibração e regras de decisão.
+A rubrica prevista para o experimento principal atribui, em cada dimensão, 0 (falha grave ou propriedade ausente), 1 (atendimento parcial ou ambíguo) ou 2 (atendimento suficiente). A avaliação é feita no nível da resposta e deve registrar as afirmações centrais que fundamentam a nota.
+
+\begin{description}
+  \item[Correção factual.] Examina se fatos, números, datas e atribuições apresentados são sustentados pelas evidências disponíveis.
+  \item[Aderência ao contexto recuperado.] Examina se a resposta usa o contexto recuperado de modo pertinente e se evita extrapolações não apoiadas por ele.
+  \item[Suporte e precisão das citações.] Examina se as fontes identificadas sustentam as afirmações associadas e se autoria e referência documental estão corretas.
+  \item[Completude proporcional à pergunta.] Examina se a resposta cobre os componentes solicitados sem omissões relevantes nem expansão indevida do escopo.
+  \item[Reconhecimento de insuficiência documental.] Examina se a resposta declara limites ou ausência de evidência quando o contexto não sustenta uma resposta completa, inclusive em perguntas parcial ou não respondíveis.
+\end{description}
+
+As descrições acima operacionalizam as cinco dimensões previstas na Seção~\ref{sec:rubrica}; os âncoras 0--2 são comuns às dimensões. O repositório não contém exemplos de calibração validados nem uma regra final para casos em que uma dimensão não se aplique. Esses pontos devem ser definidos no piloto, antes da anotação principal, e registrados em nova versão da rubrica. A rubrica exploratória usada nas execuções de viabilidade é outro instrumento e está identificada no Apêndice~\ref{ap:instrumentos}; suas notas não devem ser convertidas para esta escala.
 
 \apendice{Instrumentos e resultados complementares}
+\label{ap:instrumentos}
 
-% TODO: incluir prompts, formulário dos avaliadores e tabelas extensas que não
-% pertençam ao fluxo principal da argumentação.
+Os prompts e a rubrica exploratória do protótipo estão em \path{06-inteligencia-artificial-generativa/4-project/eval/}. O arquivo \path{prompts/rag_prompt.md} contém instruções do fluxo RAG; \path{prompts/rag_answer_system.md}, instruções de sistema do gerador; e \path{prompts/rag_judge_system.md} e \path{prompts/rag_judge_user.md}, instruções do juiz automatizado. A rubrica correspondente está em \path{RUBRIC.md}. Esses arquivos documentam o instrumento exploratório do projeto e não substituem a rubrica de cinco dimensões definida para o experimento principal.
+
+O formulário humano abaixo é um modelo de registro derivado das dimensões e dos procedimentos descritos na metodologia. Ele não é apresentado como instrumento já aplicado ou validado; sua versão de uso deve ser fechada após o piloto de calibração.
+
+\begin{description}
+  \item[Identificação do caso.] Código da pergunta e código anonimizado da resposta.
+  \item[Notas individuais.] Uma nota de 0, 1 ou 2 para cada uma das cinco dimensões do Apêndice~\ref{ap:rubrica}, sem acesso às notas dos demais avaliadores.
+  \item[Justificativa.] Afirmações centrais e trechos ou fontes que sustentam cada julgamento; registrar explicitamente insuficiência, ambiguidade ou divergência documental quando observada.
+  \item[Observação do avaliador.] Erro ou caso crítico que demande revisão, sem substituir as notas individuais.
+\end{description}
+
+Os registros completos da execução de viabilidade reportada, incluindo respostas, notas automatizadas, configuração e análises por pergunta, estão no diretório \path{06-inteligencia-artificial-generativa/4-project/eval/results/}. As tabelas e a interpretação dos resultados pertinentes à argumentação estão no Capítulo~\ref{sec:resultados}; este apêndice indica a localização dos arquivos de auditoria sem reproduzir os mesmos números. Não foi localizado no repositório um formulário humano final nem uma tabela de julgamentos humanos independentes para o experimento principal.
+
+\apendice{Reprodução da coleta e localização dos artefatos}
+\label{ap:reproducao}
+
+O código de coleta e suas dependências estão disponíveis no repositório do pesquisador\footnote{\url{https://github.com/fabriciosantana/mcdia/tree/fc6c67ec60ab8442db3ae9bef53898d8bf9f6350/13-dissertacao/scripts}.}. A referência fixa identifica a versão consultada nesta redação, sem pressupor que o ramo principal permanecerá inalterado. O script consulta dados públicos do Senado em janelas mensais, preserva os lotes intermediários e consolida os registros por código de pronunciamento. Para executar em ambiente Python, a partir da raiz do repositório:
+
+\begin{verbatim}
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r 13-dissertacao/scripts/requirements.txt
+python 13-dissertacao/scripts/01_preparar_base_discursos_batch.py \
+  --data-inicio 2019-02-01 --data-fim 2023-01-31 \
+  --diretorio-saida /tmp/coleta-discursos-reproducao \
+  --tamanho-lote-textos 250 --trabalhadores 5 \
+  --tentativas 10 --backoff 1 --pausa-entre-lotes 2
+\end{verbatim}
+
+O diretório de saída deve ser separado dos dados originais. Os lotes existentes são reutilizados na retomada; uma nova coleta independente requer um diretório vazio. O arquivo consolidado será denominado \path{discursos_2019-02-01_2023-01-31.parquet}. Para preservar os resultados fora de uma sessão temporária, deve-se substituir o caminho de exemplo por armazenamento persistente. As opções adicionais são apresentadas pelo argumento \texttt{--help}.
+
+Reexecutar a coleta reproduz o procedimento, mas não garante identidade binária com uma coleta passada: a fonte pública e as dependências podem mudar. Para reproduzir a análise da versão congelada, deve-se obter o arquivo na revisão \texttt{v1.1.1}\footnote{\url{https://huggingface.co/datasets/fabriciosantana/discursos-senado-legislatura-56/tree/v1.1.1/data/full}.} e conferir seu SHA-256:
+\begin{verbatim}
+sha256sum discursos_2019-02-01_2023-01-31.parquet
+\end{verbatim}
+O resumo esperado é \path{e09cfc4793e5394be440906320c7d3008cda5a52b90bbc85bf47446362406af1}. Devem ser registrados data da execução e versões das dependências. O comando de coleta não foi reexecutado para esta revisão textual.
+
+As tabelas de apoio à caracterização do corpus estão em \path{13-dissertacao/texto-Latex/dados/}. A tabela de cobertura textual e o gráfico de estimativas de segmentação desta dissertação usam, respectivamente, \path{cobertura_textual.csv} e \path{estimativa_chunking.csv}, conferidos com as saídas salvas da análise exploratória.
+
+Os artefatos do protótipo e do experimento de viabilidade — incluindo preparação documental, bateria, configurações e resultados da execução reportada — estão em \path{06-inteligencia-artificial-generativa/4-project/}, no mesmo repositório. A Seção~\ref{sec:resultados} caracteriza esse percurso como etapa da pesquisa. Seus resultados são preliminares e orientam o protocolo; permanecem distintos dos resultados do experimento principal.

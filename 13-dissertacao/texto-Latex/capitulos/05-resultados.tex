@@ -1,0 +1,34 @@
+\section{Resultados preliminares}
+\label{sec:resultados}
+
+Esta seção apresenta os registros do experimento de viabilidade e o estado dos dados e análises previstos para o experimento principal.
+
+\subsection{Resultado do experimento de viabilidade}
+
+Segundo o resumo da execução integral do piloto estratificado de 32 perguntas descrito na Seção~\ref{sec:construcao-dados}, todos os itens foram processados sem erro. A média atribuída pelo juiz automatizado foi 9,094 em escala de 0 a 10. A nota deriva da rubrica exploratória do projeto, composta por cinco critérios em escala de 0 a 2; não é métrica de recuperação nem avaliação humana independente. Geração e julgamento usaram o mesmo modelo (Seção~\ref{sec:config-viabilidade}). Dois enunciados registrados nessa execução diferem da versão da bateria atualmente preservada no projeto; portanto, a média se refere à formulação efetivamente aplicada.
+
+O resumo da execução registra risco alto de mistura de autores entre os trechos recuperados em 28 dos 32 itens. Esse indicador sinaliza a necessidade de inspecionar contextos e atribuições documentais; não equivale, por si só, a erro confirmado em todas as respostas.
+
+O registro mostra que o fluxo de preparação, consulta e avaliação automatizada pôde ser executado e produziu artefatos rastreáveis. Também indica controles para o protocolo seguinte: verificar a autoria dos trechos recuperados, examinar o escopo das respostas e preservar as configurações por execução.
+
+\subsection{Caracterização da bateria e do conjunto de referência}
+
+A composição da bateria, as categorias e a seleção do piloto estão descritas na Seção~\ref{sec:construcao-dados}.
+
+A classificação de respondibilidade nos arquivos distingue itens respondíveis, parcialmente respondíveis e não respondíveis. A curadoria do conjunto de referência da dissertação ainda precisa confirmar essas classificações e associar, para cada item respondível, os documentos e trechos suficientes; as fontes indicativas da bateria não constituem julgamentos exaustivos de relevância. Consequentemente, ainda não há estatísticas de um conjunto de referência validado que permitam reportar resultados inferenciais de recuperação.
+
+\subsection{Resultados da recuperação documental}
+
+Os registros examinados não contêm uma comparação controlada entre BM25, recuperação vetorial e recuperação híbrida com consultas e julgamentos de relevância validados. Assim, não são reportados valores de Recall@k, Precision@k, MRR, nDCG ou Hit@k para o experimento principal. O cálculo das métricas previstas dependerá da validação dos documentos e trechos relevantes e da execução dos recuperadores sob condições equivalentes.
+
+\subsection{Resultados da geração de respostas}
+
+As notas acima foram geradas pela rubrica exploratória. A rubrica de cinco dimensões definida para o experimento principal tem finalidade e regras próprias e ainda não foi aplicada às respostas da bateria curada. Por isso, não se apresentam médias por dimensão nem pontuação global da rubrica principal.
+
+\subsection{Avaliação humana e avaliação automatizada}
+
+Não foi realizada avaliação humana independente das respostas do experimento de viabilidade; por isso, não há dados para calcular a concordância entre os julgamentos humanos e automatizados.
+
+\subsection{Análise de erros e casos críticos}
+
+O risco de mistura de autores reportado acima requer inspeção dos trechos e metadados para distinguir contexto heterogêneo de atribuição incorreta. Os registros não oferecem análise sistemática de respostas fora do escopo, insuficiência documental ou perguntas não respondíveis; esses padrões deverão ser examinados após a curadoria do conjunto de referência.

@@ -1,0 +1,60 @@
+\section{Sistema RAG e o acervo de discursos parlamentares}\label{sec:caso}
+
+Esta seção documenta o sistema RAG, o corpus de discursos da 56\textordfeminine{} Legislatura do Senado Federal e a execução do experimento de viabilidade técnica do protótipo.
+
+\subsection{Caracterização do corpus legislativo}\label{sec:caracterizacao-corpus}
+
+O corpus analisado reúne os pronunciamentos da 56\textordfeminine{} Legislatura. A fonte, a janela consultada, a versão do arquivo e os procedimentos de coleta e auditoria estão documentados na Seção~\ref{sec:coleta-corpus}. Esta subseção apresenta os resultados descritivos da auditoria e discute suas implicações para a preparação e a avaliação do sistema RAG.
+
+Além da disponibilidade textual sintetizada na Tabela~\ref{tab:cobertura-corpus}, a auditoria identificou 28 cópias textuais exatas excedentes, 1.291 documentos com menos de 50 palavras, sete documentos com mais de 10 mil palavras e cobertura de 86,81\% para partido e unidade federativa entre os documentos indexáveis.
+
+Como exercício exploratório de dimensionamento, foi simulada uma segmentação independente daquela efetivamente usada no experimento de viabilidade, descrita na Seção~\ref{sec:preparacao-corpus}. Com a aproximação de 512 tokens por trecho e sobreposição de 64 tokens, estimaram-se 45.971 trechos, mediana de dois trechos para textos integrais e máximo aproximado de 60; também foram simuladas configurações de 256, 768 e 1.024 tokens. A segmentação do experimento principal deverá usar o tokenizador do modelo escolhido, respeitar limites semânticos e ser comparada empiricamente no protocolo de recuperação.
+
+A Tabela~\ref{tab:cobertura-corpus} apresenta a disponibilidade textual, distinguindo documentos integrais de resumos usados como substitutos.
+
+\begin{table}[htbp]
+\centering
+\caption{Disponibilidade textual dos registros do corpus.}\label{tab:cobertura-corpus}
+\begin{tabular}{lrr}\toprule
+Fonte disponível & Registros & Percentual (\%)\\\midrule
+Texto integral & 15.039 & 95,61\\
+Resumo substituto & 687 & 4,37\\
+Sem conteúdo utilizável & 3 & 0,02\\\midrule
+Total & 15.729 & 100,00\\\bottomrule
+\end{tabular}
+\par\smallskip Fonte: elaborado pelo autor a partir da análise exploratória do corpus, versão 1.1.1 (2026).
+\end{table}
+
+A Figura~\ref{fig:estimativa-segmentacao} compara estimativas do número de trechos sob quatro tamanhos e respectivas sobreposições. Reduzir o tamanho eleva o número estimado de unidades a indexar. A figura dimensiona o planejamento computacional; não demonstra melhoria de recuperação nem representa uma segmentação final executada.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.00011cm,y=0.85cm]
+\draw[->] (0,0)--(95000,0);
+\node[font=\small] at (47500,-1.0){Trechos estimados};
+\foreach \v/\t in {0/0,20000/20.000,40000/40.000,60000/60.000,80000/80.000}{\draw (\v,0)--(\v,-0.1) node[below,font=\small]{\t};}
+\foreach \y/\v/\t/\n in {4/84567/{256 / 32}/{84.567},3/45971/{512 / 64}/{45.971},2/33297/{768 / 96}/{33.297},1/27130/{1.024 / 128}/{27.130}}{
+\fill[blue!45] (0,\y-0.25) rectangle (\v,\y+0.25);
+\node[left,font=\small] at (0,\y){\t};
+\node[right,font=\small] at (\v,\y){\n};}
+\node[anchor=west,font=\small] at (0,4.7){Tamanho / sobreposição (tokens estimados)};
+\end{tikzpicture}
+\caption{Estimativa de segmentação do corpus por tamanho e sobreposição.}\label{fig:estimativa-segmentacao}
+\par\smallskip Fonte: elaborado pelo autor a partir das saídas da análise exploratória (2026).
+\end{figure}
+
+\subsection{Arquitetura e componentes do sistema RAG}
+
+O experimento de viabilidade combina scripts Python para preparação documental e avaliação, Open WebUI como interface e orquestrador do fluxo RAG e ChromaDB como armazenamento vetorial. A aplicação recebe a pergunta, recupera trechos da base indexada, encaminha o contexto ao modelo gerador e registra resposta, fontes e metadados para inspeção.
+
+\subsection{Preparação, segmentação e enriquecimento documental}\label{sec:preparacao-corpus}
+
+O manifesto da base de viabilidade registra 23.806 trechos produzidos, dos quais 23.119 derivam de textos integrais e os demais de resumos substitutos. A preparação adotou limite de 850 palavras por trecho, sobreposição de 150 palavras e máximo de 200 trechos por arquivo; para ingestão, foram gerados 120 arquivos de lote. Cada unidade preserva metadados documentais, como autoria, data e URL, que permitem relacionar o trecho ao pronunciamento de origem.
+
+\subsection{Configuração experimental e reprodutibilidade}\label{sec:config-viabilidade}
+
+A configuração do experimento de viabilidade utilizou \texttt{text-embedding-3-small} e \texttt{gpt-5-nano}. Na execução integral do piloto apresentada na Seção~\ref{sec:resultados}, o modelo \texttt{gpt-5-nano} foi usado tanto para geração quanto para julgamento automatizado, contra a mesma base de conhecimento. O arquivo de configuração preserva identificadores e hashes dos artefatos da base, das perguntas, da rubrica e dos prompts. O prompt de geração dependia do template RAG configurado no servidor; o registro não informa temperatura, \textit{top-p} ou limite de tokens e registra a semente como \texttt{null}, de modo que os valores aplicados não podem ser reconstruídos.
+
+
+\subsection{Evolução do protótipo ao experimento principal}
+
+As questões observadas na viabilidade orientam o protocolo principal: validar perguntas, respondibilidade e evidências de referência; comparar BM25, recuperação vetorial e híbrida sob as mesmas condições; avaliar as respostas pela rubrica da dissertação; e comparar o julgamento automatizado com anotações humanas independentes. Esses procedimentos estão detalhados no Capítulo~\ref{sec:metodologia}.

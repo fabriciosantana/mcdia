@@ -20,8 +20,10 @@
   { \idpShimAccite }
 \ExplSyntaxOff
 
-\documentclass[mestrado,rascunho]{idp}
+\documentclass[mestrado]{idp}
 
+\usepackage{amsmath}
+\usepackage{xurl}
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{enumitem}
@@ -58,8 +60,8 @@
 
 \listailustracoes
 \listatabelas
-\listaquadros
-\listagraficos
+%\listaquadros
+%\listagraficos
 \input{pretextual/siglas}
 \sumario
 
@@ -67,18 +69,16 @@
 
 \input{capitulos/01-introducao}
 \input{capitulos/02-referencial-teorico}
-% \input{capitulos/03-trabalhos-relacionados}
-% \input{capitulos/04-hipoteses-de-trabalho}
-\input{capitulos/04-procedimentos-metodologicos}
-\input{capitulos/05-artefato-e-caso-empirico}
-\input{capitulos/06-resultados}
-\input{capitulos/07-discussao}
-\input{capitulos/08-consideracoes-finais}
+\input{capitulos/03-procedimentos-metodologicos}
+\input{capitulos/04-artefato-e-caso-empirico}
+\input{capitulos/05-resultados}
+\input{capitulos/06-discussao}
+\input{capitulos/07-consideracoes-finais}
 
 \postextual
 
 \referencias
-\input{postextual/apendices}
+%\input{postextual/apendices}
 % Habilitar se houver material de terceiros a anexar:
 % \input{postextual/anexos}
 
